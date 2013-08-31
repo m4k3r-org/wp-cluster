@@ -356,8 +356,8 @@ class flawless_shortcodes {
 
     } else {
       /** at the second time add css and js */
-      wp_enqueue_style( 'google-pretify' );
-      wp_enqueue_script( 'google-pretify' );
+      wp_enqueue_style( 'google-prettify' );
+      wp_enqueue_script( 'google-prettify' );
 
       $args = shortcode_atts( array(
         'class' => 'prettyprint',

@@ -1,5 +1,5 @@
 <?php
-include_once( untrailingslashit( TEMPLATEPATH ) . '/core/lib/ud_api.php' );
+include_once( untrailingslashit( TEMPLATEPATH ) . '/core/vendor/ud_api.php' );
 
 /**
  * Main class for Flawless theme options
@@ -47,10 +47,10 @@ class flawless_theme extends UD_API {
       untrailingslashit( get_stylesheet_directory() ) => untrailingslashit( get_stylesheet_directory_uri() )
     ));
 
-    $flawless[ '_bootstrap_compiled_path' ] = untrailingslashit( get_stylesheet_directory() ) . '/screen-styles.dev.css';
-    $flawless[ '_bootstrap_compiled_url' ] = untrailingslashit( get_stylesheet_directory_uri() ) . '/screen-styles.dev.css';
-    $flawless[ '_bootstrap_compiled_minified_path' ] = untrailingslashit( get_stylesheet_directory() ) . '/screen-styles.css';
-    $flawless[ '_bootstrap_compiled_minified_url' ] = untrailingslashit( get_stylesheet_directory_uri() ) . '/screen-styles.css';
+    // $flawless[ '_bootstrap_compiled_path' ] = untrailingslashit( get_stylesheet_directory() ) . '/screen-styles.dev.css';
+    // $flawless[ '_bootstrap_compiled_url' ] = untrailingslashit( get_stylesheet_directory_uri() ) . '/screen-styles.dev.css';
+    // $flawless[ '_bootstrap_compiled_minified_path' ] = untrailingslashit( get_stylesheet_directory() ) . '/screen-styles.css';
+    // $flawless[ '_bootstrap_compiled_minified_url' ] = untrailingslashit( get_stylesheet_directory_uri() ) . '/screen-styles.css';
 
     $flawless[ 'default_header' ][ 'flawless_style_assets' ] = array(
       'Name' => __( 'Name', 'flawless_theme' ),
@@ -209,16 +209,31 @@ class flawless_theme extends UD_API {
 
     flawless_theme::console_log( 'Executed: flawless_theme::init();' );
 
-    //** JS Assets - loaded early since they are not expected to be overwritten  */
-    wp_register_script( 'bootstrap', get_bloginfo( 'template_url' ) . '/ux/js/bootstrap.min.js', array( 'jquery' ), '2.0.1', true );
-    wp_register_script( 'jquery-lazyload', get_bloginfo( 'template_url' ) . '/ux/js/jquery.lazyload.min.js', array( 'jquery' ), '1.7.0', true );
-    wp_register_script( 'jquery-touch-punch', get_bloginfo( 'template_url' ) . '/ux/js/jquery.ui.touch-punch.min.js', array( 'jquery' ), '0.2.2', true );
-    wp_register_script( 'jquery-fancybox', get_bloginfo( 'template_url' ) . '/ux/js/jquery.fancybox.pack.js', array( 'jquery' ), '2.0.4', true );
-    wp_register_script( 'jquery-placeholder', get_bloginfo( 'template_url' ) . '/ux/js/jquery.placeholder.min.js', array( 'jquery' ), '2.0.4', true );
-    wp_register_script( 'google-pretify', get_bloginfo( 'template_url' ) . '/ux/js/google-prettify.js', array( 'jquery' ), Flawless_Version, true );
-    wp_register_script( 'jquery-cookie', get_bloginfo( 'template_url' ) . '/ux/js/jquery.smookie.js', array( 'jquery' ), Flawless_Version, true );
-    wp_register_script( 'jquery-masonry', get_bloginfo( 'template_url' ) . '/ux/js/jquery.masonry.min.js', array( 'jquery' ), Flawless_Version, true );
-    wp_register_script( 'jquery-equalheights', get_bloginfo( 'template_url' ) . '/ux/js/jquery.equalheights.js', array( 'jquery' ), Flawless_Version, true );
+    // ** JS Assets - loaded early since they are not expected to be overwritten  */
+    // wp_register_script( 'bootstrap', get_bloginfo( 'template_url' ) . '/assets/js/bootstrap.min.js', array( 'jquery' ), '2.0.1', true );
+    // wp_register_script( 'jquery-lazyload', get_bloginfo( 'template_url' ) . '/assets/js/jquery.lazyload.min.js', array( 'jquery' ), '1.7.0', true );
+
+    // wp_register_script( 'jquery-touch-punch', get_bloginfo( 'template_url' ) . '/assets/js/jquery.ui.touch-punch.min.js', array( 'jquery' ), '0.2.2', true );
+    // wp_register_script( 'jquery-fancybox', get_bloginfo( 'template_url' ) . '/assets/js/jquery.fancybox.pack.js', array( 'jquery' ), '2.0.4', true );
+    // wp_register_script( 'google-prettify', get_bloginfo( 'template_url' ) . '/assets/js/google-prettify.js', array( 'jquery' ), Flawless_Version, true );
+    // wp_register_script( 'jquery-cookie', get_bloginfo( 'template_url' ) . '/assets/js/jquery.smookie.js', array( 'jquery' ), Flawless_Version, true );
+    // wp_register_script( 'jquery-masonry', get_bloginfo( 'template_url' ) . '/assets/js/jquery.masonry.min.js', array( 'jquery' ), Flawless_Version, true );
+    // wp_register_script( 'jquery-equalheights', get_bloginfo( 'template_url' ) . '/assets/js/jquery.equalheights.js', array( 'jquery' ), Flawless_Version, true );
+
+    //
+    wp_register_script( 'bootstrap', '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/js/bootstrap.min.js', array( 'jquery' ), '3.0.0', true );
+    wp_register_script( 'knockout', '//cdnjs.cloudflare.com/ajax/libs/knockout/2.3.0/knockout-min.js', array( 'jquery' ), '2.0.0', true );
+    wp_register_script( 'knockout-mapping', '//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.3.5/knockout.mapping.min.js', array( 'jquery', 'knockout' ), '2.3.5', true );
+    wp_register_script( 'knockout-bootstrap', '//cdnjs.cloudflare.com/ajax/libs/knockout-bootstrap/0.2.1/knockout-bootstrap.min.js', array( 'jquery', 'knockout', 'bootstrap' ), '0.2.1', true );
+
+    wp_register_script( 'google-prettify', '//cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.js', array( 'jquery' ), 'r298', true );
+    wp_register_script( 'jquery-lazyload', '////cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.8.4/jquery.lazyload.min.js', array( 'jquery' ), '1.8.4', true );
+    wp_register_script( 'jquery-cookie', '//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.3.1/jquery.cookie.min.js', array( 'jquery' ), '1.3.1', true );
+    wp_register_script( 'jquery-touch-punch', '//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js', array( 'jquery' ), '0.2.2', true );
+    wp_register_script( 'jquery-equalheights', '//cdn.jsdelivr.net/jquery.equalheights/1.3/jquery.equalheights.min.js', array( 'jquery' ), '1.3', true );
+    wp_register_script( 'jquery-placeholder', '//cdn.jsdelivr.net/jquery.placeholder/2.0.7/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7', true );
+    wp_register_script( 'jquery-masonry', '//cdnjs.cloudflare.com/ajax/libs/masonry/3.1.1/masonry.pkgd.js', array( 'jquery' ), '3.1.1', true );
+    wp_register_script( 'jquery-fancybox', '//cdnjs.cloudflare.com/ajax/libs/fancybox/2.0.4/jquery.fancybox.pack.js', array( 'jquery' ), '2.0.4', true );
 
     //** Admin Only Actions */
     add_action( 'admin_menu', array( 'flawless_theme', 'admin_menu' ));
@@ -302,7 +317,7 @@ class flawless_theme extends UD_API {
     wp_register_script( 'flawless-bootstrap-js', flawless_theme::load( 'bootstrap.min.js', 'js' ), array( 'jquery' ), Flawless_Version, true );
 
     //** Bundled jQuery UI Effects.  Individual scripts can be loaded as well, as they are shipped with WordPress */
-    wp_register_script( 'jquery-ui-effects', get_bloginfo( 'template_url' ) . '/ux/js/jquery.ui.effects.min.js', array( 'jquery-ui-core' ), '1.8.17', true );
+    wp_register_script( 'jquery-ui-effects', get_bloginfo( 'template_url' ) . '/assets/js/jquery.ui.effects.min.js', array( 'jquery-ui-core' ), '1.8.17', true );
 
     //** UD jQuery Plugins - for now all unminified */
     wp_register_script( 'jquery-ud-dynamic_filter', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.dynamic_filter/1.1.3/jquery.ud.dynamic_filter.js', array( 'jquery-ui-core' ), '1.1.3', true );
@@ -312,10 +327,10 @@ class flawless_theme extends UD_API {
     wp_register_script( 'jquery-ud-execute_triggers', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.execute_triggers/1.0.1/jquery.ud.execute_triggers.js', array( 'jquery-ui-core' ), '1.0.1', true );
 
     //** Flawless Scripts */
-    wp_register_script( 'flawless', get_bloginfo( 'template_url' ) . '/ux/js/flawless.js', array( 'flawless-bootstrap-js' ), Flawless_Version, true );
-    wp_register_script( 'flawless-frontend', get_bloginfo( 'template_url' ) . '/ux/js/flawless.frontend.js', array( 'flawless', 'jquery-placeholder' ), Flawless_Version, true );
-    wp_register_script( 'flawless-admin-global', get_bloginfo( 'template_url' ) . '/ux/js/flawless.admin.global.js', array( 'flawless' ), Flawless_Version, true );
-    wp_register_script( 'flawless-admin', get_bloginfo( 'template_url' ) . '/ux/js/flawless.admin.js', array( 'flawless', 'flawless-admin-global', 'farbtastic' ), Flawless_Version, true );
+    wp_register_script( 'flawless', get_bloginfo( 'template_url' ) . '/assets/js/flawless.js', array( 'flawless-bootstrap-js' ), Flawless_Version, true );
+    wp_register_script( 'flawless-frontend', get_bloginfo( 'template_url' ) . '/assets/js/flawless.frontend.js', array( 'flawless', 'jquery-placeholder' ), Flawless_Version, true );
+    wp_register_script( 'flawless-admin-global', get_bloginfo( 'template_url' ) . '/assets/js/flawless.admin.global.js', array( 'flawless' ), Flawless_Version, true );
+    wp_register_script( 'flawless-admin', get_bloginfo( 'template_url' ) . '/assets/js/flawless.admin.js', array( 'flawless', 'flawless-admin-global', 'farbtastic' ), Flawless_Version, true );
 
     //** Enqueue front-end assets */
     add_action( 'wp_enqueue_scripts', array( 'flawless_theme', 'wp_enqueue_scripts' ), 100 );
@@ -608,7 +623,7 @@ class flawless_theme extends UD_API {
 
     /* Google Code Pretification - disabled on default */
     if ( $flawless[ 'enable_google_pretify' ] == 'true' ) {
-      wp_enqueue_script( 'google-pretify' );
+      wp_enqueue_script( 'google-prettify' );
     }
 
     /* Lazyload for Images - disabled on default */
@@ -1923,8 +1938,8 @@ class flawless_theme extends UD_API {
 
       //** Look for plugin-specific scripts and load them */
       foreach ( (array) $flawless[ 'asset_directories' ] as $this_directory => $this_url ) {
-        if ( file_exists( $this_directory . '/ux/js/' . $plugin . '.js' ) ) {
-          $asset_url = apply_filters( 'flawless-asset-url', $this_url . '/ux/js/' . $plugin . '.js', $plugin );
+        if ( file_exists( $this_directory . '/assets/js/' . $plugin . '.js' ) ) {
+          $asset_url = apply_filters( 'flawless-asset-url', $this_url . '/assets/js/' . $plugin . '.js', $plugin );
           wp_enqueue_script( 'flawless-asset-' . $plugin, $asset_url, array(), Flawless_Version, true );
           flawless_theme::console_log( sprintf( __( 'JavaScript found for %1s plugin and loaded: %2s.', 'flawless' ), $plugin, $asset_url ));
         }
@@ -2000,8 +2015,9 @@ class flawless_theme extends UD_API {
     }
 
     //** Enqueue Google Pretify */
+    // https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.css
     if ( $flawless[ 'enable_google_pretify' ] == 'true' ) {
-      wp_enqueue_style( 'google-pretify', flawless_theme::load( 'prettify.css', 'css' ), array( 'flawless-style' ), Flawless_Version, 'screen' );
+      wp_enqueue_style( 'google-prettify', flawless_theme::load( 'prettify.css', 'css' ), array( 'flawless-style' ), Flawless_Version, 'screen' );
     }
 
     //** Enqueue Fancybox */
@@ -2010,9 +2026,9 @@ class flawless_theme extends UD_API {
     }
 
     //** Enqueue Maintanance CSS only when in Maintanance Mode */
-    if ( $wp_query->query_vars[ 'splash_screen' ] && flawless_theme::load( 'flawless-maintanance.css', 'css' ) ) {
-      wp_enqueue_style( 'flawless-maintanance', flawless_theme::load( 'flawless-maintanance.css', 'css' ), array( 'flawless-style' ), Flawless_Version );
-    }
+    // if ( $wp_query->query_vars[ 'splash_screen' ] && flawless_theme::load( 'flawless-maintanance.css', 'css' ) ) {
+    //  wp_enqueue_style( 'flawless-maintanance', flawless_theme::load( 'flawless-maintanance.css', 'css' ), array( 'flawless-style' ), Flawless_Version );
+    // }
 
     //** Enqueue CSS for active plugins */
     foreach ( apply_filters( 'flawless::active_plugins', (array)flawless_theme::get_active_plugins() ) as $plugin ) {
@@ -2111,7 +2127,9 @@ class flawless_theme extends UD_API {
 
     if ( $_update_reason ) {
 
-      //** If compiled, enqueue the compiled CSS and remove the compiled styles */
+      /*
+       *
+      // If compiled, enqueue the compiled CSS and remove the compiled styles
       if ( !is_wp_error( $_css_is_compiled = flawless_theme::build_compiled_css( $flawless[ '_compilable_styles' ] ) ) ) {
 
         if ( $_update_reason == 'initial' ) {
@@ -2131,12 +2149,14 @@ class flawless_theme extends UD_API {
         flawless_theme::console_log( sprintf( __( 'CSS Compiling Error: %1s.', 'flawless' ), $_css_is_compiled->get_error_message() ? $_css_is_compiled->get_error_message() : __( 'Unknown Error.' ) ), 'error' );
       }
 
+      */
+
     } else {
       flawless_theme::console_log( sprintf( __( 'CSS Compiling: Compiled file is up to date. ', 'flawless' ) ), 'info' );
     }
 
     //** We don't Enqueue this until now to exclude it from compiling */
-    wp_enqueue_style( 'flawless-compiled-css', $flawless[ 'developer_mode' ] == 'true' ? $flawless[ '_bootstrap_compiled_url' ] : $flawless[ '_bootstrap_compiled_minified_url' ], array(), Flawless_Version, 'screen' );
+    // wp_enqueue_style( 'flawless-compiled-css', $flawless[ 'developer_mode' ] == 'true' ? $flawless[ '_bootstrap_compiled_url' ] : $flawless[ '_bootstrap_compiled_minified_url' ], array(), Flawless_Version, 'screen' );
 
     foreach ( (array) $flawless[ '_compilable_styles' ] as $handle => $style_data ) {
       wp_dequeue_style( $handle );
@@ -4333,7 +4353,7 @@ class flawless_theme extends UD_API {
    * @since Flawless 0.2.3
    * @author potanin@UD
    */
-  function backtrace_sidebar_type() {
+  static function backtrace_sidebar_type() {
 
     $backtrace = debug_backtrace();
 
@@ -4362,7 +4382,7 @@ class flawless_theme extends UD_API {
    * @since Flawless 0.2.0
    *
    */
-  function is_asset_loaded( $handle = false ) {
+  static function is_asset_loaded( $handle = false ) {
     global $wp_scripts;
 
     if ( empty( $handle ) ) {
@@ -4858,15 +4878,15 @@ class flawless_theme extends UD_API {
       switch ( $type ) {
 
         case 'lib':
-          if ( file_exists( $assets_path . '/libs/' . $name . '.php' ) ) {
-            include_once( $assets_path . '/core/libs/' . $name . '.php' );
+          if ( file_exists( $assets_path . '/core/lib/' . $name . '.php' ) ) {
+            include_once( $assets_path . '/core/lib/' . $name . '.php' );
             $return = true;
           }
         break;
 
         case 'less':
-          if ( file_exists( $assets_path . '/ux/less/' . $name ) ) {
-            $return = $args[ 'return' ] == 'path' ? $assets_path . '/ux/less/' . $name : $assets_url . '/ux/less/' . $name;
+          if ( file_exists( $assets_path . '/assets/less/' . $name ) ) {
+            $return = $args[ 'return' ] == 'path' ? $assets_path . '/assets/less/' . $name : $assets_url . '/assets/less/' . $name;
           }
         break;
 
@@ -4878,14 +4898,14 @@ class flawless_theme extends UD_API {
         break;
 
         case 'js':
-          if ( file_exists( $assets_path . '/ux/js/' . $name ) ) {
-            $return = $assets_url . '/ux/js/' . $name;
+          if ( file_exists( $assets_path . '/assets/js/' . $name ) ) {
+            $return = $assets_url . '/assets/js/' . $name;
           }
         break;
 
         case 'css':
-          if ( file_exists( $assets_path . '/ux/css/' . $name ) ) {
-            $return = $assets_url . '/ux/css/' . $name;
+          if ( file_exists( $assets_path . '/assets/css/' . $name ) ) {
+            $return = $assets_url . '/assets/css/' . $name;
           }
         break;
 

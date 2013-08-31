@@ -317,7 +317,7 @@ class flawless_theme extends UD_API {
     wp_register_script( &#x27;jquery-touch-punch&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/jquery.ui.touch-punch.min.js&#x27;, array( &#x27;jquery&#x27; ), &#x27;0.2.2&#x27;, true );
     wp_register_script( &#x27;jquery-fancybox&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/jquery.fancybox.pack.js&#x27;, array( &#x27;jquery&#x27; ), &#x27;2.0.4&#x27;, true );
     wp_register_script( &#x27;jquery-placeholder&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/jquery.placeholder.min.js&#x27;, array( &#x27;jquery&#x27; ), &#x27;2.0.4&#x27;, true );
-    wp_register_script( &#x27;google-pretify&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/google-prettify.js&#x27;, array( &#x27;jquery&#x27; ), Flawless_Version, true );
+    wp_register_script( &#x27;google-prettify&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/google-prettify.js&#x27;, array( &#x27;jquery&#x27; ), Flawless_Version, true );
     wp_register_script( &#x27;jquery-cookie&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/jquery.smookie.js&#x27;, array( &#x27;jquery&#x27; ), Flawless_Version, true );
     wp_register_script( &#x27;jquery-masonry&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/jquery.masonry.min.js&#x27;, array( &#x27;jquery&#x27; ), Flawless_Version, true );
     wp_register_script( &#x27;jquery-equalheights&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/jquery.equalheights.js&#x27;, array( &#x27;jquery&#x27; ), Flawless_Version, true );
@@ -710,7 +710,7 @@ class flawless_theme extends UD_API {
 
     /* Google Code Pretification - disabled on default */
     if ( $flawless[ &#x27;enable_google_pretify&#x27; ] == &#x27;true&#x27; ) {
-      wp_enqueue_script( &#x27;google-pretify&#x27; );
+      wp_enqueue_script( &#x27;google-prettify&#x27; );
     }
 
     /* Lazyload for Images - disabled on default */
@@ -2103,7 +2103,7 @@ class flawless_theme extends UD_API {
 
     //** Enqueue Google Pretify */
     if ( $flawless[ &#x27;enable_google_pretify&#x27; ] == &#x27;true&#x27; ) {
-      wp_enqueue_style( &#x27;google-pretify&#x27;, flawless_theme::load( &#x27;prettify.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version, &#x27;screen&#x27; );
+      wp_enqueue_style( &#x27;google-prettify&#x27;, flawless_theme::load( &#x27;prettify.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version, &#x27;screen&#x27; );
     }
 
     //** Enqueue Fancybox */
