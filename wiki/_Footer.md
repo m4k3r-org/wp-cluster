@@ -1,2 +1,2 @@
-**Links: [NPM](https://npmjs.org) | 
-[Wiki](https://github.com/UsabilityDynamics/veneer)**
+**Links: [WordPress.org](https://wordpress.org) | 
+[Wiki](https://github.com/UsabilityDynamics/flawless)**
