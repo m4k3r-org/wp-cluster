@@ -11,7 +11,7 @@
  *
  */ 
  
-  $this_widget_area = 'wpp_foooter_' . $property['property_type'];
+  $this_widget_area = 'wpp_foooter_' . $property[ 'property_type' ];
  
   if($tabs = flawless_theme::widget_area_tabs($this_widget_area)) { ?>
 

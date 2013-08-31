@@ -16,4 +16,4 @@ if( version_compare( phpversion(), 5.3 ) < 0 ) {
 }
 
 //** Core functionality is in flawless_loader.php. This way older verions of PHP do not crash and burn due to our usage of closures, and other modern methods */
-include_once( untrailingslashit( TEMPLATEPATH ) . '/core-assets/flawless_loader.php' );
+include_once( untrailingslashit( TEMPLATEPATH ) . '/core/flawless.php' );

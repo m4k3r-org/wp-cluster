@@ -1,19 +1,16 @@
 {
   "name": "Flawless",
   "description": "Flawless Theme.",
-  "version": "0.2.4",
+  "version": "0.7.0",
   "url": "http://flawless.io/",
   "logo": false,
   "options": {
-    "extension": ".php",
+    "extension": ".js,.php",
     "tabtospace": 2,
     "outdir": "./documentation",
     "paths": [
-      "./core-assets",
-      "./functions",
-      "./js",
-      "./libs",
-      "./modules"
+      "./core",
+      "./js"
     ]
   }
 }

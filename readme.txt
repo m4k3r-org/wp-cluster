@@ -26,6 +26,8 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 
 == Changelog ==
 = 0.7.0 =
+* Fixed WordPrss 3.6 compatibility bug with detection of current page on admin side.
+* Fixed broken CDN urls.
 * To Do: Fix settings page disabled feature toggle bug.
 * To Do: Refractor Navbar handling by converting Navbar to use AdminBar API.
 * To Do: Finish implementing WP 3.4 customizable thing.
@@ -33,7 +35,7 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 * Changed wp-login.php access prevention override to ?override_wp_login_access=true
 * Migrated get_template_part() into flawless_theme class. 
 * Implemented UD API Distributable version 1.0.0. 
-* Flawless functionality relocated from functions.php into /core-assets/flawless-loader.php to avoid fatal crash on older versions of PHP. 
+* Flawless functionality relocated from functions.php into /core/flawless-loader.php to avoid fatal crash on older versions of PHP.
 * Console Log no longer shows regular log entries unless specifically enabled. Info and Errors are always shown (when in debug mode).
 * Added doing_it_wrong_run monitor that renders messages into console log when in developer mode.
 * flawless_primary_notice_container() is now added via API to flawless::content_container_top action so it's position can be manipulated by plugins.
