@@ -122,10 +122,10 @@ class Flawless_W3TC {
 
   function flawless_init() {
 
-    add_action( &#x27;wp_ajax_flawless_delete_option_clearcache&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;delete_option_clearcache&#x27; ) );
+    add_action( &#x27;wp_ajax_flawless_delete_option_clearcache&#x27;, array( &#x27;Flawless&#x27;, &#x27;delete_option_clearcache&#x27; ) );
 
     //** Add &#x27;Clear W3 Total Cache&#x27; notice */
-    add_action( &#x27;admin_notices&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;show_clear_W3_total_cache_notice&#x27; ) );
+    add_action( &#x27;admin_notices&#x27;, array( &#x27;Flawless&#x27;, &#x27;show_clear_W3_total_cache_notice&#x27; ) );
 
   }
 
@@ -155,10 +155,10 @@ class Flawless_W3TC {
 
       // Checks Flawless Settings Request and Add option
       if ( wp_verify_nonce( $_REQUEST[ &#x27;_wpnonce&#x27; ], &#x27;flawless_settings&#x27; ) ) {
-        add_option( &#x27;flawless_theme_clear_cache_notice&#x27;, &#x27;true&#x27; );
+        add_option( &#x27;Flawless_clear_cache_notice&#x27;, &#x27;true&#x27; );
       }
 
-      $clear_notice = get_option( &#x27;flawless_theme_clear_cache_notice&#x27; );
+      $clear_notice = get_option( &#x27;Flawless_clear_cache_notice&#x27; );
       if ( !empty( $clear_notice ) ) {
         $note = &#x27;&#x27;;
         ob_start();
@@ -197,16 +197,16 @@ class Flawless_W3TC {
       }
     } else {
       // Try to delete option
-      delete_option( &#x27;flawless_theme_clear_cache_notice&#x27; );
+      delete_option( &#x27;Flawless_clear_cache_notice&#x27; );
     }
   }
 
   /*
- * Ajax function. Deletes &#x27;flawless_theme_clear_cache_notice&#x27; option,
+ * Ajax function. Deletes &#x27;Flawless_clear_cache_notice&#x27; option,
  * which is used for showing notice to clear W3 Cache if W3 Total Cache plugin is used.
  */
   static function delete_option_clearcache() {
-    delete_option( &#x27;flawless_theme_clear_cache_notice&#x27; );
+    delete_option( &#x27;Flawless_clear_cache_notice&#x27; );
     echo json_encode( array( &#x27;status&#x27; =&gt; &#x27;success&#x27; ) );
     exit();
   }

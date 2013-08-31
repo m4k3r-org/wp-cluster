@@ -359,11 +359,11 @@ if (!class_exists(&#x27;ud_cfct_module_loop&#x27;) &amp;&amp; class_exists(&#x27
           &lt;?php flawless_page_title( array( &#x27;link&#x27; =&gt; true, &#x27;before&#x27; =&gt; &#x27;&lt;h2 class=&quot;entry-title&quot;&gt;&#x27;, &#x27;after&#x27; =&gt; &#x27;&lt;/h2&gt;&#x27; ) ); ?&gt;
           &lt;?php } ?&gt;
 
-          &lt;?php echo flawless_theme::get_template_part( &#x27;entry-meta-header&#x27;, get_post_format() ); ?&gt;
+          &lt;?php echo Flawless::get_template_part( &#x27;entry-meta-header&#x27;, get_post_format() ); ?&gt;
 
-          &lt;?php echo flawless_theme::get_template_part( &#x27;entry-content&#x27;,  get_post_format() ); ?&gt;
+          &lt;?php echo Flawless::get_template_part( &#x27;entry-content&#x27;,  get_post_format() ); ?&gt;
 
-          &lt;?php echo flawless_theme::get_template_part( &#x27;entry-meta-footer&#x27;, get_post_format() ); ?&gt;
+          &lt;?php echo Flawless::get_template_part( &#x27;entry-meta-footer&#x27;, get_post_format() ); ?&gt;
 
           &lt;/div&gt;
         &lt;/div&gt;

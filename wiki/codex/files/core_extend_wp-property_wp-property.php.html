@@ -120,10 +120,10 @@ class flawless_wpp_extensions {
   /**
    * Highend Loader
    *
-   * @action flawless_theme_setup ( 10 )
+   * @action Flawless_setup ( 10 )
    * @since Flawless 0.2.3
    */
-  static function flawless_theme_setup() {
+  static function Flawless_setup() {
 
     add_action( &#x27;flawless::init_lower&#x27;, array( &#x27;flawless_wpp_extensions&#x27;, &#x27;flawless_init&#x27; ) );
 
@@ -166,21 +166,21 @@ class flawless_wpp_extensions {
       return &#x27;Search Properties&#x27;;
     } );
 
-    flawless_theme::add_post_type_option( array(
+    Flawless::add_post_type_option( array(
       &#x27;post_type&#x27; =&gt; &#x27;property&#x27;,
       &#x27;position&#x27; =&gt; 300,
       &#x27;meta_key&#x27; =&gt; &#x27;hide_default_google_map&#x27;,
       &#x27;label&#x27; =&gt; sprintf( __( &#x27;Hide Location Map.&#x27;, &#x27;flawless&#x27; ) )
     ) );
 
-    flawless_theme::add_post_type_option( array(
+    Flawless::add_post_type_option( array(
       &#x27;post_type&#x27; =&gt; &#x27;property&#x27;,
       &#x27;position&#x27; =&gt; 310,
       &#x27;meta_key&#x27; =&gt; &#x27;hide_property_attributes&#x27;,
       &#x27;label&#x27; =&gt; sprintf( __( &#x27;Hide Attributes.&#x27;, &#x27;flawless&#x27; ) )
     ) );
 
-    flawless_theme::add_post_type_option( array(
+    Flawless::add_post_type_option( array(
       &#x27;post_type&#x27; =&gt; &#x27;property&#x27;,
       &#x27;position&#x27; =&gt; 320,
       &#x27;meta_key&#x27; =&gt; &#x27;hide_property_taxonomies&#x27;,
@@ -259,7 +259,7 @@ class flawless_wpp_extensions {
 
     echo &#x27;&lt;label&gt;&#x27; . __( &#x27;Landing page:&#x27; );
 
-    flawless_theme::wp_dropdown_objects( array(
+    Flawless::wp_dropdown_objects( array(
       &#x27;name&#x27; =&gt; &#x27;wpp_settings[ extra ][ property_type_landing_pages ][ &#x27; . $property_type . &#x27; ]&#x27;,
       &#x27;show_option_none&#x27; =&gt; __( &#x27;&amp;mdash; Select &amp;mdash;&#x27; ),
       &#x27;option_none_value&#x27; =&gt; &#x27;0&#x27;,
@@ -298,7 +298,7 @@ class flawless_wpp_extensions {
 
 }
 
-add_action( &#x27;flawless_theme_setup&#x27;, array( &#x27;flawless_wpp_extensions&#x27;, &#x27;flawless_theme_setup&#x27; ) );
+add_action( &#x27;Flawless_setup&#x27;, array( &#x27;flawless_wpp_extensions&#x27;, &#x27;Flawless_setup&#x27; ) );
 
 
     </pre>

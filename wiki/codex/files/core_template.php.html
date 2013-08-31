@@ -532,7 +532,7 @@ if ( !function_exists( &#x27;flawless_image_link&#x27; ) ) {
       return false;
     }
 
-    $image_sizes = flawless_theme::image_sizes();
+    $image_sizes = Flawless::image_sizes();
 
     $args = wp_parse_args( $args, array(
       &#x27;return&#x27; =&gt; &#x27;string&#x27;,
@@ -900,7 +900,7 @@ if ( !function_exists( &#x27;flawless_breadcrumbs&#x27; ) ) {
         if ( $flawless[ &#x27;post_types&#x27; ][ get_post_type() ][ &#x27;root_page&#x27; ] ) {
           $content_type_home = get_permalink( $flawless[ &#x27;post_types&#x27; ][ get_post_type() ][ &#x27;root_page&#x27; ] );
         } else {
-          $content_type_home = flawless_theme::filter_post_link( $args[ &#x27;home_link&#x27; ] . &#x27;/&#x27; . $slug[ &#x27;slug&#x27; ] . &#x27;/&#x27;, $post );
+          $content_type_home = Flawless::filter_post_link( $args[ &#x27;home_link&#x27; ] . &#x27;/&#x27; . $slug[ &#x27;slug&#x27; ] . &#x27;/&#x27;, $post );
         }
 
         /** Fix &#x27;Pages&#x27; */
@@ -940,7 +940,7 @@ if ( !function_exists( &#x27;flawless_breadcrumbs&#x27; ) ) {
       if ( $flawless[ &#x27;post_types&#x27; ][ get_post_type() ][ &#x27;root_page&#x27; ] ) {
         $content_type_home = get_permalink( $flawless[ &#x27;post_types&#x27; ][ get_post_type() ][ &#x27;root_page&#x27; ] );
       } else {
-        $content_type_home = flawless_theme::filter_post_link( $args[ &#x27;home_link&#x27; ] . &#x27;/&#x27; . $slug[ &#x27;slug&#x27; ] . &#x27;/&#x27;, $post );
+        $content_type_home = Flawless::filter_post_link( $args[ &#x27;home_link&#x27; ] . &#x27;/&#x27; . $slug[ &#x27;slug&#x27; ] . &#x27;/&#x27;, $post );
       }
 
       /** Fix &#x27;Pages&#x27; */

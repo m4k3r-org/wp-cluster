@@ -443,7 +443,7 @@ class flawless_carrington {
     //** Merge Post Callout module ( and thus General styles ) into regular Callout */
     $options[ &#x27;cfct_module_callout&#x27; ] = array_merge( $options[ &#x27;cfct_module_callout&#x27; ], $options[ &#x27;post_callout_module&#x27; ] );
 
-    flawless_theme::console_log( &#x27;P: admin_theme_style_images() for Module Type: &#x27; . $type );
+    Flawless::console_log( &#x27;P: admin_theme_style_images() for Module Type: &#x27; . $type );
 
     //** Return either a specific module style or general */
     $return = ( isset( $options[$type] ) ? $options[$type] : $options[ &#x27;general&#x27; ] );
@@ -657,8 +657,8 @@ class flawless_carrington {
   function wp_print_styles() {
 
     //** Always load bootstrap.css */
-    if( flawless_theme::load( &#x27;carrington.css&#x27;, &#x27;css&#x27; ) ) {
-      wp_enqueue_style( &#x27;flawless-carrington&#x27;, flawless_theme::load( &#x27;carrington.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version, &#x27;screen&#x27; );
+    if( Flawless::load( &#x27;carrington.css&#x27;, &#x27;css&#x27; ) ) {
+      wp_enqueue_style( &#x27;flawless-carrington&#x27;, Flawless::load( &#x27;carrington.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version, &#x27;screen&#x27; );
     }
 
     //* dequeue carrington styles */

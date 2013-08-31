@@ -13,7 +13,7 @@
  
   $this_widget_area = 'wpp_foooter_' . $property[ 'property_type' ];
  
-  if($tabs = flawless_theme::widget_area_tabs($this_widget_area)) { ?>
+  if($tabs = Flawless::widget_area_tabs($this_widget_area)) { ?>
 
     <div class="flawless_widget_area_tabs wpp_property_bottom_area <?php echo (count($tabs) < 2 ? 'no_tabs' : 'have_tabs'); ?>">
     

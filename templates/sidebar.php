@@ -9,9 +9,9 @@
 */
 
   //** Figure out which sidebar this is */
-  $widget_area_type = flawless_theme::backtrace_sidebar_type();
+  $widget_area_type = Flawless::backtrace_sidebar_type();
 
-  $sidebars = flawless_theme::get_current_sidebars( $widget_area_type );
+  $sidebars = Flawless::get_current_sidebars( $widget_area_type );
 
   if( !$sidebars ) {
     return;

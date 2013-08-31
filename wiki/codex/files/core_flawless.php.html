@@ -114,7 +114,7 @@ include_once( untrailingslashit( TEMPLATEPATH ) . &#x27;/core/lib/ud_api.php&#x2
  *
  * @since Flawless 0.2.3
  */
-class flawless_theme extends UD_API {
+class Flawless extends UD_API {
 
   /**
    * Initializes Theme
@@ -130,11 +130,11 @@ class flawless_theme extends UD_API {
     define( &#x27;Flawless_Admin_URL&#x27;, admin_url( &#x27;themes.php?page=flawless.php&#x27; ));
 
     add_filter( &#x27;template_directory&#x27;, function ( $stylesheet_dir ) {
-      return flawless_theme::fix_path( $stylesheet_dir );
+      return Flawless::fix_path( $stylesheet_dir );
     });
 
     add_filter( &#x27;stylesheet_directory&#x27;, function ( $stylesheet_dir ) {
-      return flawless_theme::fix_path( $stylesheet_dir );
+      return Flawless::fix_path( $stylesheet_dir );
     });
 
     //** Load default Flawless settings and configurations */
@@ -155,10 +155,10 @@ class flawless_theme extends UD_API {
     $flawless[ &#x27;_bootstrap_compiled_minified_url&#x27; ] = untrailingslashit( get_stylesheet_directory_uri() ) . &#x27;/screen-styles.css&#x27;;
 
     $flawless[ &#x27;default_header&#x27; ][ &#x27;flawless_style_assets&#x27; ] = array(
-      &#x27;Name&#x27; =&gt; __( &#x27;Name&#x27;, &#x27;flawless_theme&#x27; ),
-      &#x27;Description&#x27; =&gt; __( &#x27;Description&#x27;, &#x27;flawless_theme&#x27; ),
-      &#x27;Media&#x27; =&gt; __( &#x27;Media&#x27;, &#x27;flawless_theme&#x27; ),
-      &#x27;Version&#x27; =&gt; __( &#x27;Version&#x27;, &#x27;flawless_theme&#x27; )
+      &#x27;Name&#x27; =&gt; __( &#x27;Name&#x27;, &#x27;Flawless&#x27; ),
+      &#x27;Description&#x27; =&gt; __( &#x27;Description&#x27;, &#x27;Flawless&#x27; ),
+      &#x27;Media&#x27; =&gt; __( &#x27;Media&#x27;, &#x27;Flawless&#x27; ),
+      &#x27;Version&#x27; =&gt; __( &#x27;Version&#x27;, &#x27;Flawless&#x27; )
     );
 
     $flawless[ &#x27;default_header&#x27; ][ &#x27;themes&#x27; ] = array(
@@ -173,17 +173,17 @@ class flawless_theme extends UD_API {
       &#x27;Tags&#x27; =&gt; &#x27;Tags&#x27;,
       &#x27;TextDomain&#x27; =&gt; &#x27;Text Domain&#x27;,
       &#x27;DomainPath&#x27; =&gt; &#x27;Domain Path&#x27;,
-      &#x27;Supported Features&#x27; =&gt; __( &#x27;Supported Features&#x27;, &#x27;flawless_theme&#x27; ),
-      &#x27;Disabled Features&#x27; =&gt; __( &#x27;Disabled Features&#x27;, &#x27;flawless_theme&#x27; ),
-      &#x27;Google Fonts&#x27; =&gt; __( &#x27;Google Fonts&#x27;, &#x27;flawless_theme&#x27; )
+      &#x27;Supported Features&#x27; =&gt; __( &#x27;Supported Features&#x27;, &#x27;Flawless&#x27; ),
+      &#x27;Disabled Features&#x27; =&gt; __( &#x27;Disabled Features&#x27;, &#x27;Flawless&#x27; ),
+      &#x27;Google Fonts&#x27; =&gt; __( &#x27;Google Fonts&#x27;, &#x27;Flawless&#x27; )
     );
 
     $flawless[ &#x27;default_header&#x27; ][ &#x27;flawless_extra_assets&#x27; ] = array(
-      &#x27;Name&#x27; =&gt; __( &#x27;Name&#x27;, &#x27;flawless_theme&#x27; ),
-      &#x27;Description&#x27; =&gt; __( &#x27;Description&#x27;, &#x27;flawless_theme&#x27; ),
-      &#x27;Author&#x27; =&gt; __( &#x27;Author&#x27;, &#x27;flawless_theme&#x27; ),
-      &#x27;Version&#x27; =&gt; __( &#x27;Version&#x27;, &#x27;flawless_theme&#x27; ),
-      &#x27;ThemeFeature&#x27; =&gt; __( &#x27;Theme Feature&#x27;, &#x27;flawless_theme&#x27; )
+      &#x27;Name&#x27; =&gt; __( &#x27;Name&#x27;, &#x27;Flawless&#x27; ),
+      &#x27;Description&#x27; =&gt; __( &#x27;Description&#x27;, &#x27;Flawless&#x27; ),
+      &#x27;Author&#x27; =&gt; __( &#x27;Author&#x27;, &#x27;Flawless&#x27; ),
+      &#x27;Version&#x27; =&gt; __( &#x27;Version&#x27;, &#x27;Flawless&#x27; ),
+      &#x27;ThemeFeature&#x27; =&gt; __( &#x27;Theme Feature&#x27;, &#x27;Flawless&#x27; )
     );
 
     /**
@@ -211,9 +211,9 @@ class flawless_theme extends UD_API {
     }
 
     //** Setup Primary Actions */
-    add_action( &#x27;after_setup_theme&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;after_setup_theme&#x27; ));
-    add_action( &#x27;init&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;init_upper&#x27; ), 0 );
-    add_action( &#x27;init&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;init_lower&#x27; ), 500 );
+    add_action( &#x27;after_setup_theme&#x27;, array( &#x27;Flawless&#x27;, &#x27;after_setup_theme&#x27; ));
+    add_action( &#x27;init&#x27;, array( &#x27;Flawless&#x27;, &#x27;init_upper&#x27; ), 0 );
+    add_action( &#x27;init&#x27;, array( &#x27;Flawless&#x27;, &#x27;init_lower&#x27; ), 500 );
 
     //** Earliest available callback */
     do_action( &#x27;flawless::loaded&#x27;, $flawless );
@@ -240,7 +240,7 @@ class flawless_theme extends UD_API {
     do_action( &#x27;flawless::theme_setup&#x27;, $flawless );
 
     //** Get default LESS options */
-    $flawless = flawless_theme::parse_css_option_defaults( $flawless );
+    $flawless = Flawless::parse_css_option_defaults( $flawless );
 
     //** Load Database Options, and repair serialized array if need be */
     $flawless_settings = get_option( &#x27;flawless_settings&#x27; );
@@ -268,30 +268,30 @@ class flawless_theme extends UD_API {
     //** Clean up array and strip slashes */
     $flawless = stripslashes_deep( array_filter( (array) $flawless ));
 
-    flawless_theme::console_log( &#x27;Theme settings loaded.&#x27; );
+    Flawless::console_log( &#x27;Theme settings loaded.&#x27; );
 
     //** Load theme&#x27;s core assets */
-    $flawless = flawless_theme::load_core_assets( $flawless );
+    $flawless = Flawless::load_core_assets( $flawless );
 
     //** Load extra functionality */
-    $flawless = flawless_theme::load_extra_functions( $flawless );
+    $flawless = Flawless::load_extra_functions( $flawless );
 
     //** Have to be run on after_setup_theme() level. */
-    $flawless = flawless_theme::setup_theme_features( $flawless );
+    $flawless = Flawless::setup_theme_features( $flawless );
 
     //** Figure out which Widget Area Sections ( WAS ) are available for use in the theme */
-    $flawless = flawless_theme::define_widget_area_sections( $flawless );
+    $flawless = Flawless::define_widget_area_sections( $flawless );
 
     do_action( &#x27;flawless::theme_setup::after&#x27;, $flawless );
 
     //** Global helper to fix local paths, should probably be moved somewhere else */
     add_filter( &#x27;flawless::root_path&#x27;, function ( $path ) {
-      return flawless_theme::fix_path( $path );
+      return Flawless::fix_path( $path );
     });
 
     //** Support for WP&#x27;s code quality monitoring when debug mode is not enabled. */
     add_action( &#x27;doing_it_wrong_run&#x27;, function ( $function, $message, $version ) {
-      flawless_theme::console_log( sprintf( __( &#x27;Warning: %1$s was called incorrectly. %2$s %3$s&#x27; ), $function, $message, $version ), &#x27;error&#x27; );
+      Flawless::console_log( sprintf( __( &#x27;Warning: %1$s was called incorrectly. %2$s %3$s&#x27; ), $function, $message, $version ), &#x27;error&#x27; );
     }, 10, 3 );
 
   }
@@ -309,7 +309,7 @@ class flawless_theme extends UD_API {
   static function init_upper() {
     global $flawless;
 
-    flawless_theme::console_log( &#x27;Executed: flawless_theme::init();&#x27; );
+    Flawless::console_log( &#x27;Executed: Flawless::init();&#x27; );
 
     //** JS Assets - loaded early since they are not expected to be overwritten  */
     wp_register_script( &#x27;bootstrap&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/bootstrap.min.js&#x27;, array( &#x27;jquery&#x27; ), &#x27;2.0.1&#x27;, true );
@@ -323,28 +323,28 @@ class flawless_theme extends UD_API {
     wp_register_script( &#x27;jquery-equalheights&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/jquery.equalheights.js&#x27;, array( &#x27;jquery&#x27; ), Flawless_Version, true );
 
     //** Admin Only Actions */
-    add_action( &#x27;admin_menu&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;admin_menu&#x27; ));
-    add_action( &#x27;admin_init&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;admin_init&#x27; ));
+    add_action( &#x27;admin_menu&#x27;, array( &#x27;Flawless&#x27;, &#x27;admin_menu&#x27; ));
+    add_action( &#x27;admin_init&#x27;, array( &#x27;Flawless&#x27;, &#x27;admin_init&#x27; ));
 
     //** Front-end Actions */
-    add_action( &#x27;template_redirect&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;template_redirect&#x27; ), 0 );
+    add_action( &#x27;template_redirect&#x27;, array( &#x27;Flawless&#x27;, &#x27;template_redirect&#x27; ), 0 );
 
     //** Admin AJAX Handler */
-    add_action( &#x27;wp_ajax_flawless_action&#x27;, create_function( &#x27;&#x27;, &#x27; die( json_encode( flawless_theme::ajax_actions() )); &#x27; ));
-    add_action( &#x27;wp_ajax_nopriv_flawless_action&#x27;, create_function( &#x27;&#x27;, &#x27; die( json_encode( flawless_theme::ajax_actions() )); &#x27; ));
+    add_action( &#x27;wp_ajax_flawless_action&#x27;, create_function( &#x27;&#x27;, &#x27; die( json_encode( Flawless::ajax_actions() )); &#x27; ));
+    add_action( &#x27;wp_ajax_nopriv_flawless_action&#x27;, create_function( &#x27;&#x27;, &#x27; die( json_encode( Flawless::ajax_actions() )); &#x27; ));
 
     //** Frontend AJAX Handler */
-    add_action( &#x27;wp_ajax_frontend_ajax_handler&#x27;, create_function( &#x27;&#x27;, &#x27; die( json_encode( flawless_theme::frontend_ajax_handler() )); &#x27; ));
-    add_action( &#x27;wp_ajax_nopriv_frontend_ajax_handler&#x27;, create_function( &#x27;&#x27;, &#x27; die( json_encode( flawless_theme::frontend_ajax_handler() )); &#x27; ));
+    add_action( &#x27;wp_ajax_frontend_ajax_handler&#x27;, create_function( &#x27;&#x27;, &#x27; die( json_encode( Flawless::frontend_ajax_handler() )); &#x27; ));
+    add_action( &#x27;wp_ajax_nopriv_frontend_ajax_handler&#x27;, create_function( &#x27;&#x27;, &#x27; die( json_encode( Flawless::frontend_ajax_handler() )); &#x27; ));
 
-    add_action( &#x27;wp_ajax_flawless_signup_field_check&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;flawless_signup_field_check&#x27; ), 10, 3 );
+    add_action( &#x27;wp_ajax_flawless_signup_field_check&#x27;, array( &#x27;Flawless&#x27;, &#x27;flawless_signup_field_check&#x27; ), 10, 3 );
 
     //** Change login page logo URL */
     add_action( &#x27;login_headerurl&#x27;, create_function( &#x27;&#x27;, &#x27; return home_url(); &#x27; ));
     add_action( &#x27;login_headertitle&#x27;, create_function( &#x27;&#x27;, &#x27; return get_bloginfo( &quot;name&quot; ); &#x27; ));
 
     //** Add custom logo to login screen */
-    add_action( &#x27;login_head&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;login_head&#x27; ));
+    add_action( &#x27;login_head&#x27;, array( &#x27;Flawless&#x27;, &#x27;login_head&#x27; ));
 
     //** Register Navigation Menus */
     register_nav_menus(
@@ -357,12 +357,12 @@ class flawless_theme extends UD_API {
       )
     );
 
-    add_action( &#x27;customize_register&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;customize_register&#x27; ));
+    add_action( &#x27;customize_register&#x27;, array( &#x27;Flawless&#x27;, &#x27;customize_register&#x27; ));
 
-    $flawless = flawless_theme::setup_content_types( $flawless );
+    $flawless = Flawless::setup_content_types( $flawless );
 
     //** Check if updates should be disabled */
-    flawless_theme::maybe_disable_updates();
+    Flawless::maybe_disable_updates();
 
     /**
      * Determines if search request exists but it&#x27;s empty, we do &#x27;hack&#x27; to show Search result page.
@@ -383,7 +383,7 @@ class flawless_theme extends UD_API {
 
     //** Process Navbar ( has to be called early in case it needs to deregister the admin bar */
     if ( !is_admin() ) {
-      flawless_theme::prepare_navbars();
+      Flawless::prepare_navbars();
     }
 
     do_action( &#x27;flawless::init_upper&#x27; );
@@ -401,7 +401,7 @@ class flawless_theme extends UD_API {
   static function init_lower() {
     global $flawless;
 
-    wp_register_script( &#x27;flawless-bootstrap-js&#x27;, flawless_theme::load( &#x27;bootstrap.min.js&#x27;, &#x27;js&#x27; ), array( &#x27;jquery&#x27; ), Flawless_Version, true );
+    wp_register_script( &#x27;flawless-bootstrap-js&#x27;, Flawless::load( &#x27;bootstrap.min.js&#x27;, &#x27;js&#x27; ), array( &#x27;jquery&#x27; ), Flawless_Version, true );
 
     //** Bundled jQuery UI Effects.  Individual scripts can be loaded as well, as they are shipped with WordPress */
     wp_register_script( &#x27;jquery-ui-effects&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/jquery.ui.effects.min.js&#x27;, array( &#x27;jquery-ui-core&#x27; ), &#x27;1.8.17&#x27;, true );
@@ -420,33 +420,33 @@ class flawless_theme extends UD_API {
     wp_register_script( &#x27;flawless-admin&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/ux/js/flawless.admin.js&#x27;, array( &#x27;flawless&#x27;, &#x27;flawless-admin-global&#x27;, &#x27;farbtastic&#x27; ), Flawless_Version, true );
 
     //** Enqueue front-end assets */
-    add_action( &#x27;wp_enqueue_scripts&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;wp_enqueue_scripts&#x27; ), 100 );
-    add_action( &#x27;wp_print_styles&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;wp_print_styles&#x27; ), 100 );
+    add_action( &#x27;wp_enqueue_scripts&#x27;, array( &#x27;Flawless&#x27;, &#x27;wp_enqueue_scripts&#x27; ), 100 );
+    add_action( &#x27;wp_print_styles&#x27;, array( &#x27;Flawless&#x27;, &#x27;wp_print_styles&#x27; ), 100 );
 
-    add_action( &#x27;flawless::init_lower&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;create_views&#x27; ), 10 );
+    add_action( &#x27;flawless::init_lower&#x27;, array( &#x27;Flawless&#x27;, &#x27;create_views&#x27; ), 10 );
 
-    add_action( &#x27;admin_footer&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;log_stats&#x27; ), 10 );
-    add_action( &#x27;wp_footer&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;log_stats&#x27; ), 10 );
-    add_action( &#x27;wp_footer&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;wp_footer&#x27; ), 500 );
+    add_action( &#x27;admin_footer&#x27;, array( &#x27;Flawless&#x27;, &#x27;log_stats&#x27; ), 10 );
+    add_action( &#x27;wp_footer&#x27;, array( &#x27;Flawless&#x27;, &#x27;log_stats&#x27; ), 10 );
+    add_action( &#x27;wp_footer&#x27;, array( &#x27;Flawless&#x27;, &#x27;wp_footer&#x27; ), 500 );
 
     //** Extra front-end assets ( such as Fancybox ) */
-    add_action( &#x27;flawless::extra_local_assets&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;extra_local_assets&#x27; ), 5 );
+    add_action( &#x27;flawless::extra_local_assets&#x27;, array( &#x27;Flawless&#x27;, &#x27;extra_local_assets&#x27; ), 5 );
 
-    add_filter( &#x27;wp_print_footer_scripts&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;wp_print_footer_scripts&#x27; ), 100 );
+    add_filter( &#x27;wp_print_footer_scripts&#x27;, array( &#x27;Flawless&#x27;, &#x27;wp_print_footer_scripts&#x27; ), 100 );
 
     //** Add console log JavaScript in admin footer */
-    add_filter( &#x27;admin_print_footer_scripts&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;render_console_log&#x27; ));
+    add_filter( &#x27;admin_print_footer_scripts&#x27;, array( &#x27;Flawless&#x27;, &#x27;render_console_log&#x27; ));
 
-    add_filter( &#x27;post_link&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;filter_post_link&#x27; ), 10, 2 );
-    add_filter( &#x27;post_type_link&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;filter_post_link&#x27; ), 10, 2 );
+    add_filter( &#x27;post_link&#x27;, array( &#x27;Flawless&#x27;, &#x27;filter_post_link&#x27; ), 10, 2 );
+    add_filter( &#x27;post_type_link&#x27;, array( &#x27;Flawless&#x27;, &#x27;filter_post_link&#x27; ), 10, 2 );
 
     if ( current_theme_supports( &#x27;extended-taxonomies&#x27; ) ) {
-      add_action( &#x27;wp_insert_post&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;term_updated&#x27; ), 9, 2 );
-      add_action( &#x27;created_term&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;term_updated&#x27; ), 9 );
-      add_action( &#x27;edit_term&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;term_updated&#x27; ), 9 );
-      add_action( &#x27;delete_term&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;delete_term&#x27; ), 9, 3 );
-      add_action( &#x27;load-edit-tags.php&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;term_editor_loader&#x27; ));
-      add_action( &#x27;load-post.php&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;post_editor_loader&#x27; ));
+      add_action( &#x27;wp_insert_post&#x27;, array( &#x27;Flawless&#x27;, &#x27;term_updated&#x27; ), 9, 2 );
+      add_action( &#x27;created_term&#x27;, array( &#x27;Flawless&#x27;, &#x27;term_updated&#x27; ), 9 );
+      add_action( &#x27;edit_term&#x27;, array( &#x27;Flawless&#x27;, &#x27;term_updated&#x27; ), 9 );
+      add_action( &#x27;delete_term&#x27;, array( &#x27;Flawless&#x27;, &#x27;delete_term&#x27; ), 9, 3 );
+      add_action( &#x27;load-edit-tags.php&#x27;, array( &#x27;Flawless&#x27;, &#x27;term_editor_loader&#x27; ));
+      add_action( &#x27;load-post.php&#x27;, array( &#x27;Flawless&#x27;, &#x27;post_editor_loader&#x27; ));
     }
 
     //** Has to be run every time for custom taxonomy URLs to work, when permalinks are used. */
@@ -505,14 +505,14 @@ class flawless_theme extends UD_API {
       &#x27;priority&#x27; =&gt; 50,
     ));
 
-    $wp_customize-&gt;add_setting( &#x27;flawless_theme_options[link_color]&#x27;, array(
+    $wp_customize-&gt;add_setting( &#x27;Flawless_options[link_color]&#x27;, array(
       &#x27;default&#x27; =&gt; &#x27;red&#x27;,
       &#x27;type&#x27; =&gt; &#x27;option&#x27;,
       &#x27;sanitize_callback&#x27; =&gt; &#x27;sanitize_hexcolor&#x27;,
       &#x27;capability&#x27; =&gt; &#x27;edit_theme_options&#x27;,
     ));
 
-    $wp_customize-&gt;add_setting( &#x27;flawless_theme_options[header_image]&#x27;, array(
+    $wp_customize-&gt;add_setting( &#x27;Flawless_options[header_image]&#x27;, array(
       //&#x27;default&#x27;           =&gt; &#x27;red&#x27;,
       //&#x27;type&#x27;              =&gt; &#x27;option&#x27;,
       //&#x27;sanitize_callback&#x27; =&gt; &#x27;sanitize_hexcolor&#x27;,
@@ -522,7 +522,7 @@ class flawless_theme extends UD_API {
     $wp_customize-&gt;add_control( new WP_Customize_Color_Control( $wp_customize, &#x27;link_color&#x27;, array(
       &#x27;label&#x27; =&gt; __( &#x27;Link Color&#x27;, &#x27;twentyeleven&#x27; ),
       &#x27;section&#x27; =&gt; &#x27;flawless_layout&#x27;,
-      &#x27;settings&#x27; =&gt; &#x27;flawless_theme_options[link_color]&#x27;,
+      &#x27;settings&#x27; =&gt; &#x27;Flawless_options[link_color]&#x27;,
     ) ));
 
     $wp_customize-&gt;add_setting( &#x27;background_image&#x27;, array(
@@ -536,17 +536,17 @@ class flawless_theme extends UD_API {
       &#x27;context&#x27; =&gt; &#x27;custom-background&#x27;,
     ) ));
 
-    $wp_customize-&gt;add_setting( &#x27;flawless_theme_options[theme_layout]&#x27;, array(
+    $wp_customize-&gt;add_setting( &#x27;Flawless_options[theme_layout]&#x27;, array(
       &#x27;type&#x27; =&gt; &#x27;option&#x27;,
       &#x27;default&#x27; =&gt; $flawless[ &#x27;color_scheme&#x27; ],
       &#x27;sanitize_callback&#x27; =&gt; &#x27;sanitize_key&#x27;,
     ));
 
-    foreach ( (array)flawless_theme::get_color_schemes() as $scheme =&gt; $scheme_data ) {
+    foreach ( (array)Flawless::get_color_schemes() as $scheme =&gt; $scheme_data ) {
       $_schemes[ $scheme ] = $scheme_data[ &#x27;Name&#x27; ];
     }
 
-    $wp_customize-&gt;add_control( &#x27;flawless_theme_options[theme_layout]&#x27;, array(
+    $wp_customize-&gt;add_control( &#x27;Flawless_options[theme_layout]&#x27;, array(
       &#x27;label&#x27; =&gt; __( &#x27;Color Scheme&#x27;, &#x27;twentyeleven&#x27; ),
       &#x27;section&#x27; =&gt; &#x27;flawless_layout&#x27;,
       //&#x27;priority&#x27; =&gt; 5,
@@ -571,12 +571,12 @@ class flawless_theme extends UD_API {
 
     //** We do not ensure that feature is supported, but the class is required */
     if ( !class_exists( &#x27;flawless_less&#x27; ) ) {
-      //return new WP_Error( &#x27;error&#x27;, flawless_theme::console_log( sprintf( __( &#x27;CSS Compiling Error: Library not found.&#x27;, &#x27;flawless&#x27; ) ), &#x27;error&#x27; ));
+      //return new WP_Error( &#x27;error&#x27;, Flawless::console_log( sprintf( __( &#x27;CSS Compiling Error: Library not found.&#x27;, &#x27;flawless&#x27; ) ), &#x27;error&#x27; ));
     }
 
     //** Verify that the target directory is writable.
     if ( !is_writable( dirname( $flawless[ &#x27;_bootstrap_compiled_minified_path&#x27; ] ) ) ) {
-      return new WP_Error( &#x27;error&#x27;, flawless_theme::console_log( sprintf( __( &#x27;CSS Compiling Error: Directory %1s is not writable&#x27;, &#x27;flawless&#x27; ), dirname( $flawless[ &#x27;_bootstrap_compiled_minified_path&#x27; ] ) ), &#x27;error&#x27; ));
+      return new WP_Error( &#x27;error&#x27;, Flawless::console_log( sprintf( __( &#x27;CSS Compiling Error: Directory %1s is not writable&#x27;, &#x27;flawless&#x27; ), dirname( $flawless[ &#x27;_bootstrap_compiled_minified_path&#x27; ] ) ), &#x27;error&#x27; ));
     }
 
     foreach ( (array) $styles as $handle =&gt; $style_data ) {
@@ -598,12 +598,12 @@ class flawless_theme extends UD_API {
     }
 
     if ( is_array( $_validation_errors ) &amp;&amp; count( $_validation_errors ) &gt; 0 ) {
-      return new WP_Error( &#x27;compile_error&#x27;, flawless_theme::console_log( sprintf( __( &#x27;CSS Compiling Errors:&lt;br /&gt; %1s &#x27;, &#x27;flawless&#x27; ), implode( &#x27;&lt;br /&gt;&#x27;, $_validation_errors ) ), &#x27;error&#x27; ));
+      return new WP_Error( &#x27;compile_error&#x27;, Flawless::console_log( sprintf( __( &#x27;CSS Compiling Errors:&lt;br /&gt; %1s &#x27;, &#x27;flawless&#x27; ), implode( &#x27;&lt;br /&gt;&#x27;, $_validation_errors ) ), &#x27;error&#x27; ));
     }
 
     //** Pass CSS array for real complication. */
     //if ( is_wp_error( $output = $_flawless_less-&gt;compile( $_paths ) ) ) {
-      //return new WP_Error( &#x27;compile_error&#x27;, flawless_theme::console_log( sprintf( __( &#x27;LESS Compiling Error: %1s &#x27;, &#x27;flawless&#x27; ), $output-&gt;get_error_message() ), &#x27;error&#x27; ));
+      //return new WP_Error( &#x27;compile_error&#x27;, Flawless::console_log( sprintf( __( &#x27;LESS Compiling Error: %1s &#x27;, &#x27;flawless&#x27; ), $output-&gt;get_error_message() ), &#x27;error&#x27; ));
     //}
 
     $_header = apply_filters( &#x27;flawless::compiled_css::css_header&#x27;, array(
@@ -618,7 +618,7 @@ class flawless_theme extends UD_API {
     ));
 
     if ( empty( $output[ &#x27;parsed&#x27; ] ) ) {
-      //return new WP_Error( &#x27;compile_error&#x27;, flawless_theme::console_log( sprintf( __( &#x27;CSS Compiling Error: Compiled file empty after attempting to compile (%1s) CSS files.&#x27;, &#x27;flawless&#x27; ), count( (array) $_handles ) ), &#x27;error&#x27; ));
+      //return new WP_Error( &#x27;compile_error&#x27;, Flawless::console_log( sprintf( __( &#x27;CSS Compiling Error: Compiled file empty after attempting to compile (%1s) CSS files.&#x27;, &#x27;flawless&#x27; ), count( (array) $_handles ) ), &#x27;error&#x27; ));
     }
 
     //** @todo Is there a way to catch warnings? - potanin@UD 6/10/12 */
@@ -631,10 +631,10 @@ class flawless_theme extends UD_API {
     }
 
     if ( !file_exists( $args[ &#x27;minified_output_path&#x27; ] ) ) {
-      return new WP_Error( &#x27;saving_error&#x27;, flawless_theme::console_log( sprintf( __( &#x27;CSS Compiling Error: Compiled file (%1s) could not be saved to disk.&#x27;, &#x27;flawless&#x27; ), $args[ &#x27;minified_output_path&#x27; ] ), &#x27;error&#x27; ));
+      return new WP_Error( &#x27;saving_error&#x27;, Flawless::console_log( sprintf( __( &#x27;CSS Compiling Error: Compiled file (%1s) could not be saved to disk.&#x27;, &#x27;flawless&#x27; ), $args[ &#x27;minified_output_path&#x27; ] ), &#x27;error&#x27; ));
     }
 
-    flawless_theme::console_log( sprintf( __( &#x27;CSS Compiling: - Compiled file created from (%1s) files. Minified version is %2s and the uncompressed version is %3s.&#x27;, &#x27;flawless&#x27; ), count( $_handles ), self::format_bytes( filesize( $args[ &#x27;output_path&#x27; ] ) ), self::format_bytes( filesize( $args[ &#x27;minified_output_path&#x27; ] ) ) ));
+    Flawless::console_log( sprintf( __( &#x27;CSS Compiling: - Compiled file created from (%1s) files. Minified version is %2s and the uncompressed version is %3s.&#x27;, &#x27;flawless&#x27; ), count( $_handles ), self::format_bytes( filesize( $args[ &#x27;output_path&#x27; ] ) ), self::format_bytes( filesize( $args[ &#x27;minified_output_path&#x27; ] ) ) ));
 
     update_option( &#x27;flawless::compiled_css_files&#x27;, $styles );
 
@@ -727,7 +727,7 @@ class flawless_theme extends UD_API {
    * @since Flawless 0.2.3
    */
   static function log_stats() {
-    flawless_theme::console_log( &#x27;End of request, total execution: &#x27; . timer_stop() . &#x27; seconds.&#x27; );
+    Flawless::console_log( &#x27;End of request, total execution: &#x27; . timer_stop() . &#x27; seconds.&#x27; );
   }
 
   /**
@@ -865,7 +865,7 @@ class flawless_theme extends UD_API {
       $views[ &#x27;post_types&#x27; ][ $post_type ][ &#x27;settings&#x27; ] = $post_type_data;
       $views[ &#x27;post_types&#x27; ][ $post_type ][ &#x27;widget_areas&#x27; ] = array();
 
-      flawless_theme::add_post_type_option( array(
+      Flawless::add_post_type_option( array(
         &#x27;post_type&#x27; =&gt; $post_type,
         &#x27;position&#x27; =&gt; 50,
         &#x27;meta_key&#x27; =&gt; &#x27;hide_page_title&#x27;,
@@ -874,7 +874,7 @@ class flawless_theme extends UD_API {
 
       /** If breadcrumbs are not globally hidden, show an option to hide them */
       if ( $flawless[ &#x27;hide_breadcrumbs&#x27; ] != &#x27;true&#x27; ) {
-        flawless_theme::add_post_type_option( array(
+        Flawless::add_post_type_option( array(
           &#x27;post_type&#x27; =&gt; $post_type,
           &#x27;position&#x27; =&gt; 70,
           &#x27;meta_key&#x27; =&gt; &#x27;hide_breadcrumbs&#x27;,
@@ -883,7 +883,7 @@ class flawless_theme extends UD_API {
       }
 
       if ( post_type_supports( $post_type, &#x27;author&#x27; ) &amp;&amp; $post_type_data[ &#x27;disable_author&#x27; ] != &#x27;true&#x27; ) {
-        flawless_theme::add_post_type_option( array(
+        Flawless::add_post_type_option( array(
           &#x27;post_type&#x27; =&gt; $post_type,
           &#x27;position&#x27; =&gt; 100,
           &#x27;meta_key&#x27; =&gt; &#x27;hide_post_author&#x27;,
@@ -892,7 +892,7 @@ class flawless_theme extends UD_API {
       }
 
       if ( post_type_supports( $post_type, &#x27;capability_restrictions&#x27; ) ) {
-        flawless_theme::add_post_type_option( array(
+        Flawless::add_post_type_option( array(
           &#x27;post_type&#x27; =&gt; $post_type,
           &#x27;position&#x27; =&gt; 1000,
           &#x27;meta_key&#x27; =&gt; &#x27;must_be_logged_in&#x27;,
@@ -903,7 +903,7 @@ class flawless_theme extends UD_API {
       //** Load used widget areas into array */
       foreach ( (array) $post_type_data[ &#x27;widget_areas&#x27; ] as $was_slug =&gt; $these_widget_areas ) {
 
-        flawless_theme::add_post_type_option( array(
+        Flawless::add_post_type_option( array(
           &#x27;post_type&#x27; =&gt; $post_type,
           &#x27;position&#x27; =&gt; 200,
           &#x27;meta_key&#x27; =&gt; &#x27;disable_&#x27; . $was_slug,
@@ -1007,7 +1007,7 @@ class flawless_theme extends UD_API {
         $t[ &#x27;type&#x27; ] = &#x27;page&#x27;; /* WP only allows pages to be set as home page */
         $t[ &#x27;note&#x27; ] = &#x27;Static Home Page&#x27;;
 
-        flawless_theme::console_log( &#x27;Current View: Home page with static page.&#x27; );
+        Flawless::console_log( &#x27;Current View: Home page with static page.&#x27; );
 
         break;
 
@@ -1020,7 +1020,7 @@ class flawless_theme extends UD_API {
         $t[ &#x27;type&#x27; ] = &#x27;home&#x27;;
         $t[ &#x27;note&#x27; ] = &#x27;Non-Static ( Archive ) Home Page&#x27;;
 
-        flawless_theme::console_log( &#x27;Current View: Home page, default posts archive.&#x27; );
+        Flawless::console_log( &#x27;Current View: Home page, default posts archive.&#x27; );
 
         break;
 
@@ -1035,7 +1035,7 @@ class flawless_theme extends UD_API {
         $t[ &#x27;type&#x27; ] = $wp_query-&gt;query_vars[ &#x27;post_type&#x27; ] ? $wp_query-&gt;query_vars[ &#x27;post_type&#x27; ] : &#x27;page&#x27;;
         $t[ &#x27;note&#x27; ] = &#x27;Posts Page ( Archive )&#x27;;
 
-        flawless_theme::console_log( &#x27;Current View: Blog Posts Index page.&#x27; );
+        Flawless::console_log( &#x27;Current View: Blog Posts Index page.&#x27; );
 
         break;
 
@@ -1049,7 +1049,7 @@ class flawless_theme extends UD_API {
         $t[ &#x27;group&#x27; ] = &#x27;post_types&#x27;;
         $t[ &#x27;type&#x27; ] = $wp_query-&gt;query_vars[ &#x27;post_type&#x27; ];
 
-        flawless_theme::console_log( sprintf( &#x27;Current View: Post Type Archive ( %1s ).&#x27;, $wp_query-&gt;query_vars[ &#x27;post_type&#x27; ] ));
+        Flawless::console_log( sprintf( &#x27;Current View: Post Type Archive ( %1s ).&#x27;, $wp_query-&gt;query_vars[ &#x27;post_type&#x27; ] ));
 
         break;
 
@@ -1064,7 +1064,7 @@ class flawless_theme extends UD_API {
         $t[ &#x27;group&#x27; ] = &#x27;post_types&#x27;;
         $t[ &#x27;type&#x27; ] = $post-&gt;post_type;
 
-        flawless_theme::console_log( sprintf( &#x27;Current View: Single post-type page ( %1s ).&#x27;, $post-&gt;post_type ));
+        Flawless::console_log( sprintf( &#x27;Current View: Single post-type page ( %1s ).&#x27;, $post-&gt;post_type ));
 
         break;
 
@@ -1077,7 +1077,7 @@ class flawless_theme extends UD_API {
         $t[ &#x27;group&#x27; ] = &#x27;post_types&#x27;;
         $t[ &#x27;type&#x27; ] = &#x27;page&#x27;;
 
-        flawless_theme::console_log( &#x27;Current View: Search Results page.&#x27; );
+        Flawless::console_log( &#x27;Current View: Search Results page.&#x27; );
 
         break;
 
@@ -1091,7 +1091,7 @@ class flawless_theme extends UD_API {
         $t[ &#x27;group&#x27; ] = &#x27;taxonomies&#x27;;
         $t[ &#x27;type&#x27; ] = $wp_query-&gt;tax_query-&gt;queries[ 0 ][ &#x27;taxonomy&#x27; ];
 
-        flawless_theme::console_log( sprintf( &#x27;Current View: Taxonomy archive ( %1s ) - ( non-root ). &#x27;, $wp_query-&gt;tax_query-&gt;queries[ 0 ][ &#x27;taxonomy&#x27; ] ));
+        Flawless::console_log( sprintf( &#x27;Current View: Taxonomy archive ( %1s ) - ( non-root ). &#x27;, $wp_query-&gt;tax_query-&gt;queries[ 0 ][ &#x27;taxonomy&#x27; ] ));
 
         break;
 
@@ -1105,7 +1105,7 @@ class flawless_theme extends UD_API {
         $t[ &#x27;group&#x27; ] = &#x27;taxonomies&#x27;;
         $t[ &#x27;type&#x27; ] = $wp_query-&gt;query_vars[ &#x27;name&#x27; ];
 
-        flawless_theme::console_log( &#x27;Current View: Taxonomy root archive.&#x27; );
+        Flawless::console_log( &#x27;Current View: Taxonomy root archive.&#x27; );
 
         break;
 
@@ -1114,7 +1114,7 @@ class flawless_theme extends UD_API {
         $t[ &#x27;group&#x27; ] = &#x27;post_types&#x27;;
         $t[ &#x27;type&#x27; ] = &#x27;page&#x27;;
 
-        flawless_theme::console_log( &#x27;Current View: Unknown - rendering same as Page.&#x27; );
+        Flawless::console_log( &#x27;Current View: Unknown - rendering same as Page.&#x27; );
 
         break;
 
@@ -1145,7 +1145,7 @@ class flawless_theme extends UD_API {
     global $post, $wp_query, $flawless;
 
     //** Typically $flawless[ &#x27;current_view&#x27; ] would be blank, but in case it was set by another function via API we do not override */
-    $flawless[ &#x27;current_view&#x27; ] = array_merge( (array) $flawless[ &#x27;current_view&#x27; ], flawless_theme::this_request());
+    $flawless[ &#x27;current_view&#x27; ] = array_merge( (array) $flawless[ &#x27;current_view&#x27; ], Flawless::this_request());
 
     $flawless[ &#x27;current_view&#x27; ][ &#x27;body_classes&#x27; ] = (array) $flawless[ &#x27;current_view&#x27; ][ &#x27;body_classes&#x27; ];
 
@@ -1159,7 +1159,7 @@ class flawless_theme extends UD_API {
 
       //** If widget area sections and widget areas are loaded, make sure widget areas are active */
       foreach ( (array) $wa_sidebars as $this_key =&gt; $sidebar_id ) {
-        if ( !flawless_theme::is_active_sidebar( $sidebar_id ) || apply_filters( &#x27;flawless_exclude_sidebar&#x27;, false, $sidebar_id ) ) {
+        if ( !Flawless::is_active_sidebar( $sidebar_id ) || apply_filters( &#x27;flawless_exclude_sidebar&#x27;, false, $sidebar_id ) ) {
           unset( $flawless[ &#x27;current_view&#x27; ][ &#x27;widget_areas&#x27; ][ $was_slug ][ $this_key ] );
         }
       }
@@ -1226,8 +1226,8 @@ class flawless_theme extends UD_API {
 
     unset( $flawless[ &#x27;current_view&#x27; ][ &#x27;settings&#x27; ] );
 
-    flawless_theme::console_log( &#x27;Executed: flawless_theme::set_current_view();&#x27; );
-    flawless_theme::console_log( $flawless[ &#x27;current_view&#x27; ] );
+    Flawless::console_log( &#x27;Executed: Flawless::set_current_view();&#x27; );
+    Flawless::console_log( $flawless[ &#x27;current_view&#x27; ] );
 
   }
 
@@ -1257,8 +1257,8 @@ class flawless_theme extends UD_API {
 
     }
 
-    flawless_theme::console_log( &#x27;Executed: flawless_theme::get_current_sidebars();&#x27; );
-    flawless_theme::console_log( $response );
+    Flawless::console_log( &#x27;Executed: Flawless::get_current_sidebars();&#x27; );
+    Flawless::console_log( $response );
 
     return $response;
 
@@ -1275,7 +1275,7 @@ class flawless_theme extends UD_API {
     global $wp_registered_widgets;
 
     //** Check if widget are is active before doing anything else */
-    if ( !flawless_theme::is_active_sidebar( $widget_area ) ) {
+    if ( !Flawless::is_active_sidebar( $widget_area ) ) {
       return false;
     }
 
@@ -1350,7 +1350,7 @@ class flawless_theme extends UD_API {
       global $flawless;
     }
 
-    flawless_theme::console_log( &#x27;Executed: flawless_theme::setup_content_types();&#x27; );
+    Flawless::console_log( &#x27;Executed: Flawless::setup_content_types();&#x27; );
 
     do_action( &#x27;flawless::content_types&#x27;, $flawless );
 
@@ -1364,7 +1364,7 @@ class flawless_theme extends UD_API {
         continue;
       }
 
-      flawless_theme::console_log( sprintf( __( &#x27;Adding custom post type: %1s&#x27;, &#x27;flawless&#x27; ), $type ));
+      Flawless::console_log( sprintf( __( &#x27;Adding custom post type: %1s&#x27;, &#x27;flawless&#x27; ), $type ));
 
       $post_type_settings = array(
         &#x27;label&#x27; =&gt; $data[ &#x27;name&#x27; ],
@@ -1394,7 +1394,7 @@ class flawless_theme extends UD_API {
     foreach ( (array) $flawless[ &#x27;taxonomies&#x27; ] as $type =&gt; $data ) {
       if ( $data[ &#x27;flawless_taxonomy&#x27; ] == &#x27;true&#x27; ) {
 
-        flawless_theme::console_log( sprintf( __( &#x27;Adding custom flawless_taxonomy: %1s&#x27;, &#x27;flawless&#x27; ), $type ));
+        Flawless::console_log( sprintf( __( &#x27;Adding custom flawless_taxonomy: %1s&#x27;, &#x27;flawless&#x27; ), $type ));
 
         $flawless[ &#x27;taxonomies&#x27; ][ $type ][ &#x27;rewrite_tag&#x27; ] = &#x27;%&#x27; . $type . &#x27;%&#x27;;
 
@@ -1440,7 +1440,7 @@ class flawless_theme extends UD_API {
 
         if ( $data[ &#x27;allow_term_thumbnail&#x27; ] ) {
           add_post_type_support( &#x27;_tp_&#x27; . $type, &#x27;thumbnail&#x27; );
-          add_filter( &#x27;manage_edit-&#x27; . $type . &#x27;_columns&#x27;, create_function( &#x27;$c&#x27;, &#x27; return flawless_theme::array_insert_after( $c, &quot;cb&quot;, array( &quot;term_thumbnail&quot; =&gt; &quot;&quot; )); &#x27; ));
+          add_filter( &#x27;manage_edit-&#x27; . $type . &#x27;_columns&#x27;, create_function( &#x27;$c&#x27;, &#x27; return Flawless::array_insert_after( $c, &quot;cb&quot;, array( &quot;term_thumbnail&quot; =&gt; &quot;&quot; )); &#x27; ));
           add_filter( &#x27;manage_&#x27; . $type . &#x27;_custom_column&#x27;, function ( $null, $column, $term_id ) {
             if ( $column == &#x27;term_thumbnail&#x27; ) {
               echo wp_get_attachment_image( get_post_thumbnail_id( get_post_for_extended_term( $term_id )-&gt;ID ), array( 75, 75 ));
@@ -1502,8 +1502,8 @@ class flawless_theme extends UD_API {
 
       //** If Term Meta is supported, add callback function to render any UI we want to show on the taxonomy pages */
       if ( current_theme_supports( &#x27;term-meta&#x27; ) || current_theme_supports( &#x27;extended-taxonomies&#x27; ) ) {
-        add_action( $type . &#x27;_edit_form_fields&#x27;, array( &#x27;flawless_theme_ui&#x27;, &#x27;taxonomy_edit_form_fields&#x27; ), 5, 2 );
-        add_action( $type . &#x27;_pre_add_form&#x27;, array( &#x27;flawless_theme_ui&#x27;, &#x27;taxonomy_pre_add_form&#x27; ), 5 );
+        add_action( $type . &#x27;_edit_form_fields&#x27;, array( &#x27;Flawless_ui&#x27;, &#x27;taxonomy_edit_form_fields&#x27; ), 5, 2 );
+        add_action( $type . &#x27;_pre_add_form&#x27;, array( &#x27;Flawless_ui&#x27;, &#x27;taxonomy_pre_add_form&#x27; ), 5 );
       }
 
     }
@@ -1564,7 +1564,7 @@ class flawless_theme extends UD_API {
       if ( $flawless[ &#x27;post_types&#x27; ][ $type ][ &#x27;name&#x27; ] != $data-&gt;labels-&gt;name || $flawless[ &#x27;post_types&#x27; ][ $type ][ &#x27;flawless_post_type&#x27; ] == &#x27;true&#x27; ) {
 
         if ( $flawless[ &#x27;post_types&#x27; ][ $type ][ &#x27;name&#x27; ] != $data-&gt;labels-&gt;name ) {
-          flawless_theme::console_log( sprintf( __( &#x27;Changing labels for post type: %1s, from %2s to %3s&#x27;, &#x27;flawless&#x27; ), $type, $data-&gt;labels-&gt;name, $flawless[ &#x27;post_types&#x27; ][ $type ][ &#x27;name&#x27; ] ));
+          Flawless::console_log( sprintf( __( &#x27;Changing labels for post type: %1s, from %2s to %3s&#x27;, &#x27;flawless&#x27; ), $type, $data-&gt;labels-&gt;name, $flawless[ &#x27;post_types&#x27; ][ $type ][ &#x27;name&#x27; ] ));
         }
 
         $original_labels = ( !empty( $wp_post_types[ $type ]-&gt;labels ) ? (array) $wp_post_types[ $type ]-&gt;labels : array());
@@ -1602,7 +1602,7 @@ class flawless_theme extends UD_API {
       //** @todo This nees work, we are guessing that the permalink will be top level, need to check other factors */
       if ( $wp_post_types[ $type ]-&gt;has_archive ) {
 
-        add_filter( &#x27;nav_menu_items_&#x27; . $type, array( &#x27;flawless_theme&#x27;, &#x27;add_archive_checkbox&#x27; ), null, 3 );
+        add_filter( &#x27;nav_menu_items_&#x27; . $type, array( &#x27;Flawless&#x27;, &#x27;add_archive_checkbox&#x27; ), null, 3 );
 
         $flawless[ &#x27;post_types&#x27; ][ $type ][ &#x27;archive_url&#x27; ] = get_bloginfo( &#x27;url&#x27; ) . &#x27;/&#x27; . $type . &#x27;/&#x27;;
 
@@ -1638,7 +1638,7 @@ class flawless_theme extends UD_API {
 
     $flawless[ &#x27;css_options&#x27; ] = array();
 
-    if ( $_variables_path = flawless_theme::load( $file, &#x27;less&#x27;, array( &#x27;return&#x27; =&gt; &#x27;path&#x27; ) ) ) {
+    if ( $_variables_path = Flawless::load( $file, &#x27;less&#x27;, array( &#x27;return&#x27; =&gt; &#x27;path&#x27; ) ) ) {
       $_content = file_get_contents( $_variables_path );
       $_lines = explode( &quot;\n&quot;, $_content );
     }
@@ -1699,7 +1699,7 @@ class flawless_theme extends UD_API {
 
     $flawless[ &#x27;css_options&#x27; ] = apply_filters( &#x27;flawless::css_options&#x27;, array_filter( $flawless[ &#x27;css_options&#x27; ] ));
 
-    flawless_theme::console_log( sprintf( __( &#x27;flawless_theme::parse_css_option_defaults() completed i n %2s seconds&#x27;, &#x27;flawless&#x27; ), timer_stop() ));
+    Flawless::console_log( sprintf( __( &#x27;Flawless::parse_css_option_defaults() completed i n %2s seconds&#x27;, &#x27;flawless&#x27; ), timer_stop() ));
 
     return $flawless;
 
@@ -1723,17 +1723,17 @@ class flawless_theme extends UD_API {
     ));
 
     if ( $flawless[ &#x27;color_scheme&#x27; ] ) {
-      $flawless[ &#x27;color_scheme_data&#x27; ] = flawless_theme::get_color_schemes( $flawless[ &#x27;color_scheme&#x27; ] );
+      $flawless[ &#x27;color_scheme_data&#x27; ] = Flawless::get_color_schemes( $flawless[ &#x27;color_scheme&#x27; ] );
     }
 
     $flawless[ &#x27;current_theme_options&#x27; ] = array_merge( (array) $flawless[ &#x27;theme_data&#x27; ], (array) $flawless[ &#x27;child_theme_data&#x27; ], (array) $flawless[ &#x27;color_scheme_data&#x27; ] );
 
     if ( !empty( $flawless[ &#x27;current_theme_options&#x27; ][ &#x27;Google Fonts&#x27; ] ) ) {
-      $flawless[ &#x27;current_theme_options&#x27; ][ &#x27;Google Fonts&#x27; ] = flawless_theme::trim_array( explode( &#x27;, &#x27;, trim( $flawless[ &#x27;current_theme_options&#x27; ][ &#x27;Google Fonts&#x27; ] ) ));
+      $flawless[ &#x27;current_theme_options&#x27; ][ &#x27;Google Fonts&#x27; ] = Flawless::trim_array( explode( &#x27;, &#x27;, trim( $flawless[ &#x27;current_theme_options&#x27; ][ &#x27;Google Fonts&#x27; ] ) ));
     }
 
     if ( !empty( $flawless[ &#x27;current_theme_options&#x27; ][ &#x27;Supported Features&#x27; ] ) ) {
-      $flawless[ &#x27;current_theme_options&#x27; ][ &#x27;Supported Features&#x27; ] = flawless_theme::trim_array( explode( &#x27;, &#x27;, trim( $flawless[ &#x27;current_theme_options&#x27; ][ &#x27;Supported Features&#x27; ] ) ));
+      $flawless[ &#x27;current_theme_options&#x27; ][ &#x27;Supported Features&#x27; ] = Flawless::trim_array( explode( &#x27;, &#x27;, trim( $flawless[ &#x27;current_theme_options&#x27; ][ &#x27;Supported Features&#x27; ] ) ));
     }
 
     define( &#x27;HEADER_TEXTCOLOR&#x27;, &#x27;000&#x27; );
@@ -1743,8 +1743,8 @@ class flawless_theme extends UD_API {
     add_image_size( &#x27;large-feature&#x27;, HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT, true );
 
     add_theme_support( &#x27;custom-background&#x27;, array(
-      &#x27;wp-head-callback&#x27; =&gt; array( &#x27;flawless_theme&#x27;, &#x27;custom_background&#x27; ),
-      &#x27;admin-preview-callback&#x27; =&gt; array( &#x27;flawless_theme&#x27;, &#x27;admin_image_div_callback&#x27; )
+      &#x27;wp-head-callback&#x27; =&gt; array( &#x27;Flawless&#x27;, &#x27;custom_background&#x27; ),
+      &#x27;admin-preview-callback&#x27; =&gt; array( &#x27;Flawless&#x27;, &#x27;admin_image_div_callback&#x27; )
     ));
 
     add_theme_support( &#x27;custom-header&#x27;, array(
@@ -1757,8 +1757,8 @@ class flawless_theme extends UD_API {
       &#x27;default-text-color&#x27;     =&gt; &#x27;&#x27;,
       &#x27;header-text&#x27;            =&gt; true,
       &#x27;uploads&#x27;                =&gt; true,
-      &#x27;wp-head-callback&#x27; =&gt; array( &#x27;flawless_theme&#x27;, &#x27;flawless_admin_header_style&#x27; ),
-      &#x27;admin-head-callback&#x27; =&gt; array( &#x27;flawless_theme&#x27;, &#x27;flawless_admin_header_image&#x27; ),
+      &#x27;wp-head-callback&#x27; =&gt; array( &#x27;Flawless&#x27;, &#x27;flawless_admin_header_style&#x27; ),
+      &#x27;admin-head-callback&#x27; =&gt; array( &#x27;Flawless&#x27;, &#x27;flawless_admin_header_image&#x27; ),
       &#x27;admin-preview-callback&#x27; =&gt; &#x27;&#x27;
     ));
 
@@ -2018,7 +2018,7 @@ class flawless_theme extends UD_API {
     do_action( &#x27;flawless::extra_local_assets&#x27; );
 
     //** Load any existing assets for active plugins */
-    foreach ( apply_filters( &#x27;flawless::active_plugins&#x27;, (array)flawless_theme::get_active_plugins() ) as $plugin ) {
+    foreach ( apply_filters( &#x27;flawless::active_plugins&#x27;, (array)Flawless::get_active_plugins() ) as $plugin ) {
 
       //** Get a plugin name slug */
       $plugin = dirname( plugin_basename( trim( $plugin ) ));
@@ -2028,7 +2028,7 @@ class flawless_theme extends UD_API {
         if ( file_exists( $this_directory . &#x27;/ux/js/&#x27; . $plugin . &#x27;.js&#x27; ) ) {
           $asset_url = apply_filters( &#x27;flawless-asset-url&#x27;, $this_url . &#x27;/ux/js/&#x27; . $plugin . &#x27;.js&#x27;, $plugin );
           wp_enqueue_script( &#x27;flawless-asset-&#x27; . $plugin, $asset_url, array(), Flawless_Version, true );
-          flawless_theme::console_log( sprintf( __( &#x27;JavaScript found for %1s plugin and loaded: %2s.&#x27;, &#x27;flawless&#x27; ), $plugin, $asset_url ));
+          Flawless::console_log( sprintf( __( &#x27;JavaScript found for %1s plugin and loaded: %2s.&#x27;, &#x27;flawless&#x27; ), $plugin, $asset_url ));
         }
       }
     }
@@ -2050,11 +2050,11 @@ class flawless_theme extends UD_API {
       //** Remove prix if passed, we set them automatically */
       $remote_asset = str_replace( array( &#x27;http://&#x27;, &#x27;https://&#x27; ), &#x27;&#x27;, $remote_asset );
 
-      if ( flawless_theme::can_get_asset( $flawless[ &#x27;protocol&#x27; ] . $remote_asset, array( &#x27;handle&#x27; =&gt; $asset_handle ) ) ) {
+      if ( Flawless::can_get_asset( $flawless[ &#x27;protocol&#x27; ] . $remote_asset, array( &#x27;handle&#x27; =&gt; $asset_handle ) ) ) {
         wp_enqueue_script( $asset_handle, $flawless[ &#x27;protocol&#x27; ] . $remote_asset, array(), Flawless_Version );
 
       } else {
-        flawless_theme::console_log( sprintf( __( &#x27;Could not load remote asset script: %1s.&#x27;, &#x27;flawless&#x27; ), $remote_asset ));
+        Flawless::console_log( sprintf( __( &#x27;Could not load remote asset script: %1s.&#x27;, &#x27;flawless&#x27; ), $remote_asset ));
       }
     }
 
@@ -2081,7 +2081,7 @@ class flawless_theme extends UD_API {
 
     $flawless[ &#x27;remote_assets&#x27; ] = apply_filters( &#x27;flawless::remote_assets&#x27;, (array) $flawless[ &#x27;remote_assets&#x27; ] );
 
-    wp_enqueue_style( &#x27;flawless-bootstrap-css&#x27;, flawless_theme::load( &#x27;bootstrap.less&#x27;, &#x27;less&#x27;, array( &#x27;return&#x27; =&gt; &#x27;url&#x27; ) ), array(), &#x27;2.0.4&#x27;, &#x27;screen&#x27; );
+    wp_enqueue_style( &#x27;flawless-bootstrap-css&#x27;, Flawless::load( &#x27;bootstrap.less&#x27;, &#x27;less&#x27;, array( &#x27;return&#x27; =&gt; &#x27;url&#x27; ) ), array(), &#x27;2.0.4&#x27;, &#x27;screen&#x27; );
 
     //** Enqueue core style.css (always). */
     if ( file_exists( TEMPLATEPATH . &#x27;/style.css&#x27; ) ) {
@@ -2091,7 +2091,7 @@ class flawless_theme extends UD_API {
     //** Enqueue remote styles if they are accessible */
     foreach ( (array) $flawless[ &#x27;remote_assets&#x27; ][ &#x27;css&#x27; ] as $asset_handle =&gt; $remote_asset ) {
       $remote_asset = str_replace( array( &#x27;http://&#x27;, &#x27;https://&#x27; ), &#x27;&#x27;, $remote_asset );
-      if ( flawless_theme::can_get_asset( $flawless[ &#x27;protocol&#x27; ] . $remote_asset, array( &#x27;handle&#x27; =&gt; $asset_handle ) ) ) {
+      if ( Flawless::can_get_asset( $flawless[ &#x27;protocol&#x27; ] . $remote_asset, array( &#x27;handle&#x27; =&gt; $asset_handle ) ) ) {
         wp_enqueue_style( $asset_handle, $flawless[ &#x27;protocol&#x27; ] . $remote_asset, array(), Flawless_Version );
       }
     }
@@ -2103,7 +2103,7 @@ class flawless_theme extends UD_API {
 
     //** Enqueue Google Pretify */
     if ( $flawless[ &#x27;enable_google_pretify&#x27; ] == &#x27;true&#x27; ) {
-      wp_enqueue_style( &#x27;google-prettify&#x27;, flawless_theme::load( &#x27;prettify.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version, &#x27;screen&#x27; );
+      wp_enqueue_style( &#x27;google-prettify&#x27;, Flawless::load( &#x27;prettify.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version, &#x27;screen&#x27; );
     }
 
     //** Enqueue Fancybox */
@@ -2112,12 +2112,12 @@ class flawless_theme extends UD_API {
     }
 
     //** Enqueue Maintanance CSS only when in Maintanance Mode */
-    if ( $wp_query-&gt;query_vars[ &#x27;splash_screen&#x27; ] &amp;&amp; flawless_theme::load( &#x27;flawless-maintanance.css&#x27;, &#x27;css&#x27; ) ) {
-      wp_enqueue_style( &#x27;flawless-maintanance&#x27;, flawless_theme::load( &#x27;flawless-maintanance.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version );
+    if ( $wp_query-&gt;query_vars[ &#x27;splash_screen&#x27; ] &amp;&amp; Flawless::load( &#x27;flawless-maintanance.css&#x27;, &#x27;css&#x27; ) ) {
+      wp_enqueue_style( &#x27;flawless-maintanance&#x27;, Flawless::load( &#x27;flawless-maintanance.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version );
     }
 
     //** Enqueue CSS for active plugins */
-    foreach ( apply_filters( &#x27;flawless::active_plugins&#x27;, (array)flawless_theme::get_active_plugins() ) as $plugin ) {
+    foreach ( apply_filters( &#x27;flawless::active_plugins&#x27;, (array)Flawless::get_active_plugins() ) as $plugin ) {
 
       //** Get a plugin name slug */
       $plugin = dirname( plugin_basename( trim( $plugin ) ));
@@ -2128,14 +2128,14 @@ class flawless_theme extends UD_API {
           $asset_url = apply_filters( &#x27;flawless-asset-url&#x27;, $this_url . &#x27;/css/&#x27; . $plugin . &#x27;.css&#x27;, $plugin );
           $file_data = get_file_data( $this_directory . &#x27;/css/&#x27; . $plugin . &#x27;.css&#x27;, $flawless[ &#x27;default_header&#x27; ][ &#x27;flawless_style_assets&#x27; ], &#x27;flawless_style_assets&#x27; );
           wp_enqueue_style( &#x27;flawless-asset-&#x27; . $plugin, $asset_url, array( &#x27;flawless-style&#x27; ), $file_data[ &#x27;Version&#x27; ] ? $file_data[ &#x27;Version&#x27; ] : Flawless_Version, $file_data[ &#x27;Media&#x27; ] ? $file_data[ &#x27;Media&#x27; ] : &#x27;screen&#x27; );
-          flawless_theme::console_log( sprintf( __( &#x27;CSS found for %1s plugin and loaded: %2s.&#x27;, &#x27;flawless&#x27; ), $plugin, $asset_url ), &#x27;info&#x27; );
+          Flawless::console_log( sprintf( __( &#x27;CSS found for %1s plugin and loaded: %2s.&#x27;, &#x27;flawless&#x27; ), $plugin, $asset_url ), &#x27;info&#x27; );
         }
       }
     }
 
     //** Enqueue Content Styles - before child style.css and skins are loaded */
-    if ( flawless_theme::load( &#x27;content.css&#x27;, &#x27;css&#x27; ) ) {
-      wp_enqueue_style( &#x27;flawless-content&#x27;, flawless_theme::load( &#x27;content.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version );
+    if ( Flawless::load( &#x27;content.css&#x27;, &#x27;css&#x27; ) ) {
+      wp_enqueue_style( &#x27;flawless-content&#x27;, Flawless::load( &#x27;content.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version );
     }
 
     //** Enqueue Skin / Color Scheme CSS */
@@ -2176,11 +2176,11 @@ class flawless_theme extends UD_API {
       $style_data[ &#x27;url&#x27; ] = $wp_styles-&gt;registered[ $handle ]-&gt;src;
       $style_data[ &#x27;path&#x27; ] = untrailingslashit( apply_filters( &#x27;flawless::root_path&#x27;, ABSPATH ) ) . str_replace( untrailingslashit( home_url() ), &#x27;&#x27;, $wp_styles-&gt;registered[ $handle ]-&gt;src );
       if ( !empty( $style_data[ &#x27;args&#x27; ] ) &amp;&amp; ( $style_data[ &#x27;args&#x27; ] == &#x27;print&#x27; ) ) {
-        flawless_theme::console_log( sprintf( __( &#x27;CSS Compiling: Excluding %1s because it is print only. &#x27;, &#x27;flawless&#x27; ), $style_data[ &#x27;file_name&#x27; ] ), &#x27;info&#x27; );
+        Flawless::console_log( sprintf( __( &#x27;CSS Compiling: Excluding %1s because it is print only. &#x27;, &#x27;flawless&#x27; ), $style_data[ &#x27;file_name&#x27; ] ), &#x27;info&#x27; );
         continue;
       }
 
-      if ( defined( &#x27;WP_PLUGIN_DIR&#x27; ) &amp;&amp; $flawless[ &#x27;do_not_compile_plugin_css&#x27; ] == &#x27;true&#x27; &amp;&amp; strpos( $style_data[ &#x27;path&#x27; ], flawless_theme::fix_path( WP_PLUGIN_DIR ) ) !== false ) {
+      if ( defined( &#x27;WP_PLUGIN_DIR&#x27; ) &amp;&amp; $flawless[ &#x27;do_not_compile_plugin_css&#x27; ] == &#x27;true&#x27; &amp;&amp; strpos( $style_data[ &#x27;path&#x27; ], Flawless::fix_path( WP_PLUGIN_DIR ) ) !== false ) {
         continue;
       }
 
@@ -2195,7 +2195,7 @@ class flawless_theme extends UD_API {
     }
 
     if ( empty( $flawless[ &#x27;_compilable_styles&#x27; ] ) ) {
-      flawless_theme::console_log( sprintf( __( &#x27;CSS Compiling: No compilable styles were detected. &#x27;, &#x27;flawless&#x27; ), $style_data[ &#x27;file_name&#x27; ] ), &#x27;error&#x27; );
+      Flawless::console_log( sprintf( __( &#x27;CSS Compiling: No compilable styles were detected. &#x27;, &#x27;flawless&#x27; ), $style_data[ &#x27;file_name&#x27; ] ), &#x27;error&#x27; );
     }
 
     //** If compiled CSS does not exist or is outdated, we re-generate */
@@ -2214,7 +2214,7 @@ class flawless_theme extends UD_API {
     if ( $_update_reason ) {
 
       //** If compiled, enqueue the compiled CSS and remove the compiled styles */
-      if ( !is_wp_error( $_css_is_compiled = flawless_theme::build_compiled_css( $flawless[ &#x27;_compilable_styles&#x27; ] ) ) ) {
+      if ( !is_wp_error( $_css_is_compiled = Flawless::build_compiled_css( $flawless[ &#x27;_compilable_styles&#x27; ] ) ) ) {
 
         if ( $_update_reason == &#x27;initial&#x27; ) {
           flawless_add_notice( sprintf( __( &#x27;Compiled CSS file has been successfully generated.&#x27;, &#x27;flawless&#x27; ), &#x27;#flawless_action#disable_notice=compiled_css_generation&#x27;, &#x27;hide&#x27; ));
@@ -2230,11 +2230,11 @@ class flawless_theme extends UD_API {
           wp_die( &#x27;&lt;h2&gt;&#x27; . __( &#x27;CSS Compile Error&#x27;, &#x27;flawless&#x27; ) . &#x27;&lt;/h2&gt; &#x27; . $_css_is_compiled-&gt;get_error_message(), &#x27;&#x27; );
         }
 
-        flawless_theme::console_log( sprintf( __( &#x27;CSS Compiling Error: %1s.&#x27;, &#x27;flawless&#x27; ), $_css_is_compiled-&gt;get_error_message() ? $_css_is_compiled-&gt;get_error_message() : __( &#x27;Unknown Error.&#x27; ) ), &#x27;error&#x27; );
+        Flawless::console_log( sprintf( __( &#x27;CSS Compiling Error: %1s.&#x27;, &#x27;flawless&#x27; ), $_css_is_compiled-&gt;get_error_message() ? $_css_is_compiled-&gt;get_error_message() : __( &#x27;Unknown Error.&#x27; ) ), &#x27;error&#x27; );
       }
 
     } else {
-      flawless_theme::console_log( sprintf( __( &#x27;CSS Compiling: Compiled file is up to date. &#x27;, &#x27;flawless&#x27; ) ), &#x27;info&#x27; );
+      Flawless::console_log( sprintf( __( &#x27;CSS Compiling: Compiled file is up to date. &#x27;, &#x27;flawless&#x27; ) ), &#x27;info&#x27; );
     }
 
     //** We don&#x27;t Enqueue this until now to exclude it from compiling */
@@ -2329,7 +2329,7 @@ class flawless_theme extends UD_API {
     //* Load Flawless Global Scripts */
     wp_enqueue_script( &#x27;jquery-ud-smart_buttons&#x27; );
     wp_enqueue_script( &#x27;flawless-admin-global&#x27; );
-    wp_enqueue_style( &#x27;flawless-admin-styles&#x27;, flawless_theme::load( &#x27;flawless-admin.css&#x27;, &#x27;css&#x27; ), array( &#x27;farbtastic&#x27; ), Flawless_Version, &#x27;screen&#x27; );
+    wp_enqueue_style( &#x27;flawless-admin-styles&#x27;, Flawless::load( &#x27;flawless-admin.css&#x27;, &#x27;css&#x27; ), array( &#x27;farbtastic&#x27; ), Flawless_Version, &#x27;screen&#x27; );
 
     if ( $current_screen-&gt;id != &#x27;appearance_page_flawless&#x27; ) {
       return;
@@ -2878,25 +2878,25 @@ class flawless_theme extends UD_API {
         &#x27;label&#x27; =&gt; __( &#x27;General&#x27;, &#x27;flawless&#x27; ),
         &#x27;id&#x27; =&gt; &#x27;options_ui_general&#x27;,
         &#x27;position&#x27; =&gt; 10,
-        &#x27;callback&#x27; =&gt; array( &#x27;flawless_theme_ui&#x27;, &#x27;options_ui_general&#x27; )
+        &#x27;callback&#x27; =&gt; array( &#x27;Flawless_ui&#x27;, &#x27;options_ui_general&#x27; )
       ),
       &#x27;options_ui_post_types&#x27; =&gt; array(
         &#x27;label&#x27; =&gt; __( &#x27;Content&#x27;, &#x27;flawless&#x27; ),
         &#x27;id&#x27; =&gt; &#x27;options_ui_post_types&#x27;,
         &#x27;position&#x27; =&gt; 20,
-        &#x27;callback&#x27; =&gt; array( &#x27;flawless_theme_ui&#x27;, &#x27;options_ui_post_types&#x27; )
+        &#x27;callback&#x27; =&gt; array( &#x27;Flawless_ui&#x27;, &#x27;options_ui_post_types&#x27; )
       ),
       &#x27;options_ui_design&#x27; =&gt; array(
         &#x27;label&#x27; =&gt; __( &#x27;Design&#x27;, &#x27;flawless&#x27; ),
         &#x27;id&#x27; =&gt; &#x27;options_ui_design&#x27;,
         &#x27;position&#x27; =&gt; 25,
-        &#x27;callback&#x27; =&gt; array( &#x27;flawless_theme_ui&#x27;, &#x27;options_ui_design&#x27; )
+        &#x27;callback&#x27; =&gt; array( &#x27;Flawless_ui&#x27;, &#x27;options_ui_design&#x27; )
       ),
       &#x27;options_ui_advanced&#x27; =&gt; array(
         &#x27;label&#x27; =&gt; __( &#x27;Advanced&#x27;, &#x27;flawless&#x27; ),
         &#x27;id&#x27; =&gt; &#x27;options_ui_advanced&#x27;,
         &#x27;position&#x27; =&gt; 200,
-        &#x27;callback&#x27; =&gt; array( &#x27;flawless_theme_ui&#x27;, &#x27;options_ui_advanced&#x27; )
+        &#x27;callback&#x27; =&gt; array( &#x27;Flawless_ui&#x27;, &#x27;options_ui_advanced&#x27; )
       )
     ));
 
@@ -2927,7 +2927,7 @@ class flawless_theme extends UD_API {
     $flawless[ &#x27;navbar_options&#x27; ] = apply_filters( &#x27;flawless::navbar_options&#x27;, (array) $flawless[ &#x27;navbar_options&#x27; ] );
 
     if ( is_array( $flawless[ &#x27;options_ui&#x27; ][ &#x27;tabs&#x27; ] ) ) {
-      $settings_page = add_theme_page( __( &#x27;Settings&#x27;, &#x27;flawless&#x27; ), __( &#x27;Settings&#x27;, &#x27;flawless&#x27; ), &#x27;edit_theme_options&#x27;, basename( __FILE__ ), array( &#x27;flawless_theme&#x27;, &#x27;options_page&#x27; ));
+      $settings_page = add_theme_page( __( &#x27;Settings&#x27;, &#x27;flawless&#x27; ), __( &#x27;Settings&#x27;, &#x27;flawless&#x27; ), &#x27;edit_theme_options&#x27;, basename( __FILE__ ), array( &#x27;Flawless&#x27;, &#x27;options_page&#x27; ));
     }
 
   }
@@ -2941,23 +2941,23 @@ class flawless_theme extends UD_API {
   static function template_redirect() {
     global $wp_styles, $is_IE, $flawless, $wp_query, $wp_rewrite, $post;
 
-    flawless_theme::set_current_view();
+    Flawless::set_current_view();
 
-    add_action( &#x27;wp_head&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;wp_head&#x27; ));
+    add_action( &#x27;wp_head&#x27;, array( &#x27;Flawless&#x27;, &#x27;wp_head&#x27; ));
 
-    add_filter( &#x27;wp_nav_menu_args&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;wp_nav_menu_args&#x27; ), 5 );
-    add_filter( &#x27;walker_nav_menu_start_el&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;walker_nav_menu_start_el&#x27; ), 5, 4 );
-    add_filter( &#x27;nav_menu_css_class&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;nav_menu_css_class&#x27; ), 5, 3 );
+    add_filter( &#x27;wp_nav_menu_args&#x27;, array( &#x27;Flawless&#x27;, &#x27;wp_nav_menu_args&#x27; ), 5 );
+    add_filter( &#x27;walker_nav_menu_start_el&#x27;, array( &#x27;Flawless&#x27;, &#x27;walker_nav_menu_start_el&#x27; ), 5, 4 );
+    add_filter( &#x27;nav_menu_css_class&#x27;, array( &#x27;Flawless&#x27;, &#x27;nav_menu_css_class&#x27; ), 5, 3 );
 
-    add_filter( &#x27;post_class&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;post_class&#x27; ), 10, 3 );
-    add_filter( &#x27;wp_title&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;wp_title&#x27; ), 10, 3 );
+    add_filter( &#x27;post_class&#x27;, array( &#x27;Flawless&#x27;, &#x27;post_class&#x27; ), 10, 3 );
+    add_filter( &#x27;wp_title&#x27;, array( &#x27;Flawless&#x27;, &#x27;wp_title&#x27; ), 10, 3 );
 
     //** Load global variables into the &quot;header&quot; template_part
-    add_filter( &#x27;get_template_part_header-element&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;get_template_part_header&#x27; ), 10, 2 );
-    add_filter( &#x27;get_template_part_footer-element&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;get_template_part_header&#x27; ), 10, 2 );
+    add_filter( &#x27;get_template_part_header-element&#x27;, array( &#x27;Flawless&#x27;, &#x27;get_template_part_header&#x27; ), 10, 2 );
+    add_filter( &#x27;get_template_part_footer-element&#x27;, array( &#x27;Flawless&#x27;, &#x27;get_template_part_header&#x27; ), 10, 2 );
 
     //** Load extra options into Admin Bar ( in header ) */
-    add_action( &#x27;admin_bar_menu&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;admin_bar_menu&#x27; ), 200 );
+    add_action( &#x27;admin_bar_menu&#x27;, array( &#x27;Flawless&#x27;, &#x27;admin_bar_menu&#x27; ), 200 );
 
     //** Disable default Gallery shortcode styles */
     add_filter( &#x27;use_default_gallery_style&#x27;, create_function( &#x27;&#x27;, &#x27; return false; &#x27; ));
@@ -2980,7 +2980,7 @@ class flawless_theme extends UD_API {
       }
     }
 
-    add_action( &#x27;body_class&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;body_class&#x27; ), 200, 2 );
+    add_action( &#x27;body_class&#x27;, array( &#x27;Flawless&#x27;, &#x27;body_class&#x27; ), 200, 2 );
 
     /**
      * Display attention grabbing image. (Option to enable does not currently exist, for testing only )
@@ -2998,8 +2998,8 @@ class flawless_theme extends UD_API {
     });
 
     //** Load a custom color scheme if set last, so it supercedes all others */
-    if ( !empty( $flawless[ &#x27;color_scheme&#x27; ] ) &amp;&amp; flawless_theme::get_color_schemes( $flawless[ &#x27;color_scheme&#x27; ] ) ) {
-      $flawless[ &#x27;loaded_color_scheme&#x27; ] = flawless_theme::get_color_schemes( $flawless[ &#x27;color_scheme&#x27; ] );
+    if ( !empty( $flawless[ &#x27;color_scheme&#x27; ] ) &amp;&amp; Flawless::get_color_schemes( $flawless[ &#x27;color_scheme&#x27; ] ) ) {
+      $flawless[ &#x27;loaded_color_scheme&#x27; ] = Flawless::get_color_schemes( $flawless[ &#x27;color_scheme&#x27; ] );
       $flawless[ &#x27;current_view&#x27; ][ &#x27;body_classes&#x27; ][ ] = &#x27;flawless_have_skin&#x27;;
       $flawless[ &#x27;current_view&#x27; ][ &#x27;body_classes&#x27; ][ ] = &#x27;flawless_&#x27; . str_replace( array( &#x27;.&#x27;, &#x27;-&#x27;, &#x27; &#x27; ), &#x27;_&#x27;, $flawless[ &#x27;color_scheme&#x27; ] );
     } else {
@@ -3010,7 +3010,7 @@ class flawless_theme extends UD_API {
       flawless_primary_notice_container( &#x27;&#x27; );
     });
 
-    flawless_theme::console_log( &#x27;Executed: flawless_theme::template_redirect();&#x27; );
+    Flawless::console_log( &#x27;Executed: Flawless::template_redirect();&#x27; );
   }
 
   /**
@@ -3045,7 +3045,7 @@ class flawless_theme extends UD_API {
     $tag_ID = (int)$_REQUEST[ &#x27;tag_ID&#x27; ];
 
     if ( $_GET[ &#x27;action&#x27; ] == &#x27;edit&#x27; &amp;&amp; is_numeric( $tag_ID ) ) {
-      flawless_theme::term_updated( $tag_ID );
+      Flawless::term_updated( $tag_ID );
     }
 
     if ( $_POST[ &#x27;action&#x27; ] == &#x27;editedtag&#x27; &amp;&amp; $_POST[ &#x27;extended_post_id&#x27; ] ) {
@@ -3106,8 +3106,8 @@ class flawless_theme extends UD_API {
         &#x27;description&#x27; =&gt; $maybe_post-&gt;post_excerpt
       ));
 
-      remove_filter( &#x27;created_term&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;term_updated&#x27; ), 9 );
-      remove_filter( &#x27;edit_term&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;term_updated&#x27; ), 9 );
+      remove_filter( &#x27;created_term&#x27;, array( &#x27;Flawless&#x27;, &#x27;term_updated&#x27; ), 9 );
+      remove_filter( &#x27;edit_term&#x27;, array( &#x27;Flawless&#x27;, &#x27;term_updated&#x27; ), 9 );
 
       return;
 
@@ -3120,7 +3120,7 @@ class flawless_theme extends UD_API {
       $post = get_post_for_extended_term( $term_id, $_GET[ &#x27;taxonomy&#x27; ] );
 
       //** Prevent the term_updated filter from running again (endless loop */
-      remove_filter( &#x27;wp_insert_post&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;term_updated&#x27; ), 9 );
+      remove_filter( &#x27;wp_insert_post&#x27;, array( &#x27;Flawless&#x27;, &#x27;term_updated&#x27; ), 9 );
 
       $post_id = wp_insert_post( array(
         &#x27;ID&#x27; =&gt; $post-&gt;ID,
@@ -3290,7 +3290,7 @@ class flawless_theme extends UD_API {
       }
 
       if ( $flawless[ &#x27;navbar&#x27; ][ &#x27;html&#x27; ] || $flawless[ &#x27;mobile_navbar&#x27; ][ &#x27;html&#x27; ] ) {
-        add_action( &#x27;header-navbar&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;render_navbars&#x27; ));
+        add_action( &#x27;header-navbar&#x27;, array( &#x27;Flawless&#x27;, &#x27;render_navbars&#x27; ));
       }
 
     });
@@ -3482,7 +3482,7 @@ class flawless_theme extends UD_API {
   static function wp_head() {
     global $flawless, $is_iphone, $is_IE;
 
-    flawless_theme::console_log( &#x27;Executed: flawless_theme::wp_head();&#x27; );
+    Flawless::console_log( &#x27;Executed: Flawless::wp_head();&#x27; );
 
     //** Check for and load favico.ico */
     if ( file_exists( untrailingslashit( get_stylesheet_directory() ) . &#x27;/favicon.ico&#x27; ) ) {
@@ -3522,7 +3522,7 @@ class flawless_theme extends UD_API {
       $js_config[ &#x27;nonce&#x27; ] = wp_create_nonce( &#x27;flawless_action&#x27; );
     };
 
-    $js_config = apply_filters( &#x27;flawless_theme_js_config&#x27;, $js_config );
+    $js_config = apply_filters( &#x27;Flawless_js_config&#x27;, $js_config );
 
     if ( is_array( $js_config ) ) {
       $html[ ] = &#x27;&lt;script type=&quot;text/javascript&quot;&gt;var flawless = jQuery.extend( true, jQuery.parseJSON( &#x27; . json_encode( json_encode( $js_config ) ) . &#x27; ), typeof flawless === &quot;object&quot; ? flawless : {}); &lt;/script&gt;&#x27;;
@@ -3793,7 +3793,7 @@ class flawless_theme extends UD_API {
    * Adds a widget to a sidebar, making sure that sidebar doesn&#x27;t already have this widget.
    *
    * Example usage:
-   * flawless_theme::add_widget_to_sidebar( &#x27;global_property_search&#x27;, &#x27;text&#x27;, array( &#x27;title&#x27; =&gt; &#x27;Automatically Added Widget&#x27;, &#x27;text&#x27; =&gt; &#x27;This widget was added automatically&#x27; ));
+   * Flawless::add_widget_to_sidebar( &#x27;global_property_search&#x27;, &#x27;text&#x27;, array( &#x27;title&#x27; =&gt; &#x27;Automatically Added Widget&#x27;, &#x27;text&#x27; =&gt; &#x27;This widget was added automatically&#x27; ));
    *
    * @todo Some might exist that adds widgets twice.
    * @todo Consider moving functionality to UD Class
@@ -3919,10 +3919,10 @@ class flawless_theme extends UD_API {
     }
 
     //** Create filter to render input */
-    add_action( &#x27;save_post&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;save_post&#x27; ), 10, 2 );
+    add_action( &#x27;save_post&#x27;, array( &#x27;Flawless&#x27;, &#x27;save_post&#x27; ), 10, 2 );
 
     //** Create filter to save / update */
-    add_action( &#x27;post_submitbox_misc_actions&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;post_submitbox_misc_actions&#x27; ));
+    add_action( &#x27;post_submitbox_misc_actions&#x27;, array( &#x27;Flawless&#x27;, &#x27;post_submitbox_misc_actions&#x27; ));
 
   }
 
@@ -3951,7 +3951,7 @@ class flawless_theme extends UD_API {
       }
     }
 
-    if ( flawless_theme::changeable_post_type( $post-&gt;post_type ) ) {
+    if ( Flawless::changeable_post_type( $post-&gt;post_type ) ) {
 
       //** Return if option box is not selected. */
       if ( !isset( $_POST[ &#x27;cpt-nonce-select&#x27; ] ) ) {
@@ -4048,7 +4048,7 @@ class flawless_theme extends UD_API {
     }
 
     /** Create form for switching the post type */
-    if ( current_user_can( $cur_post_type_object-&gt;cap-&gt;publish_posts ) &amp;&amp; flawless_theme::changeable_post_type( $post-&gt;post_type ) ) {
+    if ( current_user_can( $cur_post_type_object-&gt;cap-&gt;publish_posts ) &amp;&amp; Flawless::changeable_post_type( $post-&gt;post_type ) ) {
       ?&gt;
 
       &lt;div class=&quot;misc-pub-section misc-pub-section-last change-post-type&quot;&gt;
@@ -4061,7 +4061,7 @@ class flawless_theme extends UD_API {
         &lt;div id=&quot;post-type-select&quot; class=&quot;flawless_cpt_select&quot;&gt;
           &lt;select name=&quot;flawless_cpt_post_type&quot; id=&quot;flawless_cpt_post_type&quot;&gt;
             &lt;?php foreach ( (array)get_post_types( (array)apply_filters( &#x27;flawless_cpt_metabox&#x27;, array( &#x27;public&#x27; =&gt; true, &#x27;show_ui&#x27; =&gt; true ) ), &#x27;objects&#x27; ) as $pt ) {
-              if ( !current_user_can( $pt-&gt;cap-&gt;publish_posts ) || !flawless_theme::changeable_post_type( $pt-&gt;name ) ) {
+              if ( !current_user_can( $pt-&gt;cap-&gt;publish_posts ) || !Flawless::changeable_post_type( $pt-&gt;name ) ) {
                 continue;
               }
               echo &#x27;&lt;option value=&quot;&#x27; . esc_attr( $pt-&gt;name ) . &#x27;&quot;&#x27; . selected( $post-&gt;post_type, $pt-&gt;name, false ) . &#x27;&gt;&#x27; . $pt-&gt;labels-&gt;singular_name . &quot;&lt;/option&gt;\n&quot;;
@@ -4199,15 +4199,15 @@ class flawless_theme extends UD_API {
 
     //** Load defaults on theme activation */
     if ( current_user_can( &#x27;update_themes&#x27; ) ) {
-      flawless_theme::handle_upgrade();
+      Flawless::handle_upgrade();
     }
 
     //** Load back-end JS and Contextual Help */
-    add_action( &#x27;admin_enqueue_scripts&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;admin_enqueue_scripts&#x27; ), 10 );
-    add_action( &#x27;admin_print_footer_scripts&#x27;, array( &#x27;flawless_theme&#x27;, &#x27;admin_print_footer_scripts&#x27; ), 10 );
+    add_action( &#x27;admin_enqueue_scripts&#x27;, array( &#x27;Flawless&#x27;, &#x27;admin_enqueue_scripts&#x27; ), 10 );
+    add_action( &#x27;admin_print_footer_scripts&#x27;, array( &#x27;Flawless&#x27;, &#x27;admin_print_footer_scripts&#x27; ), 10 );
 
     //** Check if child thme exists and updates flawless_settings accordingly */
-    flawless_theme::flawless_child_theme_exists();
+    Flawless::flawless_child_theme_exists();
 
     //** Check for special actions and nonce, a nonce must always be set. */
     if ( !empty( $_REQUEST[ &#x27;_wpnonce&#x27; ] ) /* &amp;&amp; isset( $_REQUEST[ &#x27;flawless_action&#x27; ] ) */ ) {
@@ -4234,7 +4234,7 @@ class flawless_theme extends UD_API {
         }
 
         //** Handle Theme Options updating */
-        if ( $redirect = flawless_theme::save_settings( $_REQUEST[ &#x27;flawless_settings&#x27; ], $args ) ) {
+        if ( $redirect = Flawless::save_settings( $_REQUEST[ &#x27;flawless_settings&#x27; ], $args ) ) {
           $redirect = add_query_arg( &#x27;flush_rewrite_rules&#x27;, &#x27;true&#x27;, $redirect );
           wp_redirect( $redirect );
           die();
@@ -4268,7 +4268,7 @@ class flawless_theme extends UD_API {
   static function login_head() {
     global $flawless;
 
-    if ( !flawless_theme::can_get_image( $flawless[ &#x27;flawless_logo&#x27; ][ &#x27;url&#x27; ] ) ) {
+    if ( !Flawless::can_get_image( $flawless[ &#x27;flawless_logo&#x27; ][ &#x27;url&#x27; ] ) ) {
       return;
     }
 
@@ -4353,7 +4353,7 @@ class flawless_theme extends UD_API {
     global $flawless, $_wp_theme_features, $flawless;
 
     if ( !empty( $_GET[ &#x27;admin_splash_screen&#x27; ] ) ) {
-      flawless_theme_ui::show_update_screen( $_GET[ &#x27;admin_splash_screen&#x27; ] );
+      Flawless_ui::show_update_screen( $_GET[ &#x27;admin_splash_screen&#x27; ] );
     }
 
     if ( $_REQUEST[ &#x27;message&#x27; ] == &#x27;auto_complete_done&#x27; ) {
@@ -4527,7 +4527,7 @@ class flawless_theme extends UD_API {
       echo $script;
     }
 
-    echo flawless_theme::render_console_log();
+    echo Flawless::render_console_log();
 
   }
 
@@ -4643,7 +4643,7 @@ class flawless_theme extends UD_API {
     if ( !$match || $result[ &#x27;response&#x27; ][ &#x27;code&#x27; ] != 200 ) {
 
       if ( $flawless[ &#x27;developer_mode&#x27; ] == &#x27;true&#x27; ) {
-        flawless_theme::console_log( &quot;Remote asset ( $url ) could not be loaded, content type returned: &quot; . $result[ &#x27;headers&#x27; ][ &#x27;content-type&#x27; ] );
+        Flawless::console_log( &quot;Remote asset ( $url ) could not be loaded, content type returned: &quot; . $result[ &#x27;headers&#x27; ][ &#x27;content-type&#x27; ] );
       }
 
       return false;
@@ -4699,7 +4699,7 @@ class flawless_theme extends UD_API {
   static function install_child_theme() {
     global $user_ID, $wpdb, $wp_theme_directories;
 
-    if ( flawless_theme::flawless_child_theme_exists() ) {
+    if ( Flawless::flawless_child_theme_exists() ) {
       return true;
     }
 
@@ -5003,10 +5003,10 @@ class flawless_theme extends UD_API {
     return false;
   }
 
-} /* end flawless_theme class */
+} /* end Flawless class */
 
 //** Initialize the theme. */
-$flawless_theme = new flawless_theme();
+$Flawless = new Flawless();
 
     </pre>
 </div>

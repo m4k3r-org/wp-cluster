@@ -9,12 +9,12 @@
  */
 
 
-add_action('flawless_theme_setup', array('flawless_business_card', 'flawless_theme_setup'));
+add_action('Flawless_setup', array('flawless_business_card', 'Flawless_setup'));
 add_filter('flawless::available_theme_features', array('flawless_business_card','available_theme_features'));
 
 class flawless_business_card {
 
-  function flawless_theme_setup() {
+  function Flawless_setup() {
     add_action('flawless::init_upper', array('flawless_business_card', 'init_upper'));
     add_action('flawless::init_lower', array('flawless_business_card', 'init_lower'));
     
@@ -89,7 +89,7 @@ class flawless_business_card {
   function flawless_update_settings($flawless) {
 
     //** Set coordinates for Business Card Info */
-    $coordinates = flawless_theme::geo_locate_address($flawless['business_card']['data']['physical_address']);
+    $coordinates = Flawless::geo_locate_address($flawless['business_card']['data']['physical_address']);
 
     $flawless['business_card']['system']['latitude'] = $coordinates->longitude;
     $flawless['business_card']['system']['longitude'] = $coordinates->latitude;
@@ -102,7 +102,7 @@ class flawless_business_card {
 
   function widgets_init() {
 
-    flawless_theme::console_log('P: Widget Registered: Flawless_Widget_Business_Card');
+    Flawless::console_log('P: Widget Registered: Flawless_Widget_Business_Card');
 
     register_widget("Flawless_Widget_Business_Card");
 
@@ -351,7 +351,7 @@ class Flawless_Widget_Business_Card extends WP_Widget {
         continue;
       }
 
-      if(flawless_theme::is_url($value)) {
+      if(Flawless::is_url($value)) {
         $value = '<a class="business_info_link" href="'. $value .'">' . $label. '</a>';
         $classes[] = 'has_link';
       }
@@ -589,7 +589,7 @@ if(!function_exists('flawless_have_business_card')) {
       }
 
       //** Convert into URL, if a URL is used */
-      if(flawless_theme::is_url($value)) {
+      if(Flawless::is_url($value)) {
         $value = '<a class="business_info_link" href="'. $value .'">' . $label. '</a>';
         $classes[] = 'has_link';
       }

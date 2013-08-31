@@ -34,7 +34,7 @@ class flawless_my_account_module {
   function init() {
     global $flawless;
 
-    flawless_theme::console_log( 'P: Executed: flawless_my_account_module::init();' );
+    Flawless::console_log( 'P: Executed: flawless_my_account_module::init();' );
 
     add_action( 'wp_ajax_nopriv_flawless_ajax_reset_password', create_function( '', 'die( flawless_my_account_module::ajax_reset_password() );' ) );
     add_action( 'wp_ajax_nopriv_flawless_ajax_login', create_function( '', 'die( flawless_my_account_module::ajax_login() );' ) );
@@ -708,6 +708,6 @@ class flawless_my_account_module {
 
 }
 
-add_action( 'flawless_theme_setup', array( 'flawless_my_account_module', 'init' ) );
+add_action( 'Flawless_setup', array( 'flawless_my_account_module', 'init' ) );
 
 

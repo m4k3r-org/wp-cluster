@@ -8,7 +8,7 @@
  */
 
 //** All BuddyPress actions are initialized after bb_include action is ran. */
-add_action( 'flawless_theme_setup', array( 'Flawless_BuddyPress', 'flawless_theme_setup' ) );
+add_action( 'Flawless_setup', array( 'Flawless_BuddyPress', 'Flawless_setup' ) );
 
 class Flawless_BuddyPress {
 
@@ -17,7 +17,7 @@ class Flawless_BuddyPress {
    *
    * @author potanin@UD
    */
-  function flawless_theme_setup( $located_template ) {
+  function Flawless_setup( $located_template ) {
     global $bp, $flawless;
 
     if ( !is_object( $bp ) ) {
@@ -139,7 +139,7 @@ class Flawless_BuddyPress {
       return;
     }
 
-    flawless_theme::add_post_type_option( array(
+    Flawless::add_post_type_option( array(
       'post_type' => $wpdb->get_var( "SELECT post_type FROM {$wpdb->posts} WHERE ID = $post_id" ),
       'position' => 1000,
       'meta_key' => 'override_buddypress_template',
@@ -322,7 +322,7 @@ class Flawless_BuddyPress {
     $t[ 'type' ] = $bp->current_component;
     $t[ 'view' ] = $bp->current_action;
 
-    flawless_theme::console_log( 'P: Current View: Unknown - rendering same as Page.' );
+    Flawless::console_log( 'P: Current View: Unknown - rendering same as Page.' );
 
     return $t;
 
@@ -576,7 +576,7 @@ class Flawless_BuddyPress {
   function navbar_html( $html ) {
     global $bp, $flawless;
 
-    if ( flawless_theme::load( 'simple_html_dom' ) ) {
+    if ( Flawless::load( 'simple_html_dom' ) ) {
       //** Get BP Admin bar menu */
       ob_start();
       $bp->doing_admin_bar = true;
@@ -668,7 +668,7 @@ class Flawless_BuddyPress {
     }
 
     //** Add filter to skip the footer when including the template */
-    add_filter( 'skip_footer', array( 'flawless_theme', 'return_true' ), 20 );
+    add_filter( 'skip_footer', array( 'Flawless', 'return_true' ), 20 );
 
     //** Use OB to only capture the code between before and after page
     add_action( 'bp_before_register_page', create_function( '', ' ob_start();  ' ) );
@@ -679,7 +679,7 @@ class Flawless_BuddyPress {
     locate_template( array( 'registration/register.php' ), true );
 
     //** Remove the footer skipping so the actual footer doesn't get skipped
-    remove_filter( 'skip_footer', array( 'flawless_theme', 'return_true' ), 20 );
+    remove_filter( 'skip_footer', array( 'Flawless', 'return_true' ), 20 );
 
     return $shortcode_content;
 
@@ -1452,9 +1452,9 @@ class Flawless_BuddyPress {
   function bp_load_template( $located_template ) {
     global $wp_query;
 
-    flawless_theme::console_log( sprintf( __( 'Executing: %1s.', 'wp_crm' ), 'Flawless_BuddyPress::bp_load_template()' ) );
+    Flawless::console_log( sprintf( __( 'Executing: %1s.', 'wp_crm' ), 'Flawless_BuddyPress::bp_load_template()' ) );
 
-    flawless_theme::template_redirect();
+    Flawless::template_redirect();
 
     return $located_template;
   }

@@ -1282,7 +1282,7 @@
             "file": "core/extend/wp-property/wp-property.php",
             "line": 18,
             "description": "Highend Loader",
-            "action": "flawless_theme_setup ( 10 )",
+            "action": "Flawless_setup ( 10 )",
             "since": "Flawless 0.2.3",
             "class": "flawless_wpp_extensions"
         },
@@ -1432,7 +1432,7 @@
         {
             "file": "core/modules/less/less.php",
             "line": 2,
-            "description": "Name: Flawless LESS Handler\nVersion: 1.0\nDescription: Extends lessphp.\nAuthor: Usability Dynamics, Inc.\nTheme Feature: less-css\n\n\n=Documentation=\nIf the feature is enabled, on every page load the flawless_theme::build_compiled_css() is called which in turn calls flawless_class,\nwhich processes /less/bootstrap.less, files references form within, as well as all enqueued front-end CSS files.\nA reference to all includes files is saved in option \"flawless::compiled_css_files\"\n\nIf one of the files has a a newer modification time than the compiled CSS files, then the compiled file is re-generated.\nwhich are saved to the stylesheet directory, which is either the child theme, or the parent theme.\n\nWhen succssful, Flawless generates two files, bootstrap-compiled.css and bootstrap-compiled.min.css.\n\n=Developer Notes=\nThe file checking occurs at the wp_print_styles (0) action, since all the enqued styles must be known at that point.\n\n$flawless[ '_bootstrap_compiled_url' ] - URL to compiled CSS file.\n$flawless[ '_bootstrap_compiled_path' ] - URL to compiled CSS file.\n$flawless[ '_bootstrap_compiled_minified_path' ] - File path to minified compiled CSS file\n$flawless[ '_bootstrap_compiled_minified_url' ] - URL to minified CSS file.",
+            "description": "Name: Flawless LESS Handler\nVersion: 1.0\nDescription: Extends lessphp.\nAuthor: Usability Dynamics, Inc.\nTheme Feature: less-css\n\n\n=Documentation=\nIf the feature is enabled, on every page load the Flawless::build_compiled_css() is called which in turn calls flawless_class,\nwhich processes /less/bootstrap.less, files references form within, as well as all enqueued front-end CSS files.\nA reference to all includes files is saved in option \"flawless::compiled_css_files\"\n\nIf one of the files has a a newer modification time than the compiled CSS files, then the compiled file is re-generated.\nwhich are saved to the stylesheet directory, which is either the child theme, or the parent theme.\n\nWhen succssful, Flawless generates two files, bootstrap-compiled.css and bootstrap-compiled.min.css.\n\n=Developer Notes=\nThe file checking occurs at the wp_print_styles (0) action, since all the enqued styles must be known at that point.\n\n$flawless[ '_bootstrap_compiled_url' ] - URL to compiled CSS file.\n$flawless[ '_bootstrap_compiled_path' ] - URL to compiled CSS file.\n$flawless[ '_bootstrap_compiled_minified_path' ] - File path to minified compiled CSS file\n$flawless[ '_bootstrap_compiled_minified_url' ] - URL to minified CSS file.",
             "class": "UD_API"
         },
         {
@@ -1461,7 +1461,7 @@
             "line": 68,
             "description": "{missing description}",
             "todo": [
-                "admin_bar_menu should be using flawless_theme::add_to_navbar() which should then add the Editor link to the appropriate Navbar. - potanin@UD 6/9/2012"
+                "admin_bar_menu should be using Flawless::add_to_navbar() which should then add the Editor link to the appropriate Navbar. - potanin@UD 6/9/2012"
             ],
             "since": "Flawless 0.6.1",
             "class": "UD_API"
@@ -7059,7 +7059,7 @@
             "line": 29,
             "description": "{missing description}",
             "todo": [
-                "admin_bar_menu should be using flawless_theme::add_to_navbar() which should then add the Editor link to the appropriate Navbar. - potanin@UD 6/9/2012"
+                "admin_bar_menu should be using Flawless::add_to_navbar() which should then add the Editor link to the appropriate Navbar. - potanin@UD 6/9/2012"
             ],
             "since": "Flawless 0.5.0",
             "class": "UD_API"
@@ -9708,7 +9708,7 @@
         {
             "file": "core/flawless.php",
             "line": 3688,
-            "description": "Adds a widget to a sidebar.\n\nAdds a widget to a sidebar, making sure that sidebar doesn't already have this widget.\n\nExample usage:\nflawless_theme::add_widget_to_sidebar( 'global_property_search', 'text', array( 'title' => 'Automatically Added Widget', 'text' => 'This widget was added automatically' ));",
+            "description": "Adds a widget to a sidebar.\n\nAdds a widget to a sidebar, making sure that sidebar doesn't already have this widget.\n\nExample usage:\nFlawless::add_widget_to_sidebar( 'global_property_search', 'text', array( 'title' => 'Automatically Added Widget', 'text' => 'This widget was added automatically' ));",
             "todo": [
                 "Some might exist that adds widgets twice.",
                 "Consider moving functionality to UD Class"
@@ -10571,7 +10571,7 @@
             "line": 132,
             "description": "Display a splash screen on update or new install",
             "todo": [
-                "Once flawless_theme::parse_readme() is updated to return data via associative array",
+                "Once Flawless::parse_readme() is updated to return data via associative array",
                 "this can be improved - potanin@UD"
             ],
             "author": "potanin@UD",
@@ -12303,7 +12303,7 @@
             "line": " core/modules/business-card/business-card.php:467"
         },
         {
-            "message": "Missing item type\nName: Flawless LESS Handler\nVersion: 1.0\nDescription: Extends lessphp.\nAuthor: Usability Dynamics, Inc.\nTheme Feature: less-css\n\n\n=Documentation=\nIf the feature is enabled, on every page load the flawless_theme::build_compiled_css() is called which in turn calls flawless_class,\nwhich processes /less/bootstrap.less, files references form within, as well as all enqueued front-end CSS files.\nA reference to all includes files is saved in option \"flawless::compiled_css_files\"\n\nIf one of the files has a a newer modification time than the compiled CSS files, then the compiled file is re-generated.\nwhich are saved to the stylesheet directory, which is either the child theme, or the parent theme.\n\nWhen succssful, Flawless generates two files, bootstrap-compiled.css and bootstrap-compiled.min.css.\n\n=Developer Notes=\nThe file checking occurs at the wp_print_styles (0) action, since all the enqued styles must be known at that point.\n\n$flawless[ '_bootstrap_compiled_url' ] - URL to compiled CSS file.\n$flawless[ '_bootstrap_compiled_path' ] - URL to compiled CSS file.\n$flawless[ '_bootstrap_compiled_minified_path' ] - File path to minified compiled CSS file\n$flawless[ '_bootstrap_compiled_minified_url' ] - URL to minified CSS file.",
+            "message": "Missing item type\nName: Flawless LESS Handler\nVersion: 1.0\nDescription: Extends lessphp.\nAuthor: Usability Dynamics, Inc.\nTheme Feature: less-css\n\n\n=Documentation=\nIf the feature is enabled, on every page load the Flawless::build_compiled_css() is called which in turn calls flawless_class,\nwhich processes /less/bootstrap.less, files references form within, as well as all enqueued front-end CSS files.\nA reference to all includes files is saved in option \"flawless::compiled_css_files\"\n\nIf one of the files has a a newer modification time than the compiled CSS files, then the compiled file is re-generated.\nwhich are saved to the stylesheet directory, which is either the child theme, or the parent theme.\n\nWhen succssful, Flawless generates two files, bootstrap-compiled.css and bootstrap-compiled.min.css.\n\n=Developer Notes=\nThe file checking occurs at the wp_print_styles (0) action, since all the enqued styles must be known at that point.\n\n$flawless[ '_bootstrap_compiled_url' ] - URL to compiled CSS file.\n$flawless[ '_bootstrap_compiled_path' ] - URL to compiled CSS file.\n$flawless[ '_bootstrap_compiled_minified_path' ] - File path to minified compiled CSS file\n$flawless[ '_bootstrap_compiled_minified_url' ] - URL to minified CSS file.",
             "line": " core/modules/less/less.php:2"
         },
         {
@@ -15143,7 +15143,7 @@
             "line": " core/flawless.php:3653"
         },
         {
-            "message": "Missing item type\nAdds a widget to a sidebar.\n\nAdds a widget to a sidebar, making sure that sidebar doesn't already have this widget.\n\nExample usage:\nflawless_theme::add_widget_to_sidebar( 'global_property_search', 'text', array( 'title' => 'Automatically Added Widget', 'text' => 'This widget was added automatically' ));",
+            "message": "Missing item type\nAdds a widget to a sidebar.\n\nAdds a widget to a sidebar, making sure that sidebar doesn't already have this widget.\n\nExample usage:\nFlawless::add_widget_to_sidebar( 'global_property_search', 'text', array( 'title' => 'Automatically Added Widget', 'text' => 'This widget was added automatically' ));",
             "line": " core/flawless.php:3688"
         },
         {

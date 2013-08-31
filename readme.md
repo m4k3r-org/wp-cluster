@@ -23,15 +23,14 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 
 == Changelog ==
 = 0.1.1 =
+* Globally renamed all PHP references to "flawless_theme" to "Flawless".
+* Updated all JS libraries to utilize CDNs and removed from theme.
+* Migrated all template components into /templates directory.
 * Fixed WordPrss 3.6 compatibility bug with detection of current page on admin side.
-* Fixed broken CDN urls.
-* To Do: Fix settings page disabled feature toggle bug.
-* To Do: Refractor Navbar handling by converting Navbar to use AdminBar API.
-* To Do: Finish implementing WP 3.4 customizable thing.
 
 = 0.1.0 =
 * Changed wp-login.php access prevention override to ?override_wp_login_access=true
-* Migrated get_template_part() into flawless_theme class. 
+* Migrated get_template_part() into Flawless class.
 * Implemented UD API Distributable version 1.0.0. 
 * Flawless functionality relocated from functions.php into /core/flawless-loader.php to avoid fatal crash on older versions of PHP.
 * Console Log no longer shows regular log entries unless specifically enabled. Info and Errors are always shown (when in debug mode).
@@ -54,12 +53,12 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 * Moved option to disable wp-login.php access to Advanced Tab since a user could potentially lock themselves out that way.
 * Added Contextual Help to Settings page a placeholder for General Help, and examples for Theme Development and JavaScript helpers.
 * Added "No Thumbnail" image placeholder to skin selection for skins that do not have a thumbnail.
-* Updated flawless_theme::load( $name, $type ) to handle different asset types. Default is PHP file library, but $type of image can be specified as well.
+* Updated Flawless::load( $name, $type ) to handle different asset types. Default is PHP file library, but $type of image can be specified as well.
 * Fixed issue with Header Login notifications not being displayed on login errors and password reset.
 * Improved the way Child Theme and Skin stylesheet options are handled. Stylesheet options are now stored in $flawess[current_theme_options] which is created from combination of Child Theme and Skin. Child Themes can now declare Google Fonts.
 * Added array_merge_recursive_distinct() to $flawless variables so variable can be defined with default settings prior to options being loaded form DB.
 * Flawless Version is now combined with Child Theme version, if set, for asset URLs. Core version is stored in Flawless_Core_Version.
-* flawless_theme::load() function now checks all Asset Directories for a library.
+* Flawless::load() function now checks all Asset Directories for a library.
 * Developer Note: Action flawless_loaded renamed to flawless::loaded
 
 = 0.0.8  =
@@ -153,14 +152,14 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 * Fixed bug with "Add Row" not working on back-end.
 * Updated Carrington Build to 1.2.1
 * Added shortcodes: [image_url] and [button]
-* Created flawless_theme::extra_local_assets() function for loading things like Fancybox.
+* Created Flawless::extra_local_assets() function for loading things like Fancybox.
 * Numerous BuddyPress updates, and new shortcodes: group_meta, group_description.
 * Updated to BuddyPress Groups Carrington Build module to execute shortcodes.
 * Added 4-column Carrington Build row.
 * Added UD Loop, a branch of the Carrington Build Loop, although kept inactive.
 * Removed the Ajax Pages Carrington Build module.
 * Reactivated the Carrington Build Text module.
-* Added flawless_theme::extra_local_assets() to handle loading of extra local assets, such as Fancybox.
+* Added Flawless::extra_local_assets() to handle loading of extra local assets, such as Fancybox.
 * .inner_content_wrapper and all references changed to .container
 * .post_listing_inner class added to CB Loop module excerpt and full content listings
 * [button] shortcode added

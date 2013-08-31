@@ -20,10 +20,10 @@ class Flawless_W3TC {
 
   function flawless_init() {
 
-    add_action( 'wp_ajax_flawless_delete_option_clearcache', array( 'flawless_theme', 'delete_option_clearcache' ) );
+    add_action( 'wp_ajax_flawless_delete_option_clearcache', array( 'Flawless', 'delete_option_clearcache' ) );
 
     //** Add 'Clear W3 Total Cache' notice */
-    add_action( 'admin_notices', array( 'flawless_theme', 'show_clear_W3_total_cache_notice' ) );
+    add_action( 'admin_notices', array( 'Flawless', 'show_clear_W3_total_cache_notice' ) );
 
   }
 
@@ -53,10 +53,10 @@ class Flawless_W3TC {
 
       // Checks Flawless Settings Request and Add option
       if ( wp_verify_nonce( $_REQUEST[ '_wpnonce' ], 'flawless_settings' ) ) {
-        add_option( 'flawless_theme_clear_cache_notice', 'true' );
+        add_option( 'Flawless_clear_cache_notice', 'true' );
       }
 
-      $clear_notice = get_option( 'flawless_theme_clear_cache_notice' );
+      $clear_notice = get_option( 'Flawless_clear_cache_notice' );
       if ( !empty( $clear_notice ) ) {
         $note = '';
         ob_start();
@@ -95,16 +95,16 @@ class Flawless_W3TC {
       }
     } else {
       // Try to delete option
-      delete_option( 'flawless_theme_clear_cache_notice' );
+      delete_option( 'Flawless_clear_cache_notice' );
     }
   }
 
   /*
- * Ajax function. Deletes 'flawless_theme_clear_cache_notice' option,
+ * Ajax function. Deletes 'Flawless_clear_cache_notice' option,
  * which is used for showing notice to clear W3 Cache if W3 Total Cache plugin is used.
  */
   static function delete_option_clearcache() {
-    delete_option( 'flawless_theme_clear_cache_notice' );
+    delete_option( 'Flawless_clear_cache_notice' );
     echo json_encode( array( 'status' => 'success' ) );
     exit();
   }

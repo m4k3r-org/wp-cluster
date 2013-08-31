@@ -8,7 +8,7 @@
  *
  *
  * =Documentation=
- * If the feature is enabled, on every page load the flawless_theme::build_compiled_css() is called which in turn calls flawless_class,
+ * If the feature is enabled, on every page load the Flawless::build_compiled_css() is called which in turn calls flawless_class,
  * which processes /less/bootstrap.less, files references form within, as well as all enqueued front-end CSS files.
  * A reference to all includes files is saved in option "flawless::compiled_css_files"
  *
@@ -27,7 +27,7 @@
  *
  */
 
-flawless_theme::load( 'lessc.inc' );
+Flawless::load( 'lessc.inc' );
 
 if ( !class_exists( 'lessc' ) ) {
   return;
@@ -68,7 +68,7 @@ class flawless_less extends lessc {
     /**
      * {missing description}
      *
-     * @todo admin_bar_menu should be using flawless_theme::add_to_navbar() which should then add the Editor link to the appropriate Navbar. - potanin@UD 6/9/2012
+     * @todo admin_bar_menu should be using Flawless::add_to_navbar() which should then add the Editor link to the appropriate Navbar. - potanin@UD 6/9/2012
      * @since Flawless 0.6.1
      */
     add_action( 'flawless::theme_setup::after', function () {
@@ -140,7 +140,7 @@ class flawless_less extends lessc {
       }
     }
 
-    if ( $args[ 'minify' ] && ( class_exists( 'CssMin' ) || flawless_theme::load( 'CssMin' ) ) ) {
+    if ( $args[ 'minify' ] && ( class_exists( 'CssMin' ) || Flawless::load( 'CssMin' ) ) ) {
       $code[ 'minified' ] = CssMin::minify( $code[ 'parsed' ] );
     }
 

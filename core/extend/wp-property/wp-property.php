@@ -18,10 +18,10 @@ class flawless_wpp_extensions {
   /**
    * Highend Loader
    *
-   * @action flawless_theme_setup ( 10 )
+   * @action Flawless_setup ( 10 )
    * @since Flawless 0.2.3
    */
-  static function flawless_theme_setup() {
+  static function Flawless_setup() {
 
     add_action( 'flawless::init_lower', array( 'flawless_wpp_extensions', 'flawless_init' ) );
 
@@ -64,21 +64,21 @@ class flawless_wpp_extensions {
       return 'Search Properties';
     } );
 
-    flawless_theme::add_post_type_option( array(
+    Flawless::add_post_type_option( array(
       'post_type' => 'property',
       'position' => 300,
       'meta_key' => 'hide_default_google_map',
       'label' => sprintf( __( 'Hide Location Map.', 'flawless' ) )
     ) );
 
-    flawless_theme::add_post_type_option( array(
+    Flawless::add_post_type_option( array(
       'post_type' => 'property',
       'position' => 310,
       'meta_key' => 'hide_property_attributes',
       'label' => sprintf( __( 'Hide Attributes.', 'flawless' ) )
     ) );
 
-    flawless_theme::add_post_type_option( array(
+    Flawless::add_post_type_option( array(
       'post_type' => 'property',
       'position' => 320,
       'meta_key' => 'hide_property_taxonomies',
@@ -157,7 +157,7 @@ class flawless_wpp_extensions {
 
     echo '<label>' . __( 'Landing page:' );
 
-    flawless_theme::wp_dropdown_objects( array(
+    Flawless::wp_dropdown_objects( array(
       'name' => 'wpp_settings[ extra ][ property_type_landing_pages ][ ' . $property_type . ' ]',
       'show_option_none' => __( '&mdash; Select &mdash;' ),
       'option_none_value' => '0',
@@ -196,5 +196,5 @@ class flawless_wpp_extensions {
 
 }
 
-add_action( 'flawless_theme_setup', array( 'flawless_wpp_extensions', 'flawless_theme_setup' ) );
+add_action( 'Flawless_setup', array( 'flawless_wpp_extensions', 'Flawless_setup' ) );
 

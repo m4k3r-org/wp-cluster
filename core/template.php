@@ -430,7 +430,7 @@ if ( !function_exists( 'flawless_image_link' ) ) {
       return false;
     }
 
-    $image_sizes = flawless_theme::image_sizes();
+    $image_sizes = Flawless::image_sizes();
 
     $args = wp_parse_args( $args, array(
       'return' => 'string',
@@ -798,7 +798,7 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
         if ( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] ) {
           $content_type_home = get_permalink( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] );
         } else {
-          $content_type_home = flawless_theme::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
+          $content_type_home = Flawless::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
         }
 
         /** Fix 'Pages' */
@@ -838,7 +838,7 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
       if ( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] ) {
         $content_type_home = get_permalink( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] );
       } else {
-        $content_type_home = flawless_theme::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
+        $content_type_home = Flawless::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
       }
 
       /** Fix 'Pages' */

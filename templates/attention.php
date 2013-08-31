@@ -22,7 +22,7 @@ if ( get_post_meta( $post->ID, 'hide_header', true ) == 'true' || !current_theme
 
 $this_widget_area = 'inside_attention_grabber';
 
-if ( $tabs = flawless_theme::widget_area_tabs( $this_widget_area ) ) {
+if ( $tabs = Flawless::widget_area_tabs( $this_widget_area ) ) {
   ?>
 
   <div class="sld-flexible flawless_attention_grabber_area">

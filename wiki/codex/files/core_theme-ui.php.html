@@ -115,7 +115,7 @@
  * @class Theme UI
  * @static
  */
-class flawless_theme_ui {
+class Flawless_ui {
 
   /**
    * Renders extra fields on term editing pages.
@@ -234,11 +234,11 @@ class flawless_theme_ui {
   /**
    * Display a splash screen on update or new install
    *
-   * @todo Once flawless_theme::parse_readme() is updated to return data via associative array, this can be improved - potanin@UD
+   * @todo Once Flawless::parse_readme() is updated to return data via associative array, this can be improved - potanin@UD
    * @author potanin@UD
    */
   function show_update_screen( $splash_type ) {
-    $change_log = flawless_theme::parse_readme(); ?&gt;
+    $change_log = Flawless::parse_readme(); ?&gt;
 
     &lt;div class=&quot;wrap flawless-update about-wrap flawless_settings_page&quot;&gt;
       &lt;h1&gt;Welcome to Flawless &lt;?php echo Flawless_Version; ?&gt;&lt;/h1&gt;
@@ -271,7 +271,7 @@ class flawless_theme_ui {
         &#x27;name&#x27; =&gt; &#x27;flawless_settings[disabled_theme_features][header-navbar]&#x27;,
         &#x27;position&#x27; =&gt; 10,
         &#x27;setting&#x27; =&gt; $flawless[ &#x27;disabled_theme_features&#x27; ][ &#x27;header-navbar&#x27; ],
-        &#x27;callback&#x27; =&gt; array( &#x27;flawless_theme_ui&#x27;, &#x27;options_header_navbar&#x27; ),
+        &#x27;callback&#x27; =&gt; array( &#x27;Flawless_ui&#x27;, &#x27;options_header_navbar&#x27; ),
         &#x27;toggle_label&#x27; =&gt; __( &#x27;Do not show the Navbar.&#x27;, &#x27;flawless&#x27; )
       );
     }
@@ -283,7 +283,7 @@ class flawless_theme_ui {
         &#x27;name&#x27; =&gt; &#x27;flawless_settings[disabled_theme_features][mobile-navbar]&#x27;,
         &#x27;position&#x27; =&gt; 15,
         &#x27;setting&#x27; =&gt; $flawless[ &#x27;disabled_theme_features&#x27; ][ &#x27;mobile-navbar&#x27; ],
-        &#x27;callback&#x27; =&gt; array( &#x27;flawless_theme_ui&#x27;, &#x27;options_mobile_navbar&#x27; ),
+        &#x27;callback&#x27; =&gt; array( &#x27;Flawless_ui&#x27;, &#x27;options_mobile_navbar&#x27; ),
         &#x27;toggle_label&#x27; =&gt; __( &#x27;Do not use a Mobile Navbar.&#x27;, &#x27;flawless&#x27; )
       );
     }
@@ -294,7 +294,7 @@ class flawless_theme_ui {
       &#x27;name&#x27; =&gt; &#x27;flawless_settings[disabled_theme_features][header-search]&#x27;,
       &#x27;position&#x27; =&gt; 20,
       &#x27;setting&#x27; =&gt; $flawless[ &#x27;disabled_theme_features&#x27; ][ &#x27;header-search&#x27; ],
-      &#x27;callback&#x27; =&gt; array( &#x27;flawless_theme_ui&#x27;, &#x27;options_header_search&#x27; ),
+      &#x27;callback&#x27; =&gt; array( &#x27;Flawless_ui&#x27;, &#x27;options_header_search&#x27; ),
       &#x27;toggle_label&#x27; =&gt; __( &#x27;Do not show search box in header.&#x27;, &#x27;flawless&#x27; )
     );
 
@@ -305,7 +305,7 @@ class flawless_theme_ui {
       &#x27;position&#x27; =&gt; 40,
       &#x27;setting&#x27; =&gt; $flawless[ &#x27;disabled_theme_features&#x27; ][ &#x27;header-logo&#x27; ],
       &#x27;toggle_label&#x27; =&gt; __( &#x27;Hide logo from header.&#x27;, &#x27;flawless&#x27; ),
-      &#x27;callback&#x27; =&gt; array( &#x27;flawless_theme_ui&#x27;, &#x27;options_header_logo&#x27; )
+      &#x27;callback&#x27; =&gt; array( &#x27;Flawless_ui&#x27;, &#x27;options_header_logo&#x27; )
     );
 
     if ( current_theme_supports( &#x27;header-dropdowns&#x27; ) ) {
@@ -326,7 +326,7 @@ class flawless_theme_ui {
       &#x27;position&#x27; =&gt; 20,
       &#x27;setting&#x27; =&gt; $flawless[ &#x27;disabled_theme_features&#x27; ][ &#x27;header_text&#x27; ],
       &#x27;toggle_label&#x27; =&gt; __( &#x27;Do not show copyright in footer.&#x27;, &#x27;flawless&#x27; ),
-      &#x27;callback&#x27; =&gt; array( &#x27;flawless_theme_ui&#x27;, &#x27;options_header_text&#x27; )
+      &#x27;callback&#x27; =&gt; array( &#x27;Flawless_ui&#x27;, &#x27;options_header_text&#x27; )
     );
 
     $flawless[ &#x27;options_ui&#x27; ][ &#x27;header_elements&#x27; ][ &#x27;footer_text&#x27; ] = array(
@@ -336,7 +336,7 @@ class flawless_theme_ui {
       &#x27;position&#x27; =&gt; 20,
       &#x27;setting&#x27; =&gt; $flawless[ &#x27;disabled_theme_features&#x27; ][ &#x27;footer-copyright&#x27; ],
       &#x27;toggle_label&#x27; =&gt; __( &#x27;Do not show copyright in footer.&#x27;, &#x27;flawless&#x27; ),
-      &#x27;callback&#x27; =&gt; array( &#x27;flawless_theme_ui&#x27;, &#x27;options_footer_copyright&#x27; )
+      &#x27;callback&#x27; =&gt; array( &#x27;Flawless_ui&#x27;, &#x27;options_footer_copyright&#x27; )
     );
 
     $flawless[ &#x27;options_ui&#x27; ][ &#x27;header_elements&#x27; ] = apply_filters( &#x27;flawless_option_header_elements&#x27;, $flawless[ &#x27;options_ui&#x27; ][ &#x27;header_elements&#x27; ] );
@@ -351,7 +351,7 @@ class flawless_theme_ui {
       }
     }
 
-    $page_selection_404 = flawless_theme::wp_dropdown_objects( array(
+    $page_selection_404 = Flawless::wp_dropdown_objects( array(
       &#x27;name&#x27; =&gt; &quot;flawless_settings[404_page]&quot;,
       &#x27;show_option_none&#x27; =&gt; __( &#x27;&amp;mdash; Select &amp;mdash;&#x27; ),
       &#x27;option_none_value&#x27; =&gt; &#x27;0&#x27;,
@@ -360,7 +360,7 @@ class flawless_theme_ui {
       &#x27;selected&#x27; =&gt; $flawless[ &#x27;404_page&#x27; ]
     ) );
 
-    $page_selection_not_found = flawless_theme::wp_dropdown_objects( array(
+    $page_selection_not_found = Flawless::wp_dropdown_objects( array(
       &#x27;name&#x27; =&gt; &quot;flawless_settings[no_search_result_page]&quot;,
       &#x27;show_option_none&#x27; =&gt; __( &#x27;&amp;mdash; Select &amp;mdash;&#x27; ),
       &#x27;option_none_value&#x27; =&gt; &#x27;0&#x27;,
@@ -703,7 +703,7 @@ class flawless_theme_ui {
           &lt;input type=&quot;hidden&quot; name=&quot;flawless_settings[flawless_logo][height]&quot;
                  value=&quot;&lt;?php echo $flawless[ &#x27;flawless_logo&#x27; ][ &#x27;height&#x27; ]; ?&gt;&quot;/&gt;
 
-          &lt;?php if ( flawless_theme::can_get_image( $flawless[ &#x27;flawless_logo&#x27; ][ &#x27;url&#x27; ] ) ) {
+          &lt;?php if ( Flawless::can_get_image( $flawless[ &#x27;flawless_logo&#x27; ][ &#x27;url&#x27; ] ) ) {
             echo &#x27;&lt;img src=&quot;&#x27; . $flawless[ &#x27;flawless_logo&#x27; ][ &#x27;url&#x27; ] . &#x27;&quot; class=&quot;flawless_logo&quot; /&gt;&#x27;;
           } else {
             ?&gt;
@@ -751,7 +751,7 @@ class flawless_theme_ui {
       &lt;ul class=&quot;flawless_widget_area_list&quot; type=&quot;widget_area_selector&quot;&gt;
 
         &lt;?php foreach ( ( array )$flawless[ &#x27;widget_areas&#x27; ][ &#x27;all&#x27; ] as $sidebar_id =&gt; $sidebar_data ) {
-          flawless_theme_ui::flawless_widget_item( array(
+          Flawless_ui::flawless_widget_item( array(
             &#x27;sidebar_id&#x27; =&gt; $sidebar_id,
             &#x27;widget_area_selector&#x27; =&gt; true,
             &#x27;sidebar_data&#x27; =&gt; $sidebar_data
@@ -819,7 +819,7 @@ class flawless_theme_ui {
               &lt;?php if ( $data[ &#x27;flawless_post_type&#x27; ] == &#x27;true&#x27; ) { ?&gt;
                 &lt;li class=&quot;flawless_option&quot;&gt;
                   &lt;label&gt;&lt;?php _e( &#x27;Root Page:&#x27;, &#x27;flawless&#x27; ) ?&gt;
-                    &lt;?php flawless_theme::wp_dropdown_objects( array(
+                    &lt;?php Flawless::wp_dropdown_objects( array(
                       &#x27;name&#x27; =&gt; &quot;flawless_settings[post_types][{$type}][root_page]&quot;,
                       &#x27;show_option_none&#x27; =&gt; __( &#x27;&amp;mdash; Select &amp;mdash;&#x27; ),
                       &#x27;option_none_value&#x27; =&gt; &#x27;0&#x27;,
@@ -916,7 +916,7 @@ class flawless_theme_ui {
 
                   &lt;?php foreach ( ( array )$these_sidebars as $sidebar_id ) {
 
-                    flawless_theme_ui::flawless_widget_item( array(
+                    Flawless_ui::flawless_widget_item( array(
                       &#x27;sidebar_id&#x27; =&gt; $sidebar_id,
                       &#x27;was_slug&#x27; =&gt; $was_slug,
                       &#x27;post_type&#x27; =&gt; $type,
@@ -1045,7 +1045,7 @@ class flawless_theme_ui {
 
                   &lt;?php foreach ( ( array )$these_sidebars as $sidebar_id ) {
 
-                    flawless_theme_ui::flawless_widget_item( array(
+                    Flawless_ui::flawless_widget_item( array(
                       &#x27;sidebar_id&#x27; =&gt; $sidebar_id,
                       &#x27;was_slug&#x27; =&gt; $was_slug,
                       &#x27;taxonomy_type&#x27; =&gt; $taxonomy_type,
@@ -1163,7 +1163,7 @@ class flawless_theme_ui {
           &lt;table&gt;
 
             &lt;?php foreach ( $flawless[ &#x27;css_options&#x27; ] as $option ) { ?&gt;
-              &lt;?php echo flawless_theme_ui::render_theme_option_input( $option, array( &#x27;output&#x27; =&gt; &#x27;table_row&#x27; ) ); ?&gt;
+              &lt;?php echo Flawless_ui::render_theme_option_input( $option, array( &#x27;output&#x27; =&gt; &#x27;table_row&#x27; ) ); ?&gt;
             &lt;?php } ?&gt;
 
             &lt;?php do_action( &#x27;flawless::options_ui_design::style_options&#x27;, $flawless ); ?&gt;
@@ -1176,7 +1176,7 @@ class flawless_theme_ui {
           &lt;th&gt;&lt;?php _e( &#x27;Skin Selection&#x27;, &#x27;flawless&#x27; ); ?&gt;&lt;/th&gt;
           &lt;td&gt;
             &lt;?php /* &lt;div class=&quot;description&quot;&gt;&lt;?php _e( &#x27;A Skin is like a child theme, and usually includes custom colors, spacing, and fonts. &#x27;, &#x27;flawless&#x27; ); ?&gt;&lt;/div&gt; */ ?&gt;
-            &lt;?php echo flawless_theme_ui::skin_selection(); ?&gt;&lt;/td&gt;
+            &lt;?php echo Flawless_ui::skin_selection(); ?&gt;&lt;/td&gt;
         &lt;/tr&gt;
       &lt;?php } ?&gt;
 
@@ -1402,7 +1402,7 @@ class flawless_theme_ui {
   function skin_selection( $args = false ) {
     global $flawless;
 
-    $color_schemes = flawless_theme::get_color_schemes();
+    $color_schemes = Flawless::get_color_schemes();
 
     ob_start(); ?&gt;
 
@@ -1416,7 +1416,7 @@ class flawless_theme_ui {
             &lt;/div&gt;
           &lt;?php } else { ?&gt;
             &lt;div class=&quot;skin_thumb_placeholder flawless_no_image&quot;&gt;
-              &lt;img class=&quot;skin_thumb&quot; src=&quot;&lt;?php echo flawless_theme::load( &#x27;no-skin-thumbanil.gif&#x27;, &#x27;image&#x27; ); ?&gt;&quot;
+              &lt;img class=&quot;skin_thumb&quot; src=&quot;&lt;?php echo Flawless::load( &#x27;no-skin-thumbanil.gif&#x27;, &#x27;image&#x27; ); ?&gt;&quot;
                    title=&quot;&lt;?php _e( &#x27;No Thumbnail Found&#x27;, &#x27;flawless&#x27; ); ?&gt;&quot;/&gt;
             &lt;/div&gt;
           &lt;?php } ?&gt;
@@ -1432,7 +1432,7 @@ class flawless_theme_ui {
       &lt;?php } ?&gt;
       &lt;li class=&quot;flawless_setup_option_block&quot;&gt;
         &lt;div class=&quot;skin_thumb_placeholder flawless_no_image&quot;&gt;
-          &lt;img class=&quot;skin_thumb&quot; src=&quot;&lt;?php echo flawless_theme::load( &#x27;no-skin-thumbanil.gif&#x27;, &#x27;image&#x27; ); ?&gt;&quot;
+          &lt;img class=&quot;skin_thumb&quot; src=&quot;&lt;?php echo Flawless::load( &#x27;no-skin-thumbanil.gif&#x27;, &#x27;image&#x27; ); ?&gt;&quot;
                title=&quot;&lt;?php _e( &#x27;No Thumbnail Found&#x27;, &#x27;flawless&#x27; ); ?&gt;&quot;/&gt;
         &lt;/div&gt;
         &lt;input class=&quot;checkbox&quot; group=&quot;flawless_color_scheme&quot; &lt;?php checked( false, $flawless[ &#x27;color_scheme&#x27; ] ); ?&gt;

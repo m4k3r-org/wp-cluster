@@ -131,7 +131,7 @@ class flawless_front_end_editor {
     /**
      * {missing description}
      *
-     * @todo admin_bar_menu should be using flawless_theme::add_to_navbar() which should then add the Editor link to the appropriate Navbar. - potanin@UD 6/9/2012
+     * @todo admin_bar_menu should be using Flawless::add_to_navbar() which should then add the Editor link to the appropriate Navbar. - potanin@UD 6/9/2012
      * @since Flawless 0.5.0
      */
     add_action( &#x27;flawless::theme_setup::after&#x27;, function () {
@@ -146,7 +146,7 @@ class flawless_front_end_editor {
         add_action( &#x27;flawless_ajax_action&#x27;, array( &#x27;flawless_front_end_editor&#x27;, &#x27;flawless_ajax_action&#x27; ), 200, 2 );
 
         add_action( &#x27;flawless::wp_enqueue_scripts&#x27;, function () {
-          wp_enqueue_script( &#x27;jquery-ud-frontend_editor&#x27;, flawless_theme::load( &#x27;jquery.ud.frontend_editor.js&#x27;, &#x27;js&#x27; ), array(
+          wp_enqueue_script( &#x27;jquery-ud-frontend_editor&#x27;, Flawless::load( &#x27;jquery.ud.frontend_editor.js&#x27;, &#x27;js&#x27; ), array(
             &#x27;jquery-ui-slider&#x27;,
             &#x27;jquery-ui-draggable&#x27;,
             &#x27;jquery-ui-sortable&#x27;,
@@ -155,7 +155,7 @@ class flawless_front_end_editor {
         } );
 
         add_action( &#x27;flawless::wp_print_styles&#x27;, function () {
-          wp_enqueue_style( &#x27;flawless-live-editor&#x27;, flawless_theme::load( &#x27;flawless-live-editor.css&#x27;, &#x27;css&#x27; ), array(), Flawless_Version, &#x27;screen&#x27; );
+          wp_enqueue_style( &#x27;flawless-live-editor&#x27;, Flawless::load( &#x27;flawless-live-editor.css&#x27;, &#x27;css&#x27; ), array(), Flawless_Version, &#x27;screen&#x27; );
         } );
 
       }

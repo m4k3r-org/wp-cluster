@@ -111,12 +111,12 @@
  */
 
 
-add_action(&#x27;flawless_theme_setup&#x27;, array(&#x27;flawless_business_card&#x27;, &#x27;flawless_theme_setup&#x27;));
+add_action(&#x27;Flawless_setup&#x27;, array(&#x27;flawless_business_card&#x27;, &#x27;Flawless_setup&#x27;));
 add_filter(&#x27;flawless::available_theme_features&#x27;, array(&#x27;flawless_business_card&#x27;,&#x27;available_theme_features&#x27;));
 
 class flawless_business_card {
 
-  function flawless_theme_setup() {
+  function Flawless_setup() {
     add_action(&#x27;flawless::init_upper&#x27;, array(&#x27;flawless_business_card&#x27;, &#x27;init_upper&#x27;));
     add_action(&#x27;flawless::init_lower&#x27;, array(&#x27;flawless_business_card&#x27;, &#x27;init_lower&#x27;));
     
@@ -191,7 +191,7 @@ class flawless_business_card {
   function flawless_update_settings($flawless) {
 
     //** Set coordinates for Business Card Info */
-    $coordinates = flawless_theme::geo_locate_address($flawless[&#x27;business_card&#x27;][&#x27;data&#x27;][&#x27;physical_address&#x27;]);
+    $coordinates = Flawless::geo_locate_address($flawless[&#x27;business_card&#x27;][&#x27;data&#x27;][&#x27;physical_address&#x27;]);
 
     $flawless[&#x27;business_card&#x27;][&#x27;system&#x27;][&#x27;latitude&#x27;] = $coordinates-&gt;longitude;
     $flawless[&#x27;business_card&#x27;][&#x27;system&#x27;][&#x27;longitude&#x27;] = $coordinates-&gt;latitude;
@@ -204,7 +204,7 @@ class flawless_business_card {
 
   function widgets_init() {
 
-    flawless_theme::console_log(&#x27;P: Widget Registered: Flawless_Widget_Business_Card&#x27;);
+    Flawless::console_log(&#x27;P: Widget Registered: Flawless_Widget_Business_Card&#x27;);
 
     register_widget(&quot;Flawless_Widget_Business_Card&quot;);
 
@@ -453,7 +453,7 @@ class Flawless_Widget_Business_Card extends WP_Widget {
         continue;
       }
 
-      if(flawless_theme::is_url($value)) {
+      if(Flawless::is_url($value)) {
         $value = &#x27;&lt;a class=&quot;business_info_link&quot; href=&quot;&#x27;. $value .&#x27;&quot;&gt;&#x27; . $label. &#x27;&lt;/a&gt;&#x27;;
         $classes[] = &#x27;has_link&#x27;;
       }
@@ -691,7 +691,7 @@ if(!function_exists(&#x27;flawless_have_business_card&#x27;)) {
       }
 
       //** Convert into URL, if a URL is used */
-      if(flawless_theme::is_url($value)) {
+      if(Flawless::is_url($value)) {
         $value = &#x27;&lt;a class=&quot;business_info_link&quot; href=&quot;&#x27;. $value .&#x27;&quot;&gt;&#x27; . $label. &#x27;&lt;/a&gt;&#x27;;
         $classes[] = &#x27;has_link&#x27;;
       }

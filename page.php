@@ -8,7 +8,7 @@
  * @package Flawless
 */
 
-  //** Bail out if page is being loaded directly and flawless_theme does not exist */
+  //** Bail out if page is being loaded directly and Flawless does not exist */
   if( !function_exists( 'get_header' ) ) {
     die();
   }
