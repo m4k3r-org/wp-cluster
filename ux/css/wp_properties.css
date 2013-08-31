@@ -355,7 +355,7 @@
   }
 
   .nivo-directionNav a {
-    background: url(img/arrows.png) no-repeat scroll 0 0 transparent;
+    background: url(../../images/arrows.png) no-repeat scroll 0 0 transparent;
     border: 0 none;
     cursor: pointer;
     display: block;
@@ -373,7 +373,7 @@
   }
 
   .nivo-directionNav a.nivo-nextNav {
-    background: url(img/arrows.png) no-repeat scroll -30px 0 transparent;
+    background: url(../../images/arrows.png) no-repeat scroll -30px 0 transparent;
     right: 15px;
   }
 

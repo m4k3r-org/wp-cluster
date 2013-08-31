@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/premium/carrington-build/vendor/carrington-build/classes/module-utility.class.php - Flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Functions.html">Template Functions</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../classes/UD_API.html">UD_API</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/premium/carrington-build/vendor/carrington-build/classes/module-utility.class.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+
+/* heinous -- we need to include this for wp_terms_checklist.  yet this file
+ * (__FILE__) may be included from all sorts of weird paths
+ */
+require_once ABSPATH.&#x27;/wp-admin/includes/template.php&#x27;;
+
+/**
+ * Utility class that will be extended by cfct_build_module
+ * Provides helper functions for common actions, inputs, fields, etc.
+ */
+class cfct_build_module_utility {
+  public function __construct() {
+    add_action(&#x27;wp_ajax_cfct_module_ajax&#x27;, array($this, &#x27;_handle_requests&#x27;));
+  }
+  
+  /**
+   * Global ajax request handler for utility class provided methods
+   */
+  public function _handle_requests() {
+    if (!empty($_POST[&#x27;cf_id_base&#x27;]) &amp;&amp; $_POST[&#x27;cf_id_base&#x27;] == $this-&gt;id_base &amp;&amp; !empty($_POST[&#x27;cf_action&#x27;])) {
+      switch($_POST[&#x27;cf_action&#x27;]) {
+        case &#x27;cf-global-image-search&#x27;:
+          $this-&gt;_global_image_search();
+          break;
+      }
+    }
+  }
+
+// Module Admin Tabs
+
+  /**
+   * Standard module tabs
+   * 
+   * $tabs = array( &#x27;tab_id&#x27; =&gt; &#x27;title&#x27; );
+   *   - tab_id: id of target div to toggle
+   *   - title: user friendly tab display name
+   *
+   * The selected visible tab will have a &#x60;class=&quot;active&quot;&#x60; attribute
+   * Your tab markup should be:
+   *    &lt;div class=&quot;cfct-module-tab-contents&quot;&gt;
+   *      &lt;div id=&quot;tab-one&quot; class=&quot;active&quot;&gt;...&lt;/tab&gt;
+   *      &lt;div id=&quot;tab-two&quot;&gt;...&lt;/tab&gt;
+   *    &lt;/div&gt;
+   *
+   * @param string $tabs_id
+   * @param array $tabs
+   * @param $active_tab
+   * @return string HTML
+   */
+  protected function cfct_module_tabs($tabs_id, $tabs = array(), $active_tab = null) {
+    $html = &#x27;&#x27;;
+    if (count($tabs)) {
+      $html = &#x27;
+        &lt;div id=&quot;&#x27;.$tabs_id.&#x27;&quot; class=&quot;cfct-module-tabs&quot;&gt;
+          &lt;ul&gt;&#x27;;
+      $i = 0;
+      foreach ($tabs as $tab_id =&gt; $title) {
+        $active = ((!empty($active_tab) &amp;&amp; $active_tab == $tab_id) || empty($active_tab) &amp;&amp; ++$i == 1 ? &#x27; class=&quot;active&quot;&#x27; : &#x27;&#x27;);
+        $html .= &#x27;
+            &lt;li&#x27;.$active.&#x27;&gt;&lt;a href=&quot;#&#x27;.$tab_id.&#x27;&quot;&gt;&#x27;.$title.&#x27;&lt;/a&gt;&lt;/li&gt;&#x27;;
+      }
+      $html .= &#x27;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &#x27;;
+    }
+    return $html;
+  }  
+
+  /**
+   *  Add this JS to your module&#x27;s addModuleSaveCallback JavaScript
+   */
+  protected function cfct_module_tabs_js() {
+    return &#x27;
+      $(&quot;.cfct-module-tabs a&quot;).click(function(){
+        var _this = $(this);
+        if (!_this.parent(&quot;li&quot;).hasClass(&quot;active&quot;)) {
+          _this.parent(&quot;li&quot;).addClass(&quot;active&quot;).siblings().removeClass(&quot;active&quot;);
+          // thank IE for this next line
+          var hash = _this.attr(&quot;href&quot;).slice(_this.attr(&quot;href&quot;).indexOf(&quot;#&quot;));
+          $(hash).addClass(&quot;active&quot;).siblings().removeClass(&quot;active&quot;);
+        }
+        return false;
+      });
+    &#x27;;
+  }
+
+// Custom Layout
+  
+  /**
+   * Allows for quick checking against an internal array of
+   * feature support (in $this-&gt;content_support array)
+   * to help determine if/when items should be displayed.
+   * 
+   * Aimed at helping to make base modules more extensible to 
+   * custom situations &amp; module extending.
+   *
+   * @see callout/post-callout modules for implementation
+   * @param string $item 
+   * @return bool
+   */
+  public function supports($item) {
+    return in_array($item, $this-&gt;content_support);
+  }
+  
+  /**
+   * generic layout controls for header-size, content-size and image-alignment
+   *
+   * $controls =  = array(&#x27;header&#x27;, &#x27;content&#x27;, &#x27;image&#x27;); or any variation on that combo
+   *
+   * @param array $controls - array of control items to output
+   * @param array $data - module data
+   * @return string HTML
+   */
+  function post_layout_controls($controls, $data) {
+    if (empty($controls)) {
+      return null;
+    }
+    
+    $html = &#x27;
+      &lt;div class=&quot;&#x27;.$this-&gt;id_base.&#x27;-c6-34 cfct-post-layout-controls&quot;&gt;&#x27;;
+    if (in_array(&#x27;header&#x27;, $controls)) {
+      $html .= &#x27;
+        &lt;p class=&quot;cfct-style-title-chooser&quot;&gt;&#x27;.$this-&gt;custom_css_dropdown(&#x27;style-title&#x27;, __(&#x27;Header Size&#x27;, &#x27;carrington-build&#x27;), &#x27;header&#x27;, $data).&#x27;&lt;/p&gt;&#x27;;
+    }
+    if (in_array(&#x27;image&#x27;, $controls)) {
+      $html .= &#x27;
+        &lt;p class=&quot;cfct-style-image-chooser&quot;&gt;&#x27;.$this-&gt;custom_css_dropdown(&#x27;image-alignment&#x27;, __(&#x27;Image Alignment&#x27;, &#x27;carrington-build&#x27;), &#x27;image&#x27;, $data).&#x27;&lt;/p&gt;&#x27;;
+    }
+    if (in_array(&#x27;content&#x27;, $controls)) {
+      $html .= &#x27;
+        &lt;p class=&quot;cfct-style-content-chooser&quot;&gt;&#x27;.$this-&gt;custom_css_dropdown(&#x27;style-content&#x27;, __(&#x27;Content Size&#x27;, &#x27;carrington-build&#x27;), &#x27;content&#x27;, $data).&#x27;&lt;/p&gt;&#x27;;
+    }
+    $html .= &#x27;
+      &lt;/div&gt;&lt;!--/post-layout-controls--&gt;
+    &#x27;;
+    
+    return $html;
+  }
+  
+  function post_layout_controls_js() {
+    return preg_replace(&#x27;/^(\t){3}/m&#x27;, &#x27;&#x27;, &#x27;
+      cfct_builder.addModuleLoadCallback(&quot;&#x27;.$this-&gt;id_base.&#x27;&quot;,function(form) {
+        $(&quot;.cfct-post-layout-controls select.cfct-style-chooser&quot;).change(function(){
+          var _this = $(this);
+          var styles = &#x27;.json_encode(array_flip(array_map(&#x27;strtolower&#x27;, cfct_class_groups(&#x27;image&#x27;, true)))).&#x27;;
+          var tgt = $(&quot;#&#x27;.$this-&gt;get_field_id(&#x27;post-preview-content&#x27;).&#x27; .&#x27;.$this-&gt;id_base.&#x27;-post-content&quot;);
+
+          for (i in styles) {
+            tgt.removeClass(styles[i]);
+          }
+          tgt.addClass(_this.val());        
+        });
+        
+      });
+    &#x27;);
+  }
+  
+  function custom_css_dropdown($name, $title, $type, $data) {
+    $options = cfct_class_groups($type);
+    $current_setting = (!empty($data[$this-&gt;get_field_name($name)]) ? $data[$this-&gt;get_field_name($name)] : false);
+    
+    $ret = &#x27;&lt;label for=&quot;&#x27;.$this-&gt;get_field_id($name).&#x27;&quot;&gt;&#x27;.$title.&#x27;&lt;/label&gt;
+      &lt;select class=&quot;cfct-style-chooser&quot; name=&quot;&#x27;.$this-&gt;get_field_name($name).&#x27;&quot; id=&quot;&#x27;.$this-&gt;get_field_id($name).&#x27;&quot;&gt;&lt;option value=&quot;&quot;&gt;&#x27;.__(&#x27;-none-&#x27;, &#x27;carrington-build&#x27;).&#x27;&lt;/option&gt;&#x27;;
+    foreach ($options as $value =&gt; $name) {
+      //$ret .= &#x27;&lt;option &#x27;.($current_setting == $value ? &#x27;selected=&quot;selected&quot; &#x27; : &#x27;&#x27;).&#x27;value=&quot;&#x27;.strtolower($value).&#x27;&quot;&gt;&#x27;.$name.&#x27;&lt;/option&gt;&#x27;;
+      $ret .= &#x27;&lt;option &#x27;.selected($value, $current_setting, false).&#x27; value=&quot;&#x27;.strtolower($value).&#x27;&quot;&gt;&#x27;.$name.&#x27;&lt;/option&gt;&#x27;;
+    }
+    $ret .=&#x27;&lt;/select&gt;&#x27;;
+    
+    return $ret;
+  }
+
+// Image Selector
+  protected $image_selectors = array();
+  
+  /**
+   * Image selector HTML markup
+   * $args are:
+   *   - post_id: id of post to pull images from (for the post_image_selector)
+   *   - field_name: name of form feild to be submitted on module save
+   *   - selected_image: id of the currently selected image
+   *  - selected_size: id of the currently selected image size
+   *  - parent_class: additional classes to be applied to the parent wrapper
+   *  - image_class: additional classes to be applied to the image wrappers
+   *  - selected_image_class: additional classes to be applied to the
+   *  - direction: control the orientation of the image list, &#x27;horizontal&#x27; or &#x27;vertical&#x27;
+   *  - select_no_image: by default its a select and go, this allows selecting &quot;no image&quot;
+   *
+   * @param string $type - &#x27;post&#x27; or &#x27;global&#x27;
+   * @param array $args - array(&#x27;post_id&#x27;, &#x27;field_name&#x27;, &#x27;selected_image&#x27;, &#x27;parent_class&#x27;, &#x27;image_class&#x27;, &#x27;selected_image_class&#x27;)
+   * @return string html
+   */
+  public function image_selector($type = &#x27;post&#x27;, $args = array()) {
+    $args = array_merge(array(
+      &#x27;post_id&#x27; =&gt; null,
+      &#x27;field_name&#x27; =&gt; null,
+      &#x27;selected_image&#x27; =&gt; null,
+      &#x27;selected_size&#x27; =&gt; null,
+      &#x27;allow_multiple&#x27; =&gt; null,
+      &#x27;image_size&#x27; =&gt; &#x27;thumbnail&#x27;,    
+      &#x27;parent_class&#x27; =&gt; null,
+      &#x27;image_class&#x27; =&gt; null,      
+      &#x27;selected_image_class&#x27; =&gt; null,
+      &#x27;select_no_image&#x27; =&gt; false,
+      &#x27;suppress_size_selector&#x27; =&gt; false
+    ), $args);
+    if ($type == &#x27;post&#x27;) {
+      return $this-&gt;_post_image_selector($args);
+    }
+    else {
+      return $this-&gt;_global_image_selector($args);
+    }
+  }
+  
+  /**
+   * Method to output a &quot;global&quot; image selector for searching the entire media gallery
+   * Image selector is loaded via ajax based on a search term entered by user
+   *
+   * @see image_selector() for $args descriptions
+   * @param array $args
+   * @return string HTML
+   */
+  public function _global_image_selector($args) {
+    $value = null;
+    
+    if (!empty($args[&#x27;selected_image&#x27;])) {
+      $image = get_post($args[&#x27;selected_image&#x27;]);
+      $selected_image = &#x27;&lt;div class=&quot;cfct-image-select-items-list-item active&quot;&gt;&#x27;.$this-&gt;_image_list_item($image, $args[&#x27;image_size&#x27;]).&#x27;&lt;/div&gt;&#x27;;
+    }
+    else {
+      $selected_image = &#x27;&lt;div class=&quot;cfct-image-select-items-list-item cfct-image-select-items-no-image&quot;&gt;&lt;div&gt;&lt;div class=&quot;cfct-image-list-item-title&quot;&gt;&#x27;.__(&#x27;(no image)&#x27;, &#x27;carrington-build&#x27;).&#x27;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#x27;;
+    }
+    $html = &#x27;
+      &lt;div id=&quot;&#x27;.$this-&gt;id_base.&#x27;-&#x27;.$args[&#x27;field_name&#x27;].&#x27;-global-image-search&quot; class=&quot;cfct-global-image-select cfct-image-select-b&quot;&gt;
+        &lt;div class=&quot;&#x27;.$this-&gt;id_base.&#x27;-global-image-select-search&quot;&gt;
+          &lt;input type=&quot;text&quot; name=&quot;&#x27;.$this-&gt;id_base.&#x27;-&#x27;.$args[&#x27;field_name&#x27;].&#x27;-image-search&quot; placeholder=&quot;&#x27;.__(&#x27;Search the Image Library&#x27;, &#x27;carrington-build&#x27;).&#x27;&amp;hellip;&quot; value=&quot;&quot; id=&quot;&#x27;.$this-&gt;id_base.&#x27;-&#x27;.$args[&#x27;field_name&#x27;].&#x27;-image-search&quot; class=&quot;cfct-global-image-search-field&quot; data-image-size=&quot;&#x27;.$args[&#x27;image_size&#x27;].&#x27;&quot; /&gt;
+          &lt;input type=&quot;hidden&quot; id=&quot;&#x27;.$this-&gt;get_field_id($args[&#x27;field_name&#x27;]).&#x27;&quot; class=&quot;cfct-global-image-select-value&quot; name=&quot;&#x27;.$this-&gt;get_field_name($args[&#x27;field_name&#x27;]).&#x27;&quot; value=&quot;&#x27;.$args[&#x27;selected_image&#x27;].&#x27;&quot; /&gt;
+          
+          &lt;div class=&quot;cfct-image-scroller-group&quot;&gt;
+            &lt;div class=&quot;cfct-global-image-search-current-image cfct-image-select-current-image cfct-image-select-items-list-item&quot;&gt;
+              &#x27;.$selected_image.&#x27;
+              &lt;p&gt;&#x27;.__(&#x27;Current Selection&#x27;, &#x27;carrington-build&#x27;).&#x27;&lt;/p&gt;
+            &lt;/div&gt;&lt;div class=&quot;cfct-global-image-search-results cfct-image-select-items-list &#x27;.$this-&gt;_image_list_dir_class($args).&#x27; cfct-image-select-items-list-b&quot; id=&quot;&#x27;.$this-&gt;id_base.&#x27;-&#x27;.$args[&#x27;field_name&#x27;].&#x27;-live-search-results&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;&#x27;;
+
+    if (empty($args[&#x27;suppress_size_selector&#x27;]) || $args[&#x27;suppress_size_selector&#x27;] == false) {
+      $html .= $this-&gt;_image_selector_size_select($args);
+    }
+    
+    $html .= &#x27;
+      &lt;/div&gt;
+      &#x27;;
+    return apply_filters($this-&gt;id_base.&#x27;-global-image-select-html&#x27;, $html, $args);
+  }
+  
+  /**
+   * JS for controlling global image selector
+   * Due to markup differences this method targets a different parent wrapper for adding the image id to the hidden field
+   *
+   * @param string $field_name 
+   * @return string HTML
+   */
+  public function global_image_selector_js($field_name) {
+    $js_base = $this-&gt;id_base;
+    return &#x27;
+      cfct_builder.addModuleLoadCallback(&quot;&#x27;.$this-&gt;id_base.&#x27;&quot;, function(form) {
+        // assign search actions
+        searches = [];
+        $(&quot;.cfct-global-image-select&quot;).each(function(){
+          var _this = $(this);
+          var search = new cfctModuleLiveImageSearch(&quot;&#x27;.$this-&gt;id_base.&#x27;&quot;, _this);
+          searches.push(search);
+        });
+        $.placeholders();
+      });
+    &#x27;;
+  }
+  
+  /**
+   * Method to output a simple &quot;post&quot; image selector
+   * Image selector shows images attached to a particular post
+   *
+   * @see image_selector() for $args descriptions
+   * @param array $args
+   * @return string HTML
+   */
+  public function _post_image_selector($args) {
+    if (empty($args[&#x27;post_id&#x27;])) {
+      return false;
+    }
+
+    $attachment_args = array(
+      &#x27;post_type&#x27; =&gt; &#x27;attachment&#x27;,
+      &#x27;post_mime_type&#x27; =&gt; &#x27;image&#x27;,
+      &#x27;numberposts&#x27; =&gt; -1,
+      &#x27;post_status&#x27; =&gt; &#x27;inherit&#x27;,
+      &#x27;post_parent&#x27; =&gt; $args[&#x27;post_id&#x27;],
+      &#x27;orderby&#x27; =&gt; &#x27;title&#x27;,
+      &#x27;order&#x27; =&gt; &#x27;ASC&#x27;
+    ); 
+
+    $attachments = get_posts($attachment_args); 
+
+    if (count($attachments)) {
+      $id = $this-&gt;id_base.&#x27;-&#x27;.$args[&#x27;field_name&#x27;].&#x27;-image-select-items-list&#x27;;
+      
+      $class = &#x27;cfct-post-image-select cfct-image-select-items-list &#x27;.$this-&gt;_image_list_dir_class($args);
+      if (!empty($args[&#x27;allow_multiple&#x27;]) &amp;&amp; $args[&#x27;allow_multiple&#x27;] == true) {
+        $class .= &#x27; cfct-post-image-select-multiple&#x27;;
+        $note = __(&#x27;Select one or more Images&#x27;, &#x27;carrington-build&#x27;);
+      }
+      else {
+        $class .= &#x27; cfct-post-image-select-single&#x27;;
+        $note = __(&#x27;Select an Image&#x27;, &#x27;carrington-build&#x27;);
+      }
+      
+      // push the featured image to the front of the list of images
+      $featured_image_id = get_post_meta($args[&#x27;post_id&#x27;], &#x27;_thumbnail_id&#x27;, true);
+      if (!empty($featured_image_id)) {
+        foreach ($attachments as $key =&gt; $attachment) {
+          if ($attachment-&gt;ID == $featured_image_id) {
+            unset($attachments[$key]);
+            $attachment-&gt;is_featured_image = true;
+            array_unshift($attachments, $attachment);
+            break;
+          }
+        }
+      }
+      
+      $html = &#x27;
+        &lt;p class=&quot;cfct-image-select-note&quot;&gt;&#x27;.$note.&#x27;&lt;/p&gt;
+        &lt;div id=&quot;&#x27;.$id.&#x27;&quot; class=&quot;&#x27;.$class.&#x27;&quot;&gt;
+          &lt;div&gt;
+            &#x27;.$this-&gt;_image_list($attachments, $args).&#x27;
+            &lt;input type=&quot;hidden&quot; name=&quot;&#x27;.$this-&gt;get_field_name($args[&#x27;field_name&#x27;]).&#x27;&quot; id=&quot;&#x27;.$this-&gt;get_field_id($args[&#x27;field_name&#x27;]).&#x27;&quot; value=&quot;&#x27;.$args[&#x27;selected_image&#x27;].&#x27;&quot; /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;&#x27;;
+    }
+    else {
+      $html = &#x27;&lt;div class=&quot;cfct-image-select-no-images&quot;&gt;&#x27;.__(&#x27;No images found for the selected post.&#x27;, &#x27;carrington-build&#x27;).&#x27;&lt;/div&gt;&#x27;;
+    }
+    
+    if (empty($args[&#x27;suppress_size_selector&#x27;]) || $args[&#x27;suppress_size_selector&#x27;] == false) {
+      $html .= $this-&gt;_image_selector_size_select($args);
+    }
+    
+    return apply_filters($this-&gt;id_base.&#x27;-image-select-html&#x27;, $html, $args);
+  }
+  
+  /**
+   * Show a select list of available image sizes as defined in WordPress
+   *
+   * @param array $args - see this::image_selector() for args definition
+   * @return string HTML 
+   */
+  protected function _image_selector_size_select($args) {
+    $html = &#x27;
+      &lt;div class=&quot;cfct-image-select-size&quot;&gt;
+        &lt;label for=&quot;&#x27;.$this-&gt;id_base.&#x27;-&#x27;.$args[&#x27;field_name&#x27;].&#x27;-image-select-size&quot;&gt;&#x27;.__(&#x27;Image Size&#x27;, &#x27;carrington-build&#x27;).&#x27;&lt;/label&gt;
+        &#x27;.$this-&gt;_image_selector_size_select_node($args).&#x27;
+      &lt;/div&gt;
+      &lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;&#x27;;
+    return $html;
+  }
+  
+  /**
+   * Abstracted a select list node of available image sizes as defined in WordPress
+   *
+   * @param array $args - see this::image_selector() for args definition
+   * @return string HTML 
+   */
+  protected function _image_selector_size_select_node($args) {
+    global $_wp_additional_image_sizes;
+    $_sizes = get_intermediate_image_sizes();
+    $image_sizes = array();
+    foreach ($_sizes as $s) {
+      // Hide image sizes prefixed by underscore.
+      if (strpos($s, &#x27;_&#x27;) === 0) {
+        continue;
+      }
+      
+// taken from wp_generate_attachment_metadata(), wp-admin/includes/image.php
+      if ( isset( $_wp_additional_image_sizes[$s][&#x27;width&#x27;] ) )
+        $width = intval( $_wp_additional_image_sizes[$s][&#x27;width&#x27;] ); // For theme-added sizes
+      else
+        $width = get_option( &quot;{$s}_size_w&quot; ); // For default sizes set in options
+      if ( isset( $_wp_additional_image_sizes[$s][&#x27;height&#x27;] ) )
+        $height = intval( $_wp_additional_image_sizes[$s][&#x27;height&#x27;] ); // For theme-added sizes
+      else
+        $height = get_option( &quot;{$s}_size_h&quot; ); // For default sizes set in options
+      $size = $width.&#x27;&amp;times;&#x27;.$height;
+      if ( isset( $_wp_additional_image_sizes[$s][&#x27;crop&#x27;] ) )
+        $crop = intval( $_wp_additional_image_sizes[$s][&#x27;crop&#x27;] ); // For theme-added sizes
+      else
+        $crop = get_option( &quot;{$s}_crop&quot; ); // For default sizes set in options
+      if ($crop) {
+        $size = sprintf(__(&#x27;%s crop&#x27;, &#x27;carrington-build&#x27;), $size);
+      }
+// handle proportional image resizing along only one axis
+      if (empty($width)) {
+        $size = sprintf(__(&#x27;%s max height&#x27;, &#x27;carrington-build&#x27;), $height);
+      }
+      else if (empty($height)) {
+        $size = sprintf(__(&#x27;%s max width&#x27;, &#x27;carrington-build&#x27;), $width);
+      }
+      $image_sizes[$s] = sprintf(__(&#x27;%s (%s)&#x27;, &#x27;carrington-build&#x27;), $this-&gt;humanize($s, true, array(&#x27;-&#x27;)), $size);
+    }
+    $image_sizes[&#x27;full&#x27;] = __(&#x27;Full Size&#x27;, &#x27;carrington-build&#x27;);
+    $image_sizes = apply_filters(&#x27;cfct-build-image-size-select-sizes&#x27;, $image_sizes, $this-&gt;id_base);
+    
+    $html = &#x27;
+        &lt;select name=&quot;&#x27;.$this-&gt;get_field_name($args[&#x27;field_name&#x27;]).&#x27;-size&quot; id=&quot;&#x27;.$this-&gt;id_base.&#x27;-&#x27;.$args[&#x27;field_name&#x27;].&#x27;-image-select-size&quot;&gt;&#x27;;
+    foreach ($image_sizes as $size =&gt; $name) {
+      $html .= &#x27;
+          &lt;option value=&quot;&#x27;.$size.&#x27;&quot;&#x27;.selected($size, $args[&#x27;selected_size&#x27;], false).&#x27;&gt;&#x27;.esc_html($name).&#x27;&lt;/option&gt;&#x27;;
+    }      
+    $html .= &#x27;
+        &lt;/select&gt;&#x27;;
+    return $html;
+  }
+  
+  /**
+   * Helper function to determine the direction of the image list based on the passed in args
+   *
+   * @param array $args - the same args array that was passed to the selection output method
+   * @return string classname
+   */
+  protected function _image_list_dir_class($args) {
+    if (!empty($args[&#x27;direction&#x27;]) &amp;&amp; in_array($args[&#x27;direction&#x27;], array(&#x27;horizontal&#x27;, &#x27;vertical&#x27;))) {
+      $class = &#x27;cfct-image-select-items-list-&#x27;.$args[&#x27;direction&#x27;];
+    }
+    else {
+      $class = &#x27;cfct-image-select-items-list-horizontal&#x27;;
+    }
+    return $class;
+  }
+  
+  /**
+   * Common method for building image lists
+   *
+   * @param array $attachments - list of objects describing wp_posts table attachment items
+   * @param array $args
+   * @return string HTML
+   */
+  public function _image_list($attachments, $args) {
+    // push the selected image to the front of the list of images
+    if (isset($args[&#x27;selected_image&#x27;]) &amp;&amp; $args[&#x27;selected_image&#x27;] != false) {
+      $selected_images = (!empty($args[&#x27;selected_image&#x27;]) ? explode(&#x27;,&#x27;, $args[&#x27;selected_image&#x27;]) : 0);
+      $_attachments = $attachments;
+      foreach($_attachments as $key =&gt; $attachment) {
+        if (in_array($attachment-&gt;ID, $selected_images)) {
+          unset($attachments[$key]);
+          array_unshift($attachments, $attachment);
+          if (empty($args[&#x27;allow_multiple&#x27;])) {
+            break;
+          }
+        }
+      }
+      unset($_attachments);
+    }
+    else {
+      $selected_images = false;
+    }
+    
+    $html  = &#x27;      
+      &lt;ul class=&quot;cfct-image-select-items&quot;&gt;&#x27;;
+    
+    if (($selected_images !== false &amp;&amp; empty($args[&#x27;allow_multiple&#x27;])) || (!empty($args[&#x27;select_no_image&#x27;]) &amp;&amp; $args[&#x27;select_no_image&#x27;] == true)) {
+      $html .= &#x27;
+        &lt;li class=&quot;cfct-image-select-items-list-item cfct-image-select-items-no-image&#x27;.(empty($selected_images) ? &#x27; active&#x27; : &#x27;&#x27;).&#x27;&quot; data-image-id=&quot;0&quot;&gt;
+          &lt;div&gt;
+            &lt;div class=&quot;cfct-image-list-item-title&quot;&gt;&#x27;.__(&#x27;(no image)&#x27;, &#x27;carrington-build&#x27;).&#x27;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/li&gt;&#x27;;
+    }
+    foreach ($attachments as $attachment) {
+      $active = (is_array($selected_images) &amp;&amp; in_array($attachment-&gt;ID, $selected_images) ? &#x27; active&#x27; : null);
+      $featured = (!empty($attachment-&gt;is_featured_image) ? &#x27; featured&#x27; : null);
+      $html .= &#x27;&lt;li class=&quot;cfct-image-select-items-list-item&#x27;.$active.$featured.&#x27;&quot; data-image-id=&quot;&#x27;.$attachment-&gt;ID.&#x27;&quot;&gt;&#x27;.$this-&gt;_image_list_item($attachment, $args[&#x27;image_size&#x27;]).&#x27;&lt;/li&gt;&#x27;;
+    }
+    
+    $html .= &#x27;
+      &lt;/ul&gt;&#x27;;
+    return $html;
+  }
+  
+  protected function _image_list_item($image, $size = &#x27;thumbnail&#x27;) {
+    if (!empty($image)) {
+      $img_src = wp_get_attachment_image_src($image-&gt;ID, $size);
+      $url = $img_src[0];
+      $title = $image-&gt;post_title;
+    }
+    return &#x27;&lt;div style=&quot;background: url(&#x27;.$url.&#x27;) 0 50% no-repeat;&quot;&gt;&lt;div class=&quot;cfct-image-list-item-title&quot;&gt;&#x27;.(!empty($image-&gt;is_featured_image) &amp;&amp; $image-&gt;is_featured_image ? &#x27;&lt;span class=&quot;featured-icon&quot;&gt; ★&lt;/span&gt;&#x27; : &#x27;&#x27;).$title.&#x27;&lt;/div&gt;&lt;/div&gt;&#x27;;
+  }
+
+  protected function _global_image_search() {
+    $term = trim(stripslashes($_POST[&#x27;term&#x27;]));
+    
+    $images = query_posts(array(
+      &#x27;s&#x27; =&gt; $term,
+      &#x27;posts_per_page&#x27; =&gt; 20,
+      &#x27;post_type&#x27; =&gt; &#x27;attachment&#x27;, 
+      &#x27;post_mime_type&#x27; =&gt; &#x27;image&#x27;,
+      &#x27;post_status&#x27; =&gt; &#x27;inherit&#x27;,
+      &#x27;order&#x27; =&gt; &#x27;ASC&#x27;
+    ));
+
+    $args = array(
+      &#x27;image_size&#x27; =&gt; (!empty($_POST[&#x27;image_size&#x27;]) ? esc_attr($_POST[&#x27;image_size&#x27;]) : &#x27;thumbnail&#x27;)
+    );
+
+    $html = &#x27;&lt;div&gt;&#x27;;
+    if (count($images)) {
+      $html .= $this-&gt;_image_list($images, $args);
+    }
+    else {
+      $html .= &#x27;
+        &lt;ul class=&quot;&#x27;.$this-&gt;id_base.&#x27;-image-select-items&quot;&gt;
+          &lt;li class=&quot;cfct-image-select-items-list-item cfct-image-select-items-no-image&quot; data-image-id=&quot;0&quot;&gt;
+            &#x27;.sprintf(__(&#x27;No images found&lt;br /&gt;for term &quot;%s&quot;&#x27;, &#x27;carrington-build&#x27;), esc_html($_POST[&#x27;term&#x27;])).&#x27;
+          &lt;/li&gt;
+        &lt;/ul&gt;&#x27;;
+    }
+    $html .= &#x27;&lt;/div&gt;&#x27;;
+    
+    $ret = array(
+      &#x27;success&#x27; =&gt; (count($images) ? true : false),
+      &#x27;term&#x27; =&gt; esc_html($_POST[&#x27;term&#x27;]),
+      &#x27;html&#x27; =&gt; $html
+    );
+    
+    header(&#x27;content-type: text/javascript charset=utf8&#x27;);
+    echo cfcf_json_encode($ret);
+    exit;
+  }
+
+// Authors
+  
+  /**
+   * Returns a label and dropdown for a list of authors
+   * (using the same method as the core WP author list)
+   *
+   * @param array $data data set in the module
+   * @param string $post_type @deprecated @since 1.2
+   * @return void
+   */
+  protected function get_author_dropdown($data = array(), $post_type = null) {
+    if (!is_null($post_type)) {
+      _deprecated_argument(__FUNCTION__, &#x27;1.2&#x27; , &#x27;Use of the &lt;code&gt;$post_type&lt;/code&gt; parameter has been deprecated.  The author dropdown includes all authors, similar to the WordPress admin author dropdown.&#x27;);
+    }
+
+    $dropdown_args = array(
+      &#x27;who&#x27; =&gt; &#x27;authors&#x27;,
+      &#x27;name&#x27; =&gt; $this-&gt;get_field_name(&#x27;author&#x27;), 
+      &#x27;selected&#x27; =&gt; isset($data[$this-&gt;get_field_name(&#x27;author&#x27;)]) ? $data[$this-&gt;get_field_name(&#x27;author&#x27;)] : null,
+      &#x27;include_selected&#x27; =&gt; true,
+      &#x27;echo&#x27; =&gt; 0,
+      &#x27;class&#x27; =&gt; null,
+      &#x27;show_option_all&#x27; =&gt; __(&#x27;Any Author&#x27;, &#x27;carrington-build&#x27;),
+    );
+    $html = &#x27;
+      &#x27;.wp_dropdown_users($dropdown_args).&#x27;
+    &#x27;;
+    return $html;
+  }
+
+  protected function get_taxonomy_selector($args) {
+    if(is_int($args[&#x27;taxonomy&#x27;])) {
+      throw new Exception(&quot;Need to query the taxonomy here &gt;.&lt;&quot;);
+    }
+
+    $post_id = $args[&#x27;post_id&#x27;];
+    $taxonomy = $args[&#x27;taxonomy&#x27;];
+    $selected_cats = $args[&#x27;selected_cats&#x27;] ? $args[&#x27;selected_cats&#x27;] : null;
+
+    // Allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
+    $name = ( $taxonomy-&gt;name == &#x27;category&#x27; ) ? &#x27;post_category&#x27; : &#x27;tax_input[&#x27; . $taxonomy-&gt;name . &#x27;]&#x27;;
+
+    ob_start();
+    wp_terms_checklist($post_id, array( 
+      &#x27;taxonomy&#x27; =&gt; $taxonomy-&gt;name, 
+      &#x27;selected_cats&#x27; =&gt; $selected_cats 
+    ));
+    
+    $checklist = ob_get_clean();
+
+    if(empty($checklist)) {
+      $checklist = &#x27;&lt;li&gt;&#x27;.__(&#x27;No terms in taxonomy&#x27;,&#x27;carrington-build&#x27;).&#x27;&lt;/li&gt;&#x27;;
+    }
+
+    $result = &#x27;
+      &lt;div class=&quot;cfct-multiselect&quot;&gt;
+        &lt;ul id=&quot;&#x27;.$taxonomy-&gt;name.&#x27;checklist&quot; class=&quot;&#x27;.$taxonomy-&gt;name.&#x27; categorychecklist&quot;&gt;
+          &#x27;.$checklist.&#x27;
+        &lt;/ul&gt;
+      &lt;/div&gt;&#x27;;
+
+    return $result;
+  } // function get_taxonomy_selector()
+
+// Text
+
+  /**
+   * Text Input boilerplate
+   */
+  protected function input_text($field_name, $label_text, $value, $args = array()) {
+    $defaults = array(
+      &#x27;prefix&#x27; =&gt; null,
+      &#x27;class&#x27; =&gt; &#x27;widefat&#x27;,
+      &#x27;wrapper_class&#x27; =&gt; &#x27;&#x27;,
+    );
+    $args = array_merge($defaults, $args);
+    extract($args);
+  
+    $id = (is_null($prefix)) ? $this-&gt;get_field_id($field_name) : $prefix.$field_name;
+    $name = (is_null($prefix)) ? $this-&gt;get_field_name($field_name) : $prefix.$field_name;
+    $wrapper_class = (!empty($wrapper_class)) ? &#x27; class=&quot;&#x27;.$wrapper_class.&#x27;&quot;&#x27; : &#x27;&#x27;;
+    $class = (!empty($class)) ? &#x27; class=&quot;&#x27;.$class.&#x27;&quot;&#x27; : &#x27;&#x27;;
+    $html = &#x27;
+      &lt;label for=&quot;&#x27;.$id.&#x27;&quot;&gt;&#x27;.esc_html($label_text).&#x27;&lt;/label&gt;
+      &lt;input&#x27;.$class.&#x27; id=&quot;&#x27;.$id.&#x27;&quot; name=&quot;&#x27;.$name.&#x27;&quot; type=&quot;text&quot; value=&quot;&#x27;.esc_attr($value).&#x27;&quot; /&gt;
+    &#x27;;
+    return $html;
+  }
+
+// Utility
+  public function humanize($str, $titlecase = true, $replace_extras = array()) {
+    return cfct_build_humanize($str, $titlecase, $replace_extras);
+  }
+
+  /**
+   * Does basic WP text formatting (texturize, autop, etc.)
+   *
+   * @param string
+   * @return string
+   */
+  public function wp_formatting($str) {
+    $str = wptexturize($str);
+    $str = convert_smilies($str);
+    $str = convert_chars($str);
+    $str = wpautop($str);
+    return $str;
+  }
+  
+  /**
+   * Helper function that if you know the post_id &amp;
+   * the module_id you can get the module data directly
+   * from postmeta
+   *
+   * @param int $post_id 
+   * @param string $module_id 
+   * @return mixed array/bool - false on failure to find data
+   */
+  public function get_module_build_data($post_id, $module_id) {
+    $meta = get_post_meta($post_id, CFCT_BUILD_POSTMETA, true);
+    if (!empty($meta[&#x27;data&#x27;][&#x27;modules&#x27;][$module_id])) {
+      return $meta[&#x27;data&#x27;][&#x27;modules&#x27;][$module_id];
+    }
+    else {
+      return false;
+    }
+  }
+}
+
+/**
+ * for the time being we&#x27;ll filter in the JS needed to do live searches
+ */
+function cfct_module_utility_add_live_image_search_js($js) {
+  $file = CFCT_BUILD_DIR.&#x27;js/cfct-live-search.js&#x27;;
+  if (is_file($file)) {
+    $js .= PHP_EOL.file_get_contents($file).PHP_EOL;
+  }
+  return $js;
+}
+add_filter(&#x27;cfct-get-extras-modules-js-admin&#x27;, &#x27;cfct_module_utility_add_live_image_search_js&#x27;);
+
+?&gt;
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

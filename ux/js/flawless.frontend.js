@@ -24,7 +24,6 @@ var flawless = jQuery.extend( true, {
   }
 }, typeof flawless === 'object' ? flawless : {} );
 
-
 /**
  * Perform actions that require images to be fully loaded
  *

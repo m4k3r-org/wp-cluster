@@ -1,21 +1,23 @@
 /**
- * Theme Name: Green
- * Description: Layout designed for IntuitLaw.com
+ * Theme Name: Real Estate - Red
+ * Description: Layout designed for TandemProperties.com
  * Author: UsabilityDynamics.com
- * Version: 0.0.2
- * Tags: dark, green
- * Description: Full layout. 
+ * Version: 1.0
+ * Tags: blark, maroon, gray
+ * Description: Full layout.
  * Supported Features: custom-header, custom-background, header-logo, header-search, header-text, mobile-navbar, footer-copyright, header-actions-menu, header-menu, bottom-of-page-menu
  * Google Fonts: Oswald, Droid Serif, Droid Sans
+ *
+ * == Fonts ==
+ * TypeKit Fonts: proxima-nova, myriad-pro
  *
  * == Usage ==
  * - Adding 'two-columns' class to a loop will split up the loop items into two columns.
  * - Adding 'grid' class ??
  * - Class .formatted-row is used to
  *
- * @author potanin@UD
- *
  */
+
 
 /**
  *  CSS for Screen and Print
@@ -26,18 +28,18 @@
 @media screen, print {
 
   body {
-    background-color: #6C8C38;
-    color: #2A2A2A;
+    background-color: #f2f2f2;
   }
 
-  a {
-    color: #000;
+  /*====[Default Header Eement Positions]======================*/
+  .header.container {
+    height: 110px;
   }
 
   .background_header_image {
-    background-image: url(../../img/skin-green/body-background.jpg);
-    background-repeat: no-repeat;
-    height: 800px;
+    background: url("../../images/skin-red-realty/background_header_image.jpg") repeat-x scroll left 35px #F2F2F2;
+    height: 400px;
+    opacity: 0.3;
   }
 
   .header .logo_area_wrapper {
@@ -48,9 +50,9 @@
   }
 
   .header .header_menu {
-    bottom: -16px;
-    left: 200px;
     position: absolute;
+    right: 10px;
+    top: 50px;
     width: auto;
   }
 
@@ -64,20 +66,14 @@
     top: 70px;
   }
 
-  .header.container {
-    height: 50px;
-  }
-
+  /*====[Main Containers]=================================*/
   body, li, table, p {
     font: 400 15px/1.6 'myriad-pro', Verdana, Helvetica, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    color: #2E3C18;
-    font-family: 'Droid Sans',sans-serif;
-    font-size: 30px;
-    font-weight: bold;
-    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    font-weight: normal;
   }
 
   div.content_wrapper {
@@ -110,45 +106,6 @@
     overflow: hidden;
   }
 
-  div[class*="span"].cfct-block {
-    /* padding-bottom: 999999px; */
-    /* margin-bottom: -999999px; */
-  }
-
-  .cfct-module.cfct-rich-text.going { background-image: url(img/skin-green/skin-red-realty/going.png); }
-
-  .cfct-module.cfct-rich-text.going2 { background-image: url(img/skin-green/skin-red-realty/going2.png); }
-
-  .cfct-module.cfct-rich-text.gone { background-image: url(img/skin-green/skin-red-realty/gone.png); }
-
-  .cfct-module.cfct-rich-text.going,
-  .cfct-module.cfct-rich-text.going2,
-  .cfct-module.cfct-rich-text.gone {
-  	background-position: 20px 20px;
-  	background-repeat: no-repeat;
-  	background-size: auto 100%;
-  }
-
-  .cfct-module.cfct-rich-text.going div.cfct-mod-content,
-  .cfct-module.cfct-rich-text.going2 div.cfct-mod-content,
-  .cfct-module.cfct-rich-text.gone div.cfct-mod-content,
-  .cfct-module-hero-wrap .cfct-mod-content {
-  	background-color: transparent;
-  	position: relative;
-  }
-
-  .cfct-module.cfct-rich-text.going div.cfct-mod-content p,
-  .cfct-module.cfct-rich-text.going2 div.cfct-mod-content p,
-  .cfct-module.cfct-rich-text.gone div.cfct-mod-content p {
-  	font-size: 14px;
-  }
-
-  .cfct-module.cfct-rich-text.going h1 { color: #468847; }
-
-  .cfct-module.cfct-rich-text.going2 h1 { color: #f9a71c; }
-
-  .cfct-module.cfct-rich-text.gone h1 { color: #D11C24; }
-
   .cfct-mod-content.loop.two-columns .post {
   	width: 45%;
   	float: left;
@@ -170,19 +127,13 @@
   }
 
   /* Target only top level modules */
-  body.carrington_layout .entry-title-wrapper,
-  body.carrington_layout ul.entry-meta,
   div.formatted-row.row-fluid.row-fluid > div[class*="span"] > .cfct-module,
   div.content_wrapper.row-fluid > div[class*="span"] > .cfct-module,
-  div.row-fluid > div[class*="span"] > .cfct-module {
+  /*.cfct-build >*/ div.row-fluid > div[class*="span"] > .cfct-module {
+    background-color: #ffffff;
+    border: 1px solid #d3d3d3;
     margin-left: 10px;
     margin-right: 10px;
-    padding: 0 10px;
-  }
-
-  div.formatted-row.row-fluid.row-fluid > div[class*="span"] > .cfct-module,
-  div.content_wrapper.row-fluid > div[class*="span"] > .cfct-module,
-  div.row-fluid > div[class*="span"] > .cfct-module {
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
@@ -281,16 +232,8 @@
   }
 
   .general_header_wrapper {
-    background: url("../../img/skin-green/header-background.jpg") repeat-x scroll left top #6C8C38;
-    border-bottom: 5px solid #FEFEFE;
-    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.51);
-    -moz-box-shadow: 0 5px 7px rgba(0, 0, 0, 0.51);
-    -webkit-box-shadow: 0 5px 7px rgba(0, 0, 0, 0.51);
-    height: 55px;
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 2;
-}
+
+  }
 
   .status_container {
     margin-bottom: 10px;
@@ -299,19 +242,57 @@
 
   /*====[Title & Breadcrumbs]=======================*/
 
-  body.carrington_layout .breadcrumbs {
+  body.carrington_layout h1.entry-title {
     display: none;
   }
+
+  body.carrington_layout .breadcrumbs {
+    margin-left: 10px;
+  }
+
+  body.carrington_layout .breadcrumbs span.current {
+    color: #333333;
+    font-family: 'Oswald',sans-serif;
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: normal;
+    position: relative;
+
+  }
+
+  div.breadcrumbs {
+    margin-bottom: 15px;
+  }
+
+
+  .breadcrumbs a {
+  	color: #808080;
+  	font-weight: 300;
+  }
+
+  .breadcrumbs a:hover {
+  	color:#0088cc;
+  }
+
+  .breadcrumbs span.current {
+  	font-weight: bold;
+  	color: #555;
+  }
+
+  .breadcrumbs span.divider {
+  	color: #555;
+  }
+
 
   /*====[Footer]=================================*/
 
   div.bottom {
+    background: url("../../images/skin-red-realty/sprite.png") repeat scroll 0 -417px transparent;
     height: 10px;
   }
 
   div.footer {
-    background: url(../../img/skin-green/footer-background.jpg) no-repeat scroll center top #242424;
-    border-top: 1px solid #242424;
+    background-color: #E3E8E9;
     display: block;
     color: #74787e;
     padding: 10px 0 20px 0;
@@ -395,42 +376,22 @@
     font-weight:bold;
   }
 
-  .main.cfct-block blockquote {
-    border: 0;
+  blockquote {
+  	border-left: 4px solid #0f8dcf;
   }
 
+  .main.cfct-block blockquote,
   .main.cfct-block blockquote p {
-    margin: 0;
-    border-radius: 7px 7px 7px 7px;
-    background: none repeat scroll 0 0 #293515;
-    font: italic 1.1em/1.7em "Droid Serif","Times New Roman",serif;
-    padding: 10px;
-    color: #A2AE39;
-  }
-
-  .cfct-pullquote blockquote cite {
-    background: url(../../img/skin-green/blockquote-cite-background.png) no-repeat scroll right top transparent;
-    display: block;
-    margin: 0 auto;
-    width: 80%;
-  }
-
-  .cfct-pullquote blockquote cite,
-  .cfct-pullquote blockquote cite a {
-    color: #333333;
-    font-family: 'Droid Sans';
-    font-size: 1.1em;
-    font-weight: bold;
-    padding-top: 5px;
-    text-decoration: none;
-    text-align: center;
+    font-size: 17px;
+    line-height: 25px;
+    font-style: italic;
+    color: #828282;
   }
 
   .main.cfct-block .cfct-mod-image {
-    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.09);
-    box-shadow: 0 0 3px rgba(51, 51, 51, 0.35);
-    display: block;
     padding: 10px;
+    background: #fff;
+    box-shadow:0px 0px 3px #333333
   }
 
   .main.cfct-block .cfct-module .widget_nav_menu  ul li {
@@ -518,39 +479,29 @@
     text-align: left;
   }
 
-  .header-nav.flawless-menu > li.top_level_item > a {
-    font-weight: normal;
-    color: #F0B433;
-    font-family: Copse;
-    font-size: 17px;
-    letter-spacing: 1px;
-    line-height: 50px;
-    padding: 2px 7px;
-    text-shadow: 3px 2px 3px #000000;
-    display: block;
-    overflow: hidden;
+  .header-nav.flawless-menu > li > a {
+    border-radius: 5px 5px 5px 5px;
+    color: #2F3030;
+    font-family: 'proxima-nova',Arial;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
     text-decoration: none;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    text-transform: uppercase;
   }
 
-
-  ul.header-nav.flawless-menu > li.top_level_item.current-menu-parent > a,
-  ul.header-nav.flawless-menu > li.top_level_item.current-menu-item > a {
-    background: url(../../img/skin-green/nav-link-hover.png) no-repeat scroll center bottom transparent;
-    font-weight: normal;
-    color: #F0B433;
-    font-family: Copse;
-    font-size: 17px;
-    letter-spacing: 1px;
-    line-height: 50px;
-    padding: 2px 7px;
-    text-shadow: 3px 2px 3px #000000;
-    display: block;
-    overflow: hidden;
-    text-decoration: none;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  .header-nav.flawless-menu > li.current-menu-parent > a,
+  .header-nav.flawless-menu > li.current-menu-item > a {
+    background-image: url(../../images/skin-red-realty/sprite.png);
+    background-position: 0 0px;
+    background-repeat: no-repeat;
+    background-color: #FA4935;
+    color: #FFFFFF;
+    text-shadow: 0 1px 1px #333333;
+    border-top: 1px solid #fa5531;
+    border-right: 1px solid #b03d23;
+    border-bottom: 1px solid #b03d23;
+    border-left: 1px solid #fa5531;
   }
 
   .header-nav.flawless-menu li.top_level_item .menu_item_description {
@@ -681,47 +632,42 @@
   .dropdown_header_login {
     padding: 10px 0;
     margin: 0;
-    .flawless_login_form {
-      input {
-        &.user_login {
-          width: 18em;
-        }
-        &.user_password {
-          width: 12em;
-        }
-      }
-    }
-    .flawless_navbar_form {
-      padding: 0;
-      margin: 0;
-      float: right;
-    }
   }
-  
-  .navbar-fixed-top {
-  
-    .flawless_navbar_form {
-    
-      margin:  5px 0 0 0;
-    
-      input.user_login {
-      
-        background: none repeat scroll 0 0 rgba(255, 255, 255, 0.3);
-        border: 1px solid #111111;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.15);
-        color: rgba(255, 255, 255, 0.75);
-        font-size: 13px;
-        font-weight: normal;
-        line-height: 1;
-        padding: 4px 9px;
-        border-radius: 5px;
-        margin-bottom: 0;
-      }
-      
-      .btn {
-        margin:  0;
-      }
-    }
+
+  .navbar-fixed-top .flawless_navbar_form {
+    margin:  5px 0 0 0;
+  }
+
+  .navbar-fixed-top .flawless_navbar_form .btn {
+    margin:  0;
+  }
+
+  .dropdown_header_login .flawless_navbar_form {
+    padding: 0;
+    margin: 0;
+    float: right;
+  }
+
+  .navbar-fixed-top .flawless_navbar_form input.user_login,
+  .navbar-fixed-top .flawless_navbar_form input.user_password {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.3);
+    border: 1px solid #111111;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 1;
+    padding: 4px 9px;
+    border-radius: 5px;
+    margin-bottom: 0;
+  }
+
+  .dropdown_header_login .flawless_login_form input.user_login {
+    width: 18em;
+  }
+
+  .dropdown_header_login .flawless_login_form input.user_password {
+    width: 12em;
   }
 
   /* Position the AJAX response below the Navbar */
@@ -845,11 +791,12 @@
     margin-left: 10px;
   }
 
-  .wpp_feature_list.community_feature_list ul li,
-  .overview_stats li {
+  .cfct-module.cfct-rich-text ul {
+	  list-style-type: disc;
 	  margin-left: 20px;
-	  list-style: disc;
   }
+
+
 
 
   /*====[Item-Body]=====================================*/
@@ -1017,6 +964,11 @@
 
   .galleria-container {
     background-color: #006BA0;
+  }
+
+  ul.wpp_attribute_list, .wpp_attribute_list ul {
+	  margin-left: 30px !important;
+	  list-style-image: url(../../images/skin-red-realty/check.png) !important;
   }
 
   .wpp_pdf_link.btn, ul.wpp_widget_attribute_list p.more a.btn {
@@ -1249,17 +1201,17 @@
 
   .wpp_row_view ul.wpp_overview_data .property_price {
     color: #008aff;
-    background: url('img/skin-green/wpp/wpp-saletag.png') no-repeat left;
+    background: url('../../images/wpp/wpp-saletag.png') no-repeat left;
     text-indent: 25px;
   }
 
   .wpp_row_view ul.wpp_overview_data .property_address {
-    background: url('img/skin-green/wpp/wpp-geotag.png') no-repeat left;
+    background: url('../../images/wpp/wpp-geotag.png') no-repeat left;
     text-indent: 25px;
   }
 
   .wpp_row_view ul.wpp_overview_data .property_phone_number {
-    background: url('img/skin-green/wpp/wpp-phone.png') no-repeat left;
+    background: url('../../images/wpp/wpp-phone.png') no-repeat left;
     text-indent: 25px;
   }
 
@@ -1518,6 +1470,7 @@
 
   .entry-meta {
     list-style-type: none;
+    margin-bottom: 15px;
   }
 
   .entry-content dl.gallery-item {

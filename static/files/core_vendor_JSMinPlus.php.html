@@ -1,0 +1,2208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/vendor/JSMinPlus.php - Flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Functions.html">Template Functions</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../classes/UD_API.html">UD_API</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/vendor/JSMinPlus.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+
+/**
+ * JSMinPlus version 1.4
+ *
+ * Minifies a javascript file using a javascript parser
+ *
+ * This implements a PHP port of Brendan Eich&#x27;s Narcissus open source javascript engine (in javascript)
+ * References: http://en.wikipedia.org/wiki/Narcissus_(JavaScript_engine)
+ * Narcissus sourcecode: http://mxr.mozilla.org/mozilla/source/js/narcissus/
+ * JSMinPlus weblog: http://crisp.tweakblogs.net/blog/cat/716
+ *
+ * Tino Zijdel &lt;crisp@tweakers.net&gt;
+ *
+ * Usage: $minified = JSMinPlus::minify($script [, $filename])
+ *
+ * Versionlog (see also changelog.txt):
+ * 23-07-2011 - remove dynamic creation of OP_* and KEYWORD_* defines and declare them on top
+ *              reduce memory footprint by minifying by block-scope
+ *              some small byte-saving and performance improvements
+ * 12-05-2009 - fixed hook:colon precedence, fixed empty body in loop and if-constructs
+ * 18-04-2009 - fixed crashbug in PHP 5.2.9 and several other bugfixes
+ * 12-04-2009 - some small bugfixes and performance improvements
+ * 09-04-2009 - initial open sourced version 1.0
+ *
+ * Latest version of this script: http://files.tweakers.net/jsminplus/jsminplus.zip
+ *
+ */
+
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is the Narcissus JavaScript engine.
+ *
+ * The Initial Developer of the Original Code is
+ * Brendan Eich &lt;brendan@mozilla.org&gt;.
+ * Portions created by the Initial Developer are Copyright (C) 2004
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s): Tino Zijdel &lt;crisp@tweakers.net&gt;
+ * PHP port, modifications and minifier routine are (C) 2009-2011
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the &quot;GPL&quot;), or
+ * the GNU Lesser General Public License Version 2.1 or later (the &quot;LGPL&quot;),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+define(&#x27;TOKEN_END&#x27;, 1);
+define(&#x27;TOKEN_NUMBER&#x27;, 2);
+define(&#x27;TOKEN_IDENTIFIER&#x27;, 3);
+define(&#x27;TOKEN_STRING&#x27;, 4);
+define(&#x27;TOKEN_REGEXP&#x27;, 5);
+define(&#x27;TOKEN_NEWLINE&#x27;, 6);
+define(&#x27;TOKEN_CONDCOMMENT_START&#x27;, 7);
+define(&#x27;TOKEN_CONDCOMMENT_END&#x27;, 8);
+
+define(&#x27;JS_SCRIPT&#x27;, 100);
+define(&#x27;JS_BLOCK&#x27;, 101);
+define(&#x27;JS_LABEL&#x27;, 102);
+define(&#x27;JS_FOR_IN&#x27;, 103);
+define(&#x27;JS_CALL&#x27;, 104);
+define(&#x27;JS_NEW_WITH_ARGS&#x27;, 105);
+define(&#x27;JS_INDEX&#x27;, 106);
+define(&#x27;JS_ARRAY_INIT&#x27;, 107);
+define(&#x27;JS_OBJECT_INIT&#x27;, 108);
+define(&#x27;JS_PROPERTY_INIT&#x27;, 109);
+define(&#x27;JS_GETTER&#x27;, 110);
+define(&#x27;JS_SETTER&#x27;, 111);
+define(&#x27;JS_GROUP&#x27;, 112);
+define(&#x27;JS_LIST&#x27;, 113);
+
+define(&#x27;JS_MINIFIED&#x27;, 999);
+
+define(&#x27;DECLARED_FORM&#x27;, 0);
+define(&#x27;EXPRESSED_FORM&#x27;, 1);
+define(&#x27;STATEMENT_FORM&#x27;, 2);
+
+/* Operators */
+define(&#x27;OP_SEMICOLON&#x27;, &#x27;;&#x27;);
+define(&#x27;OP_COMMA&#x27;, &#x27;,&#x27;);
+define(&#x27;OP_HOOK&#x27;, &#x27;?&#x27;);
+define(&#x27;OP_COLON&#x27;, &#x27;:&#x27;);
+define(&#x27;OP_OR&#x27;, &#x27;||&#x27;);
+define(&#x27;OP_AND&#x27;, &#x27;&amp;&amp;&#x27;);
+define(&#x27;OP_BITWISE_OR&#x27;, &#x27;|&#x27;);
+define(&#x27;OP_BITWISE_XOR&#x27;, &#x27;^&#x27;);
+define(&#x27;OP_BITWISE_AND&#x27;, &#x27;&amp;&#x27;);
+define(&#x27;OP_STRICT_EQ&#x27;, &#x27;===&#x27;);
+define(&#x27;OP_EQ&#x27;, &#x27;==&#x27;);
+define(&#x27;OP_ASSIGN&#x27;, &#x27;=&#x27;);
+define(&#x27;OP_STRICT_NE&#x27;, &#x27;!==&#x27;);
+define(&#x27;OP_NE&#x27;, &#x27;!=&#x27;);
+define(&#x27;OP_LSH&#x27;, &#x27;&lt;&lt;&#x27;);
+define(&#x27;OP_LE&#x27;, &#x27;&lt;=&#x27;);
+define(&#x27;OP_LT&#x27;, &#x27;&lt;&#x27;);
+define(&#x27;OP_URSH&#x27;, &#x27;&gt;&gt;&gt;&#x27;);
+define(&#x27;OP_RSH&#x27;, &#x27;&gt;&gt;&#x27;);
+define(&#x27;OP_GE&#x27;, &#x27;&gt;=&#x27;);
+define(&#x27;OP_GT&#x27;, &#x27;&gt;&#x27;);
+define(&#x27;OP_INCREMENT&#x27;, &#x27;++&#x27;);
+define(&#x27;OP_DECREMENT&#x27;, &#x27;--&#x27;);
+define(&#x27;OP_PLUS&#x27;, &#x27;+&#x27;);
+define(&#x27;OP_MINUS&#x27;, &#x27;-&#x27;);
+define(&#x27;OP_MUL&#x27;, &#x27;*&#x27;);
+define(&#x27;OP_DIV&#x27;, &#x27;/&#x27;);
+define(&#x27;OP_MOD&#x27;, &#x27;%&#x27;);
+define(&#x27;OP_NOT&#x27;, &#x27;!&#x27;);
+define(&#x27;OP_BITWISE_NOT&#x27;, &#x27;~&#x27;);
+define(&#x27;OP_DOT&#x27;, &#x27;.&#x27;);
+define(&#x27;OP_LEFT_BRACKET&#x27;, &#x27;[&#x27;);
+define(&#x27;OP_RIGHT_BRACKET&#x27;, &#x27;]&#x27;);
+define(&#x27;OP_LEFT_CURLY&#x27;, &#x27;{&#x27;);
+define(&#x27;OP_RIGHT_CURLY&#x27;, &#x27;}&#x27;);
+define(&#x27;OP_LEFT_PAREN&#x27;, &#x27;(&#x27;);
+define(&#x27;OP_RIGHT_PAREN&#x27;, &#x27;)&#x27;);
+define(&#x27;OP_CONDCOMMENT_END&#x27;, &#x27;@*/&#x27;);
+
+define(&#x27;OP_UNARY_PLUS&#x27;, &#x27;U+&#x27;);
+define(&#x27;OP_UNARY_MINUS&#x27;, &#x27;U-&#x27;);
+
+/* Keywords */
+define(&#x27;KEYWORD_BREAK&#x27;, &#x27;break&#x27;);
+define(&#x27;KEYWORD_CASE&#x27;, &#x27;case&#x27;);
+define(&#x27;KEYWORD_CATCH&#x27;, &#x27;catch&#x27;);
+define(&#x27;KEYWORD_CONST&#x27;, &#x27;const&#x27;);
+define(&#x27;KEYWORD_CONTINUE&#x27;, &#x27;continue&#x27;);
+define(&#x27;KEYWORD_DEBUGGER&#x27;, &#x27;debugger&#x27;);
+define(&#x27;KEYWORD_DEFAULT&#x27;, &#x27;default&#x27;);
+define(&#x27;KEYWORD_DELETE&#x27;, &#x27;delete&#x27;);
+define(&#x27;KEYWORD_DO&#x27;, &#x27;do&#x27;);
+define(&#x27;KEYWORD_ELSE&#x27;, &#x27;else&#x27;);
+define(&#x27;KEYWORD_ENUM&#x27;, &#x27;enum&#x27;);
+define(&#x27;KEYWORD_FALSE&#x27;, &#x27;false&#x27;);
+define(&#x27;KEYWORD_FINALLY&#x27;, &#x27;finally&#x27;);
+define(&#x27;KEYWORD_FOR&#x27;, &#x27;for&#x27;);
+define(&#x27;KEYWORD_FUNCTION&#x27;, &#x27;function&#x27;);
+define(&#x27;KEYWORD_IF&#x27;, &#x27;if&#x27;);
+define(&#x27;KEYWORD_IN&#x27;, &#x27;in&#x27;);
+define(&#x27;KEYWORD_INSTANCEOF&#x27;, &#x27;instanceof&#x27;);
+define(&#x27;KEYWORD_NEW&#x27;, &#x27;new&#x27;);
+define(&#x27;KEYWORD_NULL&#x27;, &#x27;null&#x27;);
+define(&#x27;KEYWORD_RETURN&#x27;, &#x27;return&#x27;);
+define(&#x27;KEYWORD_SWITCH&#x27;, &#x27;switch&#x27;);
+define(&#x27;KEYWORD_THIS&#x27;, &#x27;this&#x27;);
+define(&#x27;KEYWORD_THROW&#x27;, &#x27;throw&#x27;);
+define(&#x27;KEYWORD_TRUE&#x27;, &#x27;true&#x27;);
+define(&#x27;KEYWORD_TRY&#x27;, &#x27;try&#x27;);
+define(&#x27;KEYWORD_TYPEOF&#x27;, &#x27;typeof&#x27;);
+define(&#x27;KEYWORD_VAR&#x27;, &#x27;var&#x27;);
+define(&#x27;KEYWORD_VOID&#x27;, &#x27;void&#x27;);
+define(&#x27;KEYWORD_WHILE&#x27;, &#x27;while&#x27;);
+define(&#x27;KEYWORD_WITH&#x27;, &#x27;with&#x27;);
+
+
+class JSMinPlus
+{
+  private $parser;
+  private $reserved = array(
+    &#x27;break&#x27;, &#x27;case&#x27;, &#x27;catch&#x27;, &#x27;continue&#x27;, &#x27;default&#x27;, &#x27;delete&#x27;, &#x27;do&#x27;,
+    &#x27;else&#x27;, &#x27;finally&#x27;, &#x27;for&#x27;, &#x27;function&#x27;, &#x27;if&#x27;, &#x27;in&#x27;, &#x27;instanceof&#x27;,
+    &#x27;new&#x27;, &#x27;return&#x27;, &#x27;switch&#x27;, &#x27;this&#x27;, &#x27;throw&#x27;, &#x27;try&#x27;, &#x27;typeof&#x27;, &#x27;var&#x27;,
+    &#x27;void&#x27;, &#x27;while&#x27;, &#x27;with&#x27;,
+    // Words reserved for future use
+    &#x27;abstract&#x27;, &#x27;boolean&#x27;, &#x27;byte&#x27;, &#x27;char&#x27;, &#x27;class&#x27;, &#x27;const&#x27;, &#x27;debugger&#x27;,
+    &#x27;double&#x27;, &#x27;enum&#x27;, &#x27;export&#x27;, &#x27;extends&#x27;, &#x27;final&#x27;, &#x27;float&#x27;, &#x27;goto&#x27;,
+    &#x27;implements&#x27;, &#x27;import&#x27;, &#x27;int&#x27;, &#x27;interface&#x27;, &#x27;long&#x27;, &#x27;native&#x27;,
+    &#x27;package&#x27;, &#x27;private&#x27;, &#x27;protected&#x27;, &#x27;public&#x27;, &#x27;short&#x27;, &#x27;static&#x27;,
+    &#x27;super&#x27;, &#x27;synchronized&#x27;, &#x27;throws&#x27;, &#x27;transient&#x27;, &#x27;volatile&#x27;,
+    // These are not reserved, but should be taken into account
+    // in isValidIdentifier (See jslint source code)
+    &#x27;arguments&#x27;, &#x27;eval&#x27;, &#x27;true&#x27;, &#x27;false&#x27;, &#x27;Infinity&#x27;, &#x27;NaN&#x27;, &#x27;null&#x27;, &#x27;undefined&#x27;
+  );
+
+  private function __construct()
+  {
+    $this-&gt;parser = new JSParser($this);
+  }
+
+  public static function minify($js, $filename=&#x27;&#x27;)
+  {
+    static $instance;
+
+    // this is a singleton
+    if(!$instance)
+      $instance = new JSMinPlus();
+
+    return $instance-&gt;min($js, $filename);
+  }
+
+  private function min($js, $filename)
+  {
+    try
+    {
+      $n = $this-&gt;parser-&gt;parse($js, $filename, 1);
+      return $this-&gt;parseTree($n);
+    }
+    catch(Exception $e)
+    {
+      echo $e-&gt;getMessage() . &quot;\n&quot;;
+    }
+
+    return false;
+  }
+
+  public function parseTree($n, $noBlockGrouping = false)
+  {
+    $s = &#x27;&#x27;;
+
+    switch ($n-&gt;type)
+    {
+      case JS_MINIFIED:
+        $s = $n-&gt;value;
+      break;
+
+      case JS_SCRIPT:
+        // we do nothing yet with funDecls or varDecls
+        $noBlockGrouping = true;
+      // FALL THROUGH
+
+      case JS_BLOCK:
+        $childs = $n-&gt;treeNodes;
+        $lastType = 0;
+        for ($c = 0, $i = 0, $j = count($childs); $i &lt; $j; $i++)
+        {
+          $type = $childs[$i]-&gt;type;
+          $t = $this-&gt;parseTree($childs[$i]);
+          if (strlen($t))
+          {
+            if ($c)
+            {
+              $s = rtrim($s, &#x27;;&#x27;);
+
+              if ($type == KEYWORD_FUNCTION &amp;&amp; $childs[$i]-&gt;functionForm == DECLARED_FORM)
+              {
+                // put declared functions on a new line
+                $s .= &quot;\n&quot;;
+              }
+              elseif ($type == KEYWORD_VAR &amp;&amp; $type == $lastType)
+              {
+                // mutiple var-statements can go into one
+                $t = &#x27;,&#x27; . substr($t, 4);
+              }
+              else
+              {
+                // add terminator
+                $s .= &#x27;;&#x27;;
+              }
+            }
+
+            $s .= $t;
+
+            $c++;
+            $lastType = $type;
+          }
+        }
+
+        if ($c &gt; 1 &amp;&amp; !$noBlockGrouping)
+        {
+          $s = &#x27;{&#x27; . $s . &#x27;}&#x27;;
+        }
+      break;
+
+      case KEYWORD_FUNCTION:
+        $s .= &#x27;function&#x27; . ($n-&gt;name ? &#x27; &#x27; . $n-&gt;name : &#x27;&#x27;) . &#x27;(&#x27;;
+        $params = $n-&gt;params;
+        for ($i = 0, $j = count($params); $i &lt; $j; $i++)
+          $s .= ($i ? &#x27;,&#x27; : &#x27;&#x27;) . $params[$i];
+        $s .= &#x27;){&#x27; . $this-&gt;parseTree($n-&gt;body, true) . &#x27;}&#x27;;
+      break;
+
+      case KEYWORD_IF:
+        $s = &#x27;if(&#x27; . $this-&gt;parseTree($n-&gt;condition) . &#x27;)&#x27;;
+        $thenPart = $this-&gt;parseTree($n-&gt;thenPart);
+        $elsePart = $n-&gt;elsePart ? $this-&gt;parseTree($n-&gt;elsePart) : null;
+
+        // empty if-statement
+        if ($thenPart == &#x27;&#x27;)
+          $thenPart = &#x27;;&#x27;;
+
+        if ($elsePart)
+        {
+          // be carefull and always make a block out of the thenPart; could be more optimized but is a lot of trouble
+          if ($thenPart != &#x27;;&#x27; &amp;&amp; $thenPart[0] != &#x27;{&#x27;)
+            $thenPart = &#x27;{&#x27; . $thenPart . &#x27;}&#x27;;
+
+          $s .= $thenPart . &#x27;else&#x27;;
+
+          // we could check for more, but that hardly ever applies so go for performance
+          if ($elsePart[0] != &#x27;{&#x27;)
+            $s .= &#x27; &#x27;;
+
+          $s .= $elsePart;
+        }
+        else
+        {
+          $s .= $thenPart;
+        }
+      break;
+
+      case KEYWORD_SWITCH:
+        $s = &#x27;switch(&#x27; . $this-&gt;parseTree($n-&gt;discriminant) . &#x27;){&#x27;;
+        $cases = $n-&gt;cases;
+        for ($i = 0, $j = count($cases); $i &lt; $j; $i++)
+        {
+          $case = $cases[$i];
+          if ($case-&gt;type == KEYWORD_CASE)
+            $s .= &#x27;case&#x27; . ($case-&gt;caseLabel-&gt;type != TOKEN_STRING ? &#x27; &#x27; : &#x27;&#x27;) . $this-&gt;parseTree($case-&gt;caseLabel) . &#x27;:&#x27;;
+          else
+            $s .= &#x27;default:&#x27;;
+
+          $statement = $this-&gt;parseTree($case-&gt;statements, true);
+          if ($statement)
+          {
+            $s .= $statement;
+            // no terminator for last statement
+            if ($i + 1 &lt; $j)
+              $s .= &#x27;;&#x27;;
+          }
+        }
+        $s .= &#x27;}&#x27;;
+      break;
+
+      case KEYWORD_FOR:
+        $s = &#x27;for(&#x27; . ($n-&gt;setup ? $this-&gt;parseTree($n-&gt;setup) : &#x27;&#x27;)
+          . &#x27;;&#x27; . ($n-&gt;condition ? $this-&gt;parseTree($n-&gt;condition) : &#x27;&#x27;)
+          . &#x27;;&#x27; . ($n-&gt;update ? $this-&gt;parseTree($n-&gt;update) : &#x27;&#x27;) . &#x27;)&#x27;;
+
+        $body  = $this-&gt;parseTree($n-&gt;body);
+        if ($body == &#x27;&#x27;)
+          $body = &#x27;;&#x27;;
+
+        $s .= $body;
+      break;
+
+      case KEYWORD_WHILE:
+        $s = &#x27;while(&#x27; . $this-&gt;parseTree($n-&gt;condition) . &#x27;)&#x27;;
+
+        $body  = $this-&gt;parseTree($n-&gt;body);
+        if ($body == &#x27;&#x27;)
+          $body = &#x27;;&#x27;;
+
+        $s .= $body;
+      break;
+
+      case JS_FOR_IN:
+        $s = &#x27;for(&#x27; . ($n-&gt;varDecl ? $this-&gt;parseTree($n-&gt;varDecl) : $this-&gt;parseTree($n-&gt;iterator)) . &#x27; in &#x27; . $this-&gt;parseTree($n-&gt;object) . &#x27;)&#x27;;
+
+        $body  = $this-&gt;parseTree($n-&gt;body);
+        if ($body == &#x27;&#x27;)
+          $body = &#x27;;&#x27;;
+
+        $s .= $body;
+      break;
+
+      case KEYWORD_DO:
+        $s = &#x27;do{&#x27; . $this-&gt;parseTree($n-&gt;body, true) . &#x27;}while(&#x27; . $this-&gt;parseTree($n-&gt;condition) . &#x27;)&#x27;;
+      break;
+
+      case KEYWORD_BREAK:
+      case KEYWORD_CONTINUE:
+        $s = $n-&gt;value . ($n-&gt;label ? &#x27; &#x27; . $n-&gt;label : &#x27;&#x27;);
+      break;
+
+      case KEYWORD_TRY:
+        $s = &#x27;try{&#x27; . $this-&gt;parseTree($n-&gt;tryBlock, true) . &#x27;}&#x27;;
+        $catchClauses = $n-&gt;catchClauses;
+        for ($i = 0, $j = count($catchClauses); $i &lt; $j; $i++)
+        {
+          $t = $catchClauses[$i];
+          $s .= &#x27;catch(&#x27; . $t-&gt;varName . ($t-&gt;guard ? &#x27; if &#x27; . $this-&gt;parseTree($t-&gt;guard) : &#x27;&#x27;) . &#x27;){&#x27; . $this-&gt;parseTree($t-&gt;block, true) . &#x27;}&#x27;;
+        }
+        if ($n-&gt;finallyBlock)
+          $s .= &#x27;finally{&#x27; . $this-&gt;parseTree($n-&gt;finallyBlock, true) . &#x27;}&#x27;;
+      break;
+
+      case KEYWORD_THROW:
+      case KEYWORD_RETURN:
+        $s = $n-&gt;type;
+        if ($n-&gt;value)
+        {
+          $t = $this-&gt;parseTree($n-&gt;value);
+          if (strlen($t))
+          {
+            if ($this-&gt;isWordChar($t[0]) || $t[0] == &#x27;\\&#x27;)
+              $s .= &#x27; &#x27;;
+
+            $s .= $t;
+          }
+        }
+      break;
+
+      case KEYWORD_WITH:
+        $s = &#x27;with(&#x27; . $this-&gt;parseTree($n-&gt;object) . &#x27;)&#x27; . $this-&gt;parseTree($n-&gt;body);
+      break;
+
+      case KEYWORD_VAR:
+      case KEYWORD_CONST:
+        $s = $n-&gt;value . &#x27; &#x27;;
+        $childs = $n-&gt;treeNodes;
+        for ($i = 0, $j = count($childs); $i &lt; $j; $i++)
+        {
+          $t = $childs[$i];
+          $s .= ($i ? &#x27;,&#x27; : &#x27;&#x27;) . $t-&gt;name;
+          $u = $t-&gt;initializer;
+          if ($u)
+            $s .= &#x27;=&#x27; . $this-&gt;parseTree($u);
+        }
+      break;
+
+      case KEYWORD_IN:
+      case KEYWORD_INSTANCEOF:
+        $left = $this-&gt;parseTree($n-&gt;treeNodes[0]);
+        $right = $this-&gt;parseTree($n-&gt;treeNodes[1]);
+
+        $s = $left;
+
+        if ($this-&gt;isWordChar(substr($left, -1)))
+          $s .= &#x27; &#x27;;
+
+        $s .= $n-&gt;type;
+
+        if ($this-&gt;isWordChar($right[0]) || $right[0] == &#x27;\\&#x27;)
+          $s .= &#x27; &#x27;;
+
+        $s .= $right;
+      break;
+
+      case KEYWORD_DELETE:
+      case KEYWORD_TYPEOF:
+        $right = $this-&gt;parseTree($n-&gt;treeNodes[0]);
+
+        $s = $n-&gt;type;
+
+        if ($this-&gt;isWordChar($right[0]) || $right[0] == &#x27;\\&#x27;)
+          $s .= &#x27; &#x27;;
+
+        $s .= $right;
+      break;
+
+      case KEYWORD_VOID:
+        $s = &#x27;void(&#x27; . $this-&gt;parseTree($n-&gt;treeNodes[0]) . &#x27;)&#x27;;
+      break;
+
+      case KEYWORD_DEBUGGER:
+        throw new Exception(&#x27;NOT IMPLEMENTED: DEBUGGER&#x27;);
+      break;
+
+      case TOKEN_CONDCOMMENT_START:
+      case TOKEN_CONDCOMMENT_END:
+        $s = $n-&gt;value . ($n-&gt;type == TOKEN_CONDCOMMENT_START ? &#x27; &#x27; : &#x27;&#x27;);
+        $childs = $n-&gt;treeNodes;
+        for ($i = 0, $j = count($childs); $i &lt; $j; $i++)
+          $s .= $this-&gt;parseTree($childs[$i]);
+      break;
+
+      case OP_SEMICOLON:
+        if ($expression = $n-&gt;expression)
+          $s = $this-&gt;parseTree($expression);
+      break;
+
+      case JS_LABEL:
+        $s = $n-&gt;label . &#x27;:&#x27; . $this-&gt;parseTree($n-&gt;statement);
+      break;
+
+      case OP_COMMA:
+        $childs = $n-&gt;treeNodes;
+        for ($i = 0, $j = count($childs); $i &lt; $j; $i++)
+          $s .= ($i ? &#x27;,&#x27; : &#x27;&#x27;) . $this-&gt;parseTree($childs[$i]);
+      break;
+
+      case OP_ASSIGN:
+        $s = $this-&gt;parseTree($n-&gt;treeNodes[0]) . $n-&gt;value . $this-&gt;parseTree($n-&gt;treeNodes[1]);
+      break;
+
+      case OP_HOOK:
+        $s = $this-&gt;parseTree($n-&gt;treeNodes[0]) . &#x27;?&#x27; . $this-&gt;parseTree($n-&gt;treeNodes[1]) . &#x27;:&#x27; . $this-&gt;parseTree($n-&gt;treeNodes[2]);
+      break;
+
+      case OP_OR: case OP_AND:
+      case OP_BITWISE_OR: case OP_BITWISE_XOR: case OP_BITWISE_AND:
+      case OP_EQ: case OP_NE: case OP_STRICT_EQ: case OP_STRICT_NE:
+      case OP_LT: case OP_LE: case OP_GE: case OP_GT:
+      case OP_LSH: case OP_RSH: case OP_URSH:
+      case OP_MUL: case OP_DIV: case OP_MOD:
+        $s = $this-&gt;parseTree($n-&gt;treeNodes[0]) . $n-&gt;type . $this-&gt;parseTree($n-&gt;treeNodes[1]);
+      break;
+
+      case OP_PLUS:
+      case OP_MINUS:
+        $left = $this-&gt;parseTree($n-&gt;treeNodes[0]);
+        $right = $this-&gt;parseTree($n-&gt;treeNodes[1]);
+
+        switch ($n-&gt;treeNodes[1]-&gt;type)
+        {
+          case OP_PLUS:
+          case OP_MINUS:
+          case OP_INCREMENT:
+          case OP_DECREMENT:
+          case OP_UNARY_PLUS:
+          case OP_UNARY_MINUS:
+            $s = $left . $n-&gt;type . &#x27; &#x27; . $right;
+          break;
+
+          case TOKEN_STRING:
+            //combine concatted strings with same quotestyle
+            if ($n-&gt;type == OP_PLUS &amp;&amp; substr($left, -1) == $right[0])
+            {
+              $s = substr($left, 0, -1) . substr($right, 1);
+              break;
+            }
+          // FALL THROUGH
+
+          default:
+            $s = $left . $n-&gt;type . $right;
+        }
+      break;
+
+      case OP_NOT:
+      case OP_BITWISE_NOT:
+      case OP_UNARY_PLUS:
+      case OP_UNARY_MINUS:
+        $s = $n-&gt;value . $this-&gt;parseTree($n-&gt;treeNodes[0]);
+      break;
+
+      case OP_INCREMENT:
+      case OP_DECREMENT:
+        if ($n-&gt;postfix)
+          $s = $this-&gt;parseTree($n-&gt;treeNodes[0]) . $n-&gt;value;
+        else
+          $s = $n-&gt;value . $this-&gt;parseTree($n-&gt;treeNodes[0]);
+      break;
+
+      case OP_DOT:
+        $s = $this-&gt;parseTree($n-&gt;treeNodes[0]) . &#x27;.&#x27; . $this-&gt;parseTree($n-&gt;treeNodes[1]);
+      break;
+
+      case JS_INDEX:
+        $s = $this-&gt;parseTree($n-&gt;treeNodes[0]);
+        // See if we can replace named index with a dot saving 3 bytes
+        if (  $n-&gt;treeNodes[0]-&gt;type == TOKEN_IDENTIFIER &amp;&amp;
+          $n-&gt;treeNodes[1]-&gt;type == TOKEN_STRING &amp;&amp;
+          $this-&gt;isValidIdentifier(substr($n-&gt;treeNodes[1]-&gt;value, 1, -1))
+        )
+          $s .= &#x27;.&#x27; . substr($n-&gt;treeNodes[1]-&gt;value, 1, -1);
+        else
+          $s .= &#x27;[&#x27; . $this-&gt;parseTree($n-&gt;treeNodes[1]) . &#x27;]&#x27;;
+      break;
+
+      case JS_LIST:
+        $childs = $n-&gt;treeNodes;
+        for ($i = 0, $j = count($childs); $i &lt; $j; $i++)
+          $s .= ($i ? &#x27;,&#x27; : &#x27;&#x27;) . $this-&gt;parseTree($childs[$i]);
+      break;
+
+      case JS_CALL:
+        $s = $this-&gt;parseTree($n-&gt;treeNodes[0]) . &#x27;(&#x27; . $this-&gt;parseTree($n-&gt;treeNodes[1]) . &#x27;)&#x27;;
+      break;
+
+      case KEYWORD_NEW:
+      case JS_NEW_WITH_ARGS:
+        $s = &#x27;new &#x27; . $this-&gt;parseTree($n-&gt;treeNodes[0]) . &#x27;(&#x27; . ($n-&gt;type == JS_NEW_WITH_ARGS ? $this-&gt;parseTree($n-&gt;treeNodes[1]) : &#x27;&#x27;) . &#x27;)&#x27;;
+      break;
+
+      case JS_ARRAY_INIT:
+        $s = &#x27;[&#x27;;
+        $childs = $n-&gt;treeNodes;
+        for ($i = 0, $j = count($childs); $i &lt; $j; $i++)
+        {
+          $s .= ($i ? &#x27;,&#x27; : &#x27;&#x27;) . $this-&gt;parseTree($childs[$i]);
+        }
+        $s .= &#x27;]&#x27;;
+      break;
+
+      case JS_OBJECT_INIT:
+        $s = &#x27;{&#x27;;
+        $childs = $n-&gt;treeNodes;
+        for ($i = 0, $j = count($childs); $i &lt; $j; $i++)
+        {
+          $t = $childs[$i];
+          if ($i)
+            $s .= &#x27;,&#x27;;
+          if ($t-&gt;type == JS_PROPERTY_INIT)
+          {
+            // Ditch the quotes when the index is a valid identifier
+            if (  $t-&gt;treeNodes[0]-&gt;type == TOKEN_STRING &amp;&amp;
+              $this-&gt;isValidIdentifier(substr($t-&gt;treeNodes[0]-&gt;value, 1, -1))
+            )
+              $s .= substr($t-&gt;treeNodes[0]-&gt;value, 1, -1);
+            else
+              $s .= $t-&gt;treeNodes[0]-&gt;value;
+
+            $s .= &#x27;:&#x27; . $this-&gt;parseTree($t-&gt;treeNodes[1]);
+          }
+          else
+          {
+            $s .= $t-&gt;type == JS_GETTER ? &#x27;get&#x27; : &#x27;set&#x27;;
+            $s .= &#x27; &#x27; . $t-&gt;name . &#x27;(&#x27;;
+            $params = $t-&gt;params;
+            for ($i = 0, $j = count($params); $i &lt; $j; $i++)
+              $s .= ($i ? &#x27;,&#x27; : &#x27;&#x27;) . $params[$i];
+            $s .= &#x27;){&#x27; . $this-&gt;parseTree($t-&gt;body, true) . &#x27;}&#x27;;
+          }
+        }
+        $s .= &#x27;}&#x27;;
+      break;
+
+      case TOKEN_NUMBER:
+        $s = $n-&gt;value;
+        if (preg_match(&#x27;/^([1-9]+)(0{3,})$/&#x27;, $s, $m))
+          $s = $m[1] . &#x27;e&#x27; . strlen($m[2]);
+      break;
+
+      case KEYWORD_NULL: case KEYWORD_THIS: case KEYWORD_TRUE: case KEYWORD_FALSE:
+      case TOKEN_IDENTIFIER: case TOKEN_STRING: case TOKEN_REGEXP:
+        $s = $n-&gt;value;
+      break;
+
+      case JS_GROUP:
+        if (in_array(
+          $n-&gt;treeNodes[0]-&gt;type,
+          array(
+            JS_ARRAY_INIT, JS_OBJECT_INIT, JS_GROUP,
+            TOKEN_NUMBER, TOKEN_STRING, TOKEN_REGEXP, TOKEN_IDENTIFIER,
+            KEYWORD_NULL, KEYWORD_THIS, KEYWORD_TRUE, KEYWORD_FALSE
+          )
+        ))
+        {
+          $s = $this-&gt;parseTree($n-&gt;treeNodes[0]);
+        }
+        else
+        {
+          $s = &#x27;(&#x27; . $this-&gt;parseTree($n-&gt;treeNodes[0]) . &#x27;)&#x27;;
+        }
+      break;
+
+      default:
+        throw new Exception(&#x27;UNKNOWN TOKEN TYPE: &#x27; . $n-&gt;type);
+    }
+
+    return $s;
+  }
+
+  private function isValidIdentifier($string)
+  {
+    return preg_match(&#x27;/^[a-zA-Z_][a-zA-Z0-9_]*$/&#x27;, $string) &amp;&amp; !in_array($string, $this-&gt;reserved);
+  }
+
+  private function isWordChar($char)
+  {
+    return $char == &#x27;_&#x27; || $char == &#x27;$&#x27; || ctype_alnum($char);
+  }
+}
+
+class JSParser
+{
+  private $t;
+  private $minifier;
+
+  private $opPrecedence = array(
+    &#x27;;&#x27; =&gt; 0,
+    &#x27;,&#x27; =&gt; 1,
+    &#x27;=&#x27; =&gt; 2, &#x27;?&#x27; =&gt; 2, &#x27;:&#x27; =&gt; 2,
+    // The above all have to have the same precedence, see bug 330975
+    &#x27;||&#x27; =&gt; 4,
+    &#x27;&amp;&amp;&#x27; =&gt; 5,
+    &#x27;|&#x27; =&gt; 6,
+    &#x27;^&#x27; =&gt; 7,
+    &#x27;&amp;&#x27; =&gt; 8,
+    &#x27;==&#x27; =&gt; 9, &#x27;!=&#x27; =&gt; 9, &#x27;===&#x27; =&gt; 9, &#x27;!==&#x27; =&gt; 9,
+    &#x27;&lt;&#x27; =&gt; 10, &#x27;&lt;=&#x27; =&gt; 10, &#x27;&gt;=&#x27; =&gt; 10, &#x27;&gt;&#x27; =&gt; 10, &#x27;in&#x27; =&gt; 10, &#x27;instanceof&#x27; =&gt; 10,
+    &#x27;&lt;&lt;&#x27; =&gt; 11, &#x27;&gt;&gt;&#x27; =&gt; 11, &#x27;&gt;&gt;&gt;&#x27; =&gt; 11,
+    &#x27;+&#x27; =&gt; 12, &#x27;-&#x27; =&gt; 12,
+    &#x27;*&#x27; =&gt; 13, &#x27;/&#x27; =&gt; 13, &#x27;%&#x27; =&gt; 13,
+    &#x27;delete&#x27; =&gt; 14, &#x27;void&#x27; =&gt; 14, &#x27;typeof&#x27; =&gt; 14,
+    &#x27;!&#x27; =&gt; 14, &#x27;~&#x27; =&gt; 14, &#x27;U+&#x27; =&gt; 14, &#x27;U-&#x27; =&gt; 14,
+    &#x27;++&#x27; =&gt; 15, &#x27;--&#x27; =&gt; 15,
+    &#x27;new&#x27; =&gt; 16,
+    &#x27;.&#x27; =&gt; 17,
+    JS_NEW_WITH_ARGS =&gt; 0, JS_INDEX =&gt; 0, JS_CALL =&gt; 0,
+    JS_ARRAY_INIT =&gt; 0, JS_OBJECT_INIT =&gt; 0, JS_GROUP =&gt; 0
+  );
+
+  private $opArity = array(
+    &#x27;,&#x27; =&gt; -2,
+    &#x27;=&#x27; =&gt; 2,
+    &#x27;?&#x27; =&gt; 3,
+    &#x27;||&#x27; =&gt; 2,
+    &#x27;&amp;&amp;&#x27; =&gt; 2,
+    &#x27;|&#x27; =&gt; 2,
+    &#x27;^&#x27; =&gt; 2,
+    &#x27;&amp;&#x27; =&gt; 2,
+    &#x27;==&#x27; =&gt; 2, &#x27;!=&#x27; =&gt; 2, &#x27;===&#x27; =&gt; 2, &#x27;!==&#x27; =&gt; 2,
+    &#x27;&lt;&#x27; =&gt; 2, &#x27;&lt;=&#x27; =&gt; 2, &#x27;&gt;=&#x27; =&gt; 2, &#x27;&gt;&#x27; =&gt; 2, &#x27;in&#x27; =&gt; 2, &#x27;instanceof&#x27; =&gt; 2,
+    &#x27;&lt;&lt;&#x27; =&gt; 2, &#x27;&gt;&gt;&#x27; =&gt; 2, &#x27;&gt;&gt;&gt;&#x27; =&gt; 2,
+    &#x27;+&#x27; =&gt; 2, &#x27;-&#x27; =&gt; 2,
+    &#x27;*&#x27; =&gt; 2, &#x27;/&#x27; =&gt; 2, &#x27;%&#x27; =&gt; 2,
+    &#x27;delete&#x27; =&gt; 1, &#x27;void&#x27; =&gt; 1, &#x27;typeof&#x27; =&gt; 1,
+    &#x27;!&#x27; =&gt; 1, &#x27;~&#x27; =&gt; 1, &#x27;U+&#x27; =&gt; 1, &#x27;U-&#x27; =&gt; 1,
+    &#x27;++&#x27; =&gt; 1, &#x27;--&#x27; =&gt; 1,
+    &#x27;new&#x27; =&gt; 1,
+    &#x27;.&#x27; =&gt; 2,
+    JS_NEW_WITH_ARGS =&gt; 2, JS_INDEX =&gt; 2, JS_CALL =&gt; 2,
+    JS_ARRAY_INIT =&gt; 1, JS_OBJECT_INIT =&gt; 1, JS_GROUP =&gt; 1,
+    TOKEN_CONDCOMMENT_START =&gt; 1, TOKEN_CONDCOMMENT_END =&gt; 1
+  );
+
+  public function __construct($minifier=null)
+  {
+    $this-&gt;minifier = $minifier;
+    $this-&gt;t = new JSTokenizer();
+  }
+
+  public function parse($s, $f, $l)
+  {
+    // initialize tokenizer
+    $this-&gt;t-&gt;init($s, $f, $l);
+
+    $x = new JSCompilerContext(false);
+    $n = $this-&gt;Script($x);
+    if (!$this-&gt;t-&gt;isDone())
+      throw $this-&gt;t-&gt;newSyntaxError(&#x27;Syntax error&#x27;);
+
+    return $n;
+  }
+
+  private function Script($x)
+  {
+    $n = $this-&gt;Statements($x);
+    $n-&gt;type = JS_SCRIPT;
+    $n-&gt;funDecls = $x-&gt;funDecls;
+    $n-&gt;varDecls = $x-&gt;varDecls;
+
+    // minify by scope
+    if ($this-&gt;minifier)
+    {
+      $n-&gt;value = $this-&gt;minifier-&gt;parseTree($n);
+
+      // clear tree from node to save memory
+      $n-&gt;treeNodes = null;
+      $n-&gt;funDecls = null;
+      $n-&gt;varDecls = null;
+
+      $n-&gt;type = JS_MINIFIED;
+    }
+
+    return $n;
+  }
+
+  private function Statements($x)
+  {
+    $n = new JSNode($this-&gt;t, JS_BLOCK);
+    array_push($x-&gt;stmtStack, $n);
+
+    while (!$this-&gt;t-&gt;isDone() &amp;&amp; $this-&gt;t-&gt;peek() != OP_RIGHT_CURLY)
+      $n-&gt;addNode($this-&gt;Statement($x));
+
+    array_pop($x-&gt;stmtStack);
+
+    return $n;
+  }
+
+  private function Block($x)
+  {
+    $this-&gt;t-&gt;mustMatch(OP_LEFT_CURLY);
+    $n = $this-&gt;Statements($x);
+    $this-&gt;t-&gt;mustMatch(OP_RIGHT_CURLY);
+
+    return $n;
+  }
+
+  private function Statement($x)
+  {
+    $tt = $this-&gt;t-&gt;get();
+    $n2 = null;
+
+    // Cases for statements ending in a right curly return early, avoiding the
+    // common semicolon insertion magic after this switch.
+    switch ($tt)
+    {
+      case KEYWORD_FUNCTION:
+        return $this-&gt;FunctionDefinition(
+          $x,
+          true,
+          count($x-&gt;stmtStack) &gt; 1 ? STATEMENT_FORM : DECLARED_FORM
+        );
+      break;
+
+      case OP_LEFT_CURLY:
+        $n = $this-&gt;Statements($x);
+        $this-&gt;t-&gt;mustMatch(OP_RIGHT_CURLY);
+      return $n;
+
+      case KEYWORD_IF:
+        $n = new JSNode($this-&gt;t);
+        $n-&gt;condition = $this-&gt;ParenExpression($x);
+        array_push($x-&gt;stmtStack, $n);
+        $n-&gt;thenPart = $this-&gt;Statement($x);
+        $n-&gt;elsePart = $this-&gt;t-&gt;match(KEYWORD_ELSE) ? $this-&gt;Statement($x) : null;
+        array_pop($x-&gt;stmtStack);
+      return $n;
+
+      case KEYWORD_SWITCH:
+        $n = new JSNode($this-&gt;t);
+        $this-&gt;t-&gt;mustMatch(OP_LEFT_PAREN);
+        $n-&gt;discriminant = $this-&gt;Expression($x);
+        $this-&gt;t-&gt;mustMatch(OP_RIGHT_PAREN);
+        $n-&gt;cases = array();
+        $n-&gt;defaultIndex = -1;
+
+        array_push($x-&gt;stmtStack, $n);
+
+        $this-&gt;t-&gt;mustMatch(OP_LEFT_CURLY);
+
+        while (($tt = $this-&gt;t-&gt;get()) != OP_RIGHT_CURLY)
+        {
+          switch ($tt)
+          {
+            case KEYWORD_DEFAULT:
+              if ($n-&gt;defaultIndex &gt;= 0)
+                throw $this-&gt;t-&gt;newSyntaxError(&#x27;More than one switch default&#x27;);
+              // FALL THROUGH
+            case KEYWORD_CASE:
+              $n2 = new JSNode($this-&gt;t);
+              if ($tt == KEYWORD_DEFAULT)
+                $n-&gt;defaultIndex = count($n-&gt;cases);
+              else
+                $n2-&gt;caseLabel = $this-&gt;Expression($x, OP_COLON);
+                break;
+            default:
+              throw $this-&gt;t-&gt;newSyntaxError(&#x27;Invalid switch case&#x27;);
+          }
+
+          $this-&gt;t-&gt;mustMatch(OP_COLON);
+          $n2-&gt;statements = new JSNode($this-&gt;t, JS_BLOCK);
+          while (($tt = $this-&gt;t-&gt;peek()) != KEYWORD_CASE &amp;&amp; $tt != KEYWORD_DEFAULT &amp;&amp; $tt != OP_RIGHT_CURLY)
+            $n2-&gt;statements-&gt;addNode($this-&gt;Statement($x));
+
+          array_push($n-&gt;cases, $n2);
+        }
+
+        array_pop($x-&gt;stmtStack);
+      return $n;
+
+      case KEYWORD_FOR:
+        $n = new JSNode($this-&gt;t);
+        $n-&gt;isLoop = true;
+        $this-&gt;t-&gt;mustMatch(OP_LEFT_PAREN);
+
+        if (($tt = $this-&gt;t-&gt;peek()) != OP_SEMICOLON)
+        {
+          $x-&gt;inForLoopInit = true;
+          if ($tt == KEYWORD_VAR || $tt == KEYWORD_CONST)
+          {
+            $this-&gt;t-&gt;get();
+            $n2 = $this-&gt;Variables($x);
+          }
+          else
+          {
+            $n2 = $this-&gt;Expression($x);
+          }
+          $x-&gt;inForLoopInit = false;
+        }
+
+        if ($n2 &amp;&amp; $this-&gt;t-&gt;match(KEYWORD_IN))
+        {
+          $n-&gt;type = JS_FOR_IN;
+          if ($n2-&gt;type == KEYWORD_VAR)
+          {
+            if (count($n2-&gt;treeNodes) != 1)
+            {
+              throw $this-&gt;t-&gt;SyntaxError(
+                &#x27;Invalid for..in left-hand side&#x27;,
+                $this-&gt;t-&gt;filename,
+                $n2-&gt;lineno
+              );
+            }
+
+            // NB: n2[0].type == IDENTIFIER and n2[0].value == n2[0].name.
+            $n-&gt;iterator = $n2-&gt;treeNodes[0];
+            $n-&gt;varDecl = $n2;
+          }
+          else
+          {
+            $n-&gt;iterator = $n2;
+            $n-&gt;varDecl = null;
+          }
+
+          $n-&gt;object = $this-&gt;Expression($x);
+        }
+        else
+        {
+          $n-&gt;setup = $n2 ? $n2 : null;
+          $this-&gt;t-&gt;mustMatch(OP_SEMICOLON);
+          $n-&gt;condition = $this-&gt;t-&gt;peek() == OP_SEMICOLON ? null : $this-&gt;Expression($x);
+          $this-&gt;t-&gt;mustMatch(OP_SEMICOLON);
+          $n-&gt;update = $this-&gt;t-&gt;peek() == OP_RIGHT_PAREN ? null : $this-&gt;Expression($x);
+        }
+
+        $this-&gt;t-&gt;mustMatch(OP_RIGHT_PAREN);
+        $n-&gt;body = $this-&gt;nest($x, $n);
+      return $n;
+
+      case KEYWORD_WHILE:
+              $n = new JSNode($this-&gt;t);
+              $n-&gt;isLoop = true;
+              $n-&gt;condition = $this-&gt;ParenExpression($x);
+              $n-&gt;body = $this-&gt;nest($x, $n);
+      return $n;
+
+      case KEYWORD_DO:
+        $n = new JSNode($this-&gt;t);
+        $n-&gt;isLoop = true;
+        $n-&gt;body = $this-&gt;nest($x, $n, KEYWORD_WHILE);
+        $n-&gt;condition = $this-&gt;ParenExpression($x);
+        if (!$x-&gt;ecmaStrictMode)
+        {
+          // &lt;script language=&quot;JavaScript&quot;&gt; (without version hints) may need
+          // automatic semicolon insertion without a newline after do-while.
+          // See http://bugzilla.mozilla.org/show_bug.cgi?id=238945.
+          $this-&gt;t-&gt;match(OP_SEMICOLON);
+          return $n;
+        }
+      break;
+
+      case KEYWORD_BREAK:
+      case KEYWORD_CONTINUE:
+        $n = new JSNode($this-&gt;t);
+
+        if ($this-&gt;t-&gt;peekOnSameLine() == TOKEN_IDENTIFIER)
+        {
+          $this-&gt;t-&gt;get();
+          $n-&gt;label = $this-&gt;t-&gt;currentToken()-&gt;value;
+        }
+
+        $ss = $x-&gt;stmtStack;
+        $i = count($ss);
+        $label = $n-&gt;label;
+        if ($label)
+        {
+          do
+          {
+            if (--$i &lt; 0)
+              throw $this-&gt;t-&gt;newSyntaxError(&#x27;Label not found&#x27;);
+          }
+          while ($ss[$i]-&gt;label != $label);
+        }
+        else
+        {
+          do
+          {
+            if (--$i &lt; 0)
+              throw $this-&gt;t-&gt;newSyntaxError(&#x27;Invalid &#x27; . $tt);
+          }
+          while (!$ss[$i]-&gt;isLoop &amp;&amp; ($tt != KEYWORD_BREAK || $ss[$i]-&gt;type != KEYWORD_SWITCH));
+        }
+
+        $n-&gt;target = $ss[$i];
+      break;
+
+      case KEYWORD_TRY:
+        $n = new JSNode($this-&gt;t);
+        $n-&gt;tryBlock = $this-&gt;Block($x);
+        $n-&gt;catchClauses = array();
+
+        while ($this-&gt;t-&gt;match(KEYWORD_CATCH))
+        {
+          $n2 = new JSNode($this-&gt;t);
+          $this-&gt;t-&gt;mustMatch(OP_LEFT_PAREN);
+          $n2-&gt;varName = $this-&gt;t-&gt;mustMatch(TOKEN_IDENTIFIER)-&gt;value;
+
+          if ($this-&gt;t-&gt;match(KEYWORD_IF))
+          {
+            if ($x-&gt;ecmaStrictMode)
+              throw $this-&gt;t-&gt;newSyntaxError(&#x27;Illegal catch guard&#x27;);
+
+            if (count($n-&gt;catchClauses) &amp;&amp; !end($n-&gt;catchClauses)-&gt;guard)
+              throw $this-&gt;t-&gt;newSyntaxError(&#x27;Guarded catch after unguarded&#x27;);
+
+            $n2-&gt;guard = $this-&gt;Expression($x);
+          }
+          else
+          {
+            $n2-&gt;guard = null;
+          }
+
+          $this-&gt;t-&gt;mustMatch(OP_RIGHT_PAREN);
+          $n2-&gt;block = $this-&gt;Block($x);
+          array_push($n-&gt;catchClauses, $n2);
+        }
+
+        if ($this-&gt;t-&gt;match(KEYWORD_FINALLY))
+          $n-&gt;finallyBlock = $this-&gt;Block($x);
+
+        if (!count($n-&gt;catchClauses) &amp;&amp; !$n-&gt;finallyBlock)
+          throw $this-&gt;t-&gt;newSyntaxError(&#x27;Invalid try statement&#x27;);
+      return $n;
+
+      case KEYWORD_CATCH:
+      case KEYWORD_FINALLY:
+        throw $this-&gt;t-&gt;newSyntaxError($tt + &#x27; without preceding try&#x27;);
+
+      case KEYWORD_THROW:
+        $n = new JSNode($this-&gt;t);
+        $n-&gt;value = $this-&gt;Expression($x);
+      break;
+
+      case KEYWORD_RETURN:
+        if (!$x-&gt;inFunction)
+          throw $this-&gt;t-&gt;newSyntaxError(&#x27;Invalid return&#x27;);
+
+        $n = new JSNode($this-&gt;t);
+        $tt = $this-&gt;t-&gt;peekOnSameLine();
+        if ($tt != TOKEN_END &amp;&amp; $tt != TOKEN_NEWLINE &amp;&amp; $tt != OP_SEMICOLON &amp;&amp; $tt != OP_RIGHT_CURLY)
+          $n-&gt;value = $this-&gt;Expression($x);
+        else
+          $n-&gt;value = null;
+      break;
+
+      case KEYWORD_WITH:
+        $n = new JSNode($this-&gt;t);
+        $n-&gt;object = $this-&gt;ParenExpression($x);
+        $n-&gt;body = $this-&gt;nest($x, $n);
+      return $n;
+
+      case KEYWORD_VAR:
+      case KEYWORD_CONST:
+              $n = $this-&gt;Variables($x);
+      break;
+
+      case TOKEN_CONDCOMMENT_START:
+      case TOKEN_CONDCOMMENT_END:
+        $n = new JSNode($this-&gt;t);
+      return $n;
+
+      case KEYWORD_DEBUGGER:
+        $n = new JSNode($this-&gt;t);
+      break;
+
+      case TOKEN_NEWLINE:
+      case OP_SEMICOLON:
+        $n = new JSNode($this-&gt;t, OP_SEMICOLON);
+        $n-&gt;expression = null;
+      return $n;
+
+      default:
+        if ($tt == TOKEN_IDENTIFIER)
+        {
+          $this-&gt;t-&gt;scanOperand = false;
+          $tt = $this-&gt;t-&gt;peek();
+          $this-&gt;t-&gt;scanOperand = true;
+          if ($tt == OP_COLON)
+          {
+            $label = $this-&gt;t-&gt;currentToken()-&gt;value;
+            $ss = $x-&gt;stmtStack;
+            for ($i = count($ss) - 1; $i &gt;= 0; --$i)
+            {
+              if ($ss[$i]-&gt;label == $label)
+                throw $this-&gt;t-&gt;newSyntaxError(&#x27;Duplicate label&#x27;);
+            }
+
+            $this-&gt;t-&gt;get();
+            $n = new JSNode($this-&gt;t, JS_LABEL);
+            $n-&gt;label = $label;
+            $n-&gt;statement = $this-&gt;nest($x, $n);
+
+            return $n;
+          }
+        }
+
+        $n = new JSNode($this-&gt;t, OP_SEMICOLON);
+        $this-&gt;t-&gt;unget();
+        $n-&gt;expression = $this-&gt;Expression($x);
+        $n-&gt;end = $n-&gt;expression-&gt;end;
+      break;
+    }
+
+    if ($this-&gt;t-&gt;lineno == $this-&gt;t-&gt;currentToken()-&gt;lineno)
+    {
+      $tt = $this-&gt;t-&gt;peekOnSameLine();
+      if ($tt != TOKEN_END &amp;&amp; $tt != TOKEN_NEWLINE &amp;&amp; $tt != OP_SEMICOLON &amp;&amp; $tt != OP_RIGHT_CURLY)
+        throw $this-&gt;t-&gt;newSyntaxError(&#x27;Missing ; before statement&#x27;);
+    }
+
+    $this-&gt;t-&gt;match(OP_SEMICOLON);
+
+    return $n;
+  }
+
+  private function FunctionDefinition($x, $requireName, $functionForm)
+  {
+    $f = new JSNode($this-&gt;t);
+
+    if ($f-&gt;type != KEYWORD_FUNCTION)
+      $f-&gt;type = ($f-&gt;value == &#x27;get&#x27;) ? JS_GETTER : JS_SETTER;
+
+    if ($this-&gt;t-&gt;match(TOKEN_IDENTIFIER))
+      $f-&gt;name = $this-&gt;t-&gt;currentToken()-&gt;value;
+    elseif ($requireName)
+      throw $this-&gt;t-&gt;newSyntaxError(&#x27;Missing function identifier&#x27;);
+
+    $this-&gt;t-&gt;mustMatch(OP_LEFT_PAREN);
+      $f-&gt;params = array();
+
+    while (($tt = $this-&gt;t-&gt;get()) != OP_RIGHT_PAREN)
+    {
+      if ($tt != TOKEN_IDENTIFIER)
+        throw $this-&gt;t-&gt;newSyntaxError(&#x27;Missing formal parameter&#x27;);
+
+      array_push($f-&gt;params, $this-&gt;t-&gt;currentToken()-&gt;value);
+
+      if ($this-&gt;t-&gt;peek() != OP_RIGHT_PAREN)
+        $this-&gt;t-&gt;mustMatch(OP_COMMA);
+    }
+
+    $this-&gt;t-&gt;mustMatch(OP_LEFT_CURLY);
+
+    $x2 = new JSCompilerContext(true);
+    $f-&gt;body = $this-&gt;Script($x2);
+
+    $this-&gt;t-&gt;mustMatch(OP_RIGHT_CURLY);
+    $f-&gt;end = $this-&gt;t-&gt;currentToken()-&gt;end;
+
+    $f-&gt;functionForm = $functionForm;
+    if ($functionForm == DECLARED_FORM)
+      array_push($x-&gt;funDecls, $f);
+
+    return $f;
+  }
+
+  private function Variables($x)
+  {
+    $n = new JSNode($this-&gt;t);
+
+    do
+    {
+      $this-&gt;t-&gt;mustMatch(TOKEN_IDENTIFIER);
+
+      $n2 = new JSNode($this-&gt;t);
+      $n2-&gt;name = $n2-&gt;value;
+
+      if ($this-&gt;t-&gt;match(OP_ASSIGN))
+      {
+        if ($this-&gt;t-&gt;currentToken()-&gt;assignOp)
+          throw $this-&gt;t-&gt;newSyntaxError(&#x27;Invalid variable initialization&#x27;);
+
+        $n2-&gt;initializer = $this-&gt;Expression($x, OP_COMMA);
+      }
+
+      $n2-&gt;readOnly = $n-&gt;type == KEYWORD_CONST;
+
+      $n-&gt;addNode($n2);
+      array_push($x-&gt;varDecls, $n2);
+    }
+    while ($this-&gt;t-&gt;match(OP_COMMA));
+
+    return $n;
+  }
+
+  private function Expression($x, $stop=false)
+  {
+    $operators = array();
+    $operands = array();
+    $n = false;
+
+    $bl = $x-&gt;bracketLevel;
+    $cl = $x-&gt;curlyLevel;
+    $pl = $x-&gt;parenLevel;
+    $hl = $x-&gt;hookLevel;
+
+    while (($tt = $this-&gt;t-&gt;get()) != TOKEN_END)
+    {
+      if ($tt == $stop &amp;&amp;
+        $x-&gt;bracketLevel == $bl &amp;&amp;
+        $x-&gt;curlyLevel == $cl &amp;&amp;
+        $x-&gt;parenLevel == $pl &amp;&amp;
+        $x-&gt;hookLevel == $hl
+      )
+      {
+        // Stop only if tt matches the optional stop parameter, and that
+        // token is not quoted by some kind of bracket.
+        break;
+      }
+
+      switch ($tt)
+      {
+        case OP_SEMICOLON:
+          // NB: cannot be empty, Statement handled that.
+          break 2;
+
+        case OP_HOOK:
+          if ($this-&gt;t-&gt;scanOperand)
+            break 2;
+
+          while (  !empty($operators) &amp;&amp;
+            $this-&gt;opPrecedence[end($operators)-&gt;type] &gt; $this-&gt;opPrecedence[$tt]
+          )
+            $this-&gt;reduce($operators, $operands);
+
+          array_push($operators, new JSNode($this-&gt;t));
+
+          ++$x-&gt;hookLevel;
+          $this-&gt;t-&gt;scanOperand = true;
+          $n = $this-&gt;Expression($x);
+
+          if (!$this-&gt;t-&gt;match(OP_COLON))
+            break 2;
+
+          --$x-&gt;hookLevel;
+          array_push($operands, $n);
+        break;
+
+        case OP_COLON:
+          if ($x-&gt;hookLevel)
+            break 2;
+
+          throw $this-&gt;t-&gt;newSyntaxError(&#x27;Invalid label&#x27;);
+        break;
+
+        case OP_ASSIGN:
+          if ($this-&gt;t-&gt;scanOperand)
+            break 2;
+
+          // Use &gt;, not &gt;=, for right-associative ASSIGN
+          while (  !empty($operators) &amp;&amp;
+            $this-&gt;opPrecedence[end($operators)-&gt;type] &gt; $this-&gt;opPrecedence[$tt]
+          )
+            $this-&gt;reduce($operators, $operands);
+
+          array_push($operators, new JSNode($this-&gt;t));
+          end($operands)-&gt;assignOp = $this-&gt;t-&gt;currentToken()-&gt;assignOp;
+          $this-&gt;t-&gt;scanOperand = true;
+        break;
+
+        case KEYWORD_IN:
+          // An in operator should not be parsed if we&#x27;re parsing the head of
+          // a for (...) loop, unless it is in the then part of a conditional
+          // expression, or parenthesized somehow.
+          if ($x-&gt;inForLoopInit &amp;&amp; !$x-&gt;hookLevel &amp;&amp;
+            !$x-&gt;bracketLevel &amp;&amp; !$x-&gt;curlyLevel &amp;&amp;
+            !$x-&gt;parenLevel
+          )
+            break 2;
+        // FALL THROUGH
+        case OP_COMMA:
+          // A comma operator should not be parsed if we&#x27;re parsing the then part
+          // of a conditional expression unless it&#x27;s parenthesized somehow.
+          if ($tt == OP_COMMA &amp;&amp; $x-&gt;hookLevel &amp;&amp;
+            !$x-&gt;bracketLevel &amp;&amp; !$x-&gt;curlyLevel &amp;&amp;
+            !$x-&gt;parenLevel
+          )
+            break 2;
+        // Treat comma as left-associative so reduce can fold left-heavy
+        // COMMA trees into a single array.
+        // FALL THROUGH
+        case OP_OR:
+        case OP_AND:
+        case OP_BITWISE_OR:
+        case OP_BITWISE_XOR:
+        case OP_BITWISE_AND:
+        case OP_EQ: case OP_NE: case OP_STRICT_EQ: case OP_STRICT_NE:
+        case OP_LT: case OP_LE: case OP_GE: case OP_GT:
+        case KEYWORD_INSTANCEOF:
+        case OP_LSH: case OP_RSH: case OP_URSH:
+        case OP_PLUS: case OP_MINUS:
+        case OP_MUL: case OP_DIV: case OP_MOD:
+        case OP_DOT:
+          if ($this-&gt;t-&gt;scanOperand)
+            break 2;
+
+          while (  !empty($operators) &amp;&amp;
+            $this-&gt;opPrecedence[end($operators)-&gt;type] &gt;= $this-&gt;opPrecedence[$tt]
+          )
+            $this-&gt;reduce($operators, $operands);
+
+          if ($tt == OP_DOT)
+          {
+            $this-&gt;t-&gt;mustMatch(TOKEN_IDENTIFIER);
+            array_push($operands, new JSNode($this-&gt;t, OP_DOT, array_pop($operands), new JSNode($this-&gt;t)));
+          }
+          else
+          {
+            array_push($operators, new JSNode($this-&gt;t));
+            $this-&gt;t-&gt;scanOperand = true;
+          }
+        break;
+
+        case KEYWORD_DELETE: case KEYWORD_VOID: case KEYWORD_TYPEOF:
+        case OP_NOT: case OP_BITWISE_NOT: case OP_UNARY_PLUS: case OP_UNARY_MINUS:
+        case KEYWORD_NEW:
+          if (!$this-&gt;t-&gt;scanOperand)
+            break 2;
+
+          array_push($operators, new JSNode($this-&gt;t));
+        break;
+
+        case OP_INCREMENT: case OP_DECREMENT:
+          if ($this-&gt;t-&gt;scanOperand)
+          {
+            array_push($operators, new JSNode($this-&gt;t));  // prefix increment or decrement
+          }
+          else
+          {
+            // Don&#x27;t cross a line boundary for postfix {in,de}crement.
+            $t = $this-&gt;t-&gt;tokens[($this-&gt;t-&gt;tokenIndex + $this-&gt;t-&gt;lookahead - 1) &amp; 3];
+            if ($t &amp;&amp; $t-&gt;lineno != $this-&gt;t-&gt;lineno)
+              break 2;
+
+            if (!empty($operators))
+            {
+              // Use &gt;, not &gt;=, so postfix has higher precedence than prefix.
+              while ($this-&gt;opPrecedence[end($operators)-&gt;type] &gt; $this-&gt;opPrecedence[$tt])
+                $this-&gt;reduce($operators, $operands);
+            }
+
+            $n = new JSNode($this-&gt;t, $tt, array_pop($operands));
+            $n-&gt;postfix = true;
+            array_push($operands, $n);
+          }
+        break;
+
+        case KEYWORD_FUNCTION:
+          if (!$this-&gt;t-&gt;scanOperand)
+            break 2;
+
+          array_push($operands, $this-&gt;FunctionDefinition($x, false, EXPRESSED_FORM));
+          $this-&gt;t-&gt;scanOperand = false;
+        break;
+
+        case KEYWORD_NULL: case KEYWORD_THIS: case KEYWORD_TRUE: case KEYWORD_FALSE:
+        case TOKEN_IDENTIFIER: case TOKEN_NUMBER: case TOKEN_STRING: case TOKEN_REGEXP:
+          if (!$this-&gt;t-&gt;scanOperand)
+            break 2;
+
+          array_push($operands, new JSNode($this-&gt;t));
+          $this-&gt;t-&gt;scanOperand = false;
+        break;
+
+        case TOKEN_CONDCOMMENT_START:
+        case TOKEN_CONDCOMMENT_END:
+          if ($this-&gt;t-&gt;scanOperand)
+            array_push($operators, new JSNode($this-&gt;t));
+          else
+            array_push($operands, new JSNode($this-&gt;t));
+        break;
+
+        case OP_LEFT_BRACKET:
+          if ($this-&gt;t-&gt;scanOperand)
+          {
+            // Array initialiser.  Parse using recursive descent, as the
+            // sub-grammar here is not an operator grammar.
+            $n = new JSNode($this-&gt;t, JS_ARRAY_INIT);
+            while (($tt = $this-&gt;t-&gt;peek()) != OP_RIGHT_BRACKET)
+            {
+              if ($tt == OP_COMMA)
+              {
+                $this-&gt;t-&gt;get();
+                $n-&gt;addNode(null);
+                continue;
+              }
+
+              $n-&gt;addNode($this-&gt;Expression($x, OP_COMMA));
+              if (!$this-&gt;t-&gt;match(OP_COMMA))
+                break;
+            }
+
+            $this-&gt;t-&gt;mustMatch(OP_RIGHT_BRACKET);
+            array_push($operands, $n);
+            $this-&gt;t-&gt;scanOperand = false;
+          }
+          else
+          {
+            // Property indexing operator.
+            array_push($operators, new JSNode($this-&gt;t, JS_INDEX));
+            $this-&gt;t-&gt;scanOperand = true;
+            ++$x-&gt;bracketLevel;
+          }
+        break;
+
+        case OP_RIGHT_BRACKET:
+          if ($this-&gt;t-&gt;scanOperand || $x-&gt;bracketLevel == $bl)
+            break 2;
+
+          while ($this-&gt;reduce($operators, $operands)-&gt;type != JS_INDEX)
+            continue;
+
+          --$x-&gt;bracketLevel;
+        break;
+
+        case OP_LEFT_CURLY:
+          if (!$this-&gt;t-&gt;scanOperand)
+            break 2;
+
+          // Object initialiser.  As for array initialisers (see above),
+          // parse using recursive descent.
+          ++$x-&gt;curlyLevel;
+          $n = new JSNode($this-&gt;t, JS_OBJECT_INIT);
+          while (!$this-&gt;t-&gt;match(OP_RIGHT_CURLY))
+          {
+            do
+            {
+              $tt = $this-&gt;t-&gt;get();
+              $tv = $this-&gt;t-&gt;currentToken()-&gt;value;
+              if (($tv == &#x27;get&#x27; || $tv == &#x27;set&#x27;) &amp;&amp; $this-&gt;t-&gt;peek() == TOKEN_IDENTIFIER)
+              {
+                if ($x-&gt;ecmaStrictMode)
+                  throw $this-&gt;t-&gt;newSyntaxError(&#x27;Illegal property accessor&#x27;);
+
+                $n-&gt;addNode($this-&gt;FunctionDefinition($x, true, EXPRESSED_FORM));
+              }
+              else
+              {
+                switch ($tt)
+                {
+                  case TOKEN_IDENTIFIER:
+                  case TOKEN_NUMBER:
+                  case TOKEN_STRING:
+                    $id = new JSNode($this-&gt;t);
+                  break;
+
+                  case OP_RIGHT_CURLY:
+                    if ($x-&gt;ecmaStrictMode)
+                      throw $this-&gt;t-&gt;newSyntaxError(&#x27;Illegal trailing ,&#x27;);
+                  break 3;
+
+                  default:
+                    throw $this-&gt;t-&gt;newSyntaxError(&#x27;Invalid property name&#x27;);
+                }
+
+                $this-&gt;t-&gt;mustMatch(OP_COLON);
+                $n-&gt;addNode(new JSNode($this-&gt;t, JS_PROPERTY_INIT, $id, $this-&gt;Expression($x, OP_COMMA)));
+              }
+            }
+            while ($this-&gt;t-&gt;match(OP_COMMA));
+
+            $this-&gt;t-&gt;mustMatch(OP_RIGHT_CURLY);
+            break;
+          }
+
+          array_push($operands, $n);
+          $this-&gt;t-&gt;scanOperand = false;
+          --$x-&gt;curlyLevel;
+        break;
+
+        case OP_RIGHT_CURLY:
+          if (!$this-&gt;t-&gt;scanOperand &amp;&amp; $x-&gt;curlyLevel != $cl)
+            throw new Exception(&#x27;PANIC: right curly botch&#x27;);
+        break 2;
+
+        case OP_LEFT_PAREN:
+          if ($this-&gt;t-&gt;scanOperand)
+          {
+            array_push($operators, new JSNode($this-&gt;t, JS_GROUP));
+          }
+          else
+          {
+            while (  !empty($operators) &amp;&amp;
+              $this-&gt;opPrecedence[end($operators)-&gt;type] &gt; $this-&gt;opPrecedence[KEYWORD_NEW]
+            )
+              $this-&gt;reduce($operators, $operands);
+
+            // Handle () now, to regularize the n-ary case for n &gt; 0.
+            // We must set scanOperand in case there are arguments and
+            // the first one is a regexp or unary+/-.
+            $n = end($operators);
+            $this-&gt;t-&gt;scanOperand = true;
+            if ($this-&gt;t-&gt;match(OP_RIGHT_PAREN))
+            {
+              if ($n &amp;&amp; $n-&gt;type == KEYWORD_NEW)
+              {
+                array_pop($operators);
+                $n-&gt;addNode(array_pop($operands));
+              }
+              else
+              {
+                $n = new JSNode($this-&gt;t, JS_CALL, array_pop($operands), new JSNode($this-&gt;t, JS_LIST));
+              }
+
+              array_push($operands, $n);
+              $this-&gt;t-&gt;scanOperand = false;
+              break;
+            }
+
+            if ($n &amp;&amp; $n-&gt;type == KEYWORD_NEW)
+              $n-&gt;type = JS_NEW_WITH_ARGS;
+            else
+              array_push($operators, new JSNode($this-&gt;t, JS_CALL));
+          }
+
+          ++$x-&gt;parenLevel;
+        break;
+
+        case OP_RIGHT_PAREN:
+          if ($this-&gt;t-&gt;scanOperand || $x-&gt;parenLevel == $pl)
+            break 2;
+
+          while (($tt = $this-&gt;reduce($operators, $operands)-&gt;type) != JS_GROUP &amp;&amp;
+            $tt != JS_CALL &amp;&amp; $tt != JS_NEW_WITH_ARGS
+          )
+          {
+            continue;
+          }
+
+          if ($tt != JS_GROUP)
+          {
+            $n = end($operands);
+            if ($n-&gt;treeNodes[1]-&gt;type != OP_COMMA)
+              $n-&gt;treeNodes[1] = new JSNode($this-&gt;t, JS_LIST, $n-&gt;treeNodes[1]);
+            else
+              $n-&gt;treeNodes[1]-&gt;type = JS_LIST;
+          }
+
+          --$x-&gt;parenLevel;
+        break;
+
+        // Automatic semicolon insertion means we may scan across a newline
+        // and into the beginning of another statement.  If so, break out of
+        // the while loop and let the t.scanOperand logic handle errors.
+        default:
+          break 2;
+      }
+    }
+
+    if ($x-&gt;hookLevel != $hl)
+      throw $this-&gt;t-&gt;newSyntaxError(&#x27;Missing : in conditional expression&#x27;);
+
+    if ($x-&gt;parenLevel != $pl)
+      throw $this-&gt;t-&gt;newSyntaxError(&#x27;Missing ) in parenthetical&#x27;);
+
+    if ($x-&gt;bracketLevel != $bl)
+      throw $this-&gt;t-&gt;newSyntaxError(&#x27;Missing ] in index expression&#x27;);
+
+    if ($this-&gt;t-&gt;scanOperand)
+      throw $this-&gt;t-&gt;newSyntaxError(&#x27;Missing operand&#x27;);
+
+    // Resume default mode, scanning for operands, not operators.
+    $this-&gt;t-&gt;scanOperand = true;
+    $this-&gt;t-&gt;unget();
+
+    while (count($operators))
+      $this-&gt;reduce($operators, $operands);
+
+    return array_pop($operands);
+  }
+
+  private function ParenExpression($x)
+  {
+    $this-&gt;t-&gt;mustMatch(OP_LEFT_PAREN);
+    $n = $this-&gt;Expression($x);
+    $this-&gt;t-&gt;mustMatch(OP_RIGHT_PAREN);
+
+    return $n;
+  }
+
+  // Statement stack and nested statement handler.
+  private function nest($x, $node, $end = false)
+  {
+    array_push($x-&gt;stmtStack, $node);
+    $n = $this-&gt;statement($x);
+    array_pop($x-&gt;stmtStack);
+
+    if ($end)
+      $this-&gt;t-&gt;mustMatch($end);
+
+    return $n;
+  }
+
+  private function reduce(&amp;$operators, &amp;$operands)
+  {
+    $n = array_pop($operators);
+    $op = $n-&gt;type;
+    $arity = $this-&gt;opArity[$op];
+    $c = count($operands);
+    if ($arity == -2)
+    {
+      // Flatten left-associative trees
+      if ($c &gt;= 2)
+      {
+        $left = $operands[$c - 2];
+        if ($left-&gt;type == $op)
+        {
+          $right = array_pop($operands);
+          $left-&gt;addNode($right);
+          return $left;
+        }
+      }
+      $arity = 2;
+    }
+
+    // Always use push to add operands to n, to update start and end
+    $a = array_splice($operands, $c - $arity);
+    for ($i = 0; $i &lt; $arity; $i++)
+      $n-&gt;addNode($a[$i]);
+
+    // Include closing bracket or postfix operator in [start,end]
+    $te = $this-&gt;t-&gt;currentToken()-&gt;end;
+    if ($n-&gt;end &lt; $te)
+      $n-&gt;end = $te;
+
+    array_push($operands, $n);
+
+    return $n;
+  }
+}
+
+class JSCompilerContext
+{
+  public $inFunction = false;
+  public $inForLoopInit = false;
+  public $ecmaStrictMode = false;
+  public $bracketLevel = 0;
+  public $curlyLevel = 0;
+  public $parenLevel = 0;
+  public $hookLevel = 0;
+
+  public $stmtStack = array();
+  public $funDecls = array();
+  public $varDecls = array();
+
+  public function __construct($inFunction)
+  {
+    $this-&gt;inFunction = $inFunction;
+  }
+}
+
+class JSNode
+{
+  private $type;
+  private $value;
+  private $lineno;
+  private $start;
+  private $end;
+
+  public $treeNodes = array();
+  public $funDecls = array();
+  public $varDecls = array();
+
+  public function __construct($t, $type=0)
+  {
+    if ($token = $t-&gt;currentToken())
+    {
+      $this-&gt;type = $type ? $type : $token-&gt;type;
+      $this-&gt;value = $token-&gt;value;
+      $this-&gt;lineno = $token-&gt;lineno;
+      $this-&gt;start = $token-&gt;start;
+      $this-&gt;end = $token-&gt;end;
+    }
+    else
+    {
+      $this-&gt;type = $type;
+      $this-&gt;lineno = $t-&gt;lineno;
+    }
+
+    if (($numargs = func_num_args()) &gt; 2)
+    {
+      $args = func_get_args();
+      for ($i = 2; $i &lt; $numargs; $i++)
+        $this-&gt;addNode($args[$i]);
+    }
+  }
+
+  // we don&#x27;t want to bloat our object with all kind of specific properties, so we use overloading
+  public function __set($name, $value)
+  {
+    $this-&gt;$name = $value;
+  }
+
+  public function __get($name)
+  {
+    if (isset($this-&gt;$name))
+      return $this-&gt;$name;
+
+    return null;
+  }
+
+  public function addNode($node)
+  {
+    if ($node !== null)
+    {
+      if ($node-&gt;start &lt; $this-&gt;start)
+        $this-&gt;start = $node-&gt;start;
+      if ($this-&gt;end &lt; $node-&gt;end)
+        $this-&gt;end = $node-&gt;end;
+    }
+
+    $this-&gt;treeNodes[] = $node;
+  }
+}
+
+class JSTokenizer
+{
+  private $cursor = 0;
+  private $source;
+
+  public $tokens = array();
+  public $tokenIndex = 0;
+  public $lookahead = 0;
+  public $scanNewlines = false;
+  public $scanOperand = true;
+
+  public $filename;
+  public $lineno;
+
+  private $keywords = array(
+    &#x27;break&#x27;,
+    &#x27;case&#x27;, &#x27;catch&#x27;, &#x27;const&#x27;, &#x27;continue&#x27;,
+    &#x27;debugger&#x27;, &#x27;default&#x27;, &#x27;delete&#x27;, &#x27;do&#x27;,
+    &#x27;else&#x27;, &#x27;enum&#x27;,
+    &#x27;false&#x27;, &#x27;finally&#x27;, &#x27;for&#x27;, &#x27;function&#x27;,
+    &#x27;if&#x27;, &#x27;in&#x27;, &#x27;instanceof&#x27;,
+    &#x27;new&#x27;, &#x27;null&#x27;,
+    &#x27;return&#x27;,
+    &#x27;switch&#x27;,
+    &#x27;this&#x27;, &#x27;throw&#x27;, &#x27;true&#x27;, &#x27;try&#x27;, &#x27;typeof&#x27;,
+    &#x27;var&#x27;, &#x27;void&#x27;,
+    &#x27;while&#x27;, &#x27;with&#x27;
+  );
+
+  private $opTypeNames = array(
+    &#x27;;&#x27;, &#x27;,&#x27;, &#x27;?&#x27;, &#x27;:&#x27;, &#x27;||&#x27;, &#x27;&amp;&amp;&#x27;, &#x27;|&#x27;, &#x27;^&#x27;,
+    &#x27;&amp;&#x27;, &#x27;===&#x27;, &#x27;==&#x27;, &#x27;=&#x27;, &#x27;!==&#x27;, &#x27;!=&#x27;, &#x27;&lt;&lt;&#x27;, &#x27;&lt;=&#x27;,
+    &#x27;&lt;&#x27;, &#x27;&gt;&gt;&gt;&#x27;, &#x27;&gt;&gt;&#x27;, &#x27;&gt;=&#x27;, &#x27;&gt;&#x27;, &#x27;++&#x27;, &#x27;--&#x27;, &#x27;+&#x27;,
+    &#x27;-&#x27;, &#x27;*&#x27;, &#x27;/&#x27;, &#x27;%&#x27;, &#x27;!&#x27;, &#x27;~&#x27;, &#x27;.&#x27;, &#x27;[&#x27;,
+    &#x27;]&#x27;, &#x27;{&#x27;, &#x27;}&#x27;, &#x27;(&#x27;, &#x27;)&#x27;, &#x27;@*/&#x27;
+  );
+
+  private $assignOps = array(&#x27;|&#x27;, &#x27;^&#x27;, &#x27;&amp;&#x27;, &#x27;&lt;&lt;&#x27;, &#x27;&gt;&gt;&#x27;, &#x27;&gt;&gt;&gt;&#x27;, &#x27;+&#x27;, &#x27;-&#x27;, &#x27;*&#x27;, &#x27;/&#x27;, &#x27;%&#x27;);
+  private $opRegExp;
+
+  public function __construct()
+  {
+    $this-&gt;opRegExp = &#x27;#^(&#x27; . implode(&#x27;|&#x27;, array_map(&#x27;preg_quote&#x27;, $this-&gt;opTypeNames)) . &#x27;)#&#x27;;
+  }
+
+  public function init($source, $filename = &#x27;&#x27;, $lineno = 1)
+  {
+    $this-&gt;source = $source;
+    $this-&gt;filename = $filename ? $filename : &#x27;[inline]&#x27;;
+    $this-&gt;lineno = $lineno;
+
+    $this-&gt;cursor = 0;
+    $this-&gt;tokens = array();
+    $this-&gt;tokenIndex = 0;
+    $this-&gt;lookahead = 0;
+    $this-&gt;scanNewlines = false;
+    $this-&gt;scanOperand = true;
+  }
+
+  public function getInput($chunksize)
+  {
+    if ($chunksize)
+      return substr($this-&gt;source, $this-&gt;cursor, $chunksize);
+
+    return substr($this-&gt;source, $this-&gt;cursor);
+  }
+
+  public function isDone()
+  {
+    return $this-&gt;peek() == TOKEN_END;
+  }
+
+  public function match($tt)
+  {
+    return $this-&gt;get() == $tt || $this-&gt;unget();
+  }
+
+  public function mustMatch($tt)
+  {
+          if (!$this-&gt;match($tt))
+      throw $this-&gt;newSyntaxError(&#x27;Unexpected token; token &#x27; . $tt . &#x27; expected&#x27;);
+
+    return $this-&gt;currentToken();
+  }
+
+  public function peek()
+  {
+    if ($this-&gt;lookahead)
+    {
+      $next = $this-&gt;tokens[($this-&gt;tokenIndex + $this-&gt;lookahead) &amp; 3];
+      if ($this-&gt;scanNewlines &amp;&amp; $next-&gt;lineno != $this-&gt;lineno)
+        $tt = TOKEN_NEWLINE;
+      else
+        $tt = $next-&gt;type;
+    }
+    else
+    {
+      $tt = $this-&gt;get();
+      $this-&gt;unget();
+    }
+
+    return $tt;
+  }
+
+  public function peekOnSameLine()
+  {
+    $this-&gt;scanNewlines = true;
+    $tt = $this-&gt;peek();
+    $this-&gt;scanNewlines = false;
+
+    return $tt;
+  }
+
+  public function currentToken()
+  {
+    if (!empty($this-&gt;tokens))
+      return $this-&gt;tokens[$this-&gt;tokenIndex];
+  }
+
+  public function get($chunksize = 1000)
+  {
+    while($this-&gt;lookahead)
+    {
+      $this-&gt;lookahead--;
+      $this-&gt;tokenIndex = ($this-&gt;tokenIndex + 1) &amp; 3;
+      $token = $this-&gt;tokens[$this-&gt;tokenIndex];
+      if ($token-&gt;type != TOKEN_NEWLINE || $this-&gt;scanNewlines)
+        return $token-&gt;type;
+    }
+
+    $conditional_comment = false;
+
+    // strip whitespace and comments
+    while(true)
+    {
+      $input = $this-&gt;getInput($chunksize);
+
+      // whitespace handling; gobble up \r as well (effectively we don&#x27;t have support for MAC newlines!)
+      $re = $this-&gt;scanNewlines ? &#x27;/^[ \r\t]+/&#x27; : &#x27;/^\s+/&#x27;;
+      if (preg_match($re, $input, $match))
+      {
+        $spaces = $match[0];
+        $spacelen = strlen($spaces);
+        $this-&gt;cursor += $spacelen;
+        if (!$this-&gt;scanNewlines)
+          $this-&gt;lineno += substr_count($spaces, &quot;\n&quot;);
+
+        if ($spacelen == $chunksize)
+          continue; // complete chunk contained whitespace
+
+        $input = $this-&gt;getInput($chunksize);
+        if ($input == &#x27;&#x27; || $input[0] != &#x27;/&#x27;)
+          break;
+      }
+
+      // Comments
+      if (!preg_match(&#x27;/^\/(?:\*(@(?:cc_on|if|elif|else|end))?.*?\*\/|\/[^\n]*)/s&#x27;, $input, $match))
+      {
+        if (!$chunksize)
+          break;
+
+        // retry with a full chunk fetch; this also prevents breakage of long regular expressions (which will never match a comment)
+        $chunksize = null;
+        continue;
+      }
+
+      // check if this is a conditional (JScript) comment
+      if (!empty($match[1]))
+      {
+        $match[0] = &#x27;/*&#x27; . $match[1];
+        $conditional_comment = true;
+        break;
+      }
+      else
+      {
+        $this-&gt;cursor += strlen($match[0]);
+        $this-&gt;lineno += substr_count($match[0], &quot;\n&quot;);
+      }
+    }
+
+    if ($input == &#x27;&#x27;)
+    {
+      $tt = TOKEN_END;
+      $match = array(&#x27;&#x27;);
+    }
+    elseif ($conditional_comment)
+    {
+      $tt = TOKEN_CONDCOMMENT_START;
+    }
+    else
+    {
+      switch ($input[0])
+      {
+        case &#x27;0&#x27;:
+          // hexadecimal
+          if (($input[1] == &#x27;x&#x27; || $input[1] == &#x27;X&#x27;) &amp;&amp; preg_match(&#x27;/^0x[0-9a-f]+/i&#x27;, $input, $match))
+          {
+            $tt = TOKEN_NUMBER;
+            break;
+          }
+        // FALL THROUGH
+
+        case &#x27;1&#x27;: case &#x27;2&#x27;: case &#x27;3&#x27;: case &#x27;4&#x27;: case &#x27;5&#x27;:
+        case &#x27;6&#x27;: case &#x27;7&#x27;: case &#x27;8&#x27;: case &#x27;9&#x27;:
+          // should always match
+          preg_match(&#x27;/^\d+(?:\.\d*)?(?:[eE][-+]?\d+)?/&#x27;, $input, $match);
+          $tt = TOKEN_NUMBER;
+        break;
+
+        case &quot;&#x27;&quot;:
+          if (preg_match(&#x27;/^\&#x27;(?:[^\\\\\&#x27;\r\n]++|\\\\(?:.|\r?\n))*\&#x27;/&#x27;, $input, $match))
+          {
+            $tt = TOKEN_STRING;
+          }
+          else
+          {
+            if ($chunksize)
+              return $this-&gt;get(null); // retry with a full chunk fetch
+
+            throw $this-&gt;newSyntaxError(&#x27;Unterminated string literal&#x27;);
+          }
+        break;
+
+        case &#x27;&quot;&#x27;:
+          if (preg_match(&#x27;/^&quot;(?:[^\\\\&quot;\r\n]++|\\\\(?:.|\r?\n))*&quot;/&#x27;, $input, $match))
+          {
+            $tt = TOKEN_STRING;
+          }
+          else
+          {
+            if ($chunksize)
+              return $this-&gt;get(null); // retry with a full chunk fetch
+
+            throw $this-&gt;newSyntaxError(&#x27;Unterminated string literal&#x27;);
+          }
+        break;
+
+        case &#x27;/&#x27;:
+          if ($this-&gt;scanOperand &amp;&amp; preg_match(&#x27;/^\/((?:\\\\.|\[(?:\\\\.|[^\]])*\]|[^\/])+)\/([gimy]*)/&#x27;, $input, $match))
+          {
+            $tt = TOKEN_REGEXP;
+            break;
+          }
+        // FALL THROUGH
+
+        case &#x27;|&#x27;:
+        case &#x27;^&#x27;:
+        case &#x27;&amp;&#x27;:
+        case &#x27;&lt;&#x27;:
+        case &#x27;&gt;&#x27;:
+        case &#x27;+&#x27;:
+        case &#x27;-&#x27;:
+        case &#x27;*&#x27;:
+        case &#x27;%&#x27;:
+        case &#x27;=&#x27;:
+        case &#x27;!&#x27;:
+          // should always match
+          preg_match($this-&gt;opRegExp, $input, $match);
+          $op = $match[0];
+          if (in_array($op, $this-&gt;assignOps) &amp;&amp; $input[strlen($op)] == &#x27;=&#x27;)
+          {
+            $tt = OP_ASSIGN;
+            $match[0] .= &#x27;=&#x27;;
+          }
+          else
+          {
+            $tt = $op;
+            if ($this-&gt;scanOperand)
+            {
+              if ($op == OP_PLUS)
+                $tt = OP_UNARY_PLUS;
+              elseif ($op == OP_MINUS)
+                $tt = OP_UNARY_MINUS;
+            }
+            $op = null;
+          }
+        break;
+
+        case &#x27;.&#x27;:
+          if (preg_match(&#x27;/^\.\d+(?:[eE][-+]?\d+)?/&#x27;, $input, $match))
+          {
+            $tt = TOKEN_NUMBER;
+            break;
+          }
+        // FALL THROUGH
+
+        case &#x27;;&#x27;:
+        case &#x27;,&#x27;:
+        case &#x27;?&#x27;:
+        case &#x27;:&#x27;:
+        case &#x27;~&#x27;:
+        case &#x27;[&#x27;:
+        case &#x27;]&#x27;:
+        case &#x27;{&#x27;:
+        case &#x27;}&#x27;:
+        case &#x27;(&#x27;:
+        case &#x27;)&#x27;:
+          // these are all single
+          $match = array($input[0]);
+          $tt = $input[0];
+        break;
+
+        case &#x27;@&#x27;:
+          // check end of conditional comment
+          if (substr($input, 0, 3) == &#x27;@*/&#x27;)
+          {
+            $match = array(&#x27;@*/&#x27;);
+            $tt = TOKEN_CONDCOMMENT_END;
+          }
+          else
+            throw $this-&gt;newSyntaxError(&#x27;Illegal token&#x27;);
+        break;
+
+        case &quot;\n&quot;:
+          if ($this-&gt;scanNewlines)
+          {
+            $match = array(&quot;\n&quot;);
+            $tt = TOKEN_NEWLINE;
+          }
+          else
+            throw $this-&gt;newSyntaxError(&#x27;Illegal token&#x27;);
+        break;
+
+        default:
+          // FIXME: add support for unicode and unicode escape sequence \uHHHH
+          if (preg_match(&#x27;/^[$\w]+/&#x27;, $input, $match))
+          {
+            $tt = in_array($match[0], $this-&gt;keywords) ? $match[0] : TOKEN_IDENTIFIER;
+          }
+          else
+            throw $this-&gt;newSyntaxError(&#x27;Illegal token&#x27;);
+      }
+    }
+
+    $this-&gt;tokenIndex = ($this-&gt;tokenIndex + 1) &amp; 3;
+
+    if (!isset($this-&gt;tokens[$this-&gt;tokenIndex]))
+      $this-&gt;tokens[$this-&gt;tokenIndex] = new JSToken();
+
+    $token = $this-&gt;tokens[$this-&gt;tokenIndex];
+    $token-&gt;type = $tt;
+
+    if ($tt == OP_ASSIGN)
+      $token-&gt;assignOp = $op;
+
+    $token-&gt;start = $this-&gt;cursor;
+
+    $token-&gt;value = $match[0];
+    $this-&gt;cursor += strlen($match[0]);
+
+    $token-&gt;end = $this-&gt;cursor;
+    $token-&gt;lineno = $this-&gt;lineno;
+
+    return $tt;
+  }
+
+  public function unget()
+  {
+    if (++$this-&gt;lookahead == 4)
+      throw $this-&gt;newSyntaxError(&#x27;PANIC: too much lookahead!&#x27;);
+
+    $this-&gt;tokenIndex = ($this-&gt;tokenIndex - 1) &amp; 3;
+  }
+
+  public function newSyntaxError($m)
+  {
+    return new Exception(&#x27;Parse error: &#x27; . $m . &#x27; in file \&#x27;&#x27; . $this-&gt;filename . &#x27;\&#x27; on line &#x27; . $this-&gt;lineno);
+  }
+}
+
+class JSToken
+{
+  public $type;
+  public $value;
+  public $start;
+  public $end;
+  public $lineno;
+  public $assignOp;
+}
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

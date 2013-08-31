@@ -2,6 +2,7 @@
 /**
  * Flawless - Premium WordPress Theme - functions and definitions.
  *
+ * @version 0.1.1
  * @module Flawless
  * @static
  *

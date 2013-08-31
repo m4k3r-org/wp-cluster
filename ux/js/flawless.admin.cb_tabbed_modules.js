@@ -264,7 +264,6 @@ function save_tabbed_blocks() {
 
 }
 
-
 /**
  * Add Button to all blocks to create Tab Menu
  *
@@ -307,7 +306,6 @@ function cb_ud_prepare_blocks() {
   });
 
 }
-
 
 /**
  * Adds UI to Block for modules to be dragged into

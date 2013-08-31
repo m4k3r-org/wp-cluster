@@ -21,17 +21,15 @@ To maintain relational widths, all spacing is handled by the inner .cfct-module 
 Masonry is applied to all galleries by default, unless gallery has 'disable-masonry' class.
 Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 
-== Developer Notes ==
-* {}
-
 == Changelog ==
-= 0.7.0 =
+= 0.1.1 =
 * Fixed WordPrss 3.6 compatibility bug with detection of current page on admin side.
 * Fixed broken CDN urls.
 * To Do: Fix settings page disabled feature toggle bug.
 * To Do: Refractor Navbar handling by converting Navbar to use AdminBar API.
 * To Do: Finish implementing WP 3.4 customizable thing.
 
+= 0.1.0 =
 * Changed wp-login.php access prevention override to ?override_wp_login_access=true
 * Migrated get_template_part() into flawless_theme class. 
 * Implemented UD API Distributable version 1.0.0. 
@@ -46,7 +44,7 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 * Added LESS support and converted static Twitter Bootstrap to LESS. Theme creates a static compiled and minified screen-styles.css and screen-styles.dev.css in the child theme directory.
 * Added flawless_add_notice() function for printing notices on the fornt-end.
 
-= 0.6.2 =
+= 0.0.9 =
 * Modernized Carrington Build feature file structure.
 * Changed filenames of Core Asset functions to match class names, when applicable.
 * Renamed filter: flawless_remote_assets to flawless::remote_assets
@@ -64,7 +62,7 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 * flawless_theme::load() function now checks all Asset Directories for a library.
 * Developer Note: Action flawless_loaded renamed to flawless::loaded
 
-= 0.6.1  =
+= 0.0.8  =
 * Added Header Actions Menu.
 * Added automatic Google Font loader when fonts are defined in skin.
 * Added support for 404 Redirected plugin. When present, suggestions are automatically inserted into 404 Page, and available via [wbz404_suggestions] shortcode.
@@ -77,7 +75,7 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 * Improvements to flawless_page_title() to better handle post titles within loops.
 * Bugfix: Business Card widget was not being loaded early enough.
 
-= 0.6.0  =
+= 0.0.7  =
 * Added ability to customized placeholder text in search input field.
 * Added option to disable automatically-growing search input field.
 * Added an invisible post edit link that is located in the top right corner of the page.
@@ -89,7 +87,7 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 * Changed the automatically expanding search input field to only expand when in header.
 * Fixed bug with post type root pages not being loaded.
 
-= 0.5.5 =
+= 0.0.6 =
 * Added Extended Term Editor.
 * Added term taxonomy thumbnail support.
 * Added default options loader, done automatically if no Flawless settings exist, and a default-configuration.json exists in the stylesheet directory.
@@ -114,16 +112,16 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 * Added utility function in_array_like() in functions.php for comparing arrays using LIKE.
 * Added default logo if a user uploaded logo is not present.
 
-= 0.5.0 =
+= 0.0.5 =
 * Improved the way JavaScript files are loaded.
 * Moved "JavaScript Enhancements" settings under the Advanced tab.
 * Added Visual Debug option that for layout design and development - enabled under Settings -> Appearance.
 
-= 0.3.8 =
+= 0.0.4 =
 * Fixed bug with third-party added taxonomies not showing up in post type association interface.
 * Added a fail-safe to the Login Module for when AJAX fails due to an unforeseen JavaScript error, that will still log users in after the page is reloaded. (WIP)
 
-= 0.3.7 =
+= 0.0.3 =
 * Usability Dynamics jQuery Plugins are now loaded by way of CDN.
 * Improvements to Login Module.
 * Improved and standardized structure of content stylesheet.
@@ -132,33 +130,27 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 * Improved default page title handling.
 * Option to hide Author.
 
-= 0.3.6 =
+= 0.0.2 =
 * Added Mobile Navbar UI.
 * Fixes to permalink rewrites to resolve issues with Shopp plugin.
 * Carrington Build update to version 1.2.2.
 * Removed 4-column CB row.
 * Relocated Carrington Build modules into flawless/modules
 
-= 0.3.5 =
+= 0.0.1 =
 * Logo handling updated - uploaded logos are now loaded and stored in the Media Library.
 * Added a Header Navbar management panel which lets you select the type of Navbar, if any, to display on the front-end.  In addition to the Navbar itself, you may also add optional components such as a User Login form, a collapsible menu expander for mobile resolutions, as well as a displaying your brand.
 * Added full Navbar support for the BuddyPress Admin Bar.
-
-= 0.3.4 =
 * Added splash screen to notify when theme has been updated, with a changelog.
 * Restructured the way extra assets (e.g. fancybox, prettify, form helper) are loaded.  They are now registered automatically and then enqueued later on if enabled.  This way they can be enqueued manually since they are always registered.
 * Added Google Prettify and some language styles we will use.
 * Added "Users" to BuddyPress Navbar "Manage" dropdown.
-
-= 0.3.3 =
 * Global variable $fs replaced for $flawless. (old one still works, but should be phased out)
 * Added a top Navbar which can be used to render a custom menu.
 * Added responsive styles which only affect the Navbar.
 * Added option to disable the BuddyPress navbar.
 * Changed the theme settings page UI to match the WP Appearance / Plugins pages.
 * Fixed bug with "Add Row" not working on back-end.
-
-= 0.3.2 =
 * Updated Carrington Build to 1.2.1
 * Added shortcodes: [image_url] and [button]
 * Created flawless_theme::extra_local_assets() function for loading things like Fancybox.
@@ -168,15 +160,7 @@ Masonry can be applied to rows by adding a 'enable-masonry' class to the row.
 * Added UD Loop, a branch of the Carrington Build Loop, although kept inactive.
 * Removed the Ajax Pages Carrington Build module.
 * Reactivated the Carrington Build Text module.
-
-= 0.3.1 =
 * Added flawless_theme::extra_local_assets() to handle loading of extra local assets, such as Fancybox.
-
-= 0.2.5 =
 * .inner_content_wrapper and all references changed to .container
 * .post_listing_inner class added to CB Loop module excerpt and full content listings
 * [button] shortcode added
-
-= 0.1.0 =
-* Nothing yet.
-

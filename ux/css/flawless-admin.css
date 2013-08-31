@@ -281,14 +281,14 @@
   }
 
   ul.flawless_sortable_attributes li {
-    background: url("../../img/admin/flawless_draggable.png") no-repeat scroll left center transparent;
+    background: url("../../images/admin/flawless_draggable.png") no-repeat scroll left center transparent;
     padding-left: 25px;
   }
 
 
   /* Carrington Build Extensions Begin { */
   .cfct-row-handle .cfct-add-row-class {
-    background:url(../../img/admin/cfct-add-row-class.png) no-repeat 0 0;
+    background:url(../../images/admin/cfct-add-row-class.png) no-repeat 0 0;
     float: left;
     height:21px;
     overflow:hidden;
@@ -557,7 +557,7 @@
       float: left;
       height: 100%;
       width: 25px;
-      background: url("../../img/dyn_sidebar.png"), url("../../img/dyn_sidebar.png");
+      background: url("../../images/dyn_sidebar.png"), url("../../images/dyn_sidebar.png");
       background-position: 56px 0, 0 0;
       position: absolute;
       top: 0;
@@ -580,7 +580,7 @@
   }
   #flawless_settings_page .flawless_content_ui .flawless_widget_area_list[type=widget_area_holder] div.delete,
   #flawless_settings_page .flawless_content_ui .flawless_widget_area_list[type=widget_area_selector] .flawless_widget_item[flawless_widget_area="true"] div.delete {
-   background: url("../../img/dyn_sidebar.png"), url("../../img/dyn_sidebar.png");
+   background: url("../../images/dyn_sidebar.png"), url("../../images/dyn_sidebar.png");
       background-position: 26px 0, 0 0;
       position: absolute;
       top: 0;
@@ -624,7 +624,7 @@
     font-size: 1.2em;
     text-transform: lowercase;
     color: #4A4A4A;
-    background: transparent url("../../img/admin/add.png") no-repeat center left;
+    background: transparent url("../../images/admin/add.png") no-repeat center left;
     padding-left: 20px;
     padding-bottom: 2px;
   }
@@ -696,7 +696,7 @@
   }
 
   .flawless_settings_page .ud_ui_dynamic_table tr:hover td.draggable_col {
-    background: #F9F9F9 url("../../img/admin/flawless-vertical-drag-large.png") no-repeat center right;
+    background: #F9F9F9 url("../../images/admin/flawless-vertical-drag-large.png") no-repeat center right;
   }
 
   .flawless_settings_page .ud_ui_dynamic_table tr.flawless_dynamic_table_row:hover .delete_icon {
@@ -712,7 +712,7 @@
   }
 
   .flawless_settings_page .ud_ui_dynamic_table div.delete_icon {
-    background: url("../../img/admin/icon-delete-row.png") no-repeat scroll 14px center transparent;
+    background: url("../../images/admin/icon-delete-row.png") no-repeat scroll 14px center transparent;
     cursor: pointer;
     display: none;
     float: left;
@@ -725,7 +725,7 @@
   }
 
   .flawless_settings_page .ud_ui_dynamic_table tr.flawless_dynamic_table_row.flawless_locked_row div.delete_icon {
-    background-image: url("../../img/admin/icon-delete-row-disabled.png");
+    background-image: url("../../images/admin/icon-delete-row-disabled.png");
   }
 
   .flawless_settings_page .flawless_content_settings {

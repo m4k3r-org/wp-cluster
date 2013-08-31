@@ -1,6 +1,5 @@
 jQuery( document ).ready( function () {
 
-
   if ( typeof prettyPrint == 'function' ) {
     prettyPrint();
   }
@@ -64,7 +63,6 @@ jQuery( document ).ready( function () {
 
   } );
 
-
   /**
    * Set custom class for entire build
    *
@@ -105,7 +103,6 @@ jQuery( document ).ready( function () {
 
 
   } );
-
 
   /**
    * Shows custom row class entry box and saves it via AJAX
@@ -154,7 +151,6 @@ jQuery( document ).ready( function () {
 
   } );
 
-
   /**
    * Adds click handlers for the change post type option under edit posts.
    *
@@ -181,5 +177,4 @@ jQuery( document ).ready( function () {
     e.preventDefault();
   } );
 
-
-} );
+});
