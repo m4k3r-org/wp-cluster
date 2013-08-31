@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/premium/carrington-build/vendor/carrington-build/js/jquery.popover/jquery.cf.popover.js - Flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="Flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Functions.html">Template Functions</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../classes/UD_API.html">UD_API</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/premium/carrington-build/vendor/carrington-build/js/jquery.popover/jquery.cf.popover.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*!
+ * CF Popover
+ * A lightweight framework for positioning iPad-style popover elements against triggers.
+ *
+ * Copyright 2011, Crowd Favorite (http://crowdfavorite.com)
+ * Licensed under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ */
+;(function ($) {
+  /* Proxy this once to save computation */
+  var uiPosition = $.ui.position;
+  
+  /**
+   * Constructor function for popovers
+   */
+  var Popover = function ($trigger, opts) {
+    this.opts = $.extend({}, this.opts, opts);
+    this.$trigger = $($trigger.get(0));
+    
+    this.$popover = $(( this.opts.popover || this.$trigger.attr(&#x27;href&#x27;) ));
+    this.$popover = $(this.$popover.get(0));
+    
+    if (!this.$popover.hasClass(&#x27;popover-before-after-applied&#x27;)) {
+      this.$popover.addClass(&#x27;popover-before-after-applied&#x27;)
+        .prepend(&#x27;&lt;span role=&quot;presentation&quot; class=&quot;before&quot;/&gt;&#x27;)
+        .append(&#x27;&lt;span role=&quot;presentation&quot; class=&quot;after&quot;/&gt;&#x27;)
+        .hide();
+    }
+  };
+  
+  Popover.prototype = {
+    timeout: null,
+    $win: $(window),
+    
+    opts: {
+      my: &#x27;center bottom&#x27;,
+      at: &#x27;center top&#x27;,
+      offset: &#x27;0 0&#x27;,
+      collision: &#x27;flop flop&#x27;,
+      popover: null,
+      thereCanBeOnlyOne: true
+    },
+    
+    /**
+     * Custom collision handling for popovers (access via &quot;flop&quot; keyword)
+     * Identical to &quot;flip&quot;, but adds class to element being flipped to let
+     * you know when it has been changed from default position.
+     * Functions get bound to this.$popover in the constructor.
+     * Used as a monkey patch below.
+     */
+    flop: {
+      left: function (position, data) {
+        var cPosition = data.collisionPosition,
+          $popover = $(this),
+          c = &#x27;flopped-x&#x27;,
+          out;
+        
+        /* Run the original first -- it modifies position
+        and data by reference. Store return value
+        anyway, since we want to make sure if they do
+        decide to return something in future the API
+        isn&#x27;t broken */
+        out = uiPosition.flip.left(position, data);
+        
+        (cPosition.left !== position.left) ? $popover.addClass(c) : $popover.removeClass(c);
+        
+        return out;
+      },
+      top: function (position, data) {
+        var cPosition = data.collisionPosition,
+          $popover = $(this),
+          c = &#x27;flopped-y&#x27;,
+          out;
+          
+        /* Run the original first -- it modifies position
+        and data by reference. Store return value
+        anyway, since we want to make sure if they do
+        decide to return something in future the API
+        isn&#x27;t broken */
+        out = uiPosition.flip.top(position, data);
+        
+        (cPosition.top !== position.top) ? $popover.addClass(c) : $popover.removeClass(c);
+        
+        return out;
+      }
+    },
+    
+    bindEvents: function () {
+      this.$trigger.click($.proxy(function (e) {
+        if (this.popoverIsOpen()) {
+          this.hidePopover(e);
+        }
+        else {
+          this.showPopover(e);
+        };
+        if (this.opts.thereCanBeOnlyOne) {
+          $(&#x27;body&#x27;).trigger(&#x27;popover-hide-all&#x27;);
+        };
+      }, this));
+      
+      $(&#x27;body&#x27;).click($.proxy(function (e) {
+        if (this.popoverIsOpen()) {
+          if (!$(this.$popover).has($(e.target)).size() &amp;&amp; !$(this.$popover).filter($(e.target)).size()) {
+            this.hide();
+          }
+        };
+      }, this)).bind(&#x27;popover-hide-all&#x27;, $.proxy(function() {
+        if (this.popoverIsOpen() &amp;&amp; !this.currentTrigger()) {
+          this.hide(true);
+        };
+      }, this));
+      
+      this.$win.resize($.proxy(this.pinToTargetDebounced, this));
+    },
+    
+    /* is the popover the this trigger open? */
+    popoverIsOpen: function() {
+      var opener = (this.$trigger.length == this.$trigger.filter(this.$popover.data(&#x27;opener&#x27;)).length);
+      return (this.$popover.is(&#x27;:visible&#x27;) &amp;&amp; opener);
+    },
+    
+    /* is this trigger the last trigger clicked? */
+    currentTrigger: function() {
+      return (this.$trigger.length == this.$trigger.filter($.fn.popover.lastTrigger).length);
+    },
+    
+    /* Method for showing the popover */
+    show: function (e) {
+      $.fn.popover.lastTrigger = this.$trigger;
+      this.$popover.fadeIn(&#x27;medium&#x27;, $.proxy(function () {
+        this.$trigger.trigger(&#x27;popover-show-animation-complete&#x27;);
+      }, this)).data(&#x27;opener&#x27;, this.$trigger);
+      this.pinToTarget();
+      this.$trigger.trigger(&#x27;popover-show&#x27;);
+    },
+    
+    /* Method for hiding the popover */
+    hide: function (immediate) {
+      var callback = $.proxy(function () {
+        this.$trigger.trigger(&#x27;popover-hide-animation-complete&#x27;);
+      }, this);
+      if (immediate) {
+        this.$popover.hide(0, callback);
+      }
+      else {
+        this.$popover.fadeOut(&#x27;fast&#x27;, callback);
+      };
+      this.$trigger.trigger(&#x27;popover-hide&#x27;);
+    },
+    
+    /* Event handler for showing popover */
+    showPopover: function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.show(e);
+    },
+    
+    /* Event handler for hiding popover */
+    hidePopover: function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.hide();
+    },
+    
+    /* Calculate and position against trigger */
+    pinToTarget: function () {
+      var $popover = this.$popover,
+        posOpts = $.extend({
+          of: this.$trigger
+        }, this.opts),
+        
+        /* Monkey-patch in our custom collision handling */
+        flop = {
+          /* Bind our custom collision handling to the popover element */
+          left: $.proxy(this.flop.left, this.$popover),
+          top: $.proxy(this.flop.top, this.$popover)
+        };
+      
+      uiPosition.flop = flop;
+      $popover.position(posOpts);
+      uiPosition.flop = undefined;
+    },
+    
+    /* Debounced to prevent hitting lots of times while resizing happens.
+    Will fire a maximum of 20x per second. Useful for binding to the window
+    resize event. */
+    pinToTargetDebounced: function () {
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout($.proxy(this.pinToTarget, this), 50);
+    }
+  };
+  
+  var fn = $.fn;
+  
+  fn.popover = function (opts) {
+    var Popover = fn.popover.Popover;
+    
+    this.each(function() {
+      var $this = $(this);
+      var popover = new Popover($this, opts);
+      popover.bindEvents();
+      
+      /* Store Popover instance for easy method access.
+      See: http://alexsexton.com/?p=51
+      
+      Example: $(&#x27;.trigger&#x27;).data(&#x27;popover&#x27;).hidePopover(); */
+      $this.data(&#x27;popover&#x27;, popover);
+    });
+    
+    return this;
+  };
+  
+  fn.popover.lastTrigger = null;
+  
+  /* Expose constructor function for folks to duck-type when necessary */
+  fn.popover.Popover = Popover;
+})(jQuery);
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

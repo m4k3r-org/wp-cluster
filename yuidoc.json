@@ -9,7 +9,7 @@
     "no-code": false,
     "extension": ".js,.php",
     "tabtospace": 2,
-    "outdir": "./static",
+    "outdir": "./wiki/codex",
     "paths": [
       "./core",
       "./ux"

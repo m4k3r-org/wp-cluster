@@ -966,11 +966,15 @@ if ( !function_exists( 'flawless_widget_area' ) ) {
     do_action( 'get_sidebar', $name );
 
     $templates = array();
+
+    // Check in theme "templates" directory
     if ( isset( $name ) ) {
-      $templates[ ] = "sidebar-{$name}.php";
+      $templates[] = "sidebar-{$name}.php";
+      $templates[] = "templates/sidebar-{$name}.php";
     }
 
-    $templates[ ] = 'sidebar.php';
+    $templates[] = 'sidebar.php';
+    $templates[] = 'templates/sidebar.php';
 
     /** Backward compat code will be removed in a future WP release */
     if ( '' == locate_template( $templates, true, false ) ) {

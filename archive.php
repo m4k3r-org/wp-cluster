@@ -4,7 +4,7 @@
  *
  *
  *
- * @version 3.0.0
+ * @version 0.0.3
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
  * @package Flawless
 */
@@ -16,9 +16,9 @@
 
 ?>
 
-<?php get_header( 'archive' ) ?>
+<?php get_template_part( 'templates/header',  'archive' ) ?>
 
-<?php get_template_part( 'attention', 'archive' ); ?>
+<?php get_template_part( 'templates/attention', 'archive' ); ?>
 
 <div class="<?php flawless_wrapper_class(); ?>">
 
@@ -42,7 +42,7 @@
       </header>
 
       <div class="loop loop-blog post-listing clearfix">
-      <?php get_template_part( 'loop', 'blog' ); ?>
+      <?php get_template_part( 'templates/loop', 'blog' ); ?>
       </div>
 
     </div> <?php /* .archive-hentry */ ?>
@@ -53,4 +53,4 @@
 
 </div> <!-- #content -->
 
-<?php get_footer(); ?>
+<?php get_template_part( 'templates/footer', 'archive' ); ?>

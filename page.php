@@ -14,9 +14,9 @@
   }
 ?>
 
-<?php get_header( 'page' ); ?>
+<?php get_template_part( 'templates/header',  'page' ); ?>
 
-<?php get_template_part( 'attention', 'page' ); ?>
+<?php get_template_part( 'templates/attention', 'page' ); ?>
 
 <div class="<?php flawless_wrapper_class(); ?>">
 
@@ -33,7 +33,7 @@
         <?php flawless_page_title(); ?>
       </header>
 
-      <?php get_template_part( 'entry-meta', 'header' ); ?>
+      <?php get_template_part( 'templates/entry-meta', 'header' ); ?>
 
       <div class="entry-content clearfix">
       <?php the_content( 'More Info' ); ?>
@@ -41,7 +41,7 @@
 
       <?php comments_template(); ?>
 
-      <?php get_template_part( 'entry-meta', 'footer' ); ?>
+      <?php get_template_part( 'templates/entry-meta', 'footer' ); ?>
 
     </div><!-- flawless_module_class() -->
 
@@ -53,4 +53,4 @@
 
 </div>
 
-<?php get_footer(); ?>
+<?php get_template_part( 'templates/footer', 'page' ); ?>
