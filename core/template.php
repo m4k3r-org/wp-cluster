@@ -508,6 +508,8 @@ if ( !function_exists( 'flawless_comment' ) ) {
    * Based on denali 1.1 comment handler
    *
    * @todo Needs major revision, ported from Denali.
+   * @for Template Methods
+   * @method flawless_block_class
    * @since Flawless 0.2.3
    */
   function flawless_comment( $comment, $args, $depth ) {
@@ -559,6 +561,9 @@ if ( !function_exists( 'is_posts_page' ) ) {
   /**
    * Conditional tag to determine if current page is selected to be the primary posts page
    *
+   * @for Template Methods
+   * @method flawless_block_class
+   * @author potanin@UD
    * @since Flawless 0.2.3
    */
   function is_posts_page() {
@@ -573,6 +578,9 @@ if ( !function_exists( 'flawless_wrapper_class' ) ) {
    *
    * This is the equivalent of a CB .row
    *
+   * @for Template Methods
+   * @method flawless_block_class
+   * @author potanin@UD
    * @since Flawless 0.2.3
    */
   function flawless_wrapper_class( $custom_class = '' ) {
@@ -607,6 +615,8 @@ if ( !function_exists( 'flawless_block_class' ) ) {
   /**
    * Builds classes for the .main.cfct-block based on conditional elements.
    *
+   * @for Template Methods
+   * @method flawless_block_class
    * @since Flawless 0.5.0
    * @author willis@UD
    */

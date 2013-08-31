@@ -33,7 +33,7 @@ if ( !class_exists( 'lessc' ) ) {
   return;
 }
 
-class flawless_less extends lessc {
+class Flawless_LESS extends lessc {
 
   /**
    * Initializer.
@@ -44,8 +44,94 @@ class flawless_less extends lessc {
 
     //** On initial call, we need to initialize the feature via hooks */
     if ( !did_action( 'flawless::available_theme_features' ) ) {
-      return flawless_less::initialize();
+      return Flawless_LESS::initialize();
     }
+
+  }
+
+  /**
+   * Generates a compiled CSS file from multiple CSS and LESS files
+   *
+   * @since 0.0.3
+   */
+  function build_compiled_css( $styles, $args = array() ) {
+    global $flawless;
+
+    $args = wp_parse_args( $args, array(
+      'minified_output_path' => $flawless[ '_bootstrap_compiled_minified_path' ],
+      'output_path' => $flawless[ '_bootstrap_compiled_path' ]
+    ));
+
+    //** We do not ensure that feature is supported, but the class is required */
+    if ( !class_exists( 'Flawless_LESS' ) ) {
+      //return new WP_Error( 'error', Flawless::console_log( sprintf( __( 'CSS Compiling Error: Library not found.', 'flawless' ) ), 'error' ));
+    }
+
+    //** Verify that the target directory is writable.
+    if ( !is_writable( dirname( $flawless[ '_bootstrap_compiled_minified_path' ] ) ) ) {
+      return new WP_Error( 'error', Flawless::console_log( sprintf( __( 'CSS Compiling Error: Directory %1s is not writable', 'flawless' ), dirname( $flawless[ '_bootstrap_compiled_minified_path' ] ) ), 'error' ));
+    }
+
+    foreach ( (array) $styles as $handle => $style_data ) {
+      $_handles[ ] = dirname( $style_data[ 'path' ] ) . '/' . $style_data[ 'file_name' ];
+      $_paths[ ] = $style_data[ 'path' ];
+    }
+
+    if ( empty( $_handles ) ) {
+      return;
+    }
+
+    //$_Flawless_LESS = new Flawless_LESS();
+
+    //** Cycle through each CSS file and check for validation */
+    foreach ( (array) $_paths as $path ) {
+      //if ( is_wp_error( $_validation = $_Flawless_LESS->compile( $path ) ) ) {
+      // $_validation_errors[ ] = $path . ' - ' . $_validation->get_error_message();
+      //}
+    }
+
+    if ( $_validation_errors && is_array( $_validation_errors ) && count( $_validation_errors ) > 0 ) {
+      return new WP_Error( 'compile_error', Flawless::console_log( sprintf( __( 'CSS Compiling Errors:<br /> %1s ', 'flawless' ), implode( '<br />', $_validation_errors ) ), 'error' ));
+    }
+
+    //** Pass CSS array for real complication. */
+    //if ( is_wp_error( $output = $_Flawless_LESS->compile( $_paths ) ) ) {
+    //return new WP_Error( 'compile_error', Flawless::console_log( sprintf( __( 'LESS Compiling Error: %1s ', 'flawless' ), $output->get_error_message() ), 'error' ));
+    //}
+
+    $_header = apply_filters( 'flawless::compiled_css::css_header', array(
+      '/**',
+      ' * Name: ' . get_bloginfo() . ' Screen Styles',
+      ' * Generated: ' . date( get_option( 'date_format' ) ) . ' at ' . date( get_option( 'time_format' ) ),
+      ' * Compilation Time: ' . round( timer_stop() ) . ' seconds',
+      ' * Source Files: ',
+      ' * - ' . implode( " \n * - ", (array) $_handles ),
+      ' * ',
+      ' */'
+    ));
+
+    if ( empty( $output[ 'parsed' ] ) ) {
+      //return new WP_Error( 'compile_error', Flawless::console_log( sprintf( __( 'CSS Compiling Error: Compiled file empty after attempting to compile (%1s) CSS files.', 'flawless' ), count( (array) $_handles ) ), 'error' ));
+    }
+
+    //** @todo Is there a way to catch warnings? - potanin@UD 6/10/12 */
+    if ( WP_DEBUG ) {
+      file_put_contents( $args[ 'output_path' ], implode( "\n", (array) $_header ) . "\n\n" . $output[ 'parsed' ] );
+      file_put_contents( $args[ 'minified_output_path' ], $output[ 'minified' ] );
+    } else {
+      @file_put_contents( $args[ 'output_path' ], implode( "\n", (array) $_header ) . "\n\n" . $output[ 'parsed' ] );
+      @file_put_contents( $args[ 'minified_output_path' ], $output[ 'minified' ] );
+    }
+
+    if ( !file_exists( $args[ 'minified_output_path' ] ) ) {
+      return new WP_Error( 'saving_error', Flawless::console_log( sprintf( __( 'CSS Compiling Error: Compiled file (%1s) could not be saved to disk.', 'flawless' ), $args[ 'minified_output_path' ] ), 'error' ));
+    }
+
+    Flawless::console_log( sprintf( __( 'CSS Compiling: - Compiled file created from (%1s) files. Minified version is %2s and the uncompressed version is %3s.', 'flawless' ), count( $_handles ), self::format_bytes( filesize( $args[ 'output_path' ] ) ), self::format_bytes( filesize( $args[ 'minified_output_path' ] ) ) ));
+
+    update_option( 'flawless::compiled_css_files', $styles );
+
+    return true;
 
   }
 
@@ -150,4 +236,4 @@ class flawless_less extends lessc {
 
 }
 
-$flawless_less = new flawless_less();
+$Flawless_LESS = new Flawless_LESS();
