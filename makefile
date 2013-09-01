@@ -3,13 +3,17 @@ LIB_COV = static/lib-cov
 JSON_FILE = static/all.json
 HTML_FILE = static/coverage.html
 
-test-all: clean document test-code
+test-all:
+	clean
+	document
+	test-code
 
 install:
 	cd core && composer.phar install
 	cd ux && component install && component build
 
 push:
+	yuidoc
 	cd ux && component build
 	git add .
 	git commit -m "WIP"
@@ -25,7 +29,7 @@ build-ux:
 	cd ux && component build
 
 document:
-	yuidoc --configfile static/yuidoc.json
+	yuidoc --configfile yuidoc.json
 
 test-code:
 	@NODE_ENV=test mocha \

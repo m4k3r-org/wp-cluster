@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/wp-content/plugins/advanced-custom-fields/core/actions/export.php - Flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="Flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/: Flawless.Element.html">: Flawless.Element</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Module.html">: Flawless.Flawless_Module</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Shortcode.html">: Flawless.Flawless_Shortcode</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Widget.html">: Flawless.Flawless_Widget</a></li>
+            
+                <li><a href="../classes/: Flawless.flawless_wpp_extensions.html">: Flawless.flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/: Flawless.License.html">: Flawless.License</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/wp-content/plugins/advanced-custom-fields/core/actions/export.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+
+/*
+*  Export
+*
+*  @description: 
+*  @since: 3.6
+*  @created: 25/01/13
+*/
+
+
+// vars
+$defaults = array(
+  &#x27;acf_posts&#x27; =&gt; array(),
+  &#x27;nonce&#x27; =&gt; &#x27;&#x27;
+);
+$my_options = array_merge( $defaults, $_POST );
+
+
+// validate nonce
+if( !wp_verify_nonce($my_options[&#x27;nonce&#x27;], &#x27;export&#x27;) )
+{
+  wp_die(__(&quot;Error&quot;,&#x27;acf&#x27;));
+}
+
+
+// check for posts
+if( empty($my_options[&#x27;acf_posts&#x27;]) )
+{
+  wp_die(__(&quot;No ACF groups selected&quot;,&#x27;acf&#x27;));
+}
+
+
+/**
+ * Version number for the export format.
+ *
+ * Bump this when something changes that might affect compatibility.
+ *
+ * @since 2.5.0
+ */
+define( &#x27;WXR_VERSION&#x27;, &#x27;1.1&#x27; );
+
+
+/**
+ * Wrap given string in XML CDATA tag.
+ *
+ * @since 2.1.0
+ *
+ * @param string $str String to wrap in XML CDATA tag.
+ */
+function wxr_cdata( $str ) {
+  if ( seems_utf8( $str ) == false )
+    $str = utf8_encode( $str );
+
+  // $str = ent2ncr(esc_html($str));
+  $str = &quot;&lt;![CDATA[$str&quot; . ( ( substr( $str, -1 ) == &#x27;]&#x27; ) ? &#x27; &#x27; : &#x27;&#x27; ) . &#x27;]]&gt;&#x27;;
+
+  return $str;
+}
+
+/**
+ * Return the URL of the site
+ *
+ * @since 2.5.0
+ *
+ * @return string Site URL.
+ */
+function wxr_site_url() {
+  // ms: the base url
+  if ( is_multisite() )
+    return network_home_url();
+  // wp: the blog url
+  else
+    return get_site_url();
+}
+
+/**
+ * Output a tag_description XML tag from a given tag object
+ *
+ * @since 2.3.0
+ *
+ * @param object $tag Tag Object
+ */
+function wxr_tag_description( $tag ) {
+  if ( empty( $tag-&gt;description ) )
+    return;
+
+  echo &#x27;&lt;wp:tag_description&gt;&#x27; . wxr_cdata( $tag-&gt;description ) . &#x27;&lt;/wp:tag_description&gt;&#x27;;
+}
+
+/**
+ * Output a term_name XML tag from a given term object
+ *
+ * @since 2.9.0
+ *
+ * @param object $term Term Object
+ */
+function wxr_term_name( $term ) {
+  if ( empty( $term-&gt;name ) )
+    return;
+
+  echo &#x27;&lt;wp:term_name&gt;&#x27; . wxr_cdata( $term-&gt;name ) . &#x27;&lt;/wp:term_name&gt;&#x27;;
+}
+
+/**
+ * Output a term_description XML tag from a given term object
+ *
+ * @since 2.9.0
+ *
+ * @param object $term Term Object
+ */
+function wxr_term_description( $term ) {
+  if ( empty( $term-&gt;description ) )
+    return;
+
+  echo &#x27;&lt;wp:term_description&gt;&#x27; . wxr_cdata( $term-&gt;description ) . &#x27;&lt;/wp:term_description&gt;&#x27;;
+}
+
+/**
+ * Output list of authors with posts
+ *
+ * @since 3.1.0
+ */
+function wxr_authors_list() {
+  global $wpdb;
+
+  $authors = array();
+  $results = $wpdb-&gt;get_results( &quot;SELECT DISTINCT post_author FROM $wpdb-&gt;posts&quot; );
+  foreach ( (array) $results as $result )
+    $authors[] = get_userdata( $result-&gt;post_author );
+
+  $authors = array_filter( $authors );
+
+  foreach( $authors as $author ) {
+    echo &quot;\t&lt;wp:author&gt;&quot;;
+    echo &#x27;&lt;wp:author_id&gt;&#x27; . $author-&gt;ID . &#x27;&lt;/wp:author_id&gt;&#x27;;
+    echo &#x27;&lt;wp:author_login&gt;&#x27; . $author-&gt;user_login . &#x27;&lt;/wp:author_login&gt;&#x27;;
+    echo &#x27;&lt;wp:author_email&gt;&#x27; . $author-&gt;user_email . &#x27;&lt;/wp:author_email&gt;&#x27;;
+    echo &#x27;&lt;wp:author_display_name&gt;&#x27; . wxr_cdata( $author-&gt;display_name ) . &#x27;&lt;/wp:author_display_name&gt;&#x27;;
+    echo &#x27;&lt;wp:author_first_name&gt;&#x27; . wxr_cdata( $author-&gt;user_firstname ) . &#x27;&lt;/wp:author_first_name&gt;&#x27;;
+    echo &#x27;&lt;wp:author_last_name&gt;&#x27; . wxr_cdata( $author-&gt;user_lastname ) . &#x27;&lt;/wp:author_last_name&gt;&#x27;;
+    echo &quot;&lt;/wp:author&gt;\n&quot;;
+  }
+}
+
+header( &#x27;Content-Description: File Transfer&#x27; );
+header( &#x27;Content-Disposition: attachment; filename=advanced-custom-field-export.xml&#x27; );
+header( &#x27;Content-Type: text/xml; charset=&#x27; . get_option( &#x27;blog_charset&#x27; ), true );
+
+
+echo &#x27;&lt;?xml version=&quot;1.0&quot; encoding=&quot;&#x27; . get_bloginfo(&#x27;charset&#x27;) . &quot;\&quot; ?&gt;\n&quot;;
+
+?&gt;
+&lt;!-- This is a WordPress eXtended RSS file generated by WordPress as an export of your site. --&gt;
+&lt;!-- It contains information about your site&#x27;s posts, pages, comments, categories, and other content. --&gt;
+&lt;!-- You may use this file to transfer that content from one site to another. --&gt;
+&lt;!-- This file is not intended to serve as a complete backup of your site. --&gt;
+
+&lt;!-- To import this information into a WordPress site follow these steps: --&gt;
+&lt;!-- 1. Log in to that site as an administrator. --&gt;
+&lt;!-- 2. Go to Tools: Import in the WordPress admin panel. --&gt;
+&lt;!-- 3. Install the &quot;WordPress&quot; importer from the list. --&gt;
+&lt;!-- 4. Activate &amp; Run Importer. --&gt;
+&lt;!-- 5. Upload this file using the form provided on that page. --&gt;
+&lt;!-- 6. You will first be asked to map the authors in this export file to users --&gt;
+&lt;!--    on the site. For each author, you may choose to map to an --&gt;
+&lt;!--    existing user on the site or to create a new user. --&gt;
+&lt;!-- 7. WordPress will then import each of the posts, pages, comments, categories, etc. --&gt;
+&lt;!--    contained in this file into your site. --&gt;
+
+&lt;?php the_generator( &#x27;export&#x27; ); ?&gt;
+&lt;rss version=&quot;2.0&quot;
+  xmlns:excerpt=&quot;http://wordpress.org/export/&lt;?php echo WXR_VERSION; ?&gt;/excerpt/&quot;
+  xmlns:content=&quot;http://purl.org/rss/1.0/modules/content/&quot;
+  xmlns:wfw=&quot;http://wellformedweb.org/CommentAPI/&quot;
+  xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;
+  xmlns:wp=&quot;http://wordpress.org/export/&lt;?php echo WXR_VERSION; ?&gt;/&quot;
+&gt;
+
+&lt;channel&gt;
+  &lt;title&gt;&lt;?php bloginfo_rss( &#x27;name&#x27; ); ?&gt;&lt;/title&gt;
+  &lt;link&gt;&lt;?php bloginfo_rss( &#x27;url&#x27; ); ?&gt;&lt;/link&gt;
+  &lt;description&gt;&lt;?php bloginfo_rss( &#x27;description&#x27; ); ?&gt;&lt;/description&gt;
+  &lt;pubDate&gt;&lt;?php echo date( &#x27;D, d M Y H:i:s +0000&#x27; ); ?&gt;&lt;/pubDate&gt;
+  &lt;language&gt;&lt;?php echo get_option( &#x27;rss_language&#x27; ); ?&gt;&lt;/language&gt;
+  &lt;wp:wxr_version&gt;&lt;?php echo WXR_VERSION; ?&gt;&lt;/wp:wxr_version&gt;
+  &lt;wp:base_site_url&gt;&lt;?php echo wxr_site_url(); ?&gt;&lt;/wp:base_site_url&gt;
+  &lt;wp:base_blog_url&gt;&lt;?php bloginfo_rss( &#x27;url&#x27; ); ?&gt;&lt;/wp:base_blog_url&gt;
+&lt;?php wxr_authors_list(); ?&gt;
+&lt;?php if ( $my_options[&#x27;acf_posts&#x27;] ) {
+
+  global $wp_query, $wpdb, $post;
+  $wp_query-&gt;in_the_loop = true; // Fake being in the loop.
+  
+  // create SQL with %d placeholders
+  $where = &#x27;WHERE ID IN (&#x27; . substr(str_repeat(&#x27;%d,&#x27;, count($my_options[&#x27;acf_posts&#x27;])), 0, -1) . &#x27;)&#x27;;
+  
+  // now prepare the SQL based on the %d + $_POST data
+  $posts = $wpdb-&gt;get_results( $wpdb-&gt;prepare(&quot;SELECT * FROM {$wpdb-&gt;posts} $where&quot;, $my_options[&#x27;acf_posts&#x27;]));
+
+  // Begin Loop
+  foreach ( $posts as $post ) {
+    setup_postdata( $post );
+?&gt;
+  &lt;item&gt;
+    &lt;title&gt;&lt;?php echo apply_filters( &#x27;the_title_rss&#x27;, $post-&gt;post_title ); ?&gt;&lt;/title&gt;
+    &lt;link&gt;&lt;?php the_permalink_rss() ?&gt;&lt;/link&gt;
+    &lt;pubDate&gt;&lt;?php echo mysql2date( &#x27;D, d M Y H:i:s +0000&#x27;, get_post_time( &#x27;Y-m-d H:i:s&#x27;, true ), false ); ?&gt;&lt;/pubDate&gt;
+    &lt;dc:creator&gt;&lt;?php echo get_the_author_meta( &#x27;login&#x27; ); ?&gt;&lt;/dc:creator&gt;
+    &lt;guid isPermaLink=&quot;false&quot;&gt;&lt;?php esc_url( the_guid() ); ?&gt;&lt;/guid&gt;
+    &lt;wp:post_id&gt;&lt;?php echo $post-&gt;ID; ?&gt;&lt;/wp:post_id&gt;
+    &lt;wp:post_date&gt;&lt;?php echo $post-&gt;post_date; ?&gt;&lt;/wp:post_date&gt;
+    &lt;wp:post_date_gmt&gt;&lt;?php echo $post-&gt;post_date_gmt; ?&gt;&lt;/wp:post_date_gmt&gt;
+    &lt;wp:comment_status&gt;&lt;?php echo $post-&gt;comment_status; ?&gt;&lt;/wp:comment_status&gt;
+    &lt;wp:ping_status&gt;&lt;?php echo $post-&gt;ping_status; ?&gt;&lt;/wp:ping_status&gt;
+    &lt;wp:post_name&gt;&lt;?php echo $post-&gt;post_name; ?&gt;&lt;/wp:post_name&gt;
+    &lt;wp:status&gt;&lt;?php echo $post-&gt;post_status; ?&gt;&lt;/wp:status&gt;
+    &lt;wp:post_parent&gt;&lt;?php echo $post-&gt;post_parent; ?&gt;&lt;/wp:post_parent&gt;
+    &lt;wp:menu_order&gt;&lt;?php echo $post-&gt;menu_order; ?&gt;&lt;/wp:menu_order&gt;
+    &lt;wp:post_type&gt;&lt;?php echo $post-&gt;post_type; ?&gt;&lt;/wp:post_type&gt;
+    &lt;wp:post_password&gt;&lt;?php echo $post-&gt;post_password; ?&gt;&lt;/wp:post_password&gt;
+&lt;?php  $postmeta = $wpdb-&gt;get_results( $wpdb-&gt;prepare( &quot;SELECT * FROM $wpdb-&gt;postmeta WHERE post_id = %d&quot;, $post-&gt;ID ) );
+    foreach( $postmeta as $meta ) : if ( $meta-&gt;meta_key != &#x27;_edit_lock&#x27; ) : 
+      $meta-&gt;meta_value = str_replace(&quot;\r\n&quot;, &quot;\n&quot;, $meta-&gt;meta_value);
+      $meta-&gt;meta_value = str_replace(&quot;\r&quot;, &quot;\n&quot;, $meta-&gt;meta_value);
+    ?&gt;
+    &lt;wp:postmeta&gt;
+      &lt;wp:meta_key&gt;&lt;?php echo $meta-&gt;meta_key; ?&gt;&lt;/wp:meta_key&gt;
+      &lt;wp:meta_value&gt;&lt;?php echo wxr_cdata( $meta-&gt;meta_value ); ?&gt;&lt;/wp:meta_value&gt;
+    &lt;/wp:postmeta&gt;
+&lt;?php  endif; endforeach; ?&gt;
+  &lt;/item&gt;
+&lt;?php
+  }
+} 
+?&gt;
+&lt;/channel&gt;
+&lt;/rss&gt;
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

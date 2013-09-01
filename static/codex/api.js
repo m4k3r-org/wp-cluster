@@ -8,8 +8,6 @@ YUI.add("yuidoc-meta", function(Y) {
         ": Flawless.License",
         ": Flawless.flawless_wpp_extensions",
         "Shortcodes",
-        "Template Functions",
-        "Template Methods",
         "Theme UI"
     ],
     "modules": [

@@ -55,10 +55,6 @@
             
                 <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
             
-                <li><a href="../classes/Template Functions.html">Template Functions</a></li>
-            
-                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
-            
                 <li><a href="../classes/Theme UI.html">Theme UI</a></li>
             
             </ul>
@@ -163,6 +159,8 @@ final class Flawless {
       wp_die( sprintf( __( &#x27;Your version of PHP, %1s, is old, and this theme cannot support it, so it has been disabled. Please consider upgrading to 5.3, or newer. &lt;a href=&quot;%2s&quot;&gt;Back to Safety.&lt;/a&gt;&#x27;, HDDP ), phpversion(), admin_url() ) );
     }
 
+
+
     //$this-&gt;template_directory();
 
     // add_filter( &#x27;template_directory&#x27;, call_user_func(array( $this, template_directory ), $stylesheet_dir) );
@@ -182,7 +180,8 @@ final class Flawless {
     ));
 
     $flawless[ &#x27;paths&#x27; ] = array(
-      &#x27;vendor&#x27; =&gt; untrailingslashit( get_template_directory() ) . &#x27;/core/vendor&#x27;
+      &#x27;vendor&#x27; =&gt; untrailingslashit( get_template_directory() ) . &#x27;/vendor&#x27;,
+      &#x27;templates&#x27; =&gt; untrailingslashit( get_template_directory() ) . &#x27;/templates&#x27;
     );
 
     $flawless[ &#x27;default_header&#x27; ][ &#x27;flawless_style_assets&#x27; ] = array(
@@ -226,6 +225,8 @@ final class Flawless {
       global $flawless;
       return (array) $flawless[ &#x27;default_header&#x27; ][ &#x27;themes&#x27; ];
     });
+
+    include_once( $flawless[ &#x27;paths&#x27; ][ &#x27;templates&#x27; ] . &#x27;/template.php&#x27; );
 
     //** Get Core settings */
     $flawless[ &#x27;theme_data&#x27; ] = array_filter( (array) get_file_data( TEMPLATEPATH . &#x27;/style.css&#x27;, $flawless[ &#x27;default_header&#x27; ][ &#x27;themes&#x27; ], &#x27;theme&#x27; ));
@@ -1086,8 +1087,8 @@ final class Flawless {
 
     unset( $flawless[ &#x27;current_view&#x27; ][ &#x27;settings&#x27; ] );
 
-    Flawless::console_log( &#x27;Executed: Flawless::set_current_view();&#x27; );
-    Flawless::console_log( $flawless[ &#x27;current_view&#x27; ] );
+    self::console_log( &#x27;Executed: Flawless::set_current_view();&#x27; );
+    self::console_log( $flawless[ &#x27;current_view&#x27; ] );
 
   }
 
