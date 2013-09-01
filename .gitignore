@@ -1,4 +1,5 @@
 composer.lock
+npm-debug.log
 core/premium
 .svn
 .idea

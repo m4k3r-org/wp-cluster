@@ -2,7 +2,9 @@
 * Flawless WordPress Theme By Usability Dynamics, Inc.
 * Theme Homepage - http://usabilitydynamics.com/products/flawless/
 
-component install
+## Useful Commands
+$ composer install
+$ component install && component build
 
 ## To Do
 - Update Carrington Build and look into integrating https://raw.github.com/crowdfavorite/wp-carrington-build-bootstrap-3/master/build-bootstrap-grid.php.

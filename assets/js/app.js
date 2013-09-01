@@ -1,6 +1,0 @@
-/**
- * Application Logic
- *
- */
-
-function app() {}

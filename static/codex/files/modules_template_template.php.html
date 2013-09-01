@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>modules/template/template.php - Flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="Flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/: Flawless.Element.html">: Flawless.Element</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Module.html">: Flawless.Flawless_Module</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Shortcode.html">: Flawless.Flawless_Shortcode</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Widget.html">: Flawless.Flawless_Widget</a></li>
+            
+                <li><a href="../classes/: Flawless.flawless_wpp_extensions.html">: Flawless.flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/: Flawless.License.html">: Flawless.License</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Functions.html">Template Functions</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: modules/template/template.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ * Name: Template Functions
+ *
+ * Description: Functions meant to be used on frontend.
+ *
+ * Author: Usability Dynamics, Inc.
+ * Version: 1.0
+ *
+ * Copyright 2010 - 2013 Usability Dynamics, Inc.
+ *
+ * @module Flawless
+ * @submodule Core Assets
+ * @class Template Functions
+ * @static
+ */
+
+namespace Flawless;
+
+/**
+ * Template Functionality
+ *
+ * @package Flawless\Module
+ */
+class Template extends Module {
+
+}
+
+
+if ( !function_exists( &#x27;flawless_comment_form&#x27; ) ) {
+
+  /**
+   * Outputs a complete commenting form for use within a template.
+   * Most strings and form fields may be controlled through the $args array passed
+   * into the function, while you may also choose to use the comment_form_default_fields
+   * filter to modify the array of default fields if you&#x27;d just like to add a new
+   * one or remove a single field. All fields are also individually passed through
+   * a filter of the form comment_form_field_$name where $name is the key used
+   * in the array of fields.
+   *
+   * @since 3.0.0
+   *
+   * @param array $args Options for strings, fields etc in the form
+   * @param mixed $post_id Post ID to generate the form for, uses the current post if null
+   *
+   * @return void
+   */
+  function flawless_comment_form( $args = array(), $post_id = null ) {
+    global $id;
+
+    if ( null === $post_id )
+      $post_id = $id;
+    else
+      $id = $post_id;
+
+    if ( !comments_open() ) {
+      do_action( &#x27;comment_form_comments_closed&#x27; );
+      return;
+    }
+
+    $commenter = wp_get_current_commenter();
+    $user = wp_get_current_user();
+    $user_identity = !empty( $user-&gt;ID ) ? $user-&gt;display_name : &#x27;&#x27;;
+
+    $req = get_option( &#x27;require_name_email&#x27; );
+
+    $aria_req = ( $req ? &quot; aria-required=&#x27;true&#x27;&quot; : &#x27;&#x27; );
+    $fields = array(
+      &#x27;author&#x27; =&gt; &#x27;&lt;p class=&quot;comment-form-author&quot;&gt;&#x27; . &#x27;&lt;label for=&quot;author&quot;&gt;&#x27; . __( &#x27;Name&#x27; ) . &#x27;&lt;/label&gt; &#x27; . ( $req ? &#x27;&lt;span class=&quot;required&quot;&gt;*&lt;/span&gt;&#x27; : &#x27;&#x27; ) .
+      &#x27;&lt;input id=&quot;author&quot; placeholder=&quot;Your Name&quot; name=&quot;author&quot; type=&quot;text&quot; value=&quot;&#x27; . esc_attr( $commenter[ &#x27;comment_author&#x27; ] ) . &#x27;&quot; size=&quot;30&quot;&#x27; . $aria_req . &#x27; /&gt;&lt;/p&gt;&#x27;,
+      &#x27;email&#x27; =&gt; &#x27;&lt;p class=&quot;comment-form-email&quot;&gt;&lt;label for=&quot;email&quot;&gt;&#x27; . __( &#x27;Email&#x27; ) . &#x27;&lt;/label&gt; &#x27; . ( $req ? &#x27;&lt;span class=&quot;required&quot;&gt;*&lt;/span&gt;&#x27; : &#x27;&#x27; ) .
+      &#x27;&lt;input id=&quot;email&quot; placeholder=&quot;Your Email Address&quot; name=&quot;email&quot; type=&quot;text&quot; value=&quot;&#x27; . esc_attr( $commenter[ &#x27;comment_author_email&#x27; ] ) . &#x27;&quot; size=&quot;30&quot;&#x27; . $aria_req . &#x27; /&gt;&lt;/p&gt;&#x27;,
+      &#x27;url&#x27; =&gt; &#x27;&lt;p class=&quot;comment-form-url&quot;&gt;&lt;label for=&quot;url&quot;&gt;&#x27; . __( &#x27;Website&#x27; ) . &#x27;&lt;/label&gt;&#x27; .
+      &#x27;&lt;input id=&quot;url&quot; placeholder=&quot;Website (optional)&quot; name=&quot;url&quot; type=&quot;text&quot; value=&quot;&#x27; . esc_attr( $commenter[ &#x27;comment_author_url&#x27; ] ) . &#x27;&quot; size=&quot;30&quot; /&gt;&lt;/p&gt;&#x27;,
+    );
+
+    //$required_text = sprintf( &#x27; &#x27; . __( &#x27;Required fields are marked %s&#x27; ), &#x27;&lt;span class=&quot;required&quot;&gt;*&lt;/span&gt;&#x27; );
+
+    $defaults = array(
+      &#x27;fields&#x27; =&gt; apply_filters( &#x27;comment_form_default_fields&#x27;, $fields ),
+      &#x27;comment_field&#x27; =&gt; &#x27;&lt;p class=&quot;comment-form-comment&quot;&gt;&lt;label for=&quot;comment&quot;&gt;&#x27; . _x( &#x27;Comment&#x27;, &#x27;noun&#x27; ) . &#x27;&lt;/label&gt;&lt;textarea id=&quot;comment&quot; placeholder=&quot;Your comment goes here.&quot; name=&quot;comment&quot; cols=&quot;45&quot; rows=&quot;8&quot; aria-required=&quot;true&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;&#x27;,
+      &#x27;must_log_in&#x27; =&gt; &#x27;&lt;p class=&quot;must-log-in&quot;&gt;&#x27; . sprintf( __( &#x27;You must be &lt;a href=&quot;%s&quot;&gt;logged in&lt;/a&gt; to post a comment.&#x27; ), wp_login_url( apply_filters( &#x27;the_permalink&#x27;, get_permalink( $post_id ) ) ) ) . &#x27;&lt;/p&gt;&#x27;,
+      &#x27;logged_in_as&#x27; =&gt; &#x27;&lt;p class=&quot;logged-in-as&quot;&gt;&#x27; . sprintf( __( &#x27;Logged in as &lt;a href=&quot;%1$s&quot;&gt;%2$s&lt;/a&gt;. &lt;a href=&quot;%3$s&quot; title=&quot;Log out of this account&quot;&gt;Log out?&lt;/a&gt;&#x27; ), admin_url( &#x27;profile.php&#x27; ), $user_identity, wp_logout_url( apply_filters( &#x27;the_permalink&#x27;, get_permalink( $post_id ) ) ) ) . &#x27;&lt;/p&gt;&#x27;,
+      &#x27;comment_notes_before&#x27; =&gt; &#x27;&lt;p class=&quot;comment-notes&quot;&gt;&#x27; . __( &#x27;Your email address will not be published.&#x27; ) . ( $req ? $required_text : &#x27;&#x27; ) . &#x27;&lt;/p&gt;&#x27;,
+      &#x27;comment_notes_after&#x27; =&gt; &#x27;&lt;p class=&quot;form-allowed-tags&quot;&gt;&#x27; . sprintf( __( &#x27;You may use these &lt;abbr title=&quot;HyperText Markup Language&quot;&gt;HTML&lt;/abbr&gt; tags and attributes: %s&#x27; ), &#x27; &lt;code&gt;&#x27; . allowed_tags() . &#x27;&lt;/code&gt;&#x27; ) . &#x27;&lt;/p&gt;&#x27;,
+      &#x27;id_form&#x27; =&gt; &#x27;flawless_comment_form&#x27;,
+      &#x27;id_submit&#x27; =&gt; &#x27;submit&#x27;,
+      &#x27;title_reply&#x27; =&gt; __( &#x27;Leave a Reply&#x27; ),
+      &#x27;title_reply_to&#x27; =&gt; __( &#x27;Leave a Reply to %s&#x27; ),
+      &#x27;cancel_reply_link&#x27; =&gt; __( &#x27;Cancel reply&#x27; ),
+      &#x27;label_submit&#x27; =&gt; __( &#x27;Post Comment&#x27; ),
+    );
+
+    $args = wp_parse_args( $args, apply_filters( &#x27;comment_form_defaults&#x27;, $defaults ) ); ?&gt;
+
+    &lt;?php do_action( &#x27;comment_form_before&#x27; ); ?&gt;
+    &lt;div class=&quot;wp_comment_form_container&quot;&gt;
+      &lt;h3 class=&quot;reply-title&quot;&gt;&lt;?php comment_form_title( $args[ &#x27;title_reply&#x27; ], $args[ &#x27;title_reply_to&#x27; ] ); ?&gt;
+        &lt;small&gt;&lt;?php cancel_comment_reply_link( $args[ &#x27;cancel_reply_link&#x27; ] ); ?&gt;&lt;/small&gt;
+      &lt;/h3&gt;
+      &lt;?php if ( get_option( &#x27;comment_registration&#x27; ) &amp;&amp; !is_user_logged_in() ) : ?&gt;
+        &lt;?php echo $args[ &#x27;must_log_in&#x27; ]; ?&gt;
+        &lt;?php do_action( &#x27;comment_form_must_log_in_after&#x27; ); ?&gt;
+      &lt;?php else : ?&gt;
+        &lt;form class=&quot;flawless_comment_form&quot; action=&quot;&lt;?php echo site_url( &#x27;/wp-comments-post.php&#x27; ); ?&gt;&quot; method=&quot;post&quot;
+          id=&quot;&lt;?php echo esc_attr( $args[ &#x27;id_form&#x27; ] ); ?&gt;&quot;&gt;
+          &lt;?php do_action( &#x27;comment_form_top&#x27; ); ?&gt;
+          &lt;?php if ( is_user_logged_in() ) : ?&gt;
+            &lt;?php echo apply_filters( &#x27;comment_form_logged_in&#x27;, $args[ &#x27;logged_in_as&#x27; ], $commenter, $user_identity ); ?&gt;
+            &lt;?php do_action( &#x27;comment_form_logged_in_after&#x27;, $commenter, $user_identity ); ?&gt;
+          &lt;?php else : ?&gt;
+            &lt;?php echo $args[ &#x27;comment_notes_before&#x27; ]; ?&gt;
+            &lt;?php
+            do_action( &#x27;comment_form_before_fields&#x27; );
+            foreach ( ( array ) $args[ &#x27;fields&#x27; ] as $name =&gt; $field ) {
+              echo apply_filters( &quot;comment_form_field_{$name}&quot;, $field ) . &quot;\n&quot;;
+            }
+            do_action( &#x27;comment_form_after_fields&#x27; );
+            ?&gt;
+          &lt;?php endif; ?&gt;
+          &lt;?php echo apply_filters( &#x27;comment_form_field_comment&#x27;, $args[ &#x27;comment_field&#x27; ] ); ?&gt;
+          &lt;?php echo $args[ &#x27;comment_notes_after&#x27; ]; ?&gt;
+          &lt;p class=&quot;form-submit&quot;&gt;
+            &lt;input name=&quot;submit&quot; class=&quot;btn btn-info&quot; type=&quot;submit&quot; id=&quot;&lt;?php echo esc_attr( $args[ &#x27;id_submit&#x27; ] ); ?&gt;&quot;
+              value=&quot;&lt;?php echo esc_attr( $args[ &#x27;label_submit&#x27; ] ); ?&gt;&quot;/&gt;
+            &lt;?php comment_id_fields( $post_id ); ?&gt;
+          &lt;/p&gt;
+          &lt;?php do_action( &#x27;comment_form&#x27;, $post_id ); ?&gt;
+        &lt;/form&gt;
+      &lt;?php endif; ?&gt;
+    &lt;/div&gt;
+    &lt;?php do_action( &#x27;comment_form_after&#x27; ); ?&gt;
+  &lt;?php
+  }
+}
+
+if ( !function_exists( &#x27;get_term_attachment_image&#x27; ) ) {
+  /**
+   * Generate page title to be displayed in a template.
+   *
+   * @author potanin@UD
+   */
+  function get_term_attachment_image( $term_id = &#x27;&#x27;, $size = &#x27;thumbnail&#x27;, $icon = false, $attr = &#x27;&#x27; ) {
+
+    if ( !$term_id &amp;&amp; ( is_tax() || is_tag() || is_category() ) ) {
+      $term_id = get_queried_object()-&gt;term_id;
+    }
+
+    return wp_get_attachment_image( get_post_thumbnail_id( get_post_for_extended_term( $term_id )-&gt;ID ), $size, $icon, $attr );
+  }
+}
+
+if ( !function_exists( &#x27;flawless_page_title&#x27; ) ) {
+  /**
+   * Generate page title to be displayed in a template.
+   *
+   * Based off wp_title(), but without separation.
+   *
+   * @updated 0.6.1
+   * @version 0.1
+   * @todo Messes up titles on category pages by putting the first post&#x27;s title in it&#x27;s place. - potanin@UD 5/25/12
+   * @todo integrate get_the_title();
+   * @author potanin@UD
+   */
+  function flawless_page_title( $args = &#x27;&#x27; ) {
+    global $wpdb, $wp_locale, $post, $wp_query;
+
+    $args = wp_parse_args( $args, array(
+      &#x27;before&#x27; =&gt; &#x27;&lt;h1 class=&quot;entry-title&quot;&gt;&#x27;,
+      &#x27;after&#x27; =&gt; &#x27;&lt;/h1&gt;&#x27;,
+      &#x27;link&#x27; =&gt; false
+    ) );
+
+    //** Hide page title if the current title is for the main post (to exclude items in loop) */
+    if ( get_queried_object()-&gt;ID == $post-&gt;ID &amp;&amp; hide_page_title( get_queried_object()-&gt;ID ) ) {
+      return;
+    }
+
+    $m = get_query_var( &#x27;m&#x27; );
+    $year = get_query_var( &#x27;year&#x27; );
+    $monthnum = get_query_var( &#x27;monthnum&#x27; );
+    $day = get_query_var( &#x27;day&#x27; );
+    $search = get_query_var( &#x27;s&#x27; );
+
+    $t_sep = &#x27;%WP_TITILE_SEP%&#x27;; // Temporary separator, for accurate flipping, if necessary
+
+    // If there is a post
+    if ( !$args[ &#x27;title&#x27; ] &amp;&amp; $post-&gt;post_title ) {
+      $args[ &#x27;title&#x27; ] = $post-&gt;post_title;
+    }
+
+    // If there&#x27;s a category or tag
+    if ( !$args[ &#x27;title&#x27; ] &amp;&amp; ( is_category() || is_tag() ) ) {
+      $args[ &#x27;title&#x27; ] = single_term_title( &#x27;&#x27;, false );
+    }
+
+    // If there&#x27;s a taxonomy
+    if ( !$args[ &#x27;title&#x27; ] &amp;&amp; is_tax() ) {
+      $term = get_queried_object();
+      $tax = get_taxonomy( $term-&gt;taxonomy );
+      $args[ &#x27;title&#x27; ] = single_term_title( $tax-&gt;labels-&gt;name . $t_sep, false );
+    }
+
+    // If there&#x27;s an author
+    if ( !$args[ &#x27;title&#x27; ] &amp;&amp; is_author() ) {
+      $author = get_queried_object();
+      $args[ &#x27;title&#x27; ] = $author-&gt;display_name;
+    }
+
+    // If there&#x27;s a post type archive
+    if ( !$args[ &#x27;title&#x27; ] &amp;&amp; is_post_type_archive() )
+      $args[ &#x27;title&#x27; ] = post_type_archive_title( &#x27;&#x27;, false );
+
+    // If there&#x27;s a month
+    if ( !$args[ &#x27;title&#x27; ] &amp;&amp; ( is_archive() &amp;&amp; !empty( $m ) ) ) {
+      $my_year = substr( $m, 0, 4 );
+      $my_month = $wp_locale-&gt;get_month( substr( $m, 4, 2 ) );
+      $my_day = intval( substr( $m, 6, 2 ) );
+      $args[ &#x27;title&#x27; ] = $my_year . ( $my_month ? $t_sep . $my_month : &#x27;&#x27; ) . ( $my_day ? $t_sep . $my_day : &#x27;&#x27; );
+    }
+
+    // If there&#x27;s a year
+    if ( !$args[ &#x27;title&#x27; ] &amp;&amp; ( is_archive() &amp;&amp; !empty( $year ) ) ) {
+      $args[ &#x27;title&#x27; ] = $year;
+      if ( !empty( $monthnum ) )
+        $args[ &#x27;title&#x27; ] .= $t_sep . $wp_locale-&gt;get_month( $monthnum );
+      if ( !empty( $day ) )
+        $args[ &#x27;title&#x27; ] .= $t_sep . zeroise( $day, 2 );
+    }
+
+    // If it&#x27;s a search
+    if ( !$args[ &#x27;title&#x27; ] &amp;&amp; is_search() ) {
+
+      if ( trim( get_search_query() ) == &#x27;&#x27; ) {
+        $args[ &#x27;title&#x27; ] = __( &#x27;Showing All Results&#x27;, &#x27;flawless&#x27; );
+      } else {
+        $args[ &#x27;title&#x27; ] = sprintf( __( &#x27;Search: %s&#x27;, &#x27;flawless&#x27; ), &#x27;&lt;span&gt;&#x27; . get_search_query() . &#x27;&lt;/span&gt;&#x27; );
+      }
+
+    }
+
+    if ( !$args[ &#x27;title&#x27; ] &amp;&amp; is_404() ) {
+      $args[ &#x27;title&#x27; ] = __( &#x27;Page not found&#x27; );
+    }
+
+    if ( $args[ &#x27;link&#x27; ] ) {
+      $args[ &#x27;title&#x27; ] = &#x27;&lt;a href=&quot;&#x27; . apply_filters( &#x27;the_permalink&#x27;, get_permalink() ) . &#x27;&quot;  alt=&quot;&#x27; . $args[ &#x27;title&#x27; ] . &#x27;&quot; rel=&quot;bookmark&quot;&gt;&#x27; . $args[ &#x27;title&#x27; ] . &#x27;&lt;/a&gt;&#x27;;
+    }
+
+    $args[ &#x27;title&#x27; ] = $args[ &#x27;before&#x27; ] . $args[ &#x27;title&#x27; ] . $args[ &#x27;after&#x27; ];
+
+    $args[ &#x27;title&#x27; ] = apply_filters( &#x27;flawless::page_title&#x27;, $args[ &#x27;title&#x27; ], array(
+      &#x27;title&#x27; =&gt; $args[ &#x27;title&#x27; ],
+      &#x27;before&#x27; =&gt; $before,
+      &#x27;after&#x27; =&gt; $after,
+      &#x27;position&#x27; =&gt; &#x27;entry-title&#x27;
+    ) );
+
+    if ( $args[ &#x27;return&#x27; ] ) {
+      return $args[ &#x27;title&#x27; ];
+    }
+
+    echo $args[ &#x27;title&#x27; ];
+
+  }
+
+}
+
+if ( !function_exists( &#x27;flawless_set_color_scheme&#x27; ) ) {
+  /**
+   * Set current skin, very basic for now.
+   *
+   * @todo Add check to see if being called too early, or too late.
+   * @author potanin@UD
+   */
+  function flawless_set_color_scheme( $skin = &#x27;&#x27; ) {
+    global $flawless;
+    $flawless[ &#x27;color_scheme&#x27; ] = $skin;
+  }
+}
+
+if ( !function_exists( &#x27;get_post_for_extended_term&#x27; ) ) {
+  /**
+   * {}
+   *
+   * @author potanin@UD
+   */
+  function get_post_for_extended_term( $term_id = false, $taxonomy = false ) {
+    global $wpdb;
+
+    if ( !$term_id ) {
+      return false;
+    }
+
+    if ( is_object( $term_id ) ) {
+      $term_id = $term_id-&gt;term_id;
+      $taxonomy = $taxonomy ? $taxonomy : $term_id-&gt;taxonomy;
+    }
+
+    //** Try to get taxonomy -if this term only has one relationship, it&#x27;s a good guess */
+    if ( !$taxonomy ) {
+      $taxonomy = $wpdb-&gt;get_col( &quot;SELECT taxonomy FROM {$wpdb-&gt;term_taxonomy} WHERE term_id = {$term_id}&quot; );
+
+      if ( count( $taxonomy ) &gt; 1 ) {
+        return false;
+      } else {
+        $taxonomy = $taxonomy[ 0 ];
+      }
+    }
+
+    if ( !is_numeric( $term_id ) || empty( $taxonomy ) ) {
+      return false;
+    }
+
+    $post_id = $wpdb-&gt;get_var( &quot;SELECT post_id FROM {$wpdb-&gt;postmeta} pm LEFT JOIN {$wpdb-&gt;posts} p ON pm.post_id = p.ID WHERE meta_key = &#x27;extended_term_id&#x27; AND meta_value = &#x27;{$term_id}&#x27; AND post_type = &#x27;_tp_{$taxonomy}&#x27; &quot; );
+
+    if ( !$post_id ) {
+      return false;
+    }
+
+    if ( $post_id ) {
+      $post = get_post( $post_id );
+    }
+
+    if ( !$post ) {
+      return false;
+    }
+
+    return $post;
+
+  }
+}
+
+if ( !function_exists( &#x27;flawless_render_in_footer&#x27; ) ) {
+  /**
+   * {}
+   *
+   * @author potanin@UD
+   */
+  function flawless_render_in_footer( $content, $args = array() ) {
+    global $flawless;
+    $flawless[ &#x27;runtime&#x27; ][ &#x27;footer_scripts&#x27; ][ ] = $content;
+  }
+}
+
+if ( !function_exists( &#x27;add_term_meta&#x27; ) ) {
+  /**
+   * Add meta data field to a term.
+   *
+   */
+  function add_term_meta( $term_id, $meta_key, $meta_value, $unique = false ) {
+
+    if ( current_theme_supports( &#x27;extended-taxonomies&#x27; ) ) {
+      return add_post_meta( get_post_for_extended_term( $term_id )-&gt;ID, $meta_key, $meta_value, $unique );
+    }
+
+    return add_metadata( &#x27;taxonomy&#x27;, $term_id, $meta_key, $meta_value, $unique );
+  }
+}
+
+if ( !function_exists( &#x27;delete_term_meta&#x27; ) ) {
+  /**
+   * Remove metadata matching criteria from a term.
+   *
+   *
+   */
+  function delete_term_meta( $term_id, $meta_key, $meta_value = &#x27;&#x27; ) {
+
+    if ( current_theme_supports( &#x27;extended-taxonomies&#x27; ) ) {
+      return delete_post_meta( get_post_for_extended_term( $term_id )-&gt;ID, $meta_key, $meta_value );
+    }
+
+    return delete_metadata( &#x27;taxonomy&#x27;, $term_id, $meta_key, $meta_value );
+  }
+}
+
+if ( !function_exists( &#x27;get_term_meta&#x27; ) ) {
+  /**
+   * Retrieve term meta field for a term.
+   *
+   */
+  function get_term_meta( $term_id, $key, $single = false ) {
+
+    if ( current_theme_supports( &#x27;extended-taxonomies&#x27; ) ) {
+      return get_post_meta( get_post_for_extended_term( $term_id )-&gt;ID, $key, $single );
+    }
+
+    return get_metadata( &#x27;taxonomy&#x27;, $term_id, $key, $single );
+  }
+}
+
+if ( !function_exists( &#x27;update_term_meta&#x27; ) ) {
+  /**
+   * Update term meta field based on term ID.
+   *
+   */
+  function update_term_meta( $term_id, $meta_key, $meta_value, $prev_value = &#x27;&#x27; ) {
+
+    if ( current_theme_supports( &#x27;extended-taxonomies&#x27; ) ) {
+      return update_post_meta( get_post_for_extended_term( $term_id )-&gt;ID, $meta_key, $meta_value, $prev_value );
+    }
+
+    return update_metadata( &#x27;taxonomy&#x27;, $term_id, $meta_key, $meta_value, $prev_value );
+  }
+}
+
+if ( !function_exists( &#x27;wp_is_mobile&#x27; ) ) {
+  /**
+   * Test if the current browser runs on a mobile device ( smart phone, tablet, etc. )
+   *
+   * @return bool true|false
+   */
+  function wp_is_mobile() {
+    static $is_mobile;
+
+    if ( isset( $is_mobile ) )
+      return $is_mobile;
+
+    if ( empty( $_SERVER[ &#x27;HTTP_USER_AGENT&#x27; ] ) ) {
+      $is_mobile = false;
+    } elseif ( strpos( $_SERVER[ &#x27;HTTP_USER_AGENT&#x27; ], &#x27;Mobile&#x27; ) !== false // many mobile devices ( all iPhone, iPad, etc. )
+      || strpos( $_SERVER[ &#x27;HTTP_USER_AGENT&#x27; ], &#x27;Android&#x27; ) !== false
+      || strpos( $_SERVER[ &#x27;HTTP_USER_AGENT&#x27; ], &#x27;BlackBerry&#x27; ) !== false
+      || strpos( $_SERVER[ &#x27;HTTP_USER_AGENT&#x27; ], &#x27;Opera Mini&#x27; ) !== false
+    ) {
+      $is_mobile = true;
+    } else {
+      $is_mobile = false;
+    }
+
+    return $is_mobile;
+  }
+}
+
+if ( !function_exists( &#x27;flawless_image_link&#x27; ) ) {
+  /**
+   * Get imare src, resizing the image if needed.
+   *
+   * @author potanin@UD
+   */
+  function flawless_image_link( $attachment_id = false, $size = false, $args = array() ) {
+
+    if ( !$size || !$attachment_id ) {
+      return false;
+    }
+
+    $image_sizes = Flawless::image_sizes();
+
+    $args = wp_parse_args( $args, array(
+      &#x27;return&#x27; =&gt; &#x27;string&#x27;,
+      &#x27;cache_id&#x27; =&gt; sanitize_title( $attachment_id . $size ),
+      &#x27;default&#x27; =&gt; &#x27;&#x27;
+    ) );
+
+    if ( $return = wp_cache_get( $args[ &#x27;cache_id&#x27; ], &#x27;flawless_image_link&#x27; ) ) {
+      return $return;
+    }
+
+    $attachment_image_src = ( array ) wp_get_attachment_image_src( $attachment_id, $size );
+
+    if ( empty( $image_sizes ) || ( is_array( $attachment_id ) &amp;&amp; $attachment_id[ 1 ] == $image_sizes[ $size ][ &#x27;width&#x27; ] ) ) {
+      $return = $attachment_image_src[ 0 ];
+      wp_cache_set( $args[ &#x27;cache_id&#x27; ], $return, &#x27;flawless_image_link&#x27; );
+      return $return;
+    }
+
+    /** Get the metadata */
+    $metadata = wp_get_attachment_metadata( $attachment_id );
+    /** If we have metadata, we need to check it before continuing */
+    if ( $metadata ) {
+      /** Check to see if the original file exists */
+      if ( isset( $metadata[ &#x27;sizes&#x27; ] ) &amp;&amp; isset( $metadata[ &#x27;sizes&#x27; ][ $size ] ) &amp;&amp; isset( $metadata[ &#x27;sizes&#x27; ][ $size ][ &#x27;file&#x27; ] ) ) {
+        /** Get the upload directory */
+        $upload_dir = wp_upload_dir();
+        /** Determine the file&#x27;s directory */
+        $file_dir = explode( &#x27;/&#x27;, $metadata[ &#x27;file&#x27; ] );
+        array_pop( $file_dir );
+        $file_dir = implode( &#x27;/&#x27;, $file_dir );
+        /** Build the file path */
+        $resized_file = $upload_dir[ &#x27;basedir&#x27; ] . &#x27;/&#x27; . $file_dir . &#x27;/&#x27; . $metadata[ &#x27;sizes&#x27; ][ $size ][ &#x27;file&#x27; ];
+        if ( file_exists( $resized_file ) ) {
+          $file_url = $upload_dir[ &#x27;baseurl&#x27; ] . &#x27;/&#x27; . $file_dir . &#x27;/&#x27; . $metadata[ &#x27;sizes&#x27; ][ $size ][ &#x27;file&#x27; ];
+          wp_cache_set( $args[ &#x27;cache_id&#x27; ], $file_url, &#x27;flawless_image_link&#x27; );
+          return $file_url;
+        }
+      }
+    }
+
+    $image_resize = image_resize( get_attached_file( $attachment_id, true ), $image_sizes[ $size ][ &#x27;width&#x27; ], $image_sizes[ $size ][ &#x27;height&#x27; ], $image_sizes[ $size ][ &#x27;crop&#x27; ], &#x27;test&#x27; );
+
+    if ( is_wp_error( $image_resize ) || !file_exists( $image_resize ) ) {
+
+      if ( $attachment_image_src[ 0 ] ) {
+        $return = $args[ &#x27;default&#x27; ] ? $args[ &#x27;default&#x27; ] : $attachment_image_src[ 0 ];
+      } else {
+        $return = $args[ &#x27;default&#x27; ];
+      }
+
+      wp_cache_set( $args[ &#x27;cache_id&#x27; ], $return, &#x27;flawless_image_link&#x27; );
+      return $return;
+    }
+
+    require_once( ABSPATH . &#x27;wp-admin/includes/image.php&#x27; );
+
+    wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, get_attached_file( $attachment_id, true ) ) );
+
+    $attachment_image_src = ( array ) wp_get_attachment_image_src( $attachment_id, $size );
+
+    $return = $attachment_image_src[ 0 ] ? $attachment_image_src[ 0 ] : $args[ &#x27;default&#x27; ];
+
+    wp_cache_set( $args[ &#x27;cache_id&#x27; ], $return, &#x27;flawless_image_link&#x27; );
+
+    return $return;
+
+  }
+}
+
+if ( !function_exists( &#x27;flawless_comment&#x27; ) ) {
+  /**
+   * Handles comments
+   *
+   * Based on denali 1.1 comment handler
+   *
+   * @todo Needs major revision, ported from Denali.
+   * @for Template Methods
+   * @method flawless_block_class
+   * @since Flawless 0.2.3
+   */
+  function flawless_comment( $comment, $args, $depth ) {
+    $GLOBALS[ &#x27;comment&#x27; ] = $comment;
+    switch ( $comment-&gt;comment_type ) :
+      case &#x27;&#x27; :
+        ?&gt;
+        &lt;li &lt;?php comment_class(); ?&gt; id=&quot;li-comment-&lt;?php comment_ID(); ?&gt;&quot; data-comment_id=&quot;&lt;?php comment_ID(); ?&gt;&quot;&gt;
+        &lt;?php echo get_avatar( $comment, 80 ); ?&gt;
+
+        &lt;div id=&quot;comment-&lt;?php comment_ID(); ?&gt;&quot; class=&quot;comment-content&quot;&gt;
+          &lt;div class=&quot;comment-author vcard&quot;&gt;
+
+            &lt;?php printf( __( &#x27;%s&#x27;, &#x27;flawless&#x27; ), sprintf( &#x27;&lt;cite class=&quot;fn&quot;&gt;%s&lt;/cite&gt;&#x27;, get_comment_author_link() ) ); ?&gt;
+            &lt;span class=&quot;comment-meta commentmetadata&quot;&gt;&lt;a
+                href=&quot;&lt;?php echo esc_url( get_comment_link( $comment-&gt;comment_ID ) ); ?&gt;&quot;&gt;
+                &lt;?php
+                /* translators: 1: date, 2: time */
+                printf( __( &#x27;%1$s at %2$s&#x27;, &#x27;flawless&#x27; ), get_comment_date(), get_comment_time() ); ?&gt;&lt;/a&gt;&lt;?php edit_comment_link( __( &#x27;( Edit )&#x27;, &#x27;flawless&#x27; ), &#x27; &#x27; );
+              ?&gt;
+
+              &lt;span class=&quot;reply&quot;&gt;
+              &lt;?php comment_reply_link( array_merge( $args, array( &#x27;depth&#x27; =&gt; $depth, &#x27;max_depth&#x27; =&gt; $args[ &#x27;max_depth&#x27; ] ) ) ); ?&gt;
+          &lt;/span&gt;&lt;!-- .reply --&gt;
+          &lt;/span&gt;&lt;!-- .comment-meta .commentmetadata --&gt;
+          &lt;/div&gt;
+          &lt;!-- .comment-author .vcard --&gt;
+          &lt;?php if ( $comment-&gt;comment_approved == &#x27;0&#x27; ) : ?&gt;
+            &lt;em&gt;&lt;?php _e( &#x27;Your comment is awaiting moderation.&#x27;, &#x27;flawless&#x27; ); ?&gt;&lt;/em&gt;
+            &lt;br/&gt;
+          &lt;?php endif; ?&gt;
+
+          &lt;div class=&quot;comment-body&quot;&gt;&lt;?php comment_text(); ?&gt;&lt;/div&gt;
+        &lt;/div&gt;&lt;!-- #comment-##  --&gt;
+
+        &lt;?php
+        break;
+      case &#x27;pingback&#x27;  :
+      case &#x27;trackback&#x27; :
+        ?&gt;
+        &lt;li class=&quot;post pingback&quot;&gt;
+        &lt;p&gt;&lt;?php _e( &#x27;Pingback:&#x27;, &#x27;flawless&#x27; ); ?&gt; &lt;?php comment_author_link(); ?&gt;&lt;?php edit_comment_link( __( &#x27;( Edit )&#x27;, &#x27;flawless&#x27; ), &#x27; &#x27; ); ?&gt;&lt;/p&gt;
+        &lt;?php
+        break;
+    endswitch;
+  }
+}
+
+if ( !function_exists( &#x27;is_posts_page&#x27; ) ) {
+  /**
+   * Conditional tag to determine if current page is selected to be the primary posts page
+   *
+   * @for Template Methods
+   * @method flawless_block_class
+   * @author potanin@UD
+   * @since Flawless 0.2.3
+   */
+  function is_posts_page() {
+    global $wp_query;
+    return $wp_query-&gt;is_posts_page ? true : false;
+  }
+}
+
+if ( !function_exists( &#x27;flawless_wrapper_class&#x27; ) ) {
+  /**
+   * Builds classes for the wrapper element based on conditional elements.
+   *
+   * This is the equivalent of a CB .row
+   *
+   * @for Template Methods
+   * @method flawless_block_class
+   * @author potanin@UD
+   * @since Flawless 0.2.3
+   */
+  function flawless_wrapper_class( $custom_class = &#x27;&#x27; ) {
+    global $wp_query, $flawless;
+
+    $classes = array( $custom_class );
+    $classes[ ] = &#x27;container&#x27;;
+    $classes[ ] = &#x27;content_wrapper&#x27;;
+    $classes[ ] = &#x27;row-fluid&#x27;;
+
+    //** Prevent classes from being blanked out */
+    $maybe_classes = apply_filters( &#x27;flawless::wrapper_class&#x27;, $classes );
+
+    if ( !empty( $maybe_classes ) ) {
+      $classes = $maybe_classes;
+    }
+
+    //** Remove blanks */
+    $classes = array_filter( ( array ) $classes );
+
+    //** Remove duplicates */
+    $classes = array_unique( ( array ) $classes );
+
+    $flawless[ &#x27;wrapper_class&#x27; ] = !empty( $classes ) ? $classes : array();
+
+    echo implode( &#x27; &#x27;, $classes );
+
+  }
+}
+
+if ( !function_exists( &#x27;flawless_block_class&#x27; ) ) {
+  /**
+   * Builds classes for the .main.cfct-block based on conditional elements.
+   *
+   * @for Template Methods
+   * @method flawless_block_class
+   * @since Flawless 0.5.0
+   * @author willis@UD
+   */
+  function flawless_block_class( $custom_class = &#x27;&#x27; ) {
+    global $flawless;
+
+    $classes[ ] = $custom_class;
+
+    //** Added classes to body */
+    foreach ( ( array ) $flawless[ &#x27;current_view&#x27; ][ &#x27;block_classes&#x27; ] as $class ) {
+      $classes[ ] = $class;
+    }
+
+    echo implode( &#x27; &#x27;, ( array ) $classes );
+  }
+}
+
+if ( !function_exists( &#x27;flawless_module_class&#x27; ) ) {
+  /**
+   * Builds classes for the .hentry.cfct-module based on conditional elements.
+   *
+   * Called in templates intead of post_class(). On CB pages, the cfct-move is removed by flawless_carrington::module_class()
+   *
+   * @since Flawless 0.5.0
+   * @author potanin@UD
+   */
+  function flawless_module_class( $custom_class = &#x27;&#x27; ) {
+    global $flawless, $wp_query, $post;
+
+    //** Load Post Classes if this is a post */
+    $classes = get_post_class( &#x27;&#x27;, $post-&gt;ID );
+
+    $classes[ ] = $custom_class;
+    $classes[ ] = &#x27;cfct-module&#x27;;
+
+    $classes = apply_filters( &#x27;flawless::module_class&#x27;, $classes );
+
+    echo implode( &#x27; &#x27;, ( array ) $classes );
+
+  }
+}
+
+if ( !function_exists( &#x27;hide_page_title&#x27; ) ) {
+  /**
+   * Conditional tag to determine if current page is selected to be the primary posts page
+   *
+   * @since Flawless 0.2.3
+   * @author potanin@UD
+   */
+  function hide_page_title( $post_id = false ) {
+    global $post;
+
+    if ( is_home() ) {
+      return true;
+    }
+
+    if ( !$post_id ) {
+      $post_id = $post-&gt;ID;
+    }
+
+    return get_post_meta( $post_id, &#x27;hide_page_title&#x27;, true ) == &#x27;true&#x27; ? true : false;
+
+  }
+}
+
+if ( !function_exists( &#x27;flawless_footer_copyright&#x27; ) ) {
+  /**
+   * Displays the Copyright info the footer.
+   *
+   * Avoid applying the_content filter since Carrington will take it over.
+   *
+   * @since Flawless 0.2.3
+   * @author potanin@UD
+   */
+  function flawless_footer_copyright() {
+    global $flawless;
+    echo do_shortcode( nl2br( $flawless[ &#x27;footer&#x27; ][ &#x27;copyright&#x27; ] ) );
+  }
+
+}
+
+if ( !function_exists( &#x27;flawless_element&#x27; ) ) {
+  /**
+   * Generates unique &lt;div&gt; attributes for a draggable element
+   *
+   * @since 1.0
+   * @author potanin@UD
+   */
+  function flawless_element( $classes = false, $args = false ) {
+    global $flawless;
+
+    $template_part = false;
+
+    //** Figure out where this got called from */
+    foreach ( ( array ) debug_backtrace() as $item ) {
+
+      if ( $item[ &#x27;function&#x27; ] == &#x27;get_header&#x27; ) {
+        $template_part = &#x27;header&#x27;;
+        break;
+      }
+
+      if ( $item[ &#x27;function&#x27; ] == &#x27;get_footer&#x27; ) {
+        $template_part = &#x27;footer&#x27;;
+        break;
+      }
+
+    }
+
+    $classes = explode( &#x27; &#x27;, $classes );
+
+    $classes[ ] = &#x27;cfct-module&#x27;;
+    $classes[ ] = &#x27;flawless_module&#x27;;
+
+    $classes = implode( &#x27; &#x27;, $classes );
+
+    //** Generate unique ID for this element, as long as classes don&#x27;t change and it stays in same template part, it&#x27;ll be good */
+    $element_hash = md5( $classes . $template_part );
+
+    echo &#x27; class=&quot;&#x27; . $classes . &#x27;&quot; template_part=&quot;&#x27; . $template_part . &#x27;&quot; element_hash=&quot;&#x27; . $element_hash . &#x27;&quot; &#x27;;
+
+  }
+
+}
+
+if ( !function_exists( &#x27;flawless_breadcrumbs&#x27; ) ) {
+  /**
+   * Prints out breadcrumbs
+   *
+   * @todo Improve the way term and taxonomy is handled here.
+   * @version 0.1
+   * @author potanin@UD
+   */
+  function flawless_breadcrumbs( $args = false ) {
+    global $wp_query, $post, $flawless;
+
+    $args = wp_parse_args( $args, array(
+      &#x27;hide_breadcrumbs&#x27; =&gt; get_post_meta( $post-&gt;ID, &#x27;hide_breadcrumbs&#x27;, true ) == &#x27;true&#x27; || $flawless[ &#x27;hide_breadcrumbs&#x27; ] ? true : false,
+      &#x27;return&#x27; =&gt; false,
+      &#x27;home_label&#x27; =&gt; __( &#x27;Home&#x27; ),
+      &#x27;home_link&#x27; =&gt; home_url(),
+      &#x27;wrapper_class&#x27; =&gt; &#x27;breadcrumbs&#x27;,
+      &#x27;divider&#x27; =&gt; &#x27; &lt;span class=&quot;divider&quot;&gt;&amp;raquo;&lt;/span&gt; &#x27;,
+      &#x27;hide_on_home&#x27; =&gt; true
+    ) );
+
+    if ( $args[ &#x27;hide_breadcrumbs&#x27; ] ) {
+      return;
+    }
+
+    $before = &#x27;&lt;span class=&quot;current&quot;&gt;&#x27;;
+    $after = &#x27;&lt;/span&gt;&#x27;;
+
+    if ( $args[ &#x27;hide_on_home&#x27; ] &amp;&amp; ( is_home() || is_front_page() ) ) {
+      return;
+    }
+
+    $html[ ] = &#x27;&lt;a class=&quot;home_link&quot; href=&quot;&#x27; . $args[ &#x27;home_link&#x27; ] . &#x27;&quot;&gt;&#x27; . $args[ &#x27;home_label&#x27; ] . &#x27;&lt;/a&gt; &#x27; . $delimiter . &#x27; &#x27;;
+
+    if ( is_home() || is_front_page() ) {
+
+    } elseif ( is_category() ) {
+
+      $cat_obj = $wp_query-&gt;get_queried_object();
+      $thisCat = $cat_obj-&gt;term_id;
+      $thisCat = get_category( $thisCat );
+      $parentCat = get_category( $thisCat-&gt;parent );
+      if ( $thisCat-&gt;parent != 0 ) $html[ ] = ( get_category_parents( $parentCat, TRUE, &#x27; &#x27; . $delimiter . &#x27; &#x27; ) );
+      $html[ ] = $before . single_cat_title( &#x27;&#x27;, false ) . $after;
+
+    } elseif ( is_day() ) {
+      $html[ ] = &#x27;&lt;a href=&quot;&#x27; . get_year_link( get_the_time( &#x27;Y&#x27; ) ) . &#x27;&quot;&gt;&#x27; . get_the_time( &#x27;Y&#x27; ) . &#x27;&lt;/a&gt; &#x27; . $delimiter . &#x27; &#x27;;
+      $html[ ] = &#x27;&lt;a href=&quot;&#x27; . get_month_link( get_the_time( &#x27;Y&#x27; ), get_the_time( &#x27;m&#x27; ) ) . &#x27;&quot;&gt;&#x27; . get_the_time( &#x27;F&#x27; ) . &#x27;&lt;/a&gt; &#x27; . $delimiter . &#x27; &#x27;;
+      $html[ ] = $before . get_the_time( &#x27;d&#x27; ) . $after;
+
+    } elseif ( is_month() ) {
+      $html[ ] = &#x27;&lt;a href=&quot;&#x27; . get_year_link( get_the_time( &#x27;Y&#x27; ) ) . &#x27;&quot;&gt;&#x27; . get_the_time( &#x27;Y&#x27; ) . &#x27;&lt;/a&gt; &#x27; . $delimiter . &#x27; &#x27;;
+      $html[ ] = $before . get_the_time( &#x27;F&#x27; ) . $after;
+
+    } elseif ( is_year() ) {
+      $html[ ] = $before . get_the_time( &#x27;Y&#x27; ) . $after;
+
+    } elseif ( is_single() &amp;&amp; !is_attachment() ) {
+
+      if ( get_post_type() != &#x27;post&#x27; ) {
+        $post_type = get_post_type_object( get_post_type() );
+        $slug = $post_type-&gt;rewrite;
+
+        //** Check if this content type has a custom Root page */
+        if ( $flawless[ &#x27;post_types&#x27; ][ get_post_type() ][ &#x27;root_page&#x27; ] ) {
+          $content_type_home = get_permalink( $flawless[ &#x27;post_types&#x27; ][ get_post_type() ][ &#x27;root_page&#x27; ] );
+        } else {
+          $content_type_home = Flawless::filter_post_link( $args[ &#x27;home_link&#x27; ] . &#x27;/&#x27; . $slug[ &#x27;slug&#x27; ] . &#x27;/&#x27;, $post );
+        }
+
+        /** Fix &#x27;Pages&#x27; */
+        if ( $post-&gt;post_type == &#x27;page&#x27; ) {
+          if ( $anc = get_post_ancestors( $post ) ) {
+            $anc = wp_get_single_post( $anc[ 0 ] );
+            $content_type_home = get_permalink( $anc-&gt;ID );
+          }
+        }
+
+        if ( $anc ) {
+          $args[ &#x27;title&#x27; ] = $anc-&gt;post_title;
+        } else {
+          $args[ &#x27;title&#x27; ] = $post_type-&gt;labels-&gt;name;
+        }
+
+        $html[ &#x27;content_type_home&#x27; ] = &#x27;&lt;a href=&quot;&#x27; . $content_type_home . &#x27;&quot;&gt;&#x27; . $args[ &#x27;title&#x27; ] . &#x27;&lt;/a&gt;&#x27;;
+        $html[ &#x27;this_page&#x27; ] = $before . get_the_title() . $after;
+
+      } else {
+        $cat = get_the_category();
+        $cat = $cat[ 0 ];
+
+        if ( $cat ) {
+          $html[ ] = get_category_parents( $cat, TRUE, &#x27; &#x27; . $delimiter . &#x27; &#x27; );
+        }
+
+        $html[ ] = $before . get_the_title() . $after;
+      }
+
+    } elseif ( !is_single() &amp;&amp; !is_page() &amp;&amp; get_post_type() != &#x27;post&#x27; &amp;&amp; !is_404() &amp;&amp; !is_search() ) {
+
+      $taxonomy = get_taxonomy( $wp_query-&gt;query_vars[ &#x27;taxonomy&#x27; ] );
+      $post_type = get_post_type_object( get_post_type() );
+
+      //** Check if this content type has a custom Root page */
+      if ( $flawless[ &#x27;post_types&#x27; ][ get_post_type() ][ &#x27;root_page&#x27; ] ) {
+        $content_type_home = get_permalink( $flawless[ &#x27;post_types&#x27; ][ get_post_type() ][ &#x27;root_page&#x27; ] );
+      } else {
+        $content_type_home = Flawless::filter_post_link( $args[ &#x27;home_link&#x27; ] . &#x27;/&#x27; . $slug[ &#x27;slug&#x27; ] . &#x27;/&#x27;, $post );
+      }
+
+      /** Fix &#x27;Pages&#x27; */
+      if ( $post-&gt;post_type == &#x27;page&#x27; ) {
+        if ( $anc = get_post_ancestors( $post ) ) {
+          $anc = wp_get_single_post( $anc[ 0 ] );
+          $content_type_home = get_permalink( $anc-&gt;ID );
+        }
+      }
+
+      if ( $anc ) {
+        $args[ &#x27;title&#x27; ] = $anc-&gt;post_title;
+      } else {
+        $args[ &#x27;title&#x27; ] = $post_type-&gt;labels-&gt;name;
+      }
+
+      switch ( true ) {
+
+        case is_tag():
+          $html[ &#x27;content_type_home&#x27; ] = &#x27;&lt;a href=&quot;&#x27; . $content_type_home . &#x27;&quot;&gt;&#x27; . $args[ &#x27;title&#x27; ] . &#x27;&lt;/a&gt;&#x27;;
+          $html[ ] = $before . get_queried_object() &gt; name . $after;
+          break;
+
+        case is_tax():
+          $html[ &#x27;content_type_home&#x27; ] = &#x27;&lt;a href=&quot;&#x27; . $content_type_home . &#x27;&quot;&gt;&#x27; . $args[ &#x27;title&#x27; ] . &#x27;&lt;/a&gt;&#x27;;
+          $html[ ] = $before . get_queried_object()-&gt;name . $after;
+          break;
+
+        default:
+          $html[ ] = $before . $post_type-&gt;labels-&gt;name . $after;
+          break;
+
+      }
+
+    } elseif ( is_attachment() ) {
+      $parent = get_post( $post-&gt;post_parent );
+      $cat = get_the_category( $parent-&gt;ID );
+      $cat = $cat[ 0 ];
+
+      //** Must check a category was found */
+      if ( $cat &amp;&amp; !is_wp_error( $cat ) ) {
+        $html[ ] = get_category_parents( $cat, TRUE, &#x27; &#x27; . $delimiter . &#x27; &#x27; );
+      }
+
+      $html[ ] = &#x27;&lt;a href=&quot;&#x27; . get_permalink( $parent ) . &#x27;&quot;&gt;&#x27; . $parent-&gt;post_title . &#x27;&lt;/a&gt; &#x27; . $delimiter . &#x27; &#x27;;
+      $html[ ] = $before . get_the_title() . $after;
+
+    } elseif ( is_page() &amp;&amp; !$post-&gt;post_parent ) {
+      $html[ ] = $before . get_the_title() . $after;
+
+    } elseif ( is_page() &amp;&amp; $post-&gt;post_parent ) {
+      $parent_id = $post-&gt;post_parent;
+      $breadcrumbs = array();
+      while ( $parent_id ) {
+        $page = get_page( $parent_id );
+        $breadcrumbs[ ] = &#x27;&lt;a href=&quot;&#x27; . get_permalink( $page-&gt;ID ) . &#x27;&quot;&gt;&#x27; . get_the_title( $page-&gt;ID ) . &#x27;&lt;/a&gt;&#x27;;
+        $parent_id = $page-&gt;post_parent;
+      }
+      $breadcrumbs = array_reverse( $breadcrumbs );
+      foreach ( $breadcrumbs as $crumb ) $html[ ] = $crumb . &#x27; &#x27; . $delimiter . &#x27; &#x27;;
+      $html[ ] = $before . get_the_title() . $after;
+
+    } elseif ( is_search() ) {
+
+      $html[ ] = $before . &#x27;Search results for &quot;&#x27; . get_search_query() . &#x27;&quot;&#x27; . $after;
+
+    } elseif ( is_tag() ) {
+
+      $html[ ] = $before . &#x27;Posts tagged &quot;&#x27; . single_tag_title( &#x27;&#x27;, false ) . &#x27;&quot;&#x27; . $after;
+
+    } elseif ( is_author() ) {
+      global $author;
+      $userdata = get_userdata( $author );
+      $html[ ] = $before . &#x27;Content by &#x27; . $userdata-&gt;display_name . $after;
+
+    } elseif ( is_404() ) {
+      $html[ ] = $before . &#x27;404 Error&#x27; . $after;
+    } elseif ( is_tax() ) {
+
+      $taxonomy = get_taxonomy( $wp_query-&gt;query_vars[ &#x27;taxonomy&#x27; ] );
+
+      $html[ ] = &#x27;&lt;a href=&quot;&#x27; . $args[ &#x27;home_link&#x27; ] . &#x27;/&#x27; . $taxonomy-&gt;rewrite[ &#x27;slug&#x27; ] . &#x27;&quot;&gt;&#x27; . $taxonomy-&gt;labels-&gt;name . &#x27;&lt;/a&gt; &#x27;;
+      $html[ ] = $before . $wp_query-&gt;get_queried_object()-&gt;name . $after;
+
+    } else {
+
+      //$html[] = &quot;&lt;pre&gt;&quot;;print_r( $wp_query );$html[] = &quot;&lt;/pre&gt;&quot;;
+    }
+
+    if ( get_query_var( &#x27;paged&#x27; ) ) {
+      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[ ] = &#x27; ( &#x27;;
+      $page[ ] = __( &#x27;Page&#x27; ) . &#x27; &#x27; . get_query_var( &#x27;paged&#x27; );
+      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[ ] = &#x27; )&#x27;;
+
+      $html[ ] = implode( &#x27;&#x27;, ( array ) $page );
+    }
+
+    $html = apply_filters( &#x27;flawless::breadcrumb_trail&#x27;, $html );
+
+    $final_html = &#x27;&lt;div class=&quot;&#x27; . $args[ &#x27;wrapper_class&#x27; ] . &#x27;&quot;&gt;&#x27; . implode( apply_filters( &#x27;flawless_bcreadcrumbs::delimiter&#x27;, $args[ &#x27;divider&#x27; ] ), $html ) . &#x27;&lt;/div&gt;&#x27;;
+
+    if ( $args[ &#x27;return&#x27; ] ) {
+      return $final_html;
+    }
+
+    echo $final_html;
+
+  }
+}
+
+if ( !function_exists( &#x27;flawless_widget_area&#x27; ) ) {
+  /**
+   * Checks and renders sidebar template.
+   * It&#x27;s just modified get_sidebar() function.
+   *
+   * Note: use this function instead of default get_sidebar() or dynamic_sidebar()
+   * in Flawless theme.
+   *
+   * @todo Needs to check if the requested widget are has active widgets, and if not, should not return.
+   * @see get_sidebar()
+   * @return HTML
+   * @author Maxim Peshkov
+   */
+  function flawless_widget_area( $name = null ) {
+    do_action( &#x27;get_sidebar&#x27;, $name );
+
+    $templates = array();
+
+    // Check in theme &quot;templates&quot; directory
+    if ( isset( $name ) ) {
+      $templates[ ] = &quot;sidebar-{$name}.php&quot;;
+      $templates[ ] = &quot;templates/sidebar-{$name}.php&quot;;
+    }
+
+    $templates[ ] = &#x27;sidebar.php&#x27;;
+    $templates[ ] = &#x27;templates/sidebar.php&#x27;;
+
+    /** Backward compat code will be removed in a future WP release */
+    if ( &#x27;&#x27; == locate_template( $templates, true, false ) ) {
+      load_template( ABSPATH . WPINC . &#x27;/theme-compat/sidebar.php&#x27;, false );
+    }
+  }
+}
+
+if ( !function_exists( &#x27;flawless_thumbnail&#x27; ) ) {
+  /**
+   * Displays a thumbail with wrapper, if applicable
+   *
+   * Default wrapper is &#x27;entry-thumbnail&#x27;
+   *
+   * @author potanin@UD
+   */
+  function flawless_thumbnail( $args = array() ) {
+    $args = wp_parse_args( $args, $defaults = array(
+      &#x27;wrapper_class&#x27; =&gt; &#x27;entry-thumbnail&#x27;,
+      &#x27;size&#x27; =&gt; array( 100, 100 ),
+      &#x27;return&#x27; =&gt; false,
+      &#x27;link&#x27; =&gt; true
+    ) );
+
+    $thumbnail = get_the_post_thumbnail( NULL, $args[ &#x27;size&#x27; ] );
+
+    if ( !$thumbnail ) {
+      return;
+    }
+
+    $html[ ] = &#x27;&lt;div class=&quot;&#x27; . $args[ &#x27;wrapper_class&#x27; ] . &#x27;&quot;&gt;&#x27;;
+
+    if ( $args[ &#x27;link&#x27; ] ) {
+      $html[ ] = &#x27;&lt;a href=&quot;&#x27; . get_permalink() . &#x27;&quot; alt=&quot;&#x27; . get_the_title() . &#x27;&quot;&gt;&#x27;;
+    }
+
+    $html[ ] = $thumbnail;
+
+    if ( $args[ &#x27;link&#x27; ] ) {
+      $html[ ] = &#x27;&lt;/a&gt;&#x27;;
+    }
+
+    $html[ ] = &#x27;&lt;/div&gt;&#x27;;
+
+    $html = implode( &#x27;&#x27;, ( array ) $html );
+
+    if ( $args[ &#x27;return&#x27; ] ) {
+      return $html;
+    }
+
+    echo $html;
+
+  }
+
+}
+
+if ( !function_exists( &#x27;flawless_word_trim&#x27; ) ) {
+  /**
+   * Truncate a string, stop at preceding word.
+   *
+   * @author potanin@UD
+   */
+  function flawless_word_trim( $string, $count, $ellipsis = false ) {
+
+    if ( strlen( $string ) &lt; $count ) {
+      return $string;
+    }
+
+    $truncated = preg_replace( &#x27;/\s+?( \S+ )?$/&#x27;, &#x27;&#x27;, substr( $string, 0, $ellipsis ? $count + 3 : $count ) );
+
+    if ( strlen( $string ) &gt; strlen( $truncated ) &amp;&amp; $ellipsis ) {
+      $truncated .= &#x27;...&#x27;;
+    }
+
+    return $truncated;
+
+  }
+}
+
+if ( !function_exists( &#x27;flawless_add_notice&#x27; ) ) {
+  /**
+   * Add a notice to the queue. Must be called before flawless::primary_notice_container which is typically called in header.php
+   *
+   * @since 0.7.0
+   * @author potanin@UD
+   */
+  function flawless_add_notice( $notice = &#x27;&#x27;, $args = array() ) {
+    global $flawless;
+
+    $flawless[ &#x27;runtime&#x27; ][ &#x27;this_notice&#x27; ] = array(
+      &#x27;content&#x27; =&gt; $notice,
+      &#x27;args&#x27; =&gt; $args
+    );
+
+    if ( did_action( &#x27;flawless::render::primary_notice_container&#x27; ) ) {
+      _doing_it_wrong( __FUNCTION__, sprintf( __( &#x27;Notices should be added before %1s hook in header.php.&#x27;, &#x27;flawless&#x27; ), &#x27;flawless::content_container_top&#x27; ), &#x27;3.4&#x27; );
+    }
+
+    add_filter( &#x27;flawless::primary_notice_container&#x27;, function ( $notices = array(), $args = array() ) {
+      global $flawless;
+
+      $args = wp_parse_args( $flawless[ &#x27;runtime&#x27; ][ &#x27;this_notice&#x27; ][ &#x27;args&#x27; ], $args );
+
+      switch ( $args[ &#x27;type&#x27; ] ) {
+
+        case &#x27;error&#x27;:
+          $notices[ ] = &#x27;&lt;div class=&quot;alert alert-success&quot;&gt;&lt;a class=&quot;close&quot; data-dismiss=&quot;alert&quot; href=&quot;#&quot;&gt;&amp;times;&lt;/a&gt;&#x27; . $flawless[ &#x27;runtime&#x27; ][ &#x27;this_notice&#x27; ][ &#x27;content&#x27; ] . &#x27;&lt;/div&gt;&#x27;;
+          break;
+
+        case &#x27;success&#x27;:
+          $notices[ ] = &#x27;&lt;div class=&quot;alert alert-success&quot;&gt;&lt;a class=&quot;close&quot; data-dismiss=&quot;alert&quot; href=&quot;#&quot;&gt;&amp;times;&lt;/a&gt;&#x27; . $flawless[ &#x27;runtime&#x27; ][ &#x27;this_notice&#x27; ][ &#x27;content&#x27; ] . &#x27;&lt;/div&gt;&#x27;;
+          break;
+
+        case &#x27;info&#x27;:
+        default:
+          $notices[ ] = &#x27;&lt;div class=&quot;alert alert-info&quot;&gt;&lt;a class=&quot;close&quot; data-dismiss=&quot;alert&quot; href=&quot;#&quot;&gt;&amp;times;&lt;/a&gt;&#x27; . $flawless[ &#x27;runtime&#x27; ][ &#x27;this_notice&#x27; ][ &#x27;content&#x27; ] . &#x27;&lt;/div&gt;&#x27;;
+          break;
+      }
+
+      return $notices;
+
+    }, 2, 10 );
+  }
+
+}
+
+if ( !function_exists( &#x27;flawless_primary_notice_container&#x27; ) ) {
+  /**
+   * Render any notices.
+   *
+   * @author potanin@UD
+   */
+  function flawless_primary_notice_container( $notice = &#x27;&#x27;, $args = array() ) {
+
+    do_action( &#x27;flawless::render::primary_notice_container&#x27; );
+
+    $notices = array_filter( ( array ) apply_filters( &#x27;flawless::primary_notice_container&#x27;, array( $notice ) ) );
+
+    if ( !is_array( $notices ) || empty( $notices ) ) {
+      return;
+    }
+
+    echo &#x27;&lt;div class=&quot;primary_notice_container container&quot;&gt;&#x27; . implode( &#x27;&#x27;, ( array ) $notices ) . &#x27;&lt;/div&gt;&#x27;;
+
+  }
+}
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

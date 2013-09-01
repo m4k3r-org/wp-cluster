@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>premium/carrington-build/vendor/carrington-build/modules/rich-text/rich-text.php - Flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="Flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/: Flawless.Element.html">: Flawless.Element</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Module.html">: Flawless.Flawless_Module</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Shortcode.html">: Flawless.Flawless_Shortcode</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Widget.html">: Flawless.Flawless_Widget</a></li>
+            
+                <li><a href="../classes/: Flawless.flawless_wpp_extensions.html">: Flawless.flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/: Flawless.License.html">: Flawless.License</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Functions.html">Template Functions</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: premium/carrington-build/vendor/carrington-build/modules/rich-text/rich-text.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+
+/**
+ * Plain Text Carrington Build Module
+ * Simple plain text box that stores and displays exactly what it is given.
+ * Good for displaying raw HTML and/or JavaScript
+ */
+if (!class_exists(&#x27;cfct_module_rich_text&#x27;)) {
+  class cfct_module_rich_text extends cfct_build_module {
+    protected $_deprecated_id = &#x27;cfct-rich-text-module&#x27;; // deprecated property, not needed for new module development
+    
+    // remove padding from the popup-content form
+    protected $admin_form_fullscreen = true;
+
+    public function __construct() {
+      $opts = array(
+        &#x27;description&#x27; =&gt; __(&#x27;Provides a WYSIWYG editor.&#x27;, &#x27;carrington-build&#x27;),
+        &#x27;icon&#x27; =&gt; &#x27;rich-text/icon.png&#x27;
+      );
+      parent::__construct(&#x27;cfct-rich-text&#x27;, __(&#x27;Rich Text&#x27;, &#x27;carrington-build&#x27;), $opts);
+      
+      // set up rich text editing if user has disabled preference that will not load tinymce
+      if (!user_can_richedit()) {
+        add_action(&#x27;admin_print_footer_scripts&#x27;, array($this, &#x27;footer_js&#x27;), 10);
+      }      
+    }
+
+    public function display($data) {
+      $text = do_shortcode($data[$this-&gt;get_field_id(&#x27;content&#x27;)]);
+      return $this-&gt;load_view($data, compact(&#x27;text&#x27;));
+    }
+
+    public function admin_form($data) {
+      $ret = &#x27;
+        &lt;textarea name=&quot;&#x27;.$this-&gt;get_field_name(&#x27;content&#x27;).&#x27;&quot; id=&quot;&#x27;.$this-&gt;get_field_id(&#x27;content&#x27;).&#x27;&quot;&gt;&#x27;.
+        (isset($data[$this-&gt;get_field_name(&#x27;content&#x27;)]) ? htmlspecialchars($data[$this-&gt;get_field_name(&#x27;content&#x27;)]) : null).
+        &#x27;&lt;/textarea&gt;
+        &#x27;;
+      $ret .= $this-&gt;inline_js();
+      return $ret;
+    }
+
+    /**
+     * Return a textual representation of this module.
+     *
+     * @param array $data 
+     * @return string
+     */
+    public function text($data) {
+      return strip_tags($data[$this-&gt;get_field_name(&#x27;content&#x27;)]);
+    }
+
+
+    /**
+     * Modify the data before it is saved, or not
+     *
+     * @param array $new_data 
+     * @param array $old_data 
+     * @return array
+     */
+    public function update($new_data, $old_data) {
+      return $new_data;
+    }
+  
+    /**
+     * Add some admin CSS for formatting
+     *
+     * @return void
+     */
+    public function admin_css() {
+      return &#x27;
+        #&#x27;.$this-&gt;get_field_id(&#x27;content&#x27;).&#x27; {
+          height: 300px;
+        }
+      &#x27;;
+    }
+    
+    public function admin_js() {
+      $js = &#x27;
+        // automatically set focus on the rich text editor
+        cfct_builder.addModuleLoadCallback(&quot;&#x27;.$this-&gt;id_base.&#x27;&quot;,function(form) {
+          tinyMCE.execCommand(&quot;mceAddControl&quot;, false, &quot;&#x27;.$this-&gt;get_field_id(&#x27;content&#x27;).&#x27;&quot;);
+          setTimeout(function() {tinyMCE.execCommand(&quot;mceFocus&quot;, true, &quot;&#x27;.$this-&gt;get_field_id(&#x27;content&#x27;).&#x27;&quot;);}, 10);
+
+          
+
+          // properly destroy the editor on cancel
+          $(&quot;#cfct-edit-module-cancel&quot;).click(function() {
+            var _ed = tinyMCE.get(&quot;&#x27;.$this-&gt;get_field_id(&#x27;content&#x27;).&#x27;&quot;);
+            tinyMCE.remove(_ed);            
+          });
+        });
+        
+        // we have to register a save callback so that tinyMCE pushes the data
+        // back to the original textarea before the submit script gathers its content    
+        cfct_builder.addModuleSaveCallback(&quot;&#x27;.$this-&gt;id_base.&#x27;&quot;,function(form) {
+          var _ed = tinyMCE.get(&quot;&#x27;.$this-&gt;get_field_id(&#x27;content&#x27;).&#x27;&quot;);
+          _ed.save();
+          tinyMCE.remove(_ed);
+        });
+      &#x27;;
+      return $js;
+    }
+    
+    /**
+     * Add tinyMCE to the footer
+     * Only happens if user has DESELECTED the rich text editing
+     * option in their user preference
+     *
+     * @return void
+     */
+    public function footer_js() {
+      // wp_tiny_mce();
+      global $tinymce_version;
+      $baseurl = includes_url(&#x27;js/tinymce&#x27;);
+      echo &#x27;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;&#x27;.$baseurl.&#x27;/tiny_mce.js?ver=&#x27;.$tinymce_version.&#x27;&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;&#x27;.$baseurl.&#x27;/langs/wp-langs-en.js?ver=&#x27;.$tinymce_version.&#x27;&quot;&gt;&lt;/script&gt;&#x27;.PHP_EOL;
+    }
+    
+    /**
+     * Set up tinymce
+     *
+     * @return string javascript
+     */
+    public function inline_js() {
+      $mce_locale = ( &#x27;&#x27; == get_locale() ) ? &#x27;en&#x27; : strtolower( substr(get_locale(), 0, 2) ); // only ISO 639-1
+      $mce_spellchecker_languages = apply_filters(&#x27;mce_spellchecker_languages&#x27;, &#x27;+English=en,Danish=da,Dutch=nl,Finnish=fi,French=fr,German=de,Italian=it,Polish=pl,Portuguese=pt,Spanish=es,Swedish=sv&#x27;);
+      
+      $js = &#x27;
+        &lt;script type=&quot;text/javascript&quot;&gt;
+          //&lt;![CDATA[
+          // same as calling tinymce.EditorManager.init({});
+          tinyMCE.init({ &#x27;;
+          // compress output whitespace a bit...
+      $js .= preg_replace(&#x27;/(\n|\t)/&#x27;, &#x27;&#x27;, &#x27;
+            mode:&quot;none&quot;,
+            onpageload:&quot;&quot;, 
+            width:&quot;100%&quot;, 
+            theme:&quot;advanced&quot;, 
+            skin:&quot;wp_theme&quot;, 
+            theme_advanced_buttons1:&quot;bold,italic,underline,|,bullist,numlist,blockquote,|,justifyleft,justifycenter,justifyright,|,outdent,indent,|,link,unlink,|,code,wp_help&quot;,
+            theme_advanced_buttons2:&quot;formatselect,underline,justifyfull,forecolor,|,pastetext,pasteword,removeformat,|,charmap,|,undo,redo,spellchecker&quot;, 
+            theme_advanced_buttons3:&quot;&quot;, 
+            theme_advanced_buttons4:&quot;&quot;, 
+            language:&quot;&#x27;.$mce_locale.&#x27;&quot;, 
+            spellchecker_languages:&quot;&#x27;.$mce_spellchecker_languages.&#x27;&quot;, 
+            theme_advanced_toolbar_location:&quot;top&quot;, 
+            theme_advanced_toolbar_align:&quot;left&quot;, 
+            theme_advanced_statusbar_location:&quot;bottom&quot;, 
+            theme_advanced_resizing:&quot;&quot;, 
+            theme_advanced_resize_horizontal:&quot;&quot;, 
+            dialog_type:&quot;modal&quot;, 
+            relative_urls:&quot;&quot;, 
+            remove_script_host:&quot;&quot;, 
+            convert_urls:&quot;&quot;, 
+            apply_source_formatting:&quot;&quot;, 
+            remove_linebreaks:&quot;0&quot;, 
+            paste_convert_middot_lists:&quot;1&quot;, 
+            paste_remove_spans:&quot;1&quot;, 
+            paste_remove_styles:&quot;1&quot;, 
+            gecko_spellcheck:&quot;1&quot;, 
+            entities:&quot;38,amp,60,lt,62,gt&quot;, 
+            accessibility_focus:false, 
+            tab_focus:&quot;:prev,:next&quot;, 
+            save_callback:&quot;&quot;, 
+            wpeditimage_disable_captions:&quot;&quot;, 
+            plugins:&quot;safari,inlinepopups,spellchecker,paste&quot;
+          &#x27;);
+      $js .= &#x27;
+          });
+          //]]&gt;
+        &lt;/script&gt;&#x27;;
+      return $js;
+    }
+  }
+  
+  cfct_build_register_module(&#x27;cfct_module_rich_text&#x27;);
+}
+?&gt;
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

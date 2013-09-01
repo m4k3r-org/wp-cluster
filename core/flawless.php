@@ -53,6 +53,8 @@ final class Flawless {
       wp_die( sprintf( __( 'Your version of PHP, %1s, is old, and this theme cannot support it, so it has been disabled. Please consider upgrading to 5.3, or newer. <a href="%2s">Back to Safety.</a>', HDDP ), phpversion(), admin_url() ) );
     }
 
+
+
     //$this->template_directory();
 
     // add_filter( 'template_directory', call_user_func(array( $this, template_directory ), $stylesheet_dir) );
@@ -72,7 +74,8 @@ final class Flawless {
     ));
 
     $flawless[ 'paths' ] = array(
-      'vendor' => untrailingslashit( get_template_directory() ) . '/core/vendor'
+      'vendor' => untrailingslashit( get_template_directory() ) . '/vendor',
+      'templates' => untrailingslashit( get_template_directory() ) . '/templates'
     );
 
     $flawless[ 'default_header' ][ 'flawless_style_assets' ] = array(
@@ -116,6 +119,8 @@ final class Flawless {
       global $flawless;
       return (array) $flawless[ 'default_header' ][ 'themes' ];
     });
+
+    include_once( $flawless[ 'paths' ][ 'templates' ] . '/template.php' );
 
     //** Get Core settings */
     $flawless[ 'theme_data' ] = array_filter( (array) get_file_data( TEMPLATEPATH . '/style.css', $flawless[ 'default_header' ][ 'themes' ], 'theme' ));
@@ -976,8 +981,8 @@ final class Flawless {
 
     unset( $flawless[ 'current_view' ][ 'settings' ] );
 
-    Flawless::console_log( 'Executed: Flawless::set_current_view();' );
-    Flawless::console_log( $flawless[ 'current_view' ] );
+    self::console_log( 'Executed: Flawless::set_current_view();' );
+    self::console_log( $flawless[ 'current_view' ] );
 
   }
 

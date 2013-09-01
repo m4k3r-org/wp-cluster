@@ -5,8 +5,24 @@ HTML_FILE = static/coverage.html
 
 test-all: clean document test-code
 
-update:
-	cd static && composer.phar install
+install:
+	cd core && composer.phar install
+	cd ux && component install && component build
+
+push:
+	cd ux && component build
+	git add .
+	git commit -m "WIP"
+	git push
+
+update-vendor:
+	cd core && composer.phar update
+
+update-ux:
+	cd ux && component update
+
+build-ux:
+	cd ux && component build
 
 document:
 	yuidoc --configfile static/yuidoc.json
