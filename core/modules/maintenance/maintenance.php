@@ -2,14 +2,15 @@
 /**
  *
  */
+namespace Flawless {
 
-namespace Flawless;
+  /**
+   * Class Maintenance
+   *
+   * @package Flawless\Module
+   */
+  class Maintenance extends Module {
 
-/**
- * Class Maintenance
- *
- * @package Flawless\Module
- */
-class Maintenance extends Module {
+  }
 
 }

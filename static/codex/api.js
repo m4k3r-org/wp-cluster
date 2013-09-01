@@ -1,14 +1,17 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
+        ": Flawless.API",
         ": Flawless.Element",
         ": Flawless.Flawless_Module",
-        ": Flawless.Flawless_Shortcode",
-        ": Flawless.Flawless_Widget",
         ": Flawless.License",
-        ": Flawless.flawless_wpp_extensions",
+        "Flawless.BuddyPress",
+        "Flawless.Flawless\\Shortcode",
+        "Flawless.Flawless\\Widget",
+        "Shortcode",
         "Shortcodes",
-        "Theme UI"
+        "Theme UI",
+        "flawless_wpp_extensions"
     ],
     "modules": [
         "Core Assets",
@@ -23,7 +26,7 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "Flawless",
             "name": "Flawless",
-            "description": "Main class for Flawless theme."
+            "description": "Shortcode Management\n\n-"
         }
     ]
 } };

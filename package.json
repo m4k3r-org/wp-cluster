@@ -1,0 +1,26 @@
+{
+  "name": "flawless",
+  "version": "0.1.1",
+  "homepage": "http://github.com/UsabilityDynamics/flawless",
+  "keywords": [
+    "theme", "responsive", "bootstrap"
+  ],
+  "license": [
+    "GPL-3.0+"
+  ],
+  "authors": [
+    {
+      "name": "Maxim Peshkov",
+      "email": "maxim.peshkov@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Anton Korotkov",
+      "email": "anton.korotkov@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    }
+  ],
+  "dependencies": {}
+}

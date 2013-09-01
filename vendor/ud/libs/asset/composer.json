@@ -1,0 +1,28 @@
+{
+  "name": "ud/asset",
+  "type": "library",
+  "description": "UD shared vendor libraries.",
+  "version": "0.1.1",
+  "homepage": "http://github.com/UsabilityDynamics/wp-libs",
+  "authors": [
+    {
+      "name": "Maxim Peshkov",
+      "email": "maxim.peshkov@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Anton Korotkov",
+      "email": "anton.korotkov@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-0": { "UD\\Asset\\": "" }
+  },
+  "require": {
+    "php": ">=5.3.3"
+  },
+  "target-dir": "ud/asset"
+}

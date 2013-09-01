@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/premium/client-dashboard/client-dashboard.php - Flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="Flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/: Flawless.API.html">: Flawless.API</a></li>
+            
+                <li><a href="../classes/: Flawless.Element.html">: Flawless.Element</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Module.html">: Flawless.Flawless_Module</a></li>
+            
+                <li><a href="../classes/: Flawless.License.html">: Flawless.License</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Widget.html">Flawless.Flawless\Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/premium/client-dashboard/client-dashboard.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ * Name: Login Module
+ *
+ * Description: Can be inserted via widget, shortcode or PHP function.
+ * Author: Usability Dynamics, Inc.
+ * Version: 1.3.0
+ *
+ * To override wp-login.php redirection when enabled, add the ?override_wp_login_access=true argument
+ *
+ * API Filters:
+ * flawless::dashboard_url
+ * flawless::my_account_url
+ * flawless::logged_in_links
+ * flawless::login_name - Allow user lookups by meta other than email and login
+ * flawless::login_redirect - URL to redirect user to after login. The global user object is set.
+ * flawless::my_account_module::render_module_args
+ */
+namespace Flawless {
+
+  /**
+   * Add custom shortcodes for various post types
+   *
+   * @since 1.0
+   *
+   */
+  class Client_Dashboard {
+
+    /**
+     * {missing description}
+     *
+     * @todo When access to wp-login.php is restricted, users could potentialy lock themselves out if they forget to add a login option to navbar, or elsewhere. - potanin@UD 6/9/12
+     * @author potanin@UD
+     */
+    function init() {
+      global $flawless;
+
+      Flawless::console_log( &#x27;P: Executed: Client_Dashboard::init();&#x27; );
+
+      add_action( &#x27;wp_ajax_nopriv_flawless_ajax_reset_password&#x27;, create_function( &#x27;&#x27;, &#x27;die( Client_Dashboard::ajax_reset_password() );&#x27; ) );
+      add_action( &#x27;wp_ajax_nopriv_flawless_ajax_login&#x27;, create_function( &#x27;&#x27;, &#x27;die( Client_Dashboard::ajax_login() );&#x27; ) );
+      add_action( &#x27;wp_ajax_flawless_ajax_logout&#x27;, create_function( &#x27;&#x27;, &#x27;die( Client_Dashboard::ajax_logout() );&#x27; ) );
+
+      /** Handle login and reset when JS fails */
+      add_action( &#x27;template_redirect&#x27;, array( &#x27;Client_Dashboard&#x27;, &#x27;template_redirect&#x27; ) );
+
+      /** Add navbar menu items */
+      add_action( &#x27;flawless::navbar_html&#x27;, array( &#x27;Client_Dashboard&#x27;, &#x27;navbar_html&#x27; ), 100 );
+
+      /** Theme Settings */
+      add_action( &#x27;flawless::options_ui_advanced::advanced_settings&#x27;, array( &#x27;Client_Dashboard&#x27;, &#x27;options_ui&#x27; ), 100 );
+
+      if ( $flawless[ &#x27;login_module&#x27; ][ &#x27;disbale_wp_login_access&#x27; ] == &#x27;true&#x27; &amp;&amp; $_GET[ &#x27;override_wp_login_access&#x27; ] != &#x27;true&#x27; ) {
+        add_action( &#x27;login_init&#x27;, array( &#x27;Client_Dashboard&#x27;, &#x27;login_init&#x27; ), 5 );
+      }
+
+      add_filter( &#x27;flawless::primary_notice_container&#x27;, array( &#x27;Client_Dashboard&#x27;, &#x27;primary_notice_container&#x27; ), 10 );
+
+    }
+
+    /**
+     * {missing description}
+     *
+     * Not functional - $_REQUEST seems to be cleared out.
+     *
+     * @todo Add better check to see if AJAX request really did fail. - potanin@UD
+     * @author potanin@UD
+     */
+    function template_redirect() {
+
+      /** If AJAX Login fails for some reason, we catch it here */
+      if ( $_POST[ &#x27;action&#x27; ] == &#x27;flawless_ajax_login&#x27; &amp;&amp; wp_verify_nonce( $_POST[ &#x27;flawless_login_nonce&#x27; ], &#x27;flawless_login_nonce&#x27; ) ) {
+
+        $response = (array) json_decode( Client_Dashboard::ajax_login() );
+
+        if ( $response[ &#x27;success&#x27; ] ) {
+          die( wp_redirect( $response[ &#x27;redirect_to&#x27; ] ) );
+        }
+      }
+
+      /** If AJAX Login fails for some reason, we catch it here */
+      if ( $_REQUEST[ &#x27;action&#x27; ] == &#x27;flawless_ajax_reset_password&#x27; &amp;&amp; wp_verify_nonce( $_REQUEST[ &#x27;flawless_ajax_reset_password&#x27; ], &#x27;flawless_ajax_reset_password&#x27; ) ) {
+
+        $response = (array) json_decode( Client_Dashboard::ajax_reset_password() );
+
+        if ( $response[ &#x27;success&#x27; ] ) {
+          die( wp_redirect( $response[ &#x27;redirect_to&#x27; ] ) );
+        }
+      }
+
+    }
+
+    /**
+     * Add Theme Settings option to prevent viewing of default WP Login page
+     *
+     * @author potanin@UD
+     */
+    function login_init() {
+
+      $action = isset( $_REQUEST[ &#x27;action&#x27; ] ) ? $_REQUEST[ &#x27;action&#x27; ] : &#x27;login&#x27;;
+
+      switch ( $action ) {
+
+        case &#x27;logout&#x27;:
+          check_admin_referer( &#x27;log-out&#x27; );
+          wp_logout();
+          wp_safe_redirect( add_query_arg( &#x27;user_action&#x27;, &#x27;logout&#x27;, home_url() ) );
+          exit;
+
+          break;
+
+        case &#x27;rp&#x27;:
+          $user = check_password_reset_key( $_GET[ &#x27;key&#x27; ], $_GET[ &#x27;login&#x27; ] );
+          $userdata = get_user_by( &#x27;login&#x27;, $_GET[ &#x27;login&#x27; ] );
+
+          if ( is_wp_error( $user ) || !$userdata-&gt;ID ) {
+            die( wp_redirect( add_query_arg( &#x27;user_action&#x27;, &#x27;password_reset_fail&#x27;, home_url() ) ) );
+          }
+
+          //** Create temporary password */
+          $temporary_password = wp_generate_password( 13, false );
+
+          //** Update User Profile with temporary password */
+          wp_set_password( $temporary_password, $userdata-&gt;ID );
+
+          //** Automatically log the user in */
+          wp_signon( array(
+            &#x27;user_login&#x27; =&gt; $_GET[ &#x27;login&#x27; ],
+            &#x27;user_password&#x27; =&gt; $temporary_password
+          ) );
+
+          //** Store random password to display to user, will be cleared out once the message is rendered */
+          update_user_option( $userdata-&gt;ID, &#x27;temporary_password&#x27;, $temporary_password );
+
+          //** Redirect user to home, where a notification is displayed for them */
+          die( wp_redirect( add_query_arg( &#x27;user_action&#x27;, &#x27;password_reset&#x27;, home_url() ) ) );
+
+          break;
+
+        default:
+
+          /** Prevent a strange cookie-initiated loop from happening - ensure user is logged out here */
+          if ( is_user_logged_in() ) {
+            wp_logout();
+          }
+
+          die( wp_redirect( add_query_arg( &#x27;user_action&#x27;, &#x27;login&#x27;, home_url() ) ) );
+
+          break;
+
+      }
+
+      die( wp_redirect( add_query_arg( &#x27;user_action&#x27;, &#x27;unknown&#x27;, home_url() ) ) );
+
+    }
+
+    /**
+     * Handles any login-related notices.
+     *
+     * @author potanin@UD
+     */
+    function primary_notice_container( $notices = array() ) {
+      $user_action = $_GET[ &#x27;user_action&#x27; ];
+
+      if ( empty( $user_action ) ) {
+        return $notices;
+      }
+
+      $user = wp_get_current_user();
+
+      switch ( $user_action ) {
+
+        case &#x27;password_reset&#x27;:
+
+          $temporary_password = get_user_option( &#x27;temporary_password&#x27; );
+          delete_user_option( $user-&gt;ID, &#x27;temporary_password&#x27; );
+
+          if ( empty( $temporary_password ) ) {
+            return $notices;
+          }
+
+          $notices[ ] = &#x27;&lt;div class=&quot;alert alert-success&quot;&gt;&lt;a class=&quot;close&quot; data-dismiss=&quot;alert&quot; href=&quot;#&quot;&gt;&amp;times;&lt;/a&gt;&#x27; . sprintf( __( &#x27;Welcome back, %1s! Your new password is: &lt;b&gt;%2s&lt;/b&gt;, you can change it in the My Account section. &#x27;, &#x27;flawless&#x27; ), $user-&gt;data-&gt;display_name, $temporary_password ) . &#x27;&lt;/div&gt;&#x27;;
+
+          break;
+
+        case &#x27;password_reset_fail&#x27;:
+          $notices[ ] = &#x27;&lt;div class=&quot;alert alert-error&quot;&gt;&lt;a class=&quot;close&quot; data-dismiss=&quot;alert&quot; href=&quot;#&quot;&gt;&amp;times;&lt;/a&gt;&#x27; . sprintf( __( &#x27;It looks like you attempted to reset your password, but something did not work, perhaps you followed an expired reset link?&#x27;, &#x27;flawless&#x27; ) ) . &#x27;&lt;/div&gt;&#x27;;
+
+          break;
+
+        case &#x27;login&#x27;:
+          if ( is_user_logged_in() &amp;&amp; $user-&gt;data-&gt;display_name ) {
+            $notices[ ] = &#x27;&lt;div class=&quot;alert alert-info&quot;&gt;&lt;a class=&quot;close&quot; data-dismiss=&quot;alert&quot; href=&quot;#&quot;&gt;&amp;times;&lt;/a&gt;&#x27; . sprintf( __( &#x27;Welcome back, %1s! &#x27;, &#x27;flawless&#x27; ), $user-&gt;data-&gt;display_name ) . &#x27;&lt;/div&gt;&#x27;;
+          } elseif ( is_user_logged_in() ) {
+            $notices[ ] = &#x27;&lt;div class=&quot;alert alert-info&quot;&gt;&lt;a class=&quot;close&quot; data-dismiss=&quot;alert&quot; href=&quot;#&quot;&gt;&amp;times;&lt;/a&gt;&#x27; . __( &#x27;You have been logged in, welcome back.&#x27;, &#x27;flawless&#x27; ) . &#x27;&lt;/div&gt;&#x27;;
+          }
+          break;
+
+        case &#x27;logout&#x27;:
+          if ( !is_user_logged_in() ) {
+            $notices[ ] = &#x27;&lt;div class=&quot;alert alert-info&quot;&gt;&lt;a class=&quot;close&quot; data-dismiss=&quot;alert&quot; href=&quot;#&quot;&gt;&amp;times;&lt;/a&gt;&#x27; . __( &#x27;You have been logged out.&#x27;, &#x27;flawless&#x27; ) . &#x27;&lt;/div&gt;&#x27;;
+          }
+          break;
+
+      }
+
+      return $notices;
+
+    }
+
+    /**
+     * Add Theme Settings option to prevent viewing of default WP Login page
+     *
+     * @author potanin@UD
+     */
+    function options_ui( $flawless ) {
+      ?&gt;
+
+      &lt;li&gt;
+      &lt;label&gt;
+        &lt;input
+          type=&quot;checkbox&quot; &lt;?php echo checked( &#x27;true&#x27;, $flawless[ &#x27;login_module&#x27; ][ &#x27;disbale_wp_login_access&#x27; ] ); ?&gt;
+          name=&quot;flawless_settings[login_module][disbale_wp_login_access]&quot; value=&quot;true&quot;/&gt;
+        &lt;?php _e( &#x27;Disable default WordPress Login page.&#x27;, &#x27;flawless&#x27; ); ?&gt;
+        &lt;span
+          class=&quot;description&quot;&gt;&lt;?php _e( &#x27;If disabled, visitors trying to access /wp-admin/ will be redirected to the home page.&#x27;, &#x27;flawless&#x27; ); ?&gt;&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/li&gt;
+
+    &lt;?php
+    }
+
+    /**
+     * Adds Login Module elements to Navbar
+     *
+     *
+     * @note This is run too early for $post or $wp_query to be used.  - potanin@UD
+     * @return array $html
+     * @author peshkov@UD
+     */
+    function navbar_html( $html ) {
+      global $flawless;
+
+      if ( $flawless[ &#x27;navbar&#x27; ][ &#x27;show_login&#x27; ] != &#x27;true&#x27; || !is_array( $html ) ) {
+        return $html;
+      }
+
+      if ( !is_user_logged_in() ) {
+
+        self::enqueue_scripts();
+
+        $render_reset_password = &quot;&lt;li class=\&quot;hidden navbar_reset_password_form\&quot;&gt;&quot; . self::render_reset_password( array(
+            &#x27;form_class&#x27; =&gt; &#x27;flawless_navbar_form form-horizontal&#x27;,
+            &#x27;submit_class&#x27; =&gt; &#x27;btn-inverse&#x27;,
+          ) ) . &quot;&lt;/li&gt;&quot;;
+
+        $navbar_login_form = &quot;&lt;li class=\&quot;navbar_login_form\&quot;&gt;&quot; . self::render_module( array(
+            &#x27;position&#x27; =&gt; &#x27;navbar&#x27;,
+            &#x27;user_ul_class&#x27; =&gt; &#x27;nav&#x27;,
+            &#x27;form_class&#x27; =&gt; &#x27;flawless_navbar_form form-horizontal&#x27;,
+            &#x27;submit_class&#x27; =&gt; &#x27;btn-inverse&#x27;,
+            &#x27;redirect_to&#x27; =&gt; ( is_singular() ? get_permalink( $post-&gt;ID ) : home_url() ),
+          ) ) . &quot;&lt;/li&gt;&quot;;
+
+        if ( is_array( $html[ &#x27;left&#x27; ] ) ) {
+          $html[ &#x27;right&#x27; ][ ] = $render_reset_password;
+          $html[ &#x27;right&#x27; ][ ] = $navbar_login_form;
+
+        } else {
+          $html[ &#x27;right&#x27; ] = $html[ &#x27;right&#x27; ] . $render_reset_password . $navbar_login_form;
+        }
+
+      } else {
+
+        $admin_links = array();
+
+        if ( current_user_can( &#x27;edit_posts&#x27; ) ) {
+          $admin_links[ &#x27;dashboard&#x27; ] = &#x27;&lt;li class=&quot;nav_dashboard_link&quot;&gt;&lt;a class=&quot;nav_dashboard_link&quot; href=&quot;&#x27; . apply_filters( &#x27;flawless::dashboard_url&#x27;, admin_url( &#x27;&#x27; ) ) . &#x27;&quot; &gt;&#x27; . __( &#x27;Dashboard&#x27;, &#x27;flawless&#x27; ) . &#x27;&lt;/a&gt;&lt;/li&gt;&#x27;;
+        }
+
+        $admin_links[ &#x27;logout&#x27; ] = &#x27;&lt;li class=&quot;nav_logout_link&quot;&gt;&lt;a class=&quot;nav_logout_link default&quot; href=&quot;&#x27; . wp_logout_url() . &#x27; &quot;&gt;&#x27; . __( &#x27;Logout&#x27;, &#x27;flawless&#x27; ) . &#x27;&lt;/a&gt;&lt;/li&gt;&#x27;;
+
+        $admin_links = apply_filters( &#x27;flawless::logged_in_links&#x27;, $admin_links );
+
+        if ( is_array( $html[ &#x27;left&#x27; ] ) ) {
+          $html[ &#x27;right&#x27; ][ ] = implode( &#x27;&#x27;, ( array ) $admin_links );
+
+        } else {
+          $html[ &#x27;right&#x27; ] = $html[ &#x27;right&#x27; ] . implode( &#x27;&#x27;, ( array ) $admin_links );;
+        }
+
+      }
+
+      return $html;
+    }
+
+    /**
+     * Renders Reset password Form
+     *
+     * @param array $args.
+     *
+     * @return string. HTML
+     * @author peshkov@UD
+     */
+    function render_reset_password( $args = array() ) {
+      $return = &quot;&quot;;
+      $args = wp_parse_args( $args, array(
+        &#x27;form_class&#x27; =&gt; &#x27;form-inline&#x27;,
+        &#x27;username_text&#x27; =&gt; __( &#x27;Username or Email&#x27;, &#x27;flawless&#x27; ),
+        &#x27;submit_text&#x27; =&gt; __( &#x27;Get New Password&#x27;, &#x27;flawless&#x27; ),
+        &#x27;submit_class&#x27; =&gt; &#x27;btn-primary&#x27;,
+      ) );
+
+      if ( is_user_logged_in() ) return $return;
+      self::enqueue_scripts();
+      ob_start();
+
+      ?&gt;
+      &lt;div class=&quot;flawless_password_reset_form_wrapper&quot;&gt;
+      &lt;form name=&quot;flawless_password_reset_form&quot;
+        class=&quot;flawless_password_reset_form &lt;?php echo $args[ &#x27;form_class&#x27; ]; ?&gt;&quot;
+        action=&quot;&lt;?php add_query_arg( &#x27;action&#x27;, &#x27;flawless_ajax_reset_password&#x27;, site_url() ); ?&gt;&quot; method=&quot;POST&quot;&gt;
+        &lt;?php wp_nonce_field( &#x27;flawless_password_reset_form&#x27;, &#x27;flawless_password_reset_form&#x27; ); ?&gt;
+        &lt;input type=&quot;hidden&quot; name=&quot;action&quot; value=&quot;flawless_ajax_reset_password&quot;/&gt;
+        &lt;input class=&quot;input user_login&quot; type=&quot;text&quot; tabindex=&quot;10&quot; size=&quot;20&quot;
+          placeholder=&quot;&lt;?php echo $args[ &#x27;username_text&#x27; ]; ?&gt;&quot; value=&quot;&quot; name=&quot;user_login&quot;&gt;
+        &lt;input type=&quot;submit&quot; class=&quot;btn &lt;?php echo $args[ &#x27;submit_class&#x27; ]; ?&gt;&quot;
+          data-loading-text=&quot;&lt;?php _e( &#x27;Processing&#x27;, &#x27;flawless&#x27; ); ?&gt;&quot;
+          value=&quot;&lt;?php echo $args[ &#x27;submit_text&#x27; ]; ?&gt;&quot;/&gt;
+        &lt;span class=&quot;flawless_ajax_response label hidden&quot;&gt;&lt;/span&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+      &lt;?php
+
+      $return = ob_get_contents();
+      ob_end_clean();
+
+      return $return;
+    }
+
+    /**
+     *  Render login form / my account view
+     *
+     * @todo The JS function for this module needs to check for a JSON response - if no response at all, or response is not in expected JSON format, some sort of notice should be displayed to user. - potaninU@D
+     * @filters: flawless::dashboard_url, flawless::my_account_url, flawless::logged_in_links
+     * @author potanin@UD
+     */
+    function render_module( $args = array() ) {
+      global $post;
+
+      $args = wp_parse_args( $args, array(
+        &#x27;form_class&#x27; =&gt; &#x27;form-inline&#x27;,
+        &#x27;submit_class&#x27; =&gt; &#x27;btn-primary&#x27;,
+        &#x27;position&#x27; =&gt; false,
+        &#x27;user_ul_class&#x27; =&gt; &#x27;nav&#x27;,
+        &#x27;username_text&#x27; =&gt; __( &#x27;Username or Email&#x27;, &#x27;flawless&#x27; ),
+        &#x27;password_text&#x27; =&gt; __( &#x27;Password&#x27;, &#x27;flawless&#x27; ),
+        &#x27;redirect_to&#x27; =&gt; add_query_arg( &#x27;action&#x27;, &#x27;logged_in&#x27;, home_url() ),
+        &#x27;login_message&#x27; =&gt; false,
+        &#x27;logged_in_menu&#x27; =&gt; false,
+        &#x27;login_text&#x27; =&gt; __( &#x27;Login&#x27;, &#x27;flawless&#x27; )
+      ) );
+
+      $args = apply_filters( &#x27;flawless::my_account_module::render_module_args&#x27;, $args );
+
+      self::enqueue_scripts();
+      ob_start();
+
+      ?&gt;
+      &lt;div class=&quot;flawless_my_account clearfix&quot;
+        current_status=&quot;&lt;?php echo is_user_logged_in() ? &#x27;logged_in&#x27; : &#x27;logged_out&#x27;; ?&gt;&quot;&gt;
+      &lt;?php //** USER IS LOGGED IN */ ?&gt;
+        &lt;?php if ( is_user_logged_in() ) : ?&gt;
+          &lt;ul class=&quot;logged_in_info &lt;?php echo $args[ &#x27;user_ul_class&#x27; ]; ?&gt; clearfix&quot;&gt;
+          &lt;?php echo implode( &#x27;&#x27;, ( array ) $admin_links ); ?&gt;
+        &lt;/ul&gt;
+          &lt;?php //** USER IS NOT LOGGED IN */ ?&gt;
+        &lt;?php else: ?&gt;
+          &lt;?php if ( $args[ &#x27;login_message&#x27; ] ) { ?&gt;&lt;p
+            class=&quot;f_login_message&quot;&gt;&lt;?php echo $args[ &#x27;login_message&#x27; ]; ?&gt;&lt;/p&gt;&lt;?php } ?&gt;
+
+          &lt;div class=&quot;flawless_login_form_wrapper&quot;&gt;
+          &lt;form name=&quot;flawless_login_form&quot; class=&quot;flawless_login_form &lt;?php echo $args[ &#x27;form_class&#x27; ]; ?&gt;&quot;
+            action=&quot;&lt;?php echo add_query_arg( &#x27;action&#x27;, &#x27;flawless_ajax_login&#x27;, home_url( &#x27;index.php&#x27; ) ); ?&gt;&quot;
+            method=&quot;POST&quot;&gt;
+            &lt;?php wp_nonce_field( &#x27;flawless_login_nonce&#x27;, &#x27;flawless_login_nonce&#x27; ); ?&gt;
+            &lt;input type=&quot;text&quot; name=&quot;log&quot; placeholder=&quot;&lt;?php echo $args[ &#x27;username_text&#x27; ]; ?&gt;&quot;
+              class=&quot;span2 user_login&quot;&gt;
+            &lt;input type=&quot;password&quot; name=&quot;pwd&quot; placeholder=&quot;&lt;?php echo $args[ &#x27;password_text&#x27; ]; ?&gt;&quot;
+              class=&quot;span2 user_password&quot;&gt;
+            &lt;input type=&quot;hidden&quot; name=&quot;rememberme&quot; value=&quot;forever&quot; tabindex=&quot;90&quot;/&gt;
+            &lt;input type=&quot;hidden&quot; name=&quot;redirect_to&quot; value=&quot;&lt;?php echo esc_attr( $args[ &#x27;redirect_to&#x27; ] ); ?&gt;&quot;/&gt;
+            &lt;input type=&quot;hidden&quot; name=&quot;testcookie&quot; value=&quot;1&quot;/&gt;
+            &lt;input type=&quot;hidden&quot; name=&quot;action&quot; value=&quot;flawless_ajax_login&quot;/&gt;
+            &lt;input type=&quot;submit&quot; class=&quot;btn &lt;?php echo $args[ &#x27;submit_class&#x27; ]; ?&gt;&quot;
+              data-loading-text=&quot;&lt;?php _e( &#x27;Processing&#x27;, &#x27;flawless&#x27; ); ?&gt;&quot;
+              value=&quot;&lt;?php echo $args[ &#x27;login_text&#x27; ]; ?&gt;&quot;/&gt;
+            &lt;span class=&quot;flawless_ajax_response label hidden&quot;&gt;&lt;/span&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+        &lt;?php endif; ?&gt;
+    &lt;/div&gt;
+      &lt;?php
+
+      $return = ob_get_contents();
+      ob_end_clean();
+
+      return $return;
+    }
+
+    /**
+     * Retrives password and send the email to user.
+     * Based on wp-login.php functionality.
+     *
+     * @return JSON
+     * @author peshkov@UD
+     */
+    function ajax_reset_password() {
+
+      if ( !wp_verify_nonce( $_POST[ &#x27;flawless_password_reset_form&#x27; ], &#x27;flawless_password_reset_form&#x27; ) ) {
+        return json_encode( array(
+          &#x27;success&#x27; =&gt; false
+        ) );
+      }
+
+      $response = array(
+        &#x27;success&#x27; =&gt; true,
+      );
+
+      $http_post = ( &#x27;POST&#x27; == $_SERVER[ &#x27;REQUEST_METHOD&#x27; ] );
+
+      if ( !$http_post ) {
+        $response[ &#x27;success&#x27; ] = false;
+        $response[ &#x27;error&#x27; ] = __( &#x27;Request method is wrong&#x27;, &#x27;flawless&#x27; );
+
+      } else {
+
+        $errors = self::retrieve_password();
+
+        if ( is_wp_error( $errors ) ) {
+          $response[ &#x27;success&#x27; ] = false;
+          $error = $errors-&gt;get_error_code();
+
+          switch ( $error ) {
+            case &#x27;invalid_email&#x27;:
+            case &#x27;Validation Fail&#x27;:
+              $response[ &#x27;code&#x27; ] = &#x27;Validation Fail&#x27;;
+              $response[ &#x27;error&#x27; ] = __( &#x27;We could not find an account with the information you provided.  You may enter your username or e-mail address.&#x27;, &#x27;flawless&#x27; );
+              break;
+            case &#x27;mail_could_not_be_sent&#x27;:
+              $response[ &#x27;code&#x27; ] = &#x27;sendmail_fail&#x27;;
+              $response[ &#x27;error&#x27; ] = __( &#x27;There was a problem sending password reset e-mail. Please contact support.&#x27;, &#x27;flawless&#x27; );
+              break;
+            default:
+              $response[ &#x27;error&#x27; ] = $error-&gt;get_error_code();
+              break;
+          }
+        } elseif ( $errors ) {
+          $response[ &#x27;code&#x27; ] = &#x27;notification_sent&#x27;;
+        }
+      }
+
+      return json_encode( $response );
+
+    }
+
+    /**
+     * Handles login.
+     * Based on wp-login.php functionality.
+     *
+     * May be called directly when AJAX fails due to a JS error.
+     *
+     * @return JSON
+     * @author peshkov@UD
+     */
+    function ajax_login() {
+
+      if ( !wp_verify_nonce( $_POST[ &#x27;flawless_login_nonce&#x27; ], &#x27;flawless_login_nonce&#x27; ) ) {
+        return json_encode( array(
+          &#x27;success&#x27; =&gt; false
+        ) );
+      }
+
+      $secure_cookie = &#x27;&#x27;;
+      $user = false;
+
+      //** Try to get user by e-mail */
+      if ( is_email( $_POST[ &#x27;log&#x27; ] ) ) {
+        $user = get_user_by( &#x27;email&#x27;, $_POST[ &#x27;log&#x27; ] );
+      }
+
+      //** If no match, try to get by login */
+      if ( !$user ) {
+        $user = get_user_by( &#x27;login&#x27;, sanitize_user( $_POST[ &#x27;log&#x27; ] ) );
+      }
+
+      $user = apply_filters( &#x27;flawless::login_name&#x27;, $user, $_POST[ &#x27;log&#x27; ] );
+
+      //* If the user wants ssl but the session is not ssl, force a secure cookie. */
+      if ( !empty( $_POST[ &#x27;log&#x27; ] ) &amp;&amp; !force_ssl_admin() ) {
+        if ( $user ) {
+          if ( get_user_option( &#x27;use_ssl&#x27;, $user-&gt;ID ) ) {
+            $secure_cookie = true;
+            force_ssl_admin( true );
+          }
+        }
+      }
+
+      if ( isset( $_REQUEST[ &#x27;redirect_to&#x27; ] ) ) {
+        $redirect_to = $_REQUEST[ &#x27;redirect_to&#x27; ];
+        //** Redirect to https if user wants ssl */
+        if ( $secure_cookie &amp;&amp; false !== strpos( $redirect_to, &#x27;wp-admin&#x27; ) )
+          $redirect_to = preg_replace( &#x27;|^http://|&#x27;, &#x27;https://&#x27;, $redirect_to );
+      } else {
+        $redirect_to = false;
+      }
+
+      /**
+       * If the user was redirected to a secure login form from a non-secure admin page,
+       * and secure login is required but secure admin is not, then don&#x27;t use a secure
+       * cookie and redirect back to the referring non-secure admin page.  This allows logins
+       * to always be POSTed over SSL while allowing the user to choose visiting the admin via http or https.
+       */
+      if ( !$secure_cookie &amp;&amp; is_ssl() &amp;&amp; force_ssl_login() &amp;&amp; !force_ssl_admin() &amp;&amp; ( 0 !== strpos( $redirect_to, &#x27;https&#x27; ) ) &amp;&amp; ( 0 === strpos( $redirect_to, &#x27;http&#x27; ) ) ) {
+        $secure_cookie = false;
+      }
+
+      /* If a user login was found */
+      if ( $user-&gt;user_login ) {
+
+        $user = wp_signon( array(
+          &#x27;user_login&#x27; =&gt; $user-&gt;user_login,
+          &#x27;user_password&#x27; =&gt; $_POST[ &#x27;pwd&#x27; ],
+          &#x27;remember&#x27; =&gt; ( !empty( $_POST[ &#x27;rememberme&#x27; ] ) ? true : false ),
+        ), $secure_cookie );
+
+        if ( is_wp_error( $user ) ) {
+
+          $response = array(
+            &#x27;success&#x27; =&gt; false,
+            &#x27;code&#x27; =&gt; $user-&gt;get_error_code()
+          );
+
+          switch ( $response[ &#x27;code&#x27; ] ) {
+            case &#x27;invalid_username&#x27;:
+              $response[ &#x27;error&#x27; ] = __( &#x27;Your login credentials could not be verified.&#x27;, &#x27;flawless&#x27; );
+              $response[ &#x27;code&#x27; ] = &#x27;Validation Fail&#x27;;
+              break;
+            case &#x27;incorrect_password&#x27;:
+              $response[ &#x27;error&#x27; ] = __( &#x27;Your login credentials could not be verified.&#x27;, &#x27;flawless&#x27; );
+              $response[ &#x27;code&#x27; ] = &#x27;Validation Fail&#x27;;
+              break;
+            default:
+              $response[ &#x27;error&#x27; ] = $response[ &#x27;code&#x27; ];
+              break;
+          }
+
+        } else {
+
+          $response = array(
+            &#x27;success&#x27; =&gt; true,
+            &#x27;redirect_to&#x27; =&gt; apply_filters( &#x27;flawless::login_redirect&#x27;, $redirect_to, $user-&gt;ID )
+          );
+
+        }
+
+      } else {
+
+        $response = array(
+          &#x27;success&#x27; =&gt; false,
+          &#x27;code&#x27; =&gt; &#x27;Validation Fail&#x27;,
+          &#x27;error&#x27; =&gt; __( &#x27;Your login credentials could not be verified.&#x27;, &#x27;flawless&#x27; )
+        );
+
+      }
+
+      return json_encode( $response );
+
+    }
+
+    /**
+     *  Handle front-end log out.
+     *
+     *
+     */
+    function ajax_logout() {
+      wp_logout();
+      $response = array( &#x27;success&#x27; =&gt; true );
+      return json_encode( $response );
+    }
+
+    /**
+     * Enqueues ( once ) specific scripts.
+     *
+     * @author peshkov@UD
+     */
+    protected function enqueue_scripts() {
+      static $loaded = false;
+
+      if ( $loaded ) {
+        return;
+      }
+
+      wp_enqueue_script( &#x27;flawless-login_module&#x27;, get_bloginfo( &#x27;template_url&#x27; ) . &#x27;/js/flawless.login_module.js&#x27;, array( &#x27;flawless-frontend&#x27; ), Flawless_Version, true );
+
+      $l10n = array(
+        &#x27;log_in&#x27; =&gt; __( &#x27;Log in&#x27;, &#x27;flawless&#x27; ),
+        &#x27;forget_password&#x27; =&gt; __( &#x27;Would you like to reset your password?&#x27;, &#x27;flawless&#x27; ),
+        &#x27;enter_fields_properly&#x27; =&gt; __( &#x27;Please enter your Username or Email properly&#x27;, &#x27;flawless&#x27; ),
+        &#x27;email_was_sent&#x27; =&gt; __( &#x27;Sending password resetting instructions. Please check your e-mail. &#x27;, &#x27;flawless&#x27; ),
+        &#x27;something_wrong&#x27; =&gt; __( &#x27;Something went wrong, please, try again later.&#x27;, &#x27;flawless&#x27; ),
+        &#x27;enter_login&#x27; =&gt; __( &#x27;Please enter your username, or e-mail address.&#x27;, &#x27;flawless&#x27; ),
+        &#x27;enter_password&#x27; =&gt; __( &#x27;Please enter a password.&#x27;, &#x27;flawless&#x27; )
+      );
+
+      wp_localize_script( &#x27;flawless-login_module&#x27;, &#x27;lm_l10n&#x27;, $l10n );
+      $loaded = true;
+
+    }
+
+    /**
+     * Handles sending password retrieval email to user.
+     * The current method just duplicates WP function retrieve_password().
+     *
+     * @uses $wpdb WordPress Database object
+     * @return bool|WP_Error True: when finish. WP_Error on error
+     * @author peshkov@UD
+     */
+    protected function retrieve_password() {
+      global $wpdb, $current_site;
+
+      $errors = new WP_Error();
+
+      if ( empty( $_POST[ &#x27;user_login&#x27; ] ) ) {
+        $errors-&gt;add( &#x27;empty_username&#x27;, __( &#x27;&lt;strong&gt;ERROR&lt;/strong&gt;: Enter a username or e-mail address.&#x27; ) );
+
+      } elseif ( strpos( $_POST[ &#x27;user_login&#x27; ], &#x27;@&#x27; ) ) {
+        $user_data = get_user_by( &#x27;email&#x27;, trim( $_POST[ &#x27;user_login&#x27; ] ) );
+
+        if ( empty( $user_data ) ) {
+          $errors-&gt;add( &#x27;invalid_email&#x27;, __( &#x27;&lt;strong&gt;ERROR&lt;/strong&gt;: There is no user registered with that email address.&#x27; ) );
+        }
+
+      } else {
+        $login = trim( $_POST[ &#x27;user_login&#x27; ] );
+        $user_data = get_user_by( &#x27;login&#x27;, $login );
+      }
+
+      do_action( &#x27;lostpassword_post&#x27; );
+
+      if ( $errors-&gt;get_error_code() ) {
+        return $errors;
+      }
+
+      if ( !$user_data ) {
+        $errors-&gt;add( &#x27;Validation Fail&#x27;, __( &#x27;&lt;strong&gt;ERROR&lt;/strong&gt;: Invalid username or e-mail.&#x27; ) );
+        return $errors;
+      }
+
+      // redefining user_login ensures we return the right case in the email
+      $user_login = $user_data-&gt;user_login;
+      $user_email = $user_data-&gt;user_email;
+
+      //** If WP-CRM is enabled, it hooks into the following action to check if WP password reset email is disabled */
+      do_action( &#x27;retrieve_password&#x27;, $user_login );
+
+      $allow = apply_filters( &#x27;allow_password_reset&#x27;, true, $user_data-&gt;ID );
+
+      if ( !$allow ) {
+        return new WP_Error( &#x27;no_password_reset&#x27;, __( &#x27;Password reset is not allowed for this user&#x27; ) );
+      } elseif ( is_wp_error( $allow ) ) {
+        return $allow;
+      }
+
+      $key = $wpdb-&gt;get_var( $wpdb-&gt;prepare( &quot;SELECT user_activation_key FROM $wpdb-&gt;users WHERE user_login = %s&quot;, $user_login ) );
+
+      if ( empty( $key ) ) {
+        // Generate something random for a key...
+        $key = wp_generate_password( 20, false );
+        do_action( &#x27;retrieve_password_key&#x27;, $user_login, $key );
+        // Now insert the new md5 key into the db
+        $wpdb-&gt;update( $wpdb-&gt;users, array( &#x27;user_activation_key&#x27; =&gt; $key ), array( &#x27;user_login&#x27; =&gt; $user_login ) );
+      }
+
+      $message = __( &#x27;Someone requested that the password be reset for the following account:&#x27; ) . &quot;\r\n\r\n&quot;;
+      $message .= network_site_url() . &quot;\r\n\r\n&quot;;
+      $message .= sprintf( __( &#x27;Username: %s&#x27; ), $user_login ) . &quot;\r\n\r\n&quot;;
+      $message .= __( &#x27;If this was a mistake, just ignore this email and nothing will happen.&#x27; ) . &quot;\r\n\r\n&quot;;
+      $message .= __( &#x27;To reset your password, visit the following address:&#x27; ) . &quot;\r\n\r\n&quot;;
+      $message .= &#x27;&lt;&#x27; . network_site_url( &quot;wp-login.php?action=rp&amp;key=$key&amp;login=&quot; . rawurlencode( $user_login ), &#x27;login&#x27; ) . &quot;&gt;\r\n&quot;;
+
+      if ( is_multisite() ) {
+        $blogname = $GLOBALS[ &#x27;current_site&#x27; ]-&gt;site_name;
+      } else {
+        $blogname = wp_specialchars_decode( get_option( &#x27;blogname&#x27; ), ENT_QUOTES );
+      }
+
+      $title = sprintf( __( &#x27;[%s] Password Reset&#x27; ), $blogname );
+
+      $title = apply_filters( &#x27;retrieve_password_title&#x27;, $title );
+
+      //** WP-CRM Blanks thie following value out if the WP Password Rests are disabled in WP-CRM Settings, and stops the mail from going out here */
+      $message = apply_filters( &#x27;retrieve_password_message&#x27;, $message, $key );
+
+      if ( $message &amp;&amp; !wp_mail( $user_email, $title, $message ) ) {
+        $errors-&gt;add( &#x27;mail_could_not_be_sent&#x27;, __( &#x27;&lt;strong&gt;ERROR&lt;/strong&gt;: The e-mail could not be sent. Possible reason: your host may have disabled the mail() function...&#x27; ) );
+        return $errors;
+      }
+      return true;
+    }
+
+  }
+
+  add_action( &#x27;Flawless_setup&#x27;, array( &#x27;Client_Dashboard&#x27;, &#x27;init&#x27; ) );
+
+}
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

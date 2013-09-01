@@ -7,15 +7,15 @@
  * @class Element
  * @user: potanin@UD
  */
+namespace Flawless {
 
-namespace Flawless;
+  /**
+   * Class Element
+   *
+   * @package Flawless
+   */
+  class Element {
 
-/**
- * Class Element
- *
- * @package Flawless
- */
-class Element {
+  }
 
 }
-

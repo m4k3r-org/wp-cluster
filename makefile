@@ -19,14 +19,19 @@ push:
 	git commit -m "WIP"
 	git push
 
+update:
+	composer.phar update
+	cd ux && component install && component build
+	yuidoc --configfile yuidoc.json
+
 update-vendor:
-	cd core && composer.phar update
+	composer.phar update
 
 update-ux:
-	cd ux && component install
+	component install
 
 build-ux:
-	cd ux && component build
+	component build
 
 document:
 	yuidoc --configfile yuidoc.json

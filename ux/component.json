@@ -2,7 +2,10 @@
   "name": "flawless",
   "version": "0.1.1",
   "description": "Flawless Theme.",
-  "remotes": [ "https://raw.github.com", "https://repository.usabilitydynamics.com" ],
+  "remotes": [
+    "https://raw.github.com",
+    "https://repository.usabilitydynamics.com"
+  ],
   "dependencies": {
     "CamShaft/bootstrap-responsive": "*",
     "CamShaft/bootstrap-grid": "*",
@@ -11,10 +14,21 @@
     "component/dialog": "*"
   },
   "main": "scripts/flawless.js",
-  "images": [ "images/ajax-loader.gif" ],
-  "fonts": [ "fonts/glyphicons-halflings" ],
-  "styles": [ "styles/index.css", "styles/content.css" ],
-  "scripts": [ "scripts/flawless.frontend.js" ],
-  "templates": [ "templates/template.html" ],
+  "images": [
+    "images/ajax-loader.gif"
+  ],
+  "fonts": [
+    "fonts/glyphicons-halflings"
+  ],
+  "styles": [
+    "styles/index.css",
+    "styles/content.css"
+  ],
+  "scripts": [
+    "scripts/flawless.frontend.js"
+  ],
+  "templates": [
+    "templates/template.html"
+  ],
   "license": "MIT"
 }
