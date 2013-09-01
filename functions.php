@@ -92,8 +92,13 @@ final class Flawless {
     ) );
 
     $flawless[ 'paths' ] = array(
+      'templates' => untrailingslashit( get_template_directory() ) . '/templates',
+      'controllers' => untrailingslashit( get_template_directory() ) . '/controllers',
+      'modules' => untrailingslashit( get_template_directory() ) . '/modules',
+      'premium' => untrailingslashit( get_template_directory() ) . '/premium',
       'vendor' => untrailingslashit( get_template_directory() ) . '/vendor',
-      'templates' => untrailingslashit( get_template_directory() ) . '/templates'
+      'static' => untrailingslashit( get_template_directory() ) . '/static',
+      'ux' => untrailingslashit( get_template_directory() ) . '/ux'
     );
 
     $flawless[ 'default_header' ][ 'flawless_style_assets' ] = array(
@@ -139,6 +144,14 @@ final class Flawless {
     } );
 
     include_once( $flawless[ 'paths' ][ 'templates' ] . '/template.php' );
+
+    // Vendor Libraries
+    include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/saas/saas.php' );
+    include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/saas/cloud.php' );
+    include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/api/api.php' );
+    include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/api/rpc.php' );
+    include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/asset/asset.php' );
+    include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/utility/utility.php' );
 
     //** Get Core settings */
     $flawless[ 'theme_data' ] = array_filter( (array) get_file_data( TEMPLATEPATH . '/style.css', $flawless[ 'default_header' ][ 'themes' ], 'theme' ) );
@@ -192,7 +205,7 @@ final class Flawless {
     //** In case serialize string was broken during export/import */
     if ( !is_array( $flawless_settings ) || empty( $flawless_settings ) ) {
 
-      $flawless_settings = self::repair_serialized_array( $wpdb->get_var( "SELECT option_value FROM {$wpdb->options} WHERE option_name = 'flawless_settings' " ) );
+      $flawless_settings = $wpdb->get_var( "SELECT option_value FROM {$wpdb->options} WHERE option_name = 'flawless_settings' " );
 
       if ( is_array( $flawless_settings ) && !empty( $flawless_settings ) ) {
         update_option( 'flawless_settings', $flawless_settings );
@@ -293,14 +306,15 @@ final class Flawless {
     //** Add custom logo to login screen */
     add_action( 'login_head', array( 'Flawless', 'login_head' ) );
 
-    //** Register Navigation Menus */
+    // Register Navigation Menus
+    // @todo Migrate presentation-specific logic outside of this class; otherwise should make it easy to disable/enable in child theme.
     register_nav_menus(
       array(
-        'header-actions-menu' => __( 'Header Actions Menu', 'flawless' ),
+        //'header-actions-menu' => __( 'Header Actions Menu', 'flawless' ),
         'header-menu' => __( 'Header Menu', 'flawless' ),
-        'header-sub-menu' => __( 'Header Sub-Menu', 'flawless' ),
+        //'header-sub-menu' => __( 'Header Sub-Menu', 'flawless' ),
         'footer-menu' => __( 'Footer Menu', 'flawless' ),
-        'bottom_of_page_menu' => __( 'Bottom of Page Menu', 'flawless' )
+        //'bottom_of_page_menu' => __( 'Bottom of Page Menu', 'flawless' )
       )
     );
 
@@ -346,23 +360,23 @@ final class Flawless {
   static function init_lower() {
     global $flawless;
 
-    wp_register_script( 'flawless-bootstrap-js', Flawless::load( 'bootstrap.min.js', 'js' ), array( 'jquery' ), Flawless_Version, true );
+    // wp_register_script( 'flawless-bootstrap-js', Flawless::load( 'bootstrap.min.js', 'js' ), array( 'jquery' ), Flawless_Version, true );
 
     //** Bundled jQuery UI Effects.  Individual scripts can be loaded as well, as they are shipped with WordPress */
-    wp_register_script( 'jquery-ui-effects', get_bloginfo( 'template_url' ) . '/assets/js/jquery.ui.effects.min.js', array( 'jquery-ui-core' ), '1.8.17', true );
+    // wp_register_script( 'jquery-ui-effects', get_bloginfo( 'template_url' ) . '/assets/js/jquery.ui.effects.min.js', array( 'jquery-ui-core' ), '1.8.17', true );
 
     //** UD jQuery Plugins - for now all unminified */
-    wp_register_script( 'jquery-ud-dynamic_filter', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.dynamic_filter/1.1.3/jquery.ud.dynamic_filter.js', array( 'jquery-ui-core' ), '1.1.3', true );
-    wp_register_script( 'jquery-ud-form_helper', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.form_helper/1.1/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1', true );
-    wp_register_script( 'jquery-ud-smart_buttons', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.smart_buttons/0.6/jquery.ud.smart_buttons.js', array( 'jquery-ui-core' ), '0.6', true );
-    wp_register_script( 'jquery-ud-social', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.social/0.3/jquery.ud.social.js', array( 'jquery-ui-core' ), '0.3', true );
-    wp_register_script( 'jquery-ud-execute_triggers', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.execute_triggers/1.0.1/jquery.ud.execute_triggers.js', array( 'jquery-ui-core' ), '1.0.1', true );
+    // wp_register_script( 'jquery-ud-dynamic_filter', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.dynamic_filter/1.1.3/jquery.ud.dynamic_filter.js', array( 'jquery-ui-core' ), '1.1.3', true );
+    // wp_register_script( 'jquery-ud-form_helper', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.form_helper/1.1/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1', true );
+    // wp_register_script( 'jquery-ud-smart_buttons', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.smart_buttons/0.6/jquery.ud.smart_buttons.js', array( 'jquery-ui-core' ), '0.6', true );
+    // wp_register_script( 'jquery-ud-social', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.social/0.3/jquery.ud.social.js', array( 'jquery-ui-core' ), '0.3', true );
+    // wp_register_script( 'jquery-ud-execute_triggers', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.execute_triggers/1.0.1/jquery.ud.execute_triggers.js', array( 'jquery-ui-core' ), '1.0.1', true );
 
     //** Flawless Scripts */
-    wp_register_script( 'flawless', get_bloginfo( 'template_url' ) . '/assets/js/flawless.js', array( 'flawless-bootstrap-js' ), Flawless_Version, true );
-    wp_register_script( 'flawless-frontend', get_bloginfo( 'template_url' ) . '/assets/js/flawless.frontend.js', array( 'flawless', 'jquery-placeholder' ), Flawless_Version, true );
-    wp_register_script( 'flawless-admin-global', get_bloginfo( 'template_url' ) . '/assets/js/flawless.admin.global.js', array( 'flawless' ), Flawless_Version, true );
-    wp_register_script( 'flawless-admin', get_bloginfo( 'template_url' ) . '/assets/js/flawless.admin.js', array( 'flawless', 'flawless-admin-global', 'farbtastic' ), Flawless_Version, true );
+    // wp_register_script( 'flawless', get_bloginfo( 'template_url' ) . '/assets/js/flawless.js', array( 'flawless-bootstrap-js' ), Flawless_Version, true );
+    // wp_register_script( 'flawless-frontend', get_bloginfo( 'template_url' ) . '/assets/js/flawless.frontend.js', array( 'flawless', 'jquery-placeholder' ), Flawless_Version, true );
+    // wp_register_script( 'flawless-admin-global', get_bloginfo( 'template_url' ) . '/assets/js/flawless.admin.global.js', array( 'flawless' ), Flawless_Version, true );
+    // wp_register_script( 'flawless-admin', get_bloginfo( 'template_url' ) . '/assets/js/flawless.admin.js', array( 'flawless', 'flawless-admin-global', 'farbtastic' ), Flawless_Version, true );
 
     //** Enqueue front-end assets */
     add_action( 'wp_enqueue_scripts', array( 'Flawless', 'wp_enqueue_scripts' ), 100 );
@@ -372,7 +386,6 @@ final class Flawless {
 
     add_action( 'admin_footer', array( 'Flawless', 'log_stats' ), 10 );
     add_action( 'wp_footer', array( 'Flawless', 'log_stats' ), 10 );
-    add_action( 'wp_footer', array( 'Flawless', 'wp_footer' ), 500 );
 
     //** Extra front-end assets ( such as Fancybox ) */
     add_action( 'flawless::extra_local_assets', array( 'Flawless', 'extra_local_assets' ), 5 );
@@ -501,16 +514,6 @@ final class Flawless {
    */
   static function log_stats() {
     Flawless::console_log( 'End of request, total execution: ' . timer_stop() . ' seconds.' );
-  }
-
-  /**
-   * -
-   *
-   * @since 0.6.0
-   */
-  static function wp_footer() {
-    global $wpdb;
-    echo '<span class="flawless_page_stats hidden">' . timer_stop() . ' seconds | ' . ( $wpdb->num_queries ? $wpdb->num_queries . ' queries | ' : '' ) . round( ( memory_get_peak_usage() / 1048576 ) ) . ' mb' . '</span>';
   }
 
   /**
@@ -1671,6 +1674,8 @@ final class Flawless {
       $flawless[ 'flawless_logo' ][ 'height' ] = $image_attributes[ 2 ];
     }
 
+    // die( '<pre>' . print_r( $flawless, true ) . '</pre>' );
+
     foreach ( (array) $flawless[ 'asset_directories' ] as $path => $url ) {
 
       $path = $path . '/core';
@@ -1708,17 +1713,13 @@ final class Flawless {
    */
   static function load_extend_modules( $flawless ) {
 
-    $required_file_data = apply_filters( 'flawless::required_extra_resource_file_data', array( 'Name', 'Version' ) );
-
-    //die( '<pre>' . print_r($required_file_data, true ) . '</pre>' );
-
     function load_file( $file_data ) {
 
       if ( empty( $file_data ) ) {
         return false;
       }
 
-      foreach ( (array) $required_file_data as $req_field ) {
+      foreach ( (array) apply_filters( 'flawless::required_extra_resource_file_data', array( 'Name', 'Version' ) ) as $req_field ) {
         if ( !in_array( $req_field, array_keys( (array) $file_data ) ) ) {
           return false;
         }
@@ -4089,6 +4090,7 @@ final class Flawless {
   /**
    * Adds custom logo, if exists, to login screen.
    *
+   * @todo Should be migrated into a module.
    * @since 0.2.3
    */
   static function login_head() {
@@ -4350,7 +4352,7 @@ final class Flawless {
     global $flawless;
 
     foreach ( (array) $flawless[ 'runtime' ][ 'footer_scripts' ] as $script ) {
-      echo $script;
+      //echo $script;
     }
 
     echo Flawless::render_console_log();

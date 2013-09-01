@@ -36,7 +36,7 @@
     {
       "type": "package",
       "package": {
-        "name": "ud/libs",
+        "name": "ud/wp-libs",
         "version": "trunk",
         "source": {
           "url": "http://github.com/UsabilityDynamics/wp-libs",
@@ -47,7 +47,7 @@
     }
   ],
   "require": {
-    "ud/libs": "*"
+    "ud/wp-libs": "*"
   },
   "autoload": {
     "psr-0": {
