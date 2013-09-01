@@ -1,6 +1,6 @@
 [
     {
-        "name": "ud/libs",
+        "name": "ud/wp-libs",
         "version": "trunk",
         "version_normalized": "9999999-dev",
         "source": {

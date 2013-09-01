@@ -1,0 +1,15 @@
+{
+  "name": "ud/wp-libs/api”",
+  "version": "0.1.1",
+  "description": "UD shared vendor libraries.",
+  "remotes": [
+    "https://raw.github.com",
+    "https://repository.usabilitydynamics.com"
+  ],
+  "dependencies": {},
+  "files": [
+    "api.php",
+    "rpc.php"
+  ],
+  "license": "MIT"
+}
