@@ -23,7 +23,7 @@ update-vendor:
 	cd core && composer.phar update
 
 update-ux:
-	cd ux && component update
+	cd ux && component install
 
 build-ux:
 	cd ux && component build
