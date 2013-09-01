@@ -668,7 +668,7 @@ class Flawless_BuddyPress {
     }
 
     //** Add filter to skip the footer when including the template */
-    add_filter( 'skip_footer', array( 'Flawless', 'return_true' ), 20 );
+    add_filter( 'skip_footer', array( __SELF__, 'return_true' ), 20 );
 
     //** Use OB to only capture the code between before and after page
     add_action( 'bp_before_register_page', create_function( '', ' ob_start();  ' ) );
@@ -679,7 +679,7 @@ class Flawless_BuddyPress {
     locate_template( array( 'registration/register.php' ), true );
 
     //** Remove the footer skipping so the actual footer doesn't get skipped
-    remove_filter( 'skip_footer', array( 'Flawless', 'return_true' ), 20 );
+    remove_filter( 'skip_footer', array( __SELF__, 'return_true' ), 20 );
 
     return $shortcode_content;
 

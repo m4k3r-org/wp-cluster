@@ -5,8 +5,11 @@ HTML_FILE = static/coverage.html
 
 test-all: clean document test-code
 
+update:
+	cd static && composer.phar install
+
 document:
-	yuidoc
+	yuidoc --configfile static/yuidoc.json
 
 test-code:
 	@NODE_ENV=test mocha \

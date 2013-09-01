@@ -41,17 +41,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+                <li><a href="../classes/: Flawless.Element.html">: Flawless.Element</a></li>
             
-                <li><a href="../classes/Loader.html">Loader</a></li>
+                <li><a href="../classes/: Flawless.Flawless_Module.html">: Flawless.Flawless_Module</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Shortcode.html">: Flawless.Flawless_Shortcode</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Widget.html">: Flawless.Flawless_Widget</a></li>
+            
+                <li><a href="../classes/: Flawless.License.html">: Flawless.License</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
             
                 <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
             
                 <li><a href="../classes/Template Functions.html">Template Functions</a></li>
             
-                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
             
-                <li><a href="../classes/UD_API.html">UD_API</a></li>
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
             
             </ul>
 
@@ -135,7 +143,7 @@ if ( !class_exists( &#x27;lessc&#x27; ) ) {
   return;
 }
 
-class flawless_less extends lessc {
+class Flawless_LESS extends lessc {
 
   /**
    * Initializer.
@@ -146,8 +154,94 @@ class flawless_less extends lessc {
 
     //** On initial call, we need to initialize the feature via hooks */
     if ( !did_action( &#x27;flawless::available_theme_features&#x27; ) ) {
-      return flawless_less::initialize();
+      return Flawless_LESS::initialize();
     }
+
+  }
+
+  /**
+   * Generates a compiled CSS file from multiple CSS and LESS files
+   *
+   * @since 0.0.3
+   */
+  function build_compiled_css( $styles, $args = array() ) {
+    global $flawless;
+
+    $args = wp_parse_args( $args, array(
+      &#x27;minified_output_path&#x27; =&gt; $flawless[ &#x27;_bootstrap_compiled_minified_path&#x27; ],
+      &#x27;output_path&#x27; =&gt; $flawless[ &#x27;_bootstrap_compiled_path&#x27; ]
+    ));
+
+    //** We do not ensure that feature is supported, but the class is required */
+    if ( !class_exists( &#x27;Flawless_LESS&#x27; ) ) {
+      //return new WP_Error( &#x27;error&#x27;, Flawless::console_log( sprintf( __( &#x27;CSS Compiling Error: Library not found.&#x27;, &#x27;flawless&#x27; ) ), &#x27;error&#x27; ));
+    }
+
+    //** Verify that the target directory is writable.
+    if ( !is_writable( dirname( $flawless[ &#x27;_bootstrap_compiled_minified_path&#x27; ] ) ) ) {
+      return new WP_Error( &#x27;error&#x27;, Flawless::console_log( sprintf( __( &#x27;CSS Compiling Error: Directory %1s is not writable&#x27;, &#x27;flawless&#x27; ), dirname( $flawless[ &#x27;_bootstrap_compiled_minified_path&#x27; ] ) ), &#x27;error&#x27; ));
+    }
+
+    foreach ( (array) $styles as $handle =&gt; $style_data ) {
+      $_handles[ ] = dirname( $style_data[ &#x27;path&#x27; ] ) . &#x27;/&#x27; . $style_data[ &#x27;file_name&#x27; ];
+      $_paths[ ] = $style_data[ &#x27;path&#x27; ];
+    }
+
+    if ( empty( $_handles ) ) {
+      return;
+    }
+
+    //$_Flawless_LESS = new Flawless_LESS();
+
+    //** Cycle through each CSS file and check for validation */
+    foreach ( (array) $_paths as $path ) {
+      //if ( is_wp_error( $_validation = $_Flawless_LESS-&gt;compile( $path ) ) ) {
+      // $_validation_errors[ ] = $path . &#x27; - &#x27; . $_validation-&gt;get_error_message();
+      //}
+    }
+
+    if ( $_validation_errors &amp;&amp; is_array( $_validation_errors ) &amp;&amp; count( $_validation_errors ) &gt; 0 ) {
+      return new WP_Error( &#x27;compile_error&#x27;, Flawless::console_log( sprintf( __( &#x27;CSS Compiling Errors:&lt;br /&gt; %1s &#x27;, &#x27;flawless&#x27; ), implode( &#x27;&lt;br /&gt;&#x27;, $_validation_errors ) ), &#x27;error&#x27; ));
+    }
+
+    //** Pass CSS array for real complication. */
+    //if ( is_wp_error( $output = $_Flawless_LESS-&gt;compile( $_paths ) ) ) {
+    //return new WP_Error( &#x27;compile_error&#x27;, Flawless::console_log( sprintf( __( &#x27;LESS Compiling Error: %1s &#x27;, &#x27;flawless&#x27; ), $output-&gt;get_error_message() ), &#x27;error&#x27; ));
+    //}
+
+    $_header = apply_filters( &#x27;flawless::compiled_css::css_header&#x27;, array(
+      &#x27;/**&#x27;,
+      &#x27; * Name: &#x27; . get_bloginfo() . &#x27; Screen Styles&#x27;,
+      &#x27; * Generated: &#x27; . date( get_option( &#x27;date_format&#x27; ) ) . &#x27; at &#x27; . date( get_option( &#x27;time_format&#x27; ) ),
+      &#x27; * Compilation Time: &#x27; . round( timer_stop() ) . &#x27; seconds&#x27;,
+      &#x27; * Source Files: &#x27;,
+      &#x27; * - &#x27; . implode( &quot; \n * - &quot;, (array) $_handles ),
+      &#x27; * &#x27;,
+      &#x27; */&#x27;
+    ));
+
+    if ( empty( $output[ &#x27;parsed&#x27; ] ) ) {
+      //return new WP_Error( &#x27;compile_error&#x27;, Flawless::console_log( sprintf( __( &#x27;CSS Compiling Error: Compiled file empty after attempting to compile (%1s) CSS files.&#x27;, &#x27;flawless&#x27; ), count( (array) $_handles ) ), &#x27;error&#x27; ));
+    }
+
+    //** @todo Is there a way to catch warnings? - potanin@UD 6/10/12 */
+    if ( WP_DEBUG ) {
+      file_put_contents( $args[ &#x27;output_path&#x27; ], implode( &quot;\n&quot;, (array) $_header ) . &quot;\n\n&quot; . $output[ &#x27;parsed&#x27; ] );
+      file_put_contents( $args[ &#x27;minified_output_path&#x27; ], $output[ &#x27;minified&#x27; ] );
+    } else {
+      @file_put_contents( $args[ &#x27;output_path&#x27; ], implode( &quot;\n&quot;, (array) $_header ) . &quot;\n\n&quot; . $output[ &#x27;parsed&#x27; ] );
+      @file_put_contents( $args[ &#x27;minified_output_path&#x27; ], $output[ &#x27;minified&#x27; ] );
+    }
+
+    if ( !file_exists( $args[ &#x27;minified_output_path&#x27; ] ) ) {
+      return new WP_Error( &#x27;saving_error&#x27;, Flawless::console_log( sprintf( __( &#x27;CSS Compiling Error: Compiled file (%1s) could not be saved to disk.&#x27;, &#x27;flawless&#x27; ), $args[ &#x27;minified_output_path&#x27; ] ), &#x27;error&#x27; ));
+    }
+
+    Flawless::console_log( sprintf( __( &#x27;CSS Compiling: - Compiled file created from (%1s) files. Minified version is %2s and the uncompressed version is %3s.&#x27;, &#x27;flawless&#x27; ), count( $_handles ), self::format_bytes( filesize( $args[ &#x27;output_path&#x27; ] ) ), self::format_bytes( filesize( $args[ &#x27;minified_output_path&#x27; ] ) ) ));
+
+    update_option( &#x27;flawless::compiled_css_files&#x27;, $styles );
+
+    return true;
 
   }
 
@@ -252,7 +346,7 @@ class flawless_less extends lessc {
 
 }
 
-$flawless_less = new flawless_less();
+$Flawless_LESS = new Flawless_LESS();
     </pre>
 </div>
 

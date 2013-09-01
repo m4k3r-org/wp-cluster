@@ -1,0 +1,85 @@
+{
+  "name": "flawless",
+  "version": "0.1.1",
+  "type": "wordpress-theme",
+  "minimum-stability": "dev",
+  "homepage": "http://github.com/UsabilityDynamics/flawless",
+  "keywords": [
+    "theme", "responsive", "bootstrap"
+  ],
+  "license": [
+    "GPL-3.0+"
+  ],
+  "authors": [
+    {
+      "name": "Maxim Peshkov",
+      "email": "maxim.peshkov@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Anton Korotkov",
+      "email": "anton.korotkov@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    }
+  ],
+  "config": {
+    "vendor-dir": "../vendor",
+    "component-dir": "../assets/vendor",
+    "bin-dir": "../core/bin"
+  },
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "ud/vendor",
+        "version": "trunk",
+        "source": {
+          "url": "http://github.com/UsabilityDynamics/vendor",
+          "type": "svn",
+          "reference": "trunk"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "ud/socket",
+        "version": "trunk",
+        "source": {
+          "url": "https://ud.svn.beanstalkapp.com/ud-cdn",
+          "type": "svn",
+          "reference": "js/ud.socket/latest"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "ud/loader",
+        "version": "trunk",
+        "source": {
+          "url": "https://ud.svn.beanstalkapp.com/ud-cdn",
+          "type": "svn",
+          "reference": "js/ud.loader/latest"
+        }
+      }
+    }
+  ],
+  "require": {
+    "symfony/validator": "2.1.*",
+    "ud/vendor": "*",
+    "ud/socket": "*",
+    "ud/loader": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Flawless": "core",
+      "Flawless\\Modules\\": "core/modules",
+      "Flawless\\Extend\\": "core/extend",
+      "Flawless\\Premium\\": "core/premium"
+    },
+    "files": []
+  }
+}

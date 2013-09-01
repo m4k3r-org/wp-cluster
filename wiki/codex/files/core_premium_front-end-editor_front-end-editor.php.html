@@ -41,17 +41,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+                <li><a href="../classes/: Flawless.Element.html">: Flawless.Element</a></li>
             
-                <li><a href="../classes/Loader.html">Loader</a></li>
+                <li><a href="../classes/: Flawless.Flawless_Module.html">: Flawless.Flawless_Module</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Shortcode.html">: Flawless.Flawless_Shortcode</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Widget.html">: Flawless.Flawless_Widget</a></li>
+            
+                <li><a href="../classes/: Flawless.License.html">: Flawless.License</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
             
                 <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
             
                 <li><a href="../classes/Template Functions.html">Template Functions</a></li>
             
-                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
             
-                <li><a href="../classes/UD_API.html">UD_API</a></li>
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
             
             </ul>
 
@@ -162,7 +170,100 @@ class flawless_front_end_editor {
 
     }, 200 );
 
+    // @todo Was being triggered at the flawless::init_upper level.
+    add_action( &#x27;customize_register&#x27;, array( __SELF__, &#x27;customize_register&#x27; ));
+
   }
+
+
+  /**
+   * -
+   *
+   * Migrated out of core.
+   *
+   * Types: text, checkbox, radio, select, dropdown-pages
+   * Actions: customize_render_control
+   *
+   * @todo custom action to save settings - customize_save_ in class-wp-customize-setting.php
+   * @since 0.0.3
+   */
+  static function customize_register( $wp_customize ) {
+    global $flawless;
+
+    if ( !class_exists( &#x27;WP_Customize&#x27; ) ) {
+      return;
+    }
+
+    $wp_customize-&gt;get_setting( &#x27;blogname&#x27; )-&gt;transport = &#x27;postMessage&#x27;;
+    $wp_customize-&gt;get_setting( &#x27;blogdescription&#x27; )-&gt;transport = &#x27;postMessage&#x27;;
+
+    $wp_customize-&gt;remove_section( &#x27;strings&#x27; );
+    $wp_customize-&gt;remove_section( &#x27;header&#x27; );
+    $wp_customize-&gt;remove_section( &#x27;background&#x27; );
+    $wp_customize-&gt;remove_section( &#x27;nav&#x27; );
+    $wp_customize-&gt;remove_section( &#x27;static_front_page&#x27; );
+
+    //WP_Customize_Color_Control
+    //WP_Customize_Upload_Control
+    //WP_Customize_Image_Control
+    //WP_Customize_Header_Image_Control
+
+    $wp_customize-&gt;add_section( &#x27;flawless_layout&#x27;, array(
+      &#x27;title&#x27; =&gt; __( &#x27;Layout&#x27;, &#x27;twentyeleven&#x27; ),
+      &#x27;priority&#x27; =&gt; 50,
+    ));
+
+    $wp_customize-&gt;add_setting( &#x27;Flawless_options[link_color]&#x27;, array(
+      &#x27;default&#x27; =&gt; &#x27;red&#x27;,
+      &#x27;type&#x27; =&gt; &#x27;option&#x27;,
+      &#x27;sanitize_callback&#x27; =&gt; &#x27;sanitize_hexcolor&#x27;,
+      &#x27;capability&#x27; =&gt; &#x27;edit_theme_options&#x27;,
+    ));
+
+    $wp_customize-&gt;add_setting( &#x27;Flawless_options[header_image]&#x27;, array(
+      //&#x27;default&#x27;           =&gt; &#x27;red&#x27;,
+      //&#x27;type&#x27;              =&gt; &#x27;option&#x27;,
+      //&#x27;sanitize_callback&#x27; =&gt; &#x27;sanitize_hexcolor&#x27;,
+      &#x27;capability&#x27; =&gt; &#x27;edit_theme_options&#x27;,
+    ));
+
+    $wp_customize-&gt;add_control( new WP_Customize_Color_Control( $wp_customize, &#x27;link_color&#x27;, array(
+      &#x27;label&#x27; =&gt; __( &#x27;Link Color&#x27;, &#x27;twentyeleven&#x27; ),
+      &#x27;section&#x27; =&gt; &#x27;flawless_layout&#x27;,
+      &#x27;settings&#x27; =&gt; &#x27;Flawless_options[link_color]&#x27;,
+    ) ));
+
+    $wp_customize-&gt;add_setting( &#x27;background_image&#x27;, array(
+      &#x27;default&#x27; =&gt; get_theme_support( &#x27;custom-background&#x27;, &#x27;default-image&#x27; ),
+      //&#x27;theme_supports&#x27; =&gt; &#x27;custom-background&#x27;,
+    ));
+
+    $wp_customize-&gt;add_control( new WP_Customize_Image_Control( $wp_customize, &#x27;background_image&#x27;, array(
+      &#x27;label&#x27; =&gt; __( &#x27;Background Image&#x27; ),
+      &#x27;section&#x27; =&gt; &#x27;flawless_layout&#x27;,
+      &#x27;context&#x27; =&gt; &#x27;custom-background&#x27;,
+    ) ));
+
+    $wp_customize-&gt;add_setting( &#x27;Flawless_options[theme_layout]&#x27;, array(
+      &#x27;type&#x27; =&gt; &#x27;option&#x27;,
+      &#x27;default&#x27; =&gt; $flawless[ &#x27;color_scheme&#x27; ],
+      &#x27;sanitize_callback&#x27; =&gt; &#x27;sanitize_key&#x27;,
+    ));
+
+    foreach ( (array) Flawless::get_color_schemes() as $scheme =&gt; $scheme_data ) {
+      $_schemes[ $scheme ] = $scheme_data[ &#x27;Name&#x27; ];
+    }
+
+    $wp_customize-&gt;add_control( &#x27;Flawless_options[theme_layout]&#x27;, array(
+      &#x27;label&#x27; =&gt; __( &#x27;Color Scheme&#x27;, &#x27;twentyeleven&#x27; ),
+      &#x27;section&#x27; =&gt; &#x27;flawless_layout&#x27;,
+      //&#x27;priority&#x27; =&gt; 5,
+      &#x27;type&#x27; =&gt; &#x27;radio&#x27;,
+      &#x27;choices&#x27; =&gt; $_schemes
+    ));
+
+  }
+
 
   /**
    * Add &quot;Theme Options&quot; link to admin bar.

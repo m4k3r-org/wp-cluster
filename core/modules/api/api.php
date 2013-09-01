@@ -1,617 +1,472 @@
 <?php
 /**
- * Name: API
- * Version: 1.0.0
- * Description: API access to Flawless.
- * Author: Usability Dynamics, Inc.
- * Theme Feature: api
  *
  */
 
-add_action( 'Flawless_setup', array( 'flawless_business_card', 'Flawless_setup' ) );
-add_filter( 'flawless::available_theme_features', array( 'flawless_business_card', 'available_theme_features' ) );
-
-class flawless_business_card {
-
-  function Flawless_setup() {
-    add_action( 'flawless::init_upper', array( 'flawless_business_card', 'init_upper' ) );
-    add_action( 'flawless::init_lower', array( 'flawless_business_card', 'init_lower' ) );
-
-  }
-
-  function init_upper() {
-
-    if ( !current_theme_supports( 'header-business-card' ) ) {
-      return;
-    }
-
-    //** Add business card widget */
-    add_action( 'widgets_init', array( 'flawless_business_card', 'widgets_init' ) );
-
-  }
-
-  function init_lower() {
-
-    if ( !current_theme_supports( 'header-business-card' ) ) {
-      return;
-    }
-
-    //** Add administrative actions */
-    add_action( 'admin_init', array( 'flawless_business_card', 'admin_init' ) );
-
-    add_filter( 'flawless_option_tabs', array( 'flawless_business_card', 'flawless_option_tabs' ) );
-
-    add_filter( 'flawless_default_settings', array( 'flawless_business_card', 'flawless_default_settings' ) );
-
-    add_filter( 'flawless_update_settings', array( 'flawless_business_card', 'flawless_update_settings' ) );
-
-  }
-
-  function admin_init() {
-
-    //** Add Business Card to header configuration */
-    add_filter( 'flawless_option_header_elements', array( 'flawless_business_card', 'flawless_option_header_elements' ) );
-
-  }
-
-  /**
-   * {}
-   *
-   */
-  function available_theme_features( $features ) {
-    $features[ 'header-business-card' ] = true;
-    return $features;
-  }
-
-  function flawless_default_settings( $flawless ) {
-
-    $flawless[ 'business_card' ][ 'data' ][ 'physical_address' ] = array(
-      'label' => __( 'Address', 'flawless' ),
-      'type' => 'geo_map',
-      'locked' => 'true',
-      'description' => __( 'A valid address will allow the theme to retreive geo-coordinates using Google Maps and draw a location map.', 'flawless' )
-    );
-
-    $flawless[ 'business_card' ][ 'data' ][ 'phone_number' ] = array(
-      'label' => __( 'Phone Number', 'flawless' ),
-      'locked' => 'true'
-    );
-
-    return $flawless;
-
-  }
-
-  function flawless_update_settings( $flawless ) {
-
-    //** Set coordinates for Business Card Info */
-    $coordinates = Flawless::geo_locate_address( $flawless[ 'business_card' ][ 'data' ][ 'physical_address' ] );
-
-    $flawless[ 'business_card' ][ 'system' ][ 'latitude' ] = $coordinates->longitude;
-    $flawless[ 'business_card' ][ 'system' ][ 'longitude' ] = $coordinates->latitude;
-
-    return $flawless;
-
-  }
-
-  function widgets_init() {
-
-    Flawless::console_log( 'P: Widget Registered: Flawless_Widget_Business_Card' );
-
-    register_widget( "Flawless_Widget_Business_Card" );
-
-  }
-
-  function flawless_option_tabs( $tabs ) {
-
-    $tabs[ 'options_ui_business_card' ] = array(
-      'label' => __( 'Business Info', 'flawless' ),
-      'id' => 'options_ui_business_card',
-      'position' => 30,
-      'callback' => array( 'flawless_business_card', 'options_ui_business_card' )
-    );
-
-    return $tabs;
-
-  }
-
-  /**
-   * Adds "Business Info" tab to the Header configuration.
-   *
-   * @since Flawless 1.0
-   */
-  function flawless_option_header_elements( $tabs ) {
-    global $flawless;
-
-    $tabs[ 'business' ] = array(
-      'label' => __( 'Business Info', 'flawless' ),
-      'id' => 'header-business-card',
-      'name' => 'flawless_settings[disabled_theme_features][header-business-card]',
-      'position' => 60,
-      'setting' => $flawless[ 'disabled_theme_features' ][ 'header-business-card' ],
-      'toggle_label' => __( 'Disable the header <b>Caller Card</b> section.', 'flawless' ),
-      'callback' => array( 'flawless_business_card', 'header_business_card_options' )
-    );
-
-    return $tabs;
-
-  }
-
-  /**
-   * Render contents of the "Business Info" settings in Header
-   *
-   * @since Flawless 1.0
-   */
-  function header_business_card_options( $flawless ) {
-
-    $header_options = ( is_array( $flawless[ 'business_card' ][ 'header' ] ) ? $flawless[ 'business_card' ][ 'header' ] : array() );
-    $main_options = ( is_array( $flawless[ 'business_card' ][ 'data' ] ) ? $flawless[ 'business_card' ][ 'data' ] : array() );
-
-    $social_icons = flawless_footer_follow( $flawless, array( 'return_raw' => true ) );
-
-    if ( count( $social_icons ) > 0 ) {
-      $main_options[ 'social_icons' ][ 'label' ] = __( 'Social Media Icons', 'flawless' );
-    }
-
-    //** Cycle through saved attributes, to maintain order, and remove any that are no longer in main list */
-    foreach ( $header_options as $slug => $selected ) {
-      if ( !in_array( $slug, array_keys( $main_options ) ) ) {
-        unset( $header_options[ $slug ] );
-      } else {
-        $header_options[ $slug ] = $main_options[ $slug ];
-
-        if ( $selected[ 'enable' ] == 'true' ) {
-          $header_options[ $slug ][ 'enable' ] = 'true';
-        }
-      }
-    }
-
-    //** Cycle through main options, and add any to array that are not already there */
-    foreach ( $main_options as $slug => $data ) {
-      if ( !in_array( $slug, array_keys( $header_options ) ) ) {
-        $header_options[ $slug ] = $data;
-      }
-    }
-
-
-    ?>
-
-    <p><?php _e( 'Fields to Display:', 'flawless' ); ?></p>
-    <div class="flawless_sortable_wrapper flawless_bc_options wp-tab-panel">
-      <ul class="flawless_sortable_attributes">
-        <?php foreach ( $header_options as $slug => $data ) { ?>
-          <li>
-            <input type="hidden" name="flawless_settings[business_card][header][<?php echo $slug; ?>][enable]"
-                   value="false"/>
-            <input class="checkbox" type="checkbox" <?php checked( $header_options[ $slug ][ 'enable' ], 'true' ) ?>
-                   id="header_business_card_<?php echo $slug; ?>"
-                   name="flawless_settings[business_card][header][<?php echo $slug; ?>][enable]" value="true"/>
-            <label for="header_business_card_<?php echo $slug; ?>"><?php echo $data[ 'label' ]; ?></label>
-          </li>
-        <?php } ?>
-      </ul>
-    </div>
-
-  <?php
-
-  }
-
-  /**
-   *
-   * @param $flawless
-   */
-  function options_ui_business_card( $flawless ) {
-    /** Determine if business_card option doesn't exist some way we set default settings */
-    if ( empty( $flawless[ 'business_card' ] ) ) {
-      $flawless = self::flawless_default_settings( $flawless );
-    }
-    ?>
-
-    <div class="tab_description"><?php _e( '', 'flawless' ); ?></div>
-
-    <table class="form-table">
-      <tbody>
-      <tr valign="top">
-        <th><?php _e( 'Business Info', 'flawless' ); ?></th>
-        <td>
-          <table class="widefat wpp_something_advanced_wrapper ud_ui_dynamic_table" sortable_table="true"
-                 allow_random_slug="false">
-            <tbody>
-            <?php foreach ( (array)$flawless[ 'business_card' ][ 'data' ] as $slug => $data ) { ?>
-              <tr
-                class="flawless_dynamic_table_row <?php echo( $data[ 'locked' ] == 'true' ? 'flawless_locked_row' : '' ); ?>"
-                slug="<?php echo $slug; ?>" new_row="false"
-                lock_row="<?php echo( $data[ 'locked' ] == 'true' ? 'true' : 'false' ); ?>">
-                <th>
-                  <div class="delete_icon flawless_delete_row" verify_action="true"></div>
-                  <ul class="flawless_options_wrapper">
-                    <li>
-                      <input type="text" id="flawless_card_<?php echo $slug; ?>" class="slug_setter"
-                             name="flawless_settings[business_card][data][<?php echo $slug; ?>][label]"
-                             value="<?php echo $data[ 'label' ]; ?>"/>
-                    </li>
-                  </ul>
-                  <input type="hidden" class="slug_setter"
-                         name="flawless_settings[business_card][data][<?php echo $slug; ?>][type]"
-                         value="<?php echo $data[ 'type' ]; ?>"/>
-                  <input type="hidden" do_not_clone="true" class="slug_setter"
-                         name="flawless_settings[business_card][data][<?php echo $slug; ?>][locked]"
-                         value="<?php echo $data[ 'locked' ]; ?>"/>
-                  <input type="hidden" do_not_clone="true" class="slug_setter"
-                         name="flawless_settings[business_card][data][<?php echo $slug; ?>][description]"
-                         value="<?php echo $data[ 'description' ]; ?>"/>
-                </th>
-                <td class="draggable_col">
-                  <input type="text" id="flawless_card_<?php echo $slug; ?>" class="regular-text"
-                         name="flawless_settings[business_card][data][<?php echo $slug; ?>][value]"
-                         value="<?php echo $data[ 'value' ]; ?>"/>
-                  <?php echo( $data[ 'description' ] ? '<div class="description">' . $data[ 'description' ] . '</div>' : '' ); ?>
-                </td>
-              </tr>
-            <?php } ?>
-            </tbody>
-            <tfoot>
-            <tr>
-              <td colspan='2'><input type="button" class="flawless_add_row button-secondary"
-                                     value="<?php _e( 'Add Row', 'flawless' ) ?>"/></td>
-            </tr>
-            </tfoot>
-          </table>
-        </td>
-      </tr>
-
-      <tr>
-        <th><?php _e( 'Social Media Links' ); ?></th>
-        <td>
-          <ul class="social_media_icons">
-            <?php foreach ( flawless_footer_follow( $flawless, array( 'return_raw' => true ) ) as $social_key => $social_row ) { ?>
-              <li>
-                <label for="<?php echo $social_key; ?>">
-                  <img class="social_media_icon_thumb" src="<?php echo $social_row[ 'thumb_url' ]; ?>"/>
-                </label>
-                <input id="<?php echo $social_key; ?>" type="text" class="flawless_force_http_prefix"
-                       name="flawless_settings[social_icons][<?php echo $social_row[ 'option' ]; ?>]"
-                       value="<?php echo $social_row[ 'url' ]; ?>"/>
-                <span class="label"><?php echo $social_row[ 'label' ]; ?></span>
-              </li>
-            <?php } ?>
-          </ul>
-
-        </td>
-      </tr>
-
-      </tbody>
-    </table>
-
-
-  <?php
-  }
-
-}
+namespace Flawless;
 
 /**
- * Business Card widget.
+ * API Routes
  *
- * @since 3.0.0
+ * Description: WPP API implementation
+ *
+ * @source Migrated from WPP 2.0
+ * @author potanin@UD
+ * @author peshkov@UD
+ * @version 0.1.0
  */
-class Flawless_Widget_Business_Card extends WP_Widget {
+class API extends Module {
 
   /**
-   * Initialize the widget.
+   * Something like constructor
    *
-   * @since 3.0.0
    */
-  function __construct() {
+  public function __construct( $params = array() ) {
 
-    parent::__construct(
-      'business_card',
-      __( 'Business Card', 'flawless' ),
-      array(
-        'classname' => 'business_card',
-        'description' => __( 'Display business information in a flexible format.', 'flawless' )
-      ),
-      array(
-        'width' => 300
+  }
+
+  /**
+   * Generates API routes
+   *
+   * @author potanin@UD
+   */
+  static function api_routes( $args = false ) {
+    global $wp, $wpdb, $wp_properties;
+
+    $_api_key = WPP_F::get_key( 'api_key' );
+
+    if ( !$_api_key || is_wp_error( $_api_key ) ) {
+      return false;
+    }
+
+    $is_permalink = '' != get_option( 'permalink_structure' ) ? true : false;
+
+    $wp_properties[ '_api_routes' ] = array(
+      'path' => $is_permalink ? "/{$_api_key}/resources" : "/index.php?wpp_api_key={$_api_key}&wpp_api_action=resources",
+      'response' => 'json',
+      'resources' => array(),
+    );
+
+    $wp_properties[ '_api_routes' ][ 'resources' ] = apply_filters( 'wpp::api_routes', array(
+      'wpp' => array(
+        'description' => 'WP-Property Core',
+        'apis' => array(
+          'feature_check' => array(
+            'path' => "/{$_api_key}/wpp/feature_check",
+            'description' => __( 'Check all features for updates against Updates server, and download all eligible..', 'wpp' ),
+            'operations' => array(
+              'httpMethod' => 'GET',
+              'summary' => 'Run update.',
+              'nickname' => 'feature_check'
+            ),
+            '_method' => array( 'WPP_F', 'feature_check' ),
+          ),
+          'server_capabilities' => array(
+            'path' => "/{$_api_key}/wpp/server_capabilities",
+            'description' => __( 'Output server capabilities.', 'wpp' ),
+            'operations' => array(
+              'httpMethod' => 'GET',
+              'summary' => 'View server capabilities.',
+              'nickname' => 'server_capabilities',
+            ),
+            '_method' => array( 'WPP_F', 'get_server_capabilities' )
+          ),
+          'data_model' => array(
+            'path' => "/{$_api_key}/wpp/data_model",
+            'description' => __( 'Output Data Structure when API Key is set and matches.', 'wpp' ),
+            'operations' => array(
+              'httpMethod' => 'GET',
+              'summary' => 'View standard data model.',
+              'nickname' => 'data_model',
+              'parameters' => array(
+                array(
+                  'name' => 'model', 'paramType' => 'query', 'required' => true, 'description' => __( 'Model name, usually slug of listing type.', 'wpp' ),
+                  'allowableValues' => array( 'valueType' => 'LIST', 'values' => array_keys( (array) $wp_properties[ 'property_types' ] ) ),
+                ),
+                array(
+                  'name' => 'push', 'paramType' => 'query', 'description' => __( 'To synchronize with Semantics API, set to true.', 'wpp' ),
+                  'allowableValues' => array( 'valueType' => 'LIST', 'values' => array( 'true', '' ) ),
+                )
+              )
+            ),
+            '_method' => array( 'WPP_F', 'get_data_model' )
+          ),
+          'listings' => array(
+            'path' => "/{$_api_key}/wpp/listings",
+            'description' => __( 'Export listings in JSON or XML format using RESTful queries.', 'wpp' ),
+            'operations' => array(
+              'httpMethod' => 'GET',
+              'summary' => __( 'Export listings in JSON or XML format using RESTful queries.', 'wpp' ),
+              'nickname' => 'get_listings',
+              'parameters' => array(
+                array(
+                  'name' => 'property_type', 'paramType' => 'query', 'description' => __( 'Property Type to query.', 'wpp' ),
+                  'allowableValues' => array( 'valueType' => 'LIST', 'values' => array_keys( (array) $wp_properties[ 'property_types' ] ) ),
+                  'allowMultiple' => true
+                ),
+                array(
+                  'name' => 'sort_by', 'paramType' => 'query', 'description' => __( 'Results sorted by specific attribute.', 'wpp' ),
+                  'allowableValues' => array( 'valueType' => 'LIST', 'values' => array_keys( (array) $wp_properties[ 'sortable_attributes' ] ) )
+                ),
+                array(
+                  'name' => 'sort_order', 'paramType' => 'query', 'description' => __( 'Ascending (ASC ) and Descending ( DESC ) order.', 'wpp' ),
+                  'allowableValues' => array( 'valueType' => 'LIST', 'values' => array( 'ASC', 'DESC' ) )
+                ),
+                array( 'name' => 'limit', 'paramType' => 'query', 'dataType' => 'int', 'description' => __( 'Limit exported listings to.', 'wpp' ) ),
+                array( 'name' => 'per_page', 'paramType' => 'query', 'dataType' => 'int', 'description' => __( 'To synchronize with Semantics API, set to true.', 'wpp' ) ),
+                array( 'name' => 'starting_row', 'dataType' => 'int', 'description' => __( 'To synchronize with Semantics API, set to true.', 'wpp' ), 'paramType' => 'query' ),
+                array( 'name' => 'format', 'paramType' => 'query', 'allowableValues' => array( 'valueType' => 'LIST', 'values' => array( 'JSON', 'XML' ) ), 'required' => true )
+              )
+            ),
+            '_method' => array( 'WPP_Export', 'wpp_export_properties' )
+          ),
+          'configuration' => array(
+            'path' => "/{$_api_key}/wpp/configuration",
+            'description' => __( 'Output Configuration Structure when API Key is set and matches.', 'wpp' ),
+            'operations' => array(
+              'httpMethod' => 'GET',
+              'nickname' => 'get_configuration',
+              'summary' => 'View standard data model.',
+            ),
+            '_method' => array( __SELF__, 'get' )
+          )
+        )
       )
-    );
+    ), $_api_key );
 
-  }
-
-  /**
-   * Renders the widget on the front-end.
-   *
-   * @since 3.0.0
-   */
-  function widget( $args, $instance ) {
-    global $flawless;
-
-    extract( $args );
-
-    if ( empty( $instance ) ) {
-      return;
-    }
-
-    $html[ ] = $before_widget;
-
-    if ( $instance[ 'widget_title' ] ) {
-      $html[ ] = $before_title . $instance[ 'widget_title' ] . $after_title;
-    }
-
-    $main_data = ( is_array( $flawless[ 'business_card' ][ 'data' ] ) ? $flawless[ 'business_card' ][ 'data' ] : array() );
-
-    foreach ( $instance as $slug => $option ) {
-
-      if ( $option != 'true' ) {
+    //** Check API routes and fix|modify data and structure */
+    foreach ( $wp_properties[ '_api_routes' ][ 'resources' ] as $key => $instance ) {
+      if ( !isset( $instance[ 'apis' ] ) || !is_array( $instance[ 'apis' ] ) ) {
+        unset( $wp_properties[ '_api_routes' ][ $key ] );
         continue;
       }
-
-      $classes = array( $slug );
-
-      $data = $main_data[ $slug ];
-
-      $value = $flawless[ 'business_card' ][ 'data' ][ $slug ][ 'value' ];
-      $label = $flawless[ 'business_card' ][ 'data' ][ $slug ][ 'label' ];
-
-      if ( $slug == 'social_icons' ) {
-        $value = flawless_footer_follow();
-      }
-
-      if ( empty( $value ) ) {
-        continue;
-      }
-
-      if ( Flawless::is_url( $value ) ) {
-        $value = '<a class="business_info_link" href="' . $value . '">' . $label . '</a>';
-        $classes[ ] = 'has_link';
-      }
-
-      $attributes[ ] = '<p class="' . implode( ' ', (array)$classes ) . '">' . nl2br( do_shortcode( $value ) ) . '</p>';
-    }
-
-    if ( !empty( $attributes ) ) {
-      $html[ 'attributes' ] = '<address class="flawless_business_card_items">' . implode( '', $attributes ) . '</address>';
-    }
-
-    $html[ ] = $after_widget;
-
-    if ( !empty( $html[ 'attributes' ] ) ) {
-      echo implode( '', $html );
-    } else {
-      return false;
-    }
-
-  }
-
-  /**
-   * Handles any special functions when the widget is being updated.
-   *
-   * @since 3.0.0
-   */
-  function update( $new_instance, $old_instance ) {
-    return $new_instance;
-  }
-
-  /**
-   * Renders widget UI in control panel.
-   *
-   *
-   * @todo Needs to make use of sortable attributes.
-   * @uses $current_screen global variable
-   * @since 3.0.0
-   */
-  function form( $instance = false ) {
-    global $flawless;
-
-    if ( $this ) {
-      $this_here = $this;
-    }
-
-    $widget_options = ( is_array( $instance ) ? $instance : array() );
-    $main_options = ( is_array( $flawless[ 'business_card' ][ 'data' ] ) ? $flawless[ 'business_card' ][ 'data' ] : array() );
-
-    //** We don't want to mix in the title into our array */
-    unset( $widget_options[ 'widget_title' ] );
-
-    //** Cycle through saved attributes, to maintain order, and remove any that are no longer in main list */
-    foreach ( $widget_options as $slug => $selected ) {
-      if ( !in_array( $slug, array_keys( $main_options ) ) ) {
-        unset( $widget_options[ $slug ] );
+      if ( $is_permalink ) {
+        $wp_properties[ '_api_routes' ][ 'resources' ][ $key ][ 'path' ] = "/{$_api_key}/{$key}";
       } else {
-        $widget_options[ $slug ] = $main_options[ $slug ];
+        $wp_properties[ '_api_routes' ][ 'resources' ][ $key ][ 'path' ] = "/index.php?wpp_api_key={$_api_key}&wpp_api_action=resource_methods&wpp_api_resource={$key}";
       }
-    }
-
-    //** Cycle through main options, and add any to array that are not already there */
-    foreach ( $main_options as $slug => $data ) {
-      if ( !in_array( $slug, array_keys( $widget_options ) ) ) {
-        $widget_options[ $slug ] = $data;
-      }
-    }
-
-    $social_icons = flawless_footer_follow( $flawless, array( 'return_raw' => true ) );
-
-    if ( count( $social_icons ) > 0 ) {
-      $widget_options[ 'social_icons' ][ 'label' ] = __( 'Social Media Icons', 'flawless' );
-    }
-
-    ?>
-
-    <script type="text/javascript">
-      jQuery( document ).ready( function () {
-        if ( typeof jQuery.fn.sortable == 'function' ) {
-          jQuery( ".flawless_sortable_wrapper" ).each( function () {
-            jQuery( ".flawless_sortable_attributes", this ).sortable();
-          } );
+      foreach ( $instance[ 'apis' ] as $route => $data ) {
+        $data = self::set_api_route( $data );
+        if ( !$data ) {
+          unset( $wp_properties[ '_api_routes' ][ 'resources' ][ $key ][ 'apis' ][ $route ] );
+        } else {
+          if ( !$is_permalink ) {
+            $data[ 'path' ] = "/index.php?wpp_api_key={$_api_key}&wpp_api_action=do_method&wpp_api_resource={$key}&wpp_api_method={$route}";
+          }
+          $wp_properties[ '_api_routes' ][ 'resources' ][ $key ][ 'apis' ][ $route ] = $data;
         }
-      } );
-    </script>
+      }
+    }
 
-    <p>
-      <label for="<?php echo $this_here->get_field_id( 'widget_title' ); ?>"><?php _e( 'Title:' ); ?>
-        <input class="widefat" id="<?php echo $this_here->get_field_id( 'widget_title' ); ?>"
-               name="<?php echo $this_here->get_field_name( 'widget_title' ); ?>" type="text"
-               value="<?php echo esc_attr( $instance[ 'widget_title' ] ); ?>"/></label>
-    </p>
-
-    <p><?php _e( 'Fields to Display:', 'flawless' ); ?></p>
-    <div class="flawless_sortable_wrapper flawless_bc_options wp-tab-panel">
-      <ul class="flawless_sortable_attributes">
-        <?php foreach ( $widget_options as $slug => $data ) { ?>
-          <li>
-            <input type="hidden" name="<?php echo $this_here->get_field_name( $slug ); ?>" value="false"/>
-            <input class="checkbox" type="checkbox" <?php checked( $instance[ $slug ], 'true' ) ?>
-                   id="<?php echo $this_here->get_field_id( $slug ); ?>"
-                   name="<?php echo $this_here->get_field_name( $slug ); ?>" value="true"/>
-            <label for="<?php echo $this_here->get_field_id( $slug ); ?>"><?php echo $data[ 'label' ]; ?></label>
-          </li>
-        <?php } ?>
-      </ul>
-    </div>
-
-  <?php
+    return $wp_properties[ '_api_routes' ];
 
   }
 
-}
+  /**
+   * Adds rewrite rules for API methods.
+   * Based on $wp_properties[ '_api_routes' ]
+   *
+   * @author potanin@UD
+   * @author peshkov@UD
+   */
+  static function generate_rewrites() {
+    global $wp, $wp_properties;
 
-/**
- * Display Folow icons in the footer if required data is inputed
- *
- *
- */
-if ( !function_exists( 'flawless_footer_follow' ) ) {
-  function flawless_footer_follow( $flawless = false, $args = false ) {
+    //** Client API Rewrite Vars */
+    $wp->add_query_var( 'wpp_api_action' );
+    $wp->add_query_var( 'wpp_api_resource' );
+    $wp->add_query_var( 'wpp_api_method' );
+    $wp->add_query_var( 'wpp_api_key' );
+    $wp->add_query_var( 'wpp_api_response' );
 
-    if ( !$flawless ) {
-      global $flawless;
-    }
+    $_api_key = WPP_F::get_key( 'api_key' );
 
-    $defaults = array(
-      'return_raw' => false,
-      'return_array' => false,
-      'echo' => false
-    );
-
-    $args = wp_parse_args( $args, $defaults );
-
-    $template_dir = get_bloginfo( 'template_url' );
-
-    $icons[ 'twitter' ][ 'icon' ] = '/img/follow_t.png';
-    $icons[ 'twitter' ][ 'url' ] = $flawless[ 'social_icons' ][ 'twitter' ];
-    $icons[ 'twitter' ][ 'option' ] = 'twitter';
-    $icons[ 'twitter' ][ 'label' ] = 'Twitter';
-
-    $icons[ 'facebook' ][ 'icon' ] = '/img/follow_f.png';
-    $icons[ 'facebook' ][ 'url' ] = $flawless[ 'social_icons' ][ 'facebook' ];
-    $icons[ 'facebook' ][ 'option' ] = 'facebook';
-    $icons[ 'facebook' ][ 'label' ] = 'Facebook';
-
-    $icons[ 'linkedin' ][ 'icon' ] = '/img/follow_in.png';
-    $icons[ 'linkedin' ][ 'url' ] = $flawless[ 'social_icons' ][ 'linkedin' ];
-    $icons[ 'linkedin' ][ 'option' ] = 'linkedin';
-    $icons[ 'linkedin' ][ 'label' ] = 'LinkedIn';
-
-    $icons[ 'rss' ][ 'icon' ] = '/img/follow_rss.png';
-    $icons[ 'rss' ][ 'url' ] = $flawless[ 'social_icons' ][ 'rss' ];
-    $icons[ 'rss' ][ 'option' ] = 'rss';
-    $icons[ 'rss' ][ 'label' ] = 'RSS';
-
-    $icons[ 'youtube' ][ 'icon' ] = '/img/follow_y.png';
-    $icons[ 'youtube' ][ 'url' ] = $flawless[ 'social_icons' ][ 'youtube' ];
-    $icons[ 'youtube' ][ 'option' ] = 'youtube';
-    $icons[ 'youtube' ][ 'label' ] = 'YouTube';
-
-    $icons = apply_filters( 'flawless_social_icons', $icons );
-
-    foreach ( $icons as $network => $data ) {
-
-      $thumb_url = $template_dir . $data[ 'icon' ];
-
-      $icons[ $network ][ 'thumb_url' ] = $thumb_url;
-
-      if ( !empty( $data[ 'url' ] ) ) {
-        $html[ ] = '<a href="' . $data[ 'url' ] . '"><img class="flawless_social_link" src="' . $thumb_url . '" /></a>';
-      }
-
-    }
-
-    if ( $args[ 'return_raw' ] ) {
-      return $icons;
-    }
-
-    if ( !is_array( $icons ) ) {
-      return array();
-    }
-
-    if ( !is_array( $html ) ) {
-      return array();
-    }
-
-    $html = implode( '', $html );
-
-    if ( $args[ 'echo' ] ) {
-      echo $html;
+    if ( empty( $wp_properties[ '_api_routes' ][ 'resources' ] ) || !$_api_key || is_wp_error( $_api_key ) ) {
       return;
     }
 
-    if ( $args[ 'return_array' ] ) {
-      return $icons;
-    }
+    //** API method. Resources  */
+    $wp_properties[ '_rewrite_rules' ][ '(' . $_api_key . ')/resources(.(xml|json)/?)?' ] = 'index.php?wpp_api_key=$matches[1]&wpp_api_action=resources';
 
-    return $html;
+    foreach ( (array) $wp_properties[ '_api_routes' ][ 'resources' ] as $resource => $resource_data ) {
+
+      //** API method. Resource Methods Documentation */
+      $wp_properties[ '_rewrite_rules' ][ '(' . $_api_key . ')/' . $resource . '(\.(xml|json)/?)?$' ] =
+        'index.php?wpp_api_key=$matches[1]&wpp_api_action=resource_methods&wpp_api_resource=' . $resource;
+
+      foreach ( (array) $resource_data[ 'apis' ] as $method => $data ) {
+        //** Prepare condition */
+        $condition = preg_replace( '#^\/#', '', $data[ 'path' ] );
+        $condition = str_replace( $_api_key, "({$_api_key})", $condition );
+        $condition = str_replace( "/{$resource}/", "/{$resource}(?:\.(?:xml|json)/?)?/", $condition );
+
+        //** Prepare rule */
+        $rule = "index.php?wpp_api_key=\$matches[1]&wpp_api_action=do_method&wpp_api_resource={$resource}&wpp_api_method={$method}";
+
+        //** Determine if we have parameters in $condition and modify condition and rule if parameters exist */
+        if ( preg_match_all( '#\{[^\}]+\}#', $condition, $matches ) ) {
+          if ( is_array( $matches[ 0 ] ) ) {
+            for ( $i = 0; $i < count( $matches[ 0 ] ); $i++ ) {
+              $param_found = false;
+              $param = str_replace( array( '{', '}' ), '', $matches[ 0 ][ $i ] );
+              foreach ( (array) $data[ 'operations' ] as $oprt ) {
+                foreach ( (array) $oprt[ 'parameters' ] as $prm ) {
+                  if ( isset( $prm[ 'name' ] ) && $prm[ 'name' ] == $param ) {
+                    $condition = str_replace( $matches[ 0 ][ $i ], '([^\/]+)', $condition );
+                    $rule .= '&' . $param . '=$matches[' . ( $i + 2 ) . ']';
+                    //** We need to add query var for the current param */
+                    $wp->add_query_var( $param );
+                    break;
+                  }
+                }
+                if ( $param_found ) break;
+              }
+            }
+          }
+        }
+
+        //** Use filters if needed */
+        $_rc = apply_filters( 'wpp::generate_api_route_rewrite_rule', array( 'condition' => $condition, 'rule' => $rule ), array( 'resource' => $resource, 'method' => $method ) );
+
+        //** Rewrite Rule for API Method */
+        $wp_properties[ '_rewrite_rules' ][ $_rc[ 'condition' ] ] = $_rc[ 'rule' ];
+      }
+
+    }
 
   }
-}
 
-if ( !function_exists( 'flawless_have_business_card' ) ) {
-  function flawless_have_business_card( $scope = false ) {
-    global $flawless;
+  /**
+   * API action handler.
+   * Performs API method and returns result or error.
+   *
+   * @author peshkov@UD
+   *
+   * @param $query
+   */
+  static function do_action( $args = array() ) {
+    global $wp_properties;
 
-    if ( !$scope || !is_array( $flawless[ 'business_card' ][ $scope ] ) ) {
-      return;
+    $args = wp_parse_args( (array) $args, array(
+      'api_key' => false,
+      'permalink' => '' != get_option( 'permalink_structure' ) ? true : false,
+      'action' => false,
+      'resource' => false,
+      'method' => false,
+      'query_vars' => array(),
+      'type' => 'json',
+      'return' => false,
+    ) );
+
+    $result = false;
+
+    try {
+
+      /**
+       * Determine if API request has api_key and it's correct
+       * The API requests must be safety.
+       */
+      if ( $args[ 'api_key' ] !== WPP_F::get_key( 'api_key' ) ) {
+        throw new Exception( "Request is forbidden." );
+      }
+
+      //**  */
+      if ( empty( $wp_properties[ '_api_routes' ][ 'resources' ] ) || !is_array( $wp_properties[ '_api_routes' ][ 'resources' ] ) ) {
+        throw new Exception( "API is not available." );
+      }
+
+      //** Perfom specific action */
+      switch ( $args[ 'action' ] ) {
+
+        case 'resources':
+          $resources = array();
+          foreach ( $wp_properties[ '_api_routes' ][ 'resources' ] as $resource => $data ) {
+            $resources[ $resource ] = array(
+              'path' => $data[ 'path' ],
+              'desription' => isset( $data[ 'description' ] ) ? $data[ 'description' ] : '',
+            );
+          }
+          $result = WPP_F::strip_protected_keys( array(
+            'apiVersion' => WPP_Version,
+            'resources' => $resources,
+          ) );
+          break;
+
+        case 'resource_methods':
+          if ( !isset( $args[ 'resource' ] ) || !isset( $wp_properties[ '_api_routes' ][ 'resources' ][ $args[ 'resource' ] ] ) ) break;
+          $result = WPP_F::strip_protected_keys( array(
+            'path' => $wp_properties[ '_api_routes' ][ 'resources' ][ $args[ 'resource' ] ][ 'path' ],
+            'apiVersion' => WPP_Version,
+            'apis' => array_values( (array) $wp_properties[ '_api_routes' ][ 'resources' ][ $args[ 'resource' ] ][ 'apis' ] ),
+          ) );
+          break;
+
+        case 'do_method':
+          //** Be sure that all request's params are correct */
+          if ( !isset( $args[ 'resource' ] ) || !isset( $args[ 'method' ] ) ) {
+            throw new Exception( "Request is incorrect." );
+          }
+          //** Determine if API route's method exists */
+          if ( !isset( $wp_properties[ '_api_routes' ][ 'resources' ][ $args[ 'resource' ] ][ 'apis' ][ $args[ 'method' ] ] ) ) {
+            throw new Exception( "Request is incorrect." );
+          }
+          $data = $wp_properties[ '_api_routes' ][ 'resources' ][ $args[ 'resource' ] ][ 'apis' ][ $args[ 'method' ] ];
+          $params = array();
+          foreach ( (array) $data[ 'operations' ] as $opr ) {
+            if ( isset( $opr[ 'httpMethod' ] ) && strtolower( $opr[ 'httpMethod' ] ) == strtolower( $_SERVER[ 'REQUEST_METHOD' ] ) ) {
+              foreach ( (array) $opr[ 'parameters' ] as $prm ) {
+                switch ( $prm[ 'paramType' ] ) {
+                  case 'query':
+                    $params[ $prm[ 'name' ] ] = isset( $_REQUEST[ $prm[ 'name' ] ] ) ? $_REQUEST[ $prm[ 'name' ] ] : null;
+                    break;
+                  case 'path':
+                    if ( $args[ 'permalink' ] ) {
+                      $params[ $prm[ 'name' ] ] = isset( $args[ 'query_vars' ][ $prm[ 'name' ] ] ) ? $args[ 'query_vars' ][ $prm[ 'name' ] ] : null;
+                    } else {
+                      $params[ $prm[ 'name' ] ] = isset( $_REQUEST[ $prm[ 'name' ] ] ) ? $_REQUEST[ $prm[ 'name' ] ] : null;
+                    }
+                    break;
+                  case 'body':
+                    throw new Exception( "Parameter's type 'body' is not supported yet." );
+                    break;
+                  default:
+                    throw new Exception( "Parameter's type is incorrect." );
+                    break;
+                }
+                if ( empty( $params[ $prm[ 'name' ] ] ) && $prm[ 'required' ] == true ) {
+                  throw new Exception( "Parameter {$prm['name']} is required." );
+                }
+              }
+            }
+          }
+          $result = @call_user_func_array( $data[ '_method' ], array( $params ) );
+          break;
+
+        default:
+          throw new Exception( "Request is incorrect." );
+          break;
+
+      }
+
+    } catch ( exception $e ) {
+      $result = new WP_Error( __METHOD__, $e->getMessage() );
     }
 
-    $options = $flawless[ 'business_card' ][ $scope ];
-    $main_data = ( is_array( $flawless[ 'business_card' ][ 'data' ] ) ? $flawless[ 'business_card' ][ 'data' ] : array() );
-
-    foreach ( $options as $slug => $data ) {
-
-      $classes = array( $slug );
-
-      if ( $data[ 'enable' ] != 'true' ) {
-        continue;
-      }
-
-      $data = $main_data[ $slug ];
-
-      $value = $flawless[ 'business_card' ][ 'data' ][ $slug ][ 'value' ];
-      $label = $flawless[ 'business_card' ][ 'data' ][ $slug ][ 'label' ];
-
-      if ( $slug == 'social_icons' ) {
-        $value = flawless_footer_follow();
-      }
-
-      if ( empty( $value ) ) {
-        continue;
-      }
-
-      //** Convert into URL, if a URL is used */
-      if ( Flawless::is_url( $value ) ) {
-        $value = '<a class="business_info_link" href="' . $value . '">' . $label . '</a>';
-        $classes[ ] = 'has_link';
-      }
-
-      $attributes[ ] = '<li class="' . implode( ' ', (array)$classes ) . '">' . nl2br( do_shortcode( $value ) ) . '</li>';
+    if ( $args[ 'return' ] ) {
+      return $result;
     }
 
-    if ( !empty( $attributes ) ) {
-      $html[ 'attributes' ] = '<ul class="flawless_business_card_items ' . $scope . '">' . implode( '', $attributes ) . '</ul>';
+    //* Response */
+    if ( is_wp_error( $result ) ) {
+      $result = array( 'success' => false, 'message' => $result->get_error_message() );
+    } else if ( !$result ) {
+      $result = array( 'success' => false, 'message' => "There is no response." );
     }
 
-    if ( !empty( $html[ 'attributes' ] ) ) {
-      return implode( '', $html );
-    } else {
+    switch ( $args[ 'type' ] ) {
+      case 'xml':
+        WPP_F::xml_response( $result );
+        break;
+      case 'json':
+      default:
+        WPP_F::json_response( $result );
+        break;
+    }
+
+    return false;
+
+  }
+
+  /**
+   * Set API route.
+   * Parses route's data and fixes its structure
+   *
+   * @author peshkov@UD
+   *
+   * @param array $data
+   *
+   * @return $data
+   */
+  static function set_api_route( $data ) {
+
+    $data = array_merge( array(
+      'path' => false,
+      'description' => '',
+      'operations' => array(),
+      '_method' => false,
+    ), (array) $data );
+
+    //** Determine if API method can be called */
+    if ( !$data[ '_method' ] || !is_callable( $data[ '_method' ] ) ) {
       return false;
     }
 
+    if ( !$data[ 'path' ] ) {
+      return false;
+    }
+
+    $operation = array(
+      'httpMethod' => 'GET', // GET, POST, PUT, DELETE
+      'nickname' => '',
+      'summary' => '',
+      'notes' => '',
+      'parameters' => array(),
+      'errorResponses' => array(),
+    );
+
+    $parameter = array(
+      'name' => '',
+      'description' => '',
+      'paramType' => 'query', // query, path, body
+      'required' => false, // boolean
+      'allowMultiple' => false, // boolean
+      'dataType' => 'string', // int, string
+    );
+
+    $error_responses = array(
+      'code' => '', // 400, 401, 403...
+      'reason' => '',
+    );
+
+    //** Check and fix operations array structure if needed */
+    foreach ( (array) $data[ 'operations' ] as $k => $opr ) {
+      if ( is_string( $opr ) && in_array( $k, array( 'httpMethod', 'summary', 'notes', 'nickname' ) ) ) {
+        $data[ 'operations' ] = array( $data[ 'operations' ] );
+        break;
+      }
+    }
+
+    $data[ 'operations' ] = array_values( (array) $data[ 'operations' ] );
+
+    //* Data 'operations' is required */
+    if ( empty( $data[ 'operations' ] ) ) {
+      return false;
+    }
+
+    foreach ( $data[ 'operations' ] as $k => $opr ) {
+      $data[ 'operations' ][ $k ] = array_merge( $operation, (array) $opr );
+      if ( !empty( $data[ 'operations' ][ $k ][ 'parameters' ] ) ) {
+
+        if ( !is_array( $data[ 'operations' ][ $k ][ 'parameters' ] ) ) $data[ 'operations' ][ $k ][ 'parameters' ] = array();
+        else foreach ( $data[ 'operations' ][ $k ][ 'parameters' ] as $i => $v ) {
+          $v = array_merge( $parameter, (array) $v );
+          //** Check paramType */
+          if ( !is_string( $v[ 'paramType' ] ) || !in_array( $v[ 'paramType' ], array( 'query', 'path', 'body' ) ) ) {
+            return false;
+          }
+          $data[ 'operations' ][ $k ][ 'parameters' ][ $i ] = $v;
+        }
+        $data[ 'operations' ][ $k ][ 'parameters' ] = array_values( $data[ 'operations' ][ $k ][ 'parameters' ] );
+
+        if ( !is_array( $data[ 'operations' ][ $k ][ 'errorResponses' ] ) ) $data[ 'operations' ][ $k ][ 'errorResponses' ] = array();
+        else foreach ( $data[ 'operations' ][ $k ][ 'errorResponses' ] as $i => $v ) {
+          $data[ 'operations' ][ $k ][ 'errorResponses' ][ $i ] = array_merge( $parameter, (array) $v );
+        }
+        $data[ 'operations' ][ $k ][ 'errorResponses' ] = array_values( $data[ 'operations' ][ $k ][ 'errorResponses' ] );
+      }
+    }
+
+    return $data;
   }
+
 }

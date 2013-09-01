@@ -1,39 +1,63 @@
 <?php
-include_once( untrailingslashit( TEMPLATEPATH ) . '/core/vendor/ud_api.php' );
+/**
+ *
+ *
+ */
+
+//$baz = new UD\API\API( 'ls' );
+//$baz = new Composer\Autoload\ClassLoader( 'ls' );
+//$baz = UD\SaaS\SaaS::get_key( 'ls' );
+//$baz = UD\Functions::is_url( 'ls' );
 
 /**
- * Main class for Flawless theme options
+ * Main class for Flawless theme.
  *
  * @module Flawless
- * @submodule Core Assets
- * @class Loader
- * @extends UD_API
- * @constructor
- *
- * @since Flawless 0.2.3
+ * @since 0.2.3
  */
-class Flawless extends UD_API {
+final class Flawless {
+
+  // TEMP
+  public function de_slug( $data ) {
+    return $data;
+  }
+  public function extend( $data ) {
+    return $data;
+  }
+
+  // TEMP
+  public function fix_path( $path ) {
+    return $path;
+  }
 
   /**
    * Initializes Theme
    *
    * Sets up global $flawless variable, loads defaults and binds primary actions.
-   *
+
+   * @constructor
    * @method Connstruct
-   * @since Flawless 0.6.1
+   * @since 0.6.1
    */
-  function __construct() {
-    global $flawless;
+  public function __construct() {
+    global $flawless, $wp_theme_directories;
 
-    define( 'Flawless_Admin_URL', admin_url( 'themes.php?page=flawless.php' ));
+    //register_theme_directory ()
+    // get_stylesheet_directory_uri();
 
-    add_filter( 'template_directory', function ( $stylesheet_dir ) {
-      return Flawless::fix_path( $stylesheet_dir );
-    });
+    //die( '<pre>' . print_r( wp_get_themes( ), true ) . '</pre>' );
 
-    add_filter( 'stylesheet_directory', function ( $stylesheet_dir ) {
-      return Flawless::fix_path( $stylesheet_dir );
-    });
+    // Bail early if old server.
+    if( version_compare( phpversion(), 5.3 ) < 0 ) {
+      switch_theme( WP_DEFAULT_THEME, WP_DEFAULT_THEME );
+      wp_die( sprintf( __( 'Your version of PHP, %1s, is old, and this theme cannot support it, so it has been disabled. Please consider upgrading to 5.3, or newer. <a href="%2s">Back to Safety.</a>', HDDP ), phpversion(), admin_url() ) );
+    }
+
+    //$this->template_directory();
+
+    // add_filter( 'template_directory', call_user_func(array( $this, template_directory ), $stylesheet_dir) );
+    add_filter( 'template_directory', array( $this, 'fix_path' ) );
+    add_filter( 'stylesheet_directory', array( $this, 'fix_path' ) );
 
     //** Load default Flawless settings and configurations */
     $flawless[ 'have_static_home' ] = ( get_option( 'show_on_front' ) == 'page' ? true : false );
@@ -46,6 +70,10 @@ class Flawless extends UD_API {
       untrailingslashit( get_template_directory() ) => untrailingslashit( get_template_directory_uri() ),
       untrailingslashit( get_stylesheet_directory() ) => untrailingslashit( get_stylesheet_directory_uri() )
     ));
+
+    $flawless[ 'paths' ] = array(
+      'vendor' => untrailingslashit( get_template_directory() ) . '/core/vendor'
+    );
 
     $flawless[ 'default_header' ][ 'flawless_style_assets' ] = array(
       'Name' => __( 'Name', 'Flawless' ),
@@ -93,7 +121,7 @@ class Flawless extends UD_API {
     $flawless[ 'theme_data' ] = array_filter( (array) get_file_data( TEMPLATEPATH . '/style.css', $flawless[ 'default_header' ][ 'themes' ], 'theme' ));
 
     //** Define core version which is not affected by child theme version */
-    define( 'Flawless_Core_Version', $flawless[ 'theme_data' ][ 'Version' ] );
+    // define( 'Flawless_Core_Version', $flawless[ 'theme_data' ][ 'Version' ] );
 
     //** If child theme is used, we combine the child theme version with the core version */
     if ( is_child_theme() ) {
@@ -111,6 +139,9 @@ class Flawless extends UD_API {
     //** Earliest available callback */
     do_action( 'flawless::loaded', $flawless );
 
+    // Synchronize settings.
+    $this->settings = $flawless;
+
   }
 
   /**
@@ -122,7 +153,7 @@ class Flawless extends UD_API {
    * @todo flawless::theme_settings_loaded filter should verify that there is a valid return - potanin@UD
    * @todo $flawless[ 'deregister_empty_widget_areas' ] is staticly set right now, need to add menu to configure. - potanin@UD
    * @action after_setup_theme ( 10 )
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function after_setup_theme() {
     global $flawless, $wpdb;
@@ -148,7 +179,7 @@ class Flawless extends UD_API {
       }
     }
     //** Merge default $flawless settings with database settings */
-    $flawless = self::array_merge_recursive_distinct( $flawless, get_option( 'flawless_settings' ));
+    $flawless = self::extend( $flawless, get_option( 'flawless_settings' ));
 
     //** Apply earliest possible settings callback filter, verify that a valid array is returned */
     if ( is_array( $_theme_settings_loaded = apply_filters( 'flawless::theme_settings_loaded', $flawless ) ) ) {
@@ -193,7 +224,7 @@ class Flawless extends UD_API {
    * - widgets_init ( 1 )
    *
    * @WPA init ( 0 )
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    *
    */
   static function init_upper() {
@@ -201,18 +232,6 @@ class Flawless extends UD_API {
 
     Flawless::console_log( 'Executed: Flawless::init();' );
 
-    // ** JS Assets - loaded early since they are not expected to be overwritten  */
-    // wp_register_script( 'bootstrap', get_bloginfo( 'template_url' ) . '/assets/js/bootstrap.min.js', array( 'jquery' ), '2.0.1', true );
-    // wp_register_script( 'jquery-lazyload', get_bloginfo( 'template_url' ) . '/assets/js/jquery.lazyload.min.js', array( 'jquery' ), '1.7.0', true );
-
-    // wp_register_script( 'jquery-touch-punch', get_bloginfo( 'template_url' ) . '/assets/js/jquery.ui.touch-punch.min.js', array( 'jquery' ), '0.2.2', true );
-    // wp_register_script( 'jquery-fancybox', get_bloginfo( 'template_url' ) . '/assets/js/jquery.fancybox.pack.js', array( 'jquery' ), '2.0.4', true );
-    // wp_register_script( 'google-prettify', get_bloginfo( 'template_url' ) . '/assets/js/google-prettify.js', array( 'jquery' ), Flawless_Version, true );
-    // wp_register_script( 'jquery-cookie', get_bloginfo( 'template_url' ) . '/assets/js/jquery.smookie.js', array( 'jquery' ), Flawless_Version, true );
-    // wp_register_script( 'jquery-masonry', get_bloginfo( 'template_url' ) . '/assets/js/jquery.masonry.min.js', array( 'jquery' ), Flawless_Version, true );
-    // wp_register_script( 'jquery-equalheights', get_bloginfo( 'template_url' ) . '/assets/js/jquery.equalheights.js', array( 'jquery' ), Flawless_Version, true );
-
-    //
     wp_register_script( 'bootstrap', '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/js/bootstrap.min.js', array( 'jquery' ), '3.0.0', true );
     wp_register_script( 'knockout', '//cdnjs.cloudflare.com/ajax/libs/knockout/2.3.0/knockout-min.js', array( 'jquery' ), '2.0.0', true );
     wp_register_script( 'knockout-mapping', '//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.3.5/knockout.mapping.min.js', array( 'jquery', 'knockout' ), '2.3.5', true );
@@ -262,8 +281,6 @@ class Flawless extends UD_API {
       )
     );
 
-    add_action( 'customize_register', array( 'Flawless', 'customize_register' ));
-
     $flawless = Flawless::setup_content_types( $flawless );
 
     //** Check if updates should be disabled */
@@ -301,7 +318,7 @@ class Flawless extends UD_API {
    * 500 priority is ran pretty much after everything, to include widgets_init, which is ran @level 1 of init
    *
    * @filter init ( 500 )
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function init_lower() {
     global $flawless;
@@ -376,95 +393,9 @@ class Flawless extends UD_API {
   }
 
   /**
-   * {WIP}
-   *
-   * Types: text, checkbox, radio, select, dropdown-pages
-   * Actions: customize_render_control
-   *
-   * @todo custom action to save settings - customize_save_ in class-wp-customize-setting.php
-   * @since 0.0.3
-   */
-  static function customize_register( $wp_customize ) {
-    global $flawless;
-
-    if ( !class_exists( 'WP_Customize' ) ) {
-      return;
-    }
-
-    $wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
-    $wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
-
-    $wp_customize->remove_section( 'strings' );
-    $wp_customize->remove_section( 'header' );
-    $wp_customize->remove_section( 'background' );
-    $wp_customize->remove_section( 'nav' );
-    $wp_customize->remove_section( 'static_front_page' );
-
-    //WP_Customize_Color_Control
-    //WP_Customize_Upload_Control
-    //WP_Customize_Image_Control
-    //WP_Customize_Header_Image_Control
-
-    $wp_customize->add_section( 'flawless_layout', array(
-      'title' => __( 'Layout', 'twentyeleven' ),
-      'priority' => 50,
-    ));
-
-    $wp_customize->add_setting( 'Flawless_options[link_color]', array(
-      'default' => 'red',
-      'type' => 'option',
-      'sanitize_callback' => 'sanitize_hexcolor',
-      'capability' => 'edit_theme_options',
-    ));
-
-    $wp_customize->add_setting( 'Flawless_options[header_image]', array(
-      //'default'           => 'red',
-      //'type'              => 'option',
-      //'sanitize_callback' => 'sanitize_hexcolor',
-      'capability' => 'edit_theme_options',
-    ));
-
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'link_color', array(
-      'label' => __( 'Link Color', 'twentyeleven' ),
-      'section' => 'flawless_layout',
-      'settings' => 'Flawless_options[link_color]',
-    ) ));
-
-    $wp_customize->add_setting( 'background_image', array(
-      'default' => get_theme_support( 'custom-background', 'default-image' ),
-      //'theme_supports' => 'custom-background',
-    ));
-
-    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'background_image', array(
-      'label' => __( 'Background Image' ),
-      'section' => 'flawless_layout',
-      'context' => 'custom-background',
-    ) ));
-
-    $wp_customize->add_setting( 'Flawless_options[theme_layout]', array(
-      'type' => 'option',
-      'default' => $flawless[ 'color_scheme' ],
-      'sanitize_callback' => 'sanitize_key',
-    ));
-
-    foreach ( (array) Flawless::get_color_schemes() as $scheme => $scheme_data ) {
-      $_schemes[ $scheme ] = $scheme_data[ 'Name' ];
-    }
-
-    $wp_customize->add_control( 'Flawless_options[theme_layout]', array(
-      'label' => __( 'Color Scheme', 'twentyeleven' ),
-      'section' => 'flawless_layout',
-      //'priority' => 5,
-      'type' => 'radio',
-      'choices' => $_schemes
-    ));
-
-  }
-
-  /**
    * Update Flawless Theme Setting
    *
-   * @since Flawless 0.6.1
+   * @since 0.6.1
    */
   static function update_option( $key = false, $value = '' ) {
     global $flawless;
@@ -477,7 +408,7 @@ class Flawless extends UD_API {
       $flawless_settings = get_option( 'flawless_settings' );
       unset( $flawless_settings[ $key ] );
     } else {
-      $flawless_settings = self::array_merge_recursive_distinct( get_option( 'flawless_settings' ), array( $key => $value ));
+      $flawless_settings = self::extend( get_option( 'flawless_settings' ), array( $key => $value ));
     }
 
     if ( update_option( 'flawless_settings', $flawless_settings ) ) {
@@ -543,16 +474,16 @@ class Flawless extends UD_API {
    * Disables update notifications if set.
    *
    * @action after_setup_theme( 10 )
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function log_stats() {
     Flawless::console_log( 'End of request, total execution: ' . timer_stop() . ' seconds.' );
   }
 
   /**
-   * {}
+   * -
    *
-   * @since Flawless 0.6.0
+   * @since 0.6.0
    */
   static function wp_footer() {
     global $wpdb;
@@ -564,7 +495,7 @@ class Flawless extends UD_API {
    *
    * @source Update Notifications Manager ( http://www.geekpress.fr/ )
    * @action after_setup_theme( 10 )
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function maybe_disable_updates() {
     global $flawless;
@@ -597,7 +528,7 @@ class Flawless extends UD_API {
    * @todo Add "Attention Grabber" via Feature
    *
    * @action after_setup_theme( 10 )
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function define_widget_area_sections( $flawless ) {
 
@@ -638,7 +569,7 @@ class Flawless extends UD_API {
    * @todo: Add check for "custom" views, i.e. search result page. -potanin@UD
    * @todo: Add custom description generation based on views a widget area is used in. -potanin@UD
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function create_views( $current, $args = false ) {
     global $wp_registered_sidebars, $flawless, $post;
@@ -806,7 +737,7 @@ class Flawless extends UD_API {
    * - group: The "group" this view belongs to, such as post types, taxonomies, etc.
    *
    * @todo Ensure $wp_query->query_vars work with other permalink structures. - potanin@UD
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    * @author potanin@UD
    */
   static function this_request() {
@@ -957,7 +888,7 @@ class Flawless extends UD_API {
    *
    * @todo Fix issue with Post Page not displaying sidebar. Should be treated as a page. - potanin@UD 5/30/12
    * @filter template_redirect ( 0 )
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    * @author potanin@UD
    */
   static function set_current_view() {
@@ -1057,7 +988,7 @@ class Flawless extends UD_API {
    * Whether sidebars are active or not is already checked in set_current_view();
    *
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    * @author potanin@UD
    */
   static function get_current_sidebars( $widget_area_type = false ) {
@@ -1088,7 +1019,7 @@ class Flawless extends UD_API {
    *
    * Currently not used, Denali 3.0 port.
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function widget_area_tabs( $widget_area = false ) {
     global $wp_registered_widgets;
@@ -1159,7 +1090,7 @@ class Flawless extends UD_API {
    *
    * @todo Need to update all labels for taxonomoies. - potanin@UD
    * @action init (0)
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    *
    */
   static function setup_content_types( $flawless = false ) {
@@ -1450,7 +1381,7 @@ class Flawless extends UD_API {
    * Get default LESS variables from a file. These are later overwritten by theme settings.
    *
    * @todo Include a way of grouping variables together based on the CSS comments. - potanin@UD 6/11/12
-   * @since Flawless 0.6.1
+   * @since 0.6.1
    * @author potanin@UD
    */
   static function parse_css_option_defaults( $flawless, $file = 'variables.less' ) {
@@ -1529,7 +1460,7 @@ class Flawless extends UD_API {
    *
    * @todo Should have some support for bootstrap content styles. - potanin@UD 6/10/12
    * @updated 0.6.1
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function setup_theme_features( $flawless ) {
     global $wpdb;
@@ -1694,10 +1625,21 @@ class Flawless extends UD_API {
    *
    * Loaded after theme_features have been configured.
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function load_core_assets() {
     global $flawless;
+
+    // @todo Utilize via Flawless\Loader()
+    $_classes = array(
+      'classmap' => array(),
+      'files' => array(),
+      'namespaced' => array(
+        'Composer' => array(   ),
+        'UDX' => array( $flawless[ 'paths' ][ 'vendor' ] ),
+        'Flawless' => array( $flawless[ 'paths' ][ 'vendor' ] . '/core' ),
+      )
+    );
 
     //** Load logo if set */
     if ( is_numeric( $flawless[ 'flawless_logo' ][ 'post_id' ] ) && $image_attributes = wp_get_attachment_image_src( $flawless[ 'flawless_logo' ][ 'post_id' ], 'full' ) ) {
@@ -1739,7 +1681,7 @@ class Flawless extends UD_API {
   /**
    * Loads extra function files.
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function load_extend_modules( $flawless ) {
 
@@ -1821,7 +1763,7 @@ class Flawless extends UD_API {
    * Modifies body class based on loaded assets.
    *
    * @filter wp_enqueue_scripts ( 100 )
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    * @todo Scripts should be registered here, but enqueved at a differnet level. - potanin@UD
    */
   static function wp_enqueue_scripts( $args = '' ) {
@@ -1893,7 +1835,7 @@ class Flawless extends UD_API {
    * @todo Updates to /less/ files, other than bootstrap.less, are not monitored. - potanin@UD 6/11/12
    * @todo CSS added outside of here does not seem to honor dependencies - is there an issue with enqueueing CSS here? - potanin@UD 6/11/12
    * @filter wp_print_styles ( 100 )
-   * @since Flawless 0.6.1
+   * @since 0.6.1
    */
   static function wp_print_styles( $args = '' ) {
     global $flawless, $wp_styles;
@@ -2091,11 +2033,48 @@ class Flawless extends UD_API {
   }
 
   /**
+   * Returns image sizes for a passed image size slug
+   *
+   * @method image_sizes
+   * @version 0.1.1
+   * @source UD_Functions
+   * @since 0.5.4
+   * @returns array keys: 'width' and 'height' if image type sizes found.
+   */
+  static function image_sizes( $type = false, $args = '' ) {
+    global $_wp_additional_image_sizes;
+
+    $image_sizes = (array)$_wp_additional_image_sizes;
+
+    $image_sizes[ 'thumbnail' ] = array(
+      'width' => intval( get_option( 'thumbnail_size_w' ) ),
+      'height' => intval( get_option( 'thumbnail_size_h' ) )
+    );
+
+    $image_sizes[ 'medium' ] = array(
+      'width' => intval( get_option( 'medium_size_w' ) ),
+      'height' => intval( get_option( 'medium_size_h' ) )
+    );
+
+    $image_sizes[ 'large' ] = array(
+      'width' => intval( get_option( 'large_size_w' ) ),
+      'height' => intval( get_option( 'large_size_h' ) )
+    );
+
+    foreach ( (array)$image_sizes as $size => $data ) {
+      $image_sizes[ $size ] = array_filter( (array)$data );
+    }
+
+    return array_filter( (array)$image_sizes );
+
+  }
+
+  /**
    * Return array of active plugins for current instance
    *
    * Improvement over wp_get_active_and_valid_plugins() which doesn't return any plugins when in MS
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function get_active_plugins() {
 
@@ -2116,7 +2095,7 @@ class Flawless extends UD_API {
    * Load global vars for header template part.
    *
    * @todo Not sure if this is necessary - is there a reason for the flawless_header_links filter to be applied here? - potanin@UD
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function get_template_part_header( $slug, $name ) {
     global $flawless, $wp_query;
@@ -2145,7 +2124,7 @@ class Flawless extends UD_API {
    *
    * @todo Should switch to WP 3.3 contextual help with UD live-help updater.
    * @uses $current_screen global variable
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function admin_enqueue_scripts( $hook ) {
     global $current_screen, $flawless;
@@ -2207,7 +2186,7 @@ class Flawless extends UD_API {
    * Adds Inline Cropping capability to an image.
    *
    * @todo Finish by initiating scripts when triggered. Right now causes a JS error because wp_image_editor() expects imageEdit() to already be loaded.  - potanin@UD
-   * @since Flawless 0.3.4
+   * @since 0.3.4
    */
   static function inline_crop( $post_id ) {
 
@@ -2256,7 +2235,7 @@ class Flawless extends UD_API {
   /**
    * Frontend AJAX Handler.
    *
-   * @since Flawless 0.6.0
+   * @since 0.6.0
    */
   static function frontend_ajax_handler() {
     global $flawless, $wpdb;
@@ -2411,7 +2390,7 @@ class Flawless extends UD_API {
    * Must return array, which is automatically converted into JSON.
    *
    * @todo May want to update nonce verification to something more impressive since used on back and front-end calls.
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function ajax_actions() {
     global $flawless, $wpdb;
@@ -2521,7 +2500,7 @@ class Flawless extends UD_API {
    * {need description}
    *
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    *
    */
   static function add_archive_checkbox( $posts, $args, $post_type ) {
@@ -2559,7 +2538,7 @@ class Flawless extends UD_API {
    *
    * Adds a special class to menus that display descriptions for the individual menu items
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    *
    */
   static function wp_nav_menu_args( $args ) {
@@ -2576,7 +2555,7 @@ class Flawless extends UD_API {
   /**
    * {need description}
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    *
    */
   static function walker_nav_menu_start_el( $item_output, $item, $depth, $args ) {
@@ -2604,7 +2583,7 @@ class Flawless extends UD_API {
    * Modified front-end menus and adds extra classes
    *
    * @todo Find way to inexpensively figure out if current item is last and add a class.
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function nav_menu_css_class( $classes, $item, $args ) {
     global $post, $flawless, $wpdb;
@@ -2644,7 +2623,7 @@ class Flawless extends UD_API {
   /**
    * Handle upgrading the theme. Only displayed to users who can Update Themes.
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function handle_upgrade() {
     global $wpdb;
@@ -2691,7 +2670,7 @@ class Flawless extends UD_API {
   /**
    * Handles back-end theme configurations
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    *
    */
   static function admin_menu() {
@@ -2760,7 +2739,7 @@ class Flawless extends UD_API {
    * Primary function for handling front-end actions
    *
    * @filter template_redirect ( 0 )
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function template_redirect() {
     global $wp_styles, $is_IE, $flawless, $wp_query, $wp_rewrite, $post;
@@ -2809,7 +2788,7 @@ class Flawless extends UD_API {
     /**
      * Display attention grabbing image. (Option to enable does not currently exist, for testing only )
      *
-     * @since Flawless 0.6.0
+     * @since 0.6.0
      */
     add_action( 'flawless_ui::above_header', function () {
       global $post;
@@ -2840,7 +2819,7 @@ class Flawless extends UD_API {
   /**
    * Prevents direct editing of Extended Term post pages by redirecting user to term page.
    *
-   * @since Flawless 0.5.0
+   * @since 0.5.0
    */
   static function post_editor_loader() {
 
@@ -2860,7 +2839,7 @@ class Flawless extends UD_API {
   /**
    * Pre-header loader for Term Editor, when Extended Taxonomies are enabled.
    *
-   * @since Flawless 0.5.0
+   * @since 0.5.0
    */
   static function term_editor_loader() {
     global $taxnow, $wpdb;
@@ -2906,7 +2885,7 @@ class Flawless extends UD_API {
    *
    * Hooked into: wp_insert_post, edit_term, created_term, deleted_term.
    *
-   * @since Flawless 0.5.0
+   * @since 0.5.0
    */
   static function term_updated( $term_id, $maybe_post = false, $maybe_taxonomy = false ) {
     global $wpdb;
@@ -2967,7 +2946,7 @@ class Flawless extends UD_API {
   /**
    * Delete Extended Taxonomy post.
    *
-   * @since Flawless 0.5.0
+   * @since 0.5.0
    */
   static function delete_term( $term_id, $tt_id, $taxonomy ) {
     global $wpdb;
@@ -2989,7 +2968,7 @@ class Flawless extends UD_API {
    * @todo Navbar depth level of 1 is temporary - a callback must be added to render WP menus in TB format. - potanin@UD
    * @filter init ( 500 )
    * @author potanin@UD
-   * @since Flawless 0.3.5
+   * @since 0.3.5
    */
   static function prepare_navbars() {
     global $flawless;
@@ -3011,7 +2990,7 @@ class Flawless extends UD_API {
      * Bind to Template Redirect for rest of Navbar Loading since we need the $post object.
      *
      * @author potanin@UD
-     * @since Flawless 0.6.1
+     * @since 0.6.1
      */
     add_action( 'template_redirect', function () {
       global $flawless;
@@ -3127,7 +3106,7 @@ class Flawless extends UD_API {
    * Needs to be called before init ( 500 )
    *
    * @todo Finish function and update the way Navbar items are added. - potanin@UD 4/17/12
-   * @since Flawless 0.5.0
+   * @since 0.5.0
    */
   static function add_to_navbar( $html, $args = false ) {
     global $flawless;
@@ -3177,7 +3156,7 @@ class Flawless extends UD_API {
   /**
    * Renders the Navbar form the template part.
    *
-   * @since Flawless 0.3.5
+   * @since 0.3.5
    */
   static function render_navbars( $args = false ) {
     global $flawless;
@@ -3206,7 +3185,7 @@ class Flawless extends UD_API {
   /**
    * Add all the body classes
    *
-   * @since Flawless 0.2.5
+   * @since 0.2.5
    * @author potanin@UD
    */
   static function body_class( $classes, $class ) {
@@ -3230,7 +3209,7 @@ class Flawless extends UD_API {
   /**
    * Tweaks the default title. In most cases a specialty plugin will be used.
    *
-   * @since Flawless 0.3.7
+   * @since 0.3.7
    */
   static function wp_title( $current_title, $sep, $seplocation ) {
 
@@ -3257,7 +3236,7 @@ class Flawless extends UD_API {
    * used term from the taxonomy in question.
    *
    * @source http://www.viper007bond.com/2011/10/07/code-snippet-helper-class-to-add-custom-taxonomy-to-post-permalinks/
-   * @since Flawless 0.5.0
+   * @since 0.5.0
    */
   static function filter_post_link( $permalink, $post ) {
     global $flawless;
@@ -3301,7 +3280,7 @@ class Flawless extends UD_API {
   /**
    * Front-end Header Things
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function wp_head() {
     global $flawless, $is_iphone, $is_IE;
@@ -3369,7 +3348,7 @@ class Flawless extends UD_API {
    *
    * Scans child theme first.
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function get_color_schemes( $requested_scheme = false ) {
     global $flawless;
@@ -3529,7 +3508,7 @@ class Flawless extends UD_API {
    * Run on Flawless options update to validate blog owner's address for map on front-end.
    *
    * @todo Add function to check if background image actually exists and is reachable. - potanin@UD
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function custom_background() {
 
@@ -3580,7 +3559,7 @@ class Flawless extends UD_API {
    * Display area for background image in back-end
    *
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function admin_image_div_callback() {
     ?>
@@ -3622,7 +3601,7 @@ class Flawless extends UD_API {
    * @todo Some might exist that adds widgets twice.
    * @todo Consider moving functionality to UD Class
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function add_widget_to_sidebar( $sidebar_id = false, $widget_id = false, $settings = array(), $args = '' ) {
     global $wp_registered_widget_updates, $wp_registered_widgets;
@@ -3720,7 +3699,7 @@ class Flawless extends UD_API {
    *
    * Must be called early, before admin_init
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function add_post_type_option( $args = array() ) {
     global $flawless;
@@ -3753,7 +3732,7 @@ class Flawless extends UD_API {
   /**
    * Saves extra post information
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function save_post( $post_id, $post ) {
     global $pagenow;
@@ -3860,7 +3839,7 @@ class Flawless extends UD_API {
   /**
    * Render any options for this post type on editor page
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function post_submitbox_misc_actions() {
     global $post, $flawless, $pagenow;
@@ -3984,7 +3963,7 @@ class Flawless extends UD_API {
    *
    * Adds a widget to a sidebar, making sure that sidebar doesn't already have this widget.
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function remove_widget_from_sidebar( $sidebar_id, $widget_id ) {
     global $wp_registered_widget_updates;
@@ -4016,7 +3995,7 @@ class Flawless extends UD_API {
    * Displays first-time setup splash screen
    *
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function admin_init() {
     global $wp_registered_widget_updates, $wpdb, $flawless;
@@ -4031,7 +4010,7 @@ class Flawless extends UD_API {
     add_action( 'admin_print_footer_scripts', array( 'Flawless', 'admin_print_footer_scripts' ), 10 );
 
     //** Check if child thme exists and updates flawless_settings accordingly */
-    Flawless::flawless_child_theme_exists();
+    Flawless::valid_child_theme();
 
     //** Check for special actions and nonce, a nonce must always be set. */
     if ( !empty( $_REQUEST[ '_wpnonce' ] ) /* && isset( $_REQUEST[ 'flawless_action' ] ) */ ) {
@@ -4087,7 +4066,7 @@ class Flawless extends UD_API {
   /**
    * Adds custom logo, if exists, to login screen.
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function login_head() {
     global $flawless;
@@ -4106,7 +4085,7 @@ class Flawless extends UD_API {
    * Called after nonce is verified.
    *
    * @return string or false.  If string, a URL to be used for redirection.
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function save_settings( $flawless, $args = array() ) {
 
@@ -4171,7 +4150,7 @@ class Flawless extends UD_API {
    * Used for configurations that cannot be logically placed into a built-in Settings page
    *
    * @todo Update 'auto_complete_done' message to include a link to the front-end for quick view of setup results.
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function options_page() {
     global $flawless, $_wp_theme_features, $flawless;
@@ -4256,7 +4235,7 @@ class Flawless extends UD_API {
    *
    * WordPress does not provide an easy way to figure out the type of sidebar that was called from within the sidebar.php file, so we backtrace it.
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    * @author potanin@UD
    */
   static function backtrace_sidebar_type() {
@@ -4285,7 +4264,7 @@ class Flawless extends UD_API {
    * Checks if script or style have been loaded.
    *
    * @todo Add handler for styles.
-   * @since Flawless 0.2.0
+   * @since 0.2.0
    *
    */
   static function is_asset_loaded( $handle = false ) {
@@ -4312,7 +4291,7 @@ class Flawless extends UD_API {
    * PHP function to echoing a message to JS console
    *
    * @todo This needs to be improved.
-   * @since Flawless 0.2.0
+   * @since 0.2.0
    */
   static function console_log( $entry = false, $type = 'log' ) {
     global $flawless;
@@ -4338,7 +4317,7 @@ class Flawless extends UD_API {
   }
 
   /**
-   * {}
+   * Insert scripts into footer.
    *
    * flawless_render_in_footer() depends on this to render any scripts / styles.
    *
@@ -4518,12 +4497,12 @@ class Flawless extends UD_API {
    * Copies files from /flawless-child folder into the them folder so denali child can be used.
    *
    * @todo Needs to be updated to select which files to copy, flawless-child directory no longer used.
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
   static function install_child_theme() {
     global $user_ID, $wpdb, $wp_theme_directories;
 
-    if ( Flawless::flawless_child_theme_exists() ) {
+    if ( Flawless::valid_child_theme() ) {
       return true;
     }
 
@@ -4609,9 +4588,9 @@ class Flawless extends UD_API {
    * Check if default denali child theme exists.
    *
    *
-   * @since Flawless 0.2.3
+   * @since 0.2.3
    */
-  static function flawless_child_theme_exists() {
+  static function valid_child_theme() {
     global $user_ID, $wpdb, $flawless;
 
     if ( file_exists( ABSPATH . '/wp-content/themes/flawless-child' ) ) {
@@ -4627,7 +4606,7 @@ class Flawless extends UD_API {
   /**
    * Checks if sidebar is active. Same as default function, but allows hooks
    *
-   * @since Flawless 0.2.0
+   * @since 0.2.0
    */
   static function is_active_sidebar( $sidebar ) {
     return is_active_sidebar( $sidebar );
@@ -4830,4 +4809,4 @@ class Flawless extends UD_API {
 } /* end Flawless class */
 
 //** Initialize the theme. */
-$Flawless = new Flawless();
+new Flawless();

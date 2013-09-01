@@ -10,10 +10,33 @@
  * @author team@UD
  */
 
-if ( version_compare( phpversion(), 5.3 ) < 0 ) {
-  switch_theme( WP_DEFAULT_THEME, WP_DEFAULT_THEME );
-  wp_die( sprintf( __( 'Your version of PHP, %1s, is old, and this theme cannot support it, so it has been disabled. Please consider upgrading to 5.3, or newer. <a href="%2s">Back to Safety.</a>', HDDP ), phpversion(), admin_url() ) );
-}
+// This Version
+define( 'Flawless_Core_Version', '0.1.1' );
+
+// Option Key for this version's settings.
+define( 'Flawless_Option_Key', 'settings::' . Flawless_Core_Version );
+
+// Get Directory name
+define( 'Flawless_Directory', basename( TEMPLATEPATH ) );
+
+// Path for Includes
+define( 'Flawless_Path', untrailingslashit( get_stylesheet_directory() ) );
+
+// Path for front-end links
+define( 'Flawless_URL', untrailingslashit( get_stylesheet_directory_uri() ) );
+
+// Settings page URL.
+define( 'Flawless_Admin_URL', admin_url( 'themes.php?page=flawless.php' ));
+
+// Directory path to permium modules
+define( 'Flawless_Premium', Flawless_Path . 'core/premium' );
+
+// Directory path JSON schemas
+define( 'Flawless_Schemas', Flawless_Path . 'schemas' );
+
+// Locale slug
+define( 'Flawless_Transdomain', 'flawless' );
 
 //** Core functionality is in flawless_loader.php. This way older verions of PHP do not crash and burn due to our usage of closures, and other modern methods */
-include_once( untrailingslashit( TEMPLATEPATH ) . '/core/flawless.php' );
+include_once( Flawless_Path . '/core/flawless.php' );
+
