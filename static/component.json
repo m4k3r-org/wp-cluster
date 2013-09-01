@@ -1,0 +1,24 @@
+{
+  "name": "test",
+  "repo": "UsabilityDynamics/flawless",
+  "description": "asldfkj",
+  "version": "0.0.1",
+  "remotes": [
+    "https://raw.github.com",
+    "https://repository.usabilitydynamics.com"
+  ],
+  "paths": [
+    "path/to/my-other-components"
+  ],
+  "dependencies": {
+    "component/simple-grid": "*"
+  },
+  "styles": [
+    "lib/style.css"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "lib/test.js"
+  ]
+}

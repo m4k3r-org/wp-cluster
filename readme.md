@@ -2,8 +2,10 @@
 * Flawless WordPress Theme By Usability Dynamics, Inc.
 * Theme Homepage - http://usabilitydynamics.com/products/flawless/
 
+component install
+
 ## To Do
-  - Update Carrington Build and look into integrating https://raw.github.com/crowdfavorite/wp-carrington-build-bootstrap-3/master/build-bootstrap-grid.php.
+- Update Carrington Build and look into integrating https://raw.github.com/crowdfavorite/wp-carrington-build-bootstrap-3/master/build-bootstrap-grid.php.
 
 == Notes ==
 The theme has a default maximum width of 1090px, which is the default Flawless width, but can be adjusted under Appearance Settings.

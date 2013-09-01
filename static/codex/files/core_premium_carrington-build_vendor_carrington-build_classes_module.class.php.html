@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/premium/carrington-build/vendor/carrington-build/classes/module.class.php - Flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="Flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/: Flawless.Element.html">: Flawless.Element</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Module.html">: Flawless.Flawless_Module</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Shortcode.html">: Flawless.Flawless_Shortcode</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Widget.html">: Flawless.Flawless_Widget</a></li>
+            
+                <li><a href="../classes/: Flawless.flawless_wpp_extensions.html">: Flawless.flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/: Flawless.License.html">: Flawless.License</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Functions.html">Template Functions</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/premium/carrington-build/vendor/carrington-build/classes/module.class.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+
+/**
+ * Module
+ * Borrows heavily from WP_Widget
+ *
+ * @package cfct_build
+ */
+class cfct_build_module extends cfct_build_module_utility {
+  
+  public $id_base;
+  public $name;
+  public $opts;
+  public $module_options;
+  
+  protected $focus_target = null; // CSS3 selector of field to set focus to, if not set focus is set to the first visible field
+    
+  protected $view = &#x27;view.php&#x27;;
+  protected $available = true;
+  protected $context_excludes = array();
+  protected $editable = true;
+  protected $_truncate = true;
+  protected $admin_form_fullscreen = false;
+  
+  protected $errors = array();
+  
+  protected $suppress_save = false;
+  
+  /**
+   * Construct
+   */
+  function __construct($id_base = false, $name, $opts = array()) {
+    $this-&gt;basename = $this-&gt;get_basename();
+
+    // store widget type if available
+    if (isset($opts[&#x27;widget_type&#x27;])) {
+      $this-&gt;get_widget($opts[&#x27;widget_type&#x27;]);
+    }
+    $this-&gt;id_base = $id_base;
+    $this-&gt;name = $name;
+    $this-&gt;opts = $opts;
+    $this-&gt;admin_text_length = 25;
+    
+    if (isset($opts[&#x27;is_content&#x27;]) &amp;&amp; !$opts[&#x27;is_content&#x27;]) {
+      $this-&gt;is_content = false;
+    }
+    
+    if (!empty($opts[&#x27;url&#x27;])) {
+      $this-&gt;url = $opts[&#x27;url&#x27;];
+    }
+    
+    if (!empty($opts[&#x27;view&#x27;])) {
+      $this-&gt;view = $opts[&#x27;view&#x27;];
+    }
+    parent::__construct();
+    $this-&gt;module_options = cfct_module_options::get_instance();
+  }
+  
+  public function list_admin($context = null) {
+    if (isset($this-&gt;available) &amp;&amp; $this-&gt;available === false) {
+      return false;
+    }
+    elseif(!empty($this-&gt;context_excludes) &amp;&amp; in_array($context, $this-&gt;context_excludes)) {
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * Public facing output
+   * return html and not echo
+   * Proxy for child class ::display() method
+   * @return html
+   */
+  public function html($data) {
+    global $cfct_build;
+    
+    if (empty($data)) { 
+      // no funny stuff if we&#x27;re not passed any display data
+      return &#x27;&#x27;;
+    }
+
+    $module_class = apply_filters(&#x27;cfct-build-module-class&#x27;, &#x27;cfct-module &#x27;.$this-&gt;id_base, $data);
+    
+    // get display html &amp; apply generic filter
+    $module_display = apply_filters(&#x27;cfct-module-display&#x27;, $this-&gt;display($data), $this-&gt;id_base, $data);
+    // apply more module specific filters to output
+    $module_display = apply_filters(&#x27;cfct-module-&#x27;.$this-&gt;id_base.&#x27;-display&#x27;, $module_display, $data);
+    
+    $ret = &#x27;
+      &lt;div class=&quot;&#x27;.$module_class.&#x27;&quot;&gt;
+        &#x27;.$module_display.&#x27;
+      &lt;/div&gt;&#x27;;
+    
+    return apply_filters(&#x27;cfct-module-&#x27;.$this-&gt;id_base.&#x27;-html&#x27;, $ret, $data);
+  }
+  
+  /**
+   * Load the view 
+   * 
+   * $params is an associative array that will be extracted for the view
+   * All keys in the array will become available variables in the view in
+   * addition to the $data variable
+   *
+   * @param string $view 
+   * @param string $params - additional params to be made available to the template 
+   * @return void
+   */
+  public function load_view($data, $params = array()) {
+    $view = apply_filters(&#x27;cfct-module-&#x27;.$this-&gt;id_base.&#x27;-view&#x27;, $this-&gt;view, $data);
+
+    // find file
+    $view_path = &#x27;&#x27;;
+    if (is_file($view)) {
+      // full path to view given
+      $view_path = $view;
+    }
+    else {
+      // look for view in module folder
+      global $cfct_build;
+      $path = dirname($cfct_build-&gt;get_module_path($this-&gt;basename));
+      if (is_file(trailingslashit($path).$view)) {
+        $view_path = trailingslashit($path).$view;
+      }
+      else {
+        // last ditch, try the immediate parent module
+        $parent_class = get_parent_class($this);
+        if ($parent_class != &#x27;cfct_build_module&#x27;) {
+          $parent = $cfct_build-&gt;template-&gt;get_module($parent_class);
+          $parent_path = dirname($cfct_build-&gt;get_module_path($parent-&gt;get_basename()));
+          if (is_file(trailingslashit($parent_path).$view)) {
+            $view_path = trailingslashit($parent_path).$view;
+          }
+        }
+      }
+    }
+
+    // render
+    if (!empty($view_path)) {  
+      extract($params);
+      ob_start();
+    
+      include($view_path);
+    
+      $buffer = ob_get_clean();
+      return $buffer;
+    }
+    else {
+      return null;
+    }
+  }
+  
+  /**
+   * function to output to admin page so that we can wrap the form in lightbox actions
+   * proxy for child class ::admin_form() and ::admin_preview() methods
+   *
+   * @param array $data 
+   * @return string html
+   */
+  public function _admin($mode = &#x27;details&#x27;, $data = array()) {
+    global $cfct_build;
+
+    // reset admin_success each time
+    $this-&gt;suppress_save = false;
+    
+    // get admin form html &amp; apply generic filter
+    $module_form =  apply_filters(&#x27;cfct-module-admin-form&#x27;, $this-&gt;admin_form($data), $this-&gt;id_base, $data);
+    // apply module specific admin form html filters
+    $module_admin_content = apply_filters(&#x27;cfct-module-&#x27;.$this-&gt;id_base.&#x27;-admin-form&#x27;, $module_form, $data);
+
+    if ($mode == &#x27;edit&#x27;) {
+      $popup_contents = &#x27;
+          &lt;div class=&quot;cfct-popup-header cfct-popup-header-has-icon&quot;&gt;
+            &lt;img class=&quot;cfct-popup-icon&quot; src=&quot;&#x27;.$this-&gt;get_icon().&#x27;&quot; alt=&quot;&#x27;.$this-&gt;get_name().&#x27;&quot; /&gt;
+            &lt;h2 class=&quot;cfct-popup-title&quot;&gt;&#x27;.$this-&gt;name.&#x27;&lt;/h2&gt;&#x27;;
+      
+      if (isset($this-&gt;opts[&#x27;description&#x27;])) {
+        $popup_contents .= &#x27;&lt;p class=&quot;cfct-popup-subtitle&quot;&gt;&#x27; . $this-&gt;opts[&#x27;description&#x27;] . &#x27;&lt;/p&gt;&#x27;;
+      }
+      
+      if ($this-&gt;do_custom_attributes()) {
+        $popup_contents .= $this-&gt;module_options-&gt;options_list($this-&gt;get_type());    
+      }
+      
+      $popup_contents .= &#x27;
+          &lt;/div&gt;&#x27;;
+
+      $guid = isset($data[&#x27;module_id&#x27;]) &amp;&amp; !empty($data[&#x27;module_id&#x27;]) ? $data[&#x27;module_id&#x27;] : cfct_build_guid($this-&gt;id_base, &#x27;module&#x27;);
+      $render = (int) (isset($data[&#x27;render&#x27;]) ? $data[&#x27;render&#x27;] : 1);
+      
+      $style = &#x27;&#x27;;
+      if (isset($data[&#x27;max-height&#x27;])) {
+        $this-&gt;max_height = floor($data[&#x27;max-height&#x27;]);
+        $style = &#x27; style=&quot;max-height: &#x27;.$this-&gt;max_height.&#x27;px; overflow: auto;&#x27;.($this instanceof cfct_module_multi_base ? &#x27; height: &#x27;.$this-&gt;max_height.&#x27;px&#x27; : &#x27;&#x27;).&#x27;&quot;&#x27;;
+      }
+
+      // yank custom attributes from data
+      if (isset($data[&#x27;custom_attributes&#x27;]) &amp;&amp; is_array($data[&#x27;custom_attributes&#x27;])) {
+        $custom_attributes = $data[&#x27;custom_attributes&#x27;];
+        unset($data[&#x27;custom_attributes&#x27;]);
+      }
+      
+      $popup_contents .= &#x27;
+          &lt;div class=&quot;&#x27;.apply_filters(&#x27;cfct-module-form-class&#x27;, &#x27;cfct-module-form&#x27;, $this-&gt;id_base).&#x27;&quot;&gt;
+            &lt;form id=&quot;&#x27;.$this-&gt;id_base.&#x27;-edit-form&quot; class=&quot;cfct-module-edit-form&quot; name=&quot;&#x27;.$this-&gt;id_base.&#x27;&quot;&#x27;.($this-&gt;suppress_save ? &#x27; onsubmit=&quot;return false;&quot;&#x27; : &#x27;&#x27;).&#x27;&gt;&#x27;;
+
+      if ($this-&gt;do_custom_attributes()) {
+        $module_options = array();
+        if (isset($data[&#x27;cfct-module-options&#x27;])) {
+          $module_options = $data[&#x27;cfct-module-options&#x27;];
+          unset($data[&#x27;cfct-module-options&#x27;]);
+        }
+        $popup_contents .= $this-&gt;module_options-&gt;options_html($module_options, $this-&gt;get_type());
+      }
+
+      $popup_contents .= &#x27;
+              &lt;div class=&quot;cfct-popup-content&#x27;.(!empty($this-&gt;admin_form_fullscreen) &amp;&amp; $this-&gt;admin_form_fullscreen == true ? &#x27; cfct-popup-content-fullscreen&#x27; : &#x27;&#x27;).&#x27;&quot;&#x27;.$style.&#x27;&gt;
+                &lt;fieldset&gt;
+                  &#x27;.$module_admin_content.&#x27;
+                &lt;/fieldset&gt;&#x27;;
+      $popup_contents .= &#x27;
+              &lt;/div&gt;
+              &lt;div class=&quot;cfct-popup-actions&quot;&gt;&#x27;;
+      if (!$this-&gt;suppress_save) {
+        $popup_contents .= &#x27;
+                &#x27;.($cfct_build instanceof cfct_build_admin ? $cfct_build-&gt;popup_activity_div(__(&#x27;Saving Module&amp;hellip;&#x27;, &#x27;carrington-build&#x27;)) : &#x27;&#x27;).&#x27;
+        
+                &lt;input type=&quot;submit&quot; name=&quot;module-&#x27;.$this-&gt;id_base.&#x27;-submit&quot; id=&quot;module-&#x27;.$this-&gt;id_base.&#x27;-submit&quot; class=&quot;cfct-button cfct-button-dark cfct-button-action&quot; value=&quot;&#x27;.__(&#x27;Save&#x27;, &#x27;carrington-build&#x27;).&#x27;&quot;/&gt;
+                &lt;span class=&quot;cfct-or&quot;&gt; or &lt;/span&gt;&#x27;;
+      }
+      $popup_contents .= &#x27;
+                &lt;a href=&quot;#&quot; id=&quot;cfct-edit-module-cancel&quot; class=&quot;cancel&quot;&gt;&#x27;.__(&#x27;cancel&#x27;, &#x27;carrington-build&#x27;).&#x27;&lt;/a&gt;&#x27;;
+      if (!empty($data[&#x27;sideload&#x27;]) &amp;&amp; !empty($data[&#x27;parent_module_id&#x27;])) {
+        $popup_contents .= &#x27;
+                &lt;input type=&quot;hidden&quot; name=&quot;parent_module_id&quot; value=&quot;&#x27;.$data[&#x27;parent_module_id&#x27;].&#x27;&quot; /&gt;&#x27;;
+        if (!empty($data[&#x27;parent_module_id_base&#x27;])) {
+          $popup_contents .= &#x27;&lt;input type=&quot;hidden&quot; name=&quot;parent_module_id_base&quot; value=&quot;&#x27;.$data[&#x27;parent_module_id_base&#x27;].&#x27;&quot; /&gt;&#x27;;
+        }
+                
+      }
+      $popup_contents .= &#x27;
+                &lt;input type=&quot;hidden&quot; name=&quot;module_id_base&quot; value=&quot;&#x27;.$this-&gt;id_base.&#x27;&quot; /&gt;
+                &lt;input type=&quot;hidden&quot; name=&quot;module_type&quot; value=&quot;&#x27;.$this-&gt;get_type().&#x27;&quot; /&gt;
+                &lt;input type=&quot;hidden&quot; name=&quot;module_id&quot; value=&quot;&#x27;.$guid.&#x27;&quot; /&gt;
+                &lt;input type=&quot;hidden&quot; name=&quot;render&quot; value=&quot;&#x27;.$render.&#x27;&quot; /&gt;
+              &lt;/div&gt;
+            &lt;/form&gt;
+          &lt;/div&gt;&#x27;;
+          
+      // wrap it all up nice and neat
+      $html = &#x27;
+        &lt;div class=&quot;&#x27;.$this-&gt;id_base.&#x27;-edit cfct-popup&quot;&gt;
+          &lt;div class=&quot;cfct-popup-inner-wrap&quot;&gt;
+          &#x27;.apply_filters(&#x27;cfct-module-&#x27;.$this-&gt;id_base.&#x27;-admin-popup-contents&#x27;, $popup_contents, $this).&#x27;
+          &lt;/div&gt;
+        &lt;/div&gt;&#x27;;
+    }
+    else {
+      $text = $this-&gt;admin_text($data);
+      if (!empty($text) &amp;&amp; $this-&gt;_truncate) {
+        $hellip = strlen($text) &gt; $this-&gt;admin_text_length ? &#x27;&amp;hellip;&#x27; : &#x27;&#x27;;
+        $text = substr(strip_tags($text), 0, $this-&gt;admin_text_length).$hellip;
+      }
+      else {
+        $text = $this-&gt;name;
+      }
+      
+      $options_layout_html = &#x27;&#x27;;
+      if ($this-&gt;do_custom_attributes()) {
+        $module_options = array();
+        if (isset($data[&#x27;cfct-module-options&#x27;])) {
+          $module_options = $data[&#x27;cfct-module-options&#x27;];
+          unset($data[&#x27;cfct-module-options&#x27;]);
+        }
+        $options_layout_html = $this-&gt;module_options-&gt;options_layout_html($data, $module_options, $this-&gt;get_type());
+      }
+
+      $html = &#x27;
+        &lt;div id=&quot;&#x27;.$data[&#x27;module_id&#x27;].&#x27;&quot; class=&quot;cfct-module cfct-module-&#x27;.$this-&gt;id_base.&#x27;&quot;&gt;
+          &lt;dl class=&quot;cfct-module-content&quot;&gt;
+            &lt;dt class=&quot;cfct-module-content-title&quot;&gt;
+            &lt;img class=&quot;cfct-module-content-icon&quot; src=&quot;&#x27;.$this-&gt;get_icon().&#x27;&quot; alt=&quot;&#x27;.$this-&gt;get_name().&#x27;&quot; /&gt;&#x27;;
+      /* Disabled in 1.2 */
+      /* $html .= &#x27;
+          &lt;div class=&quot;cfct-module-edit-clear cfct-module-rendering&quot;&gt;
+              &lt;a href=&quot;#&#x27;.$data[&#x27;module_id&#x27;].&#x27;&quot; class=&quot;cfct-module-toggle-render&quot;&gt;&#x27;.__((!isset($data[&#x27;render&#x27;]) || $data[&#x27;render&#x27;]) ? &#x27;Enabled&#x27; : &#x27;Disabled&#x27;, &#x27;carrington-build&#x27;).&#x27;&lt;/a&gt;
+          &lt;/div&gt;&#x27;;
+      */
+      $html .= &#x27;
+              &lt;small class=&quot;cfct-module-content-type&quot;&gt;&#x27;.$this-&gt;name.&#x27;&lt;/small&gt;
+              &#x27;.esc_html($text).&#x27;
+            &lt;/dt&gt;
+            &lt;dd class=&quot;cfct-module-edit-clear&quot;&gt;&#x27;;
+      if ($this-&gt;editable) {
+        $html .= &#x27;&lt;a href=&quot;#&#x27;.$data[&#x27;module_id&#x27;].&#x27;&quot; class=&quot;cfct-module-edit&quot;&gt;&#x27;.__(&#x27;Edit&#x27;, &#x27;carrington-build&#x27;).&#x27;&lt;/a&gt; &#x27;;
+      }
+      $html .= &#x27;&lt;a href=&quot;#&#x27;.$data[&#x27;module_id&#x27;].&#x27;&quot; class=&quot;cfct-module-clear&quot;&gt;&#x27;.__(&#x27;Delete&#x27;, &#x27;carrington-build&#x27;).&#x27;&lt;/a&gt;
+            &lt;/dd&gt;
+          &lt;/dl&gt;&#x27;.
+          $options_layout_html 
+          .&#x27;
+        &lt;/div&gt;&#x27;;
+    }
+    
+    return apply_filters(&#x27;cfct-module-&#x27;.$this-&gt;id_base.&#x27;-admin&#x27;, $html, $mode);
+  }
+  
+  public function _text($data) {
+    $module_text = $this-&gt;text($data);
+    return apply_filters(&#x27;cfct-module-&#x27;.$this-&gt;id_base.&#x27;-text&#x27;, $module_text, $data);
+  }
+  
+  public function admin_form($data) {
+    trigger_error(&#x27;::admin_form() should be overriden in child class. Do not call this parent method directly.&#x27;, E_USER_ERROR);
+  }
+  public function display($data) {
+    trigger_error(&#x27;::display() should be overriden in child class. Do not call this parent method directly.&#x27;, E_USER_ERROR);
+  }
+  public function text($data) {
+    trigger_error(&#x27;::text() should be overridden in child class to return the main module content. Do not call this parent method directly&#x27;, E_USER_ERROR);
+  }
+  public function admin_text($data) {
+    return $this-&gt;text($data);
+  }
+  public function icon() {
+    return isset($this-&gt;opts[&#x27;icon&#x27;]) ? $this-&gt;opts[&#x27;icon&#x27;] : false;
+  }
+  
+  /**
+   * Get the module icon.
+   * Icon can be defined in $opts[&#x27;icon&#x27;].
+   * Alternately the icon() method can be overridden to return a path if special operations are needed
+   *
+   * @return string - icon url
+   */
+  public function get_icon() {
+    if ($path = $this-&gt;icon()) {
+      $icon = $path;      
+      if (!preg_match(&#x27;/^(http)/&#x27;, $icon)) {
+        $icon = trailingslashit(dirname($this-&gt;get_url())).preg_replace(&#x27;/^(\\/)/&#x27;, &#x27;&#x27;, $icon);
+      }
+    }
+    else {
+      // provide generic icon
+      $icon = CFCT_BUILD_URL.&#x27;img/default-icon.png&#x27;;
+    }
+    return apply_filters(&#x27;cfct-&#x27;.$this-&gt;id_base.&#x27;-module-icon&#x27;, $icon);
+  }
+
+  public function get_description() {
+    return $this-&gt;opts[&#x27;description&#x27;];
+  }
+  
+  public function get_name() {
+    return esc_html($this-&gt;name);
+  }
+  
+  public function get_id() {
+    return $this-&gt;id_base;
+  }
+  
+  public function get_post_id() {
+    global $cfct_build;
+    
+    if ($cfct_build-&gt;in_ajax() &amp;&amp; !empty($_POST[&#x27;args&#x27;])) {
+      $args = $cfct_build-&gt;ajax_decode_json($_POST[&#x27;args&#x27;], true);
+      $post_id = intval($args[&#x27;post_id&#x27;]);
+    }
+    else {
+      $post_id = $cfct_build-&gt;get_post_id();
+    }
+    return $post_id;
+  }
+  
+  /**
+   * Simple data-getter
+   * 
+   * @param string $field_name 
+   * @param array $data 
+   * @return mixed
+   */
+  public function get_data($field_name, $data = null, $default = null) {
+    # maybe some day $this-&gt;data
+    #if (!empty($this-&gt;data) &amp;&amp; !empty($this-&gt;data[$this-&gt;get_field_name($field_name)])) {
+    #  return $this-&gt;data[$this-&gt;get_field_name($field_name)];
+    #}
+    #else
+    $ret = $default;
+    if (!empty($data) &amp;&amp; isset($data[$this-&gt;get_field_name($field_name)])) {
+      $ret = $data[$this-&gt;get_field_name($field_name)];
+    }
+    return $ret;
+  }
+  
+  /**
+   * Handle pre-1.1 legacy ID attributes that were used to identify modules and rows
+   *
+   * @return string/bool
+   */
+  public function _legacy_id() {
+    $legacy_id = !empty($this-&gt;_deprecated_id) ? $this-&gt;_deprecated_id : false;
+    return apply_filters(&#x27;cfct-&#x27;.$this-&gt;id_base.&#x27;-deprecated-id&#x27;, $legacy_id);
+  }
+
+  /**
+   * Update data, standard is to just return the new data
+   *
+   * @param array $new_data 
+   * @param array $old_data 
+   * @return array
+   */  
+  function update($new_data, $old_data) {
+    return $new_data;
+  }
+  
+  /**
+   * Process the data for update
+   * Protect our custom-attributes from alteration by child module
+   *
+   * @param array $new_data 
+   * @param array $old_data 
+   * @return array
+   */
+  function _update($new_data, $old_data) {
+    // preprocess the extra attributes and keep them away from the individual module&#x27;s update function
+    if ($this-&gt;do_custom_attributes()) {
+      $module_options_new = $module_options_old = array();
+      
+      if (!empty($new_data[&#x27;cfct-module-options&#x27;])) {
+        $module_options_new = $new_data[&#x27;cfct-module-options&#x27;];
+        unset($new_data[&#x27;cfct-module-options&#x27;]);
+      }
+      
+      if (!empty($old_data[&#x27;cfct-module-options&#x27;])) {
+        $module_options_old = $old_data[&#x27;cfct-module-options&#x27;];
+        unset($old_data[&#x27;cfct-module-options&#x27;]);
+      }
+    }
+    
+    $processed = $this-&gt;update($new_data, $old_data);
+    $processed = apply_filters(&#x27;cfct-module-&#x27;.$this-&gt;id_base.&#x27;-update&#x27;, $processed, $new_data, $old_data);
+        
+    if ($this-&gt;do_custom_attributes()) {
+      $processed[&#x27;cfct-module-options&#x27;] = $this-&gt;module_options-&gt;update($module_options_new, $module_options_old);
+    }
+
+    // wp_filter_post_kses 
+    if (current_user_can(&#x27;unfiltered_html&#x27;) == false) {
+      $processed = $this-&gt;apply_wp_kses($processed);
+    }
+
+    return $processed;
+  }
+  
+  /**
+   * filter data from users who cannot post unfiltered html
+   * Recurses down in to nested arrays &amp; objects
+   *
+   * @param mixed $data
+   * @return mixed
+   */
+  private function apply_wp_kses($data) {
+    if (is_array($data)) {
+      foreach ($data as &amp;$item) {
+        if (is_array($item) || is_object($item)) {
+          $item = $this-&gt;apply_wp_kses($item);
+        }
+        else {
+          $item = wp_filter_post_kses($item);
+        }
+      }
+    }
+    elseif (is_object($data)) {
+      foreach (get_object_vars($data) as $var) {
+        if (is_array($data-&gt;$var) || is_object($data-&gt;$var)) {
+          $data-&gt;$var = $this-&gt;apply_wp_kses($data-&gt;$var);
+        }
+        else {
+          $data-&gt;$var = wp_filter_post_kses($data-&gt;$var);
+        }
+      }
+    }
+    else {
+      $data = wp_filter_post_kses($data);
+    }
+    return $data;
+  }
+  
+  function error($field, $message) {
+    // add ability to log errors for return to user
+  }
+  
+  /**
+   * JS &amp; CSS functions
+   * should return, not echo, for inclusion in a conglomerated file built on a Request Handler
+   */
+  function js() {
+    // client side js
+    return null;
+  }
+  function css() {
+    // client side css
+    return null;
+  }
+  function _admin_js() {
+    // admin js
+    $js = null;
+    if (method_exists($this, &#x27;admin_js&#x27;)) {
+      $js = $this-&gt;admin_js();
+    }
+    if (!empty($this-&gt;focus_target)) {
+      $js .= &#x27;
+// set focus to declared target field
+cfct_builder.addModuleLoadCallback(&quot;&#x27;.$this-&gt;id_base.&#x27;&quot;, function(form) {
+  $(&quot;&#x27;.$this-&gt;focus_target.&#x27;&quot;).focus();
+});
+      &#x27;;
+    }
+    else {
+      $js .= &#x27;
+// set focus to first visible field
+cfct_builder.addModuleLoadCallback(&quot;&#x27;.$this-&gt;id_base.&#x27;&quot;, function(form) {
+  $(&quot;#cfct-edit-module form:visible:first:has(:input:visible) :input[type!=checkbox][type!=radio][type!=file]:not(:submit):not(:button):visible:first&quot;).focus();
+});
+      &#x27;;
+    }
+    return $js;
+  }
+  function _admin_css() {
+    // admin css
+    $css = null;
+    if (method_exists($this, &#x27;admin_css&#x27;)) {
+      $css = $this-&gt;admin_css();
+    }
+    return $css;
+  }
+  
+  /**
+   * Get the a field name for this module&#x27;s data
+   * Function namespaces the module data to avoid name conflicts in the save data
+   *
+   * @param string $field_name 
+   * @param int $index 
+   * @return mixed
+   */
+  function get_field_name($field_name) {
+    $name = $this-&gt;id_base.&#x27;-&#x27;.$field_name;
+    return $name;
+  }
+  
+  /**
+   * Alias for get_field_name
+   * @see cfct_build_module::get_field_name for definition
+   */
+  function gfn($field_name) {
+    return $this-&gt;get_field_name($field_name);
+  }
+
+  /**
+   * Get the a field ID for this module
+   * Function namespaces the module data to avoid name conflicts in form elements
+   *
+   * @param string $field_name 
+   * @param int $index 
+   * @return mixed
+   */
+  function get_field_id($field_name, $index = 0) {
+    $id = $this-&gt;id_base.&#x27;-&#x27;.$field_name;
+    if($index != 0) {
+      $id .= &#x27;-&#x27;.$index;
+    }
+    return $id;
+  }
+  
+  /**
+   * Alias for get_field_id
+   * @see cfct_build_module::get_field_id for definition
+   */
+  function gfi($field_name, $index = 0) {
+    return $this-&gt;get_field_id($field_name, $index);
+  }
+  
+  /**
+   * Error Handling Helpers
+   * @TODO - provide error handling functionality to module save. Currently its an all or nothing affair.
+   */
+  function set_error($field, $message) {
+    return $this-&gt;errors[$field] = $message;
+  }
+  function get_error($field) {
+    return isset($this-&gt;errors[$field]) ? $this-&gt;errors[$field] : false;
+  }
+  function get_errors() {
+    return is_array($this-&gt;errors) &amp;&amp; count($this-&gt;errors) ? $this-&gt;errors : false;
+  }
+  
+  protected function do_custom_attributes() {
+    global $cfct_build;
+    return $cfct_build-&gt;enable_custom_attributes &amp;&amp; ($this-&gt;module_options instanceof cfct_module_options);
+  }
+  
+  public function admin_success() {
+    return $this-&gt;admin_success;
+  }
+  
+  /**
+   * Register an ajax handler with the parent build object
+   *
+   * @param string $key 
+   * @param string $func 
+   * @return void
+   */
+  protected function register_ajax_handler($key, $func) {
+    global $cfct_build;
+    $cfct_build-&gt;register_ajax_handler($key, $func);
+  }
+  
+  /**
+   * Return a properly formatted cfct-ajax response
+   *
+   * @param bool $success 
+   * @param string $html 
+   * @param string $message 
+   * @return object cfct_message
+   */
+  protected function ajax_response($success, $html, $message = null) {
+    if (empty($message)) {
+      $message = $this-&gt;basename;
+    }
+    
+    return new cfct_message(array(
+      &#x27;success&#x27; =&gt; (bool) $success,
+      &#x27;html&#x27; =&gt; $html,
+      &#x27;message&#x27; =&gt; $message
+    ));
+  }
+  
+  /**
+   * Filepath &amp; URL helpers
+   * Only call from child classes
+   */
+  public function get_url() {
+    if (empty($this-&gt;url)) {
+      global $cfct_build;
+      $url = $cfct_build-&gt;get_module_url($this-&gt;basename);
+      $this-&gt;url = apply_filters(&#x27;cfct-module-&#x27;.$this-&gt;id_base.&#x27;-url&#x27;, $url, $this-&gt;basename);
+    }
+    return $this-&gt;url;
+  }
+  
+  public function get_path() {
+    global $cfct_build;
+    $path = dirname($cfct_build-&gt;get_module_path($this-&gt;basename));
+    return apply_filters(&#x27;cfct-module-&#x27;.$this-&gt;id_base.&#x27;-path&#x27;, $path, $this-&gt;basename);
+  }
+  
+  /**
+   * Get the basename of this module for help locating this module in the filesystem
+   * Use ReflectionClass &#x27;cause its the most reliable way to inspect the parent
+   * 
+   * @return string
+   */
+  public function get_basename() {
+    if (empty($this-&gt;basename)) {
+            $rc = new ReflectionClass($this);
+      $this-&gt;basename = basename($rc-&gt;getFilename(),&#x27;.php&#x27;);
+      unset($rc);
+    }
+    return $this-&gt;basename;
+  }
+  
+  /**
+   * Get the module type (module class name) for this module
+   * Use ReflectionClass &#x27;cause its the most reliable way to inspect the parent
+   *
+   * @return string
+   */
+  public function get_type() {
+    if (empty($this-&gt;module_type)) {
+      $rc = new ReflectionClass($this);
+      $this-&gt;module_type = $rc-&gt;getName();
+      unset($rc);
+    }
+    return $this-&gt;module_type;
+  }
+  
+  public function get_charset() {
+    $charset = DB_CHARSET;
+    $known_charset_translations = array(
+      &#x27;utf8&#x27; =&gt; &#x27;utf-8&#x27;
+    );
+    if (array_key_exists(DB_CHARSET, $known_charset_translations)) {
+      return $known_charset_translations[DB_CHARSET];
+    }
+    else {
+      return DB_CHARSET;
+    }
+  }
+  
+  /**
+   * Placeholder for build parent post id
+   *
+   * @var int
+   */
+  protected $_build_post_id;
+
+  /**
+   * Before doing a loop we need to cache the global
+   * post_id so that we can re-do setup_postdata after
+   * our internal loop fires.
+   * 
+   * Use in conjunction with cfct_build_module::reset_global_post()
+   * if your module needs to be destructive to the global post
+   *
+   * @return bool
+   */
+  public function cache_global_post() {
+    global $cfct_build;
+    return $this-&gt;_build_post_id = $cfct_build-&gt;get_post_id();
+  }
+  
+  /**
+   * Reset the global post after our loop
+   * 
+   * Uses cached value from cfct_build_module::cache_global_post()
+   *
+   * @return bool
+   */
+  public function reset_global_post() {
+    global $post;
+    $post = get_post($this-&gt;_build_post_id);
+    setup_postdata($post);
+    return;
+  }
+  
+  /**
+   * Widget Helpers
+   */
+  private $widget;
+  private $widget_type;
+  
+  function get_widget($widget_type) {
+    if (!class_exists($widget_type)) {
+      return false;
+    }
+    if (!($this-&gt;widget instanceof $widget_type)) {
+      return false;
+    }
+    $this-&gt;widget = new $widget_type($this-&gt;id_base = false, $this-&gt;name, $this-&gt;opts = array());
+    return true;
+  }
+  
+  public function is_widget() {
+    return !empty($this-&gt;_widget_id);
+  }
+  
+// Carrington Framework Compat
+
+  /**
+   * When loading partial module content over ajax Carrington Framework
+   * compat will not be sufficiently available. This inits the compat
+   * functionality and mimics the normal &#x27;current_module&#x27; check to return
+   * the id of the module that is responding to the ajax request
+   *
+   * @return void
+   */
+  protected function ajax_set_carrington_framework_filters() {
+    global $cfct_build;
+    $cfct_build-&gt;add_carrington_framework_filters();
+    add_filter(&#x27;cfct-build-current-module&#x27;, array($this, &#x27;ajax_current_module&#x27;), 10, 1);
+  }
+  
+  /**
+   * Uset the ajax filters for Carrington Framework compat
+   *
+   * @return void
+   */
+  protected function ajax_remove_carrington_framework_filters() {
+    global $cfct_build;
+    remove_filter(&#x27;cfct-build-current-module&#x27;, array($this, &#x27;ajax_current_module&#x27;), 10, 1);
+    $cfct_build-&gt;remove_carrington_framework_filters();
+  }
+
+  /**
+   * Return the id_base of the current module
+   * Only used in conjunction with Carrington Framework in an Ajax load capacity
+   *
+   * @param string $current_module 
+   * @return string
+   */
+  public function ajax_current_module($current_module) {
+    return $this-&gt;id_base;
+  }
+  
+// Helper function for outword compatability
+
+  /**
+   * Return an array of all post-IDs refernced in this module&#x27;s data
+   * Required for compat with CF-Deploy &amp; any other plugins that might
+   * need to know about IDs referenced in the data.
+   *
+   * Recommended return data format is:
+   * @example return   array(
+   *     // single field values
+   *     &#x27;field_name&#x27; =&gt; array(
+   *       &#x27;type&#x27; =&gt; &#x27;post_type&#x27;,
+   *       &#x27;type_name&#x27; =&gt; &#x27;my-custom-post-type&#x27;,
+   *       &#x27;value&#x27; =&gt; 123,
+   *     ),
+   *     &#x27;field_name&#x27; =&gt; array(
+   *       &#x27;type&#x27; =&gt; &#x27;taxonomy&#x27;,
+   *       &#x27;type_name&#x27; =&gt; &#x27;category&#x27;
+   *       &#x27;value&#x27; =&gt; array(123, 456)
+   *     ),
+   *     
+   *     // nested field values, key names are optional
+   *     &#x27;field_name&#x27; =&gt; array(
+   *       &#x27;key&#x27; =&gt; array(
+   *         &#x27;type&#x27; =&gt; &#x27;post_type&#x27;,
+   *         &#x27;type_name&#x27; =&gt; &#x27;post&#x27;
+   *         &#x27;value&#x27; =&gt; 123,
+   *       ),
+   *       &#x27;key2&#x27; =&gt; array(
+   *         &#x27;type&#x27; =&gt; &#x27;post_type&#x27;,
+   *         &#x27;type_name&#x27; =&gt; &#x27;page&#x27;,
+   *         &#x27;value&#x27; =&gt; 456,
+   *       )
+   *     )
+   *   )
+   * 
+   * @param array $data 
+   * @return array
+   */
+  public function get_referenced_ids($data) {
+    return array();
+  }
+  
+  /**
+   * Return the save data with modified reference IDs
+   *
+   * @see cfct_build_module::get_referenced_ids() for $ids data format
+   * @param array $data - standard module save data (will vary on a per-module basis)
+   * @param array $ids 
+   * @return array $data
+   */
+  public function merge_referenced_ids($data, $reference_data) {
+    return $data;
+  }
+}
+
+?&gt;
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

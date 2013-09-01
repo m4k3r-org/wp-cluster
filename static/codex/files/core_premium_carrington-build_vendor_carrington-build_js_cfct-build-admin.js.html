@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/premium/carrington-build/vendor/carrington-build/js/cfct-build-admin.js - Flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="Flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/: Flawless.Element.html">: Flawless.Element</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Module.html">: Flawless.Flawless_Module</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Shortcode.html">: Flawless.Flawless_Shortcode</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Widget.html">: Flawless.Flawless_Widget</a></li>
+            
+                <li><a href="../classes/: Flawless.flawless_wpp_extensions.html">: Flawless.flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/: Flawless.License.html">: Flawless.License</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Functions.html">Template Functions</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/premium/carrington-build/vendor/carrington-build/js/cfct-build-admin.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+// Carrington Build Admin Functions
+;(function($) {
+
+// Admin Init  
+  cfctAdminEditInit = function() {
+    // process UI tabs
+    var cfctInitialActiveTab = null;
+    
+    // init sortables
+    $(&#x27;#cfct-sortables&#x27;).sortable({
+      handle:cfct_builder.opts.row_handle,
+      items:&#x27;.cfct-row&#x27;,
+      placeholder:&#x27;cfct-row-draggable-placeholder&#x27;,
+      forcePlaceholderSize:true,
+      opacity:0.5,
+      axis:&#x27;y&#x27;,
+      cancel:&#x27;.cfct-row-delete&#x27;,
+      update:cfct_builder.updateRowOrder
+    });
+        
+    // insert in to DOM
+    $(&#x27;#titlediv&#x27;).after(cfct_build);
+    cfct_builder.$rowTrigger = $(cfct_builder.opts.rowTriggerSelector);
+    cfct_builder.bindClickables();
+    cfct_builder.bindLiveClickables();
+    
+    // Handle the display behavior after this has been placed in the DOM in its correct location.
+    $(&#x27;#cfct-build-tabs li a&#x27;,cfct_build).each(function() {
+      var _this = $(this);
+      // add click event to tab
+      _this.click(function() {
+        cfctTabSwitch(_this);
+        return false;
+      });
+
+      // handle visual editor disabled
+      if(_this.attr(&#x27;href&#x27;) == &#x27;#postdiv&#x27; &amp;&amp; $(&#x27;#postdiv&#x27;).length == 0) {
+        _this.attr(&#x27;href&#x27;, &#x27;#postdivrich&#x27;);
+      }
+      
+      var contentDiv = _this.attr(&#x27;href&#x27;);
+      var _thisHref = $(contentDiv);
+      wpActiveEditor = contentDiv.replace(&#x27;#&#x27;, &#x27;&#x27;);
+
+      // hide tab content if its not the active tab
+      if (_this.parents(&#x27;li&#x27;).hasClass(&#x27;active&#x27;)) {
+        _thisHref.show();
+        cfctInitialActiveTab = _this.attr(&#x27;href&#x27;);
+      }
+    });
+    cfctPrepMediaGallery(cfctInitialActiveTab == &#x27;#cfct-build-data&#x27; ? &#x27;build&#x27; : &#x27;wordpress&#x27;);
+    
+    // dialog helper for window resize
+    $(window).resize(function() {
+      cfct_builder.resizeDOMWindow();
+    });
+    
+    // init options box
+    $(&#x27;.cfct-build-options-header&#x27;).click(function() {
+      cfct_builder.toggleOptions();
+      return false;
+    });
+    
+  };
+
+// Tab Switching
+  cfctTabSwitch = function(clicked) {
+    $(&#x27;body&#x27;).trigger(&#x27;click&#x27;);
+    var _this = $(clicked);
+    var _tgt = _this.attr(&#x27;href&#x27;);
+    
+    if ( $(_tgt).is(&#x27;:visible&#x27;) ) {
+      return false;
+    }
+    
+    var switchMessage;
+    switch (true) {
+      case ((_tgt == &#x27;#postdivrich&#x27; || _tgt == &#x27;#postdiv&#x27;) &amp;&amp; !cfct_builder.hasRows()):
+      case (_tgt == &#x27;#cfct-build-data&#x27; &amp;&amp; $(&#x27;#content&#x27;).val().length == 0):
+        switchMessage = null;
+        break;
+      case (_tgt == &#x27;#postdivrich&#x27; || _tgt == &#x27;#postdiv&#x27;):
+        switchMessage = &#x27;Edits made in the WordPress editor will not be saved until the Save/Update button is used. Build data will not be affected.&#x27;;
+        break;
+      case (_tgt == &#x27;#cfct-build-data&#x27;):
+        switchMessage = &#x27;Edits made in the Build area will be saved immediately and will overwrite the Post Content. Content in the WordPress editor will not be destroyed until you navigate away from this page or Save/Update button is used.&#x27;;
+        break;
+    }
+    
+    var do_tab_switch = true;
+    
+    if (switchMessage != null) {
+      if (confirm(switchMessage)) {
+        cfctDoTabSwitch(_this);
+      }
+    }
+    else {
+      cfctDoTabSwitch(_this);
+    }
+    
+    return false;
+  };
+  
+  cfctDoTabSwitch = function(_this) {
+    _this.parents(&#x27;li&#x27;).addClass(&#x27;active&#x27;).siblings().each(function() {
+      _l = $(this);
+      _l.removeClass(&#x27;active&#x27;);
+      $(_l.children(&#x27;a&#x27;).attr(&#x27;href&#x27;)).hide();
+    });
+    
+    var tgt = _this.attr(&#x27;href&#x27;);
+    var edit_state = null;
+
+    switch (tgt) {
+      case &#x27;#postdivrich&#x27;:
+      case &#x27;#postdiv&#x27;:
+        cfct_builder.toggleOptionsMenu(&#x27;hide&#x27;);
+        cfctPrepMediaGallery(&#x27;wordpress&#x27;);
+        $(tgt).show();
+        edit_state = &#x27;wordpress&#x27;;
+        break;
+      case &#x27;#cfct-build-data&#x27;:
+        cfctPrepMediaGallery(&#x27;build&#x27;);
+        cfct_builder.showWelcome();
+        $(tgt).show();
+        cfct_builder.toggleOptionsMenu(&#x27;show&#x27;);
+        edit_state = &#x27;build&#x27;;
+        break;
+    }
+    cfct_builder.fetch(&#x27;set_active_state&#x27;, { &#x27;active_state&#x27;:edit_state }, &#x27;set-edit-state&#x27;);
+    
+    // force WordPress content save notice
+    autosaveLast = &#x27;&#x27;;    
+    var mce = typeof(tinyMCE) != &#x27;undefined&#x27; ? tinyMCE.activeEditor : false, title, content;
+    if (mce) {
+      mce.setContent(mce.getContent() + &#x27;&amp;nbsp;&#x27;); // bitch slap tinyMCE in to thinking that it&#x27;s been modified
+    }
+  };
+  
+  cfctPrepMediaGallery = function(moveTo) {
+    var mediaButtons = $(&#x27;#media-buttons,#wp-content-media-buttons&#x27;);
+    switch (moveTo) {
+      case &#x27;wordpress&#x27;:
+        $(&#x27;#editor-toolbar,#wp-content-editor-tools&#x27;).append(mediaButtons);
+        break;
+      case &#x27;build&#x27;:
+        $(&#x27;#build-editor-toolbar&#x27;).append(mediaButtons);
+        $(&#x27;#editor-toolbar,#wp-content-editor-tools&#x27;).show();
+        break;
+    }
+  };
+
+// Messages
+  window.cfct_messenger = {};
+
+  cfct_messenger.opts = {
+    messages:{},
+    current_message:&#x27;&#x27;,
+    last_message:&#x27;&#x27;,
+    message_div:&#x27;#cfct-build-messages&#x27;,
+    message_timeout:&#x27;5000&#x27;,
+    message_timeout_id:&#x27;&#x27;,
+    message_type_classes:{
+      info:&#x27;cfct-message-info&#x27;,
+      warning:&#x27;cfct-message-warning&#x27;,
+      error:&#x27;cfct-message-error&#x27;,
+      confirm:&#x27;cfct-message-confirm&#x27;,
+      loading:&#x27;cfct-message-loading&#x27;
+    }
+  };
+
+  cfct_messenger.setMessage = function(message,type,expire) {
+    clearTimeout(this.message_timeout_id);
+    
+    $(this.opts.message_div)
+      .attr(&#x27;class&#x27;,this.opts.message_type_classes[type || &#x27;info&#x27;])
+      .html(&#x27;&lt;span class=&quot;cfct-message-content&quot;&gt;&#x27; + message + &#x27;&lt;/span&gt;&#x27;);
+    
+    if (expire !== false) {
+      this.setExpire(this.opts.message_timeout);
+    }
+  };
+
+  cfct_messenger.setLoading = function(message) {
+    var _message_text = message || &#x27;Loading.&#x27;;
+    this.setMessage(_message_text,&#x27;loading&#x27;,false);
+  };
+
+  cfct_messenger.clearMessage = function() {
+    var _tgt = $(cfct_messenger.opts.message_div);
+    _tgt.children(&#x27;span.cfct-message-content&#x27;).fadeOut(&#x27;fast&#x27;,function(){
+      _tgt.attr(&#x27;class&#x27;,&#x27;&#x27;).html(&#x27;&#x27;);
+    });
+  };
+
+  cfct_messenger.setExpire = function(timeout) {
+    this.opts.message_timeout_id = setTimeout(this.clearMessage, timeout || this.opts.message_timeout);
+  };
+  
+// Builder
+  window.cfct_builder = {};
+  
+  cfct_builder.opts = {
+    ajax_url:ajaxurl, // ajaxurl is pre-defined by wp-admin for autosave purposes... we may or may not want to define this ourselves
+    dialogs:{},
+    sortables:{
+      sender:null,
+      receiver:null
+    },
+    DOMWindow_defaults:{
+      windowSourceID:&#x27;#cfct-popup-placeholder&#x27;,
+      overlay:0,
+      borderSize:0,
+      windowBGColor:&#x27;none&#x27;,
+      windowPadding: 0,
+      positionType:&#x27;centered&#x27;,
+      width:800, // static at 800
+      height:650, // gets updated at box generation
+      overlay:1,
+      overlayOpacity:&#x27;65&#x27;,
+      modal:1
+    },
+    row_handle:&#x27;.cfct-row-handle&#x27;,
+    module_save_callbacks:{},
+    module_load_callbacks:{},
+    rich_text:true,
+    popup_content_width:0,
+    popup_content_height:0,
+    sortableDefaults:{
+      items:&#x27;.cfct-module&#x27;,
+      opacity:0.4,
+      placeholder:&#x27;cfct-module-draggable-placeholder&#x27;,
+      helper: &#x27;clone&#x27;,
+      revert: 150,
+      forcePlaceholderSize:true
+    },
+    rowTriggerSelector: &#x27;#cfct-sortables-add&#x27;,
+    dialog_selectors: {
+      popup: &#x27;#cfct-popup&#x27;,
+      delete_row: &#x27;#cfct-delete-row&#x27;,
+      delete_module: &#x27;#cfct-delete-module&#x27;,
+      edit_module: &#x27;#cfct-edit-module&#x27;,
+      add_module: &#x27;.cfct-popup.cfct-add-module&#x27;,
+      error_dialog: &#x27;#cfct-error-notice&#x27;,
+      reset_build: &#x27;#cfct-reset-build&#x27;,
+      save_template: &#x27;#cfct-save-template&#x27;
+    }
+  };
+  
+// DOMWindow Helpers
+  // recalculate the DOMWindow width, no smaller than 500
+  // cfct_builder.DOMWindowWidth = function() {
+  //   var w = $(window).width()*0.6;
+  //   return w &lt; 500 ? 500 : w;
+  // };
+
+  // recalculate DOMWindow height
+  cfct_builder.DOMWindowHeight = function() {
+    return $(window).height()*0.8;
+  };
+
+  cfct_builder.resizeDOMWindow = function() {
+    //this.opts.DOMWindow_defaults.width = this.DOMWindowWidth();
+    this.opts.DOMWindow_defaults.height = this.DOMWindowHeight();
+  };
+  cfct_builder.resizeDOMWindow();
+  
+  cfct_builder.showLoadingDialog = function() {
+    if ($(&#x27;#DOMWindow&#x27;).not(&#x27;:visible&#x27;)) {
+      $(this.opts.dialogs.popup_wrapper).html(cfct_builder.spinner());
+      $.openDOMWindow(this.opts.DOMWindow_defaults);
+    }
+  };
+  
+// Welcome
+  cfct_builder.showWelcome = function() {
+    var _rowchooser = $(&#x27;#cfct-sortables-add-container&#x27;);
+
+    if (!cfct_builder.hasRows()) {
+      cfct_builder.opts.welcome_removed = false;
+    
+      var _welcome = $(&#x27;#cfct-welcome-chooser&#x27;);
+    
+      $(&#x27;#cfct-welcome-faux-bottom-rows,#cfct-welcome-splash&#x27;, _welcome).show();
+      _rowchooser.hide();
+      _welcome.show();
+
+      // choose build
+      $(&#x27;#cfct-start-build&#x27;).unbind().click(function() {
+        $(&#x27;body&#x27;).trigger(&#x27;click&#x27;);
+        $(&#x27;#cfct-welcome-splash&#x27;).hide();
+        $(&#x27;#cfct-welcome-faux-bottom-rows&#x27;).slideUp(&#x27;normal&#x27;, function() {
+          _rowchooser.fadeIn(&#x27;fast&#x27;, function () {
+            cfct_builder.$rowTrigger.data(&#x27;popover&#x27;).show();
+          });
+        });
+        return false;
+      });
+    
+      // choose template
+      $(&#x27;#cfct-start-template-chooser&#x27;).unbind().click(function() {
+        $(&#x27;body&#x27;).trigger(&#x27;click&#x27;);
+        $(&#x27;#cfct-welcome-splash&#x27;).hide();
+        $(&#x27;#cfct-welcome-templates&#x27;).show();
+        return false;
+      });
+      $(&#x27;#cfct-choose-template-cancel&#x27;).unbind().click(function() {
+        $(&#x27;body&#x27;).trigger(&#x27;click&#x27;);
+        $(&#x27;#cfct-welcome-templates&#x27;).hide();
+        $(&#x27;#cfct-welcome-splash&#x27;).show();
+        return false;
+      });
+    
+      // add template
+      $(&#x27;#cfct-welcome-templates li a.cfct-template-name&#x27;).click(function() {
+        $(&#x27;body&#x27;).trigger(&#x27;click&#x27;);
+        var _this = $(this);
+        cfct_builder.insertTemplate(_this.attr(&#x27;href&#x27;).slice(_this.attr(&#x27;href&#x27;).indexOf(&#x27;#&#x27;)+1));
+        return false;
+      });
+    }
+    else {
+      _rowchooser.show();
+    }
+    return true;
+  };
+  
+  cfct_builder.hideWelcome = function() {
+    var _welcome = $(&#x27;#cfct-welcome-chooser&#x27;);
+    _welcome.slideUp(&#x27;fast&#x27;);
+    cfct_builder.opts.welcome_removed = true;
+  };
+  
+// Template insert
+  cfct_builder.insertTemplate = function(template_id) {
+    if (jQuery(&#x27;#post_ID&#x27;).val() &lt; 0) {
+      cfct_builder.initPost(&#x27;insertTemplate&#x27;,template_id);
+      return false;
+    }    
+    cfct_builder.fetch(&#x27;insert_template&#x27;, { &#x27;template_id&#x27;:template_id }, &#x27;insert-template-response&#x27;);
+    return true;
+  };
+
+  $(cfct_builder).bind(&#x27;insert-template-response&#x27;, function(evt, res) {
+    if (!res.success) {
+      return false;
+    }
+
+    if (!cfct_builder.opts.welcome_removed) {
+      cfct_builder.hideWelcome();
+    }
+
+    $(&#x27;#cfct-sortables&#x27;, cfct_build).append($(res.html)).sortable(&#x27;refresh&#x27;);
+    $(&#x27;#cfct-choose-template&#x27;).slideUp(&#x27;normal&#x27;, function() {
+      cfct_builder.$rowTrigger.data(&#x27;popover&#x27;).show();
+      $(&#x27;#cfct-sortables-add-container&#x27;).slideDown();
+    });
+    cfct_builder.bindClickables();
+    cfct_builder.toggleOptionsMenu(&#x27;show&#x27;);
+    return true;
+  });
+  
+// Editing helper
+  cfct_builder.editing_items = {
+    row_id:null,
+    block_id:null,
+    module_id:null,
+    module_name:null,
+    parent_module_id:null,
+    parent_module_id_base:null
+  };
+
+  cfct_builder.editing = function(params) {
+    if (params === 0) {
+      // reset
+      for (i in this.editing_items) {
+        this.editing_items[i] = null;
+      }
+    }
+    else {
+      // add to
+      for (i in params) {
+        this.editing_items[i] = params[i];
+      }
+    }
+    return true;
+  };
+  
+// Builder Ajax  
+  cfct_builder.fetch = function(fn, data, successTrigger, beforeTrigger, successCallback) {
+    data.post_id = $(&#x27;#post_ID&#x27;).val();
+    opts = {
+      url:this.opts.ajax_url,
+      type:&#x27;POST&#x27;,
+      async:true,
+      cache:false,
+      dataType:&#x27;json&#x27;,
+      data:{
+        action:&#x27;cfbuild_fetch&#x27;,
+        func:fn,
+        args:(typeof Prototype == &#x27;object&#x27; ? Object.toJSON(data) : JSON.stringify(data)) // prototype.js fix - use Prototype&#x27;s JSON encoder if present - it conflicts with json2.js
+      },
+      beforeSend: function(request) {
+        $(cfct_builder).trigger(beforeTrigger || &#x27;ajaxDoBefore&#x27;,request);
+        return; 
+      },
+      success: function(response) {
+        $(cfct_builder).trigger(successTrigger || &#x27;ajaxSuccess&#x27;,response);
+        if (typeof successCallback == &#x27;function&#x27;) {
+          successCallback.call(this, response);
+        }
+        return; 
+      },
+      error: function(xhr,textStatus,e) {
+        switch(textStatus) {
+          case &#x27;parsererror&#x27;:
+            var _errstring = $(&#x27;&lt;pre /&gt;&#x27;).text(xhr.responseText);
+            var _html = &#x27;&lt;p&gt;&lt;b&gt;Parse Error in data returned from server&lt;/b&gt;&#x27; +
+                  &#x27; &lt;a href=&quot;#&quot; onclick=&quot;cfct_builder.toggleAjaxErrorString(); return false&quot;&gt;toggle&lt;/a&gt;&lt;/p&gt;&#x27; +
+                  &#x27;&lt;pre class=&quot;cfct-ajax-error-string&quot; style=&quot;display: none;&quot;&gt;&#x27; + _errstring.html() + &#x27;&lt;/pre&gt;&#x27;;
+            cfct_builder.doError({
+              html:_html,
+              message: &#x27;parsererror&#x27;
+            });
+            break;
+          default:
+            cfct_builder.doError({
+              html:&#x27;&lt;b&gt;Invalid response from server during Ajax Request&lt;/b&gt;&#x27;,
+              message:&#x27;invalidajax&#x27;
+            });
+        }
+        return; 
+      }
+    };
+    $.ajax(opts);
+  };
+
+// Error Processing  
+  cfct_builder.doError = function(ret, callback) {
+    $(&#x27;#cfct-error-notice-message&#x27;,this.opts.dialogs.error_dialog).html(ret.html);
+    this.opts.dialogs.popup_wrapper.html(this.opts.dialogs.error_dialog);
+    
+    if ($(&#x27;#DOMWindow&#x27;).not(&#x27;:visible&#x27;)) {
+      $.openDOMWindow(this.opts.DOMWindow_defaults);
+    }    
+    this.prepErrorActions(callback);
+        
+    return true;
+  };
+  
+  cfct_builder.prepErrorActions = function(callback) {
+    $(&#x27;#cfct-error-notice-close&#x27;,this.opts.dialogs.error_dialog).click(function() {
+      if (callback) {
+        callback.apply();
+      }
+      
+      $.closeDOMWindow();
+      return false;
+    });
+    return true;
+  };
+  
+  cfct_builder.toggleAjaxErrorString = function() {
+    $(&#x27;.cfct-ajax-error-string&#x27;).slideToggle();
+  };
+
+// Reordering Rows  
+  cfct_builder.updateRowOrder = function(event,ui) {
+    var items = $(&#x27;#cfct-sortables&#x27;).sortable(&#x27;toArray&#x27;);
+    cfct_builder.fetch(&#x27;reorder_rows&#x27;,{
+      order:items.toString()
+    },&#x27;reorder-rows-response&#x27;);
+  };
+  
+  $(cfct_builder).bind(&#x27;reorder-rows-response&#x27;,function(evt,result) {
+    if (!result.success) {
+      cfct_builder.doError(ret);
+      return false;
+    }
+    cfct_messenger.setMessage(&#x27;Row Order Updated&#x27;,&#x27;confirm&#x27;);
+    return true;
+  });
+
+// Reordering Modules
+  cfct_builder.initBlockSortables = function() {
+    $(&#x27;.cfct-block-modules&#x27;).each(function() {
+      var _this = $(this);
+      if (_this.hasClass(&#x27;ui-sortable&#x27;)) {
+        _this.sortable(&#x27;destroy&#x27;);
+      }
+      _this.sortable($.extend(
+        cfct_builder.opts.sortableDefaults, 
+        {
+          remove:function() {
+            cfct_builder.opts.sortables.sender = this;
+          },
+          receive:function() {
+            cfct_builder.opts.sortables.receiver = this;
+          },
+          stop:cfct_builder.updateModuleOrderEnd,
+          connectWith:&#x27;#cfct-sortables .cfct-block-modules&#x27;
+        }
+      ));
+    });
+    this.enableSortables();
+  };
+  
+  cfct_builder.updateModuleOrderEnd = function() {
+    cfct_builder.disableSortables();
+    
+    var blocks = {};
+    $(&#x27;.cfct-block-modules.ui-sortable&#x27;).each(function(){
+      var _this = $(this);
+      blocks[_this.parents(&#x27;td&#x27;).attr(&#x27;id&#x27;)] = _this.sortable(&#x27;toArray&#x27;);
+    });
+
+    cfct_builder.fetch(&#x27;reorder_modules&#x27;,{
+      order:blocks
+    },&#x27;reorder-modules-response&#x27;);
+
+  };
+  
+  $(cfct_builder).bind(&#x27;cfctAjaxError&#x27;, function(responseText) {
+    cfct_builder.enableSortables();
+  });
+  
+  $(cfct_builder).bind(&#x27;reorder-modules-response&#x27;,function(evt,result) {
+    cfct_builder.enableSortables();
+
+    if (!result.success) {
+      cfct_builder.doError(result, function() {
+        $(cfct_builder.opts.sortables.sender).sortable(&#x27;cancel&#x27;);
+      });
+      return false;
+    }
+    
+    cfct_messenger.setMessage(&#x27;Module Order Updated&#x27;,&#x27;confirm&#x27;);
+    return true;
+  });
+
+  cfct_builder.disableSortables = function() {
+    $(&#x27;.cfct-block-modules.ui-sortable&#x27;).sortable(&#x27;disable&#x27;);
+    $(&#x27;#cfct-sortables, .cfct-popup .multi-module-form&#x27;).append(
+      $(&#x27;&lt;div class=&quot;cfct-reorder-status&quot;&gt;&#x27;)
+        .append($(&#x27;&lt;div class=&quot;cfct-reorder-status-wrapper&quot; /&gt;&#x27;)
+          .css({
+            &#x27;padding-top&#x27;:($(&#x27;#cfct-sortables&#x27;).height() / 3) + &#x27;px&#x27;,
+            &#x27;height&#x27;:$(&#x27;#cfct-sortables&#x27;).height() + &#x27;px&#x27;
+          })
+          .append(&#x27;&lt;div class=&quot;cfct-reorder-overlay&quot; /&gt;&#x27;, cfct_builder.spinner())
+        )
+    );
+  };
+  
+  cfct_builder.enableSortables = function() {
+    $(&#x27;.cfct-block-modules&#x27;).sortable(&#x27;enable&#x27;);
+    $(&#x27;#cfct-sortables .cfct-reorder-status, .cfct-popup .cfct-reorder-status&#x27;).remove();
+  };
+
+// Add Row Functions
+  cfct_builder.insertRow = function(row_type) {
+    if (!cfct_builder.insertingRow) {
+      cfct_builder.insertingRow = true;
+      // this.$rowTrigger.data(&#x27;popover&#x27;).hide();
+      if (!cfct_builder.opts.welcome_removed) {
+        cfct_builder.hideWelcome();
+      }
+    
+      return $(&#x27;#cfct-loading-row&#x27;).slideDown(&#x27;fast&#x27;,function() {
+        if ($(&#x27;#post_ID&#x27;).val() &lt; 0) {
+          cfct_builder.initPost(&#x27;insertRow&#x27;,row_type);
+          return false;
+        }
+        cfct_builder.fetch(&#x27;new_row&#x27;,{type:row_type},&#x27;do-insert-row&#x27;);
+        cfct_builder.insertingRow = false;
+        return true;
+      });
+    }
+  };
+  
+  $(cfct_builder).bind(&#x27;do-insert-row&#x27;,function(evt,row) {
+    if (!row.success) {
+      cfct_builder.doError(row);
+      return false;
+    }
+    
+    $(&#x27;#cfct-loading-row&#x27;).hide();
+    $(&#x27;#cfct-sortables&#x27;,cfct_build).append($(row.html)).sortable(&#x27;refresh&#x27;);
+    
+    cfct_builder.bindClickables();
+    $(&#x27;#cfct-build&#x27;).removeClass(&#x27;new&#x27;);
+  
+    cfct_messenger.setMessage(&#x27;Row Saved&#x27;,&#x27;confirm&#x27;);
+    $(cfct_builder).trigger(&#x27;new-row-inserted&#x27;, row);
+    return true;  
+  });
+
+// Remove Row Functions  
+  cfct_builder.confirmRemoveRow = function(row) {
+    $(&#x27;#cfct-delete-row-id&#x27;,this.opts.dialogs.delete_row).val(row.attr(&#x27;id&#x27;));
+    
+    // pop dialog
+    this.opts.dialogs.popup_wrapper.html(this.opts.dialogs.delete_row);
+    $.openDOMWindow(this.opts.DOMWindow_defaults);
+
+    // bind actions
+    $(&#x27;#cfct-delete-row-confirm&#x27;,this.opts.dialogs.delete_row).click(function() {
+      cfct_builder.doRemoveRow( $(&#x27;#&#x27;+$(&#x27;#cfct-delete-row-id&#x27;).val()) );
+    });
+    $(&#x27;#cfct-delete-row-cancel&#x27;,this.opts.dialogs.delete_row).click(function() {
+      $.closeDOMWindow();
+      return false;
+    });
+    $(cfct_builder).trigger(&#x27;confirm-remove-row&#x27;);
+  };
+  
+  cfct_builder.doRemoveRow = function(row) {
+    if (!cfct_builder.removingRow) {
+      cfct_builder.removingRow = true;
+      var _row = $(row);
+      cfct_builder.editing({
+        &#x27;row_id&#x27;:_row.attr(&#x27;id&#x27;)
+      });
+      cfct_builder.showPopupActivityDiv(cfct_builder.opts.dialogs.delete_row);
+    
+      var data = {
+        row_id:_row.attr(&#x27;id&#x27;)
+      };
+      cfct_builder.fetch(&#x27;delete_row&#x27;,data,&#x27;do-remove-row-response&#x27;);
+    }
+  };
+  
+  $(cfct_builder).bind(&#x27;do-remove-row-response&#x27;,function(evt,ret) {
+    if (!ret.success) {
+      cfct_builder.doError(ret);
+      return false;
+    }
+    $(&#x27;#cfct-sortables #&#x27; + cfct_builder.editing_items.row_id,cfct_build).slideUp(&#x27;fast&#x27;,function() {
+      $(this).remove();      
+      $.closeDOMWindow();
+      cfct_builder.hidePopupActivityDiv(cfct_builder.opts.dialogs.delete_row);
+      $(cfct_builder).trigger(&#x27;row-removed&#x27;);
+    });
+    
+    cfct_messenger.setMessage(&#x27;Row Deleted&#x27;,&#x27;confirm&#x27;);
+    cfct_builder.editing(0);
+    cfct_builder.removingRow = false;
+    return true;
+  });
+
+// Template Save
+  cfct_builder.saveAsTemplate = function() {
+    $(this.opts.dialogs.save_template).find(&#x27;input[type=&quot;text&quot;],textarea&#x27;).val(&#x27;&#x27;);
+    $(this.opts.dialogs.popup_wrapper).html(this.opts.dialogs.save_template);
+    $.openDOMWindow(this.opts.DOMWindow_defaults);
+
+    $(&#x27;.cancel&#x27;,this.opts.dialogs.save_template).click(function() {
+      cfct_builder.editing(0);
+      $.closeDOMWindow();
+      return false;
+    });
+    $(&#x27;input[type=&quot;submit&quot;]&#x27;,cfct_builder.opts.dialogs.popup_wrapper).unbind().click(function(){
+      $(this).parents(&#x27;form&#x27;).submit();
+      return false;
+    });
+    $(&#x27;#cfct-save-template-form&#x27;).unbind().submit(function(){
+      cfct_builder.submitTemplateForm($(this));
+      return false;
+    });
+    
+    return true;
+  };
+  
+  cfct_builder.submitTemplateForm = function(form) {
+    var _formdata = $(form).serialize();
+    cfct_builder.fetch(&#x27;save_as_template&#x27;,{
+      &#x27;data&#x27;:_formdata
+    },&#x27;save-template-response&#x27;);  
+  };
+  
+  $(cfct_builder).bind(&#x27;save-template-response&#x27;,function(evt,ret) {
+    if (!ret.success) {
+      cfct_builder.doError(ret);
+      return false;
+    }
+
+    cfct_builder.bindClickables();
+    cfct_builder.editing(0);
+    $.closeDOMWindow();
+    cfct_messenger.setMessage(&#x27;Template Saved&#x27;,&#x27;confirm&#x27;);
+    return true;    
+  });
+
+// Add Module functions  
+  cfct_builder.selectModule = function() {
+    // IE has a habit of wiping this out, reload if necessary, this is a big WTF?!?!
+    if (cfct_builder.opts.dialogs.add_module.html().length == 0) {
+      cfct_builder.loadDialog(&#x27;add_module&#x27;, true);
+    }
+    
+    this.opts.dialogs.popup_wrapper.html(this.opts.dialogs.add_module);
+    this.opts.dialogs.add_module.find(&#x27;div.cfct-popup-content&#x27;).css({&#x27;max-height&#x27;:parseInt(this.DOMWindowHeight()-(45+25+14+20), 10),&#x27;overflow&#x27;:&#x27;auto&#x27;});
+    
+    if ($(&#x27;#DOMWindow&#x27;).not(&#x27;:visible&#x27;)) {
+      $.openDOMWindow(this.opts.DOMWindow_defaults);
+    }
+    $(&#x27;#DOMWindow&#x27;).css({&#x27;overflow&#x27;:&#x27;visible&#x27;});
+    
+  };
+  
+// Edit Module Functions
+  cfct_builder.editModule = function(extra_data, callback) {
+    var data = {
+      &#x27;module_type&#x27;: this.editing_items.module_name,
+      &#x27;module_id&#x27;: this.editing_items.module_id,
+      &#x27;block_id&#x27;: this.editing_items.block_id,
+      &#x27;row_id&#x27;: this.editing_items.row_id,
+      &#x27;parent_module_id&#x27;: this.editing_items.parent_module_id, // used for sideloading, will be null if not sideloading
+      &#x27;parent_module_id_base&#x27;: this.editing_items.parent_module_id_base, // used for sideloading, will be null if not sideloading
+      &#x27;max-height&#x27;: parseInt(this.DOMWindowHeight()-(45+25+14+70), 10) // subtract fudged header, fudged footer, border width, plus safety number to get max body height
+    };
+    $.extend(data, extra_data || {});
+
+    $(cfct_builder).trigger(&#x27;edit-module&#x27;, data);
+    
+    cfct_builder.fetch(&#x27;edit_module&#x27;, data, callback || &#x27;edit-module-response&#x27;);
+    return true;
+  };
+  
+  $(cfct_builder).bind(&#x27;edit-module-response&#x27;, function(evt, ret) {    
+    if (!ret.success) {
+      cfct_builder.doError(ret);
+      return false;
+    }
+  
+    if ($(&#x27;#DOMWindow&#x27;).not(&#x27;:visible&#x27;)) {
+      $.openDOMWindow(cfct_builder.opts.DOMWindow_defaults);
+    }
+    
+    $(&#x27;#DOMWindow&#x27;).css({&#x27;overflow&#x27;:&#x27;visible&#x27;});    
+    
+    cfct_builder.hidePopupActivityDiv(cfct_builder.opts.dialogs.add_module);
+    cfct_messenger.clearMessage();
+      
+    $(cfct_builder.opts.dialogs.popup_wrapper).html(ret.html);
+    
+    var _form = cfct_builder.getFormForModuleLoadCallback(cfct_builder.opts.dialogs.popup_wrapper);
+
+    cfct_builder.doModuleLoadCallback(_form);
+    cfct_builder.setFormEditing(_form);
+    
+    return true;
+  });
+  
+  cfct_builder.setFormEditing = function(form, editing_data) {
+    form.find(&#x27;.cfct-button-action&#x27;).data(&#x27;editing&#x27;, $.extend({}, editing_data || cfct_builder.editing_items));
+    cfct_builder.editing(0);
+  };
+  
+  cfct_builder.getFormEditing = function(form) {
+    return form.find(&#x27;.cfct-button-action&#x27;).data(&#x27;editing&#x27;) || {};
+  };
+  
+  cfct_builder.submitModuleForm = function(form, extra_data, callback) {
+    if (new Date().getTime() &lt; this.submitted_at + 500) {
+      return false;
+    }
+    this.submitted_at = new Date().getTime();
+
+    cfct_messenger.clearMessage();
+    cfct_builder.showPopupActivityDiv(form);
+
+    // Protect against saving if we didn&#x27;t successfully store the module location data
+    if (cfct_builder.editing_items.row_id != null || cfct_builder.editing_items.block_id != null) {
+      var _form_editing = this.getFormEditing(form);
+      for (key in cfct_builder.editing_items) {
+        if (cfct_builder.editing_items.hasOwnProperty(key)) {
+          _form_editing[key] = _form_editing[key] || cfct_builder.editing_items[key];
+        }
+      }
+      this.setFormEditing(form, _form_editing);
+    }
+
+    if (false === cfct_builder.doModuleSaveCallback(form)) {
+      cfct_builder.hidePopupActivityDiv(this.opts.dialogs.popup_wrapper);
+      return false;
+    }
+    
+    var _form = $(form);
+    var _formdata = _form.serialize();
+    var _editing = this.getFormEditing(_form);
+    
+    var data = {
+      &#x27;data&#x27;: _formdata,
+      &#x27;row_id&#x27;: _editing.row_id,
+      &#x27;block_id&#x27;: _editing.block_id,
+      &#x27;module_type&#x27;: $(&#x27;:input[name=module_type]&#x27;, _form).val(),
+      &#x27;module_id&#x27;: _editing.module_id,
+      &#x27;parent_module_id&#x27;: _editing.parent_module_id,
+      &#x27;parent_module_id_base&#x27;: _editing.parent_module_id_base
+    };
+    $.extend(data, extra_data || {});
+    
+    this.fetch(&#x27;save_module&#x27;, data, callback || &#x27;submit-module-form-response&#x27;);
+    return true;
+  };
+  
+  $(cfct_builder).bind(&#x27;submit-module-form-response&#x27;,function(evt,ret) {
+    if (!ret.success) {
+      cfct_builder.doError(ret);
+      return false;
+    }
+    
+    this.insertModule(ret.html, $(&#x27;#&#x27; + ret.block_id + &#x27; .cfct-block-modules&#x27;), ret.module_id);
+    
+    this.bindClickables();
+    this.editing(0);
+    cfct_messenger.setMessage(&#x27;Module Saved&#x27;,&#x27;confirm&#x27;);
+    $.closeDOMWindow();
+    
+    cfct_builder.hidePopupActivityDiv(this.opts.dialogs.popup_wrapper);
+    return true;
+  });
+  
+  /** 
+   * insert a module &#x60;html&#x60; in to a block &#x60;target&#x60;
+   * if &#x60;module_id&#x60; not empty then an existing module will be replaced
+     */
+  cfct_builder.insertModule = function(html, target, module_id) {
+    if (module_id === null || $(&#x27;#&#x27; + module_id, target).size() &lt; 1) {
+      $(target).append(html);
+    }
+    else {
+      $(&#x27;#&#x27; + module_id, target).replaceWith(html);
+    }
+    
+    var _row = target.closest(&#x27;.cfct-row&#x27;);
+    if (_row.hasClass(&#x27;cfct-row-empty&#x27;)) {
+      _row.removeClass(&#x27;cfct-row-empty&#x27;);
+    }
+    
+    target.trigger(&#x27;add-module&#x27;, [module_id]);
+    
+    return true;
+  };
+  
+// Sideload Module functions
+
+  // request the module chooser in to the sideload div
+  cfct_builder.sideloadSelectModule = function() {
+    // Already loaded? Show it.
+    if ($(&#x27;.cfct-module-sideload ul#cfct-module-list&#x27;, this.opts.dialogs.popup_wrapper).size() &gt; 0) {
+      cfct_builder.sideloadOpen();
+    }
+    // Otherwise AJAX it!
+    else {
+      this.sideloadSetLoading();
+      data = {
+        &#x27;module_type&#x27;: this.editing_items.module_name,
+        &#x27;module_id&#x27;: this.editing_items.module_id,
+        &#x27;sideload&#x27;: true
+      };
+      this.fetch(&#x27;sideload_module_chooser&#x27;, data, &#x27;sideload-module-chooser-response&#x27;);
+    }
+    return false;
+  };
+  
+  // load the module chooser in to the sideload and display
+  $(cfct_builder).bind(&#x27;sideload-module-chooser-response&#x27;, function(evt, ret) {
+    if (!ret.success) {
+      cfct_builder.doError(ret);
+      return false;
+    }
+    
+    cfct_builder.sideloadSetContent(ret.html);
+    cfct_builder.sideloadOpen();
+    
+    return true;
+  });
+  
+  // cancel selecting a module
+  cfct_builder.sideloadCancelSelectModule = function() {
+    cfct_builder.sideloadClose();
+  };
+  
+  // load in response for a module admin form
+  $(cfct_builder).bind(&#x27;sideload-edit-module-response&#x27;, function(evt, ret) {
+    // handle error
+    if (!ret.success) {
+      cfct_builder.doError(ret);
+      return false;
+    }
+    
+    cfct_messenger.clearMessage();
+    cfct_builder.sideloadSetContent(ret.html);
+    
+    var sideloader = $(&#x27;.cfct-module-sideload&#x27;, cfct_builder.opts.dialogs.popup_wrapper);
+    
+    var _form = cfct_builder.getFormForModuleLoadCallback(sideloader);
+    
+    cfct_builder.doModuleLoadCallback(_form);
+    cfct_builder.setFormEditing(_form);
+    
+    if (cfct_builder.sideloadIsVisible() == false) {
+      cfct_builder.sideloadOpen();
+    }
+    
+    return false;
+  });
+  
+  // act on save-module response data
+  $(cfct_builder).bind(&#x27;sideload-submit-module-form-response&#x27;, function(evt, ret) {
+    if (!ret.success) {
+      cfct_builder.doError(ret);
+      return false;
+    }
+
+    this.insertModule(ret.html, $(&#x27;.cfct-block-modules&#x27;, this.opts.dialogs.popup_wrapper), ret.module_id);
+    
+    cfct_builder.sideloadClose();
+    return true;
+  });
+  
+  // make sure the user really wants to delete the module
+  cfct_builder.sideloadConfirmRemoveModule = function() {
+    cfct_builder.sideloadSetContent(this.opts.dialogs.delete_module);
+    cfct_builder.sideloadOpen();
+  };
+  
+  // set the sideload status to display a loading spinner
+  cfct_builder.sideloadSetLoading = function() {
+    $(&#x27;.cfct-module-sideload&#x27;, this.opts.dialogs.popup_wrapper).html($(&#x27;&lt;div class=&quot;cfct-loading&quot;&gt;Loading&amp;hellip;&lt;/div&gt;&#x27;));  
+  };
+  
+  // set the contents of the sideload div
+  cfct_builder.sideloadSetContent = function(content) {
+    var sideloader = $(&#x27;.cfct-module-sideload&#x27;, this.opts.dialogs.popup_wrapper);
+    
+    if ($(&#x27;.cfct-popup&#x27;, content).size() &gt; 0 || $(content).hasClass(&#x27;cfct-popup&#x27;)) {
+      content = $(&#x27;.cfct-popup-inner-wrap&#x27;, content).html();
+    }
+
+    sideloader.html(content);
+    
+    var _height = this.sideloadGetContentAreaHeight() + &#x27;px&#x27;;
+    $(&#x27;.cfct-popup-content&#x27;, sideloader).css({
+      &#x27;height&#x27;: _height,
+      &#x27;max-height&#x27;: _height
+    });
+  };
+  
+  // get the available content area height based on the current dialog size
+  cfct_builder.sideloadGetContentAreaHeight = function() {
+    var popup_height = $(&#x27;.cfct-popup-inner-wrap:first&#x27;, this.opts.dialogs.popup_wrapper).height();
+    var sideloadr = $(&#x27;.cfct-module-sideload&#x27;, this.opts.dialogs.popup_wrapper);
+    var module_content = $(&#x27;.cfct-module-form .cfct-popup-content:first&#x27;, this.opts.dialogs.popup_wrapper);
+
+    // doing this &#x27;cause height() &amp; friends weren&#x27;t cooperating with padding
+    var module_content_padding = parseInt(module_content.css(&#x27;padding-top&#x27;).replace(&#x27;px&#x27;, &#x27;&#x27;), 10) + parseInt(module_content.css(&#x27;padding-bottom&#x27;).replace(&#x27;px&#x27;, &#x27;&#x27;), 10);
+    var sideload_items_heights = sideloadr.find(&#x27;.cfct-popup-header&#x27;).outerHeight(true) + sideloadr.find(&#x27;.cfct-popup-actions&#x27;).outerHeight(true);
+    
+    return popup_height - module_content_padding - sideload_items_heights;
+  };
+  
+  // open the sideload div
+  cfct_builder.sideloadOpen = function(callback) {
+    var sideloadr = $(&#x27;.cfct-module-sideload&#x27;, this.opts.dialogs.popup_wrapper);
+    
+    // // make sure our dimensions are correct
+    var popup_height = $(&#x27;.cfct-popup-inner-wrap&#x27;, this.opts.dialogs.popup_wrapper).height();
+    var popup_width = $(&#x27;.cfct-popup-inner-wrap&#x27;, this.opts.dialogs.popup_wrapper).width();
+    
+    // display
+    sideloadr.css({&#x27;height&#x27;: popup_height, &#x27;width&#x27;: popup_width, &#x27;left&#x27;: -popup_width})
+      .find(&#x27;.cfct-popup-content&#x27;)
+      .end()
+      .animate({left: 0}, &#x27;fast&#x27;, callback || function() {});
+  };
+  
+  // slide close the sideload div
+  cfct_builder.sideloadClose = function(callback) {
+    var popup_width = $(&#x27;.cfct-popup-inner-wrap&#x27;, cfct_builder.opts.dialogs.popup_wrapper).width();
+    $(&#x27;.cfct-module-sideload&#x27;, cfct_builder.opts.dialogs.popup_wrapper).animate({left: -popup_width}, &#x27;normal&#x27;, callback || function(){});
+  };
+  
+  // sniff wether the sideloader is off to the side or not
+  cfct_builder.sideloadIsVisible = function() {
+    if ($(&#x27;.cfct-module-sideload&#x27;, this.opts.dialogs.popup_wrapper).position().left &lt; 0) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  };
+  
+// Module Advanced Options
+
+  cfct_builder.toggleModuleOptions = function(clicked) {
+    var mo_prnt = $(clicked).closest(&#x27;.cfct-popup-header .cfct-build-module-options&#x27;);
+    if (mo_prnt.hasClass(&#x27;cfct-build-options-active&#x27;)) {
+      mo_prnt.removeClass(&#x27;cfct-build-options-active&#x27;);
+    }
+    else {
+      mo_prnt.addClass(&#x27;cfct-build-options-active&#x27;);
+    }
+  };
+  
+  cfct_builder.moduleOptionsSliderShowHide = function(clicked) {
+    var _this = $(clicked);
+    var _wrapper = _this.closest(&#x27;.cfct-popup-header&#x27;).next(&#x27;.cfct-module-form&#x27;).find(&#x27;div.cfct-popup-advanced-actions&#x27;);
+    var _tgt = $(&#x27;#&#x27; + _this.attr(&#x27;href&#x27;).slice(_this.attr(&#x27;href&#x27;).indexOf(&#x27;#&#x27;)+1), _wrapper);
+
+    if (_wrapper.is(&#x27;:visible&#x27;)) {
+      if (!_tgt.is(&#x27;:visible&#x27;)) {
+        _wrapper.slideUp(function() {
+          cfct_builder.moduleOptionsItemShowHide(_tgt, _wrapper);        
+        });
+      }
+    }
+    else {
+      cfct_builder.moduleOptionsItemShowHide(_tgt, _wrapper);
+    }
+  };
+  
+  cfct_builder.moduleOptionsSlideClose = function() {
+    $(&#x27;.cfct-module-edit-form&#x27;).find(&#x27;.cfct-popup-advanced-actions&#x27;).slideUp();
+  };
+
+  cfct_builder.moduleOptionsItemShowHide = function(_tgt, _wrapper) {
+    _tgt.css({&#x27;display&#x27;:&#x27;block&#x27;}).siblings().css({&#x27;display&#x27;:&#x27;none&#x27;});
+    _wrapper.slideDown();
+  };
+
+// Remove Module Functions
+  cfct_builder.confirmRemoveModule = function() {
+    this.opts.dialogs.popup_wrapper.html(this.opts.dialogs.delete_module);
+    $.openDOMWindow(this.opts.DOMWindow_defaults);
+  };
+  
+  $(cfct_builder).bind(&#x27;remove-module-response&#x27;, function(evt, ret) {
+    if (!ret.success) {
+      cfct_builder.doError(ret);
+      return false;
+    }
+
+    $(&#x27;#&#x27; + ret.module_id).slideUp(function() {
+      var _this = $(this);
+      var _block = _this.closest(&#x27;.cfct-block&#x27;);
+      var _module_id = _this.attr(&#x27;id&#x27;);
+      _this.remove();
+      _block.trigger(&#x27;remove-module&#x27;, [_module_id]);
+      if ($(&#x27;.cfct-module-sideload&#x27;, cfct_builder.opts.dialogs.popup_wrapper).size() &gt; 0) {
+        cfct_builder.sideloadClose();
+      }
+      else {
+        cfct_builder.hidePopupActivityDiv(cfct_builder.opts.dialogs.delete_module);
+        $.closeDOMWindow();
+      }
+    });
+
+    cfct_messenger.setMessage(&#x27;Module Deleted&#x27;, &#x27;confirm&#x27;);
+    return true;
+  });
+
+// Reset Build Functions
+  cfct_builder.confirmResetTemplate = function() {
+    this.opts.dialogs.popup_wrapper.html(this.opts.dialogs.reset_build);
+    $.openDOMWindow(this.opts.DOMWindow_defaults);
+    
+    $(&#x27;#cfct-reset-build-confirm&#x27;, this.opts.dialogs.reset_build).click(function() {
+      cfct_builder.doResetBuild();
+    });
+
+    $(&#x27;.cancel&#x27;, this.opts.dialogs.reset_build).click(function() {
+      $.closeDOMWindow();
+      return false;
+    });
+  };
+  
+  cfct_builder.doResetBuild = function() {
+    cfct_builder.showPopupActivityDiv(cfct_builder.opts.dialogs.reset_build);
+    
+    $.closeDOMWindow();
+    $(&#x27;#cfct-sortables&#x27;).slideUp(&#x27;normal&#x27;,function(){
+      cfct_builder.fetch(&#x27;reset_build&#x27;, {}, &#x27;reset-template-response&#x27;);
+    });
+  };
+  
+  $(cfct_builder).bind(&#x27;reset-template-response&#x27;, function(evt,ret) {
+    if (!ret.success) {
+      cfct_builder.doError(ret);
+      return false;
+    }
+    
+    $(&#x27;#cfct-sortables&#x27;).children(&#x27;.cfct-row&#x27;).remove().end().slideDown(&#x27;normal&#x27;, function() {
+      $(cfct_builder).trigger(&#x27;row-removed&#x27;);
+      cfct_builder.showWelcome();
+    });
+
+    return true;
+  });
+// Module enable/disable callback
+  $(cfct_builder).bind(&#x27;toggle-render-response&#x27;, function(evt, ret) {
+    $(&#x27;#&#x27; + ret.module_id).find(&#x27;.cfct-module-status&#x27;).remove();
+    if (!ret.success) {
+      ret.html = ret.html + &quot;&lt;p&gt;Could not toggle render state.&lt;/p&gt;&quot;;
+      cfct_builder.doError(ret);
+      return false;
+    }
+    var _this = $(&#x27;#&#x27; + ret.module_id + &#x27; a.cfct-module-toggle-render&#x27;);
+    _this.html(ret.html);
+    return true;
+  });
+
+// Module Callbacks
+  cfct_builder.doModuleSaveCallback = function(form) {
+    var _form = $(form);
+    if (cfct_builder.hasModuleSaveCallback(_form.attr(&#x27;name&#x27;))) {
+      $.each(
+        cfct_builder.opts.module_save_callbacks[_form.attr(&#x27;name&#x27;)],
+        function(i, func) {
+          try {
+            var _ret = func.call(null, _form);
+            if (!_ret) {
+              return false;
+            }
+          }
+          catch (e) {
+            if (window.console &amp;&amp; console.log) {
+              console.log(e);
+            }
+            return false;
+          }
+        }
+      );
+    }
+    return true;
+  };
+  
+  cfct_builder.addModuleSaveCallback = function(id,func) {
+    if (!(cfct_builder.opts.module_save_callbacks[id] instanceof Array)) {
+      cfct_builder.opts.module_save_callbacks[id] = [];
+    }
+    cfct_builder.opts.module_save_callbacks[id].push(func);
+  };
+  
+  cfct_builder.hasModuleSaveCallback = function(formName) {
+    return (formName in cfct_builder.opts.module_save_callbacks);
+  };
+  
+  cfct_builder.doModuleLoadCallback = function(form) {
+    // do module specific callbacks
+    var _form = $(form);
+    if (_form.attr(&#x27;name&#x27;) in cfct_builder.opts.module_load_callbacks) {
+      $.each(
+        cfct_builder.opts.module_load_callbacks[_form.attr(&#x27;name&#x27;)],
+        function(i, func) {
+          try {
+            func.call(null, _form);
+          }
+          catch (e) {
+            if (window.console &amp;&amp; console.log) {
+              console.log(e);
+            }
+            return false;
+          }
+        }
+      );
+    }
+    
+    // do the &quot;all module&quot; callbacks
+    if (&#x27;*&#x27; in cfct_builder.opts.module_load_callbacks) {
+      $.each(
+        cfct_builder.opts.module_load_callbacks[&#x27;*&#x27;],
+        function(i, func) {
+          try {
+            func.call(null, _form);
+          }
+          catch (e) {
+            if (window.console &amp;&amp; console.log) {
+              console.log(e);
+            }
+            return false;
+          }
+        }
+      );
+    }
+    
+    // init sortables for multi-modules
+    _form.find(&#x27;.cfct-block-modules&#x27;).each(function() {
+      var _this = $(this);
+      if (_this.hasClass(&#x27;ui-sortable&#x27;)) {
+        _this.sortable(&#x27;destroy&#x27;);
+      }
+      _this.sortable($.extend(
+        cfct_builder.opts.sortableDefaults,
+        {
+          &#x27;remove&#x27;:null,
+          &#x27;receive&#x27;:null,
+          &#x27;stop&#x27;:cfct_builder.updateModuleOrderEnd,
+          &#x27;connectWith&#x27;:false
+        }
+      ));
+    });
+    return true;
+  };
+  
+  cfct_builder.addModuleLoadCallback = function(id, func) {
+    if (!(cfct_builder.opts.module_load_callbacks[id] instanceof Array)) {
+      cfct_builder.opts.module_load_callbacks[id] = [];
+    }
+    cfct_builder.opts.module_load_callbacks[id].push(func);
+  };
+  
+  // helper function to make sure that it gets done constently
+  cfct_builder.getFormForModuleLoadCallback = function(html) {
+    return $(&#x27;form&#x27;, html);
+  };
+  
+// module activity display
+  cfct_builder.showPopupActivityDiv = function(tgt) {
+    $(&#x27;.cfct-dialog-activity&#x27;,tgt).show();
+  };
+  
+  cfct_builder.hidePopupActivityDiv = function(tgt) {
+    $(&#x27;.cfct-dialog-activity&#x27;,tgt).hide();
+  };
+  
+// Build Options
+  cfct_builder.toggleOptions = function() {
+    var _prnt = $(&#x27;#cfct-build-header .cfct-build-options&#x27;);
+    if (_prnt.hasClass(&#x27;cfct-build-options-active&#x27;)) {
+      _prnt.removeClass(&#x27;cfct-build-options-active&#x27;);
+    }
+    else {
+      _prnt.addClass(&#x27;cfct-build-options-active&#x27;);
+    }
+  };
+  
+// Dialogs
+  cfct_builder.initDialogs = function() {
+    // main popup &amp; wrapper
+    this.loadDialog(&#x27;popup&#x27;);
+    this.opts.dialogs.popup_wrapper = $(&#x27;#cfct-popup-inner&#x27;,this.opts.dialogs.popup);
+    // delete row
+    this.loadDialog(&#x27;delete_row&#x27;);
+    // delete module
+    this.loadDialog(&#x27;delete_module&#x27;);
+    // edit module
+    this.loadDialog(&#x27;edit_module&#x27;);
+    // add module, clone because it needs to be loaded multiple times because of a weird IE bug
+    this.loadDialog(&#x27;add_module&#x27;, true);
+    // error dialog
+    this.loadDialog(&#x27;error_dialog&#x27;);
+    // reset build
+    this.loadDialog(&#x27;reset_build&#x27;);
+    // save template dialog
+    this.loadDialog(&#x27;save_template&#x27;);
+    $(&#x27;.cfct-module-form&#x27;,this.opts.dialogs.save_template).wrap(&#x27;&lt;form id=&quot;cfct-save-template-form&quot; name=&quot;cfct-save-template-form&quot; /&gt;&#x27;);
+  };
+  
+  // generic dialog loader
+  cfct_builder.loadDialog = function(dialog_key, clone) {
+    if (dialog_key in cfct_builder.opts.dialog_selectors) {
+      if (clone == true) {
+        this.opts.dialogs[dialog_key] = $(cfct_builder.opts.dialog_selectors[dialog_key]).clone();
+      }
+      else {
+        this.opts.dialogs[dialog_key] = $(cfct_builder.opts.dialog_selectors[dialog_key]);
+      }
+    }
+  };
+  
+// Actions
+  cfct_builder.bindClickables = function() {
+    // init block sortables
+    cfct_builder.initBlockSortables();
+    return true;
+  };
+  
+  cfct_builder.bindLiveClickables = function() {
+    var _that = this;
+    if (!this.$rowTrigger.data(&#x27;popover&#x27;)) {
+      this.$rowTrigger.popover({
+        my: &#x27;center top&#x27;,
+        at: &#x27;center bottom&#x27;,
+        offset: &#x27;0 1px&#x27;
+      });
+    }
+    // Rows
+      // select row to insert buttons
+      $(&#x27;#cfct-select-new-row .cfct-il-a&#x27;).live(&#x27;click&#x27;, function(e) {
+        _that.$rowTrigger.data(&#x27;popover&#x27;).hide();
+        cfct_builder.insertRow($(this).attr(&#x27;rel&#x27;));
+        return false;
+      });
+      // delete row buttons
+      $(&#x27;#cfct-sortables .cfct-row-delete&#x27;).live(&#x27;click&#x27;, function() {
+        var _this = $(this);
+        if (_this.parents(&#x27;.cfct-row&#x27;).find(&#x27;div.cfct-module&#x27;).length == 0) {
+          cfct_builder.doRemoveRow(_this.parents(&#x27;.cfct-row&#x27;));
+        }
+        else {
+          cfct_builder.confirmRemoveRow(_this.parents(&#x27;.cfct-row&#x27;));
+        }
+        return false;
+      });
+      
+    // new module
+      // standard new button
+      $(&#x27;a.cfct-add-new-module&#x27;).live(&#x27;click&#x27;, function() {
+        var _this = $(this);
+
+        cfct_builder.editing({
+          &#x27;block_id&#x27;:_this.attr(&#x27;href&#x27;).slice(_this.attr(&#x27;href&#x27;).indexOf(&#x27;#&#x27;)+1),
+          &#x27;row_id&#x27;:_this.parents(&#x27;.cfct-row&#x27;).attr(&#x27;id&#x27;)
+        });
+                
+        if (_this.closest(&#x27;.multi-module-form&#x27;).size() &gt; 0) {
+          cfct_builder.sideloadSelectModule();          
+        }
+        else {      
+          cfct_builder.selectModule();
+        }
+        return false;
+      });
+      
+      // cancel new module
+      $(&#x27;#cfct-add-module-cancel&#x27;).live(&#x27;click&#x27;, function() {
+        if ($(this).closest(&#x27;.cfct-module-sideload&#x27;).size() &gt; 0) {
+          cfct_builder.sideloadClose(function() {
+            cfct_builder.sideloadSetContent(&#x27;&#x27;);
+          });
+        }
+        else {
+          cfct_builder.editing(0);
+          $.closeDOMWindow();
+        }
+        return false;
+      });
+    
+    // remove module actions
+      $(&#x27;a.cfct-module-clear&#x27;).live(&#x27;click&#x27;, function() {
+        var _this = $(this);
+        var clear_module_data = {
+          &#x27;module_id&#x27;:_this.attr(&#x27;href&#x27;).slice(_this.attr(&#x27;href&#x27;).indexOf(&#x27;#&#x27;)+1),
+          &#x27;block_id&#x27;:_this.parents(&#x27;.cfct-block&#x27;).attr(&#x27;id&#x27;),
+          &#x27;row_id&#x27;:_this.parents(&#x27;.cfct-row&#x27;).attr(&#x27;id&#x27;)
+        };
+        
+        if (_this.closest(&#x27;.multi-module-form&#x27;).size() &gt; 0) {
+          cfct_builder.editing({
+            &#x27;parent_module_id&#x27;: $(&#x27;.multi-module-form input[name=&quot;module_id&quot;]&#x27;, cfct_builder.opts.dialogs.popup_wrapper).val(),
+            &#x27;parent_module_id_base&#x27;: $(&#x27;.multi-module-form input[name=&quot;module_id_base&quot;]&#x27;, cfct_builder.opts.dialogs.popup_wrapper).val()
+          });
+          cfct_builder.sideloadConfirmRemoveModule();
+          cfct_builder.setFormEditing($(&#x27;.cfct-module-sideload&#x27;, cfct_builder.opts.dialogs.popup_wrapper), clear_module_data);          
+        }
+        else {
+          cfct_builder.confirmRemoveModule();
+          cfct_builder.setFormEditing(cfct_builder.opts.dialogs.popup_wrapper, clear_module_data);
+        }
+        return false;
+      });
+    // Enable / disable module rendering actions
+      $(&#x27;a.cfct-module-toggle-render&#x27;).live(&#x27;click&#x27;, function() {
+        var _this = $(this);
+        cfct_builder.module_spinner(_this);
+        var module_data = {
+          &#x27;module_id&#x27;:_this.attr(&#x27;href&#x27;).slice(_this.attr(&#x27;href&#x27;).indexOf(&#x27;#&#x27;)+1),
+          &#x27;block_id&#x27;:_this.parents(&#x27;.cfct-block&#x27;).attr(&#x27;id&#x27;),
+          &#x27;row_id&#x27;:_this.parents(&#x27;.cfct-row&#x27;).attr(&#x27;id&#x27;)
+        };
+        
+        cfct_builder.fetch(&#x27;toggle_render&#x27;,
+          module_data,
+          &#x27;toggle-render-response&#x27;
+        );
+        return false;
+      });
+
+        
+    // Delete Module Confirmation
+      // standard delete module button
+      $(&#x27;#cfct-delete-module-confirm&#x27;).live(&#x27;click&#x27;, function() {
+        var _wrapper = $(this).closest(&#x27;.cfct-module-form&#x27;);
+        var callback = &#x27;remove-module-response&#x27;;
+
+        if (_wrapper.closest(&#x27;.cfct-module-sideload&#x27;).size() &lt; 1) {
+          cfct_builder.showPopupActivityDiv(cfct_builder.opts.dialogs.delete_module);
+        }
+
+        cfct_builder.fetch(&#x27;delete_module&#x27;, cfct_builder.getFormEditing(_wrapper), callback);
+        
+        return false;
+      });
+      
+      // standard cancel delete action
+      $(&#x27;#cfct-delete-module-cancel&#x27;).live(&#x27;click&#x27;, function() {
+        if ($(this).closest(&#x27;.cfct-module-sideload&#x27;).size() &gt; 0) {
+          cfct_builder.editing({
+            &#x27;sideload_module_id&#x27;: null
+          });
+          cfct_builder.sideloadClose(function() {
+            $(&#x27;.cfct-module-sideload&#x27;, cfct_builder.opts.dialogs.popup_wrapper).html(&#x27;&#x27;);
+          });          
+        }
+        else {
+          cfct_builder.editing(0);
+          $.closeDOMWindow();
+        }
+        return false;
+      });
+    
+    // edit module cancel  
+      $(&#x27;.cfct-module-form a.cancel&#x27;).live(&#x27;click&#x27;, function() {      
+        if ($(this).closest(&#x27;.cfct-module-sideload&#x27;).size() &gt; 0) {
+          cfct_builder.sideloadCancelSelectModule();
+        }
+        else {
+          cfct_builder.editing(0);
+          $.closeDOMWindow();
+        }
+          
+        return false;
+      });
+      
+    // new module selection
+      $(&#x27;.cfct-module-list li a.cfct-il-a&#x27;).live(&#x27;click&#x27;, function() {
+        var _this = $(this);
+
+        if (new Date().getTime() &lt; this.submitted_at + 500) {
+          return false;
+        }
+        this.submitted_at = new Date().getTime();
+        // block &amp; row IDs were added by the add-module button action
+        cfct_builder.editing({
+          &#x27;module_name&#x27;: _this.attr(&#x27;href&#x27;).slice(_this.attr(&#x27;href&#x27;).indexOf(&#x27;#&#x27;)+1)
+        });
+      
+        if (_this.closest(&#x27;.cfct-module-sideload&#x27;).size() &gt; 0) {
+          cfct_builder.sideloadSetLoading();
+          cfct_builder.editing({
+            &#x27;parent_module_id&#x27;: $(&#x27;.multi-module-form input[name=&quot;module_id&quot;]&#x27;, cfct_builder.opts.dialogs.popup_wrapper).val(),
+            &#x27;parent_module_id_base&#x27;: $(&#x27;.multi-module-form input[name=&quot;module_id_base&quot;]&#x27;, cfct_builder.opts.dialogs.popup_wrapper).val()
+          });
+          cfct_builder.editModule({&#x27;sideload&#x27;: true}, &#x27;sideload-edit-module-response&#x27;);
+        }
+        else {
+          cfct_builder.showPopupActivityDiv(cfct_builder.opts.dialogs.add_module);
+          cfct_builder.editModule();
+        }
+        
+        return false;
+      });
+      
+    // edit module actions
+      $(&#x27;a.cfct-module-edit&#x27;).live(&#x27;click&#x27;, function() {
+        var _this = $(this);
+
+
+        cfct_builder.editing({
+          &#x27;module_id&#x27;:_this.attr(&#x27;href&#x27;).slice(_this.attr(&#x27;href&#x27;).indexOf(&#x27;#&#x27;)+1),
+          &#x27;block_id&#x27;:_this.parents(&#x27;.cfct-block&#x27;).attr(&#x27;id&#x27;),
+          &#x27;row_id&#x27;:_this.parents(&#x27;.cfct-row&#x27;).attr(&#x27;id&#x27;)
+        });
+
+        if (_this.closest(&#x27;.multi-module-form&#x27;).size() &gt; 0) {
+          cfct_builder.editing({
+            &#x27;parent_module_id&#x27;: $(&#x27;.multi-module-form input[name=&quot;module_id&quot;]&#x27;, cfct_builder.opts.dialogs.popup_wrapper).val(),
+            &#x27;parent_module_id_base&#x27;: $(&#x27;.multi-module-form input[name=&quot;module_id_base&quot;]&#x27;, cfct_builder.opts.dialogs.popup_wrapper).val()
+          });
+          cfct_builder.editModule({&#x27;sideload&#x27;: true}, &#x27;sideload-edit-module-response&#x27;);          
+        }
+        else {
+          $(&#x27;body&#x27;).trigger(&#x27;click&#x27;);
+          cfct_builder.showLoadingDialog();
+          cfct_builder.editModule();
+        }
+
+        return false;
+      });
+      
+    // module form submit
+      // handle form submit
+      $(&#x27;form.cfct-module-edit-form&#x27;).live(&#x27;submit&#x27;, function(){
+        var _this = $(this);
+        if (_this.closest(&#x27;.cfct-module-sideload&#x27;).size() &gt; 0) {
+          callback = &#x27;sideload-submit-module-form-response&#x27;;
+        }
+        else {
+          callback = &#x27;submit-module-form-response&#x27;;
+        }
+        cfct_builder.submitModuleForm(_this, {}, callback);
+        return false;
+      });
+    
+      // add action to module form submit button
+      $(&#x27;.cfct-module-edit-form input[type=&quot;submit&quot;]&#x27;).live(&#x27;click&#x27;, function(){
+        $(this).closest(&#x27;form&#x27;).submit();
+        return false;
+      });
+      
+    // module options
+      // actions menu action
+      $(&#x27;.cfct-build-module-options .cfct-build-options-header a&#x27;).live(&#x27;click&#x27;, function() {
+        cfct_builder.toggleModuleOptions(this);
+        return false;
+      });
+
+      // take the link ID as a reference to the ID of the item that needs to be displayed
+      $(&#x27;.cfct-build-module-options .cfct-build-module-options-list a&#x27;).live(&#x27;click&#x27;, function() {
+        cfct_builder.toggleModuleOptions(this);
+        cfct_builder.moduleOptionsSliderShowHide(this);
+        return false;
+      });
+      
+      $(&#x27;div#cfct-popup-advanced-actions a.close&#x27;).live(&#x27;click&#x27;, function() {
+        cfct_builder.moduleOptionsSlideClose();
+        return false;
+      });
+      
+    // new module list toggle
+    $(&#x27;.cfct-module-list-toggle&#x27;).live(&#x27;click&#x27;, function() {
+      var _this = $(this);
+      _tgt = $(&#x27;ul.cfct-module-list&#x27;);
+      
+      switch (_this.attr(&#x27;id&#x27;)) {
+        case &#x27;cfct-module-list-toggle-detail&#x27;:
+          _tgt.removeClass(&#x27;cfct-il-mini&#x27;);
+          $(&#x27;ul.cfct-module-list&#x27;, cfct_builder.opts.dialogs.add_module).removeClass(&#x27;cfct-il-mini&#x27;);
+          state = &#x27;column&#x27;;
+          break;
+        case &#x27;cfct-module-list-toggle-compact&#x27;:
+          _tgt.addClass(&#x27;cfct-il-mini&#x27;);
+          $(&#x27;ul.cfct-module-list&#x27;, cfct_builder.opts.dialogs.add_module).addClass(&#x27;cfct-il-mini&#x27;);
+          state = &#x27;icon&#x27;;
+          break;
+      }
+      // this could be more elegant, but its not
+      _this.addClass(&#x27;active&#x27;).siblings().removeClass(&#x27;active&#x27;);
+      $(&#x27;a#&#x27; + _this.attr(&#x27;id&#x27;), cfct_builder.opts.dialogs.add_module).addClass(&#x27;active&#x27;).siblings().removeClass(&#x27;active&#x27;);
+      cfct_builder.fetch(&#x27;content_chooser_state&#x27;,{ &#x27;state&#x27;:state });
+      return false;      
+    });
+    
+    // reset layout
+    $(&#x27;#cfct-reset-build-data&#x27;).live(&#x27;click&#x27;, function() {
+      cfct_builder.editing(0);
+      cfct_builder.toggleOptions();
+      cfct_builder.confirmResetTemplate();
+      return false;
+    });
+    
+    // save layout as template
+    $(&#x27;#cfct-save-as-template&#x27;).live(&#x27;click&#x27;, function() {
+      cfct_builder.editing(0);
+      cfct_builder.saveAsTemplate();
+      cfct_builder.toggleOptions();
+      return false;
+    });
+      
+    // global &quot;click off&quot; handler
+    $(&#x27;body&#x27;).click(function(e){
+      if ($(&#x27;#cfct-build-header .cfct-build-options .cfct-build-options-list&#x27;).is(&#x27;:visible&#x27;)) {
+        cfct_builder.toggleOptions();
+      }
+    });
+    
+    // global keypress handler
+    $(document).bind(&#x27;keyup&#x27;, function(evt) {
+      switch (evt.which) {
+        case 27:
+          // bind escape key to closing the DOMWindow or closing the sideloaer
+          if ($(&#x27;.cfct-module-sideload&#x27;).size() &gt; 0 &amp;&amp; cfct_builder.sideloadIsVisible()) {
+            cfct_builder.sideloadClose();
+          }
+          else if ($(&#x27;#DOMWindow&#x27;).is(&#x27;:visible&#x27;)) {
+            $.closeDOMWindow();
+          }
+          break;
+      }
+      return true;
+    });
+    
+    // proof of concept block change listeners
+    // $(&#x27;.cfct-block&#x27;).live(&#x27;add-module&#x27;, function(evt, module_id) {
+    //   console.log(this);
+    //   console.log(&#x27;added: &#x27; + module_id);
+    // });
+    // $(&#x27;.cfct-block&#x27;).live(&#x27;remove-module&#x27;, function(evt, module_id) {
+    //   console.log(this);
+    //   console.log(&#x27;removed: &#x27; + module_id);
+    // });
+    
+    // Global Image Search boxes
+    $(&#x27;.cfct-global-image-select .cfct-image-select-items-list-item&#x27;).live(&#x27;click&#x27;, function() {
+      var _this = $(this);
+      _this.addClass(&#x27;active&#x27;).siblings().removeClass(&#x27;active&#x27;);
+
+      var _wrapper = _this.parents(&#x27;.cfct-global-image-select&#x27;);
+      
+      $(&#x27;input:hidden&#x27;, _wrapper).val(_this.attr(&#x27;data-image-id&#x27;));
+      $(&#x27;.cfct-global-image-search-current-image .cfct-image-select-items-list-item &gt; div&#x27;, _wrapper)
+        .css( &#x27;backgroundImage&#x27;, _this.children(&#x27;:first&#x27;).css(&#x27;backgroundImage&#x27;) )
+        .children(&#x27;:first&#x27;).text(_this.children(&#x27;:first&#x27;).children(&#x27;:first&#x27;).text());
+        
+      return false;
+    });
+
+    // Post image select: account for single select boxes
+    $(&#x27;.cfct-post-image-select.cfct-post-image-select-single .cfct-image-select-items-list-item&#x27;).live(&#x27;click&#x27;, function() {
+      var _this = $(this);
+
+      _this.addClass(&#x27;active&#x27;).siblings().removeClass(&#x27;active&#x27;);
+      _this.parents(&#x27;.cfct-image-select-items-list&#x27;).find(&#x27;input:hidden&#x27;).val(_this.attr(&#x27;data-image-id&#x27;));
+      
+      return false;
+    });
+
+    // Post image select: account for multi-select boxes
+    $(&#x27;.cfct-post-image-select.cfct-post-image-select-multiple .cfct-image-select-items-list-item&#x27;).live(&#x27;click&#x27;, function() {
+      var _this = $(this);
+                   
+      var val = _this.closest(&#x27;.cfct-image-select-items-list&#x27;).find(&#x27;input:hidden&#x27;).val();
+      var selected_images = new Array();
+      if (val != 0) {
+          selected_images = val.split(&#x27;,&#x27;);
+      }
+      var key = jQuery.inArray(_this.attr(&#x27;data-image-id&#x27;), selected_images);
+                  
+      if (_this.hasClass(&#x27;active&#x27;)) {
+          _this.removeClass(&#x27;active&#x27;);
+          if (key != -1) {
+              selected_images.splice(key, 1);
+          }
+      }
+      else {
+          _this.addClass(&#x27;active&#x27;);
+          if (key == -1) {
+              selected_images.push(parseInt(_this.attr(&#x27;data-image-id&#x27;), 10));
+          }
+      }
+      _this.parents(&#x27;.cfct-image-select-items-list&#x27;).find(&#x27;input:hidden&#x27;).val(selected_images);
+
+      return false;
+    });
+  };
+
+// init post handler - trigger autosave and continue when post_ID has been updated
+  cfct_builder.initPost = function(callback,data) {
+    jQuery(&#x27;#title&#x27;).val($(&#x27;#cfct-autosave-title&#x27;).val()).blur();
+    setTimeout(function() { cfct_builder.continueInitPost(callback,data); },500);
+  };
+
+  cfct_builder.continueInitPost = function(callback,data) {
+    if (jQuery(&#x27;#post_ID&#x27;).val() &lt; 0) {
+      setTimeout(function() { cfct_builder.continueInitPost(callback,data); },500);
+    }
+    else {
+      cfct_builder[callback](data);
+    }
+    return;
+  };
+  
+// Utility
+  cfct_builder.toggleOptionsMenu = function(dir) {
+    var _optionsmenu = $(&#x27;#cfct-build-header .cfct-build-header-group-secondary .cfct-build-options&#x27;);
+    switch(true) {
+      case _optionsmenu.is(&#x27;:visible&#x27;) &amp;&amp; dir == undefined:
+      case dir == &#x27;hide&#x27;:
+        func = &#x27;hide&#x27;;
+        break;
+      case _optionsmenu.is(&#x27;:hidden&#x27;) &amp;&amp; dir == undefined:
+      case dir == &#x27;show&#x27;:
+        func = &#x27;show&#x27;;
+        break;
+    }
+    _optionsmenu[func]();    
+  };
+
+  cfct_builder.hasRows = function() {
+    return $(&#x27;#cfct-sortables .cfct-row&#x27;).size() &gt; 0;
+  };
+  
+  cfct_builder.spinner = function(message) {
+    var _message = message || &#x27;Loading&amp;hellip;&#x27;;
+    return &#x27;&lt;div id=&quot;cfct-spinner-dialog&quot; class=&quot;cfct-popup&quot;&gt;&lt;div class=&quot;cfct-popup-spinner&quot;&gt;&#x27; + _message + &#x27;&lt;/div&gt;&lt;/div&gt;&#x27;;
+  };
+  
+  cfct_builder.module_spinner = function(module, message) {
+    $(module).append(
+      $(&#x27;&lt;div class=&quot;cfct-module-status&quot;&gt;&#x27;)
+        .append($(&#x27;&lt;div class=&quot;cfct-module-status-wrapper&quot; /&gt;&#x27;)
+          .css({
+            &#x27;padding-top&#x27;:($(module).height() / 3) + &#x27;px&#x27;,
+            &#x27;height&#x27;:$(module).height() + &#x27;px&#x27;
+          })
+          .append(&#x27;&lt;div class=&quot;cfct-module-status-overlay&quot; /&gt;&#x27;, cfct_builder.spinner(message))
+        )
+    );
+  };
+
+// Triggered Row Responses 
+
+  $(cfct_builder).bind(&#x27;row-removed&#x27;, function(evt) {
+    if ($(&#x27;#cfct-sortables .cfct-row, cfct_build&#x27;).length == 0) {
+      cfct_builder.toggleOptionsMenu(&#x27;hide&#x27;);
+    };
+  });
+
+  $(cfct_builder).bind(&#x27;new-row-inserted&#x27;, function(evt, row) {
+    cfct_builder.toggleOptionsMenu(&#x27;show&#x27;);
+  });
+  
+// Utility
+
+  // ugly, I know, but it works.
+  cfct_array_intersect = function(a, b) {
+    result = new Array();
+    for (i in a) {
+      for (j in b) {
+        if (a[i] == b[j]) {
+          result.push(a[i]);
+        }
+      }
+    }
+    return result;
+  };
+  
+// Get started
+  $(function() {
+    cfct_build = $(&#x27;#cfct-build&#x27;);
+    cfct_builder.opts.build = cfct_build;
+    cfct_builder.opts.rich_text = ($(&#x27;#postdivrich&#x27;).length &gt; 0 ? true : false);
+    cfct_builder.initDialogs();
+    cfctAdminEditInit();
+    cfct_build.show();
+    // check to see if a module should be displayed
+    var url = location.href,
+      urlParts = null,
+      moduleId = &#x27;&#x27;;
+    if (url.indexOf(&#x27;#&#x27;) != -1) {
+      urlParts = url.split(&#x27;#&#x27;);
+      moduleId = urlParts[1]
+      if (moduleId.indexOf(&#x27;cfct-module-&#x27;) === 0) {
+        $(&#x27;#&#x27; + moduleId).find(&#x27;.cfct-module-edit&#x27;).click();
+      }
+    }
+  });
+
+})(jQuery);  
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

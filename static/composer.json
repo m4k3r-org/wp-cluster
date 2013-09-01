@@ -26,17 +26,16 @@
   ],
   "config": {
     "vendor-dir": "../vendor",
-    "component-dir": "../assets/vendor",
     "bin-dir": "../core/bin"
   },
   "repositories": [
     {
       "type": "package",
       "package": {
-        "name": "ud/vendor",
+        "name": "ud/libs",
         "version": "trunk",
         "source": {
-          "url": "http://github.com/UsabilityDynamics/vendor",
+          "url": "http://github.com/UsabilityDynamics/wp-libs",
           "type": "svn",
           "reference": "trunk"
         }
@@ -69,7 +68,7 @@
   ],
   "require": {
     "symfony/validator": "2.1.*",
-    "ud/vendor": "*",
+    "ud/libs": "*",
     "ud/socket": "*",
     "ud/loader": "*"
   },

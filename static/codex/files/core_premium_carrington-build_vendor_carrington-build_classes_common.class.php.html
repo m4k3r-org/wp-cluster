@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/premium/carrington-build/vendor/carrington-build/classes/common.class.php - Flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="Flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/: Flawless.Element.html">: Flawless.Element</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Module.html">: Flawless.Flawless_Module</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Shortcode.html">: Flawless.Flawless_Shortcode</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Widget.html">: Flawless.Flawless_Widget</a></li>
+            
+                <li><a href="../classes/: Flawless.flawless_wpp_extensions.html">: Flawless.flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/: Flawless.License.html">: Flawless.License</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Functions.html">Template Functions</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/premium/carrington-build/vendor/carrington-build/classes/common.class.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+
+class cfct_build_common {
+  private $postmeta_key = CFCT_BUILD_POSTMETA;
+  
+  protected $active_state = null;
+  
+  protected $in_ajax = false;
+  protected $ajax_hanlders = array();
+  
+  public $template;
+  public $registered_modules_dirs = array();
+  public $registered_module_options_dirs = array();
+  public $enable_custom_attributes;
+  public $module_urls = array();
+  public $loaded_modules = array();
+  
+// Init &amp; Config
+  
+  public function __construct() {
+    $this-&gt;template = new cfct_build_template();
+    add_action(&#x27;cfct-modules-loaded&#x27;, array($this, &#x27;import_included_modules&#x27;), 10);
+    add_action(&#x27;cfct-modules-loaded&#x27;, array($this, &#x27;import_module_options&#x27;), 11);
+    add_action(&#x27;cfct-rows-loaded&#x27;, array($this, &#x27;import_included_rows&#x27;));
+    $this-&gt;enable_custom_attributes = apply_filters(&#x27;cfct-enable-custom-attributes&#x27;, true);
+  }
+  
+  /**
+   * Prep the object for action.
+   * Can be forced to prep a specific post_id if needed.
+   *   - forced post_id is used by the admin module save to build the post_content when a module is saved 
+   * 
+   * @param $post_id - optional, init a specific post_id
+   * @return bool
+   */
+  public function _init($post_id = null, $force = false) {
+    if(!empty($this-&gt;init_done) &amp;&amp; !$force) {
+      return;
+    }
+
+    $this-&gt;set_post_id($post_id);
+    $this-&gt;postmeta_key = apply_filters(&#x27;cfct-build-postmeta-key&#x27;, $this-&gt;postmeta_key);    
+
+    if ($postmeta = $this-&gt;get_postmeta()) {
+      $this-&gt;data = !is_array($postmeta[&#x27;data&#x27;]) ? array() : $postmeta[&#x27;data&#x27;];
+      $this-&gt;active_state = !empty($postmeta[&#x27;active_state&#x27;]) ? $postmeta[&#x27;active_state&#x27;] : null;
+      $this-&gt;template-&gt;set_template($postmeta[&#x27;template&#x27;]);
+    }
+    else {
+      // new post or non-build post
+      $this-&gt;data = array();
+      $this-&gt;template-&gt;set_template(array());
+    }
+    
+    $this-&gt;init_done = true;
+  }
+  
+  /**
+   * Override the template object with a pre-instantiated template object
+   * $template must be a cfct_build_template object or it will be rejected
+   *
+   * @param object $template 
+   * @return void
+   */
+  public function set_template($template) {
+    if (is_object($template) &amp;&amp; $template instanceof cfct_build_template) {
+      $this-&gt;template = $template;
+    }
+    else {
+      return false;
+    }
+  }
+  
+  /**
+   * Set the internal post_id. Revert to current global post if no post_id given
+   *
+   * @param int $post_id 
+   * @return void
+   */
+  public function set_post_id($post_id = null) {
+    if (empty($post_id)) {
+      global $post;
+      $post_id = (is_object($post)) ? $post-&gt;ID : 0;
+    }
+    $this-&gt;post_id = $post_id;
+  }
+  
+  public function get_post_id() {
+    return $this-&gt;post_id;
+  }
+  
+  /**
+   * Query wether we have the data we need to do a build
+   *
+   * @return void
+   */
+  public function can_do_build() {
+    if (!is_array($this-&gt;data) || count($this-&gt;data) == 0) {
+      return false;
+    }
+    if (!is_array($this-&gt;template-&gt;get_template()) || count($this-&gt;template-&gt;get_template()) == 0) {
+      return false;
+    }
+    if (!empty($this-&gt;active_state) &amp;&amp; $this-&gt;active_state != &#x27;build&#x27;) {
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * Helper function to allow others to determine if this
+   * object is responding to an Ajax call
+   *
+   * @return bool
+   */
+  public function in_ajax() {
+    return $this-&gt;in_ajax;
+  }
+
+// Included Modules
+
+  /**
+   * Accessor function for module_urls array
+   *
+   * @return array
+   */
+  function get_module_urls() {
+    return $this-&gt;module_urls;
+  }
+  
+  /**
+   * Get the url for a loaded module
+   *
+   * @param string $basename
+   * @return void
+   */
+  function get_module_url($basename) {
+    $url = null;
+    if (!empty($this-&gt;module_urls[$basename])) {
+      $url = $this-&gt;module_urls[$basename]; 
+    }
+    return $url;
+  }
+  
+  function get_module_path($basename) {
+    $path = null;
+    if (!empty($this-&gt;loaded_modules[$basename])) {
+      $path = $this-&gt;loaded_modules[$basename];
+    }
+    return $path;
+  }
+
+  function get_module_options_path($basename) {
+    $path = null;
+    $loaded_module_options = $this-&gt;included_module_options(true);
+    if (!empty($loaded_module_options[$basename])) {
+      $path = $loaded_module_options[$basename];
+    }
+    return $path;
+  }
+  
+  /**
+   * See if we can determine the url of the included module
+   * We natively support a few locations:
+   *  - wp-content/plugins/carrington-build/modules/
+   *  - wp-content/themes/theme-name/carrington-build/modules
+   *  - wp-content/themes/theme-name/modules
+   *
+   * @param string $file_key 
+   * @param string $module 
+   * @return array
+   */
+  function set_module_url($file_key, $module) {
+    switch (true) {
+      case strpos($module, &#x27;wp-content/plugins/carrington-build/modules&#x27;) !== false: 
+      case strpos($module, &#x27;wp-content/mu-plugins/carrington-build/modules&#x27;) !== false:
+        $url = trailingslashit(CFCT_BUILD_URL).&#x27;modules/&#x27;.$file_key.&#x27;/&#x27;;
+        break;
+      case strpos($module, &#x27;wp-content/themes/&#x27;.get_stylesheet().&#x27;/carrington-build/modules&#x27;) !== false:
+        $url = trailingslashit(get_stylesheet_directory_uri()).&#x27;carrington-build/modules/&#x27;.$file_key.&#x27;/&#x27;;
+        break;
+      case strpos($module, &#x27;wp-content/themes/&#x27;.get_stylesheet().&#x27;/modules&#x27;) !== false:
+        $url = trailingslashit(get_stylesheet_directory_uri()).&#x27;modules/&#x27;.$file_key.&#x27;/&#x27;;
+        break;
+      case strpos($module, &#x27;wp-content/themes/&#x27;.get_template().&#x27;/carrington-build/modules&#x27;) !== false:
+        $url = trailingslashit(get_template_directory_uri()).&#x27;carrington-build/modules/&#x27;.$file_key.&#x27;/&#x27;;
+        break;
+      case strpos($module, &#x27;wp-content/themes/&#x27;.get_template().&#x27;/modules&#x27;) !== false:
+        $url = trailingslashit(get_template_directory_uri()).&#x27;modules/&#x27;.$file_key.&#x27;/&#x27;;
+        break;
+      case strpos($module, &#x27;wp-content&#x27;) !== false:
+        # this is a pretty good guess... let&#x27;s go with it.
+        $url = trailingslashit(get_bloginfo(&#x27;siteurl&#x27;).substr(dirname($module), strpos($module, &#x27;wp-content&#x27;) - 1, strlen($module) -1));
+        break;
+      default:
+        # if we&#x27;ve gotten this far then we haven&#x27;t determined a usable url, give the developer a chance to recover
+        $url = &#x27;&#x27;;
+        $url = apply_filters(&#x27;cfct-build-module-url-unknown&#x27;, $url, dirname($module), $file_key);
+    }
+    return apply_filters(&#x27;cfct-build-module-url&#x27;, $url, $module, $file_key);
+  }
+  
+  /**
+   * Import modules by directory
+   * Sort modules alphabetically by key before import
+   *
+   * @return bool
+   */
+  public function import_included_modules() {
+    $modules = $this-&gt;included_modules();
+    $module_urls = array();
+    
+    foreach ($modules as $dir) {
+      if (is_array($dir)) {
+        foreach($dir as $file =&gt; $module) {
+          $this-&gt;loaded_modules[$file] = $module;
+          $module_paths[$file] = $module;
+          $module_urls[$file] = $this-&gt;set_module_url($file, $module);
+          include_once($module);
+        }
+      }
+    }
+    $this-&gt;module_urls = apply_filters(&#x27;cfct-build-module-urls&#x27;, $module_urls);
+    do_action(&#x27;cfct-modules-included&#x27;, $modules);
+    return true;
+  }
+  
+  public function included_modules() {
+    if ($modules = wp_cache_get(&#x27;cfct-build-included-modules&#x27;, &#x27;cfct_build&#x27;)) {
+      return $modules;
+    }
+    
+    $paths = $this-&gt;get_include_module_dirs();
+    $modules = array();
+    foreach ($paths as $path) {
+      if (is_dir($path) &amp;&amp; $handle = opendir($path)) {
+        while (false !== ($file = readdir($handle))) {
+          $path = trailingslashit($path);
+          if (is_dir($path.$file) &amp;&amp; is_file($path.$file.&#x27;/&#x27;.$file.&#x27;.php&#x27;)) {
+            $modules[$path][$file] = $path.$file.&#x27;/&#x27;.$file.&#x27;.php&#x27;;
+          }
+        }
+      }
+      if (is_array($modules[$path])) {
+        ksort($modules[$path]);
+      }
+    }
+
+    wp_cache_set(&#x27;cfct-build-included-modules&#x27;, $modules, &#x27;cfct_build&#x27;, 3600);
+    return $modules;
+  }
+  
+  public function get_include_module_dirs() {
+    static $dirs;
+    if (is_null($dirs)) {
+      $dirs = apply_filters(&#x27;cfct-module-dirs&#x27;, array_merge(array(trailingslashit(CFCT_BUILD_DIR).&#x27;modules&#x27;), $this-&gt;registered_modules_dirs));
+    }
+    return $dirs;
+  }
+
+  /**
+   * Check to see if a module exists for use
+   *
+   * @param string $module_id_base 
+   * @return bool
+   */
+  public function module_exists($module_id_base) {
+    return array_key_exists($module_id_base, $this-&gt;template-&gt;modules);
+  }
+  
+  /**
+   * Check to see if a module is used in the currently loaded data set
+   * WARNING: calling before data is loaded can yeild false results
+   *
+   * @param string $module_id_base 
+   * @return bool
+   */
+  public function module_used($module_id_base) {
+    if (empty($this-&gt;data[&#x27;modules&#x27;]) || !is_array($this-&gt;data[&#x27;modules&#x27;])) {
+      return false;
+    }
+    
+    foreach ($this-&gt;data[&#x27;modules&#x27;] as $module) {
+      if ($module[&#x27;module_id_base&#x27;] == $module_id_base) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+  
+// Included Module Options
+
+  public function import_module_options() {
+    $modules = $this-&gt;included_module_options();
+    foreach ($modules as $module) {
+      include_once($module);
+    }
+    return true;
+  }
+
+  public function included_module_options($get_lookup = false) {
+    if ($modules = wp_cache_get(&#x27;cfct-build-included-module-options-lookup&#x27;, &#x27;cfct_build&#x27;)) {
+      if ($get_lookup) {
+        return $modules;
+      }
+      return array_values($modules);
+    }
+  
+    $paths = apply_filters(&#x27;cfct-module-option-dirs&#x27;, array_merge(array(trailingslashit(CFCT_BUILD_DIR).&#x27;module-options&#x27;), $this-&gt;registered_module_options_dirs));
+    $modules = array();
+    foreach ($paths as $path) {
+      if (is_dir($path) &amp;&amp; $handle = opendir($path)) {
+        while (false !== ($file = readdir($handle))) {
+          $path = trailingslashit($path);
+          if (is_dir($path.$file) &amp;&amp; is_file($path.$file.&#x27;/&#x27;.$file.&#x27;.php&#x27;)) {
+            $modules[$file] = $path.$file.&#x27;/&#x27;.$file.&#x27;.php&#x27;;
+          }
+        }
+      }
+    }
+
+    wp_cache_set(&#x27;cfct-build-included-module-options-lookup&#x27;, $modules, &#x27;cfct_build&#x27;, 3600);
+    if ($get_lookup) {
+      return $modules;
+    }
+    return array_values($modules);
+  }
+
+// Included Rows
+  
+  public function import_included_rows() {
+    $rows = $this-&gt;included_rows();
+    foreach ($rows as $row) {
+      include_once($row);
+    }
+    do_action(&#x27;cfct-rows-included&#x27;, $rows);
+    return true;
+  }
+  
+  public function included_rows() {
+    if ($rows = wp_cache_get(&#x27;cfct-build-included-rows&#x27;, &#x27;cfct_build&#x27;)) {
+      return $rows;
+    }
+    
+    $paths = apply_filters(&#x27;cfct-row-dirs&#x27;, array(trailingslashit(CFCT_BUILD_DIR).&#x27;rows&#x27;));
+    $rows = array();
+    
+    foreach ($paths as $path) {
+      if (is_dir($path) &amp;&amp; $handle = opendir($path)) {
+        while (false !== ($file = readdir($handle))) {
+          $path = trailingslashit($path);
+          if (is_dir($path.$file) &amp;&amp; is_file($path.$file.&#x27;/&#x27;.$file.&#x27;.php&#x27;)) {
+            $rows[] = $path.$file.&#x27;/&#x27;.$file.&#x27;.php&#x27;;
+          }
+        }
+      }
+    }
+    wp_cache_set(&#x27;cfct-build-included-rows&#x27;, $rows, &#x27;cfct_build&#x27;, 3600);
+    return $rows;    
+  }
+  
+// Ajax Handlers
+  
+  /**
+   * Register an Ajax handler function
+   * Function can come from anywhere, only restriction is that the function must be callable
+   * 
+   * $func can be string &#x60;funcname&#x60; or &#x60;array($obj, &#x27;methodname&#x27;)&#x60; 
+   *
+   * @param string $key 
+   * @param string/array $func 
+   * @return bool
+   */
+  public function register_ajax_handler($key, $func) {
+    if (is_callable($func)) {
+      return $this-&gt;ajax_handlers[$key] = $func;
+    }
+    return false;
+  }
+  
+  /**
+   * Remove a registered ajax handler
+   *
+   * @param string $key 
+   * @return bool
+   */
+  public function deregister_ajax_handler($key) {
+    if ($this-&gt;is_ajax_handler($key)) {
+      unser($this-&gt;ajax_handlers[$key]);
+    }
+    return true;
+  }
+  
+  /**
+   * Check wether a keyname is a valid ajax handler
+   *
+   * @param string $key 
+   * @return bool
+   */
+  public function is_ajax_handler($key) {
+    return isset($this-&gt;ajax_handlers[$key]);
+  }
+  
+  /**
+   * Get a specific ajax handler
+   *
+   * @param string $key 
+   * @return mixed
+   */
+  public function get_ajax_handler($key) {
+    if ($this-&gt;is_ajax_handler($key)) {
+      return array(
+        &#x27;key&#x27; =&gt; $key,
+        &#x27;func&#x27; =&gt; $this-&gt;ajax_handlers[$key]
+      );
+    }
+    return false;
+  }
+  
+// Postmeta
+  
+  /**
+   * Get postmeta for a post.
+   * Defaults to current post if no post_id given.
+   * Returns a default empty config if no-config found in database.
+   *
+   * @param string $post_id 
+   * @return array
+   */
+  public function get_postmeta($post_id = null) {
+    if (is_null($post_id)) {
+      $post_id = $this-&gt;post_id;
+    }
+    
+    // maybe_unserialize added to safeguard against WordPress double serialization on data import
+    $post_data = maybe_unserialize(get_post_meta($post_id, $this-&gt;postmeta_key, true));
+    if (empty($post_data)) {
+      $post_data = apply_filters(&#x27;cfct-default-data&#x27;, array(
+        &#x27;timestamp&#x27; =&gt; null,
+        &#x27;data&#x27; =&gt; null,
+        &#x27;template&#x27; =&gt; null,
+        &#x27;active_state&#x27; =&gt; null
+      ));
+    }    
+    return apply_filters(&#x27;cfct-get-postmeta&#x27;, $post_data, $post_id);
+  }
+  
+  /**
+   * Save post meta
+   *
+   * @param int $post_id 
+   * @param array $post_data 
+   * @return bool
+   */
+  public function set_postmeta($post_id, $post_data) {
+    $post_data[&#x27;timestamp&#x27;] = time();    
+    return update_post_meta($post_id, CFCT_BUILD_POSTMETA, $post_data);
+  }
+  
+  /**
+   * Prune postmeta for orphan multi-module data
+   *
+   * @param string $post_id 
+   * @return bool
+   */
+  public function prune_postmeta($post_id) {
+    $pruned = false;
+    $post_data = $this-&gt;get_postmeta($post_id);
+    
+    if (!empty($post_data[&#x27;data&#x27;][&#x27;modules&#x27;])) {
+      foreach ($post_data[&#x27;data&#x27;][&#x27;modules&#x27;] as $module_id =&gt; $module) {
+        // check if module is a multi-module orphan
+        if (!empty($module[&#x27;parent_module_id&#x27;]) &amp;&amp; empty($post_data[&#x27;data&#x27;][&#x27;modules&#x27;][$module[&#x27;parent_module_id&#x27;]])) {
+          // remove orphaned block data
+          if (!empty($post_data[&#x27;data&#x27;][&#x27;blocks&#x27;][$module[&#x27;block_id&#x27;]])) {
+            unset($post_data[&#x27;data&#x27;][&#x27;blocks&#x27;][$module[&#x27;block_id&#x27;]]);
+          }
+          // remove module data
+          unset($post_data[&#x27;data&#x27;][&#x27;modules&#x27;][$module_id]);
+          $pruned = true;
+        }
+      }
+    }
+    
+    // re-init if we did a prune action
+    if ($pruned) {
+      $this-&gt;set_postmeta($post_id, $post_data);
+      $this-&gt;_init($post_id, true);
+    }
+    
+    return true;
+  }
+
+// Module/Row specified CSS &amp; JS
+  
+  /**
+   * Get custom JS or CSS from modules
+   *
+   * $type can be &#x27;js&#x27; or &#x27;css&#x27;
+   * if $admin is set to true then admin specific functions will be called
+   * 
+   * @param string $type 
+   * @param string $admin 
+   * @return string
+   */
+  public function get_module_extras($type, $admin = false) {    
+    $ret = $this-&gt;get_extras($type, $admin, &#x27;modules&#x27;);
+    if ($this-&gt;enable_custom_attributes) {
+      $module_options = cfct_module_options::get_instance();
+      $ret .= $module_options-&gt;$type($admin);
+    }
+    return apply_filters(&#x27;cfct-module-extras&#x27;, $ret, $type, $admin);
+  }
+  
+  /**
+   * Get custom row CSS
+   * Currently only supports $type = &#x27;css&#x27; - no functional reason to support row JS at this time
+   *
+   * @param $type 
+   * @return string
+   */
+  public function get_row_extras($type, $admin = false) {
+    $ret = $this-&gt;get_extras($type, $admin, &#x27;rows&#x27;);  
+    return apply_filters(&#x27;cfct-row-extras&#x27;, $ret, $type, $admin);
+  }
+  
+  /**
+   * Common function for pulling row/module extras
+   *
+   * $type can be &#x27;css&#x27; or &#x27;js&#x27;
+   * $admin is boolean
+   * $from can be &#x27;rows&#x27; or &#x27;modules&#x27;
+   *
+   * @param string $type
+   * @param bool $admin
+   * @param string $from
+   * @return string
+   */
+  public function get_extras($type, $admin, $from) {
+    // figure out the function we&#x27;re gonna run
+    $func = ($admin ? &#x27;_admin_&#x27; : null).strtolower($type);
+
+    $ret = PHP_EOL.PHP_EOL.&#x27;/* ADDED CUSTOM &#x27;.strtoupper($type).&#x27; */&#x27;.PHP_EOL;
+    
+    $this-&gt;template-&gt;init();
+    $this-&gt;import_included_rows();
+    foreach ($this-&gt;template-&gt;$from as $obj) {
+      if (method_exists($obj, $type)) {
+        $r = $obj-&gt;$func();
+        if (!empty($r)) {
+          $ret .= PHP_EOL.trim($r).PHP_EOL;          
+        }
+      }
+    }
+    // ie: &#x60;cfct-get-extras-modules-js-admin&#x60;, &#x60;cfct-get-extras-modules-css&#x60;, etc...
+    $ret = apply_filters(&#x27;cfct-get-extras-&#x27;.$from.&#x27;-&#x27;.$type.($admin ? &#x27;-admin&#x27; : null), $ret);
+    return trim($ret);    
+  }
+}
+
+?&gt;
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

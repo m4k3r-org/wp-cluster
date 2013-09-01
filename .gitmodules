@@ -1,6 +1,3 @@
-[submodule "wiki"]
-	path = wiki
-	url = https://github.com/UsabilityDynamics/flawless.wiki.git
-[submodule "core/vendor"]
-	path = core/vendor
-	url = https://github.com/UsabilityDynamics/vendor.git
+[submodule "static/wiki"]
+	path = static/wiki
+	url = https://github.com/UsabilityDynamics/flawless.wiki
