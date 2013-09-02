@@ -9,12 +9,11 @@ test-all:
 	test-code
 
 install:
-	cd core && composer.phar install
-	cd ux && component install && component build
+	composer.phar install
+	component install -d ux
+	component build -o ux/build -n app
 
 push:
-	yuidoc
-	cd ux && component build
 	git add .
 	git commit -m "WIP"
 	git push
@@ -34,7 +33,7 @@ build-ux:
 	component build
 
 document:
-	yuidoc --configfile yuidoc.json
+	yuidoc --configfile static/yuidoc.json
 
 test-code:
 	@NODE_ENV=test mocha \

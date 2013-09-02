@@ -13,22 +13,28 @@
     "timoxley/font-awesome": "*",
     "component/dialog": "*"
   },
-  "main": "scripts/flawless.js",
+  "paths": [
+    "ux"
+  ],
+  "main": "udx/scripts/flawless.js",
   "images": [
-    "images/ajax-loader.gif"
+    "ux/images/ajax-loader.gif"
   ],
   "fonts": [
-    "fonts/glyphicons-halflings"
+    "ux/fonts/glyphicons-halflings"
   ],
   "styles": [
-    "styles/index.css",
-    "styles/content.css"
+    "ux/styles/index.css",
+    "ux/styles/content.css"
   ],
   "scripts": [
-    "scripts/flawless.frontend.js"
+    "ux/scripts/flawless.frontend.js"
   ],
   "templates": [
-    "templates/template.html"
+    "ux/templates/template.html"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "development": {
+    "ux": "*"
+  }
 }

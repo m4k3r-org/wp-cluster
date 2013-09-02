@@ -8,7 +8,6 @@
  * @version 0.0.1
  * @namespace UD
  */
-
 namespace UD {
 
   /**
@@ -2092,7 +2091,7 @@ namespace UD {
      */
     static function encrypt( $pt, $salt = false ) {
 
-      if ( !$salt ) $salt = __CLASS__::default_salt;
+      if ( !$salt ) $salt = self::default_salt;
       $encrypted = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $salt ), $pt, MCRYPT_MODE_CBC, md5( md5( $salt ) ) ) );
       $encrypted = str_replace( array( '+', '/', '=' ), array( '-', '_', '' ), $encrypted );
       return $encrypted;
@@ -2113,7 +2112,7 @@ namespace UD {
      */
     static function decrypt( $ct, $salt = false ) {
 
-      if ( !$salt ) $salt = __CLASS__::default_salt;
+      if ( !$salt ) $salt = self::default_salt;
       $data = str_replace( array( '-', '_' ), array( '+', '/' ), $ct );
       $mod4 = strlen( $data ) % 4;
       if ( $mod4 ) {
@@ -2177,40 +2176,40 @@ namespace UD {
 
   }
 
-}
+  /**
+   * Adds get_called_class() function if id doesn't exist
+   * PHP < 5.3 compatibility
+   *
+   * @see: http://stackoverflow.com/questions/506705/php-get-classname-from-static-call-in-extended-class
+   * @author peshkov@UD
+   */
+  if ( !function_exists( 'get_called_class' ) ) {
+    class ud_class_tools {
+      static $i = 0;
+      static $fl = null;
 
-/**
- * Adds get_called_class() function if id doesn't exist
- * PHP < 5.3 compatibility
- *
- * @see: http://stackoverflow.com/questions/506705/php-get-classname-from-static-call-in-extended-class
- * @author peshkov@UD
- */
-if ( !function_exists( 'get_called_class' ) ) {
-  class ud_class_tools {
-    static $i = 0;
-    static $fl = null;
+      static function get_called_class() {
+        $bt = debug_backtrace();
 
-    static function get_called_class() {
-      $bt = debug_backtrace();
+        if ( self::$fl == $bt[ 2 ][ 'file' ] . $bt[ 2 ][ 'line' ] ) {
+          self::$i++;
+        } else {
+          self::$i = 0;
+          self::$fl = $bt[ 2 ][ 'file' ] . $bt[ 2 ][ 'line' ];
+        }
 
-      if ( self::$fl == $bt[ 2 ][ 'file' ] . $bt[ 2 ][ 'line' ] ) {
-        self::$i++;
-      } else {
-        self::$i = 0;
-        self::$fl = $bt[ 2 ][ 'file' ] . $bt[ 2 ][ 'line' ];
+        $lines = file( $bt[ 2 ][ 'file' ] );
+
+        preg_match_all( '/([a-zA-Z0-9\_]+)::' . $bt[ 2 ][ 'function' ] . '/', $lines[ $bt[ 2 ][ 'line' ] - 1 ], $matches );
+
+        return $matches[ 1 ][ self::$i ];
       }
+    }
 
-      $lines = file( $bt[ 2 ][ 'file' ] );
-
-      preg_match_all( '/([a-zA-Z0-9\_]+)::' . $bt[ 2 ][ 'function' ] . '/', $lines[ $bt[ 2 ][ 'line' ] - 1 ], $matches );
-
-      return $matches[ 1 ][ self::$i ];
+    function get_called_class() {
+      return ud_class_tools::get_called_class();
     }
   }
 
-  function get_called_class() {
-    return ud_class_tools::get_called_class();
-  }
-}
 
+}

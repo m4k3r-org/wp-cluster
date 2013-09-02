@@ -6,8 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Flawless\\Premium\\' => array($baseDir . '/core/premium'),
-    'Flawless\\Modules\\' => array($baseDir . '/core/modules'),
-    'Flawless\\Extend\\' => array($baseDir . '/core/extend'),
-    'Flawless' => array($baseDir . '/core'),
+    'JsonSchema' => array($vendorDir . '/justinrainbow/json-schema/src'),
 );

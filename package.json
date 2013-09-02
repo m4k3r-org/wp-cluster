@@ -1,13 +1,17 @@
 {
   "name": "flawless",
   "version": "0.1.1",
-  "homepage": "http://github.com/UsabilityDynamics/flawless",
+  "homepage": "http://github.com/UsabilityDynamics/wp-flawless",
   "keywords": [
-    "theme", "responsive", "bootstrap"
+    "theme",
+    "wordpress",
+    "theme",
+    "responsive",
+    "modular",
+    "components",
+    "bootstrap"
   ],
-  "license": [
-    "GPL-3.0+"
-  ],
+  "license": [ "GPL-3.0+" ],
   "authors": [
     {
       "name": "Maxim Peshkov",

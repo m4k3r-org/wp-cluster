@@ -2,7 +2,7 @@
   "name": "flawless",
   "version": "0.1.1",
   "type": "wordpress-theme",
-  "homepage": "http://github.com/UsabilityDynamics/flawless",
+  "homepage": "http://github.com/UsabilityDynamics/wp-flawless",
   "minimum-stability": "dev",
   "keywords": [
     "theme", "responsive", "bootstrap"
@@ -47,14 +47,7 @@
     }
   ],
   "require": {
-    "ud/wp-libs": "*"
-  },
-  "autoload": {
-    "psr-0": {
-      "Flawless": "core",
-      "Flawless\\Modules\\": "core/modules",
-      "Flawless\\Extend\\": "core/extend",
-      "Flawless\\Premium\\": "core/premium"
-    }
+    "ud/wp-libs": "*",
+    "justinrainbow/json-schema": "~1.3"
   }
 }

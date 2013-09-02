@@ -146,12 +146,12 @@ final class Flawless {
     include_once( $flawless[ 'paths' ][ 'templates' ] . '/template.php' );
 
     // Vendor Libraries
+    include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/utility/utility.php' );
     include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/saas/saas.php' );
     include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/saas/cloud.php' );
     include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/api/api.php' );
     include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/api/rpc.php' );
     include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/asset/asset.php' );
-    include_once( $flawless[ 'paths' ][ 'vendor' ] . '/ud/wp-libs/utility/utility.php' );
 
     //** Get Core settings */
     $flawless[ 'theme_data' ] = array_filter( (array) get_file_data( TEMPLATEPATH . '/style.css', $flawless[ 'default_header' ][ 'themes' ], 'theme' ) );
