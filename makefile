@@ -14,6 +14,7 @@ install:
 	component build -o ux/build -n app
 
 push:
+	yuidoc --configfile static/yuidoc.json
 	git add .
 	git commit -m "WIP"
 	git push

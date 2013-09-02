@@ -11,8 +11,6 @@
     "tabtospace": 2,
     "outdir": "./static/codex",
     "paths": [
-      "./core",
-      "./ux/scripts"
     ]
   }
 }
