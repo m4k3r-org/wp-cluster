@@ -9,11 +9,12 @@ test-all:
 	test-code
 
 install:
-	composer.phar install
-	component install -d ux
-	component build -o ux/build -n app
+	# composer.phar install
+	# component install -d ux
+	# component build -o ux/build -n app
 
 push:
+	# yuidoc --configfile yuidoc.json
 	git add .
 	git commit -m "WIP"
 	git push
