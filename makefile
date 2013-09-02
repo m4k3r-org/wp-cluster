@@ -14,27 +14,18 @@ install:
 	component build -o ux/build -n app
 
 push:
-	yuidoc --configfile static/yuidoc.json
 	git add .
 	git commit -m "WIP"
 	git push
 
 update:
 	composer.phar update
-	cd ux && component install && component build
+	component install -d ux
+	component build -o ux/build -n app
 	yuidoc --configfile yuidoc.json
 
-update-vendor:
-	composer.phar update
-
-update-ux:
-	component install
-
-build-ux:
-	component build
-
 document:
-	yuidoc --configfile static/yuidoc.json
+	yuidoc --configfile yuidoc.json
 
 test-code:
 	@NODE_ENV=test mocha \
