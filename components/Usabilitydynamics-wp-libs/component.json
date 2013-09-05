@@ -1,0 +1,15 @@
+{
+  "name": "ud/wp-libs",
+  "version": "0.1.1",
+  "description": "UD shared vendor libraries.",
+  "remotes": [
+    "https://raw.github.com",
+    "https://repository.usabilitydynamics.com"
+  ],
+  "dependencies": {},
+  "files": [
+    "readme.md"
+  ],
+  "license": "MIT",
+  "repo": "https://raw.github.com/Usabilitydynamics/wp-libs"
+}

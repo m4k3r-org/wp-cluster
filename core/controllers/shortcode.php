@@ -21,6 +21,14 @@ namespace Flawless {
    */
   class Shortcode extends Element {
 
+    /**
+     * Something like constructor
+     *
+     */
+    public function __construct( $params = array() ) {
+
+    }
+
   }
 
 }

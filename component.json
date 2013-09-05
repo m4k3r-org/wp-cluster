@@ -6,35 +6,26 @@
     "https://raw.github.com",
     "https://repository.usabilitydynamics.com"
   ],
-  "dependencies": {
-    "CamShaft/bootstrap-responsive": "*",
-    "CamShaft/bootstrap-grid": "*",
-    "component/simple-grid": "*",
-    "timoxley/font-awesome": "*",
-    "component/dialog": "*"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UsabilityDynamics/flawless"
   },
-  "paths": [
-    "ux"
-  ],
-  "main": "udx/scripts/flawless.js",
-  "images": [
-    "ux/images/ajax-loader.gif"
-  ],
-  "fonts": [
-    "ux/fonts/glyphicons-halflings"
-  ],
-  "styles": [
-    "ux/styles/index.css",
-    "ux/styles/content.css"
-  ],
-  "scripts": [
-    "ux/scripts/flawless.frontend.js"
-  ],
-  "templates": [
-    "ux/templates/template.html"
-  ],
-  "license": "MIT",
-  "development": {
-    "ux": "*"
-  }
+  "dependencies": {
+    "usabilitydynamics/ud-lib-settings": "*",
+    "usabilitydynamics/ud-lib-saas": "*",
+    "usabilitydynamics/ud-lib-api": "*",
+    "usabilitydynamics/js-elastic-filter": "*",
+    "justinrainbow/json-schema": "*",
+    "camshaft/bootstrap-responsive": "*",
+    "camshaft/bootstrap-grid": "*",
+    "camshaft/bootstrap-buttons": "*",
+    "camshaft/bootstrap-navbar": "*",
+    "camshaft/bootstrap-dropdowns": "*",
+    "camshaft/bootstrap-thumbnails": "*",
+    "camshaft/bootstrap-forms": "*",
+    "camshaft/bootstrap-tables": "*",
+    "camshaft/bootstrap-reset": "*",
+    "timoxley/font-awesome": "*"
+  },
+  "license": "MIT"
 }
