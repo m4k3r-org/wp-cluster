@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/shortcodes/shortcodes.php - flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/: Flawless.API.html">: Flawless.API</a></li>
+            
+                <li><a href="../classes/: Flawless.Element.html">: Flawless.Element</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Module.html">: Flawless.Flawless_Module</a></li>
+            
+                <li><a href="../classes/: Flawless.License.html">: Flawless.License</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Widget.html">Flawless.Flawless\Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/shortcodes/shortcodes.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ * Name: Theme Shortcodes
+ * Description: Shortcodes for the Flawless theme.
+ * Author: Usability Dynamics, Inc.
+ * Version: 1.0
+ * Copyright 2010 - 2012 Usability Dynamics, Inc.
+ *
+ */
+
+// namespace Flawless;
+
+/**
+ * Class flawless_shortcodes
+ *
+ * @module Flawless
+ * @submodule Core Assets
+ * @class Shortcodes
+ * @static
+ */
+class flawless_shortcodes extends Module {
+
+  /**
+   * Load shortcodes conditionally
+   *
+   * @since 0.2.5
+   */
+  function init() {
+    global $shortcode_tags;
+
+    //** Load list-attachments shortcode if the List Attachments Shortcode plugin does not exist */
+    if ( !in_array( &#x27;list-attachments&#x27;, array_keys( $shortcode_tags ) ) ) {
+      add_shortcode( &#x27;list_attachments&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;list_attachments&#x27; ) );
+    }
+
+  }
+
+  /**
+   * {}
+   *
+   * @version 1.25.0
+   */
+  function placeholder( $args = array() ) {
+
+    $args = shortcode_atts( array(
+      &#x27;width&#x27; =&gt; &#x27;100%&#x27;,
+      &#x27;height&#x27; =&gt; &#x27;100px&#x27;,
+      &#x27;class&#x27; =&gt; &#x27;flawless_placeholder&#x27;
+    ), $args );
+
+    if ( is_admin() ) {
+      return &#x27;[placeholder]&#x27;;
+    }
+
+    return &#x27;&lt;span class=&quot;&#x27; . $args[ &#x27;class&#x27; ] . &#x27;&quot; style=&quot;display:block;width:&#x27; . $args[ &#x27;width&#x27; ] . &#x27;;line-height: &#x27; . $args[ &#x27;height&#x27; ] . &#x27;;height: &#x27; . $args[ &#x27;height&#x27; ] . &#x27;;&quot;&gt;&#x27; . $args[ &#x27;width&#x27; ] . &#x27; X &#x27; . $args[ &#x27;height&#x27; ] . &#x27;&lt;/span&gt;&#x27;;
+
+  }
+
+  /**
+   * Display list of attached files to a s post.
+   *
+   * Function ported over from List Attachments Shortcode plugin.
+   *
+   * @version 1.25.0
+   */
+  function list_attachments( $atts = array() ) {
+    global $post, $wp_query;
+
+    $r = &#x27;&#x27;;
+
+    if ( !is_array( $atts ) ) {
+      $atts = array();
+    }
+
+    $atts = array_merge( array(
+      &#x27;type&#x27; =&gt; NULL,
+      &#x27;orderby&#x27; =&gt; NULL,
+      &#x27;groupby&#x27; =&gt; NULL,
+      &#x27;order&#x27; =&gt; NULL,
+      &#x27;post_id&#x27; =&gt; false,
+      &#x27;before_list&#x27; =&gt; &#x27;&#x27;,
+      &#x27;after_list&#x27; =&gt; &#x27;&#x27;,
+      &#x27;opening&#x27; =&gt; &#x27;&lt;ul class=&quot;attachment-list flawless_attachment_list&quot;&gt;&#x27;,
+      &#x27;closing&#x27; =&gt; &#x27;&lt;/ul&gt;&#x27;,
+      &#x27;before_item&#x27; =&gt; &#x27;&lt;li&gt;&#x27;,
+      &#x27;after_item&#x27; =&gt; &#x27;&lt;/li&gt;&#x27;,
+      &#x27;show_descriptions&#x27; =&gt; true,
+      &#x27;include_icon_classes&#x27; =&gt; true,
+      &#x27;showsize&#x27; =&gt; false
+    ), $atts );
+
+    if ( isset( $atts[ &#x27;post_id&#x27; ] ) &amp;&amp; is_numeric( $atts[ &#x27;post_id&#x27; ] ) ) {
+      $post = get_post( $atts[ &#x27;post_id&#x27; ] );
+    }
+
+    if ( !$post ) {
+      return;
+    }
+
+    if ( !empty( $atts[ &#x27;type&#x27; ] ) ) {
+      $types = explode( &#x27;,&#x27;, str_replace( &#x27; &#x27;, &#x27;&#x27;, $atts[ &#x27;type&#x27; ] ) );
+    } else {
+      $types = array();
+    }
+
+    $showsize = ( $atts[ &#x27;showsize&#x27; ] == true || $atts[ &#x27;showsize&#x27; ] == &#x27;true&#x27; || $atts[ &#x27;showsize&#x27; ] == 1 ) ? true : false;
+    $upload_dir = wp_upload_dir();
+
+    $op = clone $post;
+    $oq = clone $wp_query;
+
+    foreach ( array( &#x27;before_list&#x27;, &#x27;after_list&#x27;, &#x27;opening&#x27;, &#x27;closing&#x27;, &#x27;before_item&#x27;, &#x27;after_item&#x27; ) as $htmlItem ) {
+      $atts[ $htmlItem ] = str_replace( array( &#x27;&amp;lt;&#x27;, &#x27;&amp;gt;&#x27; ), array( &#x27;&lt;&#x27;, &#x27;&gt;&#x27; ), $atts[ $htmlItem ] );
+    }
+
+    $args = array(
+      &#x27;post_type&#x27; =&gt; &#x27;attachment&#x27;,
+      &#x27;numberposts&#x27; =&gt; -1,
+      &#x27;post_status&#x27; =&gt; null,
+      &#x27;post_parent&#x27; =&gt; $post-&gt;ID,
+    );
+
+    if ( !empty( $atts[ &#x27;orderby&#x27; ] ) ) {
+      $args[ &#x27;orderby&#x27; ] = $atts[ &#x27;orderby&#x27; ];
+    }
+    if ( !empty( $atts[ &#x27;order&#x27; ] ) ) {
+      $atts[ &#x27;order&#x27; ] = ( in_array( $atts[ &#x27;order&#x27; ], array( &#x27;a&#x27;, &#x27;asc&#x27;, &#x27;ascending&#x27; ) ) ) ? &#x27;asc&#x27; : &#x27;desc&#x27;;
+      $args[ &#x27;order&#x27; ] = $atts[ &#x27;order&#x27; ];
+    }
+    if ( !empty( $atts[ &#x27;groupby&#x27; ] ) ) {
+      $args[ &#x27;orderby&#x27; ] = $atts[ &#x27;groupby&#x27; ];
+    }
+
+    $attachments = get_posts( $args );
+
+    if ( $attachments ) {
+      $grouper = $atts[ &#x27;groupby&#x27; ];
+      $test = $attachments;
+      $test = array_shift( $test );
+      if ( !property_exists( $test, $grouper ) ) {
+        $grouper = &#x27;post_&#x27; . $grouper;
+      }
+
+      $attlist = array();
+
+      foreach ( $attachments as $att ) {
+        $key = ( !empty( $atts[ &#x27;groupby&#x27; ] ) ) ? $att-&gt;$grouper : $att-&gt;ID;
+        $key .= ( !empty( $atts[ &#x27;orderby&#x27; ] ) ) ? $att-&gt;$atts[ &#x27;orderby&#x27; ] : &#x27;&#x27;;
+
+        $attlink = wp_get_attachment_url( $att-&gt;ID );
+
+        if ( count( $types ) ) {
+          foreach ( $types as $t ) {
+            if ( substr( $attlink, ( 0 - strlen( &#x27;.&#x27; . $t ) ) ) == &#x27;.&#x27; . $t ) {
+              $attlist[ $key ] = clone $att;
+              $attlist[ $key ]-&gt;attlink = $attlink;
+            }
+          }
+        } else {
+          $attlist[ $key ] = clone $att;
+          $attlist[ $key ]-&gt;attlink = $attlink;
+        }
+      }
+      if ( $atts[ &#x27;groupby&#x27; ] ) {
+        if ( $atts[ &#x27;order&#x27; ] == &#x27;asc&#x27; ) {
+          ksort( $attlist );
+        } else {
+          krsort( $attlist );
+        }
+      }
+    }
+
+    if ( count( $attlist ) ) {
+      $open = false;
+      $r = $atts[ &#x27;before_list&#x27; ] . $atts[ &#x27;opening&#x27; ];
+      foreach ( $attlist as $att ) {
+
+        $container_classes = array( &#x27;attachment_container&#x27; );
+
+        //** Determine class to display for this file type */
+        if ( $atts[ &#x27;include_icon_classes&#x27; ] ) {
+
+          switch ( $att-&gt;post_mime_type ) {
+
+            case &#x27;application/zip&#x27;:
+              $class = &#x27;zip&#x27;;
+              break;
+
+            case &#x27;vnd.ms-excel&#x27;:
+              $class = &#x27;excel&#x27;;
+              break;
+
+            case &#x27;image/jpeg&#x27;:
+            case &#x27;image/png&#x27;:
+            case &#x27;image/gif&#x27;:
+            case &#x27;image/bmp&#x27;:
+              $class = &#x27;image&#x27;;
+              break;
+
+            default:
+              $class = &#x27;default&#x27;;
+              break;
+          }
+        }
+
+        $icon_class = ( $class ? &#x27;flawless_attachment_icon file-&#x27; . $class : false );
+
+        //** Determine if description shuold be displayed, and if it is not empty */
+        $echo_description = ( $atts[ &#x27;show_descriptions&#x27; ] &amp;&amp; !empty( $att-&gt;post_content ) ? &#x27; &lt;span class=&quot;attachment_description&quot;&gt; &#x27; . $att-&gt;post_content . &#x27; &lt;/span&gt; &#x27; : false );
+
+        $echo_title = ( $att-&gt;post_excerpt ? $att-&gt;post_excerpt : __( &#x27;View &#x27;, &#x27;flawless&#x27; ) . apply_filters( &#x27;the_title_attribute&#x27;, $att-&gt;post_title ) );
+
+        if ( $icon_class ) {
+          $container_classes[ ] = &#x27;has_icon&#x27;;
+        }
+
+        if ( !empty( $echo_description ) ) {
+          $container_classes[ ] = &#x27;has_description&#x27;;
+        }
+
+        //** Add conditional classes if class is not already passed into container */
+        if ( !strpos( $atts[ &#x27;before_item&#x27; ], &#x27;class&#x27; ) ) {
+          $this_before_item = str_replace( &#x27;&gt;&#x27;, &#x27; class=&quot;&#x27; . implode( &#x27; &#x27;, $container_classes ) . &#x27;&quot;&gt;&#x27;, $atts[ &#x27;before_item&#x27; ] );
+        }
+
+        $echo_size = ( ( $showsize ) ? &#x27; &lt;span class=&quot;attachment-size&quot;&gt;&#x27; . WPP_F::get_filesize( str_replace( $upload_dir[ &#x27;baseurl&#x27; ], $upload_dir[ &#x27;basedir&#x27; ], $attlink ) ) . &#x27;&lt;/span&gt;&#x27; : &#x27;&#x27; );
+
+        if ( !empty( $atts[ &#x27;groupby&#x27; ] ) &amp;&amp; $current_group != $att-&gt;$grouper ) {
+          if ( $open ) {
+            $r .= $atts[ &#x27;closing&#x27; ] . $atts[ &#x27;after_item&#x27; ];
+            $open = false;
+          }
+          $r .= $atts[ &#x27;before_item&#x27; ] . &#x27;&lt;h3&gt;&#x27; . $att-&gt;$grouper . &#x27;&lt;/h3&gt;&#x27; . $atts[ &#x27;opening&#x27; ];
+          $open = true;
+          $current_group = $att-&gt;$grouper;
+        }
+        $attlink = $att-&gt;attlink;
+        $r .= $this_before_item . &#x27;&lt;a href=&quot;&#x27; . $attlink . &#x27;&quot; title=&quot;&#x27; . $echo_title . &#x27;&quot; class=&quot;flawless_attachment &#x27; . $icon_class . &#x27;&quot;&gt;&#x27; . apply_filters( &#x27;the_title&#x27;, $att-&gt;post_title ) . &#x27;&lt;/a&gt;&#x27; . $echo_size . $echo_description . $atts[ &#x27;after_item&#x27; ];
+      }
+      if ( $open ) {
+        $r .= $atts[ &#x27;closing&#x27; ] . $atts[ &#x27;after_item&#x27; ];
+      }
+      $r .= $atts[ &#x27;closing&#x27; ] . $atts[ &#x27;after_list&#x27; ];
+    }
+
+    $wp_query = clone $oq;
+    $post = clone $op;
+
+    return $r;
+
+  }
+
+  /**
+   * Add custom shortcodes for various post types
+   *
+   * @since 0.2.5
+   */
+  function flawless_content_type_added( $args = false ) {
+    global $flawless;
+
+    if ( !$args ) {
+      return;
+    }
+
+    $post_type = get_post_type_object( $args[ &#x27;type&#x27; ] );
+
+    if ( !$post_type-&gt;public || !$post_type-&gt;has_archive ) {
+      return;
+    }
+
+    //** Check if post type has custom Root page */
+    if ( $flawless[ &#x27;post_types&#x27; ][ $args[ &#x27;type&#x27; ] ][ &#x27;root_page&#x27; ] ) {
+      $root_url = get_permalink( $flawless[ &#x27;post_types&#x27; ][ $args[ &#x27;type&#x27; ] ][ &#x27;root_page&#x27; ] );
+    } else {
+      $root_url = get_bloginfo( &#x27;url&#x27; ) . &#x27;/&#x27; . $post_type-&gt;rewrite[ &#x27;slug&#x27; ] . &#x27;/&#x27;;
+    }
+
+    $shortcode = &quot;{$post_type-&gt;labels-&gt;name} URL&quot;;
+
+    add_shortcode( $shortcode, create_function( &#x27;$atts, $content, $code, $the_url=&quot;&#x27; . $root_url . &#x27;&quot;&#x27;, &#x27; return &quot;$the_url&quot;; &#x27; ) );
+
+    $flawless[ &#x27;documentation&#x27; ][ &#x27;shortcodes&#x27; ][ $shortcode ] = sprintf( __( &#x27;Returns a URL to the main %1s page.&#x27;, &#x27;flawless&#x27; ), $post_type-&gt;labels-&gt;name );
+
+  }
+
+  /**
+   * Execude only [code] shortcode
+   * @param sting $content
+   * @return string
+   * @author odokienko@UD
+   */
+  function do_code_shortcode( $content ) {
+    global $shortcode_tags;
+
+    // Back up current registered shortcodes and clear them all out
+    $orig_shortcode_tags = $shortcode_tags;
+    remove_all_shortcodes();
+    add_shortcode( &#x27;code&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;code&#x27; ) );
+
+    // Do the shortcode (only the [code] one is registered)
+    $content = do_shortcode( $content );
+
+    // Put the original shortcodes back
+    $shortcode_tags = $orig_shortcode_tags;
+
+    return $content;
+  }
+
+  /**
+   * @param sting $code
+   * @return string
+   * @author odokienko@UD
+   */
+  function flawless_stripslashes( $code ) {
+    $code = str_replace( array( &quot;\\\&quot;&quot;, &quot;\\\&#x27;&quot; ), array( &#x27;&quot;&#x27;, &quot;&#x27;&quot; ), $code );
+    $code = htmlspecialchars( $code );
+    $code = str_replace( array( &#x27;&lt;&#x27;, &#x27;&gt;&#x27; ), array( &#x27;&amp;lt;&#x27;, &#x27;&amp;gt;&#x27; ), $code );
+    return $code;
+  }
+
+  /**
+   * Convert code within [code] [/code] shortcode into printable code.
+   *
+   * @since 0.3.5
+   * @example [code] ... [/code]
+   * @example [code linenums=74] ... [/code]
+   * @example [code linenums=74 lang=lang-html class=&quot;prettyprint&quot; container=&quot;pre&quot;] ... [/code]
+   * @author odokienko@UD
+   */
+  function code( $args = false, $content = null ) {
+    /**
+     * !important: if we want makes this function working then we need to run &quot;do_shortcode&quot; twice.
+     * The first time it must calls before all the rest filters (especially kses)
+     * the second time - after them
+     */
+
+    /** if it is the first time */
+    if ( empty( $args[ &#x27;second_run&#x27; ] ) ) {
+      /** we remember initial arguments */
+      $old_args = array();
+
+      foreach ( (array)$args as $key =&gt; $val ) {
+        $old_args[ ] = &quot;$key=\&quot;$val\&quot;&quot;;
+      }
+      /** do encode the body and add flag &quot;second_run&quot; and left shortcode as-is */
+      $old_args[ ] = &#x27;second_run=true&#x27;;
+      $content = &quot;[code&quot; . ( ( $old_args ) ? &quot; &quot; . implode( &#x27; &#x27;, $old_args ) : &#x27;&#x27; ) . &quot;]&quot; . base64_encode( trim( $content ) ) . &quot;[/code]&quot;;
+
+    } else {
+      /** at the second time add css and js */
+      wp_enqueue_style( &#x27;google-prettify&#x27; );
+      wp_enqueue_script( &#x27;google-prettify&#x27; );
+
+      $args = shortcode_atts( array(
+        &#x27;class&#x27; =&gt; &#x27;prettyprint&#x27;,
+        &#x27;linenums&#x27; =&gt; false,
+        &#x27;lang&#x27; =&gt; false,
+        &#x27;container&#x27; =&gt; &#x27;code&#x27;
+      ), $args );
+
+      /** and prepare the final looking (will not forget make decode of content) */
+      $content = &quot;&lt;{$args[&#x27;container&#x27;]} class=&#x27;{$args[&#x27;class&#x27;]}&quot; . ( ( $args[ &#x27;linenums&#x27; ] ) ? &quot; linenums:{$args[&#x27;linenums&#x27;]}&quot; : &#x27;&#x27; ) . ( ( $args[ &#x27;lang&#x27; ] ) ? &quot; &quot; . $args[ &#x27;lang&#x27; ] : &#x27;&#x27; ) . &quot;&#x27;&gt;&quot; . flawless_shortcodes::flawless_stripslashes( base64_decode( $content ) ) . &quot;&lt;/{$args[&#x27;container&#x27;]}&gt;&quot;;
+
+    }
+    return $content;
+  }
+
+  /**
+   * Prints out breadcrumbs to current page.
+   *
+   * @since 0.2.5
+   *
+   */
+  function breadcrumbs( $atts = false ) {
+
+    if ( !function_exists( &#x27;flawless_breadcrumbs&#x27; ) ) {
+      return;
+    }
+
+    return flawless_breadcrumbs( array(
+      &#x27;return&#x27; =&gt; true,
+      &#x27;hide_breadcrumbs&#x27; =&gt; false
+    ) );
+
+  }
+
+  /**
+   * Returns current year.
+   *
+   * @since 0.2.5
+   *
+   */
+  function current_year( $atts = false ) {
+    return date( &#x27;Y&#x27; );
+  }
+
+  /**
+   * URL to an image in the library.
+   *
+   * Usage Example: [image_url id=333 size=thumbnail]
+   *
+   * Size arguments can be any custom size, or the default: thumbnail, medium, large or full
+   * @since 0.2.5
+   */
+  function image_url( $attr, $content ) {
+
+    $args = wp_parse_args( $attr, array(
+      &#x27;id&#x27; =&gt; false,
+      &#x27;size&#x27; =&gt; &#x27;full&#x27;,
+      &#x27;icon&#x27; =&gt; false
+    ) );
+
+    if ( empty( $args[ &#x27;id&#x27; ] ) ) {
+      return;
+    }
+
+    $image_data = wp_get_attachment_image_src( $args[ &#x27;id&#x27; ], $args[ &#x27;size&#x27; ], $args[ &#x27;icon&#x27; ] );
+
+    $url = $image_data[ &#x27;0&#x27; ];
+
+    return $url;
+
+  }
+
+  /**
+   * Render a PDF in a Google Docs viewer
+   *
+   * @since 0.2.5
+   *
+   */
+  function google_docs_pdf( $attr, $content ) {
+    $url = urlencode( $attr[ &#x27;url&#x27; ] );
+    return &#x27;&lt;iframe src=&quot;http://docs.google.com/viewer?url=&#x27; . $url . &#x27; &amp;embedded=true&quot; width=&quot;99%&quot; height=&quot;800&quot;&gt;&lt;/iframe&gt;&#x27;;
+  }
+
+  /**
+   * Returns current year.
+   *
+   * @since 0.2.5
+   *
+   */
+  function site_description( $atts = false ) {
+    return get_bloginfo( &#x27;description&#x27; );
+  }
+
+  /**
+   * Shortcode function for getting a permalink to a specific post
+   *
+   * @since 0.1
+   * @param array $attr Attributes attributed to the shortcode.
+   */
+  function post_link( $attr ) {
+    $url = get_permalink( $attr[ &#x27;id&#x27; ] );
+
+    if ( empty( $url ) ) {
+      return;
+    }
+
+    if ( empty( $attr[ &#x27;title&#x27; ] ) ) {
+      $attr[ &#x27;title&#x27; ] = get_the_title( $attr[ &#x27;id&#x27; ] );
+    }
+
+    return &#x27;&lt;a href=&quot;&#x27; . $url . &#x27;&quot; class=&quot;&#x27; . $attr[ &#x27;class&#x27; ] . &#x27;&quot;&gt;&#x27; . $attr[ &#x27;title&#x27; ] . &#x27;&lt;/a&gt;&#x27;;
+  }
+
+  /**
+   * Shortcode function for getting buttons
+   *
+   * Usage Example: [button id=1 title=&quot;Home Page&quot; class=&quot;btn-success btn-large&quot;]
+   *
+   * @since 0.2.5
+   * @param array $attr Attributes attributed to the shortcode.
+   */
+  function button( $attr ) {
+    $url = get_permalink( $attr[ &#x27;id&#x27; ] );
+
+    if ( empty( $attr[ &#x27;id&#x27; ] ) ) {
+      $url = $attr[ &#x27;url&#x27; ];
+    }
+
+    if ( empty( $url ) ) {
+      return;
+    }
+
+    if ( empty( $attr[ &#x27;title&#x27; ] ) ) {
+      $attr[ &#x27;title&#x27; ] = get_the_title( $attr[ &#x27;id&#x27; ] );
+    }
+
+    return &#x27;&lt;a href=&quot;&#x27; . $url . &#x27;&quot; class=&quot;btn &#x27; . $attr[ &#x27;class&#x27; ] . &#x27;&quot;&gt;&#x27; . ( $attr[ &#x27;icon&#x27; ] ? &#x27;&lt;i class=&quot;&#x27; . $attr[ &#x27;icon&#x27; ] . &#x27;&quot;&gt;&lt;/i&gt;&#x27; : &#x27;&#x27; ) . $attr[ &#x27;title&#x27; ] . &#x27;&lt;/a&gt;&#x27;;
+  }
+
+  /**
+   * Shortcode function for getting a permalink to a specific post
+   *
+   * @since 0.1
+   * @param array $attr Attributes attributed to the shortcode.
+   */
+  function get_permalink( $attr ) {
+    return get_permalink( $attr[ &#x27;id&#x27; ] );
+  }
+
+}
+
+add_action( &#x27;flawless_content_type_added&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;flawless_content_type_added&#x27; ) );
+add_action( &#x27;flawless::init_lower&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;init&#x27; ) );
+
+add_shortcode( &#x27;code&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;code&#x27; ) );
+add_shortcode( &#x27;breadcrumbs&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;breadcrumbs&#x27; ) );
+add_shortcode( &#x27;current_year&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;current_year&#x27; ) );
+add_shortcode( &#x27;site_description&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;site_description&#x27; ) );
+add_shortcode( &#x27;post_link&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;post_link&#x27; ) );
+add_shortcode( &#x27;button&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;button&#x27; ) );
+add_shortcode( &#x27;get_permalink&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;get_permalink&#x27; ) );
+add_shortcode( &#x27;image_url&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;image_url&#x27; ) );
+add_shortcode( &#x27;pdf&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;google_docs_pdf&#x27; ) );
+add_shortcode( &#x27;placeholder&#x27;, array( &#x27;flawless_shortcodes&#x27;, &#x27;placeholder&#x27; ) );
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
