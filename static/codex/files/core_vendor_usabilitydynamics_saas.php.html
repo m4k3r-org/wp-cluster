@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/vendor/usabilitydynamics/saas.php - flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/: Flawless.API.html">: Flawless.API</a></li>
+            
+                <li><a href="../classes/: Flawless.Element.html">: Flawless.Element</a></li>
+            
+                <li><a href="../classes/: Flawless.Flawless_Module.html">: Flawless.Flawless_Module</a></li>
+            
+                <li><a href="../classes/: Flawless.License.html">: Flawless.License</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Widget.html">Flawless.Flawless\Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../classes/UD.API.html">UD.API</a></li>
+            
+                <li><a href="../classes/UD.Utility.html">UD.Utility</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Core Assets.html">Core Assets</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/vendor/usabilitydynamics/saas.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ *
+ *
+ */
+
+namespace UD;
+
+/**
+ * UD SaaS Functions
+ *
+ * Description: UD SaaS functions
+ *
+ * @author team@UD
+ * @version 0.1
+ * @package UD
+ * @subpackage Functions
+ */
+class SaaS extends Utility {
+
+  /**
+   * Returns one of several keys. Different keys are used for different things.
+   *
+   * api - key for API requests to site
+   *
+   * site_uid - site ( blog ) unique ID. Only set your site UID if you know what you&#x27;re doing. The key should only be used on one website at a time to avoid conflicts.
+   * For instance, if you have a staging and a production environment with synchronized databases, you can use the same Site UID on both sites.
+   *
+   * public_key - Public key is used on the front-end of the site to access data that requires a subscription. The public key is restricted to specified IP addresses
+   * and and is therefore safe for front-end use. The public key is provided by the UD API service after the site requesting it has been verified. This key is required to access
+   * most restricted and premium functionality.
+   *
+   * customer_key - private keys issued to individuals directly, may be used on multiple sites and in most cases can take place of a missing site_uid. Never shown publicly
+   * in clear text. It can be used in md5 format when a public_key does not exist, or has been rejected.
+   *
+   * @updated 2.0
+   * @author potanin@UD
+   */
+  static function get_key( $type = &#x27;api&#x27;, $args = false ) {
+
+    $args = wp_parse_args( $args, array( &#x27;force_check&#x27; =&gt; false ) );
+
+    $key = false;
+
+    switch ( $type ) {
+
+      /**
+       * API Keys must be manually entered into the Settings UI or it can be set as define in wp-config.php
+       *
+       */
+      case &#x27;api_key&#x27;:
+        if ( !defined( &#x27;UD_API_Key&#x27; ) ) define( &#x27;UD_API_Key&#x27;, get_option( &#x27;ud::api_key&#x27; ) );
+        $key = UD_API_Key;
+        break;
+
+      /**
+       * Site UID must be manually generated into the Settings UI or it can be set as define in wp-config.php
+       */
+      case &#x27;site_uid&#x27;:
+        if ( !defined( &#x27;UD_Site_UID&#x27; ) ) define( &#x27;UD_Site_UID&#x27;, get_option( &#x27;ud::site_uid&#x27; ) );
+        $key = UD_Site_UID;
+        break;
+
+      /**
+       * Requires site verification.
+       */
+      case &#x27;public_key&#x27;:
+        if ( !defined( &#x27;UD_Public_Key&#x27; ) ) define( &#x27;UD_Public_Key&#x27;, get_option( &#x27;ud::public_key&#x27; ) );
+        $key = UD_Public_Key;
+        break;
+
+      /**
+       * Customer Keys must be manually entered into the Settings UI. Customer Keys are given out during purchases, to beta testers,
+       * and in other non-automated situations.
+       */
+      case &#x27;customer_key&#x27;:
+        if ( is_multisite() ) {
+          if ( !defined( &#x27;UD_Customer_Key&#x27; ) ) {
+            /**
+             * Customer key must be the same for all blogs
+             * It&#x27;s stored in wp_options of blog #1.
+             */
+            switch_to_blog( 1 );
+            define( &#x27;UD_Customer_Key&#x27;, get_option( &#x27;ud::customer_key&#x27; ) );
+            restore_current_blog();
+          }
+        } else {
+          if ( !defined( &#x27;UD_Customer_Key&#x27; ) ) define( &#x27;UD_Customer_Key&#x27;, get_option( &#x27;ud::customer_key&#x27; ) );
+        }
+        $key = UD_Customer_Key;
+        break;
+
+    }
+
+    return $key;
+
+  }
+
+  /**
+   * Determines if SaaS settings are available
+   *
+   * @author peshkov@UD
+   * @return boolean
+   */
+  static function is_saas_cap_available() {
+    $result = !is_multisite() || is_super_admin() ? true : false;
+    $result = apply_filters( &#x27;ud::saas_cap_available&#x27;, $result );
+    return $result;
+  }
+
+  /**
+   * Determines if current site ( blog ) has capabilities for the passed premium feature
+   * @TODO: finish implementation
+   *
+   * @return boolean
+   * @author peshkov@UD
+   */
+  static function site_has_license( $pf ) {
+    $enabled = false;
+
+    $customer_key = self::get_key( &#x27;customer_key&#x27; );
+    //$site_uid = self::get_key( &#x27;site_uid&#x27; );
+
+    if ( empty( $customer_key ) ) {
+      return $enabled;
+    }
+
+    //** We must do request to api.usabilitydynamics.com here */
+    $enabled = true;
+
+    $enabled = apply_filters( &#x27;ud::has_license&#x27;, $enabled, $pf );
+
+    return $enabled;
+  }
+
+  /**
+   * Handler for general API calls to UD
+   *
+   * On Errors, the data response includes request URL, request body, and response headers / body.
+   *
+   * @updated 1.0.3
+   * @since 1.0.0
+   * @author potanin@UD
+   */
+  static function get_service( $service = false, $resource = &#x27;&#x27;, $args = array(), $settings = array() ) {
+
+    if ( $_query = parse_url( $service, PHP_URL_QUERY ) ) {
+      $service = str_replace( &#x27;?&#x27; . $_query, &#x27;&#x27;, $service );
+    }
+
+    if ( !$service ) {
+      return new WP_Error( &#x27;error&#x27;, sprintf( __( &#x27;API service not specified.&#x27;, UD_Transdomain ) ) );
+    }
+
+    $request = array_filter( wp_parse_args( $settings, array(
+      &#x27;headers&#x27; =&gt; array(
+        &#x27;Authorization&#x27; =&gt; &#x27;Basic &#x27; . base64_encode( &#x27;api_key:&#x27; . get_option( &#x27;ud::customer_key&#x27; ) ),
+        &#x27;Accept&#x27; =&gt; &#x27;application/json&#x27;
+      ),
+      &#x27;timeout&#x27; =&gt; 120,
+      &#x27;stream&#x27; =&gt; false,
+      &#x27;sslverify&#x27; =&gt; false,
+      &#x27;source&#x27; =&gt; ( is_ssl() ? &#x27;https&#x27; : &#x27;http&#x27; ) . &#x27;://api.usabilitydynamics.com&#x27;,
+    ) ) );
+
+    foreach ( (array)$settings as $set ) {
+
+      switch ( $set ) {
+
+        case &#x27;json&#x27;:
+          $request[ &#x27;headers&#x27; ][ &#x27;Accept&#x27; ] = &#x27;application/json&#x27;;
+          break;
+
+        case &#x27;encrypted&#x27;:
+          $request[ &#x27;headers&#x27; ][ &#x27;Encryption&#x27; ] = &#x27;Enabled&#x27;;
+          break;
+
+        case &#x27;xml&#x27;:
+          $request[ &#x27;headers&#x27; ][ &#x27;Accept&#x27; ] = &#x27;application/xml&#x27;;
+          break;
+
+      }
+
+    }
+
+    if ( !empty( $request[ &#x27;filename&#x27; ] ) &amp;&amp; file_exists( $request[ &#x27;filename&#x27; ] ) ) {
+      $request[ &#x27;stream&#x27; ] = true;
+    }
+
+    $request_url = trailingslashit( $request[ &#x27;source&#x27; ] );
+    unset( $request[ &#x27;source&#x27; ] );
+
+    if ( $settings[ &#x27;method&#x27; ] == &#x27;POST&#x27; ) {
+      $response = wp_remote_post( $request_url = $request_url . $service . &#x27;/&#x27; . $resource, array_merge( $request, array( &#x27;body&#x27; =&gt; $args ) ) );
+    } else {
+      $response = wp_remote_get( $request_url = $request_url . $service . &#x27;/&#x27; . $resource . ( is_array( $args ) ? &#x27;?&#x27; . _http_build_query( $args, null, &#x27;&amp;&#x27; ) : $args ), $request );
+    }
+
+    if ( !is_wp_error( $response ) ) {
+
+      /** If content is streamed, must rely on message codes */
+      if ( $request[ &#x27;stream&#x27; ] ) {
+
+        switch ( $response[ &#x27;response&#x27; ][ &#x27;code&#x27; ] ) {
+
+          case 200:
+            return true;
+            break;
+
+          default:
+            unlink( $request[ &#x27;filename&#x27; ] );
+            return false;
+            break;
+        }
+
+      }
+
+      switch ( true ) {
+
+        /* |Disabled until issue with RETS API is not resolved| case ( intval( $response[ &#x27;headers&#x27; ][ &#x27;content-length&#x27; ] ) === 0 ):
+          return new WP_Error( &#x27;self::ger_service&#x27; , __( &#x27;API did not send back a valid response.&#x27; ), array(
+            &#x27;request_url&#x27; =&gt; $request_url,
+            &#x27;request_body&#x27; =&gt; $request,
+            &#x27;headers&#x27; =&gt; $response[ &#x27;headers&#x27; ],
+            &#x27;body&#x27; =&gt; $response[ &#x27;body&#x27; ]
+          ));
+        break;*/
+
+        case ( $response[ &#x27;response&#x27; ][ &#x27;code&#x27; ] == 404 ):
+          return new WP_Error( &#x27;ud_api&#x27;, __( &#x27;API Not Responding. Please contact support.&#x27; ), array(
+            &#x27;request_url&#x27; =&gt; $request_url,
+            &#x27;request_body&#x27; =&gt; $request,
+            &#x27;headers&#x27; =&gt; $response[ &#x27;headers&#x27; ]
+          ) );
+          break;
+
+        case ( strpos( $response[ &#x27;headers&#x27; ][ &#x27;content-type&#x27; ], &#x27;text/html&#x27; ) !== false ):
+          return $response[ &#x27;body&#x27; ];
+          break;
+
+        case ( strpos( $response[ &#x27;headers&#x27; ][ &#x27;content-type&#x27; ], &#x27;application/json&#x27; ) !== false ):
+          $json = @json_decode( $response[ &#x27;body&#x27; ] );
+          if ( !is_object( $json ) ) return new WP_Error( &#x27;UD_Functions::get_service&#x27;, __( &#x27;An unknown error occurred while trying to make an API request to Usability Dynamics. Please contact support&#x27;, &#x27;wpp&#x27; ), array( &#x27;response&#x27; =&gt; $response[ &#x27;body&#x27; ] ) );
+          return $json-&gt;success === false ? new WP_Error( &#x27;UD_Functions::get_service&#x27;, $json-&gt;message, $json-&gt;data ) : $json;
+          break;
+
+        case ( strpos( $response[ &#x27;headers&#x27; ][ &#x27;content-type&#x27; ], &#x27;application/xml&#x27; ) !== false ):
+          return $response[ &#x27;body&#x27; ];
+          break;
+
+        default:
+          return new WP_Error( &#x27;ud_api&#x27;, __( &#x27;An unknown error occurred while trying to make an API request to Usability Dynamics. Please contact support.&#x27;, &#x27;wpp&#x27; ) );
+          break;
+
+      }
+
+    } else {
+      if ( !empty( $request[ &#x27;filename&#x27; ] ) &amp;&amp; is_file( $request[ &#x27;filename&#x27; ] ) ) {
+        unlink( $request[ &#x27;filename&#x27; ] );
+      }
+      return $response;
+    }
+
+  }
+
+}
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

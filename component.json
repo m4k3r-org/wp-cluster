@@ -4,18 +4,18 @@
   "description": "Flawless Theme.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/UsabilityDynamics/flawless"
+    "url": "https://github.com/UsabilityDynamics/wp-flawless"
   },
   "config": {
     "source-dir": "components"
   },
   "build": {
-    "js": "ux/component/scripts",
-    "css": "ux/component/css",
-    "less": "ux/component/less",
-    "fonts": "ux/component/fonts",
-    "template": "ux/component/templates",
-    "php": "core/component"
+    "js": "ux/scripts/vendor",
+    "css": "ux/styles/vendor",
+    "less": "ux/styles/vendor",
+    "fonts": "ux/fonts/vendor",
+    "template": "ux/templates/vendor",
+    "php": "core/vendor"
   },
   "dependencies": {
     "mikanda/schema-validate": "*",
@@ -23,6 +23,7 @@
     "kaerus-component/hash": "*",
     "component/model": "*",
     "component/s3": "*",
+    "usabilitydynamics/lib-models": "*",
     "usabilitydynamics/lib-loader": "*",
     "usabilitydynamics/lib-settings": "*",
     "usabilitydynamics/lib-saas": "*",

@@ -10,7 +10,10 @@ YUI.add("yuidoc-meta", function(Y) {
         "Flawless.Flawless\\Widget",
         "Shortcode",
         "Shortcodes",
+        "Theme",
         "Theme UI",
+        "UD.API",
+        "UD.Utility",
         "flawless_wpp_extensions"
     ],
     "modules": [
