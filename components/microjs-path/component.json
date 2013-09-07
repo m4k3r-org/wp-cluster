@@ -1,0 +1,16 @@
+{
+  "name": "path",
+  "repo": "microjs/path",
+  "description": "Simple, lightweight routing for web browsers",
+  "version": "1.0.1",
+  "keywords": [
+    "util",
+    "routing"
+  ],
+  "scripts": [
+    "path.js"
+  ],
+  "main": "path.js",
+  "twitter": "@ForbesLindesay",
+  "license": "MIT"
+}

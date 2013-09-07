@@ -29,6 +29,6 @@ test-code:
 
 clean:
 	rm -fr static/codex
-	rm -fr static/lib-cov
+	rm -fr static/codex/lib-cov
 	rm -fr components
 	rm -fr ux/build

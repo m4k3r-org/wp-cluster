@@ -1,0 +1,13 @@
+{
+  "name": "bootstrap-reset",
+  "repo": "CamShaft/bootstrap-reset",
+  "description": "Bootstrap Reset Component",
+  "version": "2.3.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "APLv2",
+  "styles": [
+    "bootstrap-reset.css"
+  ]
+}

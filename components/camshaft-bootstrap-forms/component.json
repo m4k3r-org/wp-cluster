@@ -1,0 +1,13 @@
+{
+  "name": "bootstrap-forms",
+  "repo": "CamShaft/bootstrap-forms",
+  "description": "Bootstrap Forms Component",
+  "version": "2.3.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "APLv2",
+  "styles": [
+    "bootstrap-forms.css"
+  ]
+}

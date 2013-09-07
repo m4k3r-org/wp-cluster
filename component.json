@@ -2,20 +2,32 @@
   "name": "flawless",
   "version": "0.1.1",
   "description": "Flawless Theme.",
-  "remotes": [
-    "https://raw.github.com",
-    "https://repository.usabilitydynamics.com"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/UsabilityDynamics/flawless"
   },
+  "config": {
+    "source-dir": "components"
+  },
+  "build": {
+    "js": "ux/component/scripts",
+    "css": "ux/component/css",
+    "less": "ux/component/less",
+    "fonts": "ux/component/fonts",
+    "template": "ux/component/templates",
+    "php": "core/component"
+  },
   "dependencies": {
-    "usabilitydynamics/ud-lib-settings": "*",
-    "usabilitydynamics/ud-lib-saas": "*",
-    "usabilitydynamics/ud-lib-api": "*",
+    "mikanda/schema-validate": "*",
+    "microjs/path": "*",
+    "kaerus-component/hash": "*",
+    "component/model": "*",
+    "component/s3": "*",
+    "usabilitydynamics/lib-loader": "*",
+    "usabilitydynamics/lib-settings": "*",
+    "usabilitydynamics/lib-saas": "*",
+    "usabilitydynamics/lib-api": "*",
     "usabilitydynamics/js-elastic-filter": "*",
-    "justinrainbow/json-schema": "*",
     "camshaft/bootstrap-responsive": "*",
     "camshaft/bootstrap-grid": "*",
     "camshaft/bootstrap-buttons": "*",

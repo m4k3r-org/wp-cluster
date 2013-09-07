@@ -1,1 +1,0 @@
-These are common libraries utilized in our WordPress projects and products.
