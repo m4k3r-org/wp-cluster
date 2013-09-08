@@ -4,7 +4,7 @@
    *
    * @namespace UsabilityDynamics
    * @module Loader
-   * @version 0.0.2
+   * @version 0.0.3
    * @author potanin@UD
    */
   namespace UsabilityDynamics {
@@ -33,10 +33,20 @@
      */
     class Loader {
 
-      // @parameters $version Version of class.
-      public $version = '0.0.2';
+      /**
+       * Loader Class version.
+       *
+       * @property $version
+       * @type {Object}
+       */
+      public static $version = '0.0.3';
 
-      // @parameter $headers Extra header parameters.
+      /**
+       * Extra header parameters.
+       *
+       * @property $headers
+       * @type {Object}
+       */
       public static $headers = array(
         'theme' => array(
           'Name' => 'Theme Name',
@@ -47,39 +57,41 @@
           'Version' => 'Version',
           'Template' => 'Template',
           'Status' => 'Status',
-          'Tags' => 'Tags',
-          'TextDomain' => 'Text Domain',
-          'DomainPath' => 'Domain Path',
-          'Supported Features' => 'Supported Features',
-          'Disabled Features' => 'Disabled Features',
-          'Google Fonts' => 'Google Fonts'
-        ),
-        'style' => array(
-          'Name' => 'Name',
-          'Description' => 'Description',
-          'Media' => 'Media',
-          'Version' => 'Version'
-        ),
-        'module' => array(
-          'Name' => 'Name',
-          'Description' => 'Description',
-          'Author' => 'Author',
-          'Media' => 'Media',
-          'ThemeFeature' => 'Theme Feature'
-        ),
+          'Tags' => 'Tags'
+        )
       );
 
-      // @parameter $options Configuration.
+      /**
+       * Configuration.
+       *
+       * @property $options
+       * @type {Object}
+       */
       public $options = stdClass;
 
-      // @parameter $fallback_directories array with fallback directories.
-      private $fallback_directories = array();
+      /**
+       * Array with fallback directories for auto-loading.
+       *
+       * @property $fallback_directories
+       * @type {Object}
+       */
+      public $fallback_directories = array();
 
-      // @parameter $prefixes Array of stored namespace prefixes.
-      private $prefixes = array();
+      /**
+       * Array of stored namespace prefixes.
+       *
+       * @property $prefixes
+       * @type {Object}
+       */
+      public $prefixes = array();
 
-      // @parameter $class_map Array of stored class mappings.
-      private $class_map = array();
+      /**
+       * Array of stored class mappings.
+       *
+       * @property $class_map
+       * @type {Object}
+       */
+      public $class_map = array();
 
       /**
        * Constructor for the Loader class.

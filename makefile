@@ -20,6 +20,9 @@ update:
 document:
 	yuidoc -q --configfile static/yuidoc.json
 
+minify:
+	uglifyjs ./ux/build/app.js -o ./ux/build/app.min.js
+
 test-code:
 	@NODE_ENV=test mocha \
   --timeout 200 \

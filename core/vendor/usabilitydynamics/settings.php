@@ -1,15 +1,22 @@
 <?php
-/**
- * Settings Library
- *
- */
-namespace UsabilityDynamics {
+  /**
+   * Settings Library
+   *
+   */
+  namespace UsabilityDynamics {
 
-  class Settings {
+    class Settings {
 
-    // Class Version.
-    public $version = '0.1.1';
+      /**
+       * Settings Class version.
+       *
+       * @public
+       * @static
+       * @property $version
+       * @type {Object}
+       */
+      public static $version = '0.1.1';
+
+    }
 
   }
-
-}

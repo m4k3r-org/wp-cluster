@@ -21,11 +21,21 @@ namespace Flawless {
    */
   class Theme {
 
-    // Class Version.
-    public $version = '0.1.1';
+    /**
+     * Theme Class version.
+     *
+     * @public
+     * @static
+     * @property $version
+     * @type {Object}
+     */
+    public static $version = '0.1.1';
 
     /**
      * Constructor
+     *
+     * @method __construct
+     * @for Theme
      *
      */
     public function __construct( $options = false ) {
@@ -42,7 +52,6 @@ namespace Flawless {
 
       add_filter( 'widget_text', 'do_shortcode' );
 
-
     }
 
     /**
@@ -50,7 +59,6 @@ namespace Flawless {
      *
      * Have to be run on after_setup_theme() level.
      *
-     * @todo Should have some support for bootstrap content styles. - potanin@UD 6/10/12
      * @updated 0.0.6
      * @since 0.0.2
      */
@@ -118,12 +126,12 @@ namespace Flawless {
           switch ( $feature ) {
 
             case 'custom-background':
-              remove_custom_background();
-              break;
+              // remove_custom_background();
+            break;
 
             case 'custom-header':
-              remove_custom_image_header();
-              break;
+              // remove_custom_image_header();
+            break;
 
           }
 

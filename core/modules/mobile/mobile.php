@@ -38,7 +38,7 @@
        * @param array $options
        */
       public function __construct( $options = array() ) {
-        add_action( 'flawless::wp_enqueue_scripts::mobile', array( $this, 'wp_enqueue_scripts' ) );
+        add_action( 'flawless::wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
       }
 
       /**
@@ -50,7 +50,11 @@
        * @for Mobile
        */
       public function wp_enqueue_scripts( &$flawless ) {
-        wp_enqueue_script( 'jquery-touch-punch' );
+
+        if ( wp_is_mobile() ) {
+          wp_enqueue_script( 'jquery-touch-punch' );
+        }
+
       }
 
     }

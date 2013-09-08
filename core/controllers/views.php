@@ -3,7 +3,7 @@
  * Flawless
  *
  * @author potanin@UD
- * @version 0.0.1
+ * @version 0.1.2
  * @namespace Flawless
  * @module Flawless
  */
@@ -11,8 +11,6 @@ namespace Flawless {
 
   /**
    * Views
-   *
-   * -
    *
    * @author potanin@UD
    * @version 0.1.0
@@ -28,20 +26,7 @@ namespace Flawless {
      * @property $version
      * @type {Object}
      */
-    public static $version = '0.1.1';
-
-    /**
-     * Views Settings Schema.
-     *
-     * Need to remove this.
-     *
-     * @static
-     * @property $version
-     * @type {Object}
-     */
-    public $_settings = array(
-      'deregister_empty_widget_areas' => false
-    );
+    public static $version = '0.1.2';
 
     /**
      * Constructor for the Views class.
@@ -69,7 +54,23 @@ namespace Flawless {
     }
 
     /**
+     * Class Logger
+     *
+     * @method log
+     * @for Views
+     *
+     * @since 0.1.2
+     * @author potanin@UD
+     */
+    static function log() {
+      //$args = func_num_args();
+    }
+
+    /**
      * Figure out which Widget Area Sections ( WAS ) are available for use in the theme
+     *
+     * @method theme_setup
+     * @for Views
      *
      * @param $flawless
      */
@@ -491,7 +492,7 @@ namespace Flawless {
           $t[ 'type' ] = 'page'; /* WP only allows pages to be set as home page */
           $t[ 'note' ] = 'Static Home Page';
 
-          Flawless::console_log( 'Current View: Home page with static page.' );
+          self::log( 'Current View: Home page with static page.' );
 
           break;
 
@@ -504,7 +505,7 @@ namespace Flawless {
           $t[ 'type' ] = 'home';
           $t[ 'note' ] = 'Non-Static ( Archive ) Home Page';
 
-          Flawless::console_log( 'Current View: Home page, default posts archive.' );
+          self::log( 'Current View: Home page, default posts archive.' );
 
           break;
 
@@ -519,7 +520,7 @@ namespace Flawless {
           $t[ 'type' ] = $wp_query->query_vars[ 'post_type' ] ? $wp_query->query_vars[ 'post_type' ] : 'page';
           $t[ 'note' ] = 'Posts Page ( Archive )';
 
-          Flawless::console_log( 'Current View: Blog Posts Index page.' );
+          self::log( 'Current View: Blog Posts Index page.' );
 
           break;
 
@@ -533,7 +534,7 @@ namespace Flawless {
           $t[ 'group' ] = 'post_types';
           $t[ 'type' ] = $wp_query->query_vars[ 'post_type' ];
 
-          Flawless::console_log( sprintf( 'Current View: Post Type Archive ( %1s ).', $wp_query->query_vars[ 'post_type' ] ) );
+          self::log( sprintf( 'Current View: Post Type Archive ( %1s ).', $wp_query->query_vars[ 'post_type' ] ) );
 
           break;
 
@@ -548,7 +549,7 @@ namespace Flawless {
           $t[ 'group' ] = 'post_types';
           $t[ 'type' ] = $post->post_type;
 
-          Flawless::console_log( sprintf( 'Current View: Single post-type page ( %1s ).', $post->post_type ) );
+          self::log( sprintf( 'Current View: Single post-type page ( %1s ).', $post->post_type ) );
 
           break;
 
@@ -561,7 +562,7 @@ namespace Flawless {
           $t[ 'group' ] = 'post_types';
           $t[ 'type' ] = 'page';
 
-          Flawless::console_log( 'Current View: Search Results page.' );
+          self::log( 'Current View: Search Results page.' );
 
           break;
 
@@ -575,7 +576,7 @@ namespace Flawless {
           $t[ 'group' ] = 'taxonomies';
           $t[ 'type' ] = $wp_query->tax_query->queries[ 0 ][ 'taxonomy' ];
 
-          Flawless::console_log( sprintf( 'Current View: Taxonomy archive ( %1s ) - ( non-root ). ', $wp_query->tax_query->queries[ 0 ][ 'taxonomy' ] ) );
+          self::log( sprintf( 'Current View: Taxonomy archive ( %1s ) - ( non-root ). ', $wp_query->tax_query->queries[ 0 ][ 'taxonomy' ] ) );
 
           break;
 
@@ -589,7 +590,7 @@ namespace Flawless {
           $t[ 'group' ] = 'taxonomies';
           $t[ 'type' ] = $wp_query->query_vars[ 'name' ];
 
-          Flawless::console_log( 'Current View: Taxonomy root archive.' );
+          self::log( 'Current View: Taxonomy root archive.' );
 
           break;
 
@@ -598,7 +599,7 @@ namespace Flawless {
           $t[ 'group' ] = 'post_types';
           $t[ 'type' ] = 'page';
 
-          Flawless::console_log( 'Current View: Unknown - rendering same as Page.' );
+          self::log( 'Current View: Unknown - rendering same as Page.' );
 
           break;
 
@@ -741,8 +742,8 @@ namespace Flawless {
 
       }
 
-      Flawless::console_log( 'Executed: Views::get_current_sidebars();' );
-      Flawless::console_log( $response );
+      self::log( 'Executed: Views::get_current_sidebars();' );
+      self::log( $response );
 
       return $response;
 

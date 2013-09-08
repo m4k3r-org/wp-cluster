@@ -20,8 +20,15 @@ namespace Flawless {
    */
   class Utility extends \UsabilityDynamics\Utility {
 
-    // Class Version.
-    public $version = '0.2.1';
+    /**
+     * Utility Class version.
+     *
+     * @public
+     * @static
+     * @property $version
+     * @type {Object}
+     */
+    public static $version = '0.2.1';
 
     /**
      * Constructor for the UD Utility class.

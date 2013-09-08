@@ -18,7 +18,7 @@ namespace Flawless {
   class Content {
 
     // Class Version.
-    public $version = '0.1.1';
+    public static $version = '0.1.1';
 
     /**
      * Constructor for the Content class.

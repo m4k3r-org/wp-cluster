@@ -18,10 +18,18 @@ namespace Flawless {
    */
   class Settings extends \UsabilityDynamics\Settings {
 
-    // Class Version.
-    public $version = '0.1.1';
+    /**
+     * Settings Class version.
+     *
+     * @public
+     * @static
+     * @property $version
+     * @type {Object}
+     */
+    public static $version = '0.1.1';
 
     /**
+     * Create Settings Instance.
      *
      * @method __construct
      * @for Settings

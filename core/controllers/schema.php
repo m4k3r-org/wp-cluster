@@ -17,6 +17,16 @@ namespace Flawless {
    */
   class Schema {
 
+    /**
+     * Schema Class version.
+     *
+     * @public
+     * @static
+     * @property $version
+     * @type {Object}
+     */
+    public static $version = '0.1.0';
+
     // @property $data Data object to validate.
     public $data = stdClass;
 

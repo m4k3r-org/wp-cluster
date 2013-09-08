@@ -143,7 +143,10 @@
           }
         }
 
-        // wp_enqueue_style( 'flawless-bootstrap-css', Asset::load( 'bootstrap.less', 'less', array( 'return' => 'url' ) ), array(), '2.0.4', 'screen' );
+        // Enqueue child theme style.css.
+        if( file_exists( STYLESHEETPATH . '/ux/build/app.min.css' ) ) {
+          //wp_enqueue_style( 'flawless-app', STYLESHEETPATH . '/ux/build/app.min.css', array(), Flawless_Version );
+        }
 
       }
 
@@ -211,7 +214,7 @@
           return $return;
         }
 
-        foreach ( (array) $flawless[ 'asset_directories' ] as $assets_path => $assets_url ) {
+        foreach ( (array) $flawless->asset_directories as $assets_path => $assets_url ) {
           switch ( $type ) {
 
             case 'lib':

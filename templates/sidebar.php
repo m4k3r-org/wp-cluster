@@ -9,7 +9,7 @@
 */
 
   //** Figure out which sidebar this is */
-  $widget_area_type = Flawless\FlawUtilityless::backtrace_sidebar_type();
+  $widget_area_type = Flawless\Utility::backtrace_sidebar_type();
 
   $sidebars = Flawless\Views::get_current_sidebars( $widget_area_type );
 

@@ -40,8 +40,15 @@ namespace Flawless {
    */
   class Loader extends \UsabilityDynamics\Loader {
 
-    // @parameters $version Version of class.
-    public $version = '0.0.3';
+    /**
+     * Loader Class version.
+     *
+     * @public
+     * @static
+     * @property $version
+     * @type {Object}
+     */
+    public static $version = '0.0.3';
 
     // @parameter $headers Extra header parameters.
     public static $headers = array(

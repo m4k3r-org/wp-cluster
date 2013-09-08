@@ -15,8 +15,15 @@ namespace Flawless {
    */
   class Module {
 
-    // @parameters $version Version of class.
-    public $version = '0.0.2';
+    /**
+     * Module Class version.
+     *
+     * @public
+     * @static
+     * @property $version
+     * @type {Object}
+     */
+    public static $version = '0.0.2';
 
   }
 
