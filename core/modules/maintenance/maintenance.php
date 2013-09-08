@@ -72,7 +72,7 @@ namespace Flawless {
       global $wp_query;
 
       if ( $wp_query->query_vars[ 'splash_screen' ] && Asset::load( 'flawless-maintanance.css', 'css' ) ) {
-        wp_enqueue_style( 'flawless-maintanance', Asset::load( 'flawless-maintanance.css', 'css' ), array( 'flawless-style' ), Flawless_Version );
+        wp_enqueue_style( 'flawless-maintanance', Asset::load( 'flawless-maintanance.css', 'css' ), array( 'flawless-app' ), Flawless_Version );
       }
 
     }

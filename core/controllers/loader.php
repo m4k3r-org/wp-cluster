@@ -86,22 +86,26 @@ namespace Flawless {
      * @for Loader
      * @constructor
      *
-     * @param $settings array
+     * @param $settings {Object|Array|boolean}
      *
      * @return \Flawless\Loader
      * @version 0.0.2
      * @since 0.0.2
      */
-    function __construct( array $settings ) {
+    function __construct( $settings = false ) {
 
-      // Save Loader Settings.
-      $this->$settings = (object) $settings;
+      if( is_array( $settings ) || is_object( $settings ) ) {
 
-      // Load libraries that use namespaces.
-      $this->set_namespace( $this->$settings->controllers );
+        // Save Loader Settings.
+        $this->$settings = (object) $settings;
 
-      // Loads libraries that do not use namespaces.
-      $this->add_class_map( $this->$settings->helpers );
+        // Load libraries that use namespaces.
+        $this->set_namespace( $this->$settings->controllers );
+
+        // Loads libraries that do not use namespaces.
+        $this->add_class_map( $this->$settings->helpers );
+
+      }
 
       // Register Autoloader.
       $this->register( true );

@@ -33,10 +33,8 @@ namespace Flawless {
      * @param array 
      */
     public function __construct( $options = array() ) {
-
-      add_filter( 'flawless::init_upper', array( __SELF__, 'setup_content_types' ) );
-      add_filter( 'flawless::template_redirect', array( __SELF__, 'template_redirect' ) );
-
+      add_filter( 'flawless::init_upper', array( $this, 'setup_content_types' ) );
+      add_filter( 'flawless::template_redirect', array( $this, 'template_redirect' ) );
     }
 
     /**
@@ -67,7 +65,7 @@ namespace Flawless {
      * @method template_redirect
      * @for Content
      */
-    static function template_redirect() {
+    static function template_redirect( &$flawless ) {
       global $post;
 
       if ( get_post_meta( $post->ID, 'must_be_logged_in', true ) == 'true' && !is_user_logged_in() ) {
@@ -92,12 +90,8 @@ namespace Flawless {
      * @action init (0)
      * @since 0.0.2
      */
-    static function setup_content_types( $flawless = false ) {
+    static function setup_content_types( &$flawless ) {
       global $wp_post_types, $wp_taxonomies;
-
-      if ( !$flawless ) {
-        global $flawless;
-      }
 
       Log::add( 'Executed: Flawless::setup_content_types();' );
 
@@ -226,11 +220,8 @@ namespace Flawless {
         $flawless[ 'taxonomies' ][ $type ][ 'exclude_from_search' ] = $wp_taxonomies[ $type ]->exclude_from_search ? 'true' : 'false';
         //$flawless[ 'taxonomies' ][ $type ][ 'show_tagcloud' ] = $wp_taxonomies[ $type ]->show_tagcloud ? 'true' : 'false';
 
-        //** If Term Meta is supported, add callback function to render any UI we want to show on the taxonomy pages */
-        if ( current_theme_supports( 'term-meta' ) || current_theme_supports( 'extended-taxonomies' ) ) {
-          add_action( $type . '_edit_form_fields', array( 'Flawless_ui', 'taxonomy_edit_form_fields' ), 5, 2 );
-          add_action( $type . '_pre_add_form', array( 'Flawless_ui', 'taxonomy_pre_add_form' ), 5 );
-        }
+        do_action( 'flawless::setup_taxonomy::' . $type, $data );
+        do_action( 'flawless::setup_taxonomy', $type, $data );
 
       }
 
@@ -348,8 +339,6 @@ namespace Flawless {
         }
 
       }
-
-      return $flawless;
 
     }
 

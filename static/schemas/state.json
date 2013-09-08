@@ -1,5 +1,11 @@
 {
-  "title": "Flawless State Schema",
+  "title": "Flawless Computed State Schema",
   "description": "Schema for Flawless state.",
-  "properties": {}
+  "properties": {
+    "remote_assets": {
+      "properties": {
+        "script": {}
+      }
+    }
+  }
 }

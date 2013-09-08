@@ -28,10 +28,10 @@ namespace Flawless {
      * Constructor
      *
      */
-    public function __construct( $options = array() ) {
-      add_filter( 'flawless::template_redirect', array( __SELF__, 'template_redirect' ) );
-      add_filter( 'flawless::theme_setup', array( __SELF__, 'theme_setup' ), 100 );
-      add_filter( 'flawless::init_upper', array( __SELF__, 'init_upper' ) );
+    public function __construct( $options = false ) {
+      add_filter( 'flawless::template_redirect', array( $this, 'template_redirect' ) );
+      add_filter( 'flawless::theme_setup', array( $this, 'theme_setup' ), 100 );
+      add_filter( 'flawless::init_upper', array( $this, 'init_upper' ) );
 
       add_filter( 'wp_title', array( __SELF__, 'wp_title' ) );
       add_action( 'wp_head', array( __SELF__, 'wp_head' ) );
@@ -54,13 +54,13 @@ namespace Flawless {
      * @updated 0.0.6
      * @since 0.0.2
      */
-    static function theme_setup( &$flawless ) {
+    public function theme_setup( &$flawless ) {
 
       //** Load styles to be used by editor */
       add_editor_style( array(
-        'ux/styles/flawless-content.css',
+        'ux/styles/content.css',
         'ux/styles/editor-style.css'
-      ) );
+      ));
 
       if ( $flawless[ 'color_scheme' ] ) {
         $flawless[ 'color_scheme_data' ] = Theme::get_color_schemes( $flawless[ 'color_scheme' ] );
@@ -80,6 +80,7 @@ namespace Flawless {
       define( 'HEADER_IMAGE', apply_filters( 'flawless::header_image', '' ) );
       define( 'HEADER_IMAGE_WIDTH', apply_filters( 'flawless::header_image_width', $flawless[ 'header_image_width' ] ? $flawless[ 'header_image_width' ] : 1090 ) );
       define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'flawless::header_image_height', $flawless[ 'header_image_height' ] ? $flawless[ 'header_image_height' ] : 314 ) );
+
       add_image_size( 'large-feature', HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT, true );
 
       //** All Available Theme Features */
@@ -96,7 +97,6 @@ namespace Flawless {
       $flawless[ 'available_theme_features' ][ 'mobile-navbar' ] = true;
       $flawless[ 'available_theme_features' ][ 'footer-copyright' ] = true;
       $flawless[ 'available_theme_features' ][ 'extended-taxonomies' ] = true;
-      $flawless[ 'available_theme_features' ][ 'term-meta' ] = true;
       $flawless[ 'available_theme_features' ] = apply_filters( 'flawless::available_theme_features', $flawless[ 'available_theme_features' ] );
 
       //** Load all Available Theme featurse */
@@ -143,13 +143,8 @@ namespace Flawless {
      * @method init_upper
      * @for Theme
      */
-    public function init_upper() {
+    public function init_upper( &$flawless ) {
 
-      /**
-       * Determines if search request exists but it's empty, we do 'hack' to show Search result page.
-       *
-       * @author peshkov@UD
-       */
       add_filter( 'request', array( __SELF__, 'request' ), 0 );
 
     }
@@ -160,7 +155,7 @@ namespace Flawless {
      * @method template_redirect
      * @for Theme
      */
-    public function template_redirect( $flawless ) {
+    public function template_redirect( &$flawless ) {
       global $wp_query;
 
       add_filter( 'wp_nav_menu_args', array( __CLASS__, 'wp_nav_menu_args' ), 5 );
@@ -172,8 +167,24 @@ namespace Flawless {
 
       add_filter( 'wp_title', array( __CLASS__, 'wp_title' ), 10, 3 );
 
+      add_action( 'flawless::content_container_top', array( __CLASSS__, 'content_container_top' ) );
+
+
+
       $wp_query->query_vars[ 'flawless' ] = &$flawless;
 
+    }
+
+    /**
+     * content_container_top
+     *
+     * ?
+     *
+     * @method content_container_top
+     * @for Theme
+     */
+    static function content_container_top() {
+      flawless_primary_notice_container( '' );
     }
 
     /**

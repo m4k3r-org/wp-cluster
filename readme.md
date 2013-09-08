@@ -3,6 +3,33 @@
 * Theme Homepage - http://usabilitydynamics.com/products/flawless/
 
 
+### Major Actions
+All major actions that utlize the "flawless::" prefix pass the $flawless variable as the first argument to any action.
+
+  * flawless::loaded
+  * flawless::theme_setup
+  * flawless::init_upper
+  * flawless::init_lower
+  * flawless::template_redirect
+  * flawless::admin_menu
+  * flawless::admin_init
+  * flawless::wp_enqueue_scripts
+  * flawless::wp_enqueue_scripts::mobile
+  * flawless::extra_local_assets
+  * flawless::wp_print_styles
+  * flawless::create_views
+
+
+### Major Filters
+  * flawless::remote_assets
+  * flawless::active_plugins
+  * flawless::conditional_asset_types
+  * flawless::wp_print_styles
+
+### Supporting Actions
+  * flawless::extra_local_assets
+  * flawless::asset_locations
+
 ### Usage
 
   // Extend Object

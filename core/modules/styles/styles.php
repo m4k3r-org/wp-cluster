@@ -32,13 +32,14 @@ namespace Flawless {
      * @constructor
      * @for Styles
      *
-     * @param array options
+     * @param array $options
+     * @return \Flawless\Styles
      */
-    public function __construct( $options = array() ) {
+    public function __construct( array $options ) {
 
-      add_action( 'flawless::theme_setup', array( __CLASS__, 'theme_setup' ) );
-
-      add_action( 'flawless::wp_print_styles', array( __CLASS__, 'wp_print_styles' ) );
+      // Major Actions.
+      add_action( 'flawless::theme_setup', array( $this, 'theme_setup' ) );
+      add_action( 'flawless::wp_print_styles', array( $this, 'wp_print_styles' ) );
 
     }
 
@@ -52,86 +53,10 @@ namespace Flawless {
      *
      * @return mixed
      */
-    static function theme_setup( &$flawless ) {
+    public function theme_setup( &$flawless ) {
 
       //** Get default LESS options */
-      __SELF__::parse_css_option_defaults( $flawless );
-
-      return $flawless;
-
-    }
-
-    /**
-     * Get default LESS variables from a file. These are later overwritten by theme settings.
-     *
-     * @todo Include a way of grouping variables together based on the CSS comments. - potanin@UD 6/11/12
-     * @since 0.0.6
-     * @author potanin@UD
-     */
-    static function parse_css_option_defaults( &$flawless, $file = 'variables.less' ) {
-
-      $flawless[ 'css_options' ] = array();
-
-      if ( $_variables_path = Asset::load( $file, 'less', array( 'return' => 'path' ) ) ) {
-        $_content = file_get_contents( $_variables_path );
-        $_lines = explode( "\n", $_content );
-      }
-
-      function de_camel( $str ) {
-        $str[ 0 ] = strtolower( str_replace( '@', '', $str[ 0 ] ) );
-        return ucwords( trim( preg_replace( '/([A-Z])/e', "' ' . strtolower('\\1')", $str ) ) );
-      }
-
-      foreach ( (array) $_lines as $line => $_line_string ) {
-
-        if ( strpos( trim( $_line_string ), '@' ) === 0 ) {
-
-          @list( $name, $value ) = (array) explode( ':', $_line_string );
-          @list( $value, $description ) = explode( '//', $value );
-
-          $name = str_replace( '@', '', $name );
-
-          switch ( true ) {
-            case strpos( $name, 'FontFamily' ):
-              $type = 'font';
-              break;
-            case strpos( $name, 'fluidGrid' ):
-              $type = 'percentage';
-              break;
-            case strpos( $name, 'Width' ):
-              $type = 'pixels';
-              break;
-            case strpos( $name, 'Text' ):
-            case strpos( $name, 'Color' ):
-            case strpos( $name, 'Border' ):
-            case strpos( $name, 'Background' ):
-              $type = 'color';
-              break;
-            case strpos( $name, 'zindex' ):
-              $type = 'hidden';
-              break;
-            case strpos( $name, 'Path' ):
-              $type = 'url';
-              break;
-          }
-
-          $flawless[ 'css_options' ][ $name ] = array_filter( array(
-            'label' => str_replace( 'Btn', __( 'Button', 'flawless' ), de_camel( $name ) ),
-            'value' => str_replace( ';', '', trim( $value ) ),
-            'name' => trim( $name ),
-            'type' => $type ? $type : false,
-            'description' => trim( $description )
-          ) );
-
-        }
-
-      }
-
-      $flawless[ 'css_options' ] = apply_filters( 'flawless::css_options', array_filter( $flawless[ 'css_options' ] ) );
-
-      Log::add( sprintf( __( 'Flawless::parse_css_option_defaults() completed i n %2s seconds', 'flawless' ), timer_stop() ) );
-
-      return $flawless;
+      self::parse_css_option_defaults( $flawless );
 
     }
 
@@ -141,8 +66,13 @@ namespace Flawless {
      * @method wp_print_styles
      * @for Styles
      */
-    static function wp_print_styles() {
-      global $flawless, $wp_styles;
+    public function wp_print_styles( &$flawless ) {
+      global $wp_styles;
+
+      // Enqueue Skin / Color Scheme CSS.
+      if ( file_exists( $flawless->loaded_color_scheme[ 'css_path' ] ) ) {
+        wp_enqueue_style( 'flawless-colors', $flawless->loaded_color_scheme[ 'css_url' ], array( 'flawless-app' ), Flawless_Version );
+      }
 
       //** Analyze all Enqueued Styles for compiling */
       foreach ( (array) $wp_styles->queue as $key => $handle ) {
@@ -244,6 +174,98 @@ namespace Flawless {
       if ( is_array( $flawless_header_css ) ) {
         wp_add_inline_style( 'flawless_header_css', implode( '', (array) apply_filters( 'flawless::header_css', $flawless_header_css, $flawless ) ) );
       }
+
+      //** Check for and load conditional browser styles */
+      foreach ( (array) apply_filters( 'flawless::conditional_asset_types', array( 'IE', 'lte IE 7', 'lte IE 8', 'IE 7', 'IE 8', 'IE 9', '!IE' ) ) as $type ) {
+
+        //** Fix slug for URL - remove white space and lowercase */
+        $url_slug = strtolower( str_replace( ' ', '-', $type ) );
+
+        foreach ( (array) $flawless->asset_directories as $assets_path => $assets_url ) {
+
+          if ( file_exists( $assets_path . "/css/conditional-{$url_slug}.css" ) ) {
+            wp_enqueue_style( 'conditional-' . $url_slug, $assets_url . "/css/conditional-{$url_slug}.css", array( 'flawless-app' ), Flawless_Version );
+            $wp_styles->add_data( 'conditional-' . $url_slug, 'conditional', $type );
+          }
+
+        }
+
+      }
+
+
+    }
+
+    /**
+     * Get default LESS variables from a file. These are later overwritten by theme settings.
+     *
+     * @todo Include a way of grouping variables together based on the CSS comments. - potanin@UD 6/11/12
+     * @since 0.0.6
+     * @author potanin@UD
+     */
+    static function parse_css_option_defaults( &$flawless, $file = 'variables.less' ) {
+
+      $flawless[ 'css_options' ] = array();
+
+      if ( $_variables_path = Asset::load( $file, 'less', array( 'return' => 'path' ) ) ) {
+        $_content = file_get_contents( $_variables_path );
+        $_lines = explode( "\n", $_content );
+      }
+
+      function de_camel( $str ) {
+        $str[ 0 ] = strtolower( str_replace( '@', '', $str[ 0 ] ) );
+        return ucwords( trim( preg_replace( '/([A-Z])/e', "' ' . strtolower('\\1')", $str ) ) );
+      }
+
+      foreach ( (array) $_lines as $line => $_line_string ) {
+
+        if ( strpos( trim( $_line_string ), '@' ) === 0 ) {
+
+          @list( $name, $value ) = (array) explode( ':', $_line_string );
+          @list( $value, $description ) = explode( '//', $value );
+
+          $name = str_replace( '@', '', $name );
+
+          switch ( true ) {
+            case strpos( $name, 'FontFamily' ):
+              $type = 'font';
+              break;
+            case strpos( $name, 'fluidGrid' ):
+              $type = 'percentage';
+              break;
+            case strpos( $name, 'Width' ):
+              $type = 'pixels';
+              break;
+            case strpos( $name, 'Text' ):
+            case strpos( $name, 'Color' ):
+            case strpos( $name, 'Border' ):
+            case strpos( $name, 'Background' ):
+              $type = 'color';
+              break;
+            case strpos( $name, 'zindex' ):
+              $type = 'hidden';
+              break;
+            case strpos( $name, 'Path' ):
+              $type = 'url';
+              break;
+          }
+
+          $flawless[ 'css_options' ][ $name ] = array_filter( array(
+            'label' => str_replace( 'Btn', __( 'Button', 'flawless' ), de_camel( $name ) ),
+            'value' => str_replace( ';', '', trim( $value ) ),
+            'name' => trim( $name ),
+            'type' => $type ? $type : false,
+            'description' => trim( $description )
+          ) );
+
+        }
+
+      }
+
+      $flawless[ 'css_options' ] = apply_filters( 'flawless::css_options', array_filter( $flawless[ 'css_options' ] ) );
+
+      Log::add( sprintf( __( 'Flawless::parse_css_option_defaults() completed i n %2s seconds', 'flawless' ), timer_stop() ) );
+
+      return $flawless;
 
     }
 

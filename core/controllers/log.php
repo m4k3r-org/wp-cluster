@@ -34,9 +34,9 @@ namespace Flawless {
      * @constructor
      * @for Log
      *
-     * @param array
+     * @param bool $options
      */
-    public function __construct( $options = array() ) {
+    public function __construct( $options = false ) {
 
       //** Add console log JavaScript in admin footer */
       add_filter( 'admin_print_footer_scripts', array( __CLASS__, 'render' ) );

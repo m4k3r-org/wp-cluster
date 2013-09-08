@@ -21,8 +21,27 @@ namespace Flawless {
    */
   class Views {
 
-    // Class Version.
-    public $version = '0.1.1';
+    /**
+     * Views class version.
+     *
+     * @static
+     * @property $version
+     * @type {Object}
+     */
+    public static $version = '0.1.1';
+
+    /**
+     * Views Settings Schema.
+     *
+     * Need to remove this.
+     *
+     * @static
+     * @property $version
+     * @type {Object}
+     */
+    public $_settings = array(
+      'deregister_empty_widget_areas' => false
+    );
 
     /**
      * Constructor for the Views class.
@@ -34,13 +53,15 @@ namespace Flawless {
      * @constructor
      * @for Views
      *
-     * @param array
+     * @param bool $options
+     *
+     * @internal param $array
      */
-    public function __construct( $options = array() ) {
+    public function __construct( $options = false ) {
 
-      add_action( 'flawless::init_lower', array( __CLASS__, 'create_views' ), 10 );
-      add_action( 'flawless::template_redirect', array( __CLASS__, 'template_redirect' ), 10 );
-      add_action( 'flawless::theme_setup::after', array( __CLASS__, 'theme_setup' ), 10 );
+      add_action( 'flawless::init_lower',           array( $this, 'init_lower' ), 10 );
+      add_action( 'flawless::template_redirect',    array( $this, 'template_redirect' ), 10 );
+      add_action( 'flawless::theme_setup::after',   array( $this, 'theme_setup' ), 10 );
 
       //** Disable default Gallery shortcode styles */
       add_filter( 'use_default_gallery_style', create_function( '', ' return false; ' ) );
@@ -53,7 +74,7 @@ namespace Flawless {
      * @param $flawless
      */
     static function theme_setup( &$flawless ) {
-      Flawless::define_widget_area_sections( $flawless );
+      self::define_widget_area_sections( $flawless );
     }
 
     /**
@@ -61,10 +82,8 @@ namespace Flawless {
      *
      * @method template_redirect
      */
-    static function template_redirect() {
+    public function template_redirect( &$flawless ) {
       Views::set_current_view();
-
-      add_action( 'body_class', array( 'Flawless', 'body_class' ), 200, 2 );
 
       add_action( 'flawless_ui::above_header', array( __CLASS__, 'above_header' ) );
 
@@ -77,10 +96,182 @@ namespace Flawless {
         $flawless[ 'current_view' ][ 'body_classes' ][ ] = 'flawless_no_skin';
       }
 
-      add_action( 'flawless::content_container_top', function () {
-        flawless_primary_notice_container( '' );
-      } );
 
+    }
+
+    /**
+     * Generates all views, registers Flawless widget areas, and unregisters any unsued widget areas.
+     *
+     * Unregistered widget areas are loaded into [widget_areas] array so they can be displayed on the Flawless settings page
+     * for WAS association.
+     *
+     * Generates dynamic settings on every page load.
+     *
+     * @method init_lower
+     * @for Views
+     *
+     * @creates [widget_areas]
+     * @creates [views]
+     *
+     * @action init ( 500 )
+     * @action flawless::init_lower ( 10 )
+     *
+     * @since 0.0.2
+     */
+    static function init_lower( &$flawless ) {
+      global $wp_registered_sidebars;
+
+      $widget_areas = array();
+      $views = array();
+
+      //** Create a default Flawless sidebar */
+      if ( !isset( $flawless[ 'flawless_widget_areas' ] ) ) {
+
+        $flawless[ 'flawless_widget_areas' ][ 'global_sidebar' ] = array(
+          'label' => __( 'Global Sidebar', 'flawless' ),
+          'class' => 'my_global_sidebar',
+          'description' => __( 'Our default sidebar.', 'flawless' ),
+          'id' => 'global_sidebar'
+        );
+
+      }
+
+      //** Create custom widget areas */
+      foreach ( (array) $flawless[ 'flawless_widget_areas' ] as $sidebar_id => $wa_data ) {
+
+        //** Register this widget area with some basic information */
+        register_sidebar( array(
+          'name' => $wa_data[ 'label' ],
+          'description' => $wa_data[ 'description' ],
+          'class' => $wa_data[ 'class' ],
+          'id' => $sidebar_id,
+          'before_widget' => '<div id="%1$s"  class="flawless_widget theme_widget widget  %2$s">',
+          'after_widget' => '</div>',
+          'before_title' => '<h5 class="widgettitle widget-title">',
+          'after_title' => '</h5>'
+        ) );
+
+        $wp_registered_sidebars[ $sidebar_id ][ 'flawless_widget_area' ] = true;
+
+      }
+
+      //** Build views from all used widget areas, update widget area info based on location and usage */
+      foreach ( (array) $flawless[ 'post_types' ] as $post_type => $post_type_data ) {
+
+        //** Load post type configuration ( not essential, just in case ) */
+        $views[ 'post_types' ][ $post_type ][ 'settings' ] = $post_type_data;
+        $views[ 'post_types' ][ $post_type ][ 'widget_areas' ] = array();
+
+        Flawless::add_post_type_option( array(
+          'post_type' => $post_type,
+          'position' => 50,
+          'meta_key' => 'hide_page_title',
+          'label' => sprintf( __( 'Hide Page Title.', 'flawless' ) )
+        ) );
+
+        /** If breadcrumbs are not globally hidden, show an option to hide them */
+        if ( $flawless[ 'hide_breadcrumbs' ] != 'true' ) {
+          Flawless::add_post_type_option( array(
+            'post_type' => $post_type,
+            'position' => 70,
+            'meta_key' => 'hide_breadcrumbs',
+            'label' => sprintf( __( 'Hide Breadcrumbs.', 'flawless' ) )
+          ) );
+        }
+
+        if ( post_type_supports( $post_type, 'author' ) && $post_type_data[ 'disable_author' ] != 'true' ) {
+          Flawless::add_post_type_option( array(
+            'post_type' => $post_type,
+            'position' => 100,
+            'meta_key' => 'hide_post_author',
+            'label' => sprintf( __( 'Hide Author.', 'flawless' ) )
+          ) );
+        }
+
+        if ( post_type_supports( $post_type, 'capability_restrictions' ) ) {
+          Flawless::add_post_type_option( array(
+            'post_type' => $post_type,
+            'position' => 1000,
+            'meta_key' => 'must_be_logged_in',
+            'label' => sprintf( __( 'Must Be Logged In To View.', 'flawless' ) )
+          ) );
+        }
+
+        //** Load used widget areas into array */
+        foreach ( (array) $post_type_data[ 'widget_areas' ] as $was_slug => $these_widget_areas ) {
+
+          Flawless::add_post_type_option( array(
+            'post_type' => $post_type,
+            'position' => 200,
+            'meta_key' => 'disable_' . $was_slug,
+            'label' => sprintf( __( 'Disable %1s.', 'flawless' ), $flawless[ 'widget_area_sections' ][ $was_slug ][ 'label' ] )
+          ) );
+
+          $views[ 'post_types' ][ $post_type ][ 'widget_areas' ][ $was_slug ] = array_filter( (array) $these_widget_areas );
+
+          $widget_areas[ 'used' ] = array_merge( (array) $widget_areas[ 'used' ], (array) $these_widget_areas );
+
+        }
+
+      }
+
+      //** Build views from all used widget areas, update widget area info based on location and usage */
+      foreach ( (array) $flawless[ 'taxonomies' ] as $taxonomy => $taxonomy_data ) {
+
+        //** Load post type configuration ( not essential, just in case ) */
+        $views[ 'taxonomies' ][ $taxonomy ][ 'settings' ] = $taxonomy_data;
+        $views[ 'taxonomies' ][ $taxonomy ][ 'widget_areas' ] = array();
+
+        //** Load used widget areas into array */
+        foreach ( (array) $taxonomy_data[ 'widget_areas' ] as $was_slug => $these_widget_areas ) {
+
+          $views[ 'taxonomies' ][ $taxonomy ][ 'widget_areas' ][ $was_slug ] = array_filter( (array) $these_widget_areas );
+
+          $widget_areas[ 'used' ] = array_merge( (array) $widget_areas[ 'used' ], (array) $these_widget_areas );
+
+        }
+
+      }
+
+      //** Create array of all sidebars */
+      $widget_areas[ 'all' ] = $wp_registered_sidebars;
+
+      ksort( $wp_registered_sidebars );
+
+      ksort( $widget_areas[ 'all' ] );
+
+      //** Unregister any WAs not placed into a WAS */
+      foreach ( (array) $wp_registered_sidebars as $sidebar_id => $sidebar_data ) {
+
+        //** If there are no active sidebars, we leave our default global sidebar active */
+        if ( count( $widget_areas[ 'used' ] ) == 0 && $sidebar_id == 'global_sidebar' ) {
+          continue;
+        }
+
+        if ( !in_array( $sidebar_id, (array) $widget_areas[ 'used' ] ) ) {
+
+          $widget_areas[ 'unused' ][ $sidebar_id ] = $wp_registered_sidebars[ $sidebar_id ];
+
+          if ( $flawless[ 'deregister_empty_widget_areas' ] ) {
+            unset( $wp_registered_sidebars[ $sidebar_id ] );
+          }
+
+        }
+
+      }
+
+      //** Update descriptions of all used widget areas */
+      foreach ( (array) $widget_areas[ 'used' ] as $sidebar_id ) {
+
+        //$wp_registered_sidebars[$sidebar_id][ 'description' ] = 'Modified! ' . $wp_registered_sidebars[$sidebar_id][ 'description' ];
+
+      }
+
+      //** Load settings into global variable */
+      $flawless[ 'widget_areas' ] = $widget_areas;
+      $flawless[ 'views' ] = $views;
+
+      do_action( 'flawless::create_views', $flawless );
 
     }
 
@@ -554,182 +745,6 @@ namespace Flawless {
       Flawless::console_log( $response );
 
       return $response;
-
-    }
-
-    /**
-     * Generates all views, registers Flawless widget areas, and unregisters any unsued widget areas.
-     *
-     * Unregistered widget areas are loaded into [widget_areas] array so they can be displayed on the Flawless settings page
-     * for WAS association.
-     *
-     * Generates dynamic settings on every page load.
-     *
-     * @creates [widget_areas]
-     * @creates [views]
-     *
-     * @action init ( 500 )
-     * @action flawless::init_lower ( 10 )
-     *
-     * @todo: Add check for "custom" views, i.e. search result page. -potanin@UD
-     * @todo: Add custom description generation based on views a widget area is used in. -potanin@UD
-     *
-     * @since 0.0.2
-     */
-    static function create_views( $current, $args = false ) {
-      global $wp_registered_sidebars, $flawless, $post;
-
-      $widget_areas = array();
-      $views = array();
-
-      //** Create a default Flawless sidebar */
-      if ( !isset( $flawless[ 'flawless_widget_areas' ] ) ) {
-
-        $flawless[ 'flawless_widget_areas' ][ 'global_sidebar' ] = array(
-          'label' => __( 'Global Sidebar', 'flawless' ),
-          'class' => 'my_global_sidebar',
-          'description' => __( 'Our default sidebar.', 'flawless' ),
-          'id' => 'global_sidebar'
-        );
-
-      }
-
-      //** Create custom widget areas */
-      foreach ( (array) $flawless[ 'flawless_widget_areas' ] as $sidebar_id => $wa_data ) {
-
-        //** Register this widget area with some basic information */
-        register_sidebar( array(
-          'name' => $wa_data[ 'label' ],
-          'description' => $wa_data[ 'description' ],
-          'class' => $wa_data[ 'class' ],
-          'id' => $sidebar_id,
-          'before_widget' => '<div id="%1$s"  class="flawless_widget theme_widget widget  %2$s">',
-          'after_widget' => '</div>',
-          'before_title' => '<h5 class="widgettitle widget-title">',
-          'after_title' => '</h5>'
-        ) );
-
-        $wp_registered_sidebars[ $sidebar_id ][ 'flawless_widget_area' ] = true;
-
-      }
-
-      //** Build views from all used widget areas, update widget area info based on location and usage */
-      foreach ( (array) $flawless[ 'post_types' ] as $post_type => $post_type_data ) {
-
-        //** Load post type configuration ( not essential, just in case ) */
-        $views[ 'post_types' ][ $post_type ][ 'settings' ] = $post_type_data;
-        $views[ 'post_types' ][ $post_type ][ 'widget_areas' ] = array();
-
-        Flawless::add_post_type_option( array(
-          'post_type' => $post_type,
-          'position' => 50,
-          'meta_key' => 'hide_page_title',
-          'label' => sprintf( __( 'Hide Page Title.', 'flawless' ) )
-        ) );
-
-        /** If breadcrumbs are not globally hidden, show an option to hide them */
-        if ( $flawless[ 'hide_breadcrumbs' ] != 'true' ) {
-          Flawless::add_post_type_option( array(
-            'post_type' => $post_type,
-            'position' => 70,
-            'meta_key' => 'hide_breadcrumbs',
-            'label' => sprintf( __( 'Hide Breadcrumbs.', 'flawless' ) )
-          ) );
-        }
-
-        if ( post_type_supports( $post_type, 'author' ) && $post_type_data[ 'disable_author' ] != 'true' ) {
-          Flawless::add_post_type_option( array(
-            'post_type' => $post_type,
-            'position' => 100,
-            'meta_key' => 'hide_post_author',
-            'label' => sprintf( __( 'Hide Author.', 'flawless' ) )
-          ) );
-        }
-
-        if ( post_type_supports( $post_type, 'capability_restrictions' ) ) {
-          Flawless::add_post_type_option( array(
-            'post_type' => $post_type,
-            'position' => 1000,
-            'meta_key' => 'must_be_logged_in',
-            'label' => sprintf( __( 'Must Be Logged In To View.', 'flawless' ) )
-          ) );
-        }
-
-        //** Load used widget areas into array */
-        foreach ( (array) $post_type_data[ 'widget_areas' ] as $was_slug => $these_widget_areas ) {
-
-          Flawless::add_post_type_option( array(
-            'post_type' => $post_type,
-            'position' => 200,
-            'meta_key' => 'disable_' . $was_slug,
-            'label' => sprintf( __( 'Disable %1s.', 'flawless' ), $flawless[ 'widget_area_sections' ][ $was_slug ][ 'label' ] )
-          ) );
-
-          $views[ 'post_types' ][ $post_type ][ 'widget_areas' ][ $was_slug ] = array_filter( (array) $these_widget_areas );
-
-          $widget_areas[ 'used' ] = array_merge( (array) $widget_areas[ 'used' ], (array) $these_widget_areas );
-
-        }
-
-      }
-
-      //** Build views from all used widget areas, update widget area info based on location and usage */
-      foreach ( (array) $flawless[ 'taxonomies' ] as $taxonomy => $taxonomy_data ) {
-
-        //** Load post type configuration ( not essential, just in case ) */
-        $views[ 'taxonomies' ][ $taxonomy ][ 'settings' ] = $taxonomy_data;
-        $views[ 'taxonomies' ][ $taxonomy ][ 'widget_areas' ] = array();
-
-        //** Load used widget areas into array */
-        foreach ( (array) $taxonomy_data[ 'widget_areas' ] as $was_slug => $these_widget_areas ) {
-
-          $views[ 'taxonomies' ][ $taxonomy ][ 'widget_areas' ][ $was_slug ] = array_filter( (array) $these_widget_areas );
-
-          $widget_areas[ 'used' ] = array_merge( (array) $widget_areas[ 'used' ], (array) $these_widget_areas );
-
-        }
-
-      }
-
-      //** Create array of all sidebars */
-      $widget_areas[ 'all' ] = $wp_registered_sidebars;
-
-      ksort( $wp_registered_sidebars );
-
-      ksort( $widget_areas[ 'all' ] );
-
-      //** Unregister any WAs not placed into a WAS */
-      foreach ( (array) $wp_registered_sidebars as $sidebar_id => $sidebar_data ) {
-
-        //** If there are no active sidebars, we leave our default global sidebar active */
-        if ( count( $widget_areas[ 'used' ] ) == 0 && $sidebar_id == 'global_sidebar' ) {
-          continue;
-        }
-
-        if ( !in_array( $sidebar_id, (array) $widget_areas[ 'used' ] ) ) {
-
-          $widget_areas[ 'unused' ][ $sidebar_id ] = $wp_registered_sidebars[ $sidebar_id ];
-
-          if ( $flawless[ 'deregister_empty_widget_areas' ] ) {
-            unset( $wp_registered_sidebars[ $sidebar_id ] );
-          }
-
-        }
-
-      }
-
-      //** Update descriptions of all used widget areas */
-      foreach ( (array) $widget_areas[ 'used' ] as $sidebar_id ) {
-
-        //$wp_registered_sidebars[$sidebar_id][ 'description' ] = 'Modified! ' . $wp_registered_sidebars[$sidebar_id][ 'description' ];
-
-      }
-
-      //** Load settings into global variable */
-      $flawless[ 'widget_areas' ] = $widget_areas;
-      $flawless[ 'views' ] = $views;
-
-      do_action( 'flawless::create_views' );
 
     }
 

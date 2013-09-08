@@ -26,43 +26,9 @@ namespace Flawless {
      * @method __construct
      * @for Settings
      */
-    public function __construct( $options = array() ) {
-      add_action( 'flawless::admin_init', array( __CLASS__, 'admin_init' ) );
-
-      add_action( 'flawless::theme_setup', array( __CLASS__, 'theme_setup' ) );
-
-    }
-
-    /**
-     * Update Flawless Theme Setting
-     *
-     * @since 0.0.6
-     */
-    static function update_option( $key = false, $value = '' ) {
-      global $flawless;
-
-      if ( !$key ) {
-        return false;
-      }
-
-      if ( empty( $value ) ) {
-        $flawless_settings = get_option( 'flawless_settings' );
-        unset( $flawless_settings[ $key ] );
-      } else {
-        $flawless_settings = self::extend( get_option( 'flawless_settings' ), array( $key => $value ) );
-      }
-
-      if ( update_option( 'flawless_settings', $flawless_settings ) ) {
-
-        if ( !empty( $value ) ) {
-          $flawless[ $key ] = $flawless_settings[ $key ];
-        } else {
-          unset( $flawless[ $key ] );
-        }
-
-        return true;
-      }
-
+    public function __construct( $options = false ) {
+      add_action( 'flawless::admin_init', array( $this, 'admin_init' ) );
+      add_action( 'flawless::theme_setup', array( $this, 'theme_setup' ) );
     }
 
     /**
@@ -71,7 +37,7 @@ namespace Flawless {
      * @method theme_setup
      * @for Settings
      */
-    static function theme_setup( &$flawless ) {
+    public function theme_setup( &$flawless ) {
       global $wpdb;
 
       //** Load Database Options, and repair serialized array if need be */
@@ -112,8 +78,7 @@ namespace Flawless {
      * @method admin_init
      * @for Settings
      */
-    static function admin_init( $flawless ) {
-
+    public function admin_init( &$flawless  ) {
 
       //** Has to be run every time for custom taxonomy URLs to work, when permalinks are used. */
       if ( $_REQUEST[ 'flush_rewrite_rules' ] == 'true' ) {
@@ -251,6 +216,38 @@ namespace Flawless {
 
       //** Redirect page to default Theme Settings page */
       return add_query_arg( 'message', $args[ 'message' ], Flawless_Admin_URL );
+
+    }
+
+    /**
+     * Update Flawless Theme Setting
+     *
+     * @since 0.0.6
+     */
+    static function update_option( $key = false, $value = '' ) {
+      global $flawless;
+
+      if ( !$key ) {
+        return false;
+      }
+
+      if ( empty( $value ) ) {
+        $flawless_settings = get_option( 'flawless_settings' );
+        unset( $flawless_settings[ $key ] );
+      } else {
+        $flawless_settings = self::extend( get_option( 'flawless_settings' ), array( $key => $value ) );
+      }
+
+      if ( update_option( 'flawless_settings', $flawless_settings ) ) {
+
+        if ( !empty( $value ) ) {
+          $flawless[ $key ] = $flawless_settings[ $key ];
+        } else {
+          unset( $flawless[ $key ] );
+        }
+
+        return true;
+      }
 
     }
 

@@ -38,55 +38,43 @@ namespace Flawless {
 
       //** Load defaults on theme activation */
       if ( current_user_can( 'update_themes' ) ) {
-        add_action( 'flawless::admin_init', array( __CLASS__, 'handle_upgrade' ) );
+        add_action( 'flawless::admin_init', array( $this, 'admin_init' ) );
       }
 
     }
 
     /**
-     * Handle upgrading the theme. Only displayed to users who can Update Themes.
+     * Handle upgrading the theme.
+     *
+     * Only displayed to users who can Update Themes.
+     *
+     * @method admin_init
+     * @for Legacy
      *
      * @since 0.0.2
      */
-    static function handle_upgrade() {
-      global $wpdb;
+    static function admin_init( &$flawless ) {
+
+      /** @var $redirect boolean */
+      $redirect = null;
 
       require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-      $installed_version = get_option( 'flawless_version' );
-
-      //** If new install. */
-      if ( empty( $installed_version ) ) {
-        $redirect = add_query_arg( 'admin_splash_screen', 'welcome', Flawless_Admin_URL );
+      // If new install.
+      if( !$flawless->get( 'version' ) ) {
+        $redirect = apply_filters( 'flawless::install', add_query_arg( 'admin_splash_screen', 'welcome', Flawless_Admin_URL ), $flawless );
       }
 
       //** If upgrading from older version */
-      if ( version_compare( Flawless_Core_Version, $installed_version, '>' ) ) {
-        $redirect = add_query_arg( 'admin_splash_screen', 'updated', Flawless_Admin_URL );
+      if ( version_compare( Flawless_Core_Version, $flawless->get( 'version' ), '>' ) ) {
+        $redirect = apply_filters( 'flawless::update', add_query_arg( 'admin_splash_screen', 'updated', Flawless_Core_Version ), $flawless );
       }
 
-      // @Migrate into module.
-      if ( current_theme_supports( 'term-meta' ) && $wpdb->taxonomymeta ) {
-
-        $sql = "CREATE TABLE {$wpdb->taxonomymeta} (
-        meta_id bigint(20) unsigned NOT NULL auto_increment,
-        taxonomy_id bigint(20) unsigned NOT NULL default '0',
-        meta_key varchar(255) default NULL,
-        meta_value longtext,
-        PRIMARY KEY  (meta_id),
-        KEY taxonomy_id (taxonomy_id),
-        KEY meta_key (meta_key)
-      ) $charset_collate;";
-
-        dbDelta( $sql );
-
-      }
-
-      //** Run the update now in case we have a redirection */
-      update_option( 'flawless_version', Flawless_Core_Version );
-
+      // Run the update now in case we have a redirection
       if ( $redirect ) {
+        $flawless->set( 'version', Flawless_Core_Version );
         die( wp_redirect( $redirect ) );
+
       }
 
     }
