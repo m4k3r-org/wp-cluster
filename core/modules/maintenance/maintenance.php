@@ -23,14 +23,25 @@ namespace Flawless {
    */
   class Maintenance extends Module {
 
-    function __construct() {
-
+    /**
+     * Constructor for the Maintenance class.
+     *
+     * @author potanin@UD
+     * @version 0.0.1
+     * @method __construct
+     *
+     * @constructor
+     * @for Maintenance
+     *
+     * @param array $options
+     */
+    public function __construct( $options = array() ) {
+      add_action( 'flawless::wp_print_styles', array( __CLASS__, 'wp_print_styles' ), 10 );
       add_action( 'flawless::template_redirect', array( __CLASS__, 'template_redirect' ), 10 );
-
     }
 
     /**
-     *
+     * Frontend Loader
      *
      * @method template_redirect
      */
@@ -48,6 +59,20 @@ namespace Flawless {
           include TEMPLATEPATH . '/maintanance.php';
           die();
         }
+      }
+
+    }
+
+    /**
+     * Enqueue Maintanance CSS only when in Maintanance Mode
+     *
+     * @param $flawless
+     */
+    function wp_print_styles( $flawless ) {
+      global $wp_query;
+
+      if ( $wp_query->query_vars[ 'splash_screen' ] && Asset::load( 'flawless-maintanance.css', 'css' ) ) {
+        wp_enqueue_style( 'flawless-maintanance', Asset::load( 'flawless-maintanance.css', 'css' ), array( 'flawless-style' ), Flawless_Version );
       }
 
     }

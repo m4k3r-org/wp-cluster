@@ -22,15 +22,219 @@ namespace Flawless {
    */
   class Management extends Module {
 
+    /**
+     *
+     */
     function __construct() {
       add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ), 10 );
 
       //** Load back-end JS and Contextual Help */
       add_action( 'admin_print_footer_scripts', array( __CLASS__, 'admin_print_footer_scripts' ), 10 );
 
+      add_action( 'flawless::template_redirect', array( __CLASS__, 'template_redirect' ), 10 );
       add_action( 'flawless::admin_menu', array( __CLASS__, 'admin_menu' ), 10 );
+      add_action( 'flawless::init_upper', array( __CLASS__, 'init_upper' ), 10 );
 
       add_action( 'flawless::theme_setup::after', array( __CLASS__, 'theme_setup' ), 10 );
+
+    }
+
+    /**
+     * Frontend Initializer
+     *
+     * @method template_redirect
+     * @for Management
+     */
+    static function template_redirect() {
+
+      //** Load extra options into Admin Bar ( in header ) */
+      add_action( 'admin_bar_menu', array( 'Flawless', 'admin_bar_menu' ), 200 );
+
+    }
+
+    /**
+     * Draws a dropdown of objects, much like the regular wp_dropdown_objects() but with custom objects
+     *
+     * @todo Perhaps update function to return an auto-complete or ID input field when there are too many objects to render ina  dropdown.
+     *
+     * @method wp_dropdown_objects
+     * @for Management
+     */
+    static function wp_dropdown_objects( $args = '' ) {
+
+      $defaults = array(
+        'depth' => 0,
+        'post_type' => 'page',
+        'child_of' => 0,
+        'selected' => 0,
+        'echo' => 1,
+        'name' => 'page_id',
+        'id' => '',
+        'show_option_none' => '',
+        'show_option_no_change' => '',
+        'option_none_value' => ''
+      );
+
+      $r = wp_parse_args( $args, $defaults );
+      extract( $r, EXTR_SKIP );
+
+      if ( is_array( $r[ 'post_type' ] ) ) {
+        $content_types = $r[ 'post_type' ];
+      } else {
+        $content_types = array( $r[ 'post_type' ] );
+      }
+
+      foreach ( (array) $content_types as $type ) {
+        $post_type_obj = get_post_type_object( $type );
+        $this_query = $r;
+        $this_query[ 'post_type' ] = $type;
+
+        $these_pages = get_pages( $this_query );
+
+        if ( $these_pages ) {
+          $objects[ $post_type_obj->labels->name ] = $these_pages;
+        }
+
+      }
+
+      if ( empty( $objects ) ) {
+        return false;
+      }
+
+      $output = array();
+
+      $output[ ] = "<select name='" . esc_attr( $name ) . "' id='" . esc_attr( $id ) . "'>\n";
+
+      if ( $show_option_no_change ) {
+        $output[ ] = "\t<option value=\"-1\">$show_option_no_change</option>";
+      }
+
+      if ( $show_option_none ) {
+        $output[ ] = "\t<option value=\"" . esc_attr( $option_none_value ) . "\">$show_option_none</option>\n";
+      }
+
+      foreach ( (array) $objects as $object_type => $pages ) {
+
+        if ( count( $objects ) > 1 ) {
+          $output[ ] = '<optgroup label="' . $object_type . '">';
+        }
+
+        $output[ ] = walk_page_dropdown_tree( $pages, $depth, $r );
+
+        if ( count( $objects ) > 1 ) {
+          $output[ ] = '</optgroup>';
+        }
+
+      }
+
+      $output[ ] = "</select>\n";
+
+      $output = apply_filters( 'wp_dropdown_pages', $output );
+
+      if ( $echo ) {
+        echo implode( ' ', $output );
+      }
+
+      return implode( ' ', $output );
+
+    }
+
+    /**
+     * Adds Inline Cropping capability to an image.
+     *
+     * Migrated out of Flawless::inline_crop();
+     *
+     * @todo Finish by initiating scripts when triggered. Right now causes a JS error because wp_image_editor() expects imageEdit() to already be loaded.  - potanin@UD
+     *
+     * @method inline_crop
+     * @for Management
+     *
+     * @since 0.3.4
+     */
+    static function inline_crop( $post_id ) {
+
+      wp_enqueue_script( 'image-edit' );
+      wp_enqueue_script( 'jcrop' );
+
+      wp_enqueue_style( 'jcrop' );
+      wp_enqueue_style( 'imgareaselect' );
+
+      include_once( ABSPATH . 'wp-admin/includes/image-edit.php' );
+      ?>
+      <script type="text/javascript"> var imageEdit = {
+          init: function () {
+            jQuery( document ).ready( function () {
+              imageEdit.init();
+            } );
+          }
+        };</script>
+      <?php
+
+      echo wp_image_editor( $post_id );
+
+    }
+
+    /**
+     * Add "Theme Options" link to admin bar.
+     *
+     * @method admin_bar_menu
+     * @for Management
+     *
+     * @since 0.0.3
+     */
+    static function admin_bar_menu( $wp_admin_bar ) {
+
+      if ( current_user_can( 'switch_themes' ) && current_user_can( 'edit_theme_options' ) ) {
+
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'appearance',
+          'id' => 'theme-options',
+          'title' => __( 'Theme Settings', 'flawless' ),
+          'href' => Flawless_Admin_URL
+        ) );
+
+      }
+
+    }
+
+    /**
+     *
+     * @method init_upper
+     * @for Management
+     */
+    static function init_upper() {
+
+      //** Check if updates should be disabled */
+      self::maybe_disable_updates();
+
+    }
+
+    /**
+     * Disables update notifications if set.
+     *
+     * @source Update Notifications Manager ( http://www.geekpress.fr/ )
+     * @action after_setup_theme( 10 )
+     * @since 0.0.2
+     */
+    static function maybe_disable_updates() {
+      global $flawless;
+
+      if ( $flawless[ 'disable_updates' ][ 'plugins' ] == 'true' ) {
+        remove_action( 'load-update-core.php', 'wp_update_plugins' );
+        add_filter( 'pre_site_transient_update_plugins', create_function( '', "return null;" ) );
+        wp_clear_scheduled_hook( 'wp_update_plugins' );
+      }
+
+      if ( $flawless[ 'disable_updates' ][ 'core' ] == 'true' ) {
+        add_filter( 'pre_site_transient_update_core', create_function( '', "return null;" ) );
+        wp_clear_scheduled_hook( 'wp_version_check' );
+      }
+
+      if ( $flawless[ 'disable_updates' ][ 'theme' ] == 'true' ) {
+        remove_action( 'load-update-core.php', 'wp_update_themes' );
+        add_filter( 'pre_site_transient_update_themes', create_function( '', "return null;" ) );
+        wp_clear_scheduled_hook( 'wp_update_themes' );
+      }
 
     }
 
@@ -122,7 +326,7 @@ namespace Flawless {
         }
       }
 
-      if ( Flawless::changeable_post_type( $post->post_type ) ) {
+      if ( Content::changeable_post_type( $post->post_type ) ) {
 
         //** Return if option box is not selected. */
         if ( !isset( $_POST[ 'cpt-nonce-select' ] ) ) {
@@ -176,7 +380,7 @@ namespace Flawless {
       }
 
       /** Create form for switching the post type */
-      if ( current_user_can( $cur_post_type_object->cap->publish_posts ) && Flawless::changeable_post_type( $post->post_type ) ) {
+      if ( current_user_can( $cur_post_type_object->cap->publish_posts ) && Content::changeable_post_type( $post->post_type ) ) {
         ?>
 
         <div class="misc-pub-section misc-pub-section-last change-post-type">
@@ -189,7 +393,7 @@ namespace Flawless {
           <div id="post-type-select" class="flawless_cpt_select">
           <select name="flawless_cpt_post_type" id="flawless_cpt_post_type">
             <?php foreach ( (array) get_post_types( (array) apply_filters( 'flawless_cpt_metabox', array( 'public' => true, 'show_ui' => true ) ), 'objects' ) as $pt ) {
-              if ( !current_user_can( $pt->cap->publish_posts ) || !Flawless::changeable_post_type( $pt->name ) ) {
+              if ( !current_user_can( $pt->cap->publish_posts ) || !Content::changeable_post_type( $pt->name ) ) {
                 continue;
               }
               echo '<option value="' . esc_attr( $pt->name ) . '"' . selected( $post->post_type, $pt->name, false ) . '>' . $pt->labels->singular_name . "</option>\n";
@@ -341,6 +545,10 @@ namespace Flawless {
           . ' background-position: top ' . get_theme_mod( 'background_position_x', 'left' );
       }
       ?>
+
+
+
+
 
 
 
@@ -590,7 +798,7 @@ namespace Flawless {
       //* Load Flawless Global Scripts */
       wp_enqueue_script( 'jquery-ud-smart_buttons' );
       wp_enqueue_script( 'flawless-admin-global' );
-      wp_enqueue_style( 'flawless-admin-styles', Flawless::load( 'flawless-admin.css', 'css' ), array( 'farbtastic' ), Flawless_Version, 'screen' );
+      wp_enqueue_style( 'flawless-admin-styles', Asset::load( 'flawless-admin.css', 'css' ), array( 'farbtastic' ), Flawless_Version, 'screen' );
 
       if ( $current_screen->id != 'appearance_page_functions' ) {
         return;
@@ -874,7 +1082,7 @@ namespace Flawless {
         }
       }
 
-      $page_selection_404 = Flawless::wp_dropdown_objects( array(
+      $page_selection_404 = Management::wp_dropdown_objects( array(
         'name' => "flawless_settings[404_page]",
         'show_option_none' => __( '&mdash; Select &mdash;' ),
         'option_none_value' => '0',
@@ -883,7 +1091,7 @@ namespace Flawless {
         'selected' => $flawless[ '404_page' ]
       ) );
 
-      $page_selection_not_found = Flawless::wp_dropdown_objects( array(
+      $page_selection_not_found = Management::wp_dropdown_objects( array(
         'name' => "flawless_settings[no_search_result_page]",
         'show_option_none' => __( '&mdash; Select &mdash;' ),
         'option_none_value' => '0',
@@ -1226,7 +1434,7 @@ namespace Flawless {
           <input type="hidden" name="flawless_settings[flawless_logo][height]"
             value="<?php echo $flawless[ 'flawless_logo' ][ 'height' ]; ?>"/>
 
-          <?php if ( Flawless::can_get_image( $flawless[ 'flawless_logo' ][ 'url' ] ) ) {
+          <?php if ( Asset::can_get_image( $flawless[ 'flawless_logo' ][ 'url' ] ) ) {
             echo '<img src="' . $flawless[ 'flawless_logo' ][ 'url' ] . '" class="flawless_logo" />';
           } else {
             ?>
@@ -1342,7 +1550,7 @@ namespace Flawless {
               <?php if ( $data[ 'flawless_post_type' ] == 'true' ) { ?>
                 <li class="flawless_option">
                   <label><?php _e( 'Root Page:', 'flawless' ) ?>
-                    <?php Flawless::wp_dropdown_objects( array(
+                    <?php Management::wp_dropdown_objects( array(
                       'name' => "flawless_settings[post_types][{$type}][root_page]",
                       'show_option_none' => __( '&mdash; Select &mdash;' ),
                       'option_none_value' => '0',
@@ -1925,7 +2133,7 @@ namespace Flawless {
     function skin_selection( $args = false ) {
       global $flawless;
 
-      $color_schemes = Flawless::get_color_schemes();
+      $color_schemes = Theme::get_color_schemes();
 
       ob_start(); ?>
 
@@ -1939,7 +2147,7 @@ namespace Flawless {
             </div>
           <?php } else { ?>
             <div class="skin_thumb_placeholder flawless_no_image">
-              <img class="skin_thumb" src="<?php echo Flawless::load( 'no-skin-thumbanil.gif', 'image' ); ?>"
+              <img class="skin_thumb" src="<?php echo Asset::load( 'no-skin-thumbanil.gif', 'image' ); ?>"
                 title="<?php _e( 'No Thumbnail Found', 'flawless' ); ?>"/>
             </div>
           <?php } ?>
@@ -1955,7 +2163,7 @@ namespace Flawless {
       <?php } ?>
         <li class="flawless_setup_option_block">
         <div class="skin_thumb_placeholder flawless_no_image">
-          <img class="skin_thumb" src="<?php echo Flawless::load( 'no-skin-thumbanil.gif', 'image' ); ?>"
+          <img class="skin_thumb" src="<?php echo Asset::load( 'no-skin-thumbanil.gif', 'image' ); ?>"
             title="<?php _e( 'No Thumbnail Found', 'flawless' ); ?>"/>
         </div>
         <input class="checkbox" group="flawless_color_scheme" <?php checked( false, $flawless[ 'color_scheme' ] ); ?>

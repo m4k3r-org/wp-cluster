@@ -716,7 +716,7 @@ namespace Flawless {
     function navbar_html( $html ) {
       global $bp, $flawless;
 
-      if ( Flawless::load( &#x27;simple_html_dom&#x27; ) ) {
+      if ( Asset::load( &#x27;simple_html_dom&#x27; ) ) {
         //** Get BP Admin bar menu */
         ob_start();
         $bp-&gt;doing_admin_bar = true;

@@ -2210,7 +2210,7 @@ namespace UD {
      */
     static function encrypt( $pt, $salt = false ) {
 
-      if ( !$salt ) $salt = __CLASS__::default_salt;
+      if ( !$salt ) $salt = self::default_salt;
       $encrypted = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $salt ), $pt, MCRYPT_MODE_CBC, md5( md5( $salt ) ) ) );
       $encrypted = str_replace( array( &#x27;+&#x27;, &#x27;/&#x27;, &#x27;=&#x27; ), array( &#x27;-&#x27;, &#x27;_&#x27;, &#x27;&#x27; ), $encrypted );
       return $encrypted;
@@ -2231,7 +2231,7 @@ namespace UD {
      */
     static function decrypt( $ct, $salt = false ) {
 
-      if ( !$salt ) $salt = __CLASS__::default_salt;
+      if ( !$salt ) $salt = self::default_salt;
       $data = str_replace( array( &#x27;-&#x27;, &#x27;_&#x27; ), array( &#x27;+&#x27;, &#x27;/&#x27; ), $ct );
       $mod4 = strlen( $data ) % 4;
       if ( $mod4 ) {

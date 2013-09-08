@@ -1,11 +1,11 @@
 <?php
 /**
- * -
+ * Utility Classs
  *
  * @copyright Copyright (c) 2010 - 2013, Usability Dynamics, Inc.
  *
  * @author team@UD
- * @version 0.0.1
+ * @version 0.2.0
  * @namespace UsabilityDynamics
  * @module UsabilityDynamics
  */
@@ -21,7 +21,7 @@ namespace UsabilityDynamics {
   class Utility {
 
     // Class Version.
-    public $version = '0.1.1';
+    public $version = '0.2.0';
 
     /**
      * Default salt for encryption
@@ -47,6 +47,30 @@ namespace UsabilityDynamics {
      */
     public function __construct() {
       define( 'UD_Transdomain', 'UD_Transdomain' );
+    }
+
+    /**
+     * Return array of active plugins for current instance
+     *
+     * Improvement over wp_get_active_and_valid_plugins() which doesn't return any plugins when in MS
+     *
+     * @method get_active_plugins
+     * @for Utility
+     *
+     * @since 0.2.0
+     */
+    static function get_active_plugins() {
+      $mu_plugins = (array) wp_get_mu_plugins();
+      $regular_plugins = (array) wp_get_active_and_valid_plugins();
+
+      if ( is_multisite() ) {
+        $network_plugins = (array) wp_get_active_network_plugins();
+      } else {
+        $network_plugins = array();
+      }
+
+      return array_merge( $regular_plugins, $mu_plugins, $network_plugins );
+
     }
 
     /**
@@ -673,8 +697,9 @@ namespace UsabilityDynamics {
     /**
      * Returns all available image sizes
      *
-     * @source WP-Property
-     * @since 2.0
+     * @method all_image_sizes
+     * @for Utility
+     *
      * @returns array keys: 'width' and 'height'
      */
     static function all_image_sizes() {

@@ -55,14 +55,13 @@ namespace Flawless {
     static function login_head() {
       global $flawless;
 
-      if ( !Flawless::can_get_image( $flawless[ 'flawless_logo' ][ 'url' ] ) ) {
+      if ( !Asset::can_get_image( $flawless[ 'flawless_logo' ][ 'url' ] ) ) {
         return;
       }
 
       echo '<style type="text/css" media="screen">.login h1 a, #login { min-width: 300px; width: ' . $flawless[ 'flawless_logo' ][ 'width' ] . 'px; } .login h1 a { background-size:' . $flawless[ 'flawless_logo' ][ 'width' ] . 'px ' . $flawless[ 'flawless_logo' ][ 'height' ] . 'px; background-image: url( ' . $flawless[ 'flawless_logo' ][ 'url' ] . ' ); margin-bottom: 10px;} </style>';
 
     }
-
 
     /**
      * Modifies default WP Login form by adding extra classes
@@ -82,7 +81,6 @@ namespace Flawless {
       echo $form;
 
     }
-
 
   }
 

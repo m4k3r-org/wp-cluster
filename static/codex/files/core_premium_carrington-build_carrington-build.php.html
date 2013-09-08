@@ -673,8 +673,8 @@ class flawless_carrington {
   function wp_print_styles() {
 
     //** Always load bootstrap.css */
-    if( Flawless::load( &#x27;carrington.css&#x27;, &#x27;css&#x27; ) ) {
-      wp_enqueue_style( &#x27;flawless-carrington&#x27;, Flawless::load( &#x27;carrington.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version, &#x27;screen&#x27; );
+    if( Asset::load( &#x27;carrington.css&#x27;, &#x27;css&#x27; ) ) {
+      wp_enqueue_style( &#x27;flawless-carrington&#x27;, Asset::load( &#x27;carrington.css&#x27;, &#x27;css&#x27; ), array( &#x27;flawless-style&#x27; ), Flawless_Version, &#x27;screen&#x27; );
     }
 
     //* dequeue carrington styles */

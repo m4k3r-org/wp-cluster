@@ -3,15 +3,13 @@
  * Template for home page which may be static or include latest posts.
  *
  * @module Flawless
- * @class Template
+ * @submodule Template
  *
  * @version 0.60.0
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @module Flawless
  */
 
-//** Bail out if page is being loaded directly and Flawless does not exist */
-if ( !function_exists( 'get_header' ) ) {
+if ( !function_exists( 'get_template_part' ) ) {
   die( 'Direct access prohibited.' );
 }
 ?>

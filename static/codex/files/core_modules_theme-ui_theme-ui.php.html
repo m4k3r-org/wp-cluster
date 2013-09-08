@@ -725,7 +725,7 @@ class Flawless_ui extends Module {
           &lt;input type=&quot;hidden&quot; name=&quot;flawless_settings[flawless_logo][height]&quot;
             value=&quot;&lt;?php echo $flawless[ &#x27;flawless_logo&#x27; ][ &#x27;height&#x27; ]; ?&gt;&quot;/&gt;
 
-          &lt;?php if ( Flawless::can_get_image( $flawless[ &#x27;flawless_logo&#x27; ][ &#x27;url&#x27; ] ) ) {
+          &lt;?php if ( Asset::can_get_image( $flawless[ &#x27;flawless_logo&#x27; ][ &#x27;url&#x27; ] ) ) {
             echo &#x27;&lt;img src=&quot;&#x27; . $flawless[ &#x27;flawless_logo&#x27; ][ &#x27;url&#x27; ] . &#x27;&quot; class=&quot;flawless_logo&quot; /&gt;&#x27;;
           } else {
             ?&gt;
@@ -1424,7 +1424,7 @@ class Flawless_ui extends Module {
   function skin_selection( $args = false ) {
     global $flawless;
 
-    $color_schemes = Flawless::get_color_schemes();
+    $color_schemes = Theme::get_color_schemes();
 
     ob_start(); ?&gt;
 
@@ -1438,7 +1438,7 @@ class Flawless_ui extends Module {
             &lt;/div&gt;
           &lt;?php } else { ?&gt;
             &lt;div class=&quot;skin_thumb_placeholder flawless_no_image&quot;&gt;
-              &lt;img class=&quot;skin_thumb&quot; src=&quot;&lt;?php echo Flawless::load( &#x27;no-skin-thumbanil.gif&#x27;, &#x27;image&#x27; ); ?&gt;&quot;
+              &lt;img class=&quot;skin_thumb&quot; src=&quot;&lt;?php echo Asset::load( &#x27;no-skin-thumbanil.gif&#x27;, &#x27;image&#x27; ); ?&gt;&quot;
                 title=&quot;&lt;?php _e( &#x27;No Thumbnail Found&#x27;, &#x27;flawless&#x27; ); ?&gt;&quot;/&gt;
             &lt;/div&gt;
           &lt;?php } ?&gt;
@@ -1454,7 +1454,7 @@ class Flawless_ui extends Module {
       &lt;?php } ?&gt;
       &lt;li class=&quot;flawless_setup_option_block&quot;&gt;
         &lt;div class=&quot;skin_thumb_placeholder flawless_no_image&quot;&gt;
-          &lt;img class=&quot;skin_thumb&quot; src=&quot;&lt;?php echo Flawless::load( &#x27;no-skin-thumbanil.gif&#x27;, &#x27;image&#x27; ); ?&gt;&quot;
+          &lt;img class=&quot;skin_thumb&quot; src=&quot;&lt;?php echo Asset::load( &#x27;no-skin-thumbanil.gif&#x27;, &#x27;image&#x27; ); ?&gt;&quot;
             title=&quot;&lt;?php _e( &#x27;No Thumbnail Found&#x27;, &#x27;flawless&#x27; ); ?&gt;&quot;/&gt;
         &lt;/div&gt;
         &lt;input class=&quot;checkbox&quot; group=&quot;flawless_color_scheme&quot; &lt;?php checked( false, $flawless[ &#x27;color_scheme&#x27; ] ); ?&gt;

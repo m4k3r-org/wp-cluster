@@ -4,21 +4,11 @@ require_once 'PHPUnit.php';
 
 class CoreTest extends PHPUnit_TestCase {
 
-  var $abc;
-
   function CoreTest( $name ) {
     $this->PHPUnit_TestCase( $name );
   }
 
-  function setUp() {
-    $this->abc = new String( "abc" );
-  }
-
-  function tearDown() {
-    unset( $this->abc );
-  }
-
-  function testToString() {
+  function classesExist() {
 
     if( class_exists( 'TCPDF' ) ) { echo "TCPDF exists.\n"; }
     if( class_exists( 'Datamatrix' ) ) { echo "Datamatrix exists.\n"; }
@@ -36,16 +26,35 @@ class CoreTest extends PHPUnit_TestCase {
 
   }
 
-  function testCopy() {
-    $abc2 = $this->abc->copy();
-    $this->assertEquals( $abc2, $this->abc );
+  function validationWorks() {
+
+    $test = new Schema( '../static/schemas/test-data.json', '../static/schemas/schema-test.json' );
+    die( '<pre>' . print_r( $test, true ) . '</pre>' );
+
   }
 
-  function testAdd() {
-    $abc2 = new String( '123' );
-    $this->abc->add( $abc2 );
-    $result = $this->abc->toString( "%s" );
-    $expected = "abc123";
-    $this->assertTrue( $result == $expected );
+  function pathsWork() {
+
+    /*
+
+    require_once( $this->paths->controllers . '/api.php' );
+    require_once( $this->paths->controllers . '/asset.php' );
+    require_once( $this->paths->controllers . '/content.php' );
+    require_once( $this->paths->controllers . '/element.php' );
+    require_once( $this->paths->controllers . '/legacy.php' );
+    require_once( $this->paths->controllers . '/license.php' );
+    require_once( $this->paths->controllers . '/log.php' );
+    require_once( $this->paths->controllers . '/module.php' );
+    require_once( $this->paths->controllers . '/shortcode.php' );
+    require_once( $this->paths->controllers . '/theme.php' );
+    require_once( $this->paths->controllers . '/utility.php' );
+    require_once( $this->paths->controllers . '/views.php' );
+    require_once( $this->paths->controllers . '/widget.php' );
+
+    */
+
   }
+
+
+
 }

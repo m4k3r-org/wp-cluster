@@ -1,232 +1,346 @@
 <?php
-/*
- * This file is part of Composer.
- *
- * (c) Nils Adermann <naderman@naderman.de>
- *     Jordi Boggiano <j.boggiano@seld.be>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-namespace Composer\Autoload;
-
 /**
- * ClassLoader implements a PSR-0 class loader
+ * Flawless Loader
  *
- * See https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
- *
- *     $loader = new \Composer\Autoload\ClassLoader();
- *
- *     // register classes with namespaces
- *     $loader->add('Symfony\Component', __DIR__.'/component');
- *     $loader->add('Symfony',           __DIR__.'/framework');
- *
- *     // activate the autoloader
- *     $loader->register();
- *
- *     // to enable searching the include path (eg. for PEAR packages)
- *     $loader->setUseIncludePath(true);
- *
- * In this example, if you try to use a class in the Symfony\Component
- * namespace or one of its children (Symfony\Component\Console for instance),
- * the autoloader will first look for the class under the component/
- * directory, and it will then fallback to the framework/ directory if not
- * found before giving up.
- *
- * This class is loosely based on the Symfony UniversalClassLoader.
- *
- * @author Fabien Potencier <fabien@symfony.com>
- * @author Jordi Boggiano <j.boggiano@seld.be>
+ * @namespace Flawless
+ * @module Loader
+ * @version 0.0.3
+ * @author potanin@UD
  */
-class ClassLoader {
-  private $prefixes = array();
-  private $fallbackDirs = array();
-  private $useIncludePath = false;
-  private $classMap = array();
+namespace Flawless {
 
-  public function getPrefixes() {
-    return call_user_func_array( 'array_merge', $this->prefixes );
-  }
-
-  public function getFallbackDirs() {
-    return $this->fallbackDirs;
-  }
-
-  public function getClassMap() {
-    return $this->classMap;
-  }
+  // Get UsabilityDynamics Loader
+  require_once( TEMPLATEPATH . DIRECTORY_SEPARATOR . '/core/vendor/usabilitydynamics/loader.php' );
 
   /**
-   * @param array $classMap Class to filename map
-   */
-  public function addClassMap( array $classMap ) {
-    if ( $this->classMap ) {
-      $this->classMap = array_merge( $this->classMap, $classMap );
-    } else {
-      $this->classMap = $classMap;
-    }
-  }
-
-  /**
-   * Registers a set of classes, merging with any others previously set.
+   * Loader implements a PSR-0 class loader
    *
-   * @param string $prefix  The classes prefix
-   * @param array|string $paths   The location(s) of the classes
-   * @param bool $prepend Prepend the location(s)
+   *     $loader = new \Flawless\Loader();
+   *
+   *     // register classes with namespaces
+   *     $loader->add( 'Symfony',           __DIR__ . '/framework' );
+   *
+   *     // register classes with namespaces by passing an array
+   *     $loader->add( array(
+   *        'UsabilityDynamics\\' => __DIR__ . '/usabilitydynamics'
+   *        'JsonSchema\\' => __DIR__ . '/jsonschema/src'
+   *     ));
+   *
+   *     // activate the autoloader
+   *     $loader->register();
+   *
+   * This class is loosely based on the Symfony UniversalClassLoader.
+   *
+   * @author potanin@UD
+   * @class Loader
+   * @extend UsabilityDynamics\Loader
+   *
+   * @author Fabien Potencier <fabien@symfony.com>
+   * @author Jordi Boggiano <j.boggiano@seld.be>
    */
-  public function add( $prefix, $paths, $prepend = false ) {
-    if ( !$prefix ) {
-      if ( $prepend ) {
-        $this->fallbackDirs = array_merge(
-          (array) $paths,
-          $this->fallbackDirs
-        );
-      } else {
-        $this->fallbackDirs = array_merge(
-          $this->fallbackDirs,
-          (array) $paths
-        );
+  class Loader extends \UsabilityDynamics\Loader {
+
+    // @parameters $version Version of class.
+    public $version = '0.0.3';
+
+    // @parameter $headers Extra header parameters.
+    public static $headers = array(
+      'theme' => array(
+        'Name' => 'Theme Name',
+        'ThemeURI' => 'Theme URI',
+        'Description' => 'Description',
+        'Author' => 'Author',
+        'AuthorURI' => 'Author URI',
+        'Version' => 'Version',
+        'Template' => 'Template',
+        'Status' => 'Status',
+        'Tags' => 'Tags',
+        'TextDomain' => 'Text Domain',
+        'DomainPath' => 'Domain Path',
+        'Supported Features' => 'Supported Features',
+        'Disabled Features' => 'Disabled Features',
+        'Google Fonts' => 'Google Fonts'
+      ),
+      'style' => array(
+        'Name' => 'Name',
+        'Description' => 'Description',
+        'Media' => 'Media',
+        'Version' => 'Version'
+      ),
+      'module' => array(
+        'Name' => 'Name',
+        'Description' => 'Description',
+        'Author' => 'Author',
+        'Media' => 'Media',
+        'ThemeFeature' => 'Theme Feature'
+      ),
+    );
+
+    // @parameter $options Configuration.
+    public $options = stdClass;
+
+    /**
+     * Constructor for the Loader class.
+     *
+     * @method __construct
+     * @for Loader
+     * @constructor
+     *
+     * @param $settings array
+     *
+     * @return \Flawless\Loader
+     * @version 0.0.2
+     * @since 0.0.2
+     */
+    function __construct( array $settings ) {
+
+      // Save Loader Settings.
+      $this->$settings = (object) $settings;
+
+      // Load libraries that use namespaces.
+      $this->set_namespace( $this->$settings->controllers );
+
+      // Loads libraries that do not use namespaces.
+      $this->add_class_map( $this->$settings->helpers );
+
+      // Register Autoloader.
+      $this->register( true );
+
+      // Prepare Filters.
+      add_filter( 'flawless::theme_setup',          array( $this, 'theme_setup' ) );
+      add_filter( 'flawless::template_redirect',    array( $this, 'template_redirect' ) );
+
+      // Utility.
+      add_filter( 'extra_theme_headers',            array( $this, 'extra_theme_headers' ) );
+
+      // @chainable
+      return $this;
+
+    }
+
+    /**
+     * Setup Theme Loader
+     *
+     * @method theme_setup
+     * @for Loader
+     *
+     * @param $flawless object Flawless instance passed by reference.
+     *
+     * @return $this
+     *
+     * @author potanin@UD
+     * @version 0.0.2
+     * @since 0.0.2
+     */
+    function theme_setup( &$flawless ) {
+
+      //** Load theme's core assets */
+      $this->load_core_assets( $flawless );
+
+      //** Load extra functionality */
+      $this->load_extend_modules( $flawless );
+
+      return $this;
+
+    }
+
+    /**
+     * Fronted Setup
+     *
+     * @param $flawless object Flawless instance passed by reference.
+     * @return $this
+     *
+     * @method template_redirect
+     * @for Loader
+     *
+     * @author potanin@UD
+     * @version 0.0.2
+     * @since 0.0.2
+     */
+    function template_redirect( &$flawless ) {
+
+      // Unrefister Autoloader.
+      $this->unregister( $flawless );
+
+      // @chainable
+      return $this;
+
+    }
+
+    /**
+     * Add Color Scheme
+     *
+     * @method extra_theme_headers
+     * @for Loader
+     *
+     * @author potanin@UD
+     * @version 0.0.2
+     * @since 0.0.2
+     */
+    function extra_theme_headers() {
+      return (array) $this->headers;
+    }
+
+    /**
+     * Loads core assets of the theme
+     *
+     * Loaded after theme_features have been configured.
+     *
+     * @method load_core_assets
+     * @for Loader
+     *
+     * @author potanin@UD
+     * @version 0.0.2
+     * @since 0.0.2
+     */
+    function load_core_assets() {
+
+      //** Load logo if set */
+      /* if( is_numeric( $this->flawless_logo[ 'post_id' ] ) && $image_attributes = wp_get_attachment_image_src( $this[ 'flawless_logo' ][ 'post_id' ], 'full' ) ) {
+        $flawless[ 'flawless_logo' ][ 'url' ] = $image_attributes[ 0 ];
+        $flawless[ 'flawless_logo' ][ 'width' ] = $image_attributes[ 1 ];
+        $flawless[ 'flawless_logo' ][ 'height' ] = $image_attributes[ 2 ];
+      } */
+
+      foreach( (array) $this->asset_directories as $path => $url ) {
+
+        $path = $path . '/core';
+
+        if( !is_dir( $path ) || !$resource = opendir( $path ) ) {
+          continue;
+        }
+
+        while ( false !== ( $file_name = readdir( $resource ) ) ) {
+
+          if( substr( strrchr( $file_name, '.' ), 1 ) != 'php' ) {
+            continue;
+          }
+
+          $file_data = Loader::get_file_data( $path . '/' . $file_name, 'module' );
+
+          $file_data[ 'Location' ] = 'theme_functions';
+          $file_data[ 'File Name' ] = $file_name;
+
+          $flawless[ 'core_assets' ][ $file_data[ 'Name' ] ] = $file_data;
+
+          include_once( $path . '/' . $file_name );
+
+        }
+
       }
 
-      return;
     }
 
-    $first = $prefix[ 0 ];
-    if ( !isset( $this->prefixes[ $first ][ $prefix ] ) ) {
-      $this->prefixes[ $first ][ $prefix ] = (array) $paths;
+    /**
+     * Loads extra function files.
+     *
+     * @method load_extend_modules
+     * @for Loader
+     *
+     * @author potanin@UD
+     * @version 0.0.2
+     * @since 0.0.2
+     */
+    function load_extend_modules() {
 
-      return;
-    }
-    if ( $prepend ) {
-      $this->prefixes[ $first ][ $prefix ] = array_merge(
-        (array) $paths,
-        $this->prefixes[ $first ][ $prefix ]
-      );
-    } else {
-      $this->prefixes[ $first ][ $prefix ] = array_merge(
-        $this->prefixes[ $first ][ $prefix ],
-        (array) $paths
-      );
-    }
-  }
+      function load_file( $file_data ) {
 
-  /**
-   * Registers a set of classes, replacing any others previously set.
-   *
-   * @param string $prefix The classes prefix
-   * @param array|string $paths  The location(s) of the classes
-   */
-  public function set( $prefix, $paths ) {
-    if ( !$prefix ) {
-      $this->fallbackDirs = (array) $paths;
+        if( empty( $file_data ) ) {
+          return false;
+        }
 
-      return;
-    }
-    $this->prefixes[ substr( $prefix, 0, 1 ) ][ $prefix ] = (array) $paths;
-  }
+        foreach ( (array) apply_filters( 'flawless::required_extra_resource_file_data', array( 'Name', 'Version' ) ) as $req_field ) {
+          if( !in_array( $req_field, array_keys( (array) $file_data ) ) ) {
+            return false;
+          }
+        }
 
-  /**
-   * Turns on searching the include path for class files.
-   *
-   * @param bool $useIncludePath
-   */
-  public function setUseIncludePath( $useIncludePath ) {
-    $this->useIncludePath = $useIncludePath;
-  }
+        $file_data[ 'Location' ] = 'theme_functions';
 
-  /**
-   * Can be used to check if the autoloader uses the include path to check
-   * for classes.
-   *
-   * @return bool
-   */
-  public function getUseIncludePath() {
-    return $this->useIncludePath;
-  }
+        $flawless[ 'flawless_extra_assets' ][ $file_data[ 'Name' ] ] = $file_data;
 
-  /**
-   * Registers this instance as an autoloader.
-   *
-   * @param bool $prepend Whether to prepend the autoloader or not
-   */
-  public function register( $prepend = false ) {
-    spl_autoload_register( array( $this, 'loadClass' ), true, $prepend );
-  }
+        include_once( $file_data[ 'path' ] );
 
-  /**
-   * Unregisters this instance as an autoloader.
-   */
-  public function unregister() {
-    spl_autoload_unregister( array( $this, 'loadClass' ) );
-  }
+      }
 
-  /**
-   * Loads the given class or interface.
-   *
-   * @param  string $class The name of the class
-   *
-   * @return bool|null True if loaded, null otherwise
-   */
-  public function loadClass( $class ) {
-    if ( $file = $this->findFile( $class ) ) {
-      include $file;
+      foreach ( (array) $this->asset_directories as $path => $url ) {
 
-      return true;
-    }
-  }
+        $path = $path . '/core/extensions';
 
-  /**
-   * Finds the path to the file where the class is defined.
-   *
-   * @param string $class The name of the class
-   *
-   * @return string|false The path if found, false otherwise
-   */
-  public function findFile( $class ) {
-    // work around for PHP 5.3.0 - 5.3.2 https://bugs.php.net/50731
-    if ( '\\' == $class[ 0 ] ) {
-      $class = substr( $class, 1 );
-    }
+        if( !is_dir( $path ) ) {
+          continue;
+        }
 
-    if ( isset( $this->classMap[ $class ] ) ) {
-      return $this->classMap[ $class ];
-    }
+        if( !$functions_resource = opendir( $path ) ) {
+          continue;
+        }
 
-    if ( false !== $pos = strrpos( $class, '\\' ) ) {
-      // namespaced class name
-      $classPath = strtr( substr( $class, 0, $pos ), '\\', DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR;
-      $className = substr( $class, $pos + 1 );
-    } else {
-      // PEAR-like class name
-      $classPath = null;
-      $className = $class;
-    }
+        while ( false !== ( $file_name = readdir( $functions_resource ) ) ) {
 
-    $classPath .= strtr( $className, '_', DIRECTORY_SEPARATOR ) . '.php';
+          if( $file_name == '.' || $file_name == '..' ) {
+            continue;
+          }
 
-    $first = $class[ 0 ];
-    if ( isset( $this->prefixes[ $first ] ) ) {
-      foreach ( $this->prefixes[ $first ] as $prefix => $dirs ) {
-        if ( 0 === strpos( $class, $prefix ) ) {
-          foreach ( $dirs as $dir ) {
-            if ( file_exists( $dir . DIRECTORY_SEPARATOR . $classPath ) ) {
-              return $dir . DIRECTORY_SEPARATOR . $classPath;
-            }
+          //** Check if directory includes a with the same name as directory, AND there is no filename in root */
+          if( is_dir( $path . '/' . $file_name ) && file_exists( $path . '/' . $file_name . '/' . $file_name . '.php' ) && !file_exists( $path . '/' . $file_name . '.php' ) ) {
+            $file_data = array_filter( (array) @get_file_data( $path . '/' . $file_name . '/' . $file_name . '.php', $flawless[ 'default_header' ][ 'flawless_extra_assets' ], 'flawless_extra_assets' ) );
+            $file_data[ 'path' ] = $path . '/' . $file_name . '/' . $file_name . '.php';
+            $file_data[ 'file_name' ] = $file_name . '.php';
+            load_file( $file_data );
+            continue;
+          }
+
+          if( substr( strrchr( $file_name, '.' ), 1 ) != 'php' ) {
+            continue;
+          }
+
+          $file_data = array_filter( (array) @get_file_data( $path . '/' . $file_name, $flawless[ 'default_header' ][ 'flawless_extra_assets' ], 'flawless_extra_assets' ) );
+
+          $file_data[ 'file_name' ] = $file_name;
+          $file_data[ 'path' ] = $path . '/' . $file_name;
+
+          load_file( $file_data );
+
+        }
+
+      }
+
+      //** Load any existing assets for active plugins */
+      foreach ( apply_filters( 'flawless::active_plugins', (array) Utility::get_active_plugins() ) as $plugin ) {
+
+        //** Get a plugin name slug */
+        $plugin = dirname( plugin_basename( trim( $plugin ) ) );
+
+        //** Look for plugin-specific scripts and load them */
+        foreach ( (array) $this->asset_directories as $this_directory => $this_url ) {
+          if( file_exists( $this_directory . '/assets/js/' . $plugin . '.js' ) ) {
+            $asset_url = apply_filters( 'flawless-asset-url', $this_url . '/assets/js/' . $plugin . '.js', $plugin );
+            wp_enqueue_script( 'flawless-asset-' . $plugin, $asset_url, array(), Flawless_Version, true );
+            Log::add( sprintf( __( 'JavaScript found for %1s plugin and loaded: %2s.', 'flawless' ), $plugin, $asset_url ) );
           }
         }
       }
+
     }
 
-    foreach ( $this->fallbackDirs as $dir ) {
-      if ( file_exists( $dir . DIRECTORY_SEPARATOR . $classPath ) ) {
-        return $dir . DIRECTORY_SEPARATOR . $classPath;
-      }
+    /**
+     * Loader Helper Files
+     *
+     * @method load_helpers
+     * @for Loader
+     *
+     * @author potanin@UD
+     * @version 0.0.2
+     * @since 0.0.2
+     */
+    function load_helpers() {
+
+      // Load Helpers
+      //include_once( $this->options->paths . '/template.php' );
+
     }
 
-    if ( $this->useIncludePath && $file = stream_resolve_include_path( $classPath ) ) {
-      return $file;
-    }
-
-    return $this->classMap[ $class ] = false;
   }
+
 }
+

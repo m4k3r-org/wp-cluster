@@ -22,9 +22,23 @@ namespace Flawless {
    */
   class Extended_Taxonomies {
 
-    function __construct() {
+    /**
+     * Constructor for the Extended Taxonomies.
+     *
+     * @author potanin@UD
+     * @version 0.0.1
+     * @method __construct
+     *
+     * @constructor
+     * @for Extended_Taxonomies
+     *
+     * @param array $options
+     */
+    public function __construct( $options = array() ) {
 
       add_filter( 'flawless::generate_taxonomies', array( __CLASS__, 'generate_taxonomies', 2, 10 ) );
+
+      add_filter( 'flawless::setup_theme_features::after', array( __CLASS__, 'setup_theme_features', 2, 10 ) );
 
     }
 
@@ -65,7 +79,19 @@ namespace Flawless {
 
     }
 
+    function setup_theme_features() {
+      global $wpdb;
+
+      if ( current_theme_supports( 'term-meta' ) ) {
+        $wpdb->taxonomymeta = $wpdb->prefix . 'taxonomymeta';
+      }
+
+
+    }
+
     function init_lower() {
+
+
 
       if ( current_theme_supports( 'extended-taxonomies' ) ) {
         add_action( 'wp_insert_post', array( __CLASS__, 'term_updated' ), 9, 2 );

@@ -17,39 +17,3 @@
 if ( get_post_meta( $post->ID, 'hide_header', true ) == 'true' || !current_theme_supports( 'inner_page_slideshow_area' ) ) {
   return;
 }
-
-//** Check if Home Page Attention Grabber is active.
-
-$this_widget_area = 'inside_attention_grabber';
-
-if ( $tabs = Flawless::widget_area_tabs( $this_widget_area ) ) {
-  ?>
-
-  <div class="sld-flexible flawless_attention_grabber_area">
-    <div class='sld-top'></div>
-    <div
-      class="flawless_widget_area_tabs wpp_property_header_area <?php echo( count( $tabs ) < 2 ? 'no_tabs' : 'have_tabs' ); ?>">
-
-      <?php if ( count( $tabs ) > 1 ) { ?>
-        <ul class="attention_grabber_tabs flawless_widget_tabs">
-          <?php foreach ( $tabs as $widget ) { ?>
-            <li class="flawless_tab"><a href="#<?php echo $widget[ 'id' ]; ?>"
-                                        class="flawless_tab_link"><?php echo $widget[ 'title' ]; ?></a></li>
-          <?php } ?>
-        </ul>
-      <?php } ?>
-
-      <?php dynamic_sidebar( $this_widget_area ); ?>
-
-    </div>
-    <div class='sld-bottom'></div>
-  </div>
-<?php
-
-} else {
-
-  //** Show default / legacy headers */
-
-  flawless_header_image();
-
-}

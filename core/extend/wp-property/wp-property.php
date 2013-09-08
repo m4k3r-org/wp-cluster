@@ -156,7 +156,7 @@ namespace Flawless {
 
       echo '<label>' . __( 'Landing page:' );
 
-      Flawless::wp_dropdown_objects( array(
+      Management::wp_dropdown_objects( array(
         'name' => 'wpp_settings[ extra ][ property_type_landing_pages ][ ' . $property_type . ' ]',
         'show_option_none' => __( '&mdash; Select &mdash;' ),
         'option_none_value' => '0',

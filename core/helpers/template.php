@@ -312,7 +312,7 @@ if ( !function_exists( 'flawless_render_in_footer' ) ) {
    */
   function flawless_render_in_footer( $content, $args = array() ) {
     global $flawless;
-    $flawless[ 'runtime' ][ 'footer_scripts' ][ ] = $content;
+    $flawless[ 'runtime' ][ 'footer_scripts' ][] = $content;
   }
 }
 
@@ -575,9 +575,9 @@ if ( !function_exists( 'flawless_wrapper_class' ) ) {
     global $wp_query, $flawless;
 
     $classes = array( $custom_class );
-    $classes[ ] = 'container';
-    $classes[ ] = 'content_wrapper';
-    $classes[ ] = 'row-fluid';
+    $classes[] = 'container';
+    $classes[] = 'content_wrapper';
+    $classes[] = 'row-fluid';
 
     //** Prevent classes from being blanked out */
     $maybe_classes = apply_filters( 'flawless::wrapper_class', $classes );
@@ -611,11 +611,11 @@ if ( !function_exists( 'flawless_block_class' ) ) {
   function flawless_block_class( $custom_class = '' ) {
     global $flawless;
 
-    $classes[ ] = $custom_class;
+    $classes[] = $custom_class;
 
     //** Added classes to body */
     foreach ( ( array ) $flawless[ 'current_view' ][ 'block_classes' ] as $class ) {
-      $classes[ ] = $class;
+      $classes[] = $class;
     }
 
     echo implode( ' ', ( array ) $classes );
@@ -637,8 +637,8 @@ if ( !function_exists( 'flawless_module_class' ) ) {
     //** Load Post Classes if this is a post */
     $classes = get_post_class( '', $post->ID );
 
-    $classes[ ] = $custom_class;
-    $classes[ ] = 'cfct-module';
+    $classes[] = $custom_class;
+    $classes[] = 'cfct-module';
 
     $classes = apply_filters( 'flawless::module_class', $classes );
 
@@ -694,8 +694,6 @@ if ( !function_exists( 'flawless_element' ) ) {
    * @author potanin@UD
    */
   function flawless_element( $classes = false, $args = false ) {
-    global $flawless;
-
     $template_part = false;
 
     //** Figure out where this got called from */
@@ -715,8 +713,8 @@ if ( !function_exists( 'flawless_element' ) ) {
 
     $classes = explode( ' ', $classes );
 
-    $classes[ ] = 'cfct-module';
-    $classes[ ] = 'flawless_module';
+    $classes[] = 'cfct-module';
+    $classes[] = 'flawless_module';
 
     $classes = implode( ' ', $classes );
 
@@ -761,7 +759,7 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
       return;
     }
 
-    $html[ ] = '<a class="home_link" href="' . $args[ 'home_link' ] . '">' . $args[ 'home_label' ] . '</a> ' . $delimiter . ' ';
+    $html[] = '<a class="home_link" href="' . $args[ 'home_link' ] . '">' . $args[ 'home_label' ] . '</a> ' . $delimiter . ' ';
 
     if ( is_home() || is_front_page() ) {
 
@@ -771,20 +769,20 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
       $thisCat = $cat_obj->term_id;
       $thisCat = get_category( $thisCat );
       $parentCat = get_category( $thisCat->parent );
-      if ( $thisCat->parent != 0 ) $html[ ] = ( get_category_parents( $parentCat, TRUE, ' ' . $delimiter . ' ' ) );
-      $html[ ] = $before . single_cat_title( '', false ) . $after;
+      if ( $thisCat->parent != 0 ) $html[] = ( get_category_parents( $parentCat, TRUE, ' ' . $delimiter . ' ' ) );
+      $html[] = $before . single_cat_title( '', false ) . $after;
 
     } elseif ( is_day() ) {
-      $html[ ] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
-      $html[ ] = '<a href="' . get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) . '">' . get_the_time( 'F' ) . '</a> ' . $delimiter . ' ';
-      $html[ ] = $before . get_the_time( 'd' ) . $after;
+      $html[] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
+      $html[] = '<a href="' . get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) . '">' . get_the_time( 'F' ) . '</a> ' . $delimiter . ' ';
+      $html[] = $before . get_the_time( 'd' ) . $after;
 
     } elseif ( is_month() ) {
-      $html[ ] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
-      $html[ ] = $before . get_the_time( 'F' ) . $after;
+      $html[] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
+      $html[] = $before . get_the_time( 'F' ) . $after;
 
     } elseif ( is_year() ) {
-      $html[ ] = $before . get_the_time( 'Y' ) . $after;
+      $html[] = $before . get_the_time( 'Y' ) . $after;
 
     } elseif ( is_single() && !is_attachment() ) {
 
@@ -821,10 +819,10 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
         $cat = $cat[ 0 ];
 
         if ( $cat ) {
-          $html[ ] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
+          $html[] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
         }
 
-        $html[ ] = $before . get_the_title() . $after;
+        $html[] = $before . get_the_title() . $after;
       }
 
     } elseif ( !is_single() && !is_page() && get_post_type() != 'post' && !is_404() && !is_search() ) {
@@ -857,16 +855,16 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
 
         case is_tag():
           $html[ 'content_type_home' ] = '<a href="' . $content_type_home . '">' . $args[ 'title' ] . '</a>';
-          $html[ ] = $before . get_queried_object() > name . $after;
+          $html[] = $before . get_queried_object() > name . $after;
           break;
 
         case is_tax():
           $html[ 'content_type_home' ] = '<a href="' . $content_type_home . '">' . $args[ 'title' ] . '</a>';
-          $html[ ] = $before . get_queried_object()->name . $after;
+          $html[] = $before . get_queried_object()->name . $after;
           break;
 
         default:
-          $html[ ] = $before . $post_type->labels->name . $after;
+          $html[] = $before . $post_type->labels->name . $after;
           break;
 
       }
@@ -878,48 +876,48 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
 
       //** Must check a category was found */
       if ( $cat && !is_wp_error( $cat ) ) {
-        $html[ ] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
+        $html[] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
       }
 
-      $html[ ] = '<a href="' . get_permalink( $parent ) . '">' . $parent->post_title . '</a> ' . $delimiter . ' ';
-      $html[ ] = $before . get_the_title() . $after;
+      $html[] = '<a href="' . get_permalink( $parent ) . '">' . $parent->post_title . '</a> ' . $delimiter . ' ';
+      $html[] = $before . get_the_title() . $after;
 
     } elseif ( is_page() && !$post->post_parent ) {
-      $html[ ] = $before . get_the_title() . $after;
+      $html[] = $before . get_the_title() . $after;
 
     } elseif ( is_page() && $post->post_parent ) {
       $parent_id = $post->post_parent;
       $breadcrumbs = array();
       while ( $parent_id ) {
         $page = get_page( $parent_id );
-        $breadcrumbs[ ] = '<a href="' . get_permalink( $page->ID ) . '">' . get_the_title( $page->ID ) . '</a>';
+        $breadcrumbs[] = '<a href="' . get_permalink( $page->ID ) . '">' . get_the_title( $page->ID ) . '</a>';
         $parent_id = $page->post_parent;
       }
       $breadcrumbs = array_reverse( $breadcrumbs );
-      foreach ( $breadcrumbs as $crumb ) $html[ ] = $crumb . ' ' . $delimiter . ' ';
-      $html[ ] = $before . get_the_title() . $after;
+      foreach ( $breadcrumbs as $crumb ) $html[] = $crumb . ' ' . $delimiter . ' ';
+      $html[] = $before . get_the_title() . $after;
 
     } elseif ( is_search() ) {
 
-      $html[ ] = $before . 'Search results for "' . get_search_query() . '"' . $after;
+      $html[] = $before . 'Search results for "' . get_search_query() . '"' . $after;
 
     } elseif ( is_tag() ) {
 
-      $html[ ] = $before . 'Posts tagged "' . single_tag_title( '', false ) . '"' . $after;
+      $html[] = $before . 'Posts tagged "' . single_tag_title( '', false ) . '"' . $after;
 
     } elseif ( is_author() ) {
       global $author;
       $userdata = get_userdata( $author );
-      $html[ ] = $before . 'Content by ' . $userdata->display_name . $after;
+      $html[] = $before . 'Content by ' . $userdata->display_name . $after;
 
     } elseif ( is_404() ) {
-      $html[ ] = $before . '404 Error' . $after;
+      $html[] = $before . '404 Error' . $after;
     } elseif ( is_tax() ) {
 
       $taxonomy = get_taxonomy( $wp_query->query_vars[ 'taxonomy' ] );
 
-      $html[ ] = '<a href="' . $args[ 'home_link' ] . '/' . $taxonomy->rewrite[ 'slug' ] . '">' . $taxonomy->labels->name . '</a> ';
-      $html[ ] = $before . $wp_query->get_queried_object()->name . $after;
+      $html[] = '<a href="' . $args[ 'home_link' ] . '/' . $taxonomy->rewrite[ 'slug' ] . '">' . $taxonomy->labels->name . '</a> ';
+      $html[] = $before . $wp_query->get_queried_object()->name . $after;
 
     } else {
 
@@ -927,11 +925,11 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
     }
 
     if ( get_query_var( 'paged' ) ) {
-      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[ ] = ' ( ';
-      $page[ ] = __( 'Page' ) . ' ' . get_query_var( 'paged' );
-      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[ ] = ' )';
+      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[] = ' ( ';
+      $page[] = __( 'Page' ) . ' ' . get_query_var( 'paged' );
+      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[] = ' )';
 
-      $html[ ] = implode( '', ( array ) $page );
+      $html[] = implode( '', ( array ) $page );
     }
 
     $html = apply_filters( 'flawless::breadcrumb_trail', $html );
@@ -967,12 +965,12 @@ if ( !function_exists( 'flawless_widget_area' ) ) {
 
     // Check in theme "templates" directory
     if ( isset( $name ) ) {
-      $templates[ ] = "sidebar-{$name}.php";
-      $templates[ ] = "templates/sidebar-{$name}.php";
+      $templates[] = "sidebar-{$name}.php";
+      $templates[] = "templates/sidebar-{$name}.php";
     }
 
-    $templates[ ] = 'sidebar.php';
-    $templates[ ] = 'templates/sidebar.php';
+    $templates[] = 'sidebar.php';
+    $templates[] = 'templates/sidebar.php';
 
     /** Backward compat code will be removed in a future WP release */
     if ( '' == locate_template( $templates, true, false ) ) {
@@ -1003,19 +1001,19 @@ if ( !function_exists( 'flawless_thumbnail' ) ) {
       return;
     }
 
-    $html[ ] = '<div class="' . $args[ 'wrapper_class' ] . '">';
+    $html[] = '<div class="' . $args[ 'wrapper_class' ] . '">';
 
     if ( $args[ 'link' ] ) {
-      $html[ ] = '<a href="' . get_permalink() . '" alt="' . get_the_title() . '">';
+      $html[] = '<a href="' . get_permalink() . '" alt="' . get_the_title() . '">';
     }
 
-    $html[ ] = $thumbnail;
+    $html[] = $thumbnail;
 
     if ( $args[ 'link' ] ) {
-      $html[ ] = '</a>';
+      $html[] = '</a>';
     }
 
-    $html[ ] = '</div>';
+    $html[] = '</div>';
 
     $html = implode( '', ( array ) $html );
 
@@ -1079,16 +1077,16 @@ if ( !function_exists( 'flawless_add_notice' ) ) {
       switch ( $args[ 'type' ] ) {
 
         case 'error':
-          $notices[ ] = '<div class="alert alert-success"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
+          $notices[] = '<div class="alert alert-success"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
           break;
 
         case 'success':
-          $notices[ ] = '<div class="alert alert-success"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
+          $notices[] = '<div class="alert alert-success"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
           break;
 
         case 'info':
         default:
-          $notices[ ] = '<div class="alert alert-info"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
+          $notices[] = '<div class="alert alert-info"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
           break;
       }
 

@@ -598,7 +598,7 @@ namespace Flawless {
     function navbar_html( $html ) {
       global $bp, $flawless;
 
-      if ( Flawless::load( 'simple_html_dom' ) ) {
+      if ( Asset::load( 'simple_html_dom' ) ) {
         //** Get BP Admin bar menu */
         ob_start();
         $bp->doing_admin_bar = true;
@@ -1332,7 +1332,7 @@ namespace Flawless {
      * @author potanin@UD
      */
     function navbar_admin_actions() {
-      global $post, $bp, $flawless;
+      global $post;
 
       if ( !is_user_logged_in() ) {
         return;
@@ -1384,7 +1384,7 @@ namespace Flawless {
      * @author potanin@UD
      */
     function navbar_topic_actions() {
-      global $post, $bp, $flawless, $forum_template;
+      global $bp, $forum_template;
 
       if ( !is_user_logged_in() ) {
         return;
@@ -1460,10 +1460,7 @@ namespace Flawless {
      * @author potanin@UD
      */
     function body_class( $classes ) {
-      global $flawless;
-
       return $classes;
-
     }
 
     /**
