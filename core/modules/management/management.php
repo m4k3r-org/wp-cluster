@@ -1363,7 +1363,7 @@
           <input type="hidden" name="flawless_settings[flawless_logo][height]"
             value="<?php echo $flawless[ 'flawless_logo' ][ 'height' ]; ?>"/>
 
-          <?php if ( Asset::can_get_image( $flawless[ 'flawless_logo' ][ 'url' ] ) ) {
+          <?php if ( Utility::can_get_image( $flawless[ 'flawless_logo' ][ 'url' ] ) ) {
             echo '<img src="' . $flawless[ 'flawless_logo' ][ 'url' ] . '" class="flawless_logo" />';
           } else {
             ?>

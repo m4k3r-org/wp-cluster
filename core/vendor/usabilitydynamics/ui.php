@@ -19,7 +19,7 @@
      * @submodule UI
      * @class UI
      */
-    class UI {
+    class UI extends Utility {
 
       /**
        * SaaS Class version.

@@ -32,9 +32,13 @@ All major actions that utlize the "flawless::" prefix pass the $flawless variabl
 
 ### Usage
 
-  // Extend Object
-  Utility::extend( array( 'one' => 'asdfsa' ), array( 'asdfdsaf' => 'asdf' ) );
-  -->
+    // Remove empty values from object.
+    Utility::array_filter_deep( $some_object )
+
+    // Extend Object
+    Utility::extend( array( 'one' => 'asdfsa' ), array( 'asdfdsaf' => 'asdf' ) );
+
+
 
 ### Notes
 The theme has a default maximum width of 1090px, which is the default Flawless width, but can be adjusted under Appearance Settings.

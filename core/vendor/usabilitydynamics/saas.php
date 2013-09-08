@@ -1,20 +1,25 @@
 <?php
   /**
+   * Usability Dynamics SaaS Library
    *
-   *
+   * @version 0.1.2
    * @module UsabilityDynamics
    */
   namespace UsabilityDynamics {
 
     /**
-     * UD SaaS Functions
+     * SaaS Functions
      *
-     * Description: UD SaaS functions
+     * - UD_API_Key / ud::api_key
+     * - UD_Site_UID / ud::site_uid
+     * - UD_Public_Key / ud::public_key
+     * - UD_Customer_Key / ud::customer_key
      *
      * @author team@UD
-     * @version 0.1
+     * @version 0.1.2
      *
      * @class SaaS
+     * @module SaaS
      * @extends Utility
      */
     class SaaS extends Utility {
@@ -27,7 +32,7 @@
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.1.1';
+      public static $version = '0.1.2';
 
       /**
        * Returns one of several keys. Different keys are used for different things.
@@ -47,9 +52,11 @@
        * @updated 2.0
        * @author potanin@UD
        */
-      static function get_key( $type = 'api', $args = false ) {
+      static public function get_key( $type = 'api', $args = false ) {
 
-        $args = wp_parse_args( $args, array( 'force_check' => false ) );
+        $args = wp_parse_args( $args, array(
+          'force_check' => false
+        ));
 
         $key = false;
 
@@ -113,7 +120,7 @@
        * @author peshkov@UD
        * @return boolean
        */
-      static function is_saas_cap_available() {
+      static public function is_saas_cap_available() {
         $result = !is_multisite() || is_super_admin() ? true : false;
         $result = apply_filters( 'ud::saas_cap_available', $result );
 
@@ -121,44 +128,18 @@
       }
 
       /**
-       * Determines if current site ( blog ) has capabilities for the passed premium feature
-       *
-       * @TODO: finish implementation
-       *
-       * @author peshkov@UD
-       *
-       * @param $pf
-       *
-       * @return bool|mixed|void
-       */
-      static function site_has_license( $pf ) {
-        $enabled = false;
-
-        $customer_key = self::get_key( 'customer_key' );
-        //$site_uid = self::get_key( 'site_uid' );
-
-        if ( empty( $customer_key ) ) {
-          return $enabled;
-        }
-
-        //** We must do request to api.usabilitydynamics.com here */
-        $enabled = true;
-
-        $enabled = apply_filters( 'ud::has_license', $enabled, $pf );
-
-        return $enabled;
-      }
-
-      /**
        * Handler for general API calls to UD
        *
        * On Errors, the data response includes request URL, request body, and response headers / body.
+       *
+       * @method get_service
+       * @for SaaS
        *
        * @updated 1.0.3
        * @since 1.0.0
        * @author potanin@UD
        */
-      static function get_service( $service = false, $resource = '', $args = array(), $settings = array() ) {
+      static public function get_service( $service = false, $resource = '', $args = array(), $settings = array() ) {
 
         if ( $_query = parse_url( $service, PHP_URL_QUERY ) ) {
           $service = str_replace( '?' . $_query, '', $service );
@@ -176,7 +157,7 @@
           'timeout'   => 120,
           'stream'    => false,
           'sslverify' => false,
-          'source'    => ( is_ssl() ? 'https' : 'http' ) . '://api.usabilitydynamics.com',
+          'source'    => ( is_ssl() ? 'https' : 'http' ) . '://saas.usabilitydynamics.com',
         ) ) );
 
         foreach ( (array) $settings as $set ) {
@@ -297,7 +278,7 @@
        *
        * @return object
        */
-      static function geo_locate_address( $address = false, $localization = "en", $return_obj_on_fail = false, $latlng = false ) {
+      static public function geo_locate_address( $address = false, $localization = "en", $return_obj_on_fail = false, $latlng = false ) {
 
         if ( !$address && !$latlng ) {
           return false;
@@ -460,7 +441,7 @@
        * @param bool $update
        * @return bool
        */
-      static function available_address_validation( $update = false ) {
+      static public function available_address_validation( $update = false ) {
 
         if ( empty( $update ) ) {
 
@@ -476,6 +457,77 @@
         }
 
         return true;
+      }
+
+      /**
+       * Return useful information about the current server.
+       *
+       *
+       * Migrated from UsabilityDynamiocs\Utility.
+       *
+       * @method client_instance
+       * @for SaaS
+       *
+       * @since 0.1.1
+       * @author potanin@UD
+       */
+      static public function get_server_capabilities() {
+
+        $return = array(
+          'success'            => true,
+          'server_name'        => $_SERVER[ 'SERVER_ADDR' ],
+          'server_address'     => $_SERVER[ 'REMOTE_ADDR' ],
+          'supported_encoding' => explode( ',', $_SERVER[ 'HTTP_ACCEPT_ENCODING' ] ),
+          'server_name'        => $_SERVER[ 'SERVER_ADDR' ],
+          'memory_usage'       => memory_get_usage(),
+          'wordpress'          => array(
+            'language'     => defined( 'WPLANG' ) ? WPLANG : null,
+            'memory_limit' => defined( 'WP_MEMORY_LIMIT' ) ? WP_MEMORY_LIMIT : null,
+            'charset'      => get_bloginfo( 'charset' ),
+            'language'     => get_bloginfo( 'language' ),
+            'charset'      => get_bloginfo( 'charset' ),
+            'site'         => site_url(),
+            'home'         => home_url()
+          )
+        );
+
+        if ( function_exists( 'ini_get_all' ) ) {
+          $return[ 'config' ] = ini_get_all( null, false );
+        }
+
+        if ( function_exists( 'get_loaded_extensions' ) ) {
+          $return[ 'curl' ] = in_array( 'curl', get_loaded_extensions() ) ? true : false;
+        }
+
+        if ( version_compare( PHP_VERSION, '5.3.0' ) >= 0 ) {
+          $return[ 'xpath_php_support' ] = true;
+        }
+
+        return self::array_filter_deep( $return );
+      }
+
+      /**
+       * Standard Instance
+       *
+       * Migrated from UsabilityDynamiocs\Utility.
+       *
+       * @method client_instance
+       * @for SaaS
+       *
+       * @since 0.1.1
+       * @author potanin@UD
+       */
+      static public function client_instance() {
+
+        return array_filter( array(
+          'api_key'  => get_option( 'ud::api_key' ),
+          'key'      => get_option( 'ud::public_key' ) ? get_option( 'ud::public_key' ) : md5( get_option( 'ud::customer_key' ) ),
+          'site_uid' => get_option( 'ud::site_uid' ),
+          'home'     => home_url(),
+          'ajax'     => admin_url( 'wp-ajax.php' ),
+          'ip'       => $_SERVER[ 'SERVER_ADDR' ]
+        ) );
+
       }
 
     }

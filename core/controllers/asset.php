@@ -38,12 +38,15 @@
        * @constructor
        * @for Asset
        *
-       * @param array $options
+       * @param array|bool $options
        */
-      public function __construct( $options = array() ) {
-        add_action( 'flawless::extra_local_assets', array( $this, 'extra_local_assets' ), 5 );
+      public function __construct( $options = false ) {
+
+        // Load additional scripts and styles.
         add_action( 'flawless::wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 5 );
-        add_action( 'flawless::wp_print_styles', array( $this, 'wp_print_styles' ), 5 );
+        add_action( 'flawless::wp_print_styles',    array( $this, 'wp_print_styles' ), 5 );
+        add_action( 'flawless::extra_local_assets', array( $this, 'extra_local_assets' ), 5 );
+
       }
 
       /**
@@ -186,15 +189,23 @@
       /**
        * Scans Asset Directories for the requested assets and returns asset-specific result if found
        *
+       * @example
+       *
+       *      // Find Script and Style for Carrington
+       *      $css  = Asset::load( 'carrington', 'css' );
+       *      $js   = Asset::load( 'carrington', 'js' );
+       *
+       *      // Enqueue, assuming they are found.
+       *      wp_enqueue_style( 'carrington', $css );
+       *      wp_enqueue_script( 'carrington', $js );
+       *
        * - lib - inclues the PHP library if it exists
        * - less - returns file path if file exists
        * - image - returns URL if exists
        * - js - returns URL if exists
        * - css - returns URL if exists
        *
-       * @todo Add function to scan different image extensions if no extension is specified.
        * @updated 0.0.6
-       *
        * @author peshkov@UD
        *
        * @param        $name
@@ -203,32 +214,34 @@
        *
        * @return bool|mixed|string
        */
-      static function load( $name, $type = 'lib', $args = '' ) {
-        global $flawless;
+      static public function load( $name, $type = 'lib', $args = '' ) {
+
+        //die( '<pre>' . print_r( func_get_args(), true ) . '</pre>' );
 
         $args = wp_parse_args( $args, array(
           'return' => false
-        ) );
+        ));
 
-        if ( $return = wp_cache_get( md5( $name . $type . serialize( $args ) ), 'flawless_load_value' ) ) {
+        /* if ( $return = wp_cache_get( md5( $name . $type . serialize( $args ) ), 'flawless_load_value' ) ) {
           return $return;
-        }
+        } */
 
         foreach ( (array) $flawless->asset_directories as $assets_path => $assets_url ) {
+
           switch ( $type ) {
 
             case 'lib':
-              if ( file_exists( $assets_path . '/core/lib/' . $name . '.php' ) ) {
-                include_once( $assets_path . '/core/lib/' . $name . '.php' );
+              if ( file_exists( $assets_path . '/controllers/' . $name . '.php' ) ) {
+                include_once( $assets_path . '/controllers/' . $name . '.php' );
                 $return = true;
               }
-              break;
+            break;
 
             case 'less':
-              if ( file_exists( $assets_path . '/assets/less/' . $name ) ) {
-                $return = $args[ 'return' ] == 'path' ? $assets_path . '/assets/less/' . $name : $assets_url . '/assets/less/' . $name;
+              if ( file_exists( $assets_path . '/styles/' . $name . '.less' ) ) {
+                $return = $args[ 'return' ] == 'path' ? $assets_path . '/styles/' . $name . '.less' : $assets_url . '/styles/' . $name . '.less';
               }
-              break;
+            break;
 
             case 'img':
             case 'image':
@@ -238,37 +251,41 @@
               break;
 
             case 'js':
-              if ( file_exists( $assets_path . '/assets/js/' . $name ) ) {
-                $return = $assets_url . '/assets/js/' . $name;
+              if ( file_exists( $assets_path . '/scripts/' . $name ) ) {
+                $return = $assets_url . '/scripts/' . $name;
               }
-              break;
+            break;
 
             case 'css':
-              if ( file_exists( $assets_path . '/assets/css/' . $name ) ) {
-                $return = $assets_url . '/assets/css/' . $name;
+              if ( file_exists( $assets_path . '/styles/' . $name . '.css' ) ) {
+                $return = $assets_url . '/styles/' . $name . '.css';
               }
-              break;
+            break;
 
           }
 
         }
 
         if ( !empty( $return ) ) {
-          wp_cache_set( md5( $name . $type . serialize( $args ) ), $return, 'flawless_load_value' );
-
+          // wp_cache_set( md5( $name . $type . serialize( $args ) ), $return, 'flawless_load_value' );
           return $return;
         }
 
         return false;
+
       }
 
       /**
        * Tests if remote script or CSS file can be opened prior to sending it to browser
        *
-       *
+       * @method can_get
        * @version 0.25.0
+       *
+       * @param bool  $url
+       * @param array $args
+       * @return bool
        */
-      static function can_get( $url = false, $args = array() ) {
+      static public function can_get( $url = false, $args = array() ) {
         global $flawless;
 
         if ( empty( $url ) ) {
@@ -311,41 +328,6 @@
       }
 
       /**
-       * Tests if remote image can be loaded.  Returns URL to image if valid.
-       *
-       * @version 0.25.0
-       */
-      static function can_get_image( $url = false ) {
-
-        if ( !is_string( $url ) ) {
-          return false;
-        }
-
-        if ( empty( $url ) ) {
-          return false;
-        }
-
-        //** Test if post_id */
-        if ( is_numeric( $url ) && $image_attributes = wp_get_attachment_image_src( $url, 'full' ) ) {
-          $url = $image_attributes[ 0 ];
-        }
-
-        $result = wp_remote_get( $url, array( 'timeout' => 10 ) );
-
-        if ( is_wp_error( $result ) ) {
-          return false;
-        }
-
-        //** Image content types should always begin with 'image' ( I hope ) */
-        if ( strpos( $result[ 'headers' ][ 'content-type' ], 'image' ) !== 0 ) {
-          return false;
-        }
-
-        return $url;
-
-      }
-
-      /**
        * Checks if script or style have been loaded.
        *
        * Migrated from Flawless::is_asset_loaded()
@@ -353,7 +335,7 @@
        * @todo Add handler for styles.
        * @since 0.2.0
        */
-      static function is_loaded( $handle = false ) {
+      static public function is_loaded( $handle = false ) {
         global $wp_scripts;
 
         if ( empty( $handle ) ) {

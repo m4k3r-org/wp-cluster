@@ -1,22 +1,25 @@
 <?php
   /**
-   * -
+   * API Library
    *
    * @author team@UD
-   * @version 0.0.1
+   * @version 0.1.1
    * @module UsabilityDynamics
    */
   namespace UsabilityDynamics {
 
     /**
-     * UD API
+     * API Library
      *
      * @module UsabilityDynamics
      * @author team@UD
-     * @version 0.1.1
+     *
+     * @version 0.1.2
+     *
      * @class API
+     * @extends Utility
      */
-    class API {
+    class API extends Utility {
 
       /**
        * API Class version.
@@ -26,7 +29,7 @@
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.1.0';
+      public static $version = '0.1.2';
 
       /**
        * Constructor for the UD API class.

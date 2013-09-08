@@ -43,6 +43,57 @@
       }
 
       /**
+       * Tests if remote image can be loaded.
+       *
+       * Returns URL to image if valid.
+       * Return false if image is invalid or could not be reached.
+       *
+       * @example
+       *
+       *      // Try to load image.
+       *      if( $url = Utility::can_get_image( $theme_settings->logo_url ) ) {
+       *        echo "Image Found: $url.";
+       *      }
+       *
+       *
+       * @method can_get_image
+       * @for Utility
+       *
+       * @param bool $url Valid URL to an image.
+       * @since 0.2.1
+       * @return bool|int|string
+       */
+      static public function can_get_image( $url = false ) {
+
+        if ( !is_string( $url ) ) {
+          return false;
+        }
+
+        if ( empty( $url ) ) {
+          return false;
+        }
+
+        //** Test if post_id */
+        if ( is_numeric( $url ) && $image_attributes = wp_get_attachment_image_src( $url, 'full' ) ) {
+          $url = $image_attributes[ 0 ];
+        }
+
+        $result = wp_remote_get( $url, array( 'timeout' => 10 ) );
+
+        if ( is_wp_error( $result ) ) {
+          return false;
+        }
+
+        //** Image content types should always begin with 'image' ( I hope ) */
+        if ( strpos( $result[ 'headers' ][ 'content-type' ], 'image' ) !== 0 ) {
+          return false;
+        }
+
+        return $url;
+
+      }
+
+      /**
        * Return array of active plugins for current instance
        *
        * Improvement over wp_get_active_and_valid_plugins() which doesn't return any plugins when in MS
@@ -52,7 +103,7 @@
        *
        * @since 0.2.0
        */
-      static function get_active_plugins() {
+      static public function get_active_plugins() {
         $mu_plugins      = (array) wp_get_mu_plugins();
         $regular_plugins = (array) wp_get_active_and_valid_plugins();
 
@@ -74,29 +125,12 @@
        *
        * @param string $url
        *
+       * @param string $url
+       *
        * @return bool
        */
-      static function is_url( $url = '' ) {
+      static public function is_url( $url = '' ) {
         return esc_url( $url );
-      }
-
-      /**
-       * Standard Instance
-       *
-       * @since 1.1
-       * @author potanin@UD
-       */
-      static function client_instance() {
-
-        return array_filter( array(
-          'api_key'  => get_option( 'ud::api_key' ),
-          'key'      => get_option( 'ud::public_key' ) ? get_option( 'ud::public_key' ) : md5( get_option( 'ud::customer_key' ) ),
-          'site_uid' => get_option( 'ud::site_uid' ),
-          'home'     => home_url(),
-          'ajax'     => admin_url( 'wp-ajax.php' ),
-          'ip'       => $_SERVER[ 'SERVER_ADDR' ]
-        ) );
-
       }
 
       /**
@@ -111,7 +145,7 @@
        * @since 2.0
        * @author potanin@UD
        */
-      static function strip_protected_keys( $array, $args = '' ) {
+      static public function strip_protected_keys( $array, $args = '' ) {
 
         $args = wp_parse_args( $args, array( 'prefix' => '_' ) );
 
@@ -140,7 +174,7 @@
        * @source Readme Parser ( http://www.tomsdimension.de/wp-plugins/readme-parser )
        * @author potanin@UD
        */
-      static function parse_readme( $readme_file = false ) {
+      static public function parse_readme( $readme_file = false ) {
 
         if ( !$readme_file ) {
           $readme_file = untrailingslashit( TEMPLATEPATH ) . '/readme.txt';
@@ -218,7 +252,7 @@
        * @source http://php.net/manual/en/function.gettype.php
        * @since 1.0.4
        */
-      static function get_type( $var ) {
+      static public function get_type( $var ) {
 
         if ( is_object( $var ) ) return get_class( $var );
         if ( is_null( $var ) ) return 'null';
@@ -234,11 +268,14 @@
       /**
        * Recursively remove empty values from array.
        *
+       * @method array_filter_deep
+       * @for Utility
+       *
        * @version 1.0.1
        * @since 1.0.3
        * @author potanin@UD
        */
-      static function array_filter_deep( $haystack = array() ) {
+      static public function array_filter_deep( $haystack = array() ) {
 
         foreach ( (array) $haystack as $key => $value ) {
 
@@ -265,7 +302,7 @@
        *
        * @since 1.0.3
        */
-      static function fresher_than( $time, $ago = '1 week' ) {
+      static public function fresher_than( $time, $ago = '1 week' ) {
         return ( strtotime( "-" . $ago ) < $time ) ? true : false;
       }
 
@@ -275,7 +312,7 @@
        * @since 1.0.2
        * @author potanin@UD
        */
-      static function timer_start( $function = 'global' ) {
+      static public function timer_start( $function = 'global' ) {
         global $ud_api;
 
         return $ud_api[ 'timers' ][ $function ][ 'start' ] = microtime( true );
@@ -287,7 +324,7 @@
        * @since 1.0.2
        * @author potanin@UD
        */
-      static function timer_stop( $function = 'global', $precision = 2 ) {
+      static public function timer_stop( $function = 'global', $precision = 2 ) {
         global $ud_api;
 
         return $ud_api[ 'timers' ][ $function ][ 'start' ] ? round( microtime( true ) - $ud_api[ 'timers' ][ $function ][ 'start' ], $precision ) : false;
@@ -303,7 +340,7 @@
        * @since 1.0.2
        * @author potanin@UD
        */
-      static function profiler_start( $method = false, $args = false ) {
+      static public function profiler_start( $method = false, $args = false ) {
         global $ud_api;
 
         if ( $ud_api[ 'profiling_now' ] && ( $ud_api[ 'profiling_now' ] != $method ) ) {
@@ -326,7 +363,7 @@
        * @since 1.0.2
        * @author potanin@UD
        */
-      static function profiler_stop( $method = false, $args = false ) {
+      static public function profiler_stop( $method = false, $args = false ) {
         global $ud_api;
 
         if ( $ud_api[ 'profiling_now' ] && ( $ud_api[ 'profiling_now' ] != $method ) ) {
@@ -353,7 +390,7 @@
        *
        * @return bool|object
        */
-      static function image_fetch( $images = false, $args = array() ) {
+      static public function image_fetch( $images = false, $args = array() ) {
 
         $images = array_filter( (array) $images );
 
@@ -504,7 +541,7 @@
        * @return array
        * @author peshkov@UD
        */
-      static function image_dimensions( $images = false, $args = array() ) {
+      static public function image_dimensions( $images = false, $args = array() ) {
 
         $result = array();
         $images = array_filter( (array) $images );
@@ -556,54 +593,13 @@
       }
 
       /**
-       * Return useful information about the current server.
-       *
-       * @since 1.0.3
-       * @author potanin@UD
-       */
-      static function get_server_capabilities() {
-
-        $return = array(
-          'success'            => true,
-          'server_name'        => $_SERVER[ 'SERVER_ADDR' ],
-          'server_address'     => $_SERVER[ 'REMOTE_ADDR' ],
-          'supported_encoding' => explode( ',', $_SERVER[ 'HTTP_ACCEPT_ENCODING' ] ),
-          'server_name'        => $_SERVER[ 'SERVER_ADDR' ],
-          'memory_usage'       => memory_get_usage(),
-          'wordpress'          => array(
-            'language'     => defined( 'WPLANG' ) ? WPLANG : null,
-            'memory_limit' => defined( 'WP_MEMORY_LIMIT' ) ? WP_MEMORY_LIMIT : null,
-            'charset'      => get_bloginfo( 'charset' ),
-            'language'     => get_bloginfo( 'language' ),
-            'charset'      => get_bloginfo( 'charset' ),
-            'site'         => site_url(),
-            'home'         => home_url()
-          )
-        );
-
-        if ( function_exists( 'ini_get_all' ) ) {
-          $return[ 'config' ] = ini_get_all( null, false );
-        }
-
-        if ( function_exists( 'get_loaded_extensions' ) ) {
-          $return[ 'curl' ] = in_array( 'curl', get_loaded_extensions() ) ? true : false;
-        }
-
-        if ( version_compare( PHP_VERSION, '5.3.0' ) >= 0 ) {
-          $return[ 'xpath_php_support' ] = true;
-        }
-
-        return self::array_filter_deep( $return );
-      }
-
-      /**
        * Converts slashes for Windows paths.
        *
        * @since 1.0.0
        * @source Flawless
        * @author potanin@UD
        */
-      static function fix_path( $path ) {
+      static public function fix_path( $path ) {
         return str_replace( '\\', '/', $path );
       }
 
@@ -613,7 +609,7 @@
        * @source WP-Property
        * @since 0.6.0
        */
-      static function trim_array( $array = array() ) {
+      static public function trim_array( $array = array() ) {
 
         foreach ( (array) $array as $key => $value ) {
 
@@ -636,7 +632,7 @@
        *
        * @returns array keys: 'width' and 'height'
        */
-      static function all_image_sizes() {
+      static public function all_image_sizes() {
         global $_wp_additional_image_sizes;
 
         $image_sizes = (array) $_wp_additional_image_sizes;
@@ -680,7 +676,7 @@
        *
        * @return array|bool|mixed
        */
-      static function get_image_link( $attachment_id = false, $size = false, $args = array() ) {
+      static public function get_image_link( $attachment_id = false, $size = false, $args = array() ) {
         global $wp_properties;
 
         if ( !$size || !$attachment_id ) {
@@ -763,7 +759,7 @@
        * @source http://stackoverflow.com/questions/6501845/php-need-help-inserting-arrays-into-associative-arrays-at-given-keys
        * @author potanin@UD
        */
-      static function array_insert_before( $array, $key, $new ) {
+      static public function array_insert_before( $array, $key, $new ) {
         $array = (array) $array;
         $keys  = array_keys( $array );
         $pos   = (int) array_search( $key, $keys );
@@ -781,7 +777,7 @@
        * @source http://stackoverflow.com/questions/6501845/php-need-help-inserting-arrays-into-associative-arrays-at-given-keys
        * @author potanin@UD
        */
-      static function array_insert_after( $array, $key, $new ) {
+      static public function array_insert_after( $array, $key, $new ) {
         $array = (array) $array;
         $keys  = array_keys( $array );
         $pos   = (int) array_search( $key, $keys ) + 1;
@@ -799,7 +795,7 @@
        * @todo API Service Candidate since we ideally need a dictionary reference.
        * @author potanin@UD
        */
-      static function depluralize( $word ) {
+      static public function depluralize( $word ) {
         $rules = array( 'ss' => false, 'os' => 'o', 'ies' => 'y', 'xes' => 'x', 'oes' => 'o', 'ies' => 'y', 'ves' => 'f', 's' => '' );
 
         foreach ( array_keys( $rules ) as $key ) {
@@ -825,7 +821,7 @@
        * @since 1.0.0
        * @author potanin@UD
        */
-      static function format_bytes( $bytes, $precision = 2 ) {
+      static public function format_bytes( $bytes, $precision = 2 ) {
         _deprecated_function( __FUNCTION__, '2.3.0', 'size_format()' );
 
         return size_format( $bytes, $precision );
@@ -841,7 +837,7 @@
        *
        * @since 0.1.0
        */
-      static function sql_log( $action = 'attach_filter' ) {
+      static public function sql_log( $action = 'attach_filter' ) {
         global $wpdb;
 
         if ( !in_array( $action, array( 'enable', 'disable', 'print_log' ) ) ) {
@@ -877,7 +873,7 @@
        * @note This is a proof of concept, in future it should be able to support AJAX calls so can be displayed via Dynamic Filter.
        * @author potanin@UD
        */
-      static function log( $message = '', $args = array() ) {
+      static public function log( $message = '', $args = array() ) {
         global $wpdb;
 
         //** Prevents MySQL Gone Away. @todo Should check if connection exists before automatically connecting. */
@@ -925,7 +921,7 @@
        * @note This is a proof of concept, in future it should be able to support AJAX calls so can be displayed via Dynamic Filter.
        * @author potanin@UD
        */
-      static function get_log( $args = false ) {
+      static public function get_log( $args = false ) {
         global $wpdb;
 
         $args = wp_parse_args( $args, array(
@@ -992,7 +988,7 @@
        *
        * @author peshkov@UD
        */
-      static function clear_log( $args = array() ) {
+      static public function clear_log( $args = array() ) {
         global $wpdb;
 
         $args = array_filter( self::prepare_to_sql( wp_parse_args( $args, array(
@@ -1024,7 +1020,7 @@
        *
        * @depreciated peshkov@UD
        */
-      static function _log( $message = false, $args = array() ) {
+      static public function _log( $message = false, $args = array() ) {
 
         $args = wp_parse_args( $args, array(
           'type'   => 'default',
@@ -1089,7 +1085,7 @@
        * @since 1.0.0
        * @author potanin@UD
        */
-      static function _backtrace_function( $function = false ) {
+      static public function _backtrace_function( $function = false ) {
 
         foreach ( debug_backtrace() as $step ) {
           if ( $function && $step[ 'function' ] == $function ) {
@@ -1105,7 +1101,7 @@
        * @since 1.0.0
        * @author potanin@UD
        */
-      static function _backtrace_file( $file = false ) {
+      static public function _backtrace_file( $file = false ) {
 
         foreach ( debug_backtrace() as $step ) {
           if ( $file && basename( $step[ 'file' ] ) == $file ) {
@@ -1120,7 +1116,7 @@
        *
        * @source http://shauninman.com/archive/2008/01/08/recovering_truncated_php_serialized_arrays
        */
-      static function repair_serialized_array( $serialized ) {
+      static public function repair_serialized_array( $serialized ) {
         $tmp = preg_replace( '/^a:\d+:\{/', '', $serialized );
 
         return self::repair_serialized_array_callback( $tmp ); // operates on and whittles down the actual argument
@@ -1131,7 +1127,7 @@
 
 
        */
-      static function repair_serialized_array_callback( &$broken ) {
+      static public function repair_serialized_array_callback( &$broken ) {
 
         $data  = array();
         $index = null;
@@ -1213,7 +1209,7 @@
        *
        * @since 0.5.0
        */
-      static function checked_in_array( $item, $array ) {
+      static public function checked_in_array( $item, $array ) {
 
         if ( is_array( $array ) && in_array( $item, $array ) ) {
           echo ' checked="checked" ';
@@ -1230,7 +1226,7 @@
        * @since 1.0.0
        * @author peshkov@UD
        */
-      static function is_older_wp_version( $version = '' ) {
+      static public function is_older_wp_version( $version = '' ) {
         if ( empty( $version ) || (float) $version == 0 ) return false;
         $current_version = get_bloginfo( 'version' );
         /** Clear version numbers */
@@ -1260,7 +1256,7 @@
        * @author peshkov@UD
        * @version 1.0
        */
-      static function get_template_part( $templates, $path = array(), $load = false ) {
+      static public function get_template_part( $templates, $path = array(), $load = false ) {
 
         $_paths = array_merge( array(
           STYLESHEETPATH,
@@ -1321,7 +1317,7 @@
        * @author peshkov@UD
        * @version 1.0
        */
-      static function _get_template_part( $name, $path = array(), $opts = array() ) {
+      static public function _get_template_part( $name, $path = array(), $opts = array() ) {
 
         $name     = (array) $name;
         $template = "";
@@ -1377,7 +1373,7 @@
        * @author peshkov@UD
        * @version 0.1
        */
-      static function get_css_classes( $args = array() ) {
+      static public function get_css_classes( $args = array() ) {
 
         //** Set arguments */
         $args = wp_parse_args( (array) $args, array(
@@ -1419,7 +1415,7 @@
        *
        * @version 0.6
        */
-      static function get_column_names( $table ) {
+      static public function get_column_names( $table ) {
 
         global $wpdb;
 
@@ -1442,7 +1438,7 @@
        *
        * @since 1.0.3
        */
-      static function extend() {
+      static public function extend() {
 
         //$arrays = array_reverse( func_get_args() );
         $arrays = func_get_args();
@@ -1479,7 +1475,7 @@
        *
        * @return string The page's URL if found, otherwise the general blog URL
        */
-      static function post_link( $title = false ) {
+      static public function post_link( $title = false ) {
 
         global $wpdb;
 
@@ -1514,7 +1510,7 @@
        *
        * @return array Using the get_option function returns the contents of the log.
        */
-      static function _get_log( $args = false ) {
+      static public function _get_log( $args = false ) {
 
         $args = wp_parse_args( $args, array(
           'limit'  => 20,
@@ -1544,11 +1540,11 @@
        *
        * @uses update_option()
        */
-      static function delete_log( $args = array() ) {
+      static public function delete_log( $args = array() ) {
 
         $args = wp_parse_args( $args, array(
           'prefix' => 'ud'
-        ) );
+        ));
 
         extract( $args );
 
@@ -1565,7 +1561,7 @@
        * @since 1.0
        * @uses add_action() Calls 'admin_menu' hook with an anonymous ( lambda-style ) function which uses add_menu_page to create a UI Log page
        */
-      static function add_log_page() {
+      static public function add_log_page() {
 
         if ( did_action( 'admin_menu' ) ) {
           _doing_it_wrong( __FUNCTION__, sprintf( __( 'You cannot call UD\Utility::add_log_page() after the %1$s hook.' ), 'init' ), '3.4' );
@@ -1586,7 +1582,7 @@
        *
        * @since 1.0.0
        */
-      static function show_log_page() {
+      static public function show_log_page() {
 
         if ( $_REQUEST[ 'ud_action' ] == 'clear_log' ) {
           self::delete_log();
@@ -1640,7 +1636,7 @@
        * @return string|array
        * @author odokienko@UD
        */
-      static function replace_data( $str = '', $values = array(), $brackets = array( 'left' => '[', 'right' => ']' ) ) {
+      static public function replace_data( $str = '', $values = array(), $brackets = array( 'left' => '[', 'right' => ']' ) ) {
         $values       = (array) $values;
         $replacements = array_keys( $values );
         array_walk( $replacements, create_function( '&$val', '$val = "' . $brackets[ 'left' ] . '".$val."' . $brackets[ 'right' ] . '";' ) );
@@ -1658,7 +1654,7 @@
        * @return boolean false if notification was not sent successfully
        * @autor odokienko@UD
        */
-      static function send_notification( $args = array() ) {
+      static public function send_notification( $args = array() ) {
 
         $args = wp_parse_args( $args, array(
           'ignore_wp_crm'   => false,
@@ -1719,7 +1715,7 @@
        * @uses add_action() Calls 'admin_menu' hook with an anonymous (lambda-style) function which uses add_menu_page to create a UI Log page
        * @return string
        */
-      static function create_slug( $content, $args = false ) {
+      static public function create_slug( $content, $args = false ) {
 
         $defaults = array(
           'separator'       => '-',
@@ -1746,7 +1742,7 @@
        *
        * @return string
        */
-      static function de_slug( $string ) {
+      static public function de_slug( $string ) {
         return ucwords( str_replace( "_", " ", $string ) );
       }
 
@@ -1759,7 +1755,7 @@
        * @return string
        * @author peshkov@UD
        */
-      static function current_url( $args = array(), $except_args = array() ) {
+      static public function current_url( $args = array(), $except_args = array() ) {
         $url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
 
         $args        = wp_parse_args( $args );
@@ -1796,7 +1792,7 @@
        * @return mixed prepared data
        * @author peshkov@UD
        */
-      static function prepare_to_sql( $args ) {
+      static public function prepare_to_sql( $args ) {
         global $wpdb;
 
         $prepared = $args;
@@ -1826,7 +1822,7 @@
        * @return string|bool Returns formatted date or time, or false if no time passed.
        * @updated 3.0
        */
-      static function nice_time( $time = false, $args = false ) {
+      static public function nice_time( $time = false, $args = false ) {
 
         $args = wp_parse_args( $args, array(
           'format' => 'date_and_time'
@@ -1864,7 +1860,7 @@
        *
        * @return mixed
        */
-      static function encrypt( $pt, $salt = false ) {
+      static public function encrypt( $pt, $salt = false ) {
 
         if ( !$salt ) $salt = self::default_salt;
         $encrypted = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $salt ), $pt, MCRYPT_MODE_CBC, md5( md5( $salt ) ) ) );
@@ -1886,7 +1882,7 @@
        *
        * @return string
        */
-      static function decrypt( $ct, $salt = false ) {
+      static public function decrypt( $ct, $salt = false ) {
 
         if ( !$salt ) $salt = self::default_salt;
         $data = str_replace( array( '-', '_' ), array( '+', '/' ), $ct );
@@ -1910,7 +1906,7 @@
        * @return array
        * @author peshkov@UD
        */
-      static function find_file_in_system( $needle, $path, $_is_dir = false ) {
+      static public function find_file_in_system( $needle, $path, $_is_dir = false ) {
         $return = array();
         $needle = (array) $needle;
         $dir    = @opendir( $path );
@@ -1944,7 +1940,7 @@
        *
        * @author odokienko@UD
        */
-      static function cleanup_extra_whitespace( $content ) {
+      static public function cleanup_extra_whitespace( $content ) {
         $content = preg_replace_callback( '~<(?:table|ul|ol )[^>]*>.*?<\/( ?:table|ul|ol )>~ims', create_function( '$matches', 'return preg_replace(\'~>[\s]+<((?:t[rdh]|li|\/tr|/table|/ul ))~ims\',\'><$1\',$matches[0]);' ), $content );
 
         return $content;

@@ -5,7 +5,7 @@
    */
   namespace UsabilityDynamics {
 
-    class Settings {
+    class Settings extends Utility {
 
       /**
        * Settings Class version.

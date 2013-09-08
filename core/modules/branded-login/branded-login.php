@@ -55,7 +55,7 @@ namespace Flawless {
     static function login_head() {
       global $flawless;
 
-      if ( !Asset::can_get_image( $flawless[ 'flawless_logo' ][ 'url' ] ) ) {
+      if ( !Utility::can_get_image( $flawless[ 'flawless_logo' ][ 'url' ] ) ) {
         return;
       }
 

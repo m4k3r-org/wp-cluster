@@ -18,7 +18,7 @@
      * @class Models
      * @subpackage Models
      */
-    class Models {
+    class Models extends Utility {
 
       /**
        * Models Class version.

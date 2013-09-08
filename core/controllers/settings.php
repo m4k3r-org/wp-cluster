@@ -40,6 +40,42 @@ namespace Flawless {
     }
 
     /**
+     * Update Flawless Theme Setting
+     *
+     * @since 0.0.6
+     */
+    public function set( $key = false, $value = '' ) {
+      global $flawless;
+
+      if ( !$key ) {
+        return false;
+      }
+
+      if ( empty( $value ) ) {
+        $flawless_settings = get_option( 'flawless_settings' );
+        unset( $flawless_settings[ $key ] );
+      } else {
+        $flawless_settings = self::extend( get_option( 'flawless_settings' ), array( $key => $value ) );
+      }
+
+      if ( update_option( 'flawless_settings', $flawless_settings ) ) {
+
+        if ( !empty( $value ) ) {
+          $flawless[ $key ] = $flawless_settings[ $key ];
+        } else {
+          unset( $flawless[ $key ] );
+        }
+
+        return true;
+      }
+
+    }
+
+    public function get( $key, $value ) {
+
+    }
+
+    /**
      * Load Settings
      *
      * @method theme_setup
@@ -170,7 +206,7 @@ namespace Flawless {
      *
      * @return string or false.  If string, a URL to be used for redirection.
      */
-    static function save_settings( $flawless = array(), $args = array() ) {
+    private function save_settings( $flawless = array(), $args = array() ) {
 
       $current_settings = stripslashes_deep( get_option( 'flawless_settings' ) );
 
@@ -224,38 +260,6 @@ namespace Flawless {
 
       //** Redirect page to default Theme Settings page */
       return add_query_arg( 'message', $args[ 'message' ], Flawless_Admin_URL );
-
-    }
-
-    /**
-     * Update Flawless Theme Setting
-     *
-     * @since 0.0.6
-     */
-    static function update_option( $key = false, $value = '' ) {
-      global $flawless;
-
-      if ( !$key ) {
-        return false;
-      }
-
-      if ( empty( $value ) ) {
-        $flawless_settings = get_option( 'flawless_settings' );
-        unset( $flawless_settings[ $key ] );
-      } else {
-        $flawless_settings = self::extend( get_option( 'flawless_settings' ), array( $key => $value ) );
-      }
-
-      if ( update_option( 'flawless_settings', $flawless_settings ) ) {
-
-        if ( !empty( $value ) ) {
-          $flawless[ $key ] = $flawless_settings[ $key ];
-        } else {
-          unset( $flawless[ $key ] );
-        }
-
-        return true;
-      }
 
     }
 

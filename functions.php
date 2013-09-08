@@ -87,22 +87,24 @@
             'protocol'          => ( is_ssl() ? 'https://' : 'http://' ),
             'deregister_empty_widget_areas'  => flase,
             'asset_directories' => apply_filters( 'flawless::asset_locations', array(
-              untrailingslashit( get_template_directory() )   => untrailingslashit( get_template_directory_uri() ),
-              untrailingslashit( get_stylesheet_directory() ) => untrailingslashit( get_stylesheet_directory_uri() )
+              trailingslashit( get_template_directory() ) . 'core' => trailingslashit( get_template_directory_uri() ) . 'core',
+              trailingslashit( get_template_directory() ) . 'ux' => trailingslashit( get_template_directory_uri() ) . 'ux',
+              trailingslashit( get_stylesheet_directory() ) . 'ux' => trailingslashit( get_stylesheet_directory_uri() ) . 'ux',
+              trailingslashit( get_stylesheet_directory() ) . 'core' => trailingslashit( get_stylesheet_directory_uri() ) . 'core',
             )),
             'paths' =>  array(
-              'controllers' => untrailingslashit( get_template_directory() ) . DIRECTORY_SEPARATOR . 'core/controllers',
-              'modules'     => untrailingslashit( get_template_directory() ) . '/core/modules',
-              'extend'      => untrailingslashit( get_template_directory() ) . '/core/extend',
-              'helpers'     => untrailingslashit( get_template_directory() ) . '/core/helpers',
-              'vendor'      => untrailingslashit( get_template_directory() ) . '/core/vendor',
-              'models'      => untrailingslashit( get_template_directory() ) . '/static/models',
-              'schemas'     => untrailingslashit( get_template_directory() ) . '/static/schemas',
-              'templates'   => untrailingslashit( get_template_directory() ) . '/templates',
-              'fonts'       => untrailingslashit( get_template_directory() ) . '/ux/styles',
-              'images'      => untrailingslashit( get_template_directory() ) . '/ux/styles',
-              'views'       => untrailingslashit( get_template_directory() ) . '/ux/views',
-              'scripts'     => untrailingslashit( get_template_directory() ) . '/ux/scripts'
+              'controllers' => trailingslashit( get_template_directory() ) . 'core/controllers',
+              'modules'     => trailingslashit( get_template_directory() ) . 'core/modules',
+              'extend'      => trailingslashit( get_template_directory() ) . 'core/extend',
+              'helpers'     => trailingslashit( get_template_directory() ) . 'core/helpers',
+              'vendor'      => trailingslashit( get_template_directory() ) . 'core/vendor',
+              'models'      => trailingslashit( get_template_directory() ) . 'static/models',
+              'schemas'     => trailingslashit( get_template_directory() ) . 'static/schemas',
+              'templates'   => trailingslashit( get_template_directory() ) . 'templates',
+              'fonts'       => trailingslashit( get_template_directory() ) . 'ux/styles',
+              'images'      => trailingslashit( get_template_directory() ) . 'ux/styles',
+              'views'       => trailingslashit( get_template_directory() ) . 'ux/views',
+              'scripts'     => trailingslashit( get_template_directory() ) . 'ux/scripts'
             )
           ),
           'loader' => array()
@@ -142,6 +144,7 @@
 
         // Controllers.
         $this->API      = new API();
+        $this->Asset    = new Asset();
         $this->Content  = new Content();
         $this->Settings = new Settings();
         $this->Legacy   = new Legacy();
@@ -176,7 +179,7 @@
        * @since 0.0.2
        */
       public function after_setup_theme() {
-        Log::add( 'Executed: Flawless::after_setup_theme();' );
+        self::log( 'Executed: Flawless::after_setup_theme();' );
         do_action( 'flawless::theme_setup', $this );
         do_action( 'flawless::theme_setup::after', $this );
       }
@@ -193,7 +196,7 @@
        * @since 0.0.2
        */
       public function init_upper() {
-        Log::add( 'Executed: Flawless::init_upper();' );
+        self::log( 'Executed: Flawless::init_upper();' );
 
         // Admin Action Wrappers.
         add_action( 'admin_menu', array( $this, 'admin_menu' ) );
@@ -205,8 +208,10 @@
         // Initializer Hook.
         do_action( 'flawless::init_upper', $this );
 
+        // $js = Asset::load( 'app', 'js' );
+
         // Compiled JavaScript library.
-        wp_register_script( 'flawless-app', STYLESHEETPATH . '/ux/build/app.min.js', array(), Flawless_Version, true );
+        wp_register_script( 'flawless-app', STYLESHEETPATH . '/ux/build/app.min.js', array( 'flawless-framework' ), Flawless_Version, true );
 
       }
 
@@ -222,7 +227,7 @@
        * @since 0.0.2
        */
       public function init_lower() {
-        Log::add( 'Executed: Flawless::init_lower();' );
+        self::log( 'Executed: Flawless::init_lower();' );
 
         // Do not load these styles if we are on admin side or the WP login page.
         if ( strpos( $_SERVER[ 'SCRIPT_NAME' ], 'wp-login.php' ) ) {
@@ -243,7 +248,7 @@
        * @for Flawless
        */
       public function admin_menu() {
-        Log::add( 'Executed: Flawless::admin_menu();' );
+        self::log( 'Executed: Flawless::admin_menu();' );
         do_action( 'flawless::admin_menu', $this );
       }
 
@@ -254,7 +259,7 @@
        * @since 0.0.2
        */
       public function admin_init() {
-        Log::add( 'Executed: Flawless::admin_init();' );
+        self::log( 'Executed: Flawless::admin_init();' );
         do_action( 'flawless::admin_init', $this );
       }
 
@@ -265,7 +270,7 @@
        * @since 0.0.2
        */
       public function template_redirect() {
-        Log::add( 'Executed: Flawless::template_redirect();' );
+        self::log( 'Executed: Flawless::template_redirect();' );
 
         // Load Template helpers.
         require_once( $this->state->computed->paths->helpers . '/template.php' );
@@ -287,7 +292,7 @@
        * @since 0.0.2
        */
       public function wp_enqueue_scripts() {
-        Log::add( 'Executed: Flawless::wp_enqueue_scripts();' );
+        self::log( 'Executed: Flawless::wp_enqueue_scripts();' );
 
         // Enqueue Scripts in context.
         do_action( 'flawless::wp_enqueue_scripts', $this );
@@ -310,7 +315,7 @@
        * @since 0.0.6
        */
       public function wp_print_styles() {
-        Log::add( 'Executed: Flawless::wp_print_styles();' );
+        self::log( 'Executed: Flawless::wp_print_styles();' );
 
         // Enqueue client-side styles.
         wp_enqueue_style( 'flawless-app', STYLESHEETPATH . '/ux/build/app.min.css', array(), Flawless_Version );
@@ -329,7 +334,9 @@
        * @author potanin@UD
        * @since 0.1.1
        */
-      public function get() {}
+      public function get( $key, $default ) {
+        return Flawless::get_instance()->Settings->get( $key, $default );
+      }
 
       /**
        * Set Setting.
@@ -340,7 +347,20 @@
        * @author potanin@UD
        * @since 0.1.1
        */
-      public function set() {}
+      public function set( $key, $value ) {
+        return Flawless::get_instance()->Settings->set( $key, $value );
+      }
+
+      /**
+       * Class Logger
+       *
+       * @method log
+       * @for Flawless
+       *
+       * @author potanin@UD
+       * @since 0.1.1
+       */
+      public function log( $data ) {}
 
       /**
        * Create Widget Instance.
@@ -354,20 +374,6 @@
        */
       public static function Widget( $args ) {
         return new Widget( $args );
-      }
-
-      /**
-       * Create Asset Instance.
-       *
-       * @method Asset
-       * @for Flawless
-       * @uses Asset
-       *
-       * @param $args
-       * @return Asset
-       */
-      public static function Asset( $args ) {
-        return new Asset( $args );
       }
 
       /**

@@ -23,7 +23,12 @@
      */
     class API extends \UsabilityDynamics\API {
 
-      // Class Version.
+      /**
+       * API Class version.
+       *
+       * @property $version
+       * @type {Object}
+       */
       public static $version = '0.1.1';
 
       /**
@@ -46,8 +51,6 @@
 
         add_action( 'wp_ajax_frontend_ajax_handler', create_function( '', ' die( json_encode( API::frontend_ajax_handler() )); ' ) );
         add_action( 'wp_ajax_nopriv_frontend_ajax_handler', create_function( '', ' die( json_encode( API::frontend_ajax_handler() )); ' ) );
-
-        add_action( 'wp_ajax_flawless_signup_field_check', array( __CLASS__, 'flawless_signup_field_check' ), 10, 3 );
 
       }
 
@@ -313,51 +316,6 @@
 
         return $return;
 
-      }
-
-      /**
-       * Flawless Signup Field Check
-       *
-       * @author odokienko@UD
-       */
-      static function flawless_signup_field_check() {
-        global $wpdb;
-
-        $field_name  = $_REQUEST[ 'field_name' ];
-        $field_value = $_REQUEST[ 'field_value' ];
-        $field_type  = $_REQUEST[ 'field_type' ];
-        $response    = array(
-          'success' => 'true'
-        );
-
-        switch ( $field_name ) {
-          case "signup_username":
-            $user_exists = $wpdb->get_row( "SELECT * FROM {$wpdb->users} WHERE `user_login` = '{$field_value}' limit 1" );
-
-            if ( !empty( $user_exists ) ) {
-              $response = array(
-                'success' => 'false',
-                'message' => __( 'Sorry, that username already exists!', 'flawless' )
-              );
-            }
-            break;
-          case "signup_email":
-            $user_exists = $wpdb->get_row( "SELECT * FROM {$wpdb->users} WHERE `user_email` = '{$field_value}' limit 1" );
-
-            if ( !empty( $user_exists ) ) {
-              $response = array(
-                'success'  => 'false',
-                'message'  => __( 'Sorry, that email address is already used!', 'flawless' ),
-                'setfocus' => '.flawless_login_form input[name=log]'
-              );
-            }
-            break;
-
-          default:
-
-        }
-
-        die( json_encode( $response ) );
       }
 
     }

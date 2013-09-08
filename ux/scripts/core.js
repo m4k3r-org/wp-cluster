@@ -6,10 +6,16 @@
  * @version 0.1.0
  * @copyright (c) 2012-2013 Usability Dynamics, Inc. (usabilitydynamics.com)
  */
-var flawless = {};
 
-/* Declare global var if it not setup already */
-jQuery.extend( true, flawless, {
+var Emitter = require( 'emitter' );
+
+module.exports = {
+
+  test_thing: function () {
+
+    console.log( 'Emitter:', Emitter );
+  },
+
   developer_mode: false,
 
   /**
@@ -17,7 +23,7 @@ jQuery.extend( true, flawless, {
    *
    * @author potanin@UD
    */
-  log: function log( notice, type, console_type, override_debug ) {
+  log: function log ( notice, type, console_type, override_debug ) {
 
     /** Defaults */
     type = typeof type !== 'undefined' ? type : 'log';
@@ -44,7 +50,7 @@ jQuery.extend( true, flawless, {
           break;
 
         case 'log':
-          if( typeof flawless.console_log_options === 'object' && flawless.console_log_options.show_log ) {
+          if ( typeof flawless.console_log_options === 'object' && flawless.console_log_options.show_log ) {
             console.log( notice );
           }
           break;
@@ -57,5 +63,4 @@ jQuery.extend( true, flawless, {
 
   }
 
-});
-
+}
