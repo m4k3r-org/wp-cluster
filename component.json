@@ -8,7 +8,6 @@
     "ux/scripts/app.js"
   ],
   "styles": [
-    "ux/styles/core.less",
     "ux/styles/content.less",
     "ux/styles/mixins.less",
     "ux/styles/app.less"

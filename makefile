@@ -20,8 +20,12 @@ update:
 document:
 	yuidoc -q --configfile static/yuidoc.json
 
-minify:
-	uglifyjs ./ux/build/app.js -o ./ux/build/app.min.js
+compile:
+	component-install && component-build -o ./ux/build -n app
+	lessc   ./ux/styles/content.less ./ux/build/content.css
+	lessc   ./ux/styles/content.less ./ux/build/content.min.css -x
+	minify  ./ux/build/app.css ./ux/build/app.min.css
+	/node_modules/upm/node_modules/uglify-js/bin/uglifyjs ./ux/build/app.js -o ./ux/build/app.min.js
 
 test-code:
 	@NODE_ENV=test mocha \
