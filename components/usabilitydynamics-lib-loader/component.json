@@ -1,0 +1,37 @@
+{
+  "name": "loader",
+  "version": "0.0.3",
+  "description": "Asset loader.",
+  "homepage": "http://github.com/UsabilityDynamics/lib-loader",
+  "private": false,
+  "repo": "UsabilityDynamics/lib-loader",
+  "dependencies": {
+    "usabilitydynamics/lib-utility": "*"
+  },
+  "libs": [
+    "libs/loader.php"
+  ],
+  "scripts": [
+    "scripts/loader.js"
+  ],
+  "authors": [
+    {
+      "name": "Andy Potanin",
+      "email": "andy.potanin@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Maxim Peshkov",
+      "email": "maxim.peshkov@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Anton Korotkov",
+      "email": "anton.korotkov@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    }
+  ]
+}

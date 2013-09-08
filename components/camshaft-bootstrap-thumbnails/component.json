@@ -1,0 +1,13 @@
+{
+  "name": "bootstrap-thumbnails",
+  "repo": "CamShaft/bootstrap-thumbnails",
+  "description": "Bootstrap Thumbnails Component",
+  "version": "2.3.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "APLv2",
+  "styles": [
+    "bootstrap-thumbnails.css"
+  ]
+}

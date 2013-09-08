@@ -1,0 +1,13 @@
+{
+  "name": "bootstrap-grid",
+  "repo": "CamShaft/bootstrap-grid",
+  "description": "Bootstrap Grid Component",
+  "version": "2.3.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "APLv2",
+  "styles": [
+    "bootstrap-grid.css"
+  ]
+}

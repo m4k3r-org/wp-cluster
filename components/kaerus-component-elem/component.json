@@ -1,0 +1,11 @@
+{
+  "name": "elem",
+  "version": "0.1.2",
+  "repo": "kaerus-component/elem",
+  "description": "DOM element extensions",
+  "scripts": [
+    "shims/querySelector.js",
+    "index.js"
+  ],
+  "license": "Apache2_0"
+}

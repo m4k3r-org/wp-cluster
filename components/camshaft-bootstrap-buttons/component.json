@@ -1,0 +1,19 @@
+{
+  "name": "bootstrap-buttons",
+  "repo": "CamShaft/bootstrap-buttons",
+  "description": "Bootstrap Buttons Component",
+  "version": "2.3.1",
+  "keywords": [],
+  "dependencies": {
+    "component/jquery": "1.8.2"
+  },
+  "development": {},
+  "license": "APLv2",
+  "main": "bootstrap-buttons.js",
+  "scripts": [
+    "bootstrap-buttons.js"
+  ],
+  "styles": [
+    "bootstrap-buttons.css"
+  ]
+}
