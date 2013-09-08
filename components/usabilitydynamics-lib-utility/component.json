@@ -1,15 +1,18 @@
 {
-  "name": "lib-utility",
-  "version": "0.0.1",
-  "description": "lib-utility",
+  "name": "utility",
+  "version": "0.2.2",
+  "description": "Usability Dynamics general utility classes.",
   "homepage": "http://github.com/UsabilityDynamics/lib-utility",
   "private": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/UsabilityDynamics/lib-utility"
   },
+  "dependencies": {},
+  "lib": [
+    "libs/utility.php"
+  ],
   "scripts": [
-    "scripts/utility.php",
     "scripts/utility.js"
   ],
   "authors": [

@@ -3,6 +3,7 @@
  *
  * JavaScript, CSS and PHP library loader.
  *
+ * @version 0.0.3
  * @author potanin@UD
  * @namespace Loader
  * @class Loader

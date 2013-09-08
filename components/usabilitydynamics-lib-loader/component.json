@@ -1,6 +1,6 @@
 {
   "name": "loader",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Asset loader.",
   "homepage": "http://github.com/UsabilityDynamics/lib-loader",
   "private": false,
@@ -8,9 +8,11 @@
   "dependencies": {
     "usabilitydynamics/lib-utility": "*"
   },
+  "libs": [
+    "libs/loader.php"
+  ],
   "scripts": [
-    "scripts/loader.js",
-    "scripts/loader.php"
+    "scripts/loader.js"
   ],
   "authors": [
     {

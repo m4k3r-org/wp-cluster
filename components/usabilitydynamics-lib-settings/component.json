@@ -1,7 +1,7 @@
 {
-  "name": "lib-settings",
-  "version": "0.0.1",
-  "description": "lib-settings",
+  "name": "settings",
+  "version": "0.1.1",
+  "description": "Settings library settings.",
   "homepage": "http://github.com/UsabilityDynamics/lib-settings",
   "private": false,
   "repository": {
@@ -12,11 +12,13 @@
     "usabilitydynamics/lib-utility": "*"
   },
   "files": [
-    "files/settings-schema.json"
+    "files/schema/settings.json"
+  ],
+  "libs": [
+    "libs/settings.php"
   ],
   "scripts": [
-    "scripts/settings.js",
-    "scripts/settings.php"
+    "scripts/settings.js"
   ],
   "authors": [
     {

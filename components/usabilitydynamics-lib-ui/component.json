@@ -1,7 +1,7 @@
 {
   "name": "ui",
-  "version": "0.0.1",
-  "description": "Component for uis.",
+  "version": "0.1.0",
+  "description": "Component for User Interfaces.",
   "homepage": "http://github.com/UsabilityDynamics/lib-ui",
   "private": false,
   "repository": {
@@ -13,14 +13,16 @@
   },
   "templates": [],
   "files": [
-    "files/ui-schema.json"
+    "files/schema/ui.json"
   ],
   "styles": [
     "styles/ui.css"
   ],
+  "libs": [
+    "libs/ui.php"
+  ],
   "scripts": [
-    "scripts/ui.js",
-    "scripts/ui.php"
+    "scripts/ui.js"
   ],
   "authors": [
     {

@@ -12,11 +12,13 @@
     "usabilitydynamics/lib-utility": "*"
   },
   "files": [
-    "files/api-schema.json"
+    "files/schema/api.json"
+  ],
+  "libs": [
+    "libs/api.php"
   ],
   "scripts": [
-    "scripts/api.js",
-    "scripts/api.php"
+    "scripts/api.js"
   ],
   "authors": [
     {

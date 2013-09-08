@@ -11,7 +11,7 @@
  */
 var io = ('undefined' === typeof module ? {} : module.exports);
 
-(function() {
+(function () {
 
   /**
    * Main
@@ -20,7 +20,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, global ) {
+  (function ( exports, global ) {
 
     var io = exports;
 
@@ -68,10 +68,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @Param {Boolean} force creation of new socket (defaults to false)
      * @api public
      */
-    io.connect = function( host, details ) {
+    io.connect = function ( host, details ) {
       var uri = io.util.parseUri( host ), uuri, socket;
 
-      if( global && global.location ) {
+      if ( global && global.location ) {
         uri.protocol = uri.protocol || global.location.protocol.slice( 0, -1 );
         uri.host = uri.host || (global.document ? global.document.domain : global.location.hostname);
         uri.port = uri.port || global.location.port;
@@ -89,11 +89,11 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
       io.util.merge( options, details );
 
-      if( options['force new connection'] || !io.sockets[uuri] ) {
+      if ( options['force new connection'] || !io.sockets[uuri] ) {
         socket = new io.Socket( options );
       }
 
-      if( !options['force new connection'] && socket ) {
+      if ( !options['force new connection'] && socket ) {
         io.sockets[uuri] = socket;
       }
 
@@ -112,7 +112,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
        * @author korotkov@ud
        * @since 0.5
        */
-      _return.socket.request = function( method, path ) {
+      _return.socket.request = function ( method, path ) {
         //io.log( 'socket.request', method, path );
 
         // Request Parameters
@@ -122,7 +122,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
             'access-key': options[ 'access-key' ],
             'transaction-id': parseInt( ( Math.random() ).toString().replace( '0.', '' ) )
           },
-          'method' : method || 'get',
+          'method': method || 'get',
           'path': path,
           'args': arguments[ Object.keys( arguments ).length - 2 ] || {}
         };
@@ -130,9 +130,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         // Add Transaction Callback listener to Socket Connections
         io.__transactions[ _request.headers[ 'transaction-id' ] ] = {
           'request': _request,
-          'callback': typeof arguments[ Object.keys( arguments ).length - 1 ] === 'function' ? arguments[ Object.keys( arguments ).length - 1 ] : function() {},
-          'timeout': setTimeout( function() {
-            if( io.__transactions[ _request.headers[ 'transaction-id' ] ] ) {
+          'callback': typeof arguments[ Object.keys( arguments ).length - 1 ] === 'function' ? arguments[ Object.keys( arguments ).length - 1 ] : function () {
+          },
+          'timeout': setTimeout( function () {
+            if ( io.__transactions[ _request.headers[ 'transaction-id' ] ] ) {
               io.__transactions[ _request.headers[ 'transaction-id' ] ].callback( Error( 'Socket transaction timed out.' ), {}, {}, io );
               delete io.__transactions[ _request.headers[ 'transaction-id' ] ];
             }
@@ -150,14 +151,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
        *
        *
        */
-      _return.on( 'message', function( message ) {
+      _return.on( 'message', function ( message ) {
 
         // Ignore messages without headers
-        if( typeof message !== 'object' || ( typeof messsage === 'object' && !message.headers ) ) {
+        if ( typeof message !== 'object' || ( typeof messsage === 'object' && !message.headers ) ) {
           return;
         }
 
-        if( typeof io.__transactions[ message.headers[ 'transaction-id' ] ] === 'object' ) {
+        if ( typeof io.__transactions[ message.headers[ 'transaction-id' ] ] === 'object' ) {
 
           // Errors will be returned in one of two ways
           var _error = message.body.errors || message.body.error;
@@ -170,24 +171,24 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
         }
 
-      });
+      } );
 
       // If third argument is a function, we treat it as a callback
-      if( typeof arguments[2] === 'function' ) {
+      if ( typeof arguments[2] === 'function' ) {
 
         var _callback = arguments[2];
 
-        socket.once( 'connect', function() {
+        socket.once( 'connect', function () {
           _callback( null, _return.socket );
-        });
+        } );
 
-        socket.once( 'connect_failed', function() {
+        socket.once( 'connect_failed', function () {
           _callback( new Error( 'Socket Connection Failed' ), _return.socket );
-        });
+        } );
 
-        socket.once( 'error', function() {
+        socket.once( 'error', function () {
           _callback( new Error( 'Socket Connection Failed' ), _return.socket );
-        });
+        } );
 
       }
 
@@ -200,13 +201,13 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      *
      */
-    io.log = function() {
+    io.log = function () {
 
       if ( typeof console === 'undefined' ) {
         return arguments ? arguments : null;
       }
 
-      if( arguments[0] instanceof Error ) {
+      if ( arguments[0] instanceof Error ) {
         console.error( 'ud.socket:error', arguments[0].message );
         return arguments;
       }
@@ -224,7 +225,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, global ) {
+  (function ( exports, global ) {
 
     /**
      * Utilities namespace.
@@ -241,15 +242,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      */
     var re = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
 
-    var parts = ['source', 'protocol', 'authority', 'userInfo', 'user', 'password', 'host', 'port', 'relative', 'path',
-      'directory', 'file', 'query', 'anchor'];
+    var parts = ['source', 'protocol', 'authority', 'userInfo', 'user', 'password', 'host', 'port', 'relative', 'path', 'directory', 'file', 'query', 'anchor'];
 
-    util.parseUri = function( str ) {
+    util.parseUri = function ( str ) {
       var m = re.exec( str || '' )
         , uri = {}
         , i = 14;
 
-      while( i-- ) {
+      while ( i-- ) {
         uri[parts[i]] = m[i] || '';
       }
 
@@ -262,18 +262,18 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {Object} uri
      * @api public
      */
-    util.uniqueUri = function( uri ) {
+    util.uniqueUri = function ( uri ) {
       var protocol = uri.protocol
         , host = uri.host
         , port = uri.port;
 
-      if( 'document' in global ) {
+      if ( 'document' in global ) {
         host = host || document.domain;
         port = port || (protocol === 'https' && document.location.protocol !== 'https:' ? 443 : document.location.port);
       } else {
         host = host || 'localhost';
 
-        if( !port && protocol === 'https' ) {
+        if ( !port && protocol === 'https' ) {
           port = 443;
         }
       }
@@ -288,13 +288,13 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {String} addition
      * @api public
      */
-    util.query = function( base, addition ) {
+    util.query = function ( base, addition ) {
       var query = util.chunkQuery( base || '' )
         , components = [];
 
       util.merge( query, util.chunkQuery( addition || '' ) );
-      for( var part in query ) {
-        if( query.hasOwnProperty( part ) ) {
+      for ( var part in query ) {
+        if ( query.hasOwnProperty( part ) ) {
           components.push( part + '=' + query[part] );
         }
       }
@@ -308,16 +308,16 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {String} qs
      * @api public
      */
-    util.chunkQuery = function( qs ) {
+    util.chunkQuery = function ( qs ) {
       var query = {}
         , params = qs.split( '&' )
         , i = 0
         , l = params.length
         , kv;
 
-      for( ; i < l; ++i ) {
+      for ( ; i < l; ++i ) {
         kv = params[i].split( '=' );
-        if( kv[0] ) {
+        if ( kv[0] ) {
           query[kv[0]] = kv[1];
         }
       }
@@ -335,8 +335,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      */
     var pageLoaded = false;
 
-    util.load = function( fn ) {
-      if( 'document' in global && document.readyState === 'complete' || pageLoaded ) {
+    util.load = function ( fn ) {
+      if ( 'document' in global && document.readyState === 'complete' || pageLoaded ) {
         return fn();
       }
 
@@ -348,10 +348,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    util.on = function( element, event, fn, capture ) {
-      if( element.attachEvent ) {
+    util.on = function ( element, event, fn, capture ) {
+      if ( element.attachEvent ) {
         element.attachEvent( 'on' + event, fn );
-      } else if( element.addEventListener ) {
+      } else if ( element.addEventListener ) {
         element.addEventListener( event, fn, capture );
       }
     };
@@ -363,21 +363,21 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {XMLHttpRequest|false} If we can create a XMLHttpRequest.
      * @api private
      */
-    util.request = function( xdomain ) {
+    util.request = function ( xdomain ) {
 
-      if( xdomain && 'undefined' != typeof XDomainRequest ) {
+      if ( xdomain && 'undefined' != typeof XDomainRequest ) {
         return new XDomainRequest();
       }
 
-      if( 'undefined' != typeof XMLHttpRequest && (!xdomain || util.ua.hasCORS) ) {
+      if ( 'undefined' != typeof XMLHttpRequest && (!xdomain || util.ua.hasCORS) ) {
         return new XMLHttpRequest();
       }
 
-      if( !xdomain ) {
+      if ( !xdomain ) {
         try {
           return new window[(['Active'].concat( 'Object' ).join( 'X' ))]( 'Microsoft.XMLHTTP' );
+        } catch ( e ) {
         }
-        catch( e ) { }
       }
 
       return null;
@@ -392,8 +392,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     /**
      * Change the internal pageLoaded value.
      */
-    if( 'undefined' != typeof window ) {
-      util.load( function() {
+    if ( 'undefined' != typeof window ) {
+      util.load( function () {
         pageLoaded = true;
       } );
     }
@@ -404,12 +404,12 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {Function} fn
      * @api public
      */
-    util.defer = function( fn ) {
-      if( !util.ua.webkit || 'undefined' != typeof importScripts ) {
+    util.defer = function ( fn ) {
+      if ( !util.ua.webkit || 'undefined' != typeof importScripts ) {
         return fn();
       }
 
-      util.load( function() {
+      util.load( function () {
         setTimeout( fn, 100 );
       } );
     };
@@ -419,14 +419,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    util.merge = function merge( target, additional, deep, lastseen ) {
+    util.merge = function merge ( target, additional, deep, lastseen ) {
       var seen = lastseen || []
         , depth = typeof deep === 'undefined' ? 2 : deep
         , prop;
 
-      for( prop in additional ) {
-        if( additional.hasOwnProperty( prop ) && util.indexOf( seen, prop ) < 0 ) {
-          if( typeof target[prop] !== 'object' || !depth ) {
+      for ( prop in additional ) {
+        if ( additional.hasOwnProperty( prop ) && util.indexOf( seen, prop ) < 0 ) {
+          if ( typeof target[prop] !== 'object' || !depth ) {
             target[prop] = additional[prop];
             seen.push( additional[prop] );
           } else {
@@ -443,7 +443,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    util.mixin = function( ctor, ctor2 ) {
+    util.mixin = function ( ctor, ctor2 ) {
       util.merge( ctor.prototype, ctor2.prototype );
     };
 
@@ -452,8 +452,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    util.inherit = function( ctor, ctor2 ) {
-      function f() {
+    util.inherit = function ( ctor, ctor2 ) {
+      function f () {
       };
       f.prototype = ctor2.prototype;
       ctor.prototype = new f;
@@ -468,7 +468,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param Object obj
      * @api public
      */
-    util.isArray = Array.isArray || function( obj ) {
+    util.isArray = Array.isArray || function ( obj ) {
       return Object.prototype.toString.call( obj ) === '[object Array]';
     };
 
@@ -477,13 +477,13 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    util.intersect = function( arr, arr2 ) {
+    util.intersect = function ( arr, arr2 ) {
       var ret = []
         , longest = arr.length > arr2.length ? arr : arr2
         , shortest = arr.length > arr2.length ? arr2 : arr;
 
-      for( var i = 0, l = shortest.length; i < l; i++ ) {
-        if( ~util.indexOf( longest, shortest[i] ) ) {
+      for ( var i = 0, l = shortest.length; i < l; i++ ) {
+        if ( ~util.indexOf( longest, shortest[i] ) ) {
           ret.push( shortest[i] );
         }
       }
@@ -497,9 +497,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @see bit.ly/a5Dxa2
      * @api public
      */
-    util.indexOf = function( arr, o, i ) {
+    util.indexOf = function ( arr, o, i ) {
 
-      for( var j = arr.length, i = i < 0 ? i + j < 0 ? 0 : i + j : i || 0; i < j && arr[i] !== o; i++ ) {}
+      for ( var j = arr.length, i = i < 0 ? i + j < 0 ? 0 : i + j : i || 0; i < j && arr[i] !== o; i++ ) {
+      }
 
       return j <= i ? -1 : i;
     };
@@ -509,10 +510,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    util.toArray = function( enu ) {
+    util.toArray = function ( enu ) {
       var arr = [];
 
-      for( var i = 0, l = enu.length; i < l; i++ ) {
+      for ( var i = 0, l = enu.length; i < l; i++ ) {
         arr.push( enu[i] );
       }
 
@@ -531,11 +532,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    util.ua.hasCORS = 'undefined' != typeof XMLHttpRequest && (function() {
+    util.ua.hasCORS = 'undefined' != typeof XMLHttpRequest && (function () {
       try {
         var a = new XMLHttpRequest();
-      }
-      catch( e ) {
+      } catch ( e ) {
         return false;
       }
 
@@ -565,7 +565,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, io ) {
+  (function ( exports, io ) {
 
     /**
      * Expose constructor.
@@ -577,7 +577,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public.
      */
-    function EventEmitter() {
+    function EventEmitter () {
     };
 
     /**
@@ -585,14 +585,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    EventEmitter.prototype.on = function( name, fn ) {
-      if( !this.$events ) {
+    EventEmitter.prototype.on = function ( name, fn ) {
+      if ( !this.$events ) {
         this.$events = {};
       }
 
-      if( !this.$events[name] ) {
+      if ( !this.$events[name] ) {
         this.$events[name] = fn;
-      } else if( io.util.isArray( this.$events[name] ) ) {
+      } else if ( io.util.isArray( this.$events[name] ) ) {
         this.$events[name].push( fn );
       } else {
         this.$events[name] = [this.$events[name], fn];
@@ -608,10 +608,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    EventEmitter.prototype.once = function( name, fn ) {
+    EventEmitter.prototype.once = function ( name, fn ) {
       var self = this;
 
-      function on() {
+      function on () {
         self.removeListener( name, on );
         fn.apply( this, arguments );
       };
@@ -627,30 +627,30 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    EventEmitter.prototype.removeListener = function( name, fn ) {
-      if( this.$events && this.$events[name] ) {
+    EventEmitter.prototype.removeListener = function ( name, fn ) {
+      if ( this.$events && this.$events[name] ) {
         var list = this.$events[name];
 
-        if( io.util.isArray( list ) ) {
+        if ( io.util.isArray( list ) ) {
           var pos = -1;
 
-          for( var i = 0, l = list.length; i < l; i++ ) {
-            if( list[i] === fn || (list[i].listener && list[i].listener === fn) ) {
+          for ( var i = 0, l = list.length; i < l; i++ ) {
+            if ( list[i] === fn || (list[i].listener && list[i].listener === fn) ) {
               pos = i;
               break;
             }
           }
 
-          if( pos < 0 ) {
+          if ( pos < 0 ) {
             return this;
           }
 
           list.splice( pos, 1 );
 
-          if( !list.length ) {
+          if ( !list.length ) {
             delete this.$events[name];
           }
-        } else if( list === fn || (list.listener && list.listener === fn) ) {
+        } else if ( list === fn || (list.listener && list.listener === fn) ) {
           delete this.$events[name];
         }
       }
@@ -663,13 +663,13 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    EventEmitter.prototype.removeAllListeners = function( name ) {
-      if( name === undefined ) {
+    EventEmitter.prototype.removeAllListeners = function ( name ) {
+      if ( name === undefined ) {
         this.$events = {};
         return this;
       }
 
-      if( this.$events && this.$events[name] ) {
+      if ( this.$events && this.$events[name] ) {
         this.$events[name] = null;
       }
 
@@ -681,16 +681,16 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api publci
      */
-    EventEmitter.prototype.listeners = function( name ) {
-      if( !this.$events ) {
+    EventEmitter.prototype.listeners = function ( name ) {
+      if ( !this.$events ) {
         this.$events = {};
       }
 
-      if( !this.$events[name] ) {
+      if ( !this.$events[name] ) {
         this.$events[name] = [];
       }
 
-      if( !io.util.isArray( this.$events[name] ) ) {
+      if ( !io.util.isArray( this.$events[name] ) ) {
         this.$events[name] = [this.$events[name]];
       }
 
@@ -702,25 +702,25 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    EventEmitter.prototype.emit = function( name ) {
-      if( !this.$events ) {
+    EventEmitter.prototype.emit = function ( name ) {
+      if ( !this.$events ) {
         return false;
       }
 
       var handler = this.$events[name];
 
-      if( !handler ) {
+      if ( !handler ) {
         return false;
       }
 
       var args = Array.prototype.slice.call( arguments, 1 );
 
-      if( 'function' === typeof handler ) {
+      if ( 'function' === typeof handler ) {
         handler.apply( this, args );
-      } else if( io.util.isArray( handler ) ) {
+      } else if ( io.util.isArray( handler ) ) {
         var listeners = handler.slice();
 
-        for( var i = 0, l = listeners.length; i < l; i++ ) {
+        for ( var i = 0, l = listeners.length; i < l; i++ ) {
           listeners[i].apply( this, args );
         }
       } else {
@@ -730,10 +730,9 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       return true;
     };
 
-    EventEmitter.prototype.__request = function( method, path ) {
+    EventEmitter.prototype.__request = function ( method, path ) {
 
     }
-
 
   })( 'undefined' != typeof io ? io : module.exports, 'undefined' != typeof io ? io : module.parent.exports );
 
@@ -744,11 +743,11 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, nativeJSON ) {
+  (function ( exports, nativeJSON ) {
     "use strict";
 
     // use native JSON if it's available
-    if( nativeJSON && nativeJSON.parse ) {
+    if ( nativeJSON && nativeJSON.parse ) {
       return exports.JSON = {
         parse: nativeJSON.parse, stringify: nativeJSON.stringify
       }
@@ -756,15 +755,13 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
     var JSON = exports.JSON = {};
 
-    function f( n ) {
+    function f ( n ) {
       // Format integers to have at least two digits.
       return n < 10 ? '0' + n : n;
     }
 
-    function date( d, key ) {
-      return isFinite( d.valueOf() ) ?
-        d.getUTCFullYear() + '-' + f( d.getUTCMonth() + 1 ) + '-' + f( d.getUTCDate() ) + 'T' + f( d.getUTCHours() ) + ':' + f( d.getUTCMinutes() ) + ':' + f( d.getUTCSeconds() ) + 'Z' :
-        null;
+    function date ( d, key ) {
+      return isFinite( d.valueOf() ) ? d.getUTCFullYear() + '-' + f( d.getUTCMonth() + 1 ) + '-' + f( d.getUTCDate() ) + 'T' + f( d.getUTCHours() ) + ':' + f( d.getUTCMinutes() ) + ':' + f( d.getUTCSeconds() ) + 'Z' : null;
     };
 
     var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g, escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g, gap, indent, meta = {    // table of character substitutions
@@ -777,8 +774,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       '\\': '\\\\'
     }, rep;
 
-
-    function quote( string ) {
+    function quote ( string ) {
 
       // If the string contains no control characters, no quote characters, and no
       // backslash characters, then we can safely slap some quotes around it.
@@ -786,14 +782,13 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       // sequences.
 
       escapable.lastIndex = 0;
-      return escapable.test( string ) ? '"' + string.replace( escapable, function( a ) {
+      return escapable.test( string ) ? '"' + string.replace( escapable, function ( a ) {
         var c = meta[a];
         return typeof c === 'string' ? c : '\\u' + ('0000' + a.charCodeAt( 0 ).toString( 16 )).slice( -4 );
       } ) + '"' : '"' + string + '"';
     }
 
-
-    function str( key, holder ) {
+    function str ( key, holder ) {
 
       // Produce a string from holder[key].
 
@@ -804,20 +799,20 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
       // If the value has a toJSON method, call it to obtain a replacement value.
 
-      if( value instanceof Date ) {
+      if ( value instanceof Date ) {
         value = date( key );
       }
 
       // If we were called with a replacer function, then call the replacer to
       // obtain a replacement value.
 
-      if( typeof rep === 'function' ) {
+      if ( typeof rep === 'function' ) {
         value = rep.call( holder, key, value );
       }
 
       // What happens next depends on the value's type.
 
-      switch( typeof value ) {
+      switch ( typeof value ) {
         case 'string':
           return quote( value );
 
@@ -844,7 +839,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
           // Due to a specification blunder in ECMAScript, typeof null is 'object',
           // so watch out for that case.
 
-          if( !value ) {
+          if ( !value ) {
             return 'null';
           }
 
@@ -855,34 +850,33 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
           // Is the value an array?
 
-          if( Object.prototype.toString.apply( value ) === '[object Array]' ) {
+          if ( Object.prototype.toString.apply( value ) === '[object Array]' ) {
 
             // The value is an array. Stringify every element. Use null as a placeholder
             // for non-JSON values.
 
             length = value.length;
-            for( i = 0; i < length; i += 1 ) {
+            for ( i = 0; i < length; i += 1 ) {
               partial[i] = str( i, value ) || 'null';
             }
 
             // Join all of the elements together, separated with commas, and wrap them in
             // brackets.
 
-            v = partial.length === 0 ? '[]' :
-              gap ? '[\n' + gap + partial.join( ',\n' + gap ) + '\n' + mind + ']' : '[' + partial.join( ',' ) + ']';
+            v = partial.length === 0 ? '[]' : gap ? '[\n' + gap + partial.join( ',\n' + gap ) + '\n' + mind + ']' : '[' + partial.join( ',' ) + ']';
             gap = mind;
             return v;
           }
 
           // If the replacer is an array, use it to select the members to be stringified.
 
-          if( rep && typeof rep === 'object' ) {
+          if ( rep && typeof rep === 'object' ) {
             length = rep.length;
-            for( i = 0; i < length; i += 1 ) {
-              if( typeof rep[i] === 'string' ) {
+            for ( i = 0; i < length; i += 1 ) {
+              if ( typeof rep[i] === 'string' ) {
                 k = rep[i];
                 v = str( k, value );
-                if( v ) {
+                if ( v ) {
                   partial.push( quote( k ) + (gap ? ': ' : ':') + v );
                 }
               }
@@ -891,10 +885,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
             // Otherwise, iterate through all of the keys in the object.
 
-            for( k in value ) {
-              if( Object.prototype.hasOwnProperty.call( value, k ) ) {
+            for ( k in value ) {
+              if ( Object.prototype.hasOwnProperty.call( value, k ) ) {
                 v = str( k, value );
-                if( v ) {
+                if ( v ) {
                   partial.push( quote( k ) + (gap ? ': ' : ':') + v );
                 }
               }
@@ -904,8 +898,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
           // Join all of the member texts together, separated with commas,
           // and wrap them in braces.
 
-          v = partial.length === 0 ? '{}' :
-            gap ? '{\n' + gap + partial.join( ',\n' + gap ) + '\n' + mind + '}' : '{' + partial.join( ',' ) + '}';
+          v = partial.length === 0 ? '{}' : gap ? '{\n' + gap + partial.join( ',\n' + gap ) + '\n' + mind + '}' : '{' + partial.join( ',' ) + '}';
           gap = mind;
           return v;
       }
@@ -913,7 +906,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
     // If the JSON object does not yet have a stringify method, give it one.
 
-    JSON.stringify = function( value, replacer, space ) {
+    JSON.stringify = function ( value, replacer, space ) {
 
       // The stringify method takes a value and an optional replacer, and an optional
       // space parameter, and returns a JSON text. The replacer can be a function
@@ -928,14 +921,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       // If the space parameter is a number, make an indent string containing that
       // many spaces.
 
-      if( typeof space === 'number' ) {
-        for( i = 0; i < space; i += 1 ) {
+      if ( typeof space === 'number' ) {
+        for ( i = 0; i < space; i += 1 ) {
           indent += ' ';
         }
 
         // If the space parameter is a string, it will be used as the indent string.
 
-      } else if( typeof space === 'string' ) {
+      } else if ( typeof space === 'string' ) {
         indent = space;
       }
 
@@ -943,7 +936,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       // Otherwise, throw an error.
 
       rep = replacer;
-      if( replacer && typeof replacer !== 'function' && (typeof replacer !== 'object' || typeof replacer.length !== 'number') ) {
+      if ( replacer && typeof replacer !== 'function' && (typeof replacer !== 'object' || typeof replacer.length !== 'number') ) {
         throw new Error( 'JSON.stringify' );
       }
 
@@ -955,23 +948,23 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
     // If the JSON object does not yet have a parse method, give it one.
 
-    JSON.parse = function( text, reviver ) {
+    JSON.parse = function ( text, reviver ) {
       // The parse method takes a text and an optional reviver function, and returns
       // a JavaScript value if the text is a valid JSON text.
 
       var j;
 
-      function walk( holder, key ) {
+      function walk ( holder, key ) {
 
         // The walk method is used to recursively walk the resulting structure so
         // that modifications can be made.
 
         var k, v, value = holder[key];
-        if( value && typeof value === 'object' ) {
-          for( k in value ) {
-            if( Object.prototype.hasOwnProperty.call( value, k ) ) {
+        if ( value && typeof value === 'object' ) {
+          for ( k in value ) {
+            if ( Object.prototype.hasOwnProperty.call( value, k ) ) {
               v = walk( value, k );
-              if( v !== undefined ) {
+              if ( v !== undefined ) {
                 value[k] = v;
               } else {
                 delete value[k];
@@ -982,15 +975,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         return reviver.call( holder, key, value );
       }
 
-
       // Parsing happens in four stages. In the first stage, we replace certain
       // Unicode characters with escape sequences. JavaScript handles many characters
       // incorrectly, either silently deleting them, or treating them as line endings.
 
       text = String( text );
       cx.lastIndex = 0;
-      if( cx.test( text ) ) {
-        text = text.replace( cx, function( a ) {
+      if ( cx.test( text ) ) {
+        text = text.replace( cx, function ( a ) {
           return '\\u' + ('0000' + a.charCodeAt( 0 ).toString( 16 )).slice( -4 );
         } );
       }
@@ -1008,9 +1000,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       // we look to see that the remaining characters are only whitespace or ']' or
       // ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
 
-      if( /^[\],:{}\s]*$/.test( text.replace( /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,
-          '@' ).replace( /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
-          ']' ).replace( /(?:^|:|,)(?:\s*\[)+/g, '' ) ) ) {
+      if ( /^[\],:{}\s]*$/.test( text.replace( /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@' ).replace( /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']' ).replace( /(?:^|:|,)(?:\s*\[)+/g, '' ) ) ) {
 
         // In the third stage we use the eval function to compile the text into a
         // JavaScript structure. The '{' operator is subject to a syntactic ambiguity
@@ -1039,7 +1029,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, io ) {
+  (function ( exports, io ) {
 
     /**
      * Parser namespace.
@@ -1090,26 +1080,26 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    parser.encodePacket = function( packet ) {
+    parser.encodePacket = function ( packet ) {
       var type = indexOf( packets, packet.type )
         , id = packet.id || ''
         , endpoint = packet.endpoint || ''
         , ack = packet.ack
         , data = null;
 
-      switch( packet.type ) {
+      switch ( packet.type ) {
         case 'error':
           var reason = packet.reason ? indexOf( reasons, packet.reason ) : ''
             , adv = packet.advice ? indexOf( advice, packet.advice ) : '';
 
-          if( reason !== '' || adv !== '' ) {
+          if ( reason !== '' || adv !== '' ) {
             data = reason + (adv !== '' ? ('+' + adv) : '');
           }
 
           break;
 
         case 'message':
-          if( packet.data !== '' ) {
+          if ( packet.data !== '' ) {
             data = packet.data;
           }
           break;
@@ -1117,7 +1107,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         case 'event':
           var ev = { name: packet.name };
 
-          if( packet.args && packet.args.length ) {
+          if ( packet.args && packet.args.length ) {
             ev.args = packet.args;
           }
 
@@ -1129,7 +1119,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
           break;
 
         case 'connect':
-          if( packet.qs ) {
+          if ( packet.qs ) {
             data = packet.qs;
           }
           break;
@@ -1147,7 +1137,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       ];
 
       // data fragment is optional
-      if( data !== null && data !== undefined ) {
+      if ( data !== null && data !== undefined ) {
         encoded.push( data );
       }
 
@@ -1160,14 +1150,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {Array} messages
      * @api private
      */
-    parser.encodePayload = function( packets ) {
+    parser.encodePayload = function ( packets ) {
       var decoded = '';
 
-      if( packets.length === 1 ) {
+      if ( packets.length === 1 ) {
         return packets[0];
       }
 
-      for( var i = 0, l = packets.length; i < l; i++ ) {
+      for ( var i = 0, l = packets.length; i < l; i++ ) {
         var packet = packets[i];
         decoded += '\ufffd' + packet.length + '\ufffd' + packets[i];
       }
@@ -1182,10 +1172,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      */
     var regexp = /([^:]+):([0-9]+)?(\+)?:([^:]+)?:?([\s\S]*)?/;
 
-    parser.decodePacket = function( data ) {
+    parser.decodePacket = function ( data ) {
       var pieces = data.match( regexp );
 
-      if( !pieces ) return {};
+      if ( !pieces ) return {};
 
       var id = pieces[2] || ''
         , data = pieces[5] || ''
@@ -1194,9 +1184,9 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         };
 
       // whether we need to acknowledge the packet
-      if( id ) {
+      if ( id ) {
         packet.id = id;
-        if( pieces[3] ) {
+        if ( pieces[3] ) {
           packet.ack = 'data';
         } else {
           packet.ack = true;
@@ -1204,7 +1194,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       }
 
       // handle different packet types
-      switch( packet.type ) {
+      switch ( packet.type ) {
         case 'error':
           var pieces = data.split( '+' );
           packet.reason = reasons[pieces[0]] || '';
@@ -1220,8 +1210,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
             var opts = JSON.parse( data );
             packet.name = opts.name;
             packet.args = opts.args;
+          } catch ( e ) {
           }
-          catch( e ) { }
 
           packet.args = packet.args || [];
           break;
@@ -1229,8 +1219,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         case 'json':
           try {
             packet.data = JSON.parse( data );
+          } catch ( e ) {
           }
-          catch( e ) { }
           break;
 
         case 'connect':
@@ -1239,15 +1229,15 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
         case 'ack':
           var pieces = data.match( /^([0-9]+)(\+)?(.*)/ );
-          if( pieces ) {
+          if ( pieces ) {
             packet.ackId = pieces[1];
             packet.args = [];
 
-            if( pieces[3] ) {
+            if ( pieces[3] ) {
               try {
                 packet.args = pieces[3] ? JSON.parse( pieces[3] ) : [];
+              } catch ( e ) {
               }
-              catch( e ) { }
             }
           }
           break;
@@ -1267,13 +1257,13 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @return {Array} messages
      * @api public
      */
-    parser.decodePayload = function( data ) {
+    parser.decodePayload = function ( data ) {
       // IE doesn't like data[i] for unicode chars, charAt works fine
-      if( data.charAt( 0 ) === '\ufffd' ) {
+      if ( data.charAt( 0 ) === '\ufffd' ) {
         var ret = [];
 
-        for( var i = 1, length = ''; i < data.length; i++ ) {
-          if( data.charAt( i ) === '\ufffd' ) {
+        for ( var i = 1, length = ''; i < data.length; i++ ) {
+          if ( data.charAt( i ) === '\ufffd' ) {
             ret.push( parser.decodePacket( data.substr( i + 1 ).substr( 0, length ) ) );
             i += Number( length ) + 1;
             length = '';
@@ -1297,7 +1287,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, io ) {
+  (function ( exports, io ) {
 
     /**
      * Expose constructor.
@@ -1310,7 +1300,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @constructor
      * @api public
      */
-    function Transport( socket, sessid ) {
+    function Transport ( socket, sessid ) {
       this.socket = socket;
       this.sessid = sessid;
     };
@@ -1320,13 +1310,12 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      */
     io.util.mixin( Transport, io.EventEmitter );
 
-
     /**
      * Indicates whether heartbeats is enabled for this transport
      *
      * @api private
      */
-    Transport.prototype.heartbeats = function() {
+    Transport.prototype.heartbeats = function () {
       return true;
     }
 
@@ -1338,25 +1327,27 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {String} data Response from the server.
      * @api private
      */
-    Transport.prototype.onData = function( data ) {
+    Transport.prototype.onData = function ( data ) {
       this.clearCloseTimeout();
 
       // If the connection in currently open (or in a reopening state) reset the close
       // timeout since we have just received data. This check is necessary so
       // that we don't reset the timeout on an explicitly disconnected connection.
-      if( this.socket.connected || this.socket.connecting || this.socket.reconnecting ) {
+      if ( this.socket.connected || this.socket.connecting || this.socket.reconnecting ) {
         this.setCloseTimeout();
       }
 
-      if( data !== '' ) {
+      if ( data !== '' ) {
         // todo: we should only do decodePayload for xhr transports
         var msgs = io.parser.decodePayload( data );
 
-        if( typeof jQuery === 'function' ) { jQuery( document ).trigger( 'io::data', msgs ); }
+        if ( typeof jQuery === 'function' ) {
+          jQuery( document ).trigger( 'io::data', msgs );
+        }
         ;
 
-        if( msgs && msgs.length ) {
-          for( var i = 0, l = msgs.length; i < l; i++ ) {
+        if ( msgs && msgs.length ) {
+          for ( var i = 0, l = msgs.length; i < l; i++ ) {
             this.onPacket( msgs[i] );
           }
         }
@@ -1370,18 +1361,18 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Transport.prototype.onPacket = function( packet ) {
+    Transport.prototype.onPacket = function ( packet ) {
       this.socket.setHeartbeatTimeout();
 
-      if( packet.type === 'heartbeat' ) {
+      if ( packet.type === 'heartbeat' ) {
         return this.onHeartbeat();
       }
 
-      if( packet.type === 'connect' && packet.endpoint === '' ) {
+      if ( packet.type === 'connect' && packet.endpoint === '' ) {
         this.onConnect();
       }
 
-      if( packet.type === 'error' && packet.advice === 'reconnect' ) {
+      if ( packet.type === 'error' && packet.advice === 'reconnect' ) {
         this.isOpen = false;
       }
 
@@ -1395,11 +1386,11 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Transport.prototype.setCloseTimeout = function() {
-      if( !this.closeTimeout ) {
+    Transport.prototype.setCloseTimeout = function () {
+      if ( !this.closeTimeout ) {
         var self = this;
 
-        this.closeTimeout = setTimeout( function() {
+        this.closeTimeout = setTimeout( function () {
           self.onDisconnect();
         }, this.socket.closeTimeout );
       }
@@ -1410,8 +1401,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Transport.prototype.onDisconnect = function() {
-      if( this.isOpen ) this.close();
+    Transport.prototype.onDisconnect = function () {
+      if ( this.isOpen ) this.close();
       this.clearTimeouts();
       this.socket.onDisconnect();
       return this;
@@ -1422,7 +1413,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Transport.prototype.onConnect = function() {
+    Transport.prototype.onConnect = function () {
       this.socket.onConnect();
       return this;
     }
@@ -1432,8 +1423,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Transport.prototype.clearCloseTimeout = function() {
-      if( this.closeTimeout ) {
+    Transport.prototype.clearCloseTimeout = function () {
+      if ( this.closeTimeout ) {
         clearTimeout( this.closeTimeout );
         this.closeTimeout = null;
       }
@@ -1444,10 +1435,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Transport.prototype.clearTimeouts = function() {
+    Transport.prototype.clearTimeouts = function () {
       this.clearCloseTimeout();
 
-      if( this.reopenTimeout ) {
+      if ( this.reopenTimeout ) {
         clearTimeout( this.reopenTimeout );
       }
     };
@@ -1458,7 +1449,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {Object} packet object.
      * @api private
      */
-    Transport.prototype.packet = function( packet ) {
+    Transport.prototype.packet = function ( packet ) {
       this.send( io.parser.encodePacket( packet ) );
     };
 
@@ -1469,7 +1460,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {String} heartbeat Heartbeat response from the server.
      * @api private
      */
-    Transport.prototype.onHeartbeat = function( heartbeat ) {
+    Transport.prototype.onHeartbeat = function ( heartbeat ) {
       this.packet( { type: 'heartbeat' } );
     };
 
@@ -1478,7 +1469,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Transport.prototype.onOpen = function() {
+    Transport.prototype.onOpen = function () {
       this.isOpen = true;
       this.clearCloseTimeout();
       this.socket.onOpen();
@@ -1490,7 +1481,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Transport.prototype.onClose = function() {
+    Transport.prototype.onClose = function () {
       var self = this;
 
       /* FIXME: reopen delay causing a infinit loop
@@ -1509,7 +1500,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {String} Connection url
      * @api private
      */
-    Transport.prototype.prepareUrl = function() {
+    Transport.prototype.prepareUrl = function () {
       var options = this.socket.options;
 
       return this.scheme() + '://' + options.host + ':' + options.port + '/' + options.resource + '/' + io.protocol + '/' + this.name + '/' + this.sessid;
@@ -1522,7 +1513,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {Function} fn The callback
      * @api private
      */
-    Transport.prototype.ready = function( socket, fn ) {
+    Transport.prototype.ready = function ( socket, fn ) {
       fn.call( this );
     };
 
@@ -1535,7 +1526,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, io, global ) {
+  (function ( exports, io, global ) {
 
     /**
      * Expose constructor.
@@ -1548,25 +1539,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    function Socket( options ) {
+    function Socket ( options ) {
 
       this.options = {
-        port: 443
-        ,secure: true
-        ,document: 'document' in global ? document : false
-        ,resource: 'socket.io'
-        ,transports: io.transports
-        ,'connect timeout': 10000
-        ,'try multiple transports': true
-        ,'reconnect': true
-        ,'reconnection delay': 500
-        ,'reconnection limit': Infinity
-        ,'reopen delay': 3000
-        ,'max reconnection attempts': 10
-        ,'sync disconnect on unload': false
-        ,'auto connect': true
-        ,'flash policy port': 10843
-        ,'manualFlush': false
+        port: 443, secure: true, document: 'document' in global ? document : false, resource: 'socket.io', transports: io.transports, 'connect timeout': 10000, 'try multiple transports': true, 'reconnect': true, 'reconnection delay': 500, 'reconnection limit': Infinity, 'reopen delay': 3000, 'max reconnection attempts': 10, 'sync disconnect on unload': false, 'auto connect': true, 'flash policy port': 10843, 'manualFlush': false
       };
 
       io.util.merge( this.options, options );
@@ -1579,14 +1555,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       this.buffer = [];
       this.doBuffer = false;
 
-      if( this.options['sync disconnect on unload'] && (!this.isXDomain() || io.util.ua.hasCORS) ) {
+      if ( this.options['sync disconnect on unload'] && (!this.isXDomain() || io.util.ua.hasCORS) ) {
         var self = this;
-        io.util.on( global, 'beforeunload', function() {
+        io.util.on( global, 'beforeunload', function () {
           self.disconnectSync();
         }, false );
       }
 
-      if( this.options['auto connect'] ) {
+      if ( this.options['auto connect'] ) {
         this.connect();
       }
 
@@ -1602,11 +1578,11 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    Socket.prototype.of = function( name ) {
-      if( !this.namespaces[name] ) {
+    Socket.prototype.of = function ( name ) {
+      if ( !this.namespaces[name] ) {
         this.namespaces[name] = new io.SocketNamespace( this, name );
 
-        if( name !== '' ) {
+        if ( name !== '' ) {
           this.namespaces[name].packet( { type: 'connect' } );
         }
       }
@@ -1619,13 +1595,13 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Socket.prototype.publish = function() {
+    Socket.prototype.publish = function () {
       this.emit.apply( this, arguments );
 
       var nsp;
 
-      for( var i in this.namespaces ) {
-        if( this.namespaces.hasOwnProperty( i ) ) {
+      for ( var i in this.namespaces ) {
+        if ( this.namespaces.hasOwnProperty( i ) ) {
           nsp = this.of( i );
           nsp.$emit.apply( nsp, arguments );
         }
@@ -1637,14 +1613,15 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    function empty() {}
+    function empty () {
+    }
 
-    Socket.prototype.handshake = function( fn ) {
+    Socket.prototype.handshake = function ( fn ) {
       var self = this
         , options = this.options;
 
-      function complete( data ) {
-        if( data instanceof Error ) {
+      function complete ( data ) {
+        if ( data instanceof Error ) {
           self.connecting = false;
           self.onError( data.message );
         } else {
@@ -1660,14 +1637,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         , io.util.query( this.options.query, 't=' + +new Date )
       ].join( '/' );
 
-      if( this.isXDomain() && !io.util.ua.hasCORS ) {
+      if ( this.isXDomain() && !io.util.ua.hasCORS ) {
         var insertAt = document.getElementsByTagName( 'script' )[0]
           , script = document.createElement( 'script' );
 
         script.src = url + '&jsonp=' + io.j.length;
         insertAt.parentNode.insertBefore( script, insertAt );
 
-        io.j.push( function( data ) {
+        io.j.push( function ( data ) {
           complete( data );
           script.parentNode.removeChild( script );
         } );
@@ -1675,16 +1652,16 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         var xhr = io.util.request();
 
         xhr.open( 'GET', url, true );
-        if( this.isXDomain() ) {
+        if ( this.isXDomain() ) {
           xhr.withCredentials = true;
         }
-        xhr.onreadystatechange = function() {
-          if( xhr.readyState === 4 ) {
+        xhr.onreadystatechange = function () {
+          if ( xhr.readyState === 4 ) {
             xhr.onreadystatechange = empty;
 
-            if( xhr.status === 200 ) {
+            if ( xhr.status === 200 ) {
               complete( xhr.responseText );
-            } else if( xhr.status === 403 ) {
+            } else if ( xhr.status === 403 ) {
               self.onError( xhr.responseText );
             } else {
               self.connecting = false;
@@ -1701,11 +1678,11 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Socket.prototype.getTransport = function( override ) {
+    Socket.prototype.getTransport = function ( override ) {
       var transports = override || this.transports, match;
 
-      for( var i = 0, transport; transport = transports[i]; i++ ) {
-        if( io.Transport[transport] && io.Transport[transport].check( this ) && (!this.isXDomain() || io.Transport[transport].xdomainCheck( this )) ) {
+      for ( var i = 0, transport; transport = transports[i]; i++ ) {
+        if ( io.Transport[transport] && io.Transport[transport].check( this ) && (!this.isXDomain() || io.Transport[transport].xdomainCheck( this )) ) {
           return new io.Transport[transport]( this, this.sessionid );
         }
       }
@@ -1720,8 +1697,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {io.Socket}
      * @api public
      */
-    Socket.prototype.connect = function( fn ) {
-      if( this.connecting ) {
+    Socket.prototype.connect = function ( fn ) {
+      if ( this.connecting ) {
         return this;
       }
 
@@ -1729,43 +1706,44 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
       self.connecting = true;
 
-      this.handshake( function( sid, heartbeat, close, transports ) {
+      this.handshake( function ( sid, heartbeat, close, transports ) {
         self.sessionid = sid;
         self.closeTimeout = close * 1000;
         self.heartbeatTimeout = heartbeat * 1000;
 
-        if( !self.transports ) {
+        if ( !self.transports ) {
           self.transports = self.origTransports = ( transports ? io.util.intersect( transports.split( ',' ), self.options.transports ) : self.options.transports);
         }
 
         self.setHeartbeatTimeout();
 
-        function connect( transports ) {
-          if( self.transport ) self.transport.clearTimeouts();
+        function connect ( transports ) {
+          if ( self.transport ) self.transport.clearTimeouts();
 
           self.transport = self.getTransport( transports );
 
-          if( !self.transport ) {
+          if ( !self.transport ) {
             return self.publish( 'connect_failed' );
           }
 
           // once the transport is ready
-          self.transport.ready( self, function() {
+          self.transport.ready( self, function () {
             self.connecting = true;
             self.publish( 'connecting', self.transport.name );
             self.transport.open();
 
-            if( self.options['connect timeout'] ) {
-              self.connectTimeoutTimer = setTimeout( function() {
-                if( !self.connected ) {
+            if ( self.options['connect timeout'] ) {
+              self.connectTimeoutTimer = setTimeout( function () {
+                if ( !self.connected ) {
                   self.connecting = false;
 
-                  if( self.options['try multiple transports'] ) {
+                  if ( self.options['try multiple transports'] ) {
                     var remaining = self.transports;
 
-                    while( remaining.length > 0 && remaining.splice( 0, 1 )[0] != self.transport.name ) {}
+                    while ( remaining.length > 0 && remaining.splice( 0, 1 )[0] != self.transport.name ) {
+                    }
 
-                    if( remaining.length ) {
+                    if ( remaining.length ) {
                       connect( remaining );
                     } else {
                       self.publish( 'connect_failed' );
@@ -1774,18 +1752,18 @@ var io = ('undefined' === typeof module ? {} : module.exports);
                 }
               }, self.options['connect timeout'] );
             }
-          });
+          } );
         }
 
         connect( self.transports );
 
-        self.once( 'connect', function() {
+        self.once( 'connect', function () {
           clearTimeout( self.connectTimeoutTimer );
 
           fn && typeof fn === 'function' && fn();
         } );
 
-      });
+      } );
 
       return this;
 
@@ -1797,12 +1775,12 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Socket.prototype.setHeartbeatTimeout = function() {
+    Socket.prototype.setHeartbeatTimeout = function () {
       clearTimeout( this.heartbeatTimeoutTimer );
-      if( this.transport && !this.transport.heartbeats() ) return;
+      if ( this.transport && !this.transport.heartbeats() ) return;
 
       var self = this;
-      this.heartbeatTimeoutTimer = setTimeout( function() {
+      this.heartbeatTimeoutTimer = setTimeout( function () {
         self.transport.onClose();
       }, this.heartbeatTimeout );
     };
@@ -1814,8 +1792,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {io.Socket}
      * @api public
      */
-    Socket.prototype.packet = function( data ) {
-      if( this.connected && !this.doBuffer ) {
+    Socket.prototype.packet = function ( data ) {
+      if ( this.connected && !this.doBuffer ) {
         this.transport.packet( data );
       } else {
         this.buffer.push( data );
@@ -1829,11 +1807,11 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Socket.prototype.setBuffer = function( v ) {
+    Socket.prototype.setBuffer = function ( v ) {
       this.doBuffer = v;
 
-      if( !v && this.connected && this.buffer.length ) {
-        if( !this.options['manualFlush'] ) {
+      if ( !v && this.connected && this.buffer.length ) {
+        if ( !this.options['manualFlush'] ) {
           this.flushBuffer();
         }
       }
@@ -1845,7 +1823,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    Socket.prototype.flushBuffer = function() {
+    Socket.prototype.flushBuffer = function () {
       this.transport.payload( this.buffer );
       this.buffer = [];
     };
@@ -1856,9 +1834,9 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {io.Socket}
      * @api public
      */
-    Socket.prototype.disconnect = function() {
-      if( this.connected || this.connecting ) {
-        if( this.open ) {
+    Socket.prototype.disconnect = function () {
+      if ( this.connected || this.connecting ) {
+        if ( this.open ) {
           this.of( '' ).packet( { type: 'disconnect' } );
         }
 
@@ -1874,7 +1852,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Socket.prototype.disconnectSync = function() {
+    Socket.prototype.disconnectSync = function () {
       // ensure disconnection
       var xhr = io.util.request();
       var uri = [
@@ -1900,7 +1878,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {Boolean}
      * @api private
      */
-    Socket.prototype.isXDomain = function() {
+    Socket.prototype.isXDomain = function () {
 
       var port = global.location.port || ('https:' === global.location.protocol ? 443 : 80);
 
@@ -1912,12 +1890,12 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Socket.prototype.onConnect = function() {
+    Socket.prototype.onConnect = function () {
 
-      if( !this.connected ) {
+      if ( !this.connected ) {
         this.connected = true;
         this.connecting = false;
-        if( !this.doBuffer ) {
+        if ( !this.doBuffer ) {
           // make sure to flush the buffer
           this.setBuffer( false );
         }
@@ -1930,7 +1908,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Socket.prototype.onOpen = function() {
+    Socket.prototype.onOpen = function () {
       this.open = true;
     };
 
@@ -1939,7 +1917,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Socket.prototype.onClose = function() {
+    Socket.prototype.onClose = function () {
       this.open = false;
       clearTimeout( this.heartbeatTimeoutTimer );
     };
@@ -1949,7 +1927,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @param text
      */
-    Socket.prototype.onPacket = function( packet ) {
+    Socket.prototype.onPacket = function ( packet ) {
       this.of( packet.endpoint ).onPacket( packet );
     };
 
@@ -1958,11 +1936,11 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Socket.prototype.onError = function( err ) {
-      if( err && err.advice ) {
-        if( err.advice === 'reconnect' && (this.connected || this.connecting) ) {
+    Socket.prototype.onError = function ( err ) {
+      if ( err && err.advice ) {
+        if ( err.advice === 'reconnect' && (this.connected || this.connecting) ) {
           this.disconnect();
-          if( this.options.reconnect ) {
+          if ( this.options.reconnect ) {
             this.reconnect();
           }
         }
@@ -1976,20 +1954,20 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Socket.prototype.onDisconnect = function( reason ) {
+    Socket.prototype.onDisconnect = function ( reason ) {
       var wasConnected = this.connected, wasConnecting = this.connecting;
 
       this.connected = false;
       this.connecting = false;
       this.open = false;
 
-      if( wasConnected || wasConnecting ) {
+      if ( wasConnected || wasConnecting ) {
         this.transport.close();
         this.transport.clearTimeouts();
-        if( wasConnected ) {
+        if ( wasConnected ) {
           this.publish( 'disconnect', reason );
 
-          if( 'booted' != reason && this.options.reconnect && !this.reconnecting ) {
+          if ( 'booted' != reason && this.options.reconnect && !this.reconnecting ) {
             this.reconnect();
           }
         }
@@ -2001,7 +1979,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    Socket.prototype.reconnect = function() {
+    Socket.prototype.reconnect = function () {
       this.reconnecting = true;
       this.reconnectionAttempts = 0;
       this.reconnectionDelay = this.options['reconnection delay'];
@@ -2011,10 +1989,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         , tryMultiple = this.options['try multiple transports']
         , limit = this.options['reconnection limit'];
 
-      function reset() {
-        if( self.connected ) {
-          for( var i in self.namespaces ) {
-            if( self.namespaces.hasOwnProperty( i ) && '' !== i ) {
+      function reset () {
+        if ( self.connected ) {
+          for ( var i in self.namespaces ) {
+            if ( self.namespaces.hasOwnProperty( i ) && '' !== i ) {
               self.namespaces[i].packet( { type: 'connect' } );
             }
           }
@@ -2036,22 +2014,22 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         self.options['try multiple transports'] = tryMultiple;
       };
 
-      function maybeReconnect() {
-        if( !self.reconnecting ) {
+      function maybeReconnect () {
+        if ( !self.reconnecting ) {
           return;
         }
 
-        if( self.connected ) {
+        if ( self.connected ) {
           return reset();
         }
         ;
 
-        if( self.connecting && self.reconnecting ) {
+        if ( self.connecting && self.reconnecting ) {
           return self.reconnectionTimer = setTimeout( maybeReconnect, 1000 );
         }
 
-        if( self.reconnectionAttempts++ >= maxAttempts ) {
-          if( !self.redoTransports ) {
+        if ( self.reconnectionAttempts++ >= maxAttempts ) {
+          if ( !self.redoTransports ) {
             self.on( 'connect_failed', maybeReconnect );
             self.options['try multiple transports'] = true;
             self.transports = self.origTransports;
@@ -2063,7 +2041,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
             reset();
           }
         } else {
-          if( self.reconnectionDelay < limit ) {
+          if ( self.reconnectionDelay < limit ) {
             self.reconnectionDelay *= 2; // exponential back off
           }
 
@@ -2088,7 +2066,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, io ) {
+  (function ( exports, io ) {
 
     /**
      * Expose constructor.
@@ -2101,7 +2079,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @constructor
      * @api public
      */
-    function SocketNamespace( socket, name ) {
+    function SocketNamespace ( socket, name ) {
       this.socket = socket;
       this.name = name || '';
       this.flags = {};
@@ -2128,7 +2106,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    SocketNamespace.prototype.of = function() {
+    SocketNamespace.prototype.of = function () {
       return this.socket.of.apply( this.socket, arguments );
     };
 
@@ -2137,7 +2115,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    SocketNamespace.prototype.packet = function( packet ) {
+    SocketNamespace.prototype.packet = function ( packet ) {
       packet.endpoint = this.name;
       this.socket.packet( packet );
       this.flags = {};
@@ -2149,12 +2127,12 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    SocketNamespace.prototype.send = function( data, fn ) {
+    SocketNamespace.prototype.send = function ( data, fn ) {
       var packet = {
         type: this.flags.json ? 'json' : 'message', data: data
       };
 
-      if( 'function' === typeof fn ) {
+      if ( 'function' === typeof fn ) {
         packet.id = ++this.ackPackets;
         packet.ack = true;
         this.acks[packet.id] = fn;
@@ -2168,14 +2146,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    SocketNamespace.prototype.emit = function( name ) {
+    SocketNamespace.prototype.emit = function ( name ) {
       var args = Array.prototype.slice.call( arguments, 1 )
         , lastArg = args[args.length - 1]
         , packet = {
           type: 'event', name: name
         };
 
-      if( 'function' === typeof lastArg ) {
+      if ( 'function' === typeof lastArg ) {
         packet.id = ++this.ackPackets;
         packet.ack = 'data';
         this.acks[packet.id] = lastArg;
@@ -2192,8 +2170,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    SocketNamespace.prototype.disconnect = function() {
-      if( this.name === '' ) {
+    SocketNamespace.prototype.disconnect = function () {
+      if ( this.name === '' ) {
         this.socket.disconnect();
       } else {
         this.packet( { type: 'disconnect' } );
@@ -2208,22 +2186,22 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    SocketNamespace.prototype.onPacket = function( packet ) {
+    SocketNamespace.prototype.onPacket = function ( packet ) {
       var self = this;
 
-      function ack() {
+      function ack () {
         self.packet( {
           type: 'ack', args: io.util.toArray( arguments ), ackId: packet.id
         } );
       };
 
-      switch( packet.type ) {
+      switch ( packet.type ) {
         case 'connect':
           this.$emit( 'connect' );
           break;
 
         case 'disconnect':
-          if( this.name === '' ) {
+          if ( this.name === '' ) {
             this.socket.onDisconnect( packet.reason || 'booted' );
           } else {
             this.$emit( 'disconnect', packet.reason );
@@ -2234,9 +2212,9 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         case 'json':
           var params = ['message', packet.data];
 
-          if( packet.ack === 'data' ) {
+          if ( packet.ack === 'data' ) {
             params.push( ack );
-          } else if( packet.ack ) {
+          } else if ( packet.ack ) {
             this.packet( { type: 'ack', ackId: packet.id } );
           }
 
@@ -2246,7 +2224,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         case 'event':
           var params = [packet.name].concat( packet.args );
 
-          if( packet.ack === 'data' ) {
+          if ( packet.ack === 'data' ) {
             params.push( ack );
           }
 
@@ -2254,17 +2232,17 @@ var io = ('undefined' === typeof module ? {} : module.exports);
           break;
 
         case 'ack':
-          if( this.acks[packet.ackId] ) {
+          if ( this.acks[packet.ackId] ) {
             this.acks[packet.ackId].apply( this, packet.args );
             delete this.acks[packet.ackId];
           }
           break;
 
         case 'error':
-          if( packet.advice ) {
+          if ( packet.advice ) {
             this.socket.onError( packet );
           } else {
-            if( packet.reason === 'unauthorized' ) {
+            if ( packet.reason === 'unauthorized' ) {
               this.$emit( 'connect_failed', packet.reason );
             } else {
               this.$emit( 'error', packet.reason );
@@ -2279,7 +2257,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    function Flag( nsp, name ) {
+    function Flag ( nsp, name ) {
       this.namespace = nsp;
       this.name = name;
     };
@@ -2289,7 +2267,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    Flag.prototype.send = function() {
+    Flag.prototype.send = function () {
       this.namespace.flags[this.name] = true;
       this.namespace.send.apply( this.namespace, arguments );
     };
@@ -2299,7 +2277,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api public
      */
-    Flag.prototype.emit = function() {
+    Flag.prototype.emit = function () {
       this.namespace.flags[this.name] = true;
       this.namespace.emit.apply( this.namespace, arguments );
     };
@@ -2313,7 +2291,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, io, global ) {
+  (function ( exports, io, global ) {
 
     /**
      * Expose constructor.
@@ -2330,7 +2308,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @extends {io.Transport}
      * @api public
      */
-    function WS( socket ) {
+    function WS ( socket ) {
       io.Transport.apply( this, arguments );
     };
 
@@ -2353,30 +2331,29 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {Transport}
      * @api public
      */
-    WS.prototype.open = function() {
+    WS.prototype.open = function () {
       var query = io.util.query( this.socket.options.query )
         , self = this
         , Socket
 
-
-      if( !Socket ) {
+      if ( !Socket ) {
         Socket = global.MozWebSocket || global.WebSocket;
       }
 
       this.websocket = new Socket( this.prepareUrl() + query );
 
-      this.websocket.onopen = function() {
+      this.websocket.onopen = function () {
         self.onOpen();
         self.socket.setBuffer( false );
       };
-      this.websocket.onmessage = function( ev ) {
+      this.websocket.onmessage = function ( ev ) {
         self.onData( ev.data );
       };
-      this.websocket.onclose = function() {
+      this.websocket.onclose = function () {
         self.onClose();
         self.socket.setBuffer( true );
       };
-      this.websocket.onerror = function( e ) {
+      this.websocket.onerror = function ( e ) {
         self.onError( e );
       };
 
@@ -2393,16 +2370,16 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     // Do to a bug in the current IDevices browser, we need to wrap the send in a
     // setTimeout, when they resume from sleeping the browser will crash if
     // we don't allow the browser time to detect the socket has been closed
-    if( io.util.ua.iDevice ) {
-      WS.prototype.send = function( data ) {
+    if ( io.util.ua.iDevice ) {
+      WS.prototype.send = function ( data ) {
         var self = this;
-        setTimeout( function() {
+        setTimeout( function () {
           self.websocket.send( data );
         }, 0 );
         return this;
       };
     } else {
-      WS.prototype.send = function( data ) {
+      WS.prototype.send = function ( data ) {
         this.websocket.send( data );
         return this;
       };
@@ -2413,8 +2390,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    WS.prototype.payload = function( arr ) {
-      for( var i = 0, l = arr.length; i < l; i++ ) {
+    WS.prototype.payload = function ( arr ) {
+      for ( var i = 0, l = arr.length; i < l; i++ ) {
         this.packet( arr[i] );
       }
       return this;
@@ -2426,7 +2403,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {Transport}
      * @api public
      */
-    WS.prototype.close = function() {
+    WS.prototype.close = function () {
       this.websocket.close();
       return this;
     };
@@ -2438,7 +2415,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {Error} e The error.
      * @api private
      */
-    WS.prototype.onError = function( e ) {
+    WS.prototype.onError = function ( e ) {
       this.socket.onError( e );
     };
 
@@ -2447,7 +2424,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    WS.prototype.scheme = function() {
+    WS.prototype.scheme = function () {
       return this.socket.options.secure ? 'wss' : 'ws';
     };
 
@@ -2458,7 +2435,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @return {Boolean}
      * @api public
      */
-    WS.check = function() {
+    WS.check = function () {
       return ('WebSocket' in global && !('__addTask' in WebSocket)) || 'MozWebSocket' in global;
     };
 
@@ -2468,7 +2445,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {Boolean}
      * @api public
      */
-    WS.xdomainCheck = function() {
+    WS.xdomainCheck = function () {
       return true;
     };
 
@@ -2487,22 +2464,22 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright: Hiroshi Ichikawa <http://gimite.net/en/>
    *
    */
-  (function() {
+  (function () {
 
-    if( 'undefined' === typeof window || window.WebSocket ) return;
+    if ( 'undefined' === typeof window || window.WebSocket ) return;
 
     var console = window.console;
-    if( !console || !console.log || !console.error ) {
-      console = {log: function() {
-      }, error: function() {
+    if ( !console || !console.log || !console.error ) {
+      console = {log: function () {
+      }, error: function () {
       }};
     }
 
-    if( !swfobject.hasFlashPlayerVersion( "10.0.0" ) ) {
+    if ( !swfobject.hasFlashPlayerVersion( "10.0.0" ) ) {
       console.error( "Flash Player >= 10.0.0 is required." );
       return;
     }
-    if( location.protocol === "file:" ) {
+    if ( location.protocol === "file:" ) {
       console.error( "WARNING: web-socket-js doesn't work in file:///... URL " + "unless you set Flash Security Settings properly. " + "Open the page via Web server i.e. http://..." );
     }
 
@@ -2514,22 +2491,22 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {int} proxyPort
      * @param {string} headers
      */
-    WebSocket = function( url, protocols, proxyHost, proxyPort, headers ) {
+    WebSocket = function ( url, protocols, proxyHost, proxyPort, headers ) {
       var self = this;
       self.__id = WebSocket.__nextId++;
       WebSocket.__instances[self.__id] = self;
       self.readyState = WebSocket.CONNECTING;
       self.bufferedAmount = 0;
       self.__events = {};
-      if( !protocols ) {
+      if ( !protocols ) {
         protocols = [];
-      } else if( typeof protocols === "string" ) {
+      } else if ( typeof protocols === "string" ) {
         protocols = [protocols];
       }
       // Uses setTimeout() to make sure __createFlash() runs after the caller sets ws.onopen etc.
       // Otherwise, when onopen fires immediately, onopen is called before it is set.
-      setTimeout( function() {
-        WebSocket.__addTask( function() {
+      setTimeout( function () {
+        WebSocket.__addTask( function () {
           WebSocket.__flash.create( self.__id, url, protocols, proxyHost || null, proxyPort || 0, headers || null );
         } );
       }, 0 );
@@ -2540,8 +2517,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {string} data  The data to send to the socket.
      * @return {boolean}  True for success, false for failure.
      */
-    WebSocket.prototype.send = function( data ) {
-      if( this.readyState === WebSocket.CONNECTING ) {
+    WebSocket.prototype.send = function ( data ) {
+      if ( this.readyState === WebSocket.CONNECTING ) {
         throw "INVALID_STATE_ERR: Web Socket connection has not been established";
       }
       // We use encodeURIComponent() here, because FABridge doesn't work if
@@ -2553,7 +2530,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       // Note by wtritch: Hopefully this will not be necessary using ExternalInterface.  Will require
       // additional testing.
       var result = WebSocket.__flash.send( this.__id, encodeURIComponent( data ) );
-      if( result < 0 ) { // success
+      if ( result < 0 ) { // success
         return true;
       } else {
         this.bufferedAmount += result;
@@ -2564,8 +2541,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     /**
      * Close this web socket gracefully.
      */
-    WebSocket.prototype.close = function() {
-      if( this.readyState === WebSocket.CLOSED || this.readyState === WebSocket.CLOSING ) {
+    WebSocket.prototype.close = function () {
+      if ( this.readyState === WebSocket.CLOSED || this.readyState === WebSocket.CLOSING ) {
         return;
       }
       this.readyState = WebSocket.CLOSING;
@@ -2580,8 +2557,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {boolean} useCapture
      * @return void
      */
-    WebSocket.prototype.addEventListener = function( type, listener, useCapture ) {
-      if( !(type in this.__events) ) {
+    WebSocket.prototype.addEventListener = function ( type, listener, useCapture ) {
+      if ( !(type in this.__events) ) {
         this.__events[type] = [];
       }
       this.__events[type].push( listener );
@@ -2595,11 +2572,11 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {boolean} useCapture
      * @return void
      */
-    WebSocket.prototype.removeEventListener = function( type, listener, useCapture ) {
-      if( !(type in this.__events) ) return;
+    WebSocket.prototype.removeEventListener = function ( type, listener, useCapture ) {
+      if ( !(type in this.__events) ) return;
       var events = this.__events[type];
-      for( var i = events.length - 1; i >= 0; --i ) {
-        if( events[i] === listener ) {
+      for ( var i = events.length - 1; i >= 0; --i ) {
+        if ( events[i] === listener ) {
           events.splice( i, 1 );
           break;
         }
@@ -2612,34 +2589,34 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {Event} event
      * @return void
      */
-    WebSocket.prototype.dispatchEvent = function( event ) {
+    WebSocket.prototype.dispatchEvent = function ( event ) {
       var events = this.__events[event.type] || [];
-      for( var i = 0; i < events.length; ++i ) {
+      for ( var i = 0; i < events.length; ++i ) {
         events[i]( event );
       }
       var handler = this["on" + event.type];
-      if( handler ) handler( event );
+      if ( handler ) handler( event );
     };
 
     /**
      * Handles an event from Flash.
      * @param {Object} flashEvent
      */
-    WebSocket.prototype.__handleEvent = function( flashEvent ) {
-      if( "readyState" in flashEvent ) {
+    WebSocket.prototype.__handleEvent = function ( flashEvent ) {
+      if ( "readyState" in flashEvent ) {
         this.readyState = flashEvent.readyState;
       }
-      if( "protocol" in flashEvent ) {
+      if ( "protocol" in flashEvent ) {
         this.protocol = flashEvent.protocol;
       }
 
       var jsEvent;
-      if( flashEvent.type === "open" || flashEvent.type === "error" ) {
+      if ( flashEvent.type === "open" || flashEvent.type === "error" ) {
         jsEvent = this.__createSimpleEvent( flashEvent.type );
-      } else if( flashEvent.type === "close" ) {
+      } else if ( flashEvent.type === "close" ) {
         // TODO implement jsEvent.wasClean
         jsEvent = this.__createSimpleEvent( "close" );
-      } else if( flashEvent.type === "message" ) {
+      } else if ( flashEvent.type === "message" ) {
         var data = decodeURIComponent( flashEvent.message );
         jsEvent = this.__createMessageEvent( "message", data );
       } else {
@@ -2649,8 +2626,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       this.dispatchEvent( jsEvent );
     };
 
-    WebSocket.prototype.__createSimpleEvent = function( type ) {
-      if( document.createEvent && window.Event ) {
+    WebSocket.prototype.__createSimpleEvent = function ( type ) {
+      if ( document.createEvent && window.Event ) {
         var event = document.createEvent( "Event" );
         event.initEvent( type, false, false );
         return event;
@@ -2659,8 +2636,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       }
     };
 
-    WebSocket.prototype.__createMessageEvent = function( type, data ) {
-      if( document.createEvent && window.MessageEvent && !window.opera ) {
+    WebSocket.prototype.__createMessageEvent = function ( type, data ) {
+      if ( document.createEvent && window.MessageEvent && !window.opera ) {
         var event = document.createEvent( "MessageEvent" );
         event.initMessageEvent( "message", false, false, data, null, null, window, null );
         return event;
@@ -2687,8 +2664,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * Load a new flash security policy file.
      * @param {string} url
      */
-    WebSocket.loadFlashPolicyFile = function( url ) {
-      WebSocket.__addTask( function() {
+    WebSocket.loadFlashPolicyFile = function ( url ) {
+      WebSocket.__addTask( function () {
         WebSocket.__flash.loadManualPolicyFile( url );
       } );
     };
@@ -2696,14 +2673,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     /**
      * Loads WebSocketMain.swf and creates WebSocketMain object in Flash.
      */
-    WebSocket.__initialize = function() {
-      if( WebSocket.__flash ) return;
+    WebSocket.__initialize = function () {
+      if ( WebSocket.__flash ) return;
 
-      if( WebSocket.__swfLocation ) {
+      if ( WebSocket.__swfLocation ) {
         // For backword compatibility.
         window.WEB_SOCKET_SWF_LOCATION = WebSocket.__swfLocation;
       }
-      if( !window.WEB_SOCKET_SWF_LOCATION ) {
+      if ( !window.WEB_SOCKET_SWF_LOCATION ) {
         console.error( "[WebSocket] set WEB_SOCKET_SWF_LOCATION to location of WebSocketMain.swf" );
         return;
       }
@@ -2715,7 +2692,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       // Lite, we put it at (0, 0). This shows 1x1 box visible at left-top corner but this is
       // the best we can do as far as we know now.
       container.style.position = "absolute";
-      if( WebSocket.__isFlashLite() ) {
+      if ( WebSocket.__isFlashLite() ) {
         container.style.left = "0px";
         container.style.top = "0px";
       } else {
@@ -2729,9 +2706,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       // See this article for hasPriority:
       // http://help.adobe.com/en_US/as3/mobile/WS4bebcd66a74275c36cfb8137124318eebc6-7ffd.html
       swfobject.embedSWF( WEB_SOCKET_SWF_LOCATION, "webSocketFlash", "1" /* width */, "1" /* height */, "10.0.0"
-        /* SWF version */, null, null, {hasPriority: true, swliveconnect: true, allowScriptAccess: "always"}, null,
-        function( e ) {
-          if( !e.success ) {
+        /* SWF version */, null, null, {hasPriority: true, swliveconnect: true, allowScriptAccess: "always"}, null, function ( e ) {
+          if ( !e.success ) {
             console.error( "[WebSocket] swfobject.embedSWF failed" );
           }
         } );
@@ -2741,14 +2717,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * Called by Flash to notify JS that it's fully loaded and ready
      * for communication.
      */
-    WebSocket.__onFlashInitialized = function() {
+    WebSocket.__onFlashInitialized = function () {
       // We need to set a timeout here to avoid round-trip calls
       // to flash during the initialization process.
-      setTimeout( function() {
+      setTimeout( function () {
         WebSocket.__flash = document.getElementById( "webSocketFlash" );
         WebSocket.__flash.setCallerUrl( location.href );
         WebSocket.__flash.setDebug( !!window.WEB_SOCKET_DEBUG );
-        for( var i = 0; i < WebSocket.__tasks.length; ++i ) {
+        for ( var i = 0; i < WebSocket.__tasks.length; ++i ) {
           WebSocket.__tasks[i]();
         }
         WebSocket.__tasks = [];
@@ -2758,18 +2734,17 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     /**
      * Called by Flash to notify WebSockets events are fired.
      */
-    WebSocket.__onFlashEvent = function() {
-      setTimeout( function() {
+    WebSocket.__onFlashEvent = function () {
+      setTimeout( function () {
         try {
           // Gets events using receiveEvents() instead of getting it from event object
           // of Flash event. This is to make sure to keep message order.
           // It seems sometimes Flash events don't arrive in the same order as they are sent.
           var events = WebSocket.__flash.receiveEvents();
-          for( var i = 0; i < events.length; ++i ) {
+          for ( var i = 0; i < events.length; ++i ) {
             WebSocket.__instances[events[i].webSocketId].__handleEvent( events[i] );
           }
-        }
-        catch( e ) {
+        } catch ( e ) {
           console.error( e );
         }
       }, 0 );
@@ -2777,17 +2752,17 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     };
 
     // Called by Flash.
-    WebSocket.__log = function( message ) {
+    WebSocket.__log = function ( message ) {
       console.log( decodeURIComponent( message ) );
     };
 
     // Called by Flash.
-    WebSocket.__error = function( message ) {
+    WebSocket.__error = function ( message ) {
       console.error( decodeURIComponent( message ) );
     };
 
-    WebSocket.__addTask = function( task ) {
-      if( WebSocket.__flash ) {
+    WebSocket.__addTask = function ( task ) {
+      if ( WebSocket.__flash ) {
         task();
       } else {
         WebSocket.__tasks.push( task );
@@ -2798,24 +2773,24 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * Test if the browser is running flash lite.
      * @return {boolean} True if flash lite is running, false otherwise.
      */
-    WebSocket.__isFlashLite = function() {
-      if( !window.navigator || !window.navigator.mimeTypes ) {
+    WebSocket.__isFlashLite = function () {
+      if ( !window.navigator || !window.navigator.mimeTypes ) {
         return false;
       }
       var mimeType = window.navigator.mimeTypes["application/x-shockwave-flash"];
-      if( !mimeType || !mimeType.enabledPlugin || !mimeType.enabledPlugin.filename ) {
+      if ( !mimeType || !mimeType.enabledPlugin || !mimeType.enabledPlugin.filename ) {
         return false;
       }
       return mimeType.enabledPlugin.filename.match( /flashlite/i ) ? true : false;
     };
 
-    if( !window.WEB_SOCKET_DISABLE_AUTO_INITIALIZATION ) {
-      if( window.addEventListener ) {
-        window.addEventListener( "load", function() {
+    if ( !window.WEB_SOCKET_DISABLE_AUTO_INITIALIZATION ) {
+      if ( window.addEventListener ) {
+        window.addEventListener( "load", function () {
           WebSocket.__initialize();
         }, false );
       } else {
-        window.attachEvent( "onload", function() {
+        window.attachEvent( "onload", function () {
           WebSocket.__initialize();
         } );
       }
@@ -2830,7 +2805,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, io, global ) {
+  (function ( exports, io, global ) {
 
     /**
      * Expose constructor.
@@ -2845,8 +2820,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @costructor
      * @api public
      */
-    function XHR( socket ) {
-      if( !socket ) return;
+    function XHR ( socket ) {
+      if ( !socket ) return;
 
       io.Transport.apply( this, arguments );
       this.sendBuffer = [];
@@ -2863,7 +2838,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {Transport}
      * @api public
      */
-    XHR.prototype.open = function() {
+    XHR.prototype.open = function () {
       this.socket.setBuffer( false );
       this.onOpen();
       this.get();
@@ -2881,10 +2856,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    XHR.prototype.payload = function( payload ) {
+    XHR.prototype.payload = function ( payload ) {
       var msgs = [];
 
-      for( var i = 0, l = payload.length; i < l; i++ ) {
+      for ( var i = 0, l = payload.length; i < l; i++ ) {
         msgs.push( io.parser.encodePacket( payload[i] ) );
       }
 
@@ -2898,7 +2873,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {Transport}
      * @api public
      */
-    XHR.prototype.send = function( data ) {
+    XHR.prototype.send = function ( data ) {
       this.post( data );
       return this;
     };
@@ -2909,19 +2884,19 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {String} data A encoded message.
      * @api private
      */
-    function empty() {
+    function empty () {
     };
 
-    XHR.prototype.post = function( data ) {
+    XHR.prototype.post = function ( data ) {
       var self = this;
       this.socket.setBuffer( true );
 
-      function stateChange() {
-        if( this.readyState === 4 ) {
+      function stateChange () {
+        if ( this.readyState === 4 ) {
           this.onreadystatechange = empty;
           self.posting = false;
 
-          if( this.status === 200 ) {
+          if ( this.status === 200 ) {
             self.socket.setBuffer( false );
           } else {
             self.onClose();
@@ -2929,14 +2904,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         }
       }
 
-      function onload() {
+      function onload () {
         this.onload = empty;
         self.socket.setBuffer( false );
       };
 
       this.sendXHR = this.request( 'POST' );
 
-      if( global.XDomainRequest && this.sendXHR instanceof XDomainRequest ) {
+      if ( global.XDomainRequest && this.sendXHR instanceof XDomainRequest ) {
         this.sendXHR.onload = this.sendXHR.onerror = onload;
       } else {
         this.sendXHR.onreadystatechange = stateChange;
@@ -2951,7 +2926,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {Transport}
      * @api public
      */
-    XHR.prototype.close = function() {
+    XHR.prototype.close = function () {
       this.onClose();
       return this;
     };
@@ -2964,22 +2939,22 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {XMLHttpRequest}
      * @api private
      */
-    XHR.prototype.request = function( method ) {
+    XHR.prototype.request = function ( method ) {
       var req = io.util.request( this.socket.isXDomain() )
         , query = io.util.query( this.socket.options.query, 't=' + +new Date );
 
       req.open( method || 'GET', this.prepareUrl() + query, true );
 
-      if( method === 'POST' ) {
+      if ( method === 'POST' ) {
         try {
-          if( req.setRequestHeader ) {
+          if ( req.setRequestHeader ) {
             req.setRequestHeader( 'Content-type', 'text/plain;charset=UTF-8' );
           } else {
             // XDomainRequest
             req.contentType = 'text/plain';
           }
+        } catch ( e ) {
         }
-        catch( e ) {}
       }
 
       return req;
@@ -2990,7 +2965,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    XHR.prototype.scheme = function() {
+    XHR.prototype.scheme = function () {
       return this.socket.options.secure ? 'https' : 'http';
     };
 
@@ -3001,16 +2976,15 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {Boolean}
      * @api public
      */
-    XHR.check = function( socket, xdomain ) {
+    XHR.check = function ( socket, xdomain ) {
       try {
         var request = io.util.request( xdomain ), usesXDomReq = (global.XDomainRequest && request instanceof XDomainRequest), socketProtocol = (
-          socket && socket.options && socket.options.secure ? 'https:' :
-            'http:'), isXProtocol = (socketProtocol != global.location.protocol);
-        if( request && !(usesXDomReq && isXProtocol) ) {
+          socket && socket.options && socket.options.secure ? 'https:' : 'http:'), isXProtocol = (socketProtocol != global.location.protocol);
+        if ( request && !(usesXDomReq && isXProtocol) ) {
           return true;
         }
+      } catch ( e ) {
       }
-      catch( e ) {}
 
       return false;
     };
@@ -3021,7 +2995,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {Boolean}
      * @api public
      */
-    XHR.xdomainCheck = function( socket ) {
+    XHR.xdomainCheck = function ( socket ) {
       return XHR.check( socket, true );
     };
 
@@ -3034,7 +3008,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, io, global ) {
+  (function ( exports, io, global ) {
 
     /**
      * Expose constructor.
@@ -3048,7 +3022,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @constructor
      * @api public
      */
-    function XHRPolling() {
+    function XHRPolling () {
       io.Transport.XHR.apply( this, arguments );
     };
 
@@ -3074,7 +3048,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    XHRPolling.prototype.heartbeats = function() {
+    XHRPolling.prototype.heartbeats = function () {
       return false;
     };
 
@@ -3085,7 +3059,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {Transport} Chaining.
      * @api public
      */
-    XHRPolling.prototype.open = function() {
+    XHRPolling.prototype.open = function () {
       var self = this;
 
       io.Transport.XHR.prototype.open.call( self );
@@ -3097,19 +3071,19 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    function empty() {
+    function empty () {
     };
 
-    XHRPolling.prototype.get = function() {
-      if( !this.isOpen ) return;
+    XHRPolling.prototype.get = function () {
+      if ( !this.isOpen ) return;
 
       var self = this;
 
-      function stateChange() {
-        if( this.readyState === 4 ) {
+      function stateChange () {
+        if ( this.readyState === 4 ) {
           this.onreadystatechange = empty;
 
-          if( this.status === 200 ) {
+          if ( this.status === 200 ) {
             self.onData( this.responseText );
             self.get();
           } else {
@@ -3118,20 +3092,20 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         }
       };
 
-      function onload() {
+      function onload () {
         this.onload = empty;
         this.onerror = empty;
         self.onData( this.responseText );
         self.get();
       };
 
-      function onerror() {
+      function onerror () {
         self.onClose();
       };
 
       this.xhr = this.request();
 
-      if( global.XDomainRequest && this.xhr instanceof XDomainRequest ) {
+      if ( global.XDomainRequest && this.xhr instanceof XDomainRequest ) {
         this.xhr.onload = onload;
         this.xhr.onerror = onerror;
       } else {
@@ -3146,15 +3120,15 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    XHRPolling.prototype.onClose = function() {
+    XHRPolling.prototype.onClose = function () {
       io.Transport.XHR.prototype.onClose.call( this );
 
-      if( this.xhr ) {
+      if ( this.xhr ) {
         this.xhr.onreadystatechange = this.xhr.onload = this.xhr.onerror = empty;
         try {
           this.xhr.abort();
+        } catch ( e ) {
         }
-        catch( e ) {}
         this.xhr = null;
       }
     };
@@ -3169,10 +3143,10 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {Function} fn The callback
      * @api private
      */
-    XHRPolling.prototype.ready = function( socket, fn ) {
+    XHRPolling.prototype.ready = function ( socket, fn ) {
       var self = this;
 
-      io.util.defer( function() {
+      io.util.defer( function () {
         fn.call( self );
       } );
     };
@@ -3193,7 +3167,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
    * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
    * MIT Licensed
    */
-  (function( exports, io, global ) {
+  (function ( exports, io, global ) {
     /**
      * There is a way to hide the loading indicator in Firefox. If you create and
      * remove a iframe it will stop showing the current loading indicator.
@@ -3219,14 +3193,14 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @extends {io.Transport.xhr-polling}
      * @api public
      */
-    function JSONPPolling( socket ) {
+    function JSONPPolling ( socket ) {
       io.Transport['xhr-polling'].apply( this, arguments );
 
       this.index = io.j.length;
 
       var self = this;
 
-      io.j.push( function( msg ) {
+      io.j.push( function ( msg ) {
         self._( msg );
       } );
     };
@@ -3252,11 +3226,11 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {String} data A encoded message.
      * @api private
      */
-    JSONPPolling.prototype.post = function( data ) {
+    JSONPPolling.prototype.post = function ( data ) {
       var self = this
         , query = io.util.query( this.socket.options.query, 't=' + (+new Date) + '&i=' + this.index );
 
-      if( !this.form ) {
+      if ( !this.form ) {
         var form = document.createElement( 'form' )
           , area = document.createElement( 'textarea' )
           , id = this.iframeId = 'socketio_iframe_' + this.index
@@ -3280,21 +3254,20 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
       this.form.action = this.prepareUrl() + query;
 
-      function complete() {
+      function complete () {
         initIframe();
         self.socket.setBuffer( false );
       };
 
-      function initIframe() {
-        if( self.iframe ) {
+      function initIframe () {
+        if ( self.iframe ) {
           self.form.removeChild( self.iframe );
         }
 
         try {
           // ie6 dynamic iframes with target="" support (thanks Chris Lambacher)
           iframe = document.createElement( '<iframe name="' + self.iframeId + '">' );
-        }
-        catch( e ) {
+        } catch ( e ) {
           iframe = document.createElement( 'iframe' );
           iframe.name = self.iframeId;
         }
@@ -3313,12 +3286,12 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
       try {
         this.form.submit();
+      } catch ( e ) {
       }
-      catch( e ) {}
 
-      if( this.iframe.attachEvent ) {
-        iframe.onreadystatechange = function() {
-          if( self.iframe.readyState === 'complete' ) {
+      if ( this.iframe.attachEvent ) {
+        iframe.onreadystatechange = function () {
+          if ( self.iframe.readyState === 'complete' ) {
             complete();
           }
         };
@@ -3335,19 +3308,19 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      *
      * @api private
      */
-    JSONPPolling.prototype.get = function() {
+    JSONPPolling.prototype.get = function () {
       var self = this
         , script = document.createElement( 'script' )
         , query = io.util.query( this.socket.options.query, 't=' + (+new Date) + '&i=' + this.index );
 
-      if( this.script ) {
+      if ( this.script ) {
         this.script.parentNode.removeChild( this.script );
         this.script = null;
       }
 
       script.async = true;
       script.src = this.prepareUrl() + query;
-      script.onerror = function() {
+      script.onerror = function () {
         self.onClose();
       };
 
@@ -3355,8 +3328,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       insertAt.parentNode.insertBefore( script, insertAt );
       this.script = script;
 
-      if( indicator ) {
-        setTimeout( function() {
+      if ( indicator ) {
+        setTimeout( function () {
           var iframe = document.createElement( 'iframe' );
           document.body.appendChild( iframe );
           document.body.removeChild( iframe );
@@ -3370,9 +3343,9 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {String} data The message
      * @api private
      */
-    JSONPPolling.prototype._ = function( msg ) {
+    JSONPPolling.prototype._ = function ( msg ) {
       this.onData( msg );
-      if( this.isOpen ) {
+      if ( this.isOpen ) {
         this.get();
       }
       return this;
@@ -3385,11 +3358,11 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @param {Function} fn The callback
      * @api private
      */
-    JSONPPolling.prototype.ready = function( socket, fn ) {
+    JSONPPolling.prototype.ready = function ( socket, fn ) {
       var self = this;
-      if( !indicator ) return fn.call( this );
+      if ( !indicator ) return fn.call( this );
 
-      io.util.load( function() {
+      io.util.load( function () {
         fn.call( self );
       } );
     };
@@ -3400,7 +3373,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @return {Boolean}
      * @api public
      */
-    JSONPPolling.check = function() {
+    JSONPPolling.check = function () {
       return 'document' in global;
     };
 
@@ -3410,7 +3383,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
      * @returns {Boolean}
      * @api public
      */
-    JSONPPolling.xdomainCheck = function() {
+    JSONPPolling.xdomainCheck = function () {
       return true;
     };
 
@@ -3425,6 +3398,6 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
 })();
 
-if( 'object' === typeof ud ) {
+if ( 'object' === typeof ud ) {
   ud.socket = io;
 }

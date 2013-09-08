@@ -1,7 +1,7 @@
 {
-  "name": "lib-saas",
-  "version": "0.0.1",
-  "description": "lib-saas",
+  "name": "saas",
+  "version": "0.1.2",
+  "description": "UD SaaS Library.",
   "homepage": "http://github.com/UsabilityDynamics/lib-saas",
   "private": false,
   "repository": {
@@ -12,12 +12,17 @@
     "usabilitydynamics/lib-utility": "*"
   },
   "files": [
-    "files/saas-schema.json"
+    "files/schema/saas.json",
+    "files/schema/saas.document.json",
+    "files/saas.config.json"
+  ],
+  "libs": [
+    "libs/saas.php",
+    "libs/saas.document.php"
   ],
   "scripts": [
-    "scripts/cloud.php",
-    "scripts/saas.php",
     "scripts/saas.js",
+    "scripts/saas.document.js",
     "scripts/model.js",
     "scripts/socket.js"
   ],

@@ -11,9 +11,11 @@
   "dependencies": {
     "usabilitydynamics/lib-utility": "*"
   },
+  "libs": [
+    "libs/models.php"
+  ],
   "scripts": [
-    "scripts/models.js",
-    "scripts/models.php"
+    "scripts/models.js"
   ],
   "authors": [
     {

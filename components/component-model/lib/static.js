@@ -2,9 +2,15 @@
  * Module dependencies.
  */
 
-var request = require('superagent');
 var Collection = require('collection');
+var request = require('superagent');
 var noop = function(){};
+
+/**
+ * Expose request for configuration
+ */
+
+exports.request = request;
 
 /**
  * Construct a url to the given `path`.
@@ -137,7 +143,7 @@ exports.destroyAll = function(fn){
   fn = fn || noop;
   var self = this;
   var url = this.url('');
-  request
+  this.request
     .del(url)
     .set(this._headers)
     .end(function(res){
@@ -156,7 +162,7 @@ exports.destroyAll = function(fn){
 exports.all = function(fn){
   var self = this;
   var url = this.url('');
-  request
+  this.request
     .get(url)
     .set(this._headers)
     .end(function(res){
@@ -180,7 +186,7 @@ exports.all = function(fn){
 exports.get = function(id, fn){
   var self = this;
   var url = this.url(id);
-  request
+  this.request
     .get(url)
     .set(this._headers)
     .end(function(res){
