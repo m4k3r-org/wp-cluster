@@ -9,7 +9,7 @@
  * be used if it exists and we ask for the attention with:
  * <code>get_template_part( 'templates/attention', 'blog-home' );</code>
  *
- * @package Flawless
+ * @module Flawless
  * @since Flawless 0.0.3
  *
  */

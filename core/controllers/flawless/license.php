@@ -13,7 +13,7 @@ namespace Flawless {
    * Class License
    *
    * @class License
-   * @package Flawless
+   * @module Flawless
    */
   class License {
 

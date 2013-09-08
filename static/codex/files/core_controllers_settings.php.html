@@ -130,7 +130,7 @@ namespace Flawless {
    *
    * Migrated from WPP 2.0.
    *
-   * @package Flawless
+   * @module Flawless
    */
   class Settings extends UD\Settings {
 
@@ -1120,14 +1120,14 @@ namespace Flawless {
           )
         ),
         &#x27;global_js&#x27; =&gt; array(
-          &#x27;file&#x27; =&gt; trailingslashit( WPP_Path ) . ( defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? &#x27;js/dev/wpp.global.js&#x27; : &#x27;js/wpp.global.js&#x27; ),
+          &#x27;file&#x27; =&gt; trailingslashit( WPP_Path ) . ( defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? &#x27;js/dev/legacy.global.js&#x27; : &#x27;js/legacy.global.js&#x27; ),
           &#x27;type&#x27; =&gt; &#x27;js&#x27;,
-          &#x27;compile_options&#x27; =&gt; defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? false : array( &#x27;input&#x27; =&gt; array( trailingslashit( WPP_Path ) . &#x27;js/dev/wpp.global.js&#x27; ) )
+          &#x27;compile_options&#x27; =&gt; defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? false : array( &#x27;input&#x27; =&gt; array( trailingslashit( WPP_Path ) . &#x27;js/dev/legacy.global.js&#x27; ) )
         ),
         &#x27;admin_js&#x27; =&gt; array(
-          &#x27;file&#x27; =&gt; trailingslashit( WPP_Path ) . ( defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? &#x27;js/dev/wpp.admin.js&#x27; : &#x27;js/wpp.admin.js&#x27; ),
+          &#x27;file&#x27; =&gt; trailingslashit( WPP_Path ) . ( defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? &#x27;js/dev/legacy.admin.js&#x27; : &#x27;js/legacy.admin.js&#x27; ),
           &#x27;type&#x27; =&gt; &#x27;js&#x27;,
-          &#x27;compile_options&#x27; =&gt; defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? false : array( &#x27;input&#x27; =&gt; array( trailingslashit( WPP_Path ) . &#x27;js/dev/wpp.admin.js&#x27; ) )
+          &#x27;compile_options&#x27; =&gt; defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? false : array( &#x27;input&#x27; =&gt; array( trailingslashit( WPP_Path ) . &#x27;js/dev/legacy.admin.js&#x27; ) )
         ),
         &#x27;admin_overview_js&#x27; =&gt; array(
           &#x27;file&#x27; =&gt; trailingslashit( WPP_Path ) . ( defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? &#x27;js/dev/wpp.admin.overview.js&#x27; : &#x27;js/wpp.admin.overview.js&#x27; ),
@@ -1135,9 +1135,9 @@ namespace Flawless {
           &#x27;compile_options&#x27; =&gt; defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? false : array( &#x27;input&#x27; =&gt; array( trailingslashit( WPP_Path ) . &#x27;js/dev/wpp.admin.overview.js&#x27; ) )
         ),
         &#x27;admin_settings_js&#x27; =&gt; array(
-          &#x27;file&#x27; =&gt; trailingslashit( WPP_Path ) . ( defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? &#x27;js/dev/wpp.admin.settings.js&#x27; : &#x27;js/wpp.admin.settings.js&#x27; ),
+          &#x27;file&#x27; =&gt; trailingslashit( WPP_Path ) . ( defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? &#x27;js/dev/legacy.admin.settings.js&#x27; : &#x27;js/legacy.admin.settings.js&#x27; ),
           &#x27;type&#x27; =&gt; &#x27;js&#x27;,
-          &#x27;compile_options&#x27; =&gt; defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? false : array( &#x27;input&#x27; =&gt; array( trailingslashit( WPP_Path ) . &#x27;js/dev/wpp.admin.settings.js&#x27; ) )
+          &#x27;compile_options&#x27; =&gt; defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? false : array( &#x27;input&#x27; =&gt; array( trailingslashit( WPP_Path ) . &#x27;js/dev/legacy.admin.settings.js&#x27; ) )
         ),
         &#x27;admin_property_js&#x27; =&gt; array(
           &#x27;file&#x27; =&gt; trailingslashit( WPP_Path ) . ( defined( &#x27;SCRIPT_DEBUG&#x27; ) &amp;&amp; SCRIPT_DEBUG ? &#x27;js/dev/wpp.admin.property.js&#x27; : &#x27;js/wpp.admin.property.js&#x27; ),
@@ -1158,7 +1158,7 @@ namespace Flawless {
           &#x27;file&#x27; =&gt; trailingslashit( $uploads[ &#x27;basedir&#x27; ] ) . &#x27;wpp_assets/wpp_app.js&#x27;,
           &#x27;type&#x27; =&gt; &#x27;js&#x27;,
           &#x27;compile_options&#x27; =&gt; array(
-            &#x27;input&#x27; =&gt; array( trailingslashit( WPP_Path ) . &#x27;js/dev/wpp.global.js&#x27;, trailingslashit( WPP_Path ) . &#x27;js/dev/wpp.frontend.js&#x27;, )
+            &#x27;input&#x27; =&gt; array( trailingslashit( WPP_Path ) . &#x27;js/dev/legacy.global.js&#x27;, trailingslashit( WPP_Path ) . &#x27;js/dev/wpp.frontend.js&#x27;, )
           )
         ),
         &#x27;theme_default_css&#x27; =&gt; array(

@@ -2,6 +2,7 @@
 /**
  *
  *
+ * @module UsabilityDynamics
  */
 namespace UsabilityDynamics {
 
@@ -12,8 +13,9 @@ namespace UsabilityDynamics {
    *
    * @author team@UD
    * @version 0.1
-   * @package UD
-   * @subpackage Functions
+   *
+   * @class SaaS
+   * @extends Utility
    */
   class SaaS extends Utility {
 

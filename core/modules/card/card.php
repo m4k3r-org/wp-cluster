@@ -6,6 +6,8 @@
  * Author: Usability Dynamics, Inc.
  * Theme Feature: header-business-card
  *
+ * @namespace Flawless
+ * @module Branded Login
  */
 
 add_action( 'Flawless_setup', array( 'flawless_business_card', 'Flawless_setup' ) );

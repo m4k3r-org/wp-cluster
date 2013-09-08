@@ -2,9 +2,9 @@
 /**
  * Flawless Utility
  *
- * @author: potanin@UD
+ * @author potanin@UD
  * @version 0.0.1
- * @namespace: Flawless
+ * @namespace Flawless
  */
 namespace Flawless {
 

@@ -33,8 +33,8 @@ class AutoLoader {
 
     // Loads libraries that do not use namespaces.
     $loader->addClassMap( array(
-      'QRcode' => $vendorDir . '/tecnick.com/tcpdf/include/barcodes/qrcode.php',
-      'TCPDF' => $vendorDir . '/tecnick.com/tcpdf/tcpdf.php'
+      //'QRcode' => $vendorDir . '/tecnick.com/tcpdf/include/barcodes/qrcode.php',
+      //'TCPDF' => $vendorDir . '/tecnick.com/tcpdf/tcpdf.php'
     ));
 
     $loader->register( true );

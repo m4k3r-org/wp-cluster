@@ -2,7 +2,7 @@
 /**
  * Displays Entry Meta on single pages.
  *
- * @package Flawless
+ * @module Flawless
  * @since Flawless 0.0.3
  *
  */ 

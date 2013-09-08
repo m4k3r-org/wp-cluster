@@ -4,7 +4,7 @@
  *
  * This can be overridden in child themes using get_template_part()
  *
- * @package Flawless
+ * @module Flawless
  * @since Flawless 0.6.0
  *
  */

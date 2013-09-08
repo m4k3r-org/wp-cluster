@@ -5,7 +5,7 @@
  *
  * @version 0.60.0
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @package Flawless
+ * @module Flawless
 */
 
   //** Bail out if page is being loaded directly and Flawless does not exist */

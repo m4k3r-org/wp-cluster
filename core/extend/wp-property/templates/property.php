@@ -5,7 +5,7 @@
  *
  * @todo add get_attribute( 'property_type_label', array( 'allow_multiple_values' =>false ) ); back to title. ( removed when title moved to flawless_page_title() );
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @package Flawless
+ * @module Flawless
  */
 
   if( !function_exists( 'get_header' ) ) {

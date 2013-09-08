@@ -7,7 +7,7 @@
  *
  * This version is tailored for UPM components and the WordPress environment.
  *
- * @namespace UD
+ * @namespace UsabilityDynamics
  * @author potanin@UD
  * @version 0.0.1
  */

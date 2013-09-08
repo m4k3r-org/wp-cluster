@@ -7,6 +7,7 @@
  * @author team@UD
  * @version 0.0.1
  * @namespace UsabilityDynamics
+ * @module UsabilityDynamics
  */
 namespace UsabilityDynamics {
 
@@ -51,10 +52,9 @@ namespace UsabilityDynamics {
     /**
      * Validate URL
      *
+     * @for Utility
      * @since 1.1.1
-     *
      * @param string $url
-     *
      * @return bool
      */
     static function is_url( $url = '' ) {
@@ -2175,41 +2175,6 @@ namespace UsabilityDynamics {
       return $content;
     }
 
-  }
-
-  /**
-   * Adds get_called_class() function if id doesn't exist
-   * PHP < 5.3 compatibility
-   *
-   * @see: http://stackoverflow.com/questions/506705/php-get-classname-from-static-call-in-extended-class
-   * @author peshkov@UD
-   */
-  if ( !function_exists( 'get_called_class' ) ) {
-    class ud_class_tools {
-      static $i = 0;
-      static $fl = null;
-
-      static function get_called_class() {
-        $bt = debug_backtrace();
-
-        if ( self::$fl == $bt[ 2 ][ 'file' ] . $bt[ 2 ][ 'line' ] ) {
-          self::$i++;
-        } else {
-          self::$i = 0;
-          self::$fl = $bt[ 2 ][ 'file' ] . $bt[ 2 ][ 'line' ];
-        }
-
-        $lines = file( $bt[ 2 ][ 'file' ] );
-
-        preg_match_all( '/([a-zA-Z0-9\_]+)::' . $bt[ 2 ][ 'function' ] . '/', $lines[ $bt[ 2 ][ 'line' ] - 1 ], $matches );
-
-        return $matches[ 1 ][ self::$i ];
-      }
-    }
-
-    function get_called_class() {
-      return ud_class_tools::get_called_class();
-    }
   }
 
 }

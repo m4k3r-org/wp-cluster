@@ -5,7 +5,7 @@
  * Used when no WordPress page is setup to display overview via shortcode.
  * Will be rendered as a 404 not-found, but still can display properties.
  *
- * @package WP-Property
+ * @module WP-Property
  */
 ?>
 

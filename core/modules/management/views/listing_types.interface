@@ -1,0 +1,112 @@
+<!--
+Product: wpp
+Description: Listing Types Builder Interface
+-->
+
+<div class="form-table wpp_option_table wpp_setting_interface wpp_property_types_ui">
+  <div class="ud_table_head">
+    <div class="ud_tr">
+      <div class="ud_th" colspan="2">
+        <h3 class="hidden wpp_section_title" data-bind="text: $root.strings.listing_types"></h3>
+        <div class="wpp_section_overview">
+          <p data-bind="text: $root.strings.listing_types_desc1"></p>
+          <p data-bind="text: $root.strings.listing_types_desc2"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ud_tbody">
+    <div class="wpp_primary_section">
+      <div class="ud_td">
+        <ul class="wpp_tab_panel" data-bind="foreach: $root.global.property_types()">
+          <li class="wpp_list_item">
+            <!-- Additional options applied by hooks -->
+            <div class="wpp_input_wrapper" data-action_hook="wpp_property_type_settings"></div>
+
+            <!-- Title input -->
+            <div class="wpp_input_wrapper">
+              <label data-bind="text: $root.strings.title"></label>
+              <input type="text" data-bind="attr: { name: 'wpp_settings[property_types][' + $data.slug() + ']' }, value: $data.label(), unique_slug: { slug: $data.slug, text: $data.label, instance: 'root_global_property_types' }" />
+            </div>
+
+            <!-- Slug input -->
+              <div class="wpp_input_wrapper">
+                <label data-bind="text: $root.strings.slug"></label>
+                <input type="text" class="slug" readonly="readonly" data-bind="value: $data.slug()" />
+              </div>
+
+            <!-- Action Icons -->
+            <div class="wpp_row_actions wpp_hide_on_drag">
+              <span class="wpp_button wpp_left"><span data-bind="click: $data.toggle_settings" class="wpp_icon wpp_icon_96"></span></span>
+              <span class="wpp_button wpp_right"><span data-bind="click: $root.remove_data.bind( $data, $root.global.property_types )" class="wpp_icon wpp_icon_56"></span></span>
+            </div>
+            <!-- Meta Checkboxes -->
+            <div class="row wpp_type_settings">
+              <span data-bind="text: $root.strings.property_type_can_be"></span>
+
+              <input type="checkbox" data-bind="value: 'true', checked: $data.meta().for_sale , attr: { id: 'wpp_type_for_sale_'+$data.slug(), name: 'wpp_settings[property_type_meta][' + $data.slug() + '][for_sale]' }" />
+              <label data-bind="attr: {'for': 'wpp_type_for_sale_'+$data.slug()}, text: $root.strings.sold"></label>
+
+              <input type="checkbox" data-bind="value: 'true', checked: $data.meta().for_rent, attr: { id: 'wpp_type_for_rent_'+$data.slug(), name: 'wpp_settings[property_type_meta][' + $data.slug() + '][for_rent]' }" />
+              <label data-bind="attr: {'for': 'wpp_type_for_rent_'+$data.slug()}, text: $root.strings.rented"></label>
+
+              <input class="slug" type="checkbox" data-bind="value: $data.slug, checked: $data.settings().searchable, attr: { id: 'wpp_type_searchable_'+$data.slug(), name: 'wpp_settings[searchable_property_types][]' }" />
+              <label data-bind="attr: {'for': 'wpp_type_searchable_'+$data.slug()}, text: $root.strings.searchable"></label>
+
+              <input class="slug" type="checkbox" data-bind="value: $data.slug, checked: $data.settings().geolocatable, attr: { id: 'wpp_type_geolocatable_'+$data.slug(), name: 'wpp_settings[location_matters][]' }" />
+              <label data-bind="attr: {'for': 'wpp_type_geolocatable_'+$data.slug()}, text: $root.strings.geolocated"></label>
+
+              <span data-bind="text: $root.strings.and_can_have"></span>
+
+              <input type="checkbox" data-bind="value: 'true', checked: $data.meta().by_owner, attr: { id: 'wpp_type_by_owner_'+$data.slug(), name: 'wpp_settings[property_type_meta][' + $data.slug() + '][by_owner]' }" />
+              <label data-bind="attr: {'for': 'wpp_type_by_owner_'+$data.slug()}, text: $root.strings.agents_assigned"></label>
+
+              <input class="slug" type="checkbox" data-bind="value: $data.slug, checked: $data.settings().hierarchical, attr: { id: 'wpp_type_hierarchical_'+$data.slug(), name: 'wpp_settings[hierarchical_property_types][]' }" />
+              <label data-bind="attr: {'for': 'wpp_type_hierarchical_'+$data.slug()}, text: $root.strings.parent_properties"></label>
+
+            </div>
+            <!-- Collapsible box -->
+            <div class="wpp_collapsed wpp_hide_on_drag" data-bind="visible: $data.show_advanced_settings()">
+              <!-- Attributes Table -->
+              <table class="ud_table_two_rows wpp_clean">
+                <thead>
+                  <tr>
+                    <th data-bind="text: $root.strings.attribute_name"></th>
+                    <th data-bind="text: $root.strings.hidden"></th>
+                    <th data-bind="text: $root.strings.inherited"></th>
+                  </tr>
+                </thead>
+                <tbody data-bind="template: { 'name': 'listing_type_enable_attributes_row', foreach: $root.global.attributes }"></tbody>
+              </table>
+            </div>
+          </li>
+        </ul>
+        <div><input class="button-secondary" type="button" data-bind="value: $root.strings.new_property_type, click: $root.add_data.bind( $root, $root.global.property_types, $root.global._property_type )" /></div>
+      </div>
+    </div>
+    <div class="wpp_secondary_section">
+      <div class="ud_th"><strong data-bind="text: $root.strings.advanced_settings"></strong></div>
+      <div class="ud_td">
+        <ul>
+          <li>
+            <label data-bind="text: $root.strings.set_properties_type"></label>
+            <select data-bind="options: $root.global.property_types(), optionsText: 'label', optionsValue: 'label' "></select>
+            <input data-bind="value: $root.strings.process" type="button" id="wpp_ajax_max_set_property_type" class="button wpp_input_button" />
+            <pre id="wpp_ajax_max_set_property_type_result" class="wpp_class_pre hidden"></pre>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/html" id="listing_type_enable_attributes_row">
+  <!-- ko if: !$data.reserved() -->
+  <tr>
+    <td data-bind="text: $data.label"></td>
+    <td><input type="checkbox" data-bind="value: $data.slug, checked: $parent.hidden_attributes, attr: { name: 'wpp_settings[hidden_attributes][' + $parent.slug() + '][]' }" /></td>
+    <td><input type="checkbox" data-bind="value: $data.slug, checked: $parent.property_inheritance, attr: { name: 'wpp_settings[property_inheritance][' + $parent.slug() + '][]' }" /></td>
+  </tr>
+  <!-- /ko -->
+</script>

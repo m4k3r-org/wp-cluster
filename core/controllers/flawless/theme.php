@@ -29,9 +29,13 @@ namespace Flawless {
 
     }
 
-    public function temp() {
+    /**
+     *
+     * @return mixed
+     */
+    public function get_theme_directories() {
       global $wp_theme_directories;
-
+      return $wp_theme_directories;
     }
 
   }

@@ -2,7 +2,7 @@
 /**
  * Renders Comments List and / or form.
  *
- * @package Flawless
+ * @module Flawless
  * @since Flawless 0.6.0
  */
 

@@ -5,7 +5,7 @@
  * This can be overridden in child themes using get_template_part()
  *
  * @todo Update this to integrate with header-actions-menu if it is used since it's in the same location. - potanin@UD 5/25/12
- * @package Flawless
+ * @module Flawless
  * @since Flawless 0.2
  */ 
  

@@ -2,20 +2,19 @@
 /**
  * -
  *
- * @class Flawless_Module
- * @user: potanin@UD
- * @date: 8/31/13
- * @time: 10:33 AM
- * 
+ * @module Flawless
+ * @namespace Flawless
+ * @module Flawless
  */
+namespace Flawless {
 
-namespace Flawless;
+  /**
+   * Class Module
+   *
+   * @class Module
+   */
+  class Module {
 
-/**
- * Class Module
- *
- * @package Flawless
- */
-class Module {
+  }
 
 }

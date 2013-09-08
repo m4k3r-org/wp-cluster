@@ -6,7 +6,7 @@
  *
  *
  *
- * @package Flawless
+ * @module Flawless
  * @since Flawless 0.3.3
  *
  */

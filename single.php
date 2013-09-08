@@ -6,7 +6,7 @@
  *
  * @version 0.0.3
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @package Flawless
+ * @module Flawless
  */
 ?>
 

@@ -3,6 +3,7 @@
  * Model Handler
  *
  * @namespace UsabilityDynamics
+ * @module UsabilityDynamics
  * @author potanin@UD
  * @version 0.0.1
  */
@@ -19,7 +20,7 @@ namespace UsabilityDynamics {
   class Models {
 
     // Class Version.
-    public static $version = '0.1.1';
+    public $version = '0.1.1';
 
     /**
      * Constructor for the UD Models class.

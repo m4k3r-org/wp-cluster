@@ -4,13 +4,14 @@
  *
  * @author team@UD
  * @version 0.0.1
- * @namespace UsabilityDynamics
+ * @module UsabilityDynamics
  */
 namespace UsabilityDynamics {
 
   /**
    * UD API
    *
+   * @module UsabilityDynamics
    * @author team@UD
    * @version 0.1.1
    * @class API
@@ -395,8 +396,7 @@ namespace UsabilityDynamics {
      * @author peshkov@UD
      *
      * @param array $data
-     *
-     * @return $data
+     * @return array|bool
      */
     static function set_api_route( $data ) {
 

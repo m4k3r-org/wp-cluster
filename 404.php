@@ -5,7 +5,7 @@
  * @version 1.1
  * @since 0.2.0
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @package Flawless
+ * @module Flawless
  */
 
 if ( $flawless[ '404_page' ] ) {

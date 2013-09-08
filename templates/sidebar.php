@@ -5,13 +5,13 @@
  * @todo have $widget_area_type and $sidebars be determined in get_current_sidebars() and then loaded into global variable for simple use here.
  * @version 0.0.3
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @package Flawless
+ * @module Flawless
 */
 
   //** Figure out which sidebar this is */
-  $widget_area_type = Flawless::backtrace_sidebar_type();
+  $widget_area_type = Flawless\Flawless::backtrace_sidebar_type();
 
-  $sidebars = Flawless::get_current_sidebars( $widget_area_type );
+  $sidebars = Flawless\Flawless::get_current_sidebars( $widget_area_type );
 
   if( !$sidebars ) {
     return;

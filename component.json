@@ -7,7 +7,7 @@
     "url": "https://github.com/UsabilityDynamics/wp-flawless"
   },
   "config": {
-    "source-dir": "components"
+    "component-dir": "components"
   },
   "build": {
     "js": "ux/scripts/vendor",
@@ -28,6 +28,7 @@
     "usabilitydynamics/lib-settings": "*",
     "usabilitydynamics/lib-saas": "*",
     "usabilitydynamics/lib-api": "*",
+    "usabilitydynamics/lib-ui": "*",
     "usabilitydynamics/js-elastic-filter": "*",
     "camshaft/bootstrap-responsive": "*",
     "camshaft/bootstrap-grid": "*",

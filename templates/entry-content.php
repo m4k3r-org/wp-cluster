@@ -15,7 +15,7 @@
  * - show_post_content
  * - show_meta_footer
  *
- * @package Flawless
+ * @module Flawless
  * @since Flawless 0.6.0
  */
 

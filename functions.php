@@ -4,9 +4,11 @@
  *
  * Premium WordPress Theme - functions and definitions.
  *
- * @version 0.1.1
- * @author team@UD
+ * @module Flawless
  * @namespace Flawless
+ *
+ * @author team@UD
+ * @version 0.1.1
  * @since 0.0.2
  */
 namespace Flawless {
@@ -70,22 +72,22 @@ namespace Flawless {
       }
 
       // Load Controllers
-      $this->loader = require_once( 'core/load.php' );
+      // @todo Migrate load.php into this file and have it reference UsabilityDynamics\Loader class manually.
+      require_once( 'core/load.php' );
 
-      $this->loader     = new Loader();
-      $this->api        = new API();
-      $this->settings   = new Settings();
-      $this->legacy     = new Legacy();
-      $this->module     = new Module();
-      $this->utility    = new Utility();
+      $this->loader = new Loader();
+      $this->api = new API();
+      $this->settings = new Settings();
+      $this->module = new Module();
+      $this->models = new \UsabilityDynamics\Models;
 
-      // $test = Utility::extend(array( 'one' => 'asdfsa' ), array( 'asdfdsaf' => 'asdf' ));
-
-      die( '<pre>' . print_r( $test, true ) . '</pre>' );
+      //die( '<pre>' . print_r( $this->models, true ) . '</pre>' );
+      // $this->legacy     = new Legacy();
+      $this->utility = new Utility();
 
       // add_filter( 'template_directory', call_user_func(array( $this, template_directory ), $stylesheet_dir) );
-      add_filter( 'template_directory', array( $this, 'fix_path' ) );
-      add_filter( 'stylesheet_directory', array( $this, 'fix_path' ) );
+      add_filter( 'template_directory', array( $this->utility, 'fix_path' ) );
+      add_filter( 'stylesheet_directory', array( $this->utility, 'fix_path' ) );
 
       //** Load default Flawless settings and configurations */
       $flawless[ 'have_static_home' ] = ( get_option( 'show_on_front' ) == 'page' ? true : false );
@@ -97,12 +99,13 @@ namespace Flawless {
       $flawless[ 'asset_directories' ] = apply_filters( 'flawless_asset_location', array(
         untrailingslashit( get_template_directory() ) => untrailingslashit( get_template_directory_uri() ),
         untrailingslashit( get_stylesheet_directory() ) => untrailingslashit( get_stylesheet_directory_uri() )
-      ));
+      ) );
 
       $flawless[ 'paths' ] = array(
         'templates' => untrailingslashit( get_template_directory() ) . '/templates',
         'controllers' => untrailingslashit( get_template_directory() ) . '/core/controllers',
         'modules' => untrailingslashit( get_template_directory() ) . '/core/modules',
+        'helpers' => untrailingslashit( get_template_directory() ) . '/core/helpers',
         'premium' => untrailingslashit( get_template_directory() ) . '/core/premium',
         'vendor' => untrailingslashit( get_template_directory() ) . '/core/vendor',
         'static' => untrailingslashit( get_template_directory() ) . '/static',
@@ -149,9 +152,9 @@ namespace Flawless {
       add_filter( 'extra_theme_headers', function () {
         global $flawless;
         return (array) $flawless[ 'default_header' ][ 'themes' ];
-      });
+      } );
 
-      include_once( $flawless[ 'paths' ][ 'templates' ] . '/template.php' );
+      include_once( $flawless[ 'paths' ][ 'helpers' ] . '/template.php' );
 
       //** Get Core settings */
       $flawless[ 'theme_data' ] = array_filter( (array) get_file_data( TEMPLATEPATH . '/style.css', $flawless[ 'default_header' ][ 'themes' ], 'theme' ) );
@@ -176,7 +179,7 @@ namespace Flawless {
       do_action( 'flawless::loaded', $flawless );
 
       // Synchronize settings.
-      $this->settings = $flawless;
+      // $this->settings = $flawless;
 
     }
 
@@ -214,6 +217,7 @@ namespace Flawless {
           update_option( 'flawless_settings', $flawless_settings = json_decode( $default_configuration, true ) );
         }
       }
+
       //** Merge default $flawless settings with database settings */
       $flawless = self::extend( $flawless, get_option( 'flawless_settings' ) );
 
@@ -225,7 +229,7 @@ namespace Flawless {
       //** Clean up array and strip slashes */
       $flawless = stripslashes_deep( array_filter( (array) $flawless ) );
 
-      Flawless::console_log( 'Theme settings loaded.' );
+      Log::add( 'Theme settings loaded.' );
 
       //** Load theme's core assets */
       $flawless = Flawless::load_core_assets( $flawless );
@@ -243,12 +247,12 @@ namespace Flawless {
 
       //** Global helper to fix local paths, should probably be moved somewhere else */
       add_filter( 'flawless::root_path', function ( $path ) {
-        return Flawless::fix_path( $path );
+        return Utility::fix_path( $path );
       } );
 
       //** Support for WP's code quality monitoring when debug mode is not enabled. */
       add_action( 'doing_it_wrong_run', function ( $function, $message, $version ) {
-        Flawless::console_log( sprintf( __( 'Warning: %1$s was called incorrectly. %2$s %3$s' ), $function, $message, $version ), 'error' );
+        Log::add( sprintf( __( 'Warning: %1$s was called incorrectly. %2$s %3$s' ), $function, $message, $version ), 'error' );
       }, 10, 3 );
 
     }
@@ -266,21 +270,27 @@ namespace Flawless {
     static function init_upper() {
       global $flawless;
 
-      Flawless::console_log( 'Executed: Flawless::init();' );
+      Log::add( 'Executed: Flawless::init();' );
 
-      wp_register_script( 'bootstrap', '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/js/bootstrap.min.js', array( 'jquery' ), '3.0.0', true );
+      wp_register_script( 'require', '//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js', array(), '2.1.8', true );
+      wp_register_script( 'twitter-bootstrap', '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/js/bootstrap.min.js', array( 'jquery' ), '3.0.0', true );
+
       wp_register_script( 'knockout', '//cdnjs.cloudflare.com/ajax/libs/knockout/2.3.0/knockout-min.js', array( 'jquery' ), '2.0.0', true );
       wp_register_script( 'knockout-mapping', '//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.3.5/knockout.mapping.min.js', array( 'jquery', 'knockout' ), '2.3.5', true );
       wp_register_script( 'knockout-bootstrap', '//cdnjs.cloudflare.com/ajax/libs/knockout-bootstrap/0.2.1/knockout-bootstrap.min.js', array( 'jquery', 'knockout', 'bootstrap' ), '0.2.1', true );
 
       wp_register_script( 'google-prettify', '//cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.js', array( 'jquery' ), 'r298', true );
-      wp_register_script( 'jquery-lazyload', '////cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.8.4/jquery.lazyload.min.js', array( 'jquery' ), '1.8.4', true );
+
+      wp_register_script( 'jquery-lazyload', '//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.8.4/jquery.lazyload.min.js', array( 'jquery' ), '1.8.4', true );
       wp_register_script( 'jquery-cookie', '//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.3.1/jquery.cookie.min.js', array( 'jquery' ), '1.3.1', true );
       wp_register_script( 'jquery-touch-punch', '//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js', array( 'jquery' ), '0.2.2', true );
       wp_register_script( 'jquery-equalheights', '//cdn.jsdelivr.net/jquery.equalheights/1.3/jquery.equalheights.min.js', array( 'jquery' ), '1.3', true );
       wp_register_script( 'jquery-placeholder', '//cdn.jsdelivr.net/jquery.placeholder/2.0.7/jquery.placeholder.min.js', array( 'jquery' ), '2.0.7', true );
       wp_register_script( 'jquery-masonry', '//cdnjs.cloudflare.com/ajax/libs/masonry/3.1.1/masonry.pkgd.js', array( 'jquery' ), '3.1.1', true );
       wp_register_script( 'jquery-fancybox', '//cdnjs.cloudflare.com/ajax/libs/fancybox/2.0.4/jquery.fancybox.pack.js', array( 'jquery' ), '2.0.4', true );
+
+      wp_register_script( 'flawless-core', get_bloginfo( 'template_url' ) . '/assets/js/flawless-core.js', array( 'twitter-bootstrap', 'require' ), Flawless_Version, true );
+      wp_register_script( 'flawless-frontend', get_bloginfo( 'template_url' ) . '/assets/js/flawless-frontend.js', array( 'flawless-core' ), Flawless_Version, true );
 
       //** Admin Only Actions */
       add_action( 'admin_menu', array( 'Flawless', 'admin_menu' ) );
@@ -298,13 +308,6 @@ namespace Flawless {
       add_action( 'wp_ajax_nopriv_frontend_ajax_handler', create_function( '', ' die( json_encode( Flawless::frontend_ajax_handler() )); ' ) );
 
       add_action( 'wp_ajax_flawless_signup_field_check', array( 'Flawless', 'flawless_signup_field_check' ), 10, 3 );
-
-      //** Change login page logo URL */
-      add_action( 'login_headerurl', create_function( '', ' return home_url(); ' ) );
-      add_action( 'login_headertitle', create_function( '', ' return get_bloginfo( "name" ); ' ) );
-
-      //** Add custom logo to login screen */
-      add_action( 'login_head', array( 'Flawless', 'login_head' ) );
 
       // Register Navigation Menus
       // @todo Migrate presentation-specific logic outside of this class; otherwise should make it easy to disable/enable in child theme.
@@ -360,52 +363,19 @@ namespace Flawless {
     static function init_lower() {
       global $flawless;
 
-      // wp_register_script( 'flawless-bootstrap-js', Flawless::load( 'bootstrap.min.js', 'js' ), array( 'jquery' ), Flawless_Version, true );
-
-      //** Bundled jQuery UI Effects.  Individual scripts can be loaded as well, as they are shipped with WordPress */
-      // wp_register_script( 'jquery-ui-effects', get_bloginfo( 'template_url' ) . '/assets/js/jquery.ui.effects.min.js', array( 'jquery-ui-core' ), '1.8.17', true );
-
-      //** UD jQuery Plugins - for now all unminified */
-      // wp_register_script( 'jquery-ud-dynamic_filter', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.dynamic_filter/1.1.3/jquery.ud.dynamic_filter.js', array( 'jquery-ui-core' ), '1.1.3', true );
-      // wp_register_script( 'jquery-ud-form_helper', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.form_helper/1.1/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1', true );
-      // wp_register_script( 'jquery-ud-smart_buttons', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.smart_buttons/0.6/jquery.ud.smart_buttons.js', array( 'jquery-ui-core' ), '0.6', true );
-      // wp_register_script( 'jquery-ud-social', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.social/0.3/jquery.ud.social.js', array( 'jquery-ui-core' ), '0.3', true );
-      // wp_register_script( 'jquery-ud-execute_triggers', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.execute_triggers/1.0.1/jquery.ud.execute_triggers.js', array( 'jquery-ui-core' ), '1.0.1', true );
-
-      //** Flawless Scripts */
-      // wp_register_script( 'flawless', get_bloginfo( 'template_url' ) . '/assets/js/flawless.js', array( 'flawless-bootstrap-js' ), Flawless_Version, true );
-      // wp_register_script( 'flawless-frontend', get_bloginfo( 'template_url' ) . '/assets/js/flawless.frontend.js', array( 'flawless', 'jquery-placeholder' ), Flawless_Version, true );
-      // wp_register_script( 'flawless-admin-global', get_bloginfo( 'template_url' ) . '/assets/js/flawless.admin.global.js', array( 'flawless' ), Flawless_Version, true );
-      // wp_register_script( 'flawless-admin', get_bloginfo( 'template_url' ) . '/assets/js/flawless.admin.js', array( 'flawless', 'flawless-admin-global', 'farbtastic' ), Flawless_Version, true );
-
       //** Enqueue front-end assets */
       add_action( 'wp_enqueue_scripts', array( 'Flawless', 'wp_enqueue_scripts' ), 100 );
       add_action( 'wp_print_styles', array( 'Flawless', 'wp_print_styles' ), 100 );
 
-      add_action( 'flawless::init_lower', array( 'Flawless', 'create_views' ), 10 );
-
-      add_action( 'admin_footer', array( 'Flawless', 'log_stats' ), 10 );
-      add_action( 'wp_footer', array( 'Flawless', 'log_stats' ), 10 );
+      add_action( 'admin_footer', array( 'Log', 'log_stats' ), 10 );
+      add_action( 'wp_footer', array( 'Log', 'log_stats' ), 10 );
 
       //** Extra front-end assets ( such as Fancybox ) */
-      add_action( 'flawless::extra_local_assets', array( 'Flawless', 'extra_local_assets' ), 5 );
-
-      add_filter( 'wp_print_footer_scripts', array( 'Flawless', 'wp_print_footer_scripts' ), 100 );
-
-      //** Add console log JavaScript in admin footer */
-      add_filter( 'admin_print_footer_scripts', array( 'Flawless', 'render_console_log' ) );
+      add_action( 'flawless::extra_local_assets', array( __CLASS__, 'extra_local_assets' ), 5 );
+      add_filter( 'wp_print_footer_scripts', array( __CLASS__, 'wp_print_footer_scripts' ), 100 );
 
       add_filter( 'post_link', array( 'Flawless', 'filter_post_link' ), 10, 2 );
       add_filter( 'post_type_link', array( 'Flawless', 'filter_post_link' ), 10, 2 );
-
-      if ( current_theme_supports( 'extended-taxonomies' ) ) {
-        add_action( 'wp_insert_post', array( 'Flawless', 'term_updated' ), 9, 2 );
-        add_action( 'created_term', array( 'Flawless', 'term_updated' ), 9 );
-        add_action( 'edit_term', array( 'Flawless', 'term_updated' ), 9 );
-        add_action( 'delete_term', array( 'Flawless', 'delete_term' ), 9, 3 );
-        add_action( 'load-edit-tags.php', array( 'Flawless', 'term_editor_loader' ) );
-        add_action( 'load-post.php', array( 'Flawless', 'post_editor_loader' ) );
-      }
 
       //** Has to be run every time for custom taxonomy URLs to work, when permalinks are used. */
       if ( $_REQUEST[ 'flush_rewrite_rules' ] == 'true' ) {
@@ -429,35 +399,11 @@ namespace Flawless {
     }
 
     /**
-     * Update Flawless Theme Setting
+     * Admin Menu Handler
      *
-     * @since 0.0.6
      */
-    static function update_option( $key = false, $value = '' ) {
-      global $flawless;
-
-      if ( !$key ) {
-        return false;
-      }
-
-      if ( empty( $value ) ) {
-        $flawless_settings = get_option( 'flawless_settings' );
-        unset( $flawless_settings[ $key ] );
-      } else {
-        $flawless_settings = self::extend( get_option( 'flawless_settings' ), array( $key => $value ) );
-      }
-
-      if ( update_option( 'flawless_settings', $flawless_settings ) ) {
-
-        if ( !empty( $value ) ) {
-          $flawless[ $key ] = $flawless_settings[ $key ];
-        } else {
-          unset( $flawless[ $key ] );
-        }
-
-        return true;
-      }
-
+    static function admin_menu() {
+      do_action( 'flawless::admin_menu' );
     }
 
     /**
@@ -504,16 +450,6 @@ namespace Flawless {
         wp_enqueue_script( 'jquery-lazyload' );
       }
 
-    }
-
-    /**
-     * Disables update notifications if set.
-     *
-     * @action after_setup_theme( 10 )
-     * @since 0.0.2
-     */
-    static function log_stats() {
-      Flawless::console_log( 'End of request, total execution: ' . timer_stop() . ' seconds.' );
     }
 
     /**
@@ -575,468 +511,6 @@ namespace Flawless {
       do_action( 'flawless_define_widget_area_sections' );
 
       return $flawless;
-
-    }
-
-    /**
-     * Generates all views, registers Flawless widget areas, and unregisters any unsued widget areas.
-     *
-     * Unregistered widget areas are loaded into [widget_areas] array so they can be displayed on the Flawless settings page
-     * for WAS association.
-     *
-     * Generates dynamic settings on every page load.
-     *
-     * @creates [widget_areas]
-     * @creates [views]
-     *
-     * @action init ( 500 )
-     * @action flawless::init_lower ( 10 )
-     *
-     * @todo: Add check for "custom" views, i.e. search result page. -potanin@UD
-     * @todo: Add custom description generation based on views a widget area is used in. -potanin@UD
-     *
-     * @since 0.0.2
-     */
-    static function create_views( $current, $args = false ) {
-      global $wp_registered_sidebars, $flawless, $post;
-
-      $widget_areas = array();
-      $views = array();
-
-      //** Create a default Flawless sidebar */
-      if ( !isset( $flawless[ 'flawless_widget_areas' ] ) ) {
-
-        $flawless[ 'flawless_widget_areas' ][ 'global_sidebar' ] = array(
-          'label' => __( 'Global Sidebar', 'flawless' ),
-          'class' => 'my_global_sidebar',
-          'description' => __( 'Our default sidebar.', 'flawless' ),
-          'id' => 'global_sidebar'
-        );
-
-      }
-
-      //** Create custom widget areas */
-      foreach ( (array) $flawless[ 'flawless_widget_areas' ] as $sidebar_id => $wa_data ) {
-
-        //** Register this widget area with some basic information */
-        register_sidebar( array(
-          'name' => $wa_data[ 'label' ],
-          'description' => $wa_data[ 'description' ],
-          'class' => $wa_data[ 'class' ],
-          'id' => $sidebar_id,
-          'before_widget' => '<div id="%1$s"  class="flawless_widget theme_widget widget  %2$s">',
-          'after_widget' => '</div>',
-          'before_title' => '<h5 class="widgettitle widget-title">',
-          'after_title' => '</h5>'
-        ) );
-
-        $wp_registered_sidebars[ $sidebar_id ][ 'flawless_widget_area' ] = true;
-
-      }
-
-      //** Build views from all used widget areas, update widget area info based on location and usage */
-      foreach ( (array) $flawless[ 'post_types' ] as $post_type => $post_type_data ) {
-
-        //** Load post type configuration ( not essential, just in case ) */
-        $views[ 'post_types' ][ $post_type ][ 'settings' ] = $post_type_data;
-        $views[ 'post_types' ][ $post_type ][ 'widget_areas' ] = array();
-
-        Flawless::add_post_type_option( array(
-          'post_type' => $post_type,
-          'position' => 50,
-          'meta_key' => 'hide_page_title',
-          'label' => sprintf( __( 'Hide Page Title.', 'flawless' ) )
-        ) );
-
-        /** If breadcrumbs are not globally hidden, show an option to hide them */
-        if ( $flawless[ 'hide_breadcrumbs' ] != 'true' ) {
-          Flawless::add_post_type_option( array(
-            'post_type' => $post_type,
-            'position' => 70,
-            'meta_key' => 'hide_breadcrumbs',
-            'label' => sprintf( __( 'Hide Breadcrumbs.', 'flawless' ) )
-          ) );
-        }
-
-        if ( post_type_supports( $post_type, 'author' ) && $post_type_data[ 'disable_author' ] != 'true' ) {
-          Flawless::add_post_type_option( array(
-            'post_type' => $post_type,
-            'position' => 100,
-            'meta_key' => 'hide_post_author',
-            'label' => sprintf( __( 'Hide Author.', 'flawless' ) )
-          ) );
-        }
-
-        if ( post_type_supports( $post_type, 'capability_restrictions' ) ) {
-          Flawless::add_post_type_option( array(
-            'post_type' => $post_type,
-            'position' => 1000,
-            'meta_key' => 'must_be_logged_in',
-            'label' => sprintf( __( 'Must Be Logged In To View.', 'flawless' ) )
-          ) );
-        }
-
-        //** Load used widget areas into array */
-        foreach ( (array) $post_type_data[ 'widget_areas' ] as $was_slug => $these_widget_areas ) {
-
-          Flawless::add_post_type_option( array(
-            'post_type' => $post_type,
-            'position' => 200,
-            'meta_key' => 'disable_' . $was_slug,
-            'label' => sprintf( __( 'Disable %1s.', 'flawless' ), $flawless[ 'widget_area_sections' ][ $was_slug ][ 'label' ] )
-          ) );
-
-          $views[ 'post_types' ][ $post_type ][ 'widget_areas' ][ $was_slug ] = array_filter( (array) $these_widget_areas );
-
-          $widget_areas[ 'used' ] = array_merge( (array) $widget_areas[ 'used' ], (array) $these_widget_areas );
-
-        }
-
-      }
-
-      //** Build views from all used widget areas, update widget area info based on location and usage */
-      foreach ( (array) $flawless[ 'taxonomies' ] as $taxonomy => $taxonomy_data ) {
-
-        //** Load post type configuration ( not essential, just in case ) */
-        $views[ 'taxonomies' ][ $taxonomy ][ 'settings' ] = $taxonomy_data;
-        $views[ 'taxonomies' ][ $taxonomy ][ 'widget_areas' ] = array();
-
-        //** Load used widget areas into array */
-        foreach ( (array) $taxonomy_data[ 'widget_areas' ] as $was_slug => $these_widget_areas ) {
-
-          $views[ 'taxonomies' ][ $taxonomy ][ 'widget_areas' ][ $was_slug ] = array_filter( (array) $these_widget_areas );
-
-          $widget_areas[ 'used' ] = array_merge( (array) $widget_areas[ 'used' ], (array) $these_widget_areas );
-
-        }
-
-      }
-
-      //** Create array of all sidebars */
-      $widget_areas[ 'all' ] = $wp_registered_sidebars;
-
-      ksort( $wp_registered_sidebars );
-
-      ksort( $widget_areas[ 'all' ] );
-
-      //** Unregister any WAs not placed into a WAS */
-      foreach ( (array) $wp_registered_sidebars as $sidebar_id => $sidebar_data ) {
-
-        //** If there are no active sidebars, we leave our default global sidebar active */
-        if ( count( $widget_areas[ 'used' ] ) == 0 && $sidebar_id == 'global_sidebar' ) {
-          continue;
-        }
-
-        if ( !in_array( $sidebar_id, (array) $widget_areas[ 'used' ] ) ) {
-
-          $widget_areas[ 'unused' ][ $sidebar_id ] = $wp_registered_sidebars[ $sidebar_id ];
-
-          if ( $flawless[ 'deregister_empty_widget_areas' ] ) {
-            unset( $wp_registered_sidebars[ $sidebar_id ] );
-          }
-
-        }
-
-      }
-
-      //** Update descriptions of all used widget areas */
-      foreach ( (array) $widget_areas[ 'used' ] as $sidebar_id ) {
-
-        //$wp_registered_sidebars[$sidebar_id][ 'description' ] = 'Modified! ' . $wp_registered_sidebars[$sidebar_id][ 'description' ];
-
-      }
-
-      //** Load settings into global variable */
-      $flawless[ 'widget_areas' ] = $widget_areas;
-      $flawless[ 'views' ] = $views;
-
-      do_action( 'flawless::create_views' );
-
-    }
-
-    /**
-     * Determines the currently requested page type.
-     *
-     * Returns information about curent view:
-     * - type: The general type of request, typically corresponding with the type of template WP would load
-     * - view: The specific view type, such as 'post_type', 'taxonomy', 'home', etc. that are used by Flawless to display custom elements such as sidebars
-     * - group: The "group" this view belongs to, such as post types, taxonomies, etc.
-     *
-     * @todo Ensure $wp_query->query_vars work with other permalink structures. - potanin@UD
-     * @since 0.0.2
-     * @author potanin@UD
-     */
-    static function this_request() {
-      global $wp_query, $post;
-
-      $t = array();
-
-      switch ( true ) {
-
-        /**
-         * The home page, when a page is used.  In this instance, we treate it just like any other page.
-         *
-         */
-        case is_page() && is_front_page():
-          $t[ 'view' ] = 'single';
-          $t[ 'group' ] = 'post_types';
-          $t[ 'type' ] = 'page'; /* WP only allows pages to be set as home page */
-          $t[ 'note' ] = 'Static Home Page';
-
-          Flawless::console_log( 'Current View: Home page with static page.' );
-
-          break;
-
-        /**
-         * The home page, when no page is set, so displayed as archive
-         *
-         */
-        case !is_page() && is_front_page():
-          $t[ 'view' ] = 'archive';
-          $t[ 'type' ] = 'home';
-          $t[ 'note' ] = 'Non-Static ( Archive ) Home Page';
-
-          Flawless::console_log( 'Current View: Home page, default posts archive.' );
-
-          break;
-
-        /**
-         * If this is the Blog Posts index page.
-         *
-         * By default posts page is never rendered NOT being attached to a page, therefore always 'single'
-         */
-        case $wp_query->is_posts_page:
-          $t[ 'view' ] = 'single';
-          $t[ 'group' ] = 'posts_page';
-          $t[ 'type' ] = $wp_query->query_vars[ 'post_type' ] ? $wp_query->query_vars[ 'post_type' ] : 'page';
-          $t[ 'note' ] = 'Posts Page ( Archive )';
-
-          Flawless::console_log( 'Current View: Blog Posts Index page.' );
-
-          break;
-
-        /**
-         * If viewing a root of a post type, when the post type allows for a root archive
-         * Note, default WP post types such as post and page do not have a post type archive
-         *
-         */
-        case $wp_query->is_post_type_archive:
-          $t[ 'view' ] = 'archive';
-          $t[ 'group' ] = 'post_types';
-          $t[ 'type' ] = $wp_query->query_vars[ 'post_type' ];
-
-          Flawless::console_log( sprintf( 'Current View: Post Type Archive ( %1s ).', $wp_query->query_vars[ 'post_type' ] ) );
-
-          break;
-
-        /**
-         * If this is a single page, just as a post, page or custom post type single view
-         *
-         * Developer Notice: BuddyPress Pages are recognized as this ( page ).
-         * Could create custom "BuddyPress" content type and modify wp_dropdown_pages filter to make them selectable.
-         */
-        case is_singular():
-          $t[ 'view' ] = 'single';
-          $t[ 'group' ] = 'post_types';
-          $t[ 'type' ] = $post->post_type;
-
-          Flawless::console_log( sprintf( 'Current View: Single post-type page ( %1s ).', $post->post_type ) );
-
-          break;
-
-        /**
-         * For search results.
-         *
-         */
-        case is_search():
-          $t[ 'view' ] = 'search';
-          $t[ 'group' ] = 'post_types';
-          $t[ 'type' ] = 'page';
-
-          Flawless::console_log( 'Current View: Search Results page.' );
-
-          break;
-
-        /**
-         * For taxonomy archives ( not taxonomy roots )
-         * Template Load: ( category.php | tag.php | taxonomy-{$taxonomy} ) -> ( archive.php )
-         * Although category and tag are taxonomies, WP has special templates for them.
-         */
-        case is_tax() || is_category() || is_tag():
-          $t[ 'view' ] = 'archive';
-          $t[ 'group' ] = 'taxonomies';
-          $t[ 'type' ] = $wp_query->tax_query->queries[ 0 ][ 'taxonomy' ];
-
-          Flawless::console_log( sprintf( 'Current View: Taxonomy archive ( %1s ) - ( non-root ). ', $wp_query->tax_query->queries[ 0 ][ 'taxonomy' ] ) );
-
-          break;
-
-        /**
-         * Taxonomy Root, by default results in 404.  WordPress does not support root pages for taxonomies, i.e. .com/category/ or .com/genre/
-         * We check that the queried name is for a valid taxonomy, yet no taxonomy nor page is detece
-         * Theoretically such a request should show all the objects associated with the taxonomy, perhaps uncategorized or ideally a Tagcloud
-         */
-        case taxonomy_exists( $wp_query->query_vars[ 'name' ] ) && !is_archive() && !is_singular():
-          $t[ 'view' ] = 'archive';
-          $t[ 'group' ] = 'taxonomies';
-          $t[ 'type' ] = $wp_query->query_vars[ 'name' ];
-
-          Flawless::console_log( 'Current View: Taxonomy root archive.' );
-
-          break;
-
-        default:
-          $t[ 'view' ] = 'search';
-          $t[ 'group' ] = 'post_types';
-          $t[ 'type' ] = 'page';
-
-          Flawless::console_log( 'Current View: Unknown - rendering same as Page.' );
-
-          break;
-
-      }
-
-      $t = apply_filters( 'flawless_request_type', $t );
-
-      return $t;
-
-    }
-
-    /**
-     * Return array of sidebars that the current page needs to display
-     *
-     * Used to load CSS classes early on into the <body> element, as well as others
-     *
-     * Determines:
-     * - widget_areas - removes any widget areas that do not have any widgets
-     * - body_classes
-     * - block_classes - the primary content container, class varies depending on number of sidebars
-     *
-     * @todo Fix issue with Post Page not displaying sidebar. Should be treated as a page. - potanin@UD 5/30/12
-     * @filter template_redirect ( 0 )
-     * @since 0.0.2
-     * @author potanin@UD
-     */
-    static function set_current_view() {
-      global $post, $wp_query, $flawless;
-
-      //** Typically $flawless[ 'current_view' ] would be blank, but in case it was set by another function via API we do not override */
-      $flawless[ 'current_view' ] = array_merge( (array) $flawless[ 'current_view' ], Flawless::this_request() );
-
-      $flawless[ 'current_view' ][ 'body_classes' ] = (array) $flawless[ 'current_view' ][ 'body_classes' ];
-
-      //** Load view data if it exists ( Widget areas, etc. )
-      if ( $flawless[ 'views' ][ $flawless[ 'current_view' ][ 'group' ] ] ) {
-        $flawless[ 'current_view' ] = array_merge( (array) $flawless[ 'current_view' ], (array) $flawless[ 'views' ][ $flawless[ 'current_view' ][ 'group' ] ][ $flawless[ 'current_view' ][ 'type' ] ] );
-      }
-
-      //** Get body classes from active widget sections */
-      foreach ( (array) $flawless[ 'current_view' ][ 'widget_areas' ] as $was_slug => $wa_sidebars ) {
-
-        //** If widget area sections and widget areas are loaded, make sure widget areas are active */
-        foreach ( (array) $wa_sidebars as $this_key => $sidebar_id ) {
-          if ( !Flawless::is_active_sidebar( $sidebar_id ) || apply_filters( 'flawless_exclude_sidebar', false, $sidebar_id ) ) {
-            unset( $flawless[ 'current_view' ][ 'widget_areas' ][ $was_slug ][ $this_key ] );
-          }
-        }
-
-        $flawless[ 'current_view' ][ 'widget_areas' ] = array_filter( (array) $flawless[ 'current_view' ][ 'widget_areas' ] );
-
-        //** Check if we have any active sidebars left - if not, leave.  */
-        if ( empty( $flawless[ 'current_view' ][ 'widget_areas' ][ $was_slug ] ) ) {
-          continue;
-        }
-
-        if ( get_post_meta( $post->ID, 'disable_' . $was_slug, true ) ) {
-          unset( $flawless[ 'current_view' ][ 'widget_areas' ][ $was_slug ] );
-        }
-
-      }
-
-      if ( count( $flawless[ 'current_view' ][ 'widget_areas' ] ) === 0 ) {
-        $flawless[ 'current_view' ][ 'block_classes' ] = array( 'c6-123456 span12' );
-        $flawless[ 'current_view' ][ 'body_classes' ][ ] = 'no_wp_sidebar';
-      }
-
-      if ( count( $flawless[ 'current_view' ][ 'widget_areas' ] ) == 1 ) {
-        $flawless[ 'current_view' ][ 'body_classes' ][ ] = 'have_sidebar';
-
-        if ( array_key_exists( 'right_sidebar', $flawless[ 'current_view' ][ 'widget_areas' ] ) ) {
-          $flawless[ 'current_view' ][ 'block_classes' ][ ] = 'c6-1234 span8 first';
-          $flawless[ 'current_view' ][ 'body_classes' ][ ] = 'have_right_sidebar';
-
-        }
-
-        if ( array_key_exists( 'left_sidebar', $flawless[ 'current_view' ][ 'widget_areas' ] ) ) {
-          $flawless[ 'current_view' ][ 'block_classes' ][ ] = 'c6-3456 span8 last';
-          $flawless[ 'current_view' ][ 'body_classes' ][ ] = 'have_left_sidebar';
-        }
-
-      }
-
-      if ( count( $flawless[ 'current_view' ][ 'widget_areas' ] ) == 2 ) {
-        $flawless[ 'current_view' ][ 'block_classes' ][ ] = 'c6-45 span4';
-      }
-
-      //** If navbar is active */
-      if ( is_array( $flawless[ 'navbar' ][ 'html' ] ) ) {
-        $flawless[ 'current_view' ][ 'body_classes' ][ ] = 'have-navbar';
-      }
-
-      if ( hide_page_title() ) {
-        $flawless[ 'current_view' ][ 'body_classes' ][ ] = 'no-title-wrapper';
-      }
-
-      if ( $flawless[ 'developer_mode' ] == 'true' ) {
-        $flawless[ 'current_view' ][ 'body_classes' ][ ] = 'developer_mode';
-      }
-
-      if ( current_user_can( 'manage_options' ) ) {
-        $flawless[ 'current_view' ][ 'body_classes' ][ ] = 'user_is_admin';
-      }
-
-      $flawless[ 'current_view' ][ 'body_classes' ] = array_unique( $flawless[ 'current_view' ][ 'body_classes' ] );
-      $flawless[ 'current_view' ][ 'block_classes' ] = array_unique( $flawless[ 'current_view' ][ 'block_classes' ] );
-
-      $flawless[ 'current_view' ] = apply_filters( 'set_current_view', $flawless[ 'current_view' ] );
-
-      unset( $flawless[ 'current_view' ][ 'settings' ] );
-
-      self::console_log( 'Executed: Flawless::set_current_view();' );
-      self::console_log( $flawless[ 'current_view' ] );
-
-    }
-
-    /**
-     * Return array of sidebars that the current page needs to display
-     *
-     * Used to load CSS classes early on into the <body> element, as well as others
-     * Whether sidebars are active or not is already checked in set_current_view();
-     *
-     *
-     * @since 0.0.2
-     * @author potanin@UD
-     */
-    static function get_current_sidebars( $widget_area_type = false ) {
-      global $post, $flawless;
-
-      if ( !$widget_area_type ) {
-        return array();
-      }
-
-      foreach ( (array) $flawless[ 'current_view' ][ 'widget_areas' ][ $widget_area_type ] as $sidebar_id ) {
-
-        $response[ ] = array(
-          'sidebar_id' => $sidebar_id,
-          'class' => $flawless[ 'widget_area_sections' ][ $widget_area_type ][ 'class' ]
-        );
-
-      }
-
-      Flawless::console_log( 'Executed: Flawless::get_current_sidebars();' );
-      Flawless::console_log( $response );
-
-      return $response;
 
     }
 
@@ -1126,7 +600,7 @@ namespace Flawless {
         global $flawless;
       }
 
-      Flawless::console_log( 'Executed: Flawless::setup_content_types();' );
+      Log::add( 'Executed: Flawless::setup_content_types();' );
 
       do_action( 'flawless::content_types', $flawless );
 
@@ -1140,7 +614,7 @@ namespace Flawless {
           continue;
         }
 
-        Flawless::console_log( sprintf( __( 'Adding custom post type: %1s', 'flawless' ), $type ) );
+        Log::add( sprintf( __( 'Adding custom post type: %1s', 'flawless' ), $type ) );
 
         $post_type_settings = array(
           'label' => $data[ 'name' ],
@@ -1170,7 +644,7 @@ namespace Flawless {
       foreach ( (array) $flawless[ 'taxonomies' ] as $type => $data ) {
         if ( $data[ 'flawless_taxonomy' ] == 'true' ) {
 
-          Flawless::console_log( sprintf( __( 'Adding custom flawless_taxonomy: %1s', 'flawless' ), $type ) );
+          Log::add( sprintf( __( 'Adding custom flawless_taxonomy: %1s', 'flawless' ), $type ) );
 
           $flawless[ 'taxonomies' ][ $type ][ 'rewrite_tag' ] = '%' . $type . '%';
 
@@ -1201,30 +675,7 @@ namespace Flawless {
           unset( $flawless[ 'taxonomies' ][ $type ] );
         }
 
-        if ( current_theme_supports( 'extended-taxonomies' ) && !post_type_exists( $type ) ) {
-
-          register_post_type( '_tp_' . $type, array(
-            'label' => $data[ 'label' ],
-            'public' => false,
-            'rewrite' => false,
-            'labels' => array(
-              'name' => $data[ 'label' ],
-              'edit_item' => 'Edit Term: ' . $data[ 'label' ]
-            ),
-            'supports' => array( 'title', 'editor' )
-          ) );
-
-          if ( $data[ 'allow_term_thumbnail' ] ) {
-            add_post_type_support( '_tp_' . $type, 'thumbnail' );
-            add_filter( 'manage_edit-' . $type . '_columns', create_function( '$c', ' return Flawless::array_insert_after( $c, "cb", array( "term_thumbnail" => "" )); ' ) );
-            add_filter( 'manage_' . $type . '_custom_column', function ( $null, $column, $term_id ) {
-              if ( $column == 'term_thumbnail' ) {
-                echo wp_get_attachment_image( get_post_thumbnail_id( get_post_for_extended_term( $term_id )->ID ), array( 75, 75 ) );
-              };
-            }, 10, 3 );
-          }
-
-        }
+        $data = apply_filters( 'flawless::generate_taxonomies', $data, $type );
 
         //** Save our custom settings to global taxononmy object */
         $wp_taxonomies[ $type ]->hierarchical = $data[ 'hierarchical' ] == 'true' ? true : false;
@@ -1340,7 +791,7 @@ namespace Flawless {
         if ( $flawless[ 'post_types' ][ $type ][ 'name' ] != $data->labels->name || $flawless[ 'post_types' ][ $type ][ 'flawless_post_type' ] == 'true' ) {
 
           if ( $flawless[ 'post_types' ][ $type ][ 'name' ] != $data->labels->name ) {
-            Flawless::console_log( sprintf( __( 'Changing labels for post type: %1s, from %2s to %3s', 'flawless' ), $type, $data->labels->name, $flawless[ 'post_types' ][ $type ][ 'name' ] ) );
+            Log::add( sprintf( __( 'Changing labels for post type: %1s, from %2s to %3s', 'flawless' ), $type, $data->labels->name, $flawless[ 'post_types' ][ $type ][ 'name' ] ) );
           }
 
           $original_labels = ( !empty( $wp_post_types[ $type ]->labels ) ? (array) $wp_post_types[ $type ]->labels : array() );
@@ -1475,7 +926,7 @@ namespace Flawless {
 
       $flawless[ 'css_options' ] = apply_filters( 'flawless::css_options', array_filter( $flawless[ 'css_options' ] ) );
 
-      Flawless::console_log( sprintf( __( 'Flawless::parse_css_option_defaults() completed i n %2s seconds', 'flawless' ), timer_stop() ) );
+      Log::add( sprintf( __( 'Flawless::parse_css_option_defaults() completed i n %2s seconds', 'flawless' ), timer_stop() ) );
 
       return $flawless;
 
@@ -1493,9 +944,8 @@ namespace Flawless {
 
       //** Load styles to be used by editor */
       add_editor_style( array(
-        /* 'css/bootstrap.css', */
-        'css/flawless-content.css',
-        'css/editor-style.css'
+        'ux/styles/flawless-content.css',
+        'ux/styles/editor-style.css'
       ) );
 
       if ( $flawless[ 'color_scheme' ] ) {
@@ -1517,26 +967,6 @@ namespace Flawless {
       define( 'HEADER_IMAGE_WIDTH', apply_filters( 'flawless::header_image_width', $flawless[ 'header_image_width' ] ? $flawless[ 'header_image_width' ] : 1090 ) );
       define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'flawless::header_image_height', $flawless[ 'header_image_height' ] ? $flawless[ 'header_image_height' ] : 314 ) );
       add_image_size( 'large-feature', HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT, true );
-
-      add_theme_support( 'custom-background', array(
-        'wp-head-callback' => array( 'Flawless', 'custom_background' ),
-        'admin-preview-callback' => array( 'Flawless', 'admin_image_div_callback' )
-      ) );
-
-      add_theme_support( 'custom-header', array(
-        'default-image' => '',
-        'random-default' => false,
-        'width' => 0,
-        'height' => 0,
-        'flex-height' => false,
-        'flex-width' => false,
-        'default-text-color' => '',
-        'header-text' => true,
-        'uploads' => true,
-        'wp-head-callback' => array( 'Flawless', 'flawless_admin_header_style' ),
-        'admin-head-callback' => array( 'Flawless', 'flawless_admin_header_image' ),
-        'admin-preview-callback' => ''
-      ) );
 
       //** All Available Theme Features */
       $flawless[ 'available_theme_features' ][ 'custom-skins' ] = true;
@@ -1595,55 +1025,6 @@ namespace Flawless {
 
       return $flawless;
 
-    }
-
-    /**
-     * Styles the header image displayed on the Appearance > Header admin panel.
-     *
-     * Referenced via add_custom_image_header() in flawless_setup().
-     *
-     */
-    static function flawless_admin_header_style() {
-      ?>
-      <style type="text/css">
-
-      <?php if( get_header_textcolor() != HEADER_TEXTCOLOR ) : ?>
-      #site-title a,
-      #site-description {
-        color: # <?php echo get_header_textcolor(); ?>;
-      }
-
-      <?php endif; ?>
-
-    </style>
-    <?php
-    }
-
-    /**
-     * Custom header image markup displayed on the Appearance > Header admin panel.
-     *
-     * Referenced via add_custom_image_header() in flawless_setup().
-     *
-     */
-    static function flawless_admin_header_image() {
-      ?>
-      <div id="headimg">
-      <?php
-      if ( 'blank' == get_theme_mod( 'header_textcolor', HEADER_TEXTCOLOR ) || '' == get_theme_mod( 'header_textcolor', HEADER_TEXTCOLOR ) )
-        $style = ' style="display:none;"';
-      else
-        $style = ' style="color:#' . get_theme_mod( 'header_textcolor', HEADER_TEXTCOLOR ) . ';"';
-      ?>
-        <h1><a id="name"<?php echo $style; ?> onclick="return false;"
-            href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a></h1>
-
-      <div id="desc"<?php echo $style; ?>><?php bloginfo( 'description' ); ?></div>
-        <?php $header_image = get_header_image();
-        if ( !empty( $header_image ) ) : ?>
-          <img src="<?php echo esc_url( $header_image ); ?>" alt=""/>
-        <?php endif; ?>
-    </div>
-    <?php
     }
 
     /**
@@ -1812,7 +1193,7 @@ namespace Flawless {
           if ( file_exists( $this_directory . '/assets/js/' . $plugin . '.js' ) ) {
             $asset_url = apply_filters( 'flawless-asset-url', $this_url . '/assets/js/' . $plugin . '.js', $plugin );
             wp_enqueue_script( 'flawless-asset-' . $plugin, $asset_url, array(), Flawless_Version, true );
-            Flawless::console_log( sprintf( __( 'JavaScript found for %1s plugin and loaded: %2s.', 'flawless' ), $plugin, $asset_url ) );
+            Log::add( sprintf( __( 'JavaScript found for %1s plugin and loaded: %2s.', 'flawless' ), $plugin, $asset_url ) );
           }
         }
       }
@@ -1838,7 +1219,7 @@ namespace Flawless {
           wp_enqueue_script( $asset_handle, $flawless[ 'protocol' ] . $remote_asset, array(), Flawless_Version );
 
         } else {
-          Flawless::console_log( sprintf( __( 'Could not load remote asset script: %1s.', 'flawless' ), $remote_asset ) );
+          Log::add( sprintf( __( 'Could not load remote asset script: %1s.', 'flawless' ), $remote_asset ) );
         }
       }
 
@@ -1913,7 +1294,7 @@ namespace Flawless {
             $asset_url = apply_filters( 'flawless-asset-url', $this_url . '/css/' . $plugin . '.css', $plugin );
             $file_data = get_file_data( $this_directory . '/css/' . $plugin . '.css', $flawless[ 'default_header' ][ 'flawless_style_assets' ], 'flawless_style_assets' );
             wp_enqueue_style( 'flawless-asset-' . $plugin, $asset_url, array( 'flawless-style' ), $file_data[ 'Version' ] ? $file_data[ 'Version' ] : Flawless_Version, $file_data[ 'Media' ] ? $file_data[ 'Media' ] : 'screen' );
-            Flawless::console_log( sprintf( __( 'CSS found for %1s plugin and loaded: %2s.', 'flawless' ), $plugin, $asset_url ), 'info' );
+            Log::add( sprintf( __( 'CSS found for %1s plugin and loaded: %2s.', 'flawless' ), $plugin, $asset_url ), 'info' );
           }
         }
       }
@@ -1961,11 +1342,11 @@ namespace Flawless {
         $style_data[ 'url' ] = $wp_styles->registered[ $handle ]->src;
         $style_data[ 'path' ] = untrailingslashit( apply_filters( 'flawless::root_path', ABSPATH ) ) . str_replace( untrailingslashit( home_url() ), '', $wp_styles->registered[ $handle ]->src );
         if ( !empty( $style_data[ 'args' ] ) && ( $style_data[ 'args' ] == 'print' ) ) {
-          Flawless::console_log( sprintf( __( 'CSS Compiling: Excluding %1s because it is print only. ', 'flawless' ), $style_data[ 'file_name' ] ), 'info' );
+          Log::add( sprintf( __( 'CSS Compiling: Excluding %1s because it is print only. ', 'flawless' ), $style_data[ 'file_name' ] ), 'info' );
           continue;
         }
 
-        if ( defined( 'WP_PLUGIN_DIR' ) && $flawless[ 'do_not_compile_plugin_css' ] == 'true' && strpos( $style_data[ 'path' ], Flawless::fix_path( WP_PLUGIN_DIR ) ) !== false ) {
+        if ( defined( 'WP_PLUGIN_DIR' ) && $flawless[ 'do_not_compile_plugin_css' ] == 'true' && strpos( $style_data[ 'path' ], Utility::fix_path( WP_PLUGIN_DIR ) ) !== false ) {
           continue;
         }
 
@@ -1980,7 +1361,7 @@ namespace Flawless {
       }
 
       if ( empty( $flawless[ '_compilable_styles' ] ) ) {
-        Flawless::console_log( sprintf( __( 'CSS Compiling: No compilable styles were detected. ', 'flawless' ), $style_data[ 'file_name' ] ), 'error' );
+        Log::add( sprintf( __( 'CSS Compiling: No compilable styles were detected. ', 'flawless' ), $style_data[ 'file_name' ] ), 'error' );
       }
 
       //** If compiled CSS does not exist or is outdated, we re-generate */
@@ -2017,13 +1398,13 @@ namespace Flawless {
           wp_die( '<h2>' . __( 'CSS Compile Error', 'flawless' ) . '</h2> ' . $_css_is_compiled->get_error_message(), '' );
         }
 
-        Flawless::console_log( sprintf( __( 'CSS Compiling Error: %1s.', 'flawless' ), $_css_is_compiled->get_error_message() ? $_css_is_compiled->get_error_message() : __( 'Unknown Error.' ) ), 'error' );
+        Log::add( sprintf( __( 'CSS Compiling Error: %1s.', 'flawless' ), $_css_is_compiled->get_error_message() ? $_css_is_compiled->get_error_message() : __( 'Unknown Error.' ) ), 'error' );
       }
 
       */
 
       } else {
-        Flawless::console_log( sprintf( __( 'CSS Compiling: Compiled file is up to date. ', 'flawless' ) ), 'info' );
+        Log::add( sprintf( __( 'CSS Compiling: Compiled file is up to date. ', 'flawless' ) ), 'info' );
       }
 
       //** We don't Enqueue this until now to exclude it from compiling */
@@ -2127,81 +1508,6 @@ namespace Flawless {
       $flawless[ 'header_links' ] = apply_filters( 'flawless_header_links', false );
 
       return $current;
-
-    }
-
-    /**
-     * Enqueue or print scripts in admin footer
-     *
-     * Renders json array of configuration.
-     *
-     * @since 0.0.2
-     */
-    static function admin_print_footer_scripts( $hook ) {
-      global $flawless;
-      echo '<script type="text/javascript">var flawless = jQuery.extend( true, jQuery.parseJSON( ' . json_encode( json_encode( $flawless ) ) . ' ), typeof flawless === "object" ? flawless : {});</script>';
-    }
-
-    /**
-     * Used for loading contextual help and back-end scripts. Only active on Theme Options page.
-     *
-     * @todo Should switch to WP 3.3 contextual help with UD live-help updater.
-     * @uses $current_screen global variable
-     * @since 0.0.2
-     */
-    static function admin_enqueue_scripts( $hook ) {
-      global $current_screen, $flawless;
-
-      //* Load Flawless Global Scripts */
-      wp_enqueue_script( 'jquery-ud-smart_buttons' );
-      wp_enqueue_script( 'flawless-admin-global' );
-      wp_enqueue_style( 'flawless-admin-styles', Flawless::load( 'flawless-admin.css', 'css' ), array( 'farbtastic' ), Flawless_Version, 'screen' );
-
-      if ( $current_screen->id != 'appearance_page_functions' ) {
-        return;
-      }
-
-      if ( function_exists( 'get_current_screen' ) ) {
-        $screen = get_current_screen();
-      }
-
-      if ( !is_object( $screen ) ) {
-        return;
-      }
-
-      $contextual_help[ 'General Usage' ][ ] = '<h3>' . __( 'Flawless Theme Help' ) . '</h3>';
-      $contextual_help[ 'General Usage' ][ ] = '<p>' . __( 'Since version 3.0.0 much flexibility was added to page layouts by adding a number of conditional Tabbed Widget areas which are available on all the pages.', 'flawless' ) . '</p>';
-
-      $contextual_help[ 'Theme Development' ][ ] = '<h3>' . __( 'Skins and Child Theme' ) . '</h3>';
-      $contextual_help[ 'Theme Development' ][ ] = '<p>' . sprintf( __( 'You may harcode the skin selection into your child theme. <code>%1s</code>.', 'flawless' ), 'flawless_set_color_scheme( \'skin-default.css\' );' ) . '</p>';
-
-      $contextual_help[ 'Theme Development' ][ ] = '<h3>' . __( 'Disabling Theme Features' ) . '</h3>';
-      $contextual_help[ 'Theme Development' ][ ] = '<p>' . sprintf( __( 'You may also disable most theme features by adding PHP chlid theme, or header tag to your CSS file. For example, to remove Custom Skin selection UI, add the following code to your functions.php file: <code>%1s</code> or to remove the custom background: <code>%2s</code>.', 'flawless' ), 'remove_theme_support( \'custom-skins\' );', 'remove_theme_support( \'custom-background\' );' ) . '</p>';
-      $contextual_help[ 'Theme Development' ][ ] = '<p>' . sprintf( __( 'To disable features from within the CSS file use the <b>Disabled Features</b> tag. For example, to disable the Header Logo and Header Search, and the following: <code>%1s</code>', 'flawless' ), 'Disabled Features: header-logo, header-search' ) . '</p>';
-
-      $contextual_help[ 'Theme Development' ][ ] = '<h3>' . __( 'Loading Google Fonts' ) . '</h3>';
-      $contextual_help[ 'Theme Development' ][ ] = '<p>' . sprintf( __( 'Loading Google Fonts is quite simple and may be done directly in a custom skin or chlid theme\'s style.css file. Add a <b>Google Fonts:</b> tag to the theme header, followed by a comma separated list of Google font names. For example, to load Droid Serif and Oswald, you would add the following: <code>%1s</code>', 'flawless' ), 'Google Fonts: Droid Serif, Oswald' ) . '</p>';
-
-      $contextual_help[ 'JavaScript Helpers' ][ ] = '<h3>' . __( 'Progress Bar' ) . '</h3>';
-      $contextual_help[ 'JavaScript Helpers' ][ ] = '<p>' . sprintf( __( 'The <b>%1s</b> function will return HTML for the loading bar, and create a timer, and attach a dynamic loading effect.  To add the progress bar to an existing HTML element, use the following code: <code>%2s</code> ', 'flawless' ), 'flawless.progress_bar()', 'jQuery( \'.css_selector\' ).append( flawless.progress_bar());' ) . '</p>';
-
-      $contextual_help = apply_filters( 'flawless::contextual_help', $contextual_help );
-
-      foreach ( (array) $contextual_help as $help_slug => $help_items ) {
-
-        $screen->add_help_tab( array(
-          'id' => $help_slug,
-          'title' => self::de_slug( $help_slug ),
-          'content' => implode( "\n", (array) $help_items )
-        ) );
-
-      }
-
-      //** Enque Scripts on Theme Options Page */
-      wp_enqueue_script( 'jquery-ui-sortable' );
-      wp_enqueue_script( 'jquery-ui-tabs' );
-      wp_enqueue_script( 'jquery-cookie' );
-      wp_enqueue_script( 'flawless-admin' );
 
     }
 
@@ -2691,74 +1997,6 @@ namespace Flawless {
     }
 
     /**
-     * Handles back-end theme configurations
-     *
-     * @since 0.0.2
-     *
-     */
-    static function admin_menu() {
-      global $flawless;
-
-      $flawless[ 'options_ui' ][ 'tabs' ] = apply_filters( 'flawless_option_tabs', array(
-        'options_ui_general' => array(
-          'label' => __( 'General', 'flawless' ),
-          'id' => 'options_ui_general',
-          'position' => 10,
-          'callback' => array( 'Flawless_ui', 'options_ui_general' )
-        ),
-        'options_ui_post_types' => array(
-          'label' => __( 'Content', 'flawless' ),
-          'id' => 'options_ui_post_types',
-          'position' => 20,
-          'callback' => array( 'Flawless_ui', 'options_ui_post_types' )
-        ),
-        'options_ui_design' => array(
-          'label' => __( 'Design', 'flawless' ),
-          'id' => 'options_ui_design',
-          'position' => 25,
-          'callback' => array( 'Flawless_ui', 'options_ui_design' )
-        ),
-        'options_ui_advanced' => array(
-          'label' => __( 'Advanced', 'flawless' ),
-          'id' => 'options_ui_advanced',
-          'position' => 200,
-          'callback' => array( 'Flawless_ui', 'options_ui_advanced' )
-        )
-      ) );
-
-      //** Put the tabs into position */
-      usort( $flawless[ 'options_ui' ][ 'tabs' ], create_function( '$a,$b', ' return $a["position"] - $b["position"]; ' ) );
-
-      //** QC Tabs Before Rendering */
-      foreach ( (array) $flawless[ 'options_ui' ][ 'tabs' ] as $tab_id => $tab ) {
-        if ( !is_callable( $tab[ 'callback' ] ) ) {
-          unset( $flawless[ 'options_ui' ][ 'tabs' ][ $tab_id ] );
-          continue;
-        }
-      }
-
-      $flawless[ 'navbar_options' ] = array(
-        'wordpress' => array(
-          'label' => __( 'WordPress "Toolbar" ', 'flawless' )
-        ) );
-
-      foreach ( (array) wp_get_nav_menus() as $menu ) {
-        $flawless[ 'navbar_options' ][ $menu->slug ] = array(
-          'type' => 'wp_menu',
-          'label' => $menu->name,
-          'menu_slug' => $menu->slug
-        );
-      }
-
-      $flawless[ 'navbar_options' ] = apply_filters( 'flawless::navbar_options', (array) $flawless[ 'navbar_options' ] );
-
-      if ( is_array( $flawless[ 'options_ui' ][ 'tabs' ] ) ) {
-        $settings_page = add_theme_page( __( 'Settings', 'flawless' ), __( 'Settings', 'flawless' ), 'edit_theme_options', basename( __FILE__ ), array( 'Flawless', 'options_page' ) );
-      }
-
-    }
-
-    /**
      * Primary function for handling front-end actions
      *
      * @filter template_redirect ( 0 )
@@ -2767,7 +2005,7 @@ namespace Flawless {
     static function template_redirect() {
       global $wp_styles, $is_IE, $flawless, $wp_query, $wp_rewrite, $post;
 
-      Flawless::set_current_view();
+      do_action( 'flawless::template_redirect' );
 
       add_action( 'wp_head', array( 'Flawless', 'wp_head' ) );
 
@@ -2791,20 +2029,8 @@ namespace Flawless {
       if ( get_post_meta( $post->ID, 'must_be_logged_in', true ) == 'true' && !is_user_logged_in() ) {
         die( wp_redirect( home_url() ) );
       }
-      //** Load denali into global var on all pages. */
+
       $wp_query->query_vars[ 'flawless' ] = & $flawless;
-
-      if ( $flawless[ 'maintanance_mode' ] == 'true' ) {
-        $wp_query->query_vars[ 'splash_screen' ] = true;
-
-        if ( file_exists( untrailingslashit( get_stylesheet_directory() ) . '/maintanance.php' ) ) {
-          include untrailingslashit( get_stylesheet_directory() ) . '/maintanance.php';
-          die();
-        } else {
-          include TEMPLATEPATH . '/maintanance.php';
-          die();
-        }
-      }
 
       add_action( 'body_class', array( 'Flawless', 'body_class' ), 200, 2 );
 
@@ -2836,149 +2062,7 @@ namespace Flawless {
         flawless_primary_notice_container( '' );
       } );
 
-      Flawless::console_log( 'Executed: Flawless::template_redirect();' );
-    }
-
-    /**
-     * Prevents direct editing of Extended Term post pages by redirecting user to term page.
-     *
-     * @since 0.5.0
-     */
-    static function post_editor_loader() {
-
-      if ( !is_numeric( $_GET[ 'post' ] ) ) {
-        return;
-      }
-
-      $extended_term_id = get_post_meta( $_GET[ 'post' ], 'extended_term_id', true );
-      $extended_term_taxonomy = get_post_meta( $_GET[ 'post' ], 'extended_term_taxonomy', true );
-
-      if ( $extended_term_id && $extended_term_taxonomy ) {
-        die( wp_redirect( get_edit_term_link( $extended_term_id, $extended_term_taxonomy ) ) );
-      }
-
-    }
-
-    /**
-     * Pre-header loader for Term Editor, when Extended Taxonomies are enabled.
-     *
-     * @since 0.5.0
-     */
-    static function term_editor_loader() {
-      global $taxnow, $wpdb;
-
-      $tax = get_taxonomy( $taxnow );
-      $tag_ID = (int) $_REQUEST[ 'tag_ID' ];
-
-      if ( $_GET[ 'action' ] == 'edit' && is_numeric( $tag_ID ) ) {
-        Flawless::term_updated( $tag_ID );
-      }
-
-      if ( $_POST[ 'action' ] == 'editedtag' && $_POST[ 'extended_post_id' ] ) {
-
-        check_admin_referer( 'update-tag_' . $tag_ID );
-
-        if ( !current_user_can( $tax->cap->edit_terms ) ) {
-          wp_die( __( 'Cheatin&#8217; uh?' ) );
-        }
-
-        $post_id = $_POST[ 'extended_post_id' ];
-
-        if ( current_user_can( 'edit_post', $post_id ) ) {
-          foreach ( (array) $_POST[ 'post_data' ] as $meta_key => $meta_value ) {
-            $wpdb->update( $wpdb->posts, array( $meta_key => $meta_value ), array( 'ID' => $post_id ) );
-          }
-        }
-
-        foreach ( (array) $_POST[ 'post_meta' ] as $meta_key => $meta_value ) {
-          if ( !empty( $meta_value ) ) {
-            update_term_meta( $tag_ID, $meta_key, $meta_value );
-          } else {
-            delete_term_meta( $tag_ID, $meta_key );
-          }
-
-        }
-
-      }
-
-    }
-
-    /**
-     * Triggered on term update and creation when Extended Taxonomies are supported.
-     *
-     * Hooked into: wp_insert_post, edit_term, created_term, deleted_term.
-     *
-     * @since 0.5.0
-     */
-    static function term_updated( $term_id, $maybe_post = false, $maybe_taxonomy = false ) {
-      global $wpdb;
-
-      //** Determine if this is an post update */
-      if ( is_object( $maybe_post ) && is_numeric( $maybe_post->ID ) ) {
-
-        //**  Verify if this is an auto save routine.  */
-        if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $maybe_post ) ) {
-          return $term_id;
-        }
-
-        $post_term_id = get_post_meta( $maybe_post->ID, 'extended_term_id', true );
-
-        if ( !$post_term_id ) {
-          return;
-        }
-
-        $term_update = wp_update_term( $post_term_id, str_replace( '_tp_', '', $maybe_post->post_type ), array(
-          'name' => $maybe_post->post_title,
-          'description' => $maybe_post->post_excerpt
-        ) );
-
-        remove_filter( 'created_term', array( 'Flawless', 'term_updated' ), 9 );
-        remove_filter( 'edit_term', array( 'Flawless', 'term_updated' ), 9 );
-
-        return;
-
-      }
-
-      //** Must be a term creation / update */
-      if ( !$maybe_post && $_GET[ 'taxonomy' ] ) {
-
-        $term = $wpdb->get_row( "SELECT name, taxonomy, tt.description, tt.term_id, slug FROM {$wpdb->term_taxonomy} tt LEFT JOIN {$wpdb->terms} t on tt.term_id = t.term_id WHERE tt.term_id = '{$term_id}'" );
-        $post = get_post_for_extended_term( $term_id, $_GET[ 'taxonomy' ] );
-
-        //** Prevent the term_updated filter from running again (endless loop */
-        remove_filter( 'wp_insert_post', array( 'Flawless', 'term_updated' ), 9 );
-
-        $post_id = wp_insert_post( array(
-          'ID' => $post->ID,
-          'post_status' => 'publish',
-          'post_title' => wp_strip_all_tags( $term->name ),
-          'post_type' => '_tp_' . $term->taxonomy,
-          'post_excerpt' => $term->description,
-          'post_content' => $post->post_content,
-          'post_name' => $term->slug
-        ), true );
-
-        if ( !is_wp_error( $post_id ) ) {
-          update_post_meta( $post_id, 'extended_term_id', $term_id );
-          update_post_meta( $post_id, 'extended_term_taxonomy', $term->taxonomy );
-        }
-      }
-
-    }
-
-    /**
-     * Delete Extended Taxonomy post.
-     *
-     * @since 0.5.0
-     */
-    static function delete_term( $term_id, $tt_id, $taxonomy ) {
-      global $wpdb;
-
-      $post_id = $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE post_type = '{$taxonomy}' AND post_name = '{$term_id}'" );
-
-      if ( $post_id ) {
-        wp_delete_post( $post_id, true );
-      }
+      Log::add( 'Executed: Flawless::template_redirect();' );
 
     }
 
@@ -3308,7 +2392,7 @@ namespace Flawless {
     static function wp_head() {
       global $flawless, $is_iphone, $is_IE;
 
-      Flawless::console_log( 'Executed: Flawless::wp_head();' );
+      Log::add( 'Executed: Flawless::wp_head();' );
 
       //** Check for and load favico.ico */
       if ( file_exists( untrailingslashit( get_stylesheet_directory() ) . '/favicon.ico' ) ) {
@@ -3449,174 +2533,6 @@ namespace Flawless {
     }
 
     /**
-     * Parse standard WordPress readme file
-     *
-     * @source Readme Parser ( http://www.tomsdimension.de/wp-plugins/readme-parser )
-     * @author potanin@UD
-     */
-    static function parse_readme( $readme_file = false ) {
-
-      if ( !$readme_file ) {
-        $readme_file = untrailingslashit( TEMPLATEPATH ) . '/readme.txt';
-      }
-
-      $file = @file_get_contents( $readme_file );
-
-      if ( !$file ) {
-        return false;
-      }
-
-      $file = preg_replace( "/(\n\r|\r\n|\r|\n)/", "\n", $file );
-
-      // headlines
-      $s = array( '===', '==', '=' );
-      $r = array( 'h2', 'h3', 'h4' );
-      for ( $x = 0; $x < sizeof( $s ); $x++ )
-        $file = preg_replace( '/(.*?)' . $s[ $x ] . '(?!\")(.*?)' . $s[ $x ] . '(.*?)/', '$1<' . $r[ $x ] . '>$2</' . $r[ $x ] . '>$3', $file );
-
-      // inline
-      $s = array( '\*\*', '\'' );
-      $r = array( 'b', 'code' );
-      for ( $x = 0; $x < sizeof( $s ); $x++ ) {
-        $file = preg_replace( '/(.*?)' . $s[ $x ] . '(?!\s)(.*?)(?!\s )' . $s[ $x ] . '(.*?)/', '$1<' . $r[ $x ] . '>$2</' . $r[ $x ] . '>$3', $file );
-      }
-
-      // ' _italic_ '
-      $file = preg_replace( '/(\s)_(\S.*?\S)_(\s|$)/', '<em>$2</em> ', $file );
-
-      // ul lists
-      $s = array( '\*', '\+', '\-' );
-      for ( $x = 0; $x < sizeof( $s ); $x++ ) {
-        $file = preg_replace( '/^[ ' . $s[ $x ] . ' ](\s)(.*?)(\n|$)/m', '<li>$2</li>', $file );
-      }
-
-      $file = preg_replace( '/\n<li>(.*?)/', '<ul><li>$1', $file );
-      $file = preg_replace( '/(<\/li>)(?!<li>)/', '$1</ul>', $file );
-
-      // ol lists
-      $file = preg_replace( '/(\d{1,2}\. )\s(.*?)(\n|$)/', '<li>$2</li>', $file );
-      $file = preg_replace( '/\n<li>(.*?)/', '<ol><li>$1', $file );
-      $file = preg_replace( '/(<\/li>)(?!(\<li\>|\<\/ul\> ))/', '$1</ol>', $file );
-
-      // ol screenshots style
-      $file = preg_replace( '/(?=Screenshots)(.*?)<ol>/', '$1<ol class="readme-parser-screenshots">', $file );
-
-      // line breaks
-      $file = preg_replace( '/(.*?)(\n)/', "$1<br/>\n", $file );
-      $file = preg_replace( '/(1|2|3|4)(><br\/>)/', '$1>', $file );
-      $file = str_replace( '</ul><br/>', '</ul>', $file );
-      $file = str_replace( '<br/><br/>', '<br/>', $file );
-
-      // urls
-      $file = str_replace( 'http://www.', 'www.', $file );
-      $file = str_replace( 'www.', 'http://www.', $file );
-      $file = preg_replace( '#(^|[^\"=]{1})(http://|ftp://|mailto:|https://)([^\s<>]+)([\s\n<>]|$)#', '$1<a href="$2$3">$3</a>$4', $file );
-
-      // divs
-      $file = preg_replace( '/(<h3> Description <\/h3>)/', "$1\n<div class=\"readme-description readme-div\">\n", $file );
-      $file = preg_replace( '/(<h3> Installation <\/h3>)/', "</div>\n$1\n<div id=\"readme-installation\" class=\"readme-div\">\n", $file );
-      $file = preg_replace( '/(<h3> Frequently Asked Questions <\/h3>)/', "</div>\n$1\n<div id=\"readme-faq\" class=\"readme-div\">\n", $file );
-      $file = preg_replace( '/(<h3> Screenshots <\/h3>)/', "</div>\n$1\n<div id=\"readme-screenshots\" class=\"readme-div\">\n", $file );
-      $file = preg_replace( '/(<h3> Arbitrary section <\/h3>)/', "</div>\n$1\n<div id=\"readme-arbitrary\" class=\"readme-div\">\n", $file );
-      $file = preg_replace( '/(<h3> Changelog <\/h3>)/', "</div>\n$1\n<div id=\"readme-changelog\" class=\"readme-changelog readme-div\">\n", $file );
-      $file = $file . '</div>';
-
-      return $file;
-
-    }
-
-    /**
-     * Draw the custom site background
-     *
-     * Run on Flawless options update to validate blog owner's address for map on front-end.
-     *
-     * @todo Add function to check if background image actually exists and is reachable. - potanin@UD
-     * @since 0.0.2
-     */
-    static function custom_background() {
-
-      $background = get_background_image();
-      $color = get_background_color();
-      $position = get_theme_mod( 'background_position_x', 'left' );
-      $attachment = get_theme_mod( 'background_attachment', 'scroll' );
-      $repeat = get_theme_mod( 'background_repeat', 'no-repeat' );
-
-      if ( !$background && !$color ) {
-        return;
-      }
-
-      $style = array();
-
-      if ( $color ) {
-        $style[ ] = "background-color: #$color;";
-      }
-
-      if ( !empty( $background ) ) {
-        $style[ ] = " background-image: url( '$background' );";
-
-        if ( !in_array( $repeat, array( 'no-repeat', 'repeat-x', 'repeat-y', 'repeat' ) ) ) {
-          $repeat = ' no-repeat ';
-        }
-
-        $style[ ] = " background-repeat: $repeat;";
-
-        if ( !in_array( $position, array( 'center', 'right', 'left' ) ) ) {
-          $position = ' center ';
-        }
-
-        $style[ ] = " background-position: top $position;";
-
-        if ( !in_array( $attachment, array( 'fixed', 'scroll' ) ) ) {
-          $attachment = ' scroll ';
-        }
-
-        $style[ ] = " background-attachment: $attachment;";
-
-      }
-
-      echo '<style type="text/css">body { ' . trim( implode( '', (array) $style ) ) . ' }</style>';
-
-    }
-
-    /**
-     * Display area for background image in back-end
-     *
-     *
-     * @since 0.0.2
-     */
-    static function admin_image_div_callback() {
-      ?>
-
-      <h3><?php _e( 'Background Image' ); ?></h3>
-      <table class="form-table">
-      <tbody>
-      <tr valign="top">
-      <th scope="row"><?php _e( 'Preview' ); ?></th>
-      <td>
-    <?php
-      $background_styles = '';
-      if ( $bgcolor = get_background_color() )
-        $background_styles .= 'background-color: #' . $bgcolor . ';';
-
-      if ( get_background_image() ) {
-        // background-image URL must be single quote, see below
-        $background_styles .= ' background-image: url(\'' . get_background_image() . '\' );'
-          . ' background-repeat: ' . get_theme_mod( 'background_repeat', 'no-repeat' ) . ';'
-          . ' background-position: top ' . get_theme_mod( 'background_position_x', 'left' );
-      }
-      ?>
-
-    
-
-      <div id="custom-background-image"
-        style=" min-height: 200px;<?php echo $background_styles; ?>"><?php // must be double quote, see above ?>
-
-    </div>
-    <?php
-
-    }
-
-    /**
      * Adds a widget to a sidebar.
      *
      * Adds a widget to a sidebar, making sure that sidebar doesn't already have this widget.
@@ -3721,105 +2637,6 @@ namespace Flawless {
     }
 
     /**
-     * Adds an option to post editor
-     *
-     * Must be called early, before admin_init
-     *
-     * @since 0.0.2
-     */
-    static function add_post_type_option( $args = array() ) {
-      global $flawless;
-
-      $args = wp_parse_args( $args, array(
-        'post_type' => 'page',
-        'label' => '',
-        'input_class' => 'regular-text',
-        'placeholder' => '',
-        'meta_key' => '',
-        'type' => 'checkbox'
-      ) );
-
-      if ( !is_array( $args[ 'post_type' ] ) ) {
-        $args[ 'post_type' ] = array( $args[ 'post_type' ] );
-      }
-
-      foreach ( (array) $args[ 'post_type' ] as $post_type ) {
-        $flawless[ 'ui_options' ][ $post_type ][ $args[ 'meta_key' ] ] = $args;
-      }
-
-      //** Create filter to render input */
-      add_action( 'save_post', array( 'Flawless', 'save_post' ), 10, 2 );
-
-      //** Create filter to save / update */
-      add_action( 'post_submitbox_misc_actions', array( 'Flawless', 'post_submitbox_misc_actions' ) );
-
-    }
-
-    /**
-     * Saves extra post information
-     *
-     * @since 0.0.2
-     */
-    static function save_post( $post_id, $post ) {
-      global $pagenow;
-
-      //** Verify if this is an auto save routine.  */
-      if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-        return;
-      }
-
-      if ( wp_is_post_revision( $post ) ) {
-        return;
-      }
-
-      foreach ( (array) $_REQUEST[ 'flawless_option' ] as $meta_key => $value ) {
-        if ( $value == 'false' || empty( $value ) ) {
-          delete_post_meta( $post_id, $meta_key );
-        } else {
-          update_post_meta( $post_id, $meta_key, $value );
-        }
-      }
-
-      if ( Flawless::changeable_post_type( $post->post_type ) ) {
-
-        //** Return if option box is not selected. */
-        if ( !isset( $_POST[ 'cpt-nonce-select' ] ) ) {
-          return;
-        }
-
-        //** Return if selected nonce was used within time limit.  */
-        if ( !wp_verify_nonce( $_POST[ 'cpt-nonce-select' ], 'post-type-selector' ) ) {
-          return;
-        }
-
-        //** Return if user cannot edit post. */
-        if ( !current_user_can( 'edit_post', $post_id ) ) {
-          return;
-        }
-
-        //** Return if new post type matches current post type. */
-        if ( $_POST[ 'flawless_cpt_post_type' ] == $post->post_type ) {
-          return;
-        }
-
-        //** Return if post type slug returned null. */
-        if ( !$new_post_type_object = get_post_type_object( $_POST[ 'flawless_cpt_post_type' ] ) ) {
-          return;
-        }
-
-        //** Return if current user cannot publish posts. */
-        if ( !current_user_can( $new_post_type_object->cap->publish_posts ) ) {
-          return;
-        }
-
-        //** Updates the post type for the new post ID.  */
-        set_post_type( $post_id, $new_post_type_object->name );
-
-      }
-
-    }
-
-    /**
      * @author odokienko@UD
      */
     static function flawless_signup_field_check() {
@@ -3860,106 +2677,6 @@ namespace Flawless {
       }
 
       die( json_encode( $response ) );
-    }
-
-    /**
-     * Render any options for this post type on editor page
-     *
-     * @since 0.0.2
-     */
-    static function post_submitbox_misc_actions() {
-      global $post, $flawless, $pagenow;
-
-      $cur_post_type_object = get_post_type_object( $post->post_type );
-
-      if ( !$cur_post_type_object->public || !$cur_post_type_object->show_ui ) {
-        return;
-      }
-
-      /** Create form for switching the post type */
-      if ( current_user_can( $cur_post_type_object->cap->publish_posts ) && Flawless::changeable_post_type( $post->post_type ) ) {
-        ?>
-
-        <div class="misc-pub-section misc-pub-section-last change-post-type">
-        <label for="flawless_cpt_post_type"><?php _e( 'Post Type:', 'flawless' ); ?></label>
-        <span id="post-type-display"
-          class="flawless_cpt_display"><?php echo $cur_post_type_object->labels->singular_name; ?></span>
-
-        <a href="#" id="edit-post-type-change" class="hide-if-no-js"><?php _e( 'Edit' ); ?></a>
-          <?php wp_nonce_field( 'post-type-selector', 'cpt-nonce-select' ); ?>
-          <div id="post-type-select" class="flawless_cpt_select">
-          <select name="flawless_cpt_post_type" id="flawless_cpt_post_type">
-            <?php foreach ( (array) get_post_types( (array) apply_filters( 'flawless_cpt_metabox', array( 'public' => true, 'show_ui' => true ) ), 'objects' ) as $pt ) {
-              if ( !current_user_can( $pt->cap->publish_posts ) || !Flawless::changeable_post_type( $pt->name ) ) {
-                continue;
-              }
-              echo '<option value="' . esc_attr( $pt->name ) . '"' . selected( $post->post_type, $pt->name, false ) . '>' . $pt->labels->singular_name . "</option>\n";
-            } ?>
-          </select>
-          <a href="#" id="save-post-type-change" class="hide-if-no-js button"><?php _e( 'OK' ); ?></a>
-          <a href="#" id="cancel-post-type-change" class="hide-if-no-js"><?php _e( 'Cancel' ); ?></a>
-        </div>
-      </div>
-      <?php
-      }
-
-      if ( !is_array( $flawless[ 'ui_options' ][ $post->post_type ] ) ) {
-        return;
-      }
-
-      usort( $flawless[ 'ui_options' ][ $post->post_type ], create_function( '$a,$b', ' return $a["position"] - $b["position"]; ' ) );
-
-      foreach ( (array) $flawless[ 'ui_options' ][ $post->post_type ] as $option ) {
-
-        switch ( $option[ 'type' ] ) {
-
-          case 'checkbox':
-
-            $html[ ] = '<li class="post_option_' . $option[ 'meta_key' ] . '">' . sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s /> %4s</label>',
-                'flawless_option[' . $option[ 'meta_key' ] . ']',
-                'flawless_option[' . $option[ 'meta_key' ] . ']',
-                checked( 'true', get_post_meta( $post->ID, $option[ 'meta_key' ], true ), false ),
-                $option[ 'label' ]
-              ) . '</li>';
-
-            break;
-
-          case 'datetime':
-
-            wp_enqueue_script( 'jquery-ui-datepicker' );
-
-            $meta_value = trim( esc_attr( implode( ', ', (array) get_post_meta( $post->ID, $option[ 'meta_key' ] ) ) ) );
-
-            if ( is_numeric( $meta_value ) && (int) $meta_value == $meta_value && strlen( $value ) == 10 ) {
-              $meta_value = date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $meta_value );
-            }
-
-            $html[ ] = '<li class="post_option_' . $option[ 'meta_key' ] . '">' . sprintf( '<label><span class="regular-text-label">%1s:</span> <input class="flawless_datepicker %2s" type="text" placeholder="%3s" name="%4s" value="' . $meta_value . '"  /></label>',
-                $option[ 'label' ],
-                $option[ 'input_class' ],
-                $option[ 'placeholder' ] ? $option[ 'placeholder' ] : '',
-                'flawless_option[' . $option[ 'meta_key' ] . ']', $meta_value ) . '</li>';
-
-            break;
-
-          case 'input':
-          default:
-
-            $meta_value = trim( esc_attr( implode( ', ', (array) get_post_meta( $post->ID, $option[ 'meta_key' ] ) ) ) );
-
-            $html[ ] = '<li class="post_option_' . $option[ 'meta_key' ] . '">' . '<label><span class="regular-text-label">' . $option[ 'label' ] . ':</span>
-          <input class="' . $option[ 'input_class' ] . '" type="text" placeholder="' . esc_attr( $option[ 'placeholder' ] ) . '" name="flawless_option[' . esc_attr( $option[ 'meta_key' ] ) . ']" value="' . esc_attr( $meta_value ) . '"  /></label></li>';
-
-            break;
-
-        }
-
-      }
-
-      if ( is_array( $html ) ) {
-        echo '<ul class="flawless_post_type_options wp-tab-panel">' . implode( "\n", $html ) . '</ul>';
-      }
-
     }
 
     /**
@@ -4024,237 +2741,14 @@ namespace Flawless {
      * @since 0.0.2
      */
     static function admin_init() {
-      global $wp_registered_widget_updates, $wpdb, $flawless;
 
       //** Load defaults on theme activation */
       if ( current_user_can( 'update_themes' ) ) {
         Flawless::handle_upgrade();
       }
 
-      //** Load back-end JS and Contextual Help */
-      add_action( 'admin_enqueue_scripts', array( 'Flawless', 'admin_enqueue_scripts' ), 10 );
-      add_action( 'admin_print_footer_scripts', array( 'Flawless', 'admin_print_footer_scripts' ), 10 );
-
-      //** Check if child thme exists and updates flawless_settings accordingly */
-      Flawless::valid_child_theme();
-
-      //** Check for special actions and nonce, a nonce must always be set. */
-      if ( !empty( $_REQUEST[ '_wpnonce' ] ) /* && isset( $_REQUEST[ 'flawless_action' ] ) */ ) {
-
-        if ( wp_verify_nonce( $_REQUEST[ '_wpnonce' ], 'flawless_settings' ) ) {
-
-          $args = array();
-
-          //** Handle Theme Backup Upload */
-          if ( $backup_file = $_FILES[ 'flawless_settings' ][ 'tmp_name' ][ 'settings_from_backup' ] ) {
-            $backup_contents = file_get_contents( $backup_file );
-
-            if ( !empty( $backup_contents ) ) {
-              $decoded_settings = json_decode( $backup_contents, true );
-
-              if ( !empty( $decoded_settings ) ) {
-                $_REQUEST[ 'flawless_settings' ] = $decoded_settings;
-                $args[ 'message' ] = 'backup_restored';
-              } else {
-                $args[ 'message' ] = 'backup_failed';
-              }
-
-            }
-          }
-
-          //** Handle Theme Options updating */
-          if ( $redirect = Flawless::save_settings( $_REQUEST[ 'flawless_settings' ], $args ) ) {
-            $redirect = add_query_arg( 'flush_rewrite_rules', 'true', $redirect );
-            wp_redirect( $redirect );
-            die();
-          }
-
-        }
-
-        //** Download back up configuration */
-        if ( wp_verify_nonce( $_REQUEST[ '_wpnonce' ], 'download-flawless-backup' ) ) {
-
-          header( 'Cache-Control: public' );
-          header( 'Content-Description: File Transfer' );
-          header( 'Content-Disposition: attachment; filename=' . sanitize_key( get_bloginfo( 'name' ) ) . '-flawless.' . date( 'Y-m-d' ) . '.json' );
-          header( 'Content-Transfer-Encoding: binary' );
-          header( 'Content-Type: text/plain; charset=' . get_option( 'blog_charset' ), true );
-
-          die( json_encode( $flawless ) );
-        }
-
-      }
-
       do_action( 'flawless::admin_init' );
 
-    }
-
-    /**
-     * Adds custom logo, if exists, to login screen.
-     *
-     * @todo Should be migrated into a module.
-     * @since 0.0.2
-     */
-    static function login_head() {
-      global $flawless;
-
-      if ( !Flawless::can_get_image( $flawless[ 'flawless_logo' ][ 'url' ] ) ) {
-        return;
-      }
-
-      echo '<style type="text/css" media="screen">.login h1 a, #login { min-width: 300px; width: ' . $flawless[ 'flawless_logo' ][ 'width' ] . 'px; } .login h1 a { background-size:' . $flawless[ 'flawless_logo' ][ 'width' ] . 'px ' . $flawless[ 'flawless_logo' ][ 'height' ] . 'px; background-image: url( ' . $flawless[ 'flawless_logo' ][ 'url' ] . ' ); margin-bottom: 10px;} </style>';
-
-    }
-
-    /**
-     * Save Theme Options
-     *
-     * Called after nonce is verified.
-     *
-     * @return string or false.  If string, a URL to be used for redirection.
-     * @since 0.0.2
-     */
-    static function save_settings( $flawless, $args = array() ) {
-
-      $current_settings = stripslashes_deep( get_option( 'flawless_settings' ) );
-
-      $args = wp_parse_args( $args, array(
-        'message' => 'settings_updated'
-      ) );
-
-      //** Set logo */
-      if ( !empty( $_FILES[ 'flawless_logo' ][ 'name' ] ) ) {
-
-        $file = wp_handle_upload( $_FILES[ 'flawless_logo' ], array( 'test_form' => false ) );
-
-        if ( !$file[ 'error' ] && $file[ 'url' ] && $image_size = getimagesize( $file[ 'file' ] ) ) {
-
-          $post_id = wp_insert_attachment( array(
-            'post_mime_type' => $file[ 'type' ],
-            'guid' => $file[ 'url' ],
-            'post_title' => sprintf( __( '%1s Logo', 'flawless' ), get_bloginfo( 'name' ) )
-          ), $file[ 'file' ] );
-
-          if ( !is_wp_error( $post_id ) ) {
-            $flawless[ 'flawless_logo' ][ 'post_id' ] = $post_id;
-
-            //** Delete old logo */
-            if ( is_numeric( $current_settings[ 'flawless_logo' ][ 'post_id' ] ) ) {
-              wp_delete_attachment( $current_settings[ 'flawless_logo' ][ 'post_id' ], true );
-            }
-
-            update_post_meta( $flawless[ 'flawless_logo' ][ 'post_id' ], '_wp_attachment_metadata', array( 'width' => $image_size[ 0 ], 'height' => $image_size[ 1 ] ) );
-          }
-
-        } else {
-          unset( $flawless[ 'flawless_logo' ] );
-
-        }
-
-      }
-
-      //** Cycle through settings and copy over any special keys */
-      foreach ( (array) apply_filters( 'flawless_preserved_setting_keys', array( 'flex_layout' ) ) as $key ) {
-        $flawless[ $key ] = !empty( $flawless[ $key ] ) ? $flawless[ $key ] : $current_settings[ $key ];
-      }
-
-      $flawless = apply_filters( 'flawless::update_settings', $flawless );
-
-      update_option( 'flawless_settings', $flawless );
-
-      delete_option( 'flawless::compiled_css_files' );
-
-      flush_rewrite_rules();
-
-      //** Redirect page to default Theme Settings page */
-      return add_query_arg( 'message', $args[ 'message' ], Flawless_Admin_URL );
-
-    }
-
-    /**
-     * Adds "Theme Options" page on back-end
-     *
-     * Used for configurations that cannot be logically placed into a built-in Settings page
-     *
-     * @todo Update 'auto_complete_done' message to include a link to the front-end for quick view of setup results.
-     * @since 0.0.2
-     */
-    static function options_page() {
-      global $flawless, $_wp_theme_features, $flawless;
-
-      if ( !empty( $_GET[ 'admin_splash_screen' ] ) ) {
-        Flawless_ui::show_update_screen( $_GET[ 'admin_splash_screen' ] );
-      }
-
-      if ( $_REQUEST[ 'message' ] == 'auto_complete_done' ) {
-        $updated = __( 'Your site has been setup.  You may configure more advanced options here.', 'flawless' );
-      }
-
-      if ( $_REQUEST[ 'message' ] ) {
-
-        switch ( $_REQUEST[ 'message' ] ) {
-
-          case 'settings_updated':
-            $updated = __( 'Theme settings updated.', 'flawless' );
-            break;
-
-          case 'backup_restored':
-            $updated = __( 'Theme backup has been restored from uploaded file.', 'flawless' );
-            break;
-
-          case 'backup_failed':
-            $updated = __( 'Could not restore configuration from backup, file data was not in valid JSON format.', 'flawless' );
-            break;
-
-        }
-      }
-
-      echo '<style type="text/css">' . implode( '', (array) $theme_feature_styles ) . '</style>';
-
-      ?>
-
-      <div id="flawless_settings_page"
-        class="wrap flawless_settings_page" <?php echo !empty( $_GET[ 'admin_splash_screen' ] ) ? 'hidden' : ''; ?>>
-
-      <h2 class="placeholder_title"></h2>
-
-        <?php if ( $updated ) { ?>
-          <div class="updated fade"><p><?php echo $updated; ?></p></div>
-        <?php } ?>
-
-        <form action="<?php echo add_query_arg( 'flawless_action', 'update_settings', Flawless_Admin_URL ); ?>"
-          method="post" enctype="multipart/form-data">
-
-        <input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'flawless_settings' ); ?>"/>
-
-        <div class="flawless_settings_tabs">
-
-          <div class="icon32" id="icon-themes"><br></div>
-
-          <ul class="tabs">
-            <?php foreach ( (array) $flawless[ 'options_ui' ][ 'tabs' ] as $tab ) { ?>
-              <li><a class="nav-tab" href="#flawless_tab_<?php echo $tab[ 'id' ]; ?>"><?php echo $tab[ 'label' ]; ?></a>
-              </li>
-            <?php } ?>
-          </ul>
-
-          <?php foreach ( (array) $flawless[ 'options_ui' ][ 'tabs' ] as $tab ) { ?>
-            <div id="flawless_tab_<?php echo $tab[ 'id' ]; ?>"
-              class="flawless_tab <?php echo $tab[ 'panel_class' ]; ?>">
-              <?php call_user_func( $tab[ 'callback' ], $flawless ); ?>
-            </div>
-          <?php } ?>
-
-        </div>
-
-        <div class="flawless_below_tabs">
-          <div class="submit_wrapper"><input type="submit" value="Save Changes" class="button-primary" name="Submit"/>
-          </div>
-        </div>
-
-      </form>
-    </div>
-    <?php
     }
 
     /**
@@ -4315,35 +2809,6 @@ namespace Flawless {
     }
 
     /**
-     * PHP function to echoing a message to JS console
-     *
-     * @todo This needs to be improved.
-     * @since 0.2.0
-     */
-    static function console_log( $entry = false, $type = 'log' ) {
-      global $flawless;
-
-      if ( empty( $entry ) ) {
-        return;
-      }
-
-      $new_entry = array(
-        'timer' => timer_stop(),
-        'entry' => $entry,
-        'type' => $type
-      );
-
-      if ( function_exists( 'memory_get_peak_usage' ) && method_exists( 'UD_API', 'format_bytes' ) ) {
-        $new_entry[ 'memory_usage' ] = self::format_bytes( memory_get_peak_usage() );
-      }
-
-      $flawless[ 'console_log' ][ ] = $new_entry;
-
-      return $entry;
-
-    }
-
-    /**
      * Insert scripts into footer.
      *
      * flawless_render_in_footer() depends on this to render any scripts / styles.
@@ -4357,81 +2822,6 @@ namespace Flawless {
         //echo $script;
       }
 
-      echo Flawless::render_console_log();
-
-    }
-
-    /**
-     * Prints JS for the console log when in debug mode in the footer.
-     *
-     * @todo Add Error logging and saving to DB even when not in developer mode. - potanin@UD
-     * @author potanin@UD
-     * @version 0.26.0
-     */
-    static function render_console_log() {
-      global $flawless;
-
-      if ( $flawless[ 'developer_mode' ] != 'true' ) {
-        return;
-      }
-
-      $html = array();
-
-      $html[ ] = '<script type="text/javascript"> if( typeof console == "object" && typeof console.log == "function" )  {';
-
-      foreach ( (array) $flawless[ 'console_log' ] as $entry ) {
-
-        if ( is_array( $entry[ 'entry' ] ) || is_object( $entry[ 'entry' ] ) ) {
-
-          switch ( $entry[ 'type' ] ) {
-
-            case 'info':
-              $html[ ] = 'console.info( jQuery.parseJSON( ' . json_encode( json_encode( $entry[ 'entry' ] ) ) . ' ));';
-              break;
-
-            case 'error':
-              $html[ ] = 'console.error( jQuery.parseJSON( ' . json_encode( json_encode( $entry[ 'entry' ] ) ) . ' ));';
-              break;
-
-            default:
-
-              if ( $flawless[ 'console_log_options' ][ 'show_log' ] ) {
-                $html[ ] = 'console.log( jQuery.parseJSON( ' . json_encode( json_encode( $entry[ 'entry' ] ) ) . ' ));';
-              }
-
-              break;
-
-          }
-
-        } else {
-
-          $entry[ 'entry' ] = 'P: ' . $entry[ 'timer' ] . ' - ' . $entry[ 'entry' ];
-
-          switch ( $entry[ 'type' ] ) {
-
-            case 'info':
-              $html[ ] = 'console.info( "' . $entry[ 'entry' ] . '" ); ';
-              break;
-
-            case 'error':
-              $html[ ] = 'console.error( "' . $entry[ 'entry' ] . '" ); ';
-              break;
-
-            default:
-
-              if ( $flawless[ 'console_log_options' ][ 'show_log' ] ) {
-                $html[ ] = 'console.log( "' . $entry[ 'entry' ] . '" ); ';
-              }
-
-              break;
-
-          }
-        }
-
-      }
-      $html[ ] = '} </script>';
-
-      echo implode( "\n", (array) $html );
 
     }
 
@@ -4473,7 +2863,7 @@ namespace Flawless {
       if ( !$match || $result[ 'response' ][ 'code' ] != 200 ) {
 
         if ( $flawless[ 'developer_mode' ] == 'true' ) {
-          Flawless::console_log( "Remote asset ( $url ) could not be loaded, content type returned: " . $result[ 'headers' ][ 'content-type' ] );
+          Log::add( "Remote asset ( $url ) could not be loaded, content type returned: " . $result[ 'headers' ][ 'content-type' ] );
         }
 
         return false;
@@ -4519,118 +2909,6 @@ namespace Flawless {
     }
 
     /**
-     * Installs a Flawless child theme.
-     *
-     * Copies files from /flawless-child folder into the them folder so denali child can be used.
-     *
-     * @todo Needs to be updated to select which files to copy, flawless-child directory no longer used.
-     * @since 0.0.2
-     */
-    static function install_child_theme() {
-      global $user_ID, $wpdb, $wp_theme_directories;
-
-      if ( Flawless::valid_child_theme() ) {
-        return true;
-      }
-
-      $destination_root = $wp_theme_directories[ 0 ];
-
-      $original = TEMPLATEPATH . '/flawless-child';
-      $original_images = TEMPLATEPATH . '/img';
-
-      if ( !file_exists( $original ) ) {
-        return false;
-      }
-
-      if ( !is_writable( $destination_root ) ) {
-        return false;
-      }
-
-      $destination = $destination_root . '/flawless-child';
-      $destination_images = $destination_root . '/flawless-child/img';
-
-      //** Create destination folder */
-      if ( !@mkdir( $destination, 0755 ) ) {
-        return false;
-      } else {
-        @mkdir( $destination_images, 0755 );
-      }
-
-      //** Copy folders from denali/flawless-child into flawless-chlld
-      if ( $original_handle = opendir( $original . '/' ) ) {
-        while ( false !== ( $file = readdir( $original_handle ) ) ) {
-
-          if ( $file != "." && $file != ".." ) {
-
-            $file_path = $original . '/' . $file;
-
-            /* Determine if it's directory, We don't copy it */
-            if ( is_dir( $file_path ) ) {
-              continue;
-            }
-
-            if ( copy( $file_path, $destination . '/' . $file ) ) {
-              $copied[ ] = $file;
-            } else {
-              $not_copied[ ] = $file;
-            }
-          }
-
-        }
-      }
-
-      //** Copy image files */
-      if ( $images_handle = opendir( $original_images . '/' ) ) {
-        while ( false !== ( $file = readdir( $images_handle ) ) ) {
-
-          if ( $file == "." || $file == ".." ) {
-            continue;
-          }
-
-          $file_path = $original_images . '/' . $file;
-
-          /* Determine if it's directory, We don't copy it */
-          if ( is_dir( $file_path ) ) {
-            continue;
-          }
-
-          if ( copy( $file_path, $destination_images . '/' . $file ) ) {
-            $copied[ ] = $file;
-          } else {
-            $not_copied[ ] = $file;
-          }
-
-        }
-      }
-
-      if ( count( $copied ) > 0 ) {
-        return true;
-      }
-
-      return false;
-
-    }
-
-    /**
-     * Check if default denali child theme exists.
-     *
-     *
-     * @since 0.0.2
-     */
-    static function valid_child_theme() {
-      global $user_ID, $wpdb, $flawless;
-
-      if ( file_exists( ABSPATH . '/wp-content/themes/flawless-child' ) ) {
-        $flawless[ 'install_flawless_child_theme' ] = 'true';
-        update_option( 'flawless_settings', $flawless );
-        return true;
-      }
-
-      return false;
-
-    }
-
-    /**
      * Checks if sidebar is active. Same as default function, but allows hooks
      *
      * @since 0.2.0
@@ -4663,10 +2941,10 @@ namespace Flawless {
       $r = wp_parse_args( $args, $defaults );
       extract( $r, EXTR_SKIP );
 
-      if ( is_array( $post_type ) ) {
-        $content_types = $post_type;
+      if ( is_array( $r[ 'post_type' ] ) ) {
+        $content_types = $r[ 'post_type' ];
       } else {
-        $content_types = array( $post_type );
+        $content_types = array( $r[ 'post_type' ] );
       }
 
       foreach ( (array) $content_types as $type ) {
@@ -4725,25 +3003,6 @@ namespace Flawless {
     }
 
     /**
-     * Modifies default WP Login form by adding extra classes
-     *
-     */
-    static function wp_login_form( $args = false ) {
-
-      //* Must override */
-      $args[ 'echo' ] = false;
-
-      $form = wp_login_form( $args );
-
-      //** Add our classes */
-      $form = str_replace( 'name="log"', 'name="log" placeholder="Username"', $form );
-      $form = str_replace( 'name="pwd"', 'name="pwd" placeholder="Password"', $form );
-
-      echo $form;
-
-    }
-
-    /**
      * Scans Asset Directories for the requested assets and returns asset-specific result if found
      *
      * - lib - inclues the PHP library if it exists
@@ -4756,9 +3015,11 @@ namespace Flawless {
      * @updated 0.0.6
      *
      * @author peshkov@UD
+     *
      * @param $name
      * @param string $type
      * @param string $args
+     *
      * @return bool|mixed|string
      */
     static function load( $name, $type = 'lib', $args = '' ) {

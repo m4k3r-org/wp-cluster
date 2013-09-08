@@ -1,0 +1,32 @@
+/**
+ * View Model
+ *
+ * Styles associated with Knockout View Models
+ *
+ */
+
+
+div.ud_view_model {
+
+  /* Displayed while Knockout.js UI is loading */
+  &.ud_ui_loading {
+
+    width: 100%;
+    height: 150px;
+    margin: 0;
+    padding: 0;
+
+    .ud_ui_prepared_interface {
+      display: none;
+    }
+
+    .ud_ui_spinner {
+      background: url("@{cdn_url}/ud.spinner.circle.gif") center center no-repeat;
+      height: 150px;
+    }
+
+  }
+
+
+
+}

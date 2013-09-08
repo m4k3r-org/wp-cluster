@@ -15,7 +15,7 @@
  * - show_post_excerpt
  * - show_post_content
  *
- * @package Flawless
+ * @module Flawless
  * @since Flawless 0.6.0
  */
 

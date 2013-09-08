@@ -1,0 +1,88 @@
+/**
+ * Input Elements
+ *
+ *
+ */
+
+
+li.wpp_list_item {
+  div.row {
+      float: none;
+      clear: both;
+    }
+
+  .wpp_collapsed {
+    padding: 5px;
+    background-color: whiteSmoke;
+    border: 1px dotted #CFCFCF;
+    textarea {
+      width: 100%;
+      min-height: 60px;
+      padding: 5px;
+    }
+    table {
+      thead {
+        tr {
+          th {
+
+            //padding-right: 10px;
+            //padding-top: 10px;
+            //font-weight: bold;
+          }
+        }
+      }
+    }
+    div.row {
+      float: none;
+      clear: both;
+      margin-bottom: 10px;
+      &:last-child {
+        margin-bottom: 5px;
+      }
+      & > * {
+        vertical-align: middle;
+      }
+      label {
+        margin: 0px 5px;
+      }
+      input[type=checkbox] {
+      }
+      input.wpp_slug {
+        width: 200px;
+        margin-right: 15px
+      }
+    }
+  }
+}
+
+// Inputs on regular table lists.
+
+
+div.wpp_secondary_section .ud_td ul li {
+
+  .wpp_label {
+    display: inline-block;
+    float: left;
+    margin-right: 10px;
+    width: 100px;
+  }
+
+  input[type=checkbox] {
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  input[type=text] {
+    margin-left: 10px;
+    padding: 5px;
+    height: 2em;
+    vertical-align: middle;
+    &.wpp_api_key {
+      width: 300px;
+    }
+  }
+  input[type=radio] {
+    vertical-align: middle;
+    clear: left;
+    margin-right: 10px;
+  }
+}
