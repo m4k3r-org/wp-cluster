@@ -1,7 +1,8 @@
-### Description
-* Flawless WordPress Theme By Usability Dynamics, Inc.
-* Theme Homepage - http://usabilitydynamics.com/products/flawless/
+### Overview
+wip
 
+### Compiling
+The compiled scripts, styles, templates, fonts and images are loaded into the /public directory at the root of the theme.
 
 ### Major Actions
 All major actions that utlize the "flawless::" prefix pass the $flawless variable as the first argument to any action.
@@ -18,7 +19,6 @@ All major actions that utlize the "flawless::" prefix pass the $flawless variabl
   * flawless::extra_local_assets
   * flawless::wp_print_styles
   * flawless::create_views
-
 
 ### Major Filters
   * flawless::remote_assets
@@ -37,7 +37,6 @@ All major actions that utlize the "flawless::" prefix pass the $flawless variabl
 
     // Extend Object
     Utility::extend( array( 'one' => 'asdfsa' ), array( 'asdfdsaf' => 'asdf' ) );
-
 
 
 ### Notes

@@ -26,11 +26,11 @@
   "config": {
     "component-dir": "components",
     "output": {
-      "js": "ux/scripts/vendor",
-      "css": "ux/styles/vendor",
-      "less": "ux/styles/vendor",
-      "fonts": "ux/fonts/vendor",
-      "template": "ux/templates/vendor",
+      "js": "public/scripts",
+      "css": "public/styles",
+      "less": "public/styles",
+      "fonts": "public/fonts",
+      "template": "public/views",
       "php": "core/vendor"
     }
   },
