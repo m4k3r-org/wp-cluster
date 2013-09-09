@@ -1,9 +1,0 @@
-{
-  "title": "Settings",
-  "type": "object",
-  "properties": {
-    "have_static_home": {
-      "type": "boolean"
-    }
-  }
-}

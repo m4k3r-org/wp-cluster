@@ -1,4 +1,0 @@
-/**
- * UD API Scripts
- *
- */
