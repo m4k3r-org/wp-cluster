@@ -37,7 +37,6 @@
   "dependencies": {
     "usabilitydynamics/lib-api": "*",
     "usabilitydynamics/lib-loader": "*",
-    "usabilitydynamics/lib-ui": "*",
     "usabilitydynamics/lib-utility": "*",
     "usabilitydynamics/lib-settings": "*",
     "usabilitydynamics/lib-saas": "*",
