@@ -11,6 +11,18 @@
   "dependencies": {
     "usabilitydynamics/lib-utility": "*"
   },
+  "schemas": [
+    "schemas/article.json",
+    "schemas/intangible.json",
+    "schemas/place.json",
+    "schemas/product.json",
+    "schemas/offer.json",
+    "schemas/state.json",
+    "schemas/store.json",
+    "schemas/webpage.json",
+    "schemas/thing.json",
+    "schemas/duration.json"
+  ],
   "libs": [
     "libs/models.php"
   ],
@@ -37,5 +49,5 @@
       "role": "Developer"
     }
   ],
-  "repo": "https://raw.github.com/usabilitydynamics/lib-models"
+  "repo": "/UsabilityDynamics/lib-models"
 }

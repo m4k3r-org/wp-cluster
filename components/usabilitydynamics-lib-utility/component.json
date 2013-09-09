@@ -8,8 +8,14 @@
     "type": "git",
     "url": "https://github.com/UsabilityDynamics/lib-utility"
   },
-  "dependencies": {},
-  "lib": [
+  "dependencies": {
+    "caolan/async": "*"
+  },
+  "styles": [
+    "styles/responsive.less",
+    "styles/responsive.css"
+  ],
+  "libs": [
     "libs/utility.php"
   ],
   "scripts": [
@@ -35,5 +41,5 @@
       "role": "Developer"
     }
   ],
-  "repo": "https://raw.github.com/usabilitydynamics/lib-utility"
+  "repo": "/UsabilityDynamics/lib-utility"
 }

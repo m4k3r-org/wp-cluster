@@ -1,6 +1,6 @@
 {
   "name": "settings",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Settings library settings.",
   "homepage": "http://github.com/UsabilityDynamics/lib-settings",
   "private": false,
@@ -11,8 +11,13 @@
   "dependencies": {
     "usabilitydynamics/lib-utility": "*"
   },
-  "files": [
-    "files/schema/settings.json"
+  "views": [
+    "views/new-installation.xhtml",
+    "views/setup-assistant.xhtml",
+    "views/upgrade-splash.xhtml"
+  ],
+  "schemas": [
+    "schemas/settings.json"
   ],
   "libs": [
     "libs/settings.php"
@@ -40,5 +45,5 @@
       "role": "Developer"
     }
   ],
-  "repo": "https://raw.github.com/usabilitydynamics/lib-settings"
+  "repo": "/UsabilityDynamics/lib-settings"
 }

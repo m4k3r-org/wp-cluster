@@ -1,0 +1,110 @@
+# This file is distributed under the same license as Bjork.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Bjork\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-01 12:56+0200\n"
+"PO-Revision-Date: 2013-03-08 16:41+0200\n"
+"Last-Translator: Radial <i10n@radial.gr>\n"
+"Language-Team: Romanian <None>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
+"2:1));\n"
+"X-Generator: Poedit 1.5.4\n"
+
+msgid "Greek"
+msgstr "Greacă"
+
+msgid "English"
+msgstr "Engleză"
+
+msgid "Italian"
+msgstr "Italiană"
+
+msgid "Spanish"
+msgstr "Spaniolă"
+
+msgid "Romanian"
+msgstr "Română"
+
+msgid "Russian"
+msgstr "Rusă"
+
+msgid "Albanian"
+msgstr "Albaneză"
+
+#, php-format
+msgid "Ensure this value is %s (it is %s)."
+msgstr "Asiguraţi-vă că această valoare este %s (este %s)."
+
+msgid "Enter a valid value."
+msgstr "Introduceți o valoare validă."
+
+msgid "Enter a valid e-mail address."
+msgstr "Introduceţi o adresă de email validă."
+
+msgid ""
+"Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+"Introduceți un 'slug' valabil, compus numai din litere, numere, underscor "
+"sau liniuțe."
+
+msgid "Enter a valid IPv4 address."
+msgstr "Introduceţi o adresă IPv4 validă."
+
+msgid "Enter only digits separated by commas."
+msgstr "Introduceţi numai numere separate de virgule."
+
+#, php-format
+msgid "Ensure this value is less than or equal to %s."
+msgstr "Asiguraţi-vă că această valoare este mai mică sau egală cu %s ."
+
+#, php-format
+msgid "Ensure this value is greater than or equal to %s."
+msgstr "Asiguraţi-vă că această valoare este mai mare sau egală cu %s ."
+
+#, php-format
+msgid "Ensure this value has at most %d characters (it has %d)."
+msgstr ""
+"Asiguraţi-vă că această valoare are cel mult %d caractere (aceasta are %d)."
+
+#, php-format
+msgid "Ensure this value has at least %d characters (it has %d)."
+msgstr ""
+"Asiguraţi-vă că această valoare are cel puţin %d caractere (aceasta are %d)."
+
+msgid "This field is required."
+msgstr "Acest câmp este obligatoriu."
+
+msgid "Enter a whole number."
+msgstr "Introduceţi un număr întreg."
+
+msgid "Enter a number."
+msgstr "Introduceţi un număr."
+
+#, php-format
+msgid "Select a valid choice. %s is not one of the available choices."
+msgstr ""
+"Selectați o opțiune validă. %s nu face parte din opțiunile disponibile."
+
+msgid "Enter a list of values."
+msgstr "Introduceți o listă de valori."
+
+msgid "Order"
+msgstr "Ordine"
+
+msgid "Delete"
+msgstr "Șterge"
+
+msgid "Unknown"
+msgstr "Necunoscut"
+
+msgid "Yes"
+msgstr "Da"
+
+msgid "No"
+msgstr "Nu"

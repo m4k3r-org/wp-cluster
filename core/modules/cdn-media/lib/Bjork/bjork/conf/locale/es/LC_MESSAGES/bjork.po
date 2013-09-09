@@ -1,0 +1,110 @@
+# This file is distributed under the same license as Bjork.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Bjork\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-01 12:56+0200\n"
+"PO-Revision-Date: 2013-03-08 16:41+0200\n"
+"Last-Translator: Radial <i10n@radial.gr>\n"
+"Language-Team: Spanish <None>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+msgid "Greek"
+msgstr "griego"
+
+msgid "English"
+msgstr "inglés"
+
+msgid "Italian"
+msgstr "italiano"
+
+msgid "Spanish"
+msgstr "español"
+
+msgid "Romanian"
+msgstr "rumano"
+
+msgid "Russian"
+msgstr "ruso"
+
+msgid "Albanian"
+msgstr "albanés"
+
+#, php-format
+msgid "Ensure this value is %s (it is %s)."
+msgstr "Asegúrese de que este valor es %s (actualmente es %s)."
+
+msgid "Enter a valid value."
+msgstr "Introduzca un valor correcto."
+
+msgid "Enter a valid e-mail address."
+msgstr "Introduzca una dirección de correo electrónico válida."
+
+msgid ""
+"Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+"Introduzca un 'slug' válido, consistente en letras, números, guiones bajos o "
+"medios."
+
+msgid "Enter a valid IPv4 address."
+msgstr "Introduzca una dirección IPv4 válida."
+
+msgid "Enter only digits separated by commas."
+msgstr "Introduzca sólo dígitos separados por comas."
+
+#, php-format
+msgid "Ensure this value is less than or equal to %s."
+msgstr "Asegúrese de que este valor es menor o igual a %s."
+
+#, php-format
+msgid "Ensure this value is greater than or equal to %s."
+msgstr "Asegúrese de que este valor es mayor o igual a %s."
+
+#, php-format
+msgid "Ensure this value has at most %d characters (it has %d)."
+msgstr ""
+"Asegúrese de que este valor tiene a lo más %d caracteres (actualmente tiene "
+"%d)."
+
+#, php-format
+msgid "Ensure this value has at least %d characters (it has %d)."
+msgstr ""
+"Asegúrese de que este valor tiene al menos %d caracteres (actualmente tiene "
+"%d)."
+
+msgid "This field is required."
+msgstr "Este campo es obligatorio."
+
+msgid "Enter a whole number."
+msgstr "Introduzca un número entero."
+
+msgid "Enter a number."
+msgstr "Introduzca un número."
+
+#, php-format
+msgid "Select a valid choice. %s is not one of the available choices."
+msgstr "Escoja una opción válida. %s no es una de las opciones disponibles."
+
+msgid "Enter a list of values."
+msgstr "Introduzca una lista de valores."
+
+msgid "Order"
+msgstr "Orden"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Unknown"
+msgstr "Desconocido"
+
+msgid "Yes"
+msgstr "Sí"
+
+msgid "No"
+msgstr "No"

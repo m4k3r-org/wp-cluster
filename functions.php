@@ -93,6 +93,7 @@
               trailingslashit( get_stylesheet_directory() ) . 'core' => trailingslashit( get_stylesheet_directory_uri() ) . 'core',
             )),
             'paths' =>  array(
+              'root'        => untrailingslashit( get_template_directory() ),
               'controllers' => trailingslashit( get_template_directory() ) . 'core/controllers',
               'modules'     => trailingslashit( get_template_directory() ) . 'core/modules',
               'extend'      => trailingslashit( get_template_directory() ) . 'core/extend',
@@ -111,6 +112,7 @@
         )));
 
         define( 'Flawless_Core_Version', self::$version );
+        define( 'Flawless_Version', self::$version );
         define( 'Flawless_Option_Key', 'settings::' . Flawless_Core_Version );
         define( 'Flawless_Directory', basename( TEMPLATEPATH ) );
         define( 'Flawless_Path', untrailingslashit( get_template_directory() ) );
@@ -127,14 +129,17 @@
             'UsabilityDynamics\\' => array( $this->state->computed->paths->vendor ),
             'JsonSchema\\'        => array( $this->state->computed->paths->vendor . '/justinrainbow' )
           ),
-          'modules'     => array(
+          'modules' => array(
             'modules' => $this->state->computed->paths->modules,
             'extend'  => $this->state->computed->paths->extend
           ),
-          'helpers'     => array(
-            'helpders' => $this->state->computed->paths->helpers . '/template.php'
+          'helpers' => array(
+            'helpers' => $this->state->computed->paths->helpers . '/template.php'
           ),
-          'schemas'     => array(
+          'models' => array(
+            'component' => $this->state->computed->paths->root . '/component.json',
+          ),
+          'schemas' => array(
             'settings' => $this->state->computed->paths->schemas . '/settings.json',
             'features' => $this->state->computed->paths->schemas . '/features.json',
             'headers'  => $this->state->computed->paths->schemas . '/headers.json',
@@ -208,17 +213,16 @@
         // Initializer Hook.
         do_action( 'flawless::init_upper', $this );
 
-        // $js = Asset::load( 'app', 'js' );
-
         // Compiled JavaScript library.
-        wp_register_script( 'flawless-app', STYLESHEETPATH . '/ux/build/app.min.js', array( 'flawless-framework' ), Flawless_Version, true );
+        wp_register_script( 'flawless-app', get_stylesheet_directory_uri() . '/public/scripts/app.min.js', array( 'flawless-framework' ), Flawless_Version, true );
 
       }
 
       /**
-       * Run on init hook, intended to load functionality towards the end of init.  Scripts are loaded here so they can be overwritten by regular init.
+       * Run on init hook, intended to load functionality towards the end of init.
        *
-       * Enqueue front-end assets
+       * Scripts are loaded here so they can be overwritten by regular init.
+       * Enqueue front-end assets.
        *
        * @method init_lower
        * @for Flawless
@@ -318,7 +322,7 @@
         self::log( 'Executed: Flawless::wp_print_styles();' );
 
         // Enqueue client-side styles.
-        wp_enqueue_style( 'flawless-app', STYLESHEETPATH . '/ux/build/app.min.css', array(), Flawless_Version );
+        wp_enqueue_style( 'flawless-app', get_stylesheet_directory_uri() . '/public/styles/app.min.css', array(), Flawless_Version );
 
         // Print extra styles in context.
         do_action( 'flawless::wp_print_styles', $this );
@@ -354,6 +358,8 @@
       /**
        * Class Logger
        *
+       * (Not implemented, should reference Utility::log() or something);
+       *
        * @method log
        * @for Flawless
        *
@@ -361,77 +367,6 @@
        * @since 0.1.1
        */
       public function log( $data ) {}
-
-      /**
-       * Create Widget Instance.
-       *
-       * @method Widget
-       * @for Flawless
-       * @uses Widget
-       *
-       * @param $args
-       * @return Widget
-       */
-      public static function Widget( $args ) {
-        return new Widget( $args );
-      }
-
-      /**
-       * Create Element Instance.
-       *
-       * @method Element
-       * @for Flawless
-       * @uses Element
-       *
-       * @param $args
-       * @return Element
-       */
-      public static function Element( $args ) {
-        return new Element( $args );
-      }
-
-      /**
-       * Create Module Instance.
-       *
-       * @method Module
-       * @for Flawless
-       * @uses Module
-       *
-       * @param $args
-       * @return Module
-       */
-      public static function Module( $args ) {
-        return new Module( $args );
-      }
-
-      /**
-       * Create Shortcode Instance.
-       *
-       * @method Shortcode
-       * @for Flawless
-       * @uses Shortcode
-       *
-       * @param $args
-       * @return Shortcode
-       */
-      public static function Shortcode( $args ) {
-        return new Shortcode( $args );
-      }
-
-      /**
-       * Create Schema Instance.
-       *
-       * @method Schema
-       * @for Flawless
-       * @uses Schema
-       *
-       * @param $data object
-       * @param $schema object
-       * @return Schema
-       */
-      public static function Schema( $data, $schema ) {
-        return new Schema( $data, $schema );
-      }
 
       /**
        * Get the Flawless Singleton

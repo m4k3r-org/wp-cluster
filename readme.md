@@ -4,6 +4,17 @@ wip
 ### Compiling
 The compiled scripts, styles, templates, fonts and images are loaded into the /public directory at the root of the theme.
 
+### Basic Codex Usage
+
+    // Remove empty values from object.
+    Utility::array_filter_deep( $some_object )
+
+    // Extend Object
+    Utility::extend( array( 'one' => 'asdfsa' ), array( 'asdfdsaf' => 'asdf' ) );
+
+    // Get Flawless Singleton Instance
+    $flawless = Flawless::get_instance();
+
 ### Major Actions
 All major actions that utlize the "flawless::" prefix pass the $flawless variable as the first argument to any action.
 
@@ -29,15 +40,6 @@ All major actions that utlize the "flawless::" prefix pass the $flawless variabl
 ### Supporting Actions
   * flawless::extra_local_assets
   * flawless::asset_locations
-
-### Usage
-
-    // Remove empty values from object.
-    Utility::array_filter_deep( $some_object )
-
-    // Extend Object
-    Utility::extend( array( 'one' => 'asdfsa' ), array( 'asdfdsaf' => 'asdf' ) );
-
 
 ### Notes
 The theme has a default maximum width of 1090px, which is the default Flawless width, but can be adjusted under Appearance Settings.

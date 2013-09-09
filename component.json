@@ -3,8 +3,39 @@
   "repo": "UsabilityDynamics/wp-flawless",
   "version": "0.1.1",
   "description": "Flawless Theme.",
+  "build": {
+    "scripts": {
+      "out": "public/scripts",
+      "settings": {
+        "minify": true
+      }
+    },
+    "styles": {
+      "out": "public/styles",
+      "settings": {
+        "minify": true
+      }
+    },
+    "fonts": {
+      "out": "public/fonts",
+      "settings": {}
+    },
+    "views": {
+      "out": "public/views",
+      "settings": {}
+    },
+    "schemas": {
+      "out": "public/schemas",
+      "settings": {}
+    },
+    "php": {
+      "out": "core/vendor",
+      "settings": {
+        "autoload": true
+      }
+    }
+  },
   "scripts": [
-    "ux/scripts/core.js",
     "ux/scripts/app.js"
   ],
   "styles": [
@@ -23,21 +54,9 @@
     "ux/images/glyphicons-halflings-white.png",
     "ux/images/glyphicons-halflings.png"
   ],
-  "config": {
-    "component-dir": "components",
-    "output": {
-      "js": "public/scripts",
-      "css": "public/styles",
-      "less": "public/styles",
-      "fonts": "public/fonts",
-      "template": "public/views",
-      "php": "core/vendor"
-    }
-  },
   "dependencies": {
     "usabilitydynamics/lib-api": "*",
     "usabilitydynamics/lib-loader": "*",
-    "usabilitydynamics/lib-ui": "*",
     "usabilitydynamics/lib-utility": "*",
     "usabilitydynamics/lib-settings": "*",
     "usabilitydynamics/lib-saas": "*",
@@ -48,10 +67,12 @@
     "usabilitydynamics/js-spa": "*",
     "usabilitydynamics/js-elastic-filter": "*",
 
-    "kaerus-component/hash": "*",
-    "component/model": "*",
-    "component/s3": "*",
-    "mikanda/schema-validate": "*",
+    "lauramelos/isotope": "*",
+    "components/modernizr": "*",
+    "danro/jquery-easing": "*",
+    "timoxley/font-awesome": "*",
+    "usabilitydynamics/FlexSlider": "*",
+
     "camshaft/bootstrap-responsive": "*",
     "camshaft/bootstrap-grid": "*",
     "camshaft/bootstrap-buttons": "*",

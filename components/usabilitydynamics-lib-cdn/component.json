@@ -12,12 +12,12 @@
     "usabilitydynamics/lib-utility": "*",
     "component/s3": "*"
   },
-  "files": [
-    "files/schema/azure.json",
-    "files/schema/s3.json"
+  "schemas": [
+    "schemas/azure.json",
+    "schemas/s3.json"
   ],
   "libs": [
-    "lib/cdn.php"
+    "libs/cdn.php"
   ],
   "scripts": [
     "scripts/cdn.js"
@@ -42,5 +42,5 @@
       "role": "Developer"
     }
   ],
-  "repo": "https://raw.github.com/usabilitydynamics/lib-cdn"
+  "repo": "/UsabilityDynamics/lib-cdn"
 }

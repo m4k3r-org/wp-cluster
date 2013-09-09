@@ -1,0 +1,14 @@
+{
+  "controllers": {
+    "class": true
+  },
+  "modules": {
+    "class": true
+  },
+  "helpers": {
+    "class": true
+  },
+  "schemas": {
+    "class": true
+  }
+}

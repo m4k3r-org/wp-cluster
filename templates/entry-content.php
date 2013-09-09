@@ -21,11 +21,9 @@
 
 global $post;
 
-
 if ( !isset( $post->show_post_content_type ) || post_password_required() ) {
   $post->show_post_content_type = 'post_excerpt';
 }
-
 
 ?>
 

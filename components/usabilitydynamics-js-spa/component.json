@@ -10,15 +10,15 @@
   },
   "dependencies": {
     "components/jquery": "*",
-    "solutionio/async": "*",
+    "caolan/async": "*",
     "usabilitydynamics/lib-settings": "*",
     "usabilitydynamics/lib-utility": "*",
     "usabilitydynamics/lib-saas": "*",
     "usabilitydynamics/lib-ui": "*",
     "usabilitydynamics/js-mvvm": "*"
   },
-  "files": [
-    "files/schema/spa.json"
+  "schemas": [
+    "schemas/spa.json"
   ],
   "styles": [
     "styles/spa.css"
@@ -49,5 +49,5 @@
       "role": "Developer"
     }
   ],
-  "repo": "https://raw.github.com/usabilitydynamics/js-spa"
+  "repo": "/UsabilityDynamics/js-spa"
 }

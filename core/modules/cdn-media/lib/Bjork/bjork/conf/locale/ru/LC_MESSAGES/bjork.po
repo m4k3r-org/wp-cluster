@@ -1,0 +1,107 @@
+# This file is distributed under the same license as Bjork.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Bjork\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-01 12:56+0200\n"
+"PO-Revision-Date: 2013-03-08 16:41+0200\n"
+"Last-Translator: Radial <i10n@radial.gr>\n"
+"Language-Team: Russian <None>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+msgid "Greek"
+msgstr "Греческий"
+
+msgid "English"
+msgstr "Английский"
+
+msgid "Italian"
+msgstr "Итальянский"
+
+msgid "Spanish"
+msgstr "Испанский"
+
+msgid "Romanian"
+msgstr "Румынский"
+
+msgid "Russian"
+msgstr "Русский"
+
+msgid "Albanian"
+msgstr "Албанский"
+
+#, php-format
+msgid "Ensure this value is %s (it is %s)."
+msgstr "Убедитесь, что это значение — %s (сейчас оно — %s)."
+
+msgid "Enter a valid value."
+msgstr "Введите правильное значение."
+
+msgid "Enter a valid e-mail address."
+msgstr "Введите правильный адрес электронной почты."
+
+msgid ""
+"Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+"Значение должно состоять только из букв, цифр, знаков подчеркивания или "
+"дефиса."
+
+msgid "Enter a valid IPv4 address."
+msgstr "Введите правильный IPv4 адрес."
+
+msgid "Enter only digits separated by commas."
+msgstr "Введите цифры, разделенные запятыми."
+
+#, php-format
+msgid "Ensure this value is less than or equal to %s."
+msgstr "Убедитесь, что это значение меньше либо равно %s."
+
+#, php-format
+msgid "Ensure this value is greater than or equal to %s."
+msgstr "Убедитесь, что это значение больше либо равно %s."
+
+#, php-format
+msgid "Ensure this value has at most %d characters (it has %d)."
+msgstr "Убедитесь, что это значение содержит не более %d символов (сейчас %d)."
+
+#, php-format
+msgid "Ensure this value has at least %d characters (it has %d)."
+msgstr "Убедитесь, что это значение содержит не менее %d символов (сейчас %d)."
+
+msgid "This field is required."
+msgstr "Обязательное поле."
+
+msgid "Enter a whole number."
+msgstr "Введите целое число."
+
+msgid "Enter a number."
+msgstr "Введите число."
+
+#, php-format
+msgid "Select a valid choice. %s is not one of the available choices."
+msgstr "Выберите корректный вариант. %s нет среди допустимых значений."
+
+msgid "Enter a list of values."
+msgstr "Введите список значений."
+
+msgid "Order"
+msgstr "Порядок"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Unknown"
+msgstr "Неизвестно"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Нет"
