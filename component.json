@@ -1,6 +1,6 @@
 {
   "name":"varnish-cms",
-  "namespace":"varnish",
+  "namespace":"Varnish",
   "repository": {
     "type": "git",
     "urL": "https://github.com/UsabilityDynamics/varnish-cms"
