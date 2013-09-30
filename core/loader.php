@@ -25,6 +25,11 @@ namespace Varnish {
     public function __construct() {
 
       // add_action( 'admin_menu', array( 'Developer', 'admin_menu' ) );
+      // Add network themes to $wp_theme_directories
+
+      if( file_exists( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'network-themes' ) ) {
+        register_theme_directory( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'network-themes' );
+      }
 
       if( file_exists( WPMU_PLUGIN_DIR . '/regenerate-thumbnails/regenerate-thumbnails.php' ) ) {
         require WPMU_PLUGIN_DIR . '/regenerate-thumbnails/regenerate-thumbnails.php';
