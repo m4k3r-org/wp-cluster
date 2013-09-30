@@ -55,15 +55,15 @@ namespace Varnish {
        */
       if( is_multisite() ) {
 
-        require_once( WPMU_PLUGIN_DIR . '/lib/class.varnish_cms.php' );
+        // require_once( WPMU_PLUGIN_DIR . '/lib/class.varnish_cms.php' );
 
-        Core::fix_urls();
+        // Core::fix_urls();
 
-        Core::add_theme_directories();
+        // Core::add_theme_directories();
 
-        Core::load_mu_plugins();
+        // Core::load_mu_plugins();
 
-        Core::initialize();
+        // Core::initialize();
 
         //** Support for custom theme directory */
         if( defined( 'WP_PRIMARY_THEME_DIR' ) ) {
