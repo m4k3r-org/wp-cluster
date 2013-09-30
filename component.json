@@ -1,0 +1,9 @@
+{
+  "name":"varnish-cms",
+  "namespace":"varnish",
+  "repository": {
+    "type": "git",
+    "urL": "https://github.com/UsabilityDynamics/varnish-cms"
+  },
+  "version":"0.0.1"
+}
