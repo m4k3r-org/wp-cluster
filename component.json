@@ -1,18 +1,15 @@
 {
   "name": "varnish-cms",
-  "namespace": "Varnish",
   "repository": {
     "type": "git",
     "urL": "https://github.com/UsabilityDynamics/varnish-cms"
   },
   "version": "0.1.1",
   "dependencies": {
-    "usabilitydynamics/lib-api": "*",
-    "usabilitydynamics/lib-utility": "*",
-    "usabilitydynamics/lib-settings": "*",
-    "usabilitydynamics/lib-saas": "*",
-    "usabilitydynamics/lib-models": "*",
-    "usabilitydynamics/lib-cdn": "*"
+    "usabilitydynamics/lib-api": "*"
+  },
+  "config": {
+    "namespace": "Varnish"
   },
   "build": {
     "scripts": {
@@ -27,19 +24,7 @@
         "minify": true
       }
     },
-    "fonts": {
-      "out": "public/fonts",
-      "settings": {}
-    },
-    "views": {
-      "out": "public/views",
-      "settings": {}
-    },
-    "schemas": {
-      "out": "public/schemas",
-      "settings": {}
-    },
-    "php": {
+    "libs": {
       "out": "core/vendor",
       "settings": {
         "autoload": true

@@ -58,26 +58,28 @@ namespace Varnish {
       require_once( 'controllers/debug.php' );
       require_once( 'controllers/developer.php' );
       require_once( 'controllers/media.php' );
-      require_once( 'controllers/theme.php' );
+      require_once( 'controllers/security.php' );
       require_once( 'controllers/settings.php' );
+      require_once( 'controllers/theme.php' );
 
       // Load Helpers
       require_once( 'helpers/utility.php' );
       require_once( 'helpers/log.php' );
       require_once( 'helpers/views.php' );
 
-      // Initialize Controllers
+      set_error_handler( array( $this, 'error_handler' ) );
+
+      // Initialize Controllers and Helpers
       $this->Developer = new Developer();
       $this->Debug     = new Debug();
       $this->API       = new API();
-      $this->Theme     = new Theme();
       $this->Media     = new Media();
       $this->Settings  = new Settings();
-
-      // Initialize Helpers
-      $this->Views   = new Views();
-      $this->Utility = new Utility();
-      $this->Log     = new Log();
+      $this->Security  = new Security();
+      $this->Theme     = new Theme();
+      $this->Views     = new Views();
+      $this->Utility   = new Utility();
+      $this->Log       = new Log();
 
       $this->state = json_decode( json_encode( array(
         'settings'  => $this->Settings->data,
@@ -109,6 +111,45 @@ namespace Varnish {
      */
     public function plugins_loaded() {
       add_action( 'admin_init', array( $this, 'admin_init' ) );
+    }
+
+    /**
+     * Error Handler
+     *
+     * @param $errno
+     * @param $errstr
+     * @param $errfile
+     * @param $errline
+     *
+     * @return bool
+     */
+    function error_handler( $errno, $errstr, $errfile, $errline ) {
+
+      if( !( error_reporting() & $errno ) ) {
+        // This error code is not included in error_reporting
+        return;
+      }
+      switch( $errno ) {
+        case E_ERROR:
+        case E_CORE_ERROR:
+        case E_RECOVERABLE_ERROR:
+        case E_WARNING:
+        case E_COMPILE_ERROR:
+        case E_USER_ERROR:
+          wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologies for inconvenience and will return shortly.</p>" );
+        break;
+
+        case E_USER_NOTICE:
+          return true;
+        break;
+
+        default:
+          wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologies for inconvenience and will return shortly.</p>" );
+        break;
+      }
+
+      return true;
+
     }
 
     /**
@@ -170,7 +211,7 @@ namespace Varnish {
      */
     public function admin_bar_menu( $wp_admin_bar = false ) {
 
-      if ( !is_super_admin() || !is_multisite() || !$wp_admin_bar ) {
+      if( !is_super_admin() || !is_multisite() || !$wp_admin_bar ) {
         return;
       }
 
@@ -210,11 +251,11 @@ namespace Varnish {
 
       add_filter( 'blog_option_upload_path', function ( $url ) {
 
-        if ( strpos( $url, 'wp-content/blogs.dir' ) !== false ) {
+        if( strpos( $url, 'wp-content/blogs.dir' ) !== false ) {
           return str_replace( 'wp-content/blogs.dir', 'media/sites', $url );
         }
 
-        if ( strpos( $url, 'wp-content/uploads' ) !== false ) {
+        if( strpos( $url, 'wp-content/uploads' ) !== false ) {
           return str_replace( 'wp-content/uploads', 'media/sites', $url );
         }
 
