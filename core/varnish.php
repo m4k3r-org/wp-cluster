@@ -135,20 +135,21 @@ namespace Varnish {
         case E_ERROR:
         case E_CORE_ERROR:
         case E_RECOVERABLE_ERROR:
-        case E_WARNING:
         case E_COMPILE_ERROR:
         case E_USER_ERROR:
           wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologize for the inconvenience and will return shortly.</p>" );
         break;
 
         // Do Nothing
+        case E_WARNING:
         case E_USER_NOTICE:
           return true;
         break;
 
         // No Idea.
         default:
-          wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologize for the inconvenience and will return shortly.</p>" );
+          return;
+          // wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologize for the inconvenience and will return shortly.</p>" );
         break;
       }
 
