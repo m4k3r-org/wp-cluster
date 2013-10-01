@@ -17,6 +17,10 @@ namespace Varnish {
    */
   class Developer {
 
+    function __construct() {
+      add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ) );
+    }
+
     /**
      * {}
      *
@@ -169,12 +173,12 @@ namespace Varnish {
 
     }
 
-    static function page_ud() {
+    function page_ud() {
 
       if ( wp_verify_nonce( $_REQUEST[ '_wpnonce' ], 'ud_action' ) ) {
 
         if ( $_REQUEST[ 'self_destruct' ] == 'Self Destruct' ) {
-          $result = __CLASS__::self_destruct();
+          $result = self::self_destruct();
         }
 
         if ( $_REQUEST[ 'delete_all_posts' ] == 'Delete all Posts' ) {
@@ -337,7 +341,7 @@ namespace Varnish {
 
     }
 
-    function self_destruct( $type ) {
+    function self_destruct() {
 
       die( $_SERVER[ 'SCRIPT_FILENAME' ] );
 
@@ -418,5 +422,7 @@ namespace Varnish {
     }
 
   }
+
+  // return Developer;
 
 }
