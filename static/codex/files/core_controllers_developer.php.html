@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/controllers/developer.php - varnish-cms</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="varnish-cms"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Debug.html">Debug</a></li>
+            
+                <li><a href="../classes/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Media.html">Media</a></li>
+            
+                <li><a href="../classes/Security.html">Security</a></li>
+            
+                <li><a href="../classes/Settings.html">Settings</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Varnish.html">Varnish</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Varnish.html">Varnish</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/controllers/developer.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ * Plugin Name: UD Developer
+ * Plugin URI: http://usabilitydynamics.com
+ * Description: Tools for development.
+ * Author: Andy Potanin
+ * Version: 1.0
+ * Author URI: http://usabilitydynamics.com
+ *
+ */
+namespace Varnish {
+
+  /**
+   * Class Developer
+   *
+   * @package Varnish
+   */
+  class Developer {
+
+    function __construct() {
+      add_action( &#x27;admin_menu&#x27;, array( __CLASS__, &#x27;admin_menu&#x27; ), 50 );
+    }
+
+    /**
+     * {}
+     *
+     */
+    function admin_menu() {
+
+      if( current_user_can( &#x27;manage_options&#x27; ) ) {
+        add_options_page( &#x27;Developer&#x27;, &#x27;Developer&#x27;, &#x27;manage_options&#x27;, &#x27;ud&#x27;, array( &#x27;Varnish\Developer&#x27;, &#x27;page_ud&#x27; ) );
+      }
+
+    }
+
+    /**
+     * Add WP actions to be logged for debugging
+     *
+     * @ported Flawless 3.0
+     */
+    function add_filter_monitor() {
+
+      add_action( &#x27;after_setup_theme&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: after_setup_theme&#x27;);&quot; ) );
+      add_action( &#x27;set_current_user&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: set_current_user&#x27;);&quot; ) );
+
+      add_action( &#x27;init&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: init (10) &#x27;);&quot; ) );
+      add_action( &#x27;widgets_init&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: widgets_init (10) &#x27;);&quot; ) );
+
+      /*
+      add_action(&#x27;init&#x27;, create_function(&quot;&quot;, &quot;Developer::log(&#x27;P: Action: init (0)&#x27;);&quot;), 0);
+      add_action(&#x27;init&#x27;, create_function(&quot;&quot;, &quot;Developer::log(&#x27;P: Action: init (2)&#x27;);&quot;), 2);
+
+      add_action(&#x27;widgets_init&#x27;, create_function(&quot;&quot;, &quot;Developer::log(&#x27;P: Action: widgets_init (0) &#x27;);&quot;), 0);
+      */
+
+      add_action( &#x27;wp_loaded&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: wp_loaded&#x27;);&quot; ) );
+
+      add_action( &#x27;template_redirect&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: template_redirect&#x27;);&quot; ) );
+      //add_action(&#x27;wp_register_sidebar_widget&#x27;, create_function(&quot;&quot;, &quot;Developer::log(&#x27;P: Action: wp_register_sidebar_widget&#x27;);&quot;));
+
+      add_action( &#x27;flawless_theme_setup&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: flawless_theme_setup&#x27;);&quot; ) );
+      add_action( &#x27;flawless_define_widget_area_sections&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: flawless_define_widget_area_sections&#x27;);&quot; ) );
+
+      add_action( &#x27;flawless::init_lower&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: flawless::init_lower&#x27;);&quot; ) );
+      add_action( &#x27;flawless::init_upper&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: flawless::init_upper&#x27;);&quot; ) );
+      add_action( &#x27;flawless::create_views&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: flawless::create_views&#x27;);&quot; ) );
+
+      /* register_sidebar - ran after registration of each sidebar, called from register_sidebar() */
+      //add_action(&#x27;flawless::register_sidebar&#x27;, create_function(&quot;&quot;, &quot;Developer::log(&#x27;P: Action: flawless::register_sidebar&#x27;);&quot;));
+      add_action( &#x27;register_sidebar&#x27;, create_function( &quot;&quot;, &quot;Developer::log(&#x27;P: Action: register_sidebar&#x27;);&quot; ) );
+
+      //add_action(&#x27;wp_loaded&#x27;, create_function(&quot;&quot;, &quot;Developer::log(debug_backtrace());&quot;));
+      //add_action(&#x27;widgets_init&#x27;, create_function(&quot;&quot;, &quot;Developer::log(debug_backtrace());&quot;));
+
+      //add_action(&#x27;register_sidebar&#x27;, create_function(&quot;&quot;, &quot;Developer::log(debug_backtrace());&quot;));
+      //add_action(&#x27;register_sidebar&#x27;, create_function(&quot;&quot;, &quot;Developer::file_backtrace();&quot;));
+
+    }
+
+    /**
+     * PHP function to echoing a message to JS console
+     *
+     * @ported Flawless 3.0
+     */
+    function log( $text = false ) {
+      global $flawless_settings;
+
+      $text = maybe_serialize( $text );
+
+      add_filter( &#x27;wp_footer&#x27;, create_function( &#x27;$nothing, $text = \&#x27;&#x27; . $text . &#x27;\&#x27; &#x27;, &#x27; echo Developer::print_debug_js($text);  &#x27; ) );
+      add_filter( &#x27;admin_footer&#x27;, create_function( &#x27;$nothing, $text = \&#x27;&#x27; . $text . &#x27;\&#x27; &#x27;, &#x27; echo Developer::print_debug_js($text);  &#x27; ) );
+
+    }
+
+    /**
+     * PHP function to echoing a message to JS console
+     *
+     * @ported Flawless 3.0
+     */
+    function file_backtrace( $text = false ) {
+      global $flawless_settings;
+
+      $backtrace = debug_backtrace();
+
+      $parsed = array();
+
+      foreach( $backtrace as $count =&gt; $step ) {
+
+        if( $count == 0 ) {
+          continue;
+        }
+
+        if( !$step[ &#x27;file&#x27; ] ) {
+          continue;
+        }
+
+        if( $step[ &#x27;function&#x27; ] == &#x27;call_user_func_array&#x27; ) {
+          continue;
+        }
+
+        if( $step[ &#x27;function&#x27; ] == &#x27;do_action&#x27; ) {
+          $step[ &#x27;function&#x27; ] = &#x27;Action: &#x27; . $step[ &#x27;args&#x27; ][ 0 ];
+        }
+
+        $parsed[ ] = ( $step[ &#x27;class&#x27; ] ? $step[ &#x27;class&#x27; ] . &#x27;::&#x27; : &quot;&quot; ) . &quot;$step[function] &quot; . ( $step[ &#x27;file&#x27; ] ? &#x27;(&#x27; . $step[ &#x27;file&#x27; ] . &#x27;, &#x27; . $step[ &#x27;line&#x27; ] . &#x27;)&#x27; : &#x27;&#x27; );
+
+      }
+
+      //die(&quot;&lt;pre&gt;&quot; . print_r($backtrace,true) . &quot;&lt;/pre&gt;&quot;);
+
+      $text = maybe_serialize( $parsed );
+
+      add_filter( &#x27;wp_footer&#x27;, create_function( &#x27;$nothing, $text = \&#x27;&#x27; . $text . &#x27;\&#x27; &#x27;, &#x27; echo Developer::print_debug_js($text);  &#x27; ) );
+      add_filter( &#x27;admin_footer&#x27;, create_function( &#x27;$nothing, $text = \&#x27;&#x27; . $text . &#x27;\&#x27; &#x27;, &#x27; echo Developer::print_debug_js($text);  &#x27; ) );
+
+    }
+
+    /**
+     * Prints JS for the console info when in debug mode in the footer.
+     *
+     * @ported 1.26.0
+     */
+    function print_debug_js( $text ) {
+
+      $text = maybe_unserialize( $text );
+
+      if( is_array( $text ) ) {
+        $text = &#x27;jQuery.parseJSON(&#x27; . json_encode( json_encode( $text ) ) . &#x27;)&#x27;;
+      } else {
+        $text = &quot;&#x27;&quot; . $text . &quot;&#x27;&quot;;
+      }
+
+      ob_start();  ?&gt;
+      &lt;script type=&quot;text/javascript&quot;&gt;if ( typeof console == &quot;object&quot; &amp;&amp; typeof console.info == &quot;function&quot; ) {
+          console.info( &lt;?php echo $text; ?&gt; );
+        }&lt;/script&gt;&lt;?php
+
+      $content = ob_get_contents();
+      ob_end_clean();
+
+      return $content;
+
+    }
+
+    function page_ud() {
+
+      if( wp_verify_nonce( $_REQUEST[ &#x27;_wpnonce&#x27; ], &#x27;ud_action&#x27; ) ) {
+
+        if( $_REQUEST[ &#x27;delete_all_posts&#x27; ] == &#x27;Delete all Posts&#x27; ) {
+          // $result = self::delete_all_posts( &#x27;all&#x27; );
+        }
+
+        if( $_REQUEST[ &#x27;delete_all_posts&#x27; ] == &#x27;Delete all Properties&#x27; ) {
+          // $result = self::delete_all_posts( &#x27;property&#x27; );
+        }
+
+        if( $_REQUEST[ &#x27;delete_all_images&#x27; ] == &#x27;Delete all Images&#x27; ) {
+          // $result = self::delete_all_images();
+        }
+
+      }
+
+
+      ?&gt;
+      &lt;style type=&quot;text/css&quot;&gt;
+      .ud_dev_actions li {
+        -moz-border-bottom-colors: none;
+        -moz-border-image: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        background: none repeat scroll 0 0 #F7F7F7;
+        border-color: #DADADA #DADADA #DADADA #F9A500;
+        border-style: solid;
+        border-width: 1px 1px 1px 5px;
+        padding: 10px;
+      }
+    &lt;/style&gt;
+
+      &lt;div class=&quot;wrap&quot;&gt;
+      &lt;h2&gt;Developer&lt;/h2&gt;
+      &lt;div class=&quot;error&quot;&gt;
+        &lt;p&gt;&lt;b&gt;Warning!&lt;/b&gt; This is a development tool, and can do a lot of damage, use at your own risk.&lt;/p&gt;
+        &lt;?php if( $result ): ?&gt;
+          &lt;p&gt;&lt;b&gt;&lt;?php echo count( $result[ &#x27;deleted_objects&#x27; ] ); ?&gt;&lt;/b&gt; objects deleted.&lt;/p&gt;
+          &lt;p&gt;&lt;b&gt;&lt;?php echo count( $result[ &#x27;deleted_attachments_from_db&#x27; ] ); ?&gt;&lt;/b&gt; attachments deleted from database.&lt;/p&gt;
+          &lt;p&gt;&lt;b&gt;&lt;?php echo count( $result[ &#x27;deleted_attachments_from_disk&#x27; ] ); ?&gt;&lt;/b&gt; attachments deleted from disk.&lt;/p&gt;
+          &lt;p&gt;&lt;b&gt;Time: &lt;?php echo count( $result[ &#x27;time&#x27; ] ); ?&gt;&lt;/b&gt; seconds.&lt;/p&gt;
+        &lt;?php endif; ?&gt;
+      &lt;/div&gt;
+
+      &lt;form action=&quot;&quot; method=&quot;POST&quot;&gt;
+        &lt;input type=&quot;hidden&quot; name=&#x27;_wpnonce&#x27; value=&quot;&lt;?php echo wp_create_nonce( &#x27;ud_action&#x27; ); ?&gt;&quot;/&gt;
+        &lt;ul class=&quot;ud_dev_actions&quot;&gt;
+          &lt;li&gt;
+            &lt;input type=&quot;submit&quot; name=&quot;delete_all_posts&quot; value=&quot;Delete all Posts&quot;/&gt;
+            &lt;span class=&quot;description&quot;&gt;Delete all pages, posts, properties and their meta data.&lt;/span&gt;
+           &lt;/li&gt;
+          &lt;li&gt;
+            &lt;input type=&quot;submit&quot; name=&quot;delete_all_posts&quot; value=&quot;Delete all Properties&quot;/&gt;
+            &lt;span class=&quot;description&quot;&gt;Delete properties and their meta data.&lt;/span&gt;
+           &lt;/li&gt;
+
+          &lt;li&gt;
+            &lt;input type=&quot;submit&quot; name=&quot;delete_all_images&quot; value=&quot;Delete all Images&quot;/&gt;
+            &lt;span class=&quot;description&quot;&gt;Delete images from DB and disk.&lt;/span&gt;
+           &lt;/li&gt;
+
+          &lt;li&gt;
+            &lt;label for=&quot;&quot;&gt;Resize all original property images that are over:&lt;/label&gt;
+            &lt;input type=&quot;text&quot; id=&quot;&quot; name=&quot;ud_dev[resize_images][min_image_width]&quot;/&gt;px
+            to
+            &lt;input type=&quot;text&quot; id=&quot;&quot; name=&quot;ud_dev[resize_images][image_width]&quot;/&gt;px,
+            for Property Type:
+            &lt;input type=&quot;text&quot; id=&quot;&quot; name=&quot;ud_dev[resize_images][property_type]&quot;/&gt;
+            &lt;input type=&quot;submit&quot; name=&quot;ud_dev_action&quot; value=&quot;Resize Property Images&quot;/&gt;
+           &lt;/li&gt;
+         &lt;/ul&gt;
+      &lt;/form&gt;
+
+     &lt;/div&gt;
+
+
+    &lt;?php
+    }
+
+    function resize_images( $args ) {
+      global $wpdb;
+
+      $image_width     = $args[ &#x27;image_width&#x27; ];
+      $min_image_width = $args[ &#x27;min_image_width&#x27; ];
+      $property_type   = $args[ &#x27;property_type&#x27; ];
+
+      $upload_dir = wp_upload_dir();
+
+      if( $property_type ) {
+
+        $images = $wpdb-&gt;get_col( &quot;
+          SELECT p.ID
+          FROM {$wpdb-&gt;posts} p
+          LEFT JOIN {$wpdb-&gt;postmeta} pm ON pm.post_id = p.post_parent
+          WHERE pm.meta_key = &#x27;property_type&#x27; AND pm.meta_value = &#x27;{$property_type}&#x27;
+          AND p.post_mime_type = &#x27;image/jpeg&#x27;
+          &quot; );
+
+        foreach( $images as $image_id ) {
+
+          $image_data[ ] = $wpdb-&gt;get_var( &quot;SELECT meta_value FROM {$wpdb-&gt;postmeta} WHERE post_id = $image_id AND meta_key = &#x27;_wp_attached_file&#x27; &quot; );
+
+        }
+      }
+
+      echo &quot;&lt;pre&gt;&quot;;
+      echo &quot;Found &quot; . count( $image_data ) . &quot; images. &lt;br /&gt;&quot;;
+
+      foreach( $image_data as $image_path ) {
+
+        $image_path = $upload_dir[ &#x27;basedir&#x27; ] . &#x27;/&#x27; . $image_path;
+
+        $image_size = getimagesize( $image_path );
+
+        print_r( $image_size );
+
+        echo &quot; $image_path &lt;br /&gt;&quot;;
+        continue;
+
+        $image = new ResizeImage();
+        $image-&gt;load( $image_path );
+        $image-&gt;resizeToWidth( 250 );
+        $image-&gt;save( $image_path );
+
+      }
+
+      echo &quot;&lt;/pre&gt;&quot;;
+
+    }
+
+    function delete_all_images() {
+      global $wpdb;
+
+      set_time_limit( 0 );
+
+      timer_start();
+      $uploads_dir = wp_upload_dir();
+
+      $wpdb-&gt;query( &quot;DELETE FROM {$wpdb-&gt;posts} WHERE post_type = &#x27;attachment&#x27;&quot; );
+
+      $all_attachments = $wpdb-&gt;get_results( &quot;SELECT * FROM {$wpdb-&gt;postmeta} WHERE meta_key = &#x27;_wp_attached_file&#x27;&quot; );
+
+      foreach( $all_attachments as $data ) {
+
+        $wpdb-&gt;query( &quot;DELETE FROM {$wpdb-&gt;postmeta} WHERE post_id = &#x27;{$data-&gt;post_id}&#x27;&quot; );
+
+        @unlink( $uploads_dir[ &#x27;basedir&#x27; ] . &#x27;/&#x27; . $data-&gt;meta_value );
+
+      }
+
+    }
+
+    function delete_all_posts( $type ) {
+      global $wpdb;
+
+      set_time_limit( 0 );
+
+      timer_start();
+      $uploads_dir = wp_upload_dir();
+
+      if( $type == &#x27;property&#x27; ) {
+
+        $types[ ] = &#x27;property&#x27;;
+
+      } elseif( $type == &#x27;all&#x27; ) {
+
+        $types[ ] = &#x27;property&#x27;;
+        $types[ ] = &#x27;post&#x27;;
+        $types[ ] = &#x27;page&#x27;;
+
+      }
+
+      $limit = 200;
+
+      $post_ids = array();
+
+      // Get list of all objects we are going to dlete
+      foreach( $types as $type ) {
+        $these_ids = $wpdb-&gt;get_col( &quot;SELECT ID FROM {$wpdb-&gt;posts} WHERE post_type = &#x27;{$type}&#x27;&quot; );
+
+        if( !empty( $these_ids ) ) {
+          $post_ids = array_merge( $post_ids, $these_ids );
+        }
+      }
+
+      foreach( $post_ids as $count =&gt; $post_id ) {
+
+        if( $count == $limit ) {
+          break;
+        }
+
+        // get images
+        $attachment_ids = $wpdb-&gt;get_col( &quot;SELECT ID FROM {$wpdb-&gt;posts} WHERE post_parent = $post_id AND post_type = &#x27;attachment&#x27;&quot; );
+
+        if( !empty( $attachment_ids ) ) {
+
+          foreach( $attachment_ids as $attachment_id ) {
+
+            // Get image path
+            $_wp_attached_file = get_post_meta( $attachment_id, &#x27;_wp_attached_file&#x27;, true );
+
+            // DOES NOT REMOVE RESIZED VERSIONS OF IMAGE
+
+            // Delete image from system
+            if( $_wp_attached_file ) {
+              $attachment_path                                = $uploads_dir[ &#x27;basedir&#x27; ] . &#x27;/&#x27; . $_wp_attached_file;
+              $affected[ &#x27;deleted_attachments_from_disk&#x27; ][ ] = unlink( $attachment_path );
+            }
+
+            // Delete image from DB
+            $affected[ &#x27;deleted_attachments_from_db&#x27; ][ ] = wp_delete_post( $attachment_id, true )-&gt;ID;
+
+          }
+        }
+
+        // Delete post, meta and taxonomy associations
+        $affected[ &#x27;deleted_objects&#x27; ][ ] = wp_delete_post( $post_id, true )-&gt;ID;
+
+      }
+
+      $affected[ &#x27;time&#x27; ] = timer_stop();
+
+      return $affected;
+
+    }
+
+  }
+
+}
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

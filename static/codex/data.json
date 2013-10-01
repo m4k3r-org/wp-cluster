@@ -1,0 +1,858 @@
+{
+    "project": {
+        "name": "varnish-cms",
+        "version": "0.1.1",
+        "url": "https://github.com/UsabilityDynamics/varnish-cms",
+        "logo": "http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png"
+    },
+    "files": {
+        "core/controllers/api.php": {
+            "name": "core/controllers/api.php",
+            "modules": {
+                "Varnish": 1
+            },
+            "classes": {},
+            "fors": {
+                "API": 1
+            },
+            "namespaces": {}
+        },
+        "core/controllers/debug.php": {
+            "name": "core/controllers/debug.php",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Debug": 1
+            },
+            "namespaces": {}
+        },
+        "core/controllers/developer.php": {
+            "name": "core/controllers/developer.php",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "core/controllers/media.php": {
+            "name": "core/controllers/media.php",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Media": 1
+            },
+            "namespaces": {}
+        },
+        "core/controllers/security.php": {
+            "name": "core/controllers/security.php",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Security": 1
+            },
+            "namespaces": {}
+        },
+        "core/controllers/settings.php": {
+            "name": "core/controllers/settings.php",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Settings": 1
+            },
+            "namespaces": {}
+        },
+        "core/controllers/theme.php": {
+            "name": "core/controllers/theme.php",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Theme": 1
+            },
+            "namespaces": {}
+        },
+        "core/helpers/log.php": {
+            "name": "core/helpers/log.php",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Log": 1
+            },
+            "namespaces": {}
+        },
+        "core/helpers/reizeimage.php": {
+            "name": "core/helpers/reizeimage.php",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "core/helpers/utility.php": {
+            "name": "core/helpers/utility.php",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Utility": 1
+            },
+            "namespaces": {}
+        },
+        "core/helpers/views.php": {
+            "name": "core/helpers/views.php",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Views": 1
+            },
+            "namespaces": {}
+        },
+        "core/core.php": {
+            "name": "core/core.php",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "core/varnish.php": {
+            "name": "core/varnish.php",
+            "modules": {},
+            "classes": {
+                "Loader": 1
+            },
+            "fors": {
+                "Loader": 1,
+                "Flawless": 1,
+                "Varnish": 1
+            },
+            "namespaces": {
+                "Varnish": 1
+            }
+        }
+    },
+    "modules": {
+        "Varnish": {
+            "name": "Varnish",
+            "submodules": {},
+            "classes": {
+                "API": 1,
+                "Debug": 1,
+                "Media": 1,
+                "Security": 1,
+                "Settings": 1,
+                "Theme": 1,
+                "Log": 1,
+                "Utility": 1,
+                "Views": 1,
+                "Loader": 1,
+                "Flawless": 1,
+                "Varnish": 1
+            },
+            "fors": {
+                "API": 1,
+                "Debug": 1,
+                "Media": 1,
+                "Security": 1,
+                "Settings": 1,
+                "Theme": 1,
+                "Log": 1,
+                "Utility": 1,
+                "Views": 1,
+                "Loader": 1,
+                "Flawless": 1,
+                "Varnish": 1
+            },
+            "namespaces": {
+                "Varnish": 1
+            },
+            "tag": "module",
+            "file": "core/varnish.php",
+            "line": 19,
+            "description": "API Access Controller",
+            "author": "potanin@UD",
+            "example": [
+                "\n\n     // Get Settings Object\n     Varnish::get_instance()->state->settings;\n     Varnish::get_instance()->get()"
+            ]
+        }
+    },
+    "classes": {
+        "API": {
+            "name": "API",
+            "shortname": "API",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": ""
+        },
+        "Debug": {
+            "name": "Debug",
+            "shortname": "Debug",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": ""
+        },
+        "Media": {
+            "name": "Media",
+            "shortname": "Media",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": ""
+        },
+        "Security": {
+            "name": "Security",
+            "shortname": "Security",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": ""
+        },
+        "Settings": {
+            "name": "Settings",
+            "shortname": "Settings",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": ""
+        },
+        "Theme": {
+            "name": "Theme",
+            "shortname": "Theme",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": ""
+        },
+        "Log": {
+            "name": "Log",
+            "shortname": "Log",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": ""
+        },
+        "Utility": {
+            "name": "Utility",
+            "shortname": "Utility",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": ""
+        },
+        "Views": {
+            "name": "Views",
+            "shortname": "Views",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": ""
+        },
+        "Loader": {
+            "name": "Loader",
+            "shortname": "Loader",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": "",
+            "file": "core/varnish.php",
+            "line": 19,
+            "description": "Class Loader"
+        },
+        "Flawless": {
+            "name": "Flawless",
+            "shortname": "Flawless",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": ""
+        },
+        "Varnish": {
+            "name": "Varnish",
+            "shortname": "Varnish",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Varnish",
+            "namespace": ""
+        }
+    },
+    "classitems": [
+        {
+            "file": "core/controllers/api.php",
+            "line": 17,
+            "description": "Initialize API",
+            "class": "API",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/debug.php",
+            "line": 17,
+            "description": "Initialize Debug",
+            "class": "Debug",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/developer.php",
+            "line": 2,
+            "description": "Plugin Name: UD Developer\nPlugin URI: http://usabilitydynamics.com\nDescription: Tools for development.\nAuthor: Andy Potanin\nVersion: 1.0\nAuthor URI: http://usabilitydynamics.com",
+            "class": "Media",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/developer.php",
+            "line": 13,
+            "description": "Class Developer",
+            "package": "Varnish",
+            "class": "Media",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/developer.php",
+            "line": 24,
+            "description": "{}",
+            "class": "Media",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/developer.php",
+            "line": 36,
+            "description": "Add WP actions to be logged for debugging",
+            "ported": "Flawless 3.0",
+            "class": "Media",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/developer.php",
+            "line": 80,
+            "description": "PHP function to echoing a message to JS console",
+            "ported": "Flawless 3.0",
+            "class": "Media",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/developer.php",
+            "line": 95,
+            "description": "PHP function to echoing a message to JS console",
+            "ported": "Flawless 3.0",
+            "class": "Media",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/developer.php",
+            "line": 138,
+            "description": "Prints JS for the console info when in debug mode in the footer.",
+            "ported": "1.26.0",
+            "class": "Media",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/media.php",
+            "line": 17,
+            "description": "Initialize Media",
+            "class": "Media",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/security.php",
+            "line": 17,
+            "description": "Initialize Security",
+            "class": "Security",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/security.php",
+            "line": 26,
+            "description": "Remove Header Elements",
+            "class": "Security",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/settings.php",
+            "line": 17,
+            "description": "Actual Settings data.",
+            "static": 1,
+            "itemtype": "property",
+            "name": "$version",
+            "type": "{Object}",
+            "class": "Settings",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/settings.php",
+            "line": 26,
+            "description": "Initialize Settings",
+            "class": "Settings",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/settings.php",
+            "line": 38,
+            "description": "Get Key",
+            "params": [
+                {
+                    "name": "$key",
+                    "description": ""
+                },
+                {
+                    "name": "null",
+                    "description": "$defaults"
+                }
+            ],
+            "return": {
+                "description": "mixed"
+            },
+            "class": "Settings",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/settings.php",
+            "line": 50,
+            "description": "Set Key",
+            "params": [
+                {
+                    "name": "bool",
+                    "description": "$key"
+                },
+                {
+                    "name": "bool",
+                    "description": "$value"
+                }
+            ],
+            "return": {
+                "description": "mixed"
+            },
+            "class": "Settings",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/theme.php",
+            "line": 17,
+            "description": "Initialize Theme",
+            "class": "Theme",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/controllers/theme.php",
+            "line": 43,
+            "description": "Scan all blog file directories and look for /themes/ directory",
+            "itemtype": "method",
+            "name": "add_site_directories",
+            "todo": [
+                "Should probably have them automatically enabled for the respective blog."
+            ],
+            "class": "Theme",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/helpers/log.php",
+            "line": 17,
+            "description": "Initialize Log",
+            "class": "Log",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/helpers/reizeimage.php",
+            "line": 2,
+            "description": "Legacy Class\n\nMigrated from VarnishCMS SVN",
+            "class": "Utility",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/helpers/utility.php",
+            "line": 17,
+            "description": "Initialize Utility",
+            "class": "Utility",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/helpers/views.php",
+            "line": 17,
+            "description": "Initialize Views",
+            "class": "Views",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/core.php",
+            "line": 2,
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/core.php",
+            "line": 7,
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/core.php",
+            "line": 13,
+            "description": "{}",
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/core.php",
+            "line": 19,
+            "description": "{}",
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/core.php",
+            "line": 26,
+            "description": "{}",
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/core.php",
+            "line": 59,
+            "description": "{}",
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/core.php",
+            "line": 76,
+            "description": "Automatically fix MS URLs that get messed up",
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/core.php",
+            "line": 100,
+            "description": "Automatically fix MS URLs that get messed up",
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/core.php",
+            "line": 127,
+            "description": "Scan all blog file directories and look for /themes/ directory",
+            "todo": [
+                "Should probably have them automatically enabled for the respective blog."
+            ],
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/varnish.php",
+            "line": 26,
+            "description": "Varnish core version.",
+            "static": 1,
+            "itemtype": "property",
+            "name": "$version",
+            "type": "{Object}",
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/varnish.php",
+            "line": 35,
+            "description": "Singleton Instance Reference.",
+            "access": "public",
+            "tagname": "",
+            "static": 1,
+            "itemtype": "property",
+            "name": "$instance",
+            "type": "{Object}",
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/varnish.php",
+            "line": 45,
+            "description": "Constructor.",
+            "itemtype": "method",
+            "name": "__construct",
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/varnish.php",
+            "line": 106,
+            "description": "Initializer.",
+            "itemtype": "method",
+            "name": "plugins_loaded",
+            "author": "potanin@UD",
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/varnish.php",
+            "line": 116,
+            "description": "Error Handler",
+            "params": [
+                {
+                    "name": "$errno",
+                    "description": ""
+                },
+                {
+                    "name": "$errstr",
+                    "description": ""
+                },
+                {
+                    "name": "$errfile",
+                    "description": ""
+                },
+                {
+                    "name": "$errline",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "bool"
+            },
+            "class": "Loader",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/varnish.php",
+            "line": 160,
+            "description": "Get Setting.\n\n   // Get Setting\n   Varnish::get( 'my_key' )",
+            "itemtype": "method",
+            "name": "get",
+            "author": "potanin@UD",
+            "since": "0.1.1",
+            "class": "Flawless",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/varnish.php",
+            "line": 176,
+            "description": "Set Setting.",
+            "usage": "// Set Setting\n   Varnish::set( 'my_key', 'my-value' )",
+            "itemtype": "method",
+            "name": "get",
+            "author": "potanin@UD",
+            "since": "0.1.1",
+            "class": "Flawless",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/varnish.php",
+            "line": 194,
+            "description": "Initialize Admin",
+            "itemtype": "method",
+            "name": "admin_init",
+            "author": "potanin@UD",
+            "class": "Flawless",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/varnish.php",
+            "line": 211,
+            "description": "Update Amin Menu",
+            "itemtype": "method",
+            "name": "admin_bar_menu",
+            "author": "potanin@UD",
+            "class": "Flawless",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/varnish.php",
+            "line": 246,
+            "description": "Automatically fix MS URLs that get messed up",
+            "class": "Flawless",
+            "module": "Varnish"
+        },
+        {
+            "file": "core/varnish.php",
+            "line": 273,
+            "description": "Get the Varnish Singleton\n\nConcept based on the CodeIgniter get_instance() concept.",
+            "example": [
+                "\n\n     var settings = Varnish::get_instance()->Settings;\n     var api = Varnish::$instance()->API;"
+            ],
+            "static": 1,
+            "return": {
+                "description": "object"
+            },
+            "itemtype": "method",
+            "name": "get_instance",
+            "class": "Varnish",
+            "module": "Varnish"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: package",
+            "line": " core/controllers/developer.php:13"
+        },
+        {
+            "message": "unknown tag: ported",
+            "line": " core/controllers/developer.php:36"
+        },
+        {
+            "message": "unknown tag: ported",
+            "line": " core/controllers/developer.php:80"
+        },
+        {
+            "message": "unknown tag: ported",
+            "line": " core/controllers/developer.php:95"
+        },
+        {
+            "message": "unknown tag: ported",
+            "line": " core/controllers/developer.php:138"
+        },
+        {
+            "message": "unknown tag: usage",
+            "line": " core/varnish.php:176"
+        },
+        {
+            "message": "Missing item type\nInitialize API",
+            "line": " core/controllers/api.php:17"
+        },
+        {
+            "message": "Missing item type\nInitialize Debug",
+            "line": " core/controllers/debug.php:17"
+        },
+        {
+            "message": "Missing item type\nPlugin Name: UD Developer\nPlugin URI: http://usabilitydynamics.com\nDescription: Tools for development.\nAuthor: Andy Potanin\nVersion: 1.0\nAuthor URI: http://usabilitydynamics.com",
+            "line": " core/controllers/developer.php:2"
+        },
+        {
+            "message": "Missing item type\nClass Developer",
+            "line": " core/controllers/developer.php:13"
+        },
+        {
+            "message": "Missing item type\n{}",
+            "line": " core/controllers/developer.php:24"
+        },
+        {
+            "message": "Missing item type\nAdd WP actions to be logged for debugging",
+            "line": " core/controllers/developer.php:36"
+        },
+        {
+            "message": "Missing item type\nPHP function to echoing a message to JS console",
+            "line": " core/controllers/developer.php:80"
+        },
+        {
+            "message": "Missing item type\nPHP function to echoing a message to JS console",
+            "line": " core/controllers/developer.php:95"
+        },
+        {
+            "message": "Missing item type\nPrints JS for the console info when in debug mode in the footer.",
+            "line": " core/controllers/developer.php:138"
+        },
+        {
+            "message": "Missing item type\nInitialize Media",
+            "line": " core/controllers/media.php:17"
+        },
+        {
+            "message": "Missing item type\nInitialize Security",
+            "line": " core/controllers/security.php:17"
+        },
+        {
+            "message": "Missing item type\nRemove Header Elements",
+            "line": " core/controllers/security.php:26"
+        },
+        {
+            "message": "Missing item type\nInitialize Settings",
+            "line": " core/controllers/settings.php:26"
+        },
+        {
+            "message": "Missing item type\nGet Key",
+            "line": " core/controllers/settings.php:38"
+        },
+        {
+            "message": "Missing item type\nSet Key",
+            "line": " core/controllers/settings.php:50"
+        },
+        {
+            "message": "Missing item type\nInitialize Theme",
+            "line": " core/controllers/theme.php:17"
+        },
+        {
+            "message": "Missing item type\nInitialize Log",
+            "line": " core/helpers/log.php:17"
+        },
+        {
+            "message": "Missing item type\nLegacy Class\n\nMigrated from VarnishCMS SVN",
+            "line": " core/helpers/reizeimage.php:2"
+        },
+        {
+            "message": "Missing item type\nInitialize Utility",
+            "line": " core/helpers/utility.php:17"
+        },
+        {
+            "message": "Missing item type\nInitialize Views",
+            "line": " core/helpers/views.php:17"
+        },
+        {
+            "message": "Missing item type",
+            "line": " core/core.php:2"
+        },
+        {
+            "message": "Missing item type",
+            "line": " core/core.php:7"
+        },
+        {
+            "message": "Missing item type\n{}",
+            "line": " core/core.php:13"
+        },
+        {
+            "message": "Missing item type\n{}",
+            "line": " core/core.php:19"
+        },
+        {
+            "message": "Missing item type\n{}",
+            "line": " core/core.php:26"
+        },
+        {
+            "message": "Missing item type\n{}",
+            "line": " core/core.php:59"
+        },
+        {
+            "message": "Missing item type\nAutomatically fix MS URLs that get messed up",
+            "line": " core/core.php:76"
+        },
+        {
+            "message": "Missing item type\nAutomatically fix MS URLs that get messed up",
+            "line": " core/core.php:100"
+        },
+        {
+            "message": "Missing item type\nScan all blog file directories and look for /themes/ directory",
+            "line": " core/core.php:127"
+        },
+        {
+            "message": "Missing item type\nError Handler",
+            "line": " core/varnish.php:116"
+        },
+        {
+            "message": "Missing item type\nAutomatically fix MS URLs that get messed up",
+            "line": " core/varnish.php:246"
+        }
+    ]
+}
