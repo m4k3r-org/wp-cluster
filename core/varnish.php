@@ -123,7 +123,7 @@ namespace Varnish {
      *
      * @return bool
      */
-    function error_handler( $errno, $errstr, $errfile, $errline ) {
+    public function error_handler( $errno, $errstr, $errfile, $errline ) {
 
       if( !( error_reporting() & $errno ) ) {
         // This error code is not included in error_reporting
@@ -289,6 +289,7 @@ namespace Varnish {
     public static function &get_instance() {
       return self::$instance;
     }
+
   }
 
   // Initialize VarnishCMS
