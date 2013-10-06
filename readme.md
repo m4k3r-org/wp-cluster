@@ -1,5 +1,11 @@
 ## Overview
 
+
+  $markdownParser = new \dflydev\markdown\MarkdownParser();
+
+  die( $markdownParser->transformMarkdown( "#Hello World" ) );
+
+
 ## Structure
 
 ### Veneer\Loader

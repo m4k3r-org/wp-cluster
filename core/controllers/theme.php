@@ -34,22 +34,23 @@ namespace Veneer {
         register_theme_directory( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'network-themes' );
       }
 
-      
-      $this->add_site_directories();
+      // $this->add_site_directories();
 
     }
 
     /**
      * Scan all blog file directories and look for /themes/ directory
      *
-     * @method add_site_directories
+     * @todo Fix error with using $wpdb->blogs.
      * @todo Should probably have them automatically enabled for the respective blog.
+     *
+     * @method add_site_directories
      */
     public function add_site_directories() {
-      global $wpdb, $_veneer;
+      global $wpdb;
 
       if ( is_dir( WP_CONTENT_DIR . '/themes-client' ) ) {
-        $_veneer[ 'theme_directories' ][ ] = WP_CONTENT_DIR . '/themes-client';
+        $this->theme_directories[] = WP_CONTENT_DIR . '/themes-client';
       }
 
       foreach ( $wpdb->get_col( "SELECT blog_id FROM {$wpdb->blogs}" ) as $blog_id ) {
@@ -59,7 +60,7 @@ namespace Veneer {
         if ( $_upload_path && $_blog_theme_directory = str_replace( 'files', 'themes', WP_BASE_DIR . '/' . $_upload_path ) ) {
 
           if ( is_dir( $_blog_theme_directory ) ) {
-            $_veneer[ 'theme_directories' ][ ] = $_blog_theme_directory;
+            $this->theme_directories[] = $_blog_theme_directory;
 
           }
 
@@ -67,7 +68,7 @@ namespace Veneer {
 
       }
 
-      foreach ( (array) $_veneer[ 'theme_directories' ] as $directory ) {
+      foreach ( (array) $this->theme_directories as $directory ) {
         register_theme_directory( $directory );
       }
 

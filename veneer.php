@@ -59,6 +59,9 @@ namespace Veneer {
       // Save context reference.
       self::$instance = & $this;
 
+      // Autoload Composer/Vendor
+      require_once( 'vendor/autoload.php' );
+
       // Load Controllers
       require_once( 'core/controllers/api.php' );
       require_once( 'core/controllers/debug.php' );
@@ -73,6 +76,7 @@ namespace Veneer {
       require_once( 'core/helpers/log.php' );
       require_once( 'core/helpers/views.php' );
 
+      // Set Custom Error Handler
       set_error_handler( array( $this, 'error_handler' ) );
 
       // Initialize Controllers and Helpers
@@ -87,14 +91,14 @@ namespace Veneer {
       $this->Utility   = new Utility();
       $this->Log       = new Log();
 
+      // Instantiate State
       $this->state = json_decode( json_encode( array(
         'settings'  => $this->Settings->data,
         'paths'     => array(
           'root'        => untrailingslashit( __DIR__ ),
-          'controllers' => trailingslashit( __DIR__ ) . 'controllers',
-          'helpers'     => trailingslashit( __DIR__ ) . 'helpers',
-          'modules'     => trailingslashit( __DIR__ ) . 'modules',
-          'schemas'     => trailingslashit( __DIR__ ) . 'schemas',
+          'controllers' => trailingslashit( __DIR__ ) . 'core' . DIRECTORY_SEPARATOR . 'controllers',
+          'helpers'     => trailingslashit( __DIR__ ) . 'core' . DIRECTORY_SEPARATOR . 'helpers',
+          'languages'      => trailingslashit( __DIR__ ) . 'languages',
           'vendor'      => trailingslashit( __DIR__ ) . 'vendor'
         ),
         'structure' => array()
@@ -133,7 +137,8 @@ namespace Veneer {
      * @author potanin@UD
      * @for Veneer
      */
-    public function shutdown() {}
+    public function shutdown() {
+    }
 
     /**
      * Error Handler
@@ -277,7 +282,6 @@ namespace Veneer {
       } );
 
       add_filter( 'blog_option_upload_path', function ( $url ) {
-
 
         // In WP 3.5 the UPLOADS constant sets the uploads path relative to the ABSPATH
         if( defiend( 'UPLOADS' ) ) {
