@@ -278,8 +278,20 @@ namespace Veneer {
 
       add_filter( 'blog_option_upload_path', function ( $url ) {
 
+
+        // In WP 3.5 the UPLOADS constant sets the uploads path relative to the ABSPATH
+        if( defiend( 'UPLOADS' ) ) {
+
+        }
+
+        // Legacy WordPress MS
         if( strpos( $url, 'wp-content/blogs.dir' ) !== false ) {
           return str_replace( 'wp-content/blogs.dir', 'media/sites', $url );
+        }
+
+        // Contemporary WordPress MS
+        if( strpos( $url, 'wp-content/sites' ) !== false ) {
+          return str_replace( 'wp-content/sites', 'media/sites', $url );
         }
 
         if( strpos( $url, 'wp-content/uploads' ) !== false ) {
