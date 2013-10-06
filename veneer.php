@@ -11,4 +11,4 @@
  **/
 
 // Load VarnishCMS Loader
-require 'core/varnish.php';
+require 'core/veneer.php';

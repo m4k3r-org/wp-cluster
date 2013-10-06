@@ -1,8 +1,8 @@
 {
-  "name": "varnish-cms",
+  "name": "wp-veneer",
   "repository": {
     "type": "git",
-    "urL": "https://github.com/UsabilityDynamics/varnish-cms"
+    "urL": "https://github.com/UsabilityDynamics/wp-veneer"
   },
   "version": "0.1.1",
   "dependencies": {
