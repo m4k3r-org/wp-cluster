@@ -39,6 +39,15 @@ namespace Veneer {
     public static $version = '0.1.1';
 
     /**
+     * Textdomain String
+     *
+     * @public
+     * @property text_domain
+     * @var string
+     */
+    public static $text_domain = 'wp-veneer';
+
+    /**
      * Singleton Instance Reference.
      *
      * @public
