@@ -2,15 +2,15 @@
 /**
  *
  *
- * @module Varnish
+ * @module Veneer
  * @author potanin@UD
  */
-namespace Varnish {
+namespace Veneer {
 
   /**
    * Class Debug
    *
-   * @module Varnish
+   * @module Veneer
    */
   class Debug {
 
@@ -20,6 +20,12 @@ namespace Varnish {
      * @for Debug
      */
     public function __construct() {
+
+      // Overwrite default logs location if a custom location is configured
+      if( defined( 'WP_LOGS_DIR' ) && is_writable( WP_LOGS_DIR ) ) {
+        error_reporting( E_ALL ^ E_NOTICE );
+        ini_set( 'error_log', WP_LOGS_DIR . '/' . date( 'Y-m-d' ) . '.log' );
+      }
 
     }
 

@@ -2,15 +2,15 @@
 /**
  * Theme Access Controller
  *
- * @module Varnish
+ * @module Veneer
  * @author potanin@UD
  */
-namespace Varnish {
+namespace Veneer {
 
   /**
    * Class Theme
    *
-   * @module Varnish
+   * @module Veneer
    */
   class Theme {
 
@@ -46,7 +46,7 @@ namespace Varnish {
      * @method add_site_directories
      * @todo Should probably have them automatically enabled for the respective blog.
      */
-    function add_site_directories() {
+    public function add_site_directories() {
       global $wpdb, $_varnish;
 
       if ( is_dir( WP_CONTENT_DIR . '/themes-client' ) ) {

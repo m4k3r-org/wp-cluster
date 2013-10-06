@@ -1,6 +1,6 @@
 <?php
 /**
- * API Access Controller
+ * Locale
  *
  * @module Veneer
  * @author potanin@UD
@@ -8,18 +8,21 @@
 namespace Veneer {
 
   /**
-   * Class API
+   * Class Locale
    *
    * @module Veneer
    */
-  class API {
+  class Locale {
 
     /**
-     * Initialize API
+     * Initialize Locale
      *
-     * @for API
+     * @for Locale
      */
     public function __construct() {
+
+      // Language
+      if( defined( 'WP_LANG_DIR' ) && is_readable( WP_LANG_DIR ) ) {}
 
     }
 

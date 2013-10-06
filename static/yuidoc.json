@@ -1,8 +1,8 @@
 {
-  "name": "varnish-cms",
+  "name": "wp-veneer",
   "version": "0.1.1",
-  "url": "https://github.com/UsabilityDynamics/varnish-cms",
-  "logo": "http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png",
+  "url": "https://github.com/UsabilityDynamics/wp-veneer",
+  "logo": "http://media.usabilitydynamics.com/logo.png",
   "options": {
     "norecurse": false,
     "no-code": false,

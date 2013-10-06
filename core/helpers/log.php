@@ -2,15 +2,15 @@
 /**
  * Log Access Controller
  *
- * @module Varnish
+ * @module Veneer
  * @author potanin@UD
  */
-namespace Varnish {
+namespace Veneer {
 
   /**
    * Class Log
    *
-   * @module Varnish
+   * @module Veneer
    */
   class Log {
 

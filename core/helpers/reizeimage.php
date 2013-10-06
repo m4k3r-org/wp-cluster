@@ -2,11 +2,11 @@
 /**
  * Legacy Class
  *
- * Migrated from VarnishCMS SVN
+ * Migrated from VeneerCMS SVN
  *
  *
  */
-namespace Varnish {
+namespace Veneer {
   
   class ResizeImage {
 

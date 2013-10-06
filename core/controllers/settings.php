@@ -2,15 +2,15 @@
 /**
  * Settings Access Controller
  *
- * @module Varnish
+ * @module Veneer
  * @author potanin@UD
  */
-namespace Varnish {
+namespace Veneer {
 
   /**
    * Class Settings
    *
-   * @module Varnish
+   * @module Veneer
    */
   class Settings {
 

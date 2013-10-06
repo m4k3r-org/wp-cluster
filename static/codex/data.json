@@ -9,7 +9,7 @@
         "core/controllers/api.php": {
             "name": "core/controllers/api.php",
             "modules": {
-                "Varnish": 1
+                "Veneer": 1
             },
             "classes": {},
             "fors": {
@@ -119,16 +119,16 @@
             "fors": {
                 "Loader": 1,
                 "Flawless": 1,
-                "Varnish": 1
+                "Veneer": 1
             },
             "namespaces": {
-                "Varnish": 1
+                "Veneer": 1
             }
         }
     },
     "modules": {
-        "Varnish": {
-            "name": "Varnish",
+        "Veneer": {
+            "name": "Veneer",
             "submodules": {},
             "classes": {
                 "API": 1,
@@ -142,7 +142,7 @@
                 "Views": 1,
                 "Loader": 1,
                 "Flawless": 1,
-                "Varnish": 1
+                "Veneer": 1
             },
             "fors": {
                 "API": 1,
@@ -156,10 +156,10 @@
                 "Views": 1,
                 "Loader": 1,
                 "Flawless": 1,
-                "Varnish": 1
+                "Veneer": 1
             },
             "namespaces": {
-                "Varnish": 1
+                "Veneer": 1
             },
             "tag": "module",
             "file": "core/varnish.php",
@@ -167,7 +167,7 @@
             "description": "API Access Controller",
             "author": "potanin@UD",
             "example": [
-                "\n\n     // Get Settings Object\n     Varnish::get_instance()->state->settings;\n     Varnish::get_instance()->get()"
+                "\n\n     // Get Settings Object\n     Veneer::get_instance()->state->settings;\n     Veneer::get_instance()->get()"
             ]
         }
     },
@@ -180,7 +180,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": ""
         },
         "Debug": {
@@ -191,7 +191,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": ""
         },
         "Media": {
@@ -202,7 +202,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": ""
         },
         "Security": {
@@ -213,7 +213,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": ""
         },
         "Settings": {
@@ -224,7 +224,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": ""
         },
         "Theme": {
@@ -235,7 +235,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": ""
         },
         "Log": {
@@ -246,7 +246,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": ""
         },
         "Utility": {
@@ -257,7 +257,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": ""
         },
         "Views": {
@@ -268,7 +268,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": ""
         },
         "Loader": {
@@ -279,7 +279,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": "",
             "file": "core/varnish.php",
             "line": 19,
@@ -293,18 +293,18 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": ""
         },
-        "Varnish": {
-            "name": "Varnish",
-            "shortname": "Varnish",
+        "Veneer": {
+            "name": "Veneer",
+            "shortname": "Veneer",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "Varnish",
+            "module": "Veneer",
             "namespace": ""
         }
     },
@@ -314,36 +314,36 @@
             "line": 17,
             "description": "Initialize API",
             "class": "API",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/debug.php",
             "line": 17,
             "description": "Initialize Debug",
             "class": "Debug",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/developer.php",
             "line": 2,
             "description": "Plugin Name: UD Developer\nPlugin URI: http://usabilitydynamics.com\nDescription: Tools for development.\nAuthor: Andy Potanin\nVersion: 1.0\nAuthor URI: http://usabilitydynamics.com",
             "class": "Media",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/developer.php",
             "line": 13,
             "description": "Class Developer",
-            "package": "Varnish",
+            "package": "Veneer",
             "class": "Media",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/developer.php",
             "line": 24,
             "description": "{}",
             "class": "Media",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/developer.php",
@@ -351,7 +351,7 @@
             "description": "Add WP actions to be logged for debugging",
             "ported": "Flawless 3.0",
             "class": "Media",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/developer.php",
@@ -359,7 +359,7 @@
             "description": "PHP function to echoing a message to JS console",
             "ported": "Flawless 3.0",
             "class": "Media",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/developer.php",
@@ -367,7 +367,7 @@
             "description": "PHP function to echoing a message to JS console",
             "ported": "Flawless 3.0",
             "class": "Media",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/developer.php",
@@ -375,28 +375,28 @@
             "description": "Prints JS for the console info when in debug mode in the footer.",
             "ported": "1.26.0",
             "class": "Media",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/media.php",
             "line": 17,
             "description": "Initialize Media",
             "class": "Media",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/security.php",
             "line": 17,
             "description": "Initialize Security",
             "class": "Security",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/security.php",
             "line": 26,
             "description": "Remove Header Elements",
             "class": "Security",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/settings.php",
@@ -407,14 +407,14 @@
             "name": "$version",
             "type": "{Object}",
             "class": "Settings",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/settings.php",
             "line": 26,
             "description": "Initialize Settings",
             "class": "Settings",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/settings.php",
@@ -434,7 +434,7 @@
                 "description": "mixed"
             },
             "class": "Settings",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/settings.php",
@@ -454,14 +454,14 @@
                 "description": "mixed"
             },
             "class": "Settings",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/theme.php",
             "line": 17,
             "description": "Initialize Theme",
             "class": "Theme",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/controllers/theme.php",
@@ -473,89 +473,89 @@
                 "Should probably have them automatically enabled for the respective blog."
             ],
             "class": "Theme",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/helpers/log.php",
             "line": 17,
             "description": "Initialize Log",
             "class": "Log",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/helpers/reizeimage.php",
             "line": 2,
-            "description": "Legacy Class\n\nMigrated from VarnishCMS SVN",
+            "description": "Legacy Class\n\nMigrated from VeneerCMS SVN",
             "class": "Utility",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/helpers/utility.php",
             "line": 17,
             "description": "Initialize Utility",
             "class": "Utility",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/helpers/views.php",
             "line": 17,
             "description": "Initialize Views",
             "class": "Views",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/core.php",
             "line": 2,
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/core.php",
             "line": 7,
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/core.php",
             "line": 13,
             "description": "{}",
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/core.php",
             "line": 19,
             "description": "{}",
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/core.php",
             "line": 26,
             "description": "{}",
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/core.php",
             "line": 59,
             "description": "{}",
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/core.php",
             "line": 76,
             "description": "Automatically fix MS URLs that get messed up",
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/core.php",
             "line": 100,
             "description": "Automatically fix MS URLs that get messed up",
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/core.php",
@@ -565,18 +565,18 @@
                 "Should probably have them automatically enabled for the respective blog."
             ],
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/varnish.php",
             "line": 26,
-            "description": "Varnish core version.",
+            "description": "Veneer core version.",
             "static": 1,
             "itemtype": "property",
             "name": "$version",
             "type": "{Object}",
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/varnish.php",
@@ -589,7 +589,7 @@
             "name": "$instance",
             "type": "{Object}",
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/varnish.php",
@@ -598,7 +598,7 @@
             "itemtype": "method",
             "name": "__construct",
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/varnish.php",
@@ -608,7 +608,7 @@
             "name": "plugins_loaded",
             "author": "potanin@UD",
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/varnish.php",
@@ -636,30 +636,30 @@
                 "description": "bool"
             },
             "class": "Loader",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/varnish.php",
             "line": 160,
-            "description": "Get Setting.\n\n   // Get Setting\n   Varnish::get( 'my_key' )",
+            "description": "Get Setting.\n\n   // Get Setting\n   Veneer::get( 'my_key' )",
             "itemtype": "method",
             "name": "get",
             "author": "potanin@UD",
             "since": "0.1.1",
             "class": "Flawless",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/varnish.php",
             "line": 176,
             "description": "Set Setting.",
-            "usage": "// Set Setting\n   Varnish::set( 'my_key', 'my-value' )",
+            "usage": "// Set Setting\n   Veneer::set( 'my_key', 'my-value' )",
             "itemtype": "method",
             "name": "get",
             "author": "potanin@UD",
             "since": "0.1.1",
             "class": "Flawless",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/varnish.php",
@@ -669,7 +669,7 @@
             "name": "admin_init",
             "author": "potanin@UD",
             "class": "Flawless",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/varnish.php",
@@ -679,21 +679,21 @@
             "name": "admin_bar_menu",
             "author": "potanin@UD",
             "class": "Flawless",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/varnish.php",
             "line": 246,
             "description": "Automatically fix MS URLs that get messed up",
             "class": "Flawless",
-            "module": "Varnish"
+            "module": "Veneer"
         },
         {
             "file": "core/varnish.php",
             "line": 273,
-            "description": "Get the Varnish Singleton\n\nConcept based on the CodeIgniter get_instance() concept.",
+            "description": "Get the Veneer Singleton\n\nConcept based on the CodeIgniter get_instance() concept.",
             "example": [
-                "\n\n     var settings = Varnish::get_instance()->Settings;\n     var api = Varnish::$instance()->API;"
+                "\n\n     var settings = Veneer::get_instance()->Settings;\n     var api = Veneer::$instance()->API;"
             ],
             "static": 1,
             "return": {
@@ -701,8 +701,8 @@
             },
             "itemtype": "method",
             "name": "get_instance",
-            "class": "Varnish",
-            "module": "Varnish"
+            "class": "Veneer",
+            "module": "Veneer"
         }
     ],
     "warnings": [
@@ -799,7 +799,7 @@
             "line": " core/helpers/log.php:17"
         },
         {
-            "message": "Missing item type\nLegacy Class\n\nMigrated from VarnishCMS SVN",
+            "message": "Missing item type\nLegacy Class\n\nMigrated from VeneerCMS SVN",
             "line": " core/helpers/reizeimage.php:2"
         },
         {

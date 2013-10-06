@@ -1,13 +1,13 @@
-VarnishCMS Network
-==================
-
 ## Overview
 
 ## Structure
 
-### Varnish\Loader
-### Varnish\Core
-### Varnish\Developer
-### Varnish\ResizeImage
+### Veneer\Loader
+
+### Veneer\Core
+
+### Veneer\Developer
+
+### Veneer\ResizeImage
 
 ## Deployment

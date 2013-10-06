@@ -1,28 +1,17 @@
-YUI.add("yuidoc-meta", function(Y) {
-   Y.YUIDoc = { meta: {
+YUI.add( "yuidoc-meta", function( Y ) {
+  Y.YUIDoc = { meta: {
     "classes": [
-        "API",
-        "Debug",
-        "Flawless",
-        "Loader",
-        "Log",
-        "Media",
-        "Security",
-        "Settings",
-        "Theme",
-        "Utility",
-        "Varnish",
-        "Views"
+      "API", "Debug", "Flawless", "Loader", "Log", "Media", "Security", "Settings", "Theme", "Utility", "Veneer", "Views"
     ],
     "modules": [
-        "Varnish"
+      "Veneer"
     ],
     "allModules": [
-        {
-            "displayName": "Varnish",
-            "name": "Varnish",
-            "description": "API Access Controller"
-        }
+      {
+        "displayName": "Veneer",
+        "name": "Veneer",
+        "description": "API Access Controller"
+      }
     ]
-} };
-});
+  } };
+} );

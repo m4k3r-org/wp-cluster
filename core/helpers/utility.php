@@ -2,15 +2,15 @@
 /**
  * Utility Access Controller
  *
- * @module Varnish
+ * @module Veneer
  * @author potanin@UD
  */
-namespace Varnish {
+namespace Veneer {
 
   /**
    * Class Utility
    *
-   * @module Varnish
+   * @module Veneer
    */
   class Utility {
 

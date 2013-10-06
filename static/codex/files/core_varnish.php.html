@@ -61,7 +61,7 @@
             
                 <li><a href="../classes/Utility.html">Utility</a></li>
             
-                <li><a href="../classes/Varnish.html">Varnish</a></li>
+                <li><a href="../classes/Veneer.html">Veneer</a></li>
             
                 <li><a href="../classes/Views.html">Views</a></li>
             
@@ -69,7 +69,7 @@
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/Varnish.html">Varnish</a></li>
+                <li><a href="../modules/Veneer.html">Veneer</a></li>
             
             </ul>
         </div>
@@ -112,7 +112,7 @@
     <pre class="code prettyprint linenums">
 &lt;?php
 /**
- * Varnish CMS Loader
+ * Veneer CMS Loader
  *
  * The Loder class is self-initializing.
  *
@@ -120,23 +120,23 @@
  * @example
  *
  *      // Get Settings Object
- *      Varnish::get_instance()-&gt;state-&gt;settings;
- *      Varnish::get_instance()-&gt;get()
+ *      Veneer::get_instance()-&gt;state-&gt;settings;
+ *      Veneer::get_instance()-&gt;get()
  *
- * @namespace Varnish
- * @module Varnish
+ * @namespace Veneer
+ * @module Veneer
  */
-namespace Varnish {
+namespace Veneer {
 
   /**
    * Class Loader
    *
    * @class Loader
    */
-  final class Varnish {
+  final class Veneer {
 
     /**
-     * Varnish core version.
+     * Veneer core version.
      *
      * @static
      * @property $version
@@ -273,7 +273,7 @@ namespace Varnish {
      * Get Setting.
      *
      *    // Get Setting
-     *    Varnish::get( &#x27;my_key&#x27; )
+     *    Veneer::get( &#x27;my_key&#x27; )
      *
      * @method get
      *
@@ -291,7 +291,7 @@ namespace Varnish {
      * @usage
      *
      *    // Set Setting
-     *    Varnish::set( &#x27;my_key&#x27;, &#x27;my-value&#x27; )
+     *    Veneer::set( &#x27;my_key&#x27;, &#x27;my-value&#x27; )
      *
      * @method get
      * @for Flawless
@@ -383,20 +383,20 @@ namespace Varnish {
     }
 
     /**
-     * Get the Varnish Singleton
+     * Get the Veneer Singleton
      *
      * Concept based on the CodeIgniter get_instance() concept.
      *
      * @example
      *
-     *      var settings = Varnish::get_instance()-&gt;Settings;
-     *      var api = Varnish::$instance()-&gt;API;
+     *      var settings = Veneer::get_instance()-&gt;Settings;
+     *      var api = Veneer::$instance()-&gt;API;
      *
      * @static
      * @return object
      *
      * @method get_instance
-     * @for Varnish
+     * @for Veneer
      */
     public static function &amp;get_instance() {
       return self::$instance;
@@ -404,8 +404,8 @@ namespace Varnish {
 
   }
 
-  // Initialize VarnishCMS
-  new Varnish();
+  // Initialize VeneerCMS
+  new Veneer();
 
 }
 

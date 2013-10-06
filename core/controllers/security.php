@@ -2,15 +2,15 @@
 /**
  * Security Access Controller
  *
- * @module Varnish
+ * @module Veneer
  * @author potanin@UD
  */
-namespace Varnish {
+namespace Veneer {
 
   /**
    * Class Security
    *
-   * @module Varnish
+   * @module Veneer
    */
   class Security {
 

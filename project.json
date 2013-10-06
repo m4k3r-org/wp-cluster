@@ -9,7 +9,7 @@
     "usabilitydynamics/lib-api": "*"
   },
   "config": {
-    "namespace": "Varnish"
+    "namespace": "Veneer"
   },
   "build": {
     "scripts": {
