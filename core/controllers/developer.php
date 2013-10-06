@@ -28,7 +28,7 @@ namespace Veneer {
     function admin_menu() {
 
       if( current_user_can( 'manage_options' ) ) {
-        add_options_page( 'Developer', 'Developer', 'manage_options', 'ud', array( 'Veneer\Developer', 'page_ud' ) );
+        // add_options_page( 'Developer', 'Developer', 'manage_options', 'ud', array( 'Veneer\Developer', 'page_ud' ) );
       }
 
     }

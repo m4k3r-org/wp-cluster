@@ -60,7 +60,9 @@ namespace Veneer {
       self::$instance = & $this;
 
       // Autoload Composer/Vendor
-      require_once( 'vendor/autoload.php' );
+      if( is_readable( 'vendor/autoload.php' ) ) {
+        require_once( 'vendor/autoload.php' );
+      }
 
       // Load Controllers
       require_once( 'core/controllers/api.php' );
