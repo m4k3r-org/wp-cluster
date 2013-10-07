@@ -36,6 +36,33 @@ namespace Veneer {
     }
 
     /**
+     * Register Content Structure
+     *
+     * @param string $data
+     * @return \Exception|\Veneer\Exception
+     */
+    public static function add_content_type( $data = '' ) {
+
+      try {
+
+        // Convert into object
+        $data = json_decode( $data, true );
+
+        if( !$data ) {
+          throw new Exception( 'Unreadable data.' );;
+        }
+
+        if( function_exists( 'register_post_type' ) ) {
+          // register_post_type( $data );
+        }
+
+      } catch( Exception $e ) {
+        return $e;
+      }
+
+    }
+
+    /**
      * Get Key
      *
      * @param      $key
