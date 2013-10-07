@@ -295,7 +295,7 @@ namespace Veneer {
       add_filter( 'blog_option_upload_path', function ( $url ) {
 
         // In WP 3.5 the UPLOADS constant sets the uploads path relative to the ABSPATH
-        if( defiend( 'UPLOADS' ) ) {
+        if( defined( 'UPLOADS' ) ) {
 
         }
 
