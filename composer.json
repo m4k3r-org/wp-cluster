@@ -4,7 +4,7 @@
   "description": "Veneer network",
   "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
   "keywords": [ "wordpress" ],
-  "license": "BSDMIT",
+  "license": "MIT",
   "authors": [
     {
       "name": "Andy Potanin",
