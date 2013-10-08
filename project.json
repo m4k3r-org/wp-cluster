@@ -6,7 +6,14 @@
   },
   "version": "0.1.1",
   "dependencies": {
-    "usabilitydynamics/lib-api": "*"
+    "usabilitydynamics/lib-api": "*",
+    "usabilitydynamics/lib-ui": "*",
+    "usabilitydynamics/lib-loader": "*",
+    "usabilitydynamics/lib-cdn": "*",
+    "usabilitydynamics/lib-utlity": "*",
+    "usabilitydynamics/lib-settings": "*",
+    "usabilitydynamics/lib-models": "*",
+    "usabilitydynamics/lib-saas": "*"
   },
   "config": {
     "namespace": "Veneer"

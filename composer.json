@@ -3,21 +3,68 @@
   "type": "library",
   "description": "Veneer network",
   "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
-  "keywords": [ "wordpress" ],
+  "keywords": [
+    "wordpress",
+    "multisite",
+    "varnish"
+  ],
   "license": "MIT",
+  "minimum-stability": "dev",
   "authors": [
     {
       "name": "Andy Potanin",
       "homepage": "http://usabilitydynamics.com"
     }
   ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/UsabilityDynamics/lib-models"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/UsabilityDynamics/lib-settings"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/UsabilityDynamics/lib-utility"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/UsabilityDynamics/lib-saas"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/UsabilityDynamics/lib-cdn"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/UsabilityDynamics/lib-ui"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/UsabilityDynamics/lib-asset"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/UsabilityDynamics/lib-api"
+    }
+  ],
   "require": {
     "php": ">=5.3",
+    "UsabilityDynamics/lib-api": "*",
+    "UsabilityDynamics/lib-models": "*",
+    "UsabilityDynamics/lib-settings": "*",
+    "UsabilityDynamics/lib-saas": "*",
+    "UsabilityDynamics/lib-ui": "*",
+    "UsabilityDynamics/lib-utility": "*",
+    "UsabilityDynamics/lib-cdn": "*",
+    "UsabilityDynamics/lib-asset": "*",
     "dflydev/markdown": "1.0.*@dev"
   },
   "autoload": {
     "psr-0": {
-      "usabilitydynamics\\veneer": "core"
+      "UsabilityDynamics\\veneer": "core"
     }
   },
   "extra": {}

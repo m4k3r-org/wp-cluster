@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'usabilitydynamics\\veneer' => array($baseDir . '/core'),
     'dflydev\\markdown' => array($vendorDir . '/dflydev/markdown/src'),
+    'UsabilityDynamics\\veneer' => array($baseDir . '/core'),
+    'JsonSchema' => array($vendorDir . '/justinrainbow/json-schema/src'),
 );

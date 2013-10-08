@@ -59,5 +59,535 @@
         "keywords": [
             "markdown"
         ]
+    },
+    {
+        "name": "justinrainbow/json-schema",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/justinrainbow/json-schema.git",
+            "reference": "05ff6d8d79fe3ad190b0663d80d3f9deee79416c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/05ff6d8d79fe3ad190b0663d80d3f9deee79416c",
+            "reference": "05ff6d8d79fe3ad190b0663d80d3f9deee79416c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2012-01-03 00:33:17",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "JsonSchema": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "NewBSD"
+        ],
+        "authors": [
+            {
+                "name": "Igor Wiedler",
+                "email": "igor@wiedler.ch",
+                "homepage": "http://wiedler.ch/igor/"
+            },
+            {
+                "name": "Bruno Prieto Reis",
+                "email": "bruno.p.reis@gmail.com"
+            },
+            {
+                "name": "Justin Rainbow",
+                "email": "justin.rainbow@gmail.com"
+            },
+            {
+                "name": "Robert Schönthal",
+                "email": "seroscho@googlemail.com",
+                "homepage": "http://digitalkaoz.net"
+            }
+        ],
+        "description": "A library to validate a json schema.",
+        "homepage": "https://github.com/justinrainbow/json-schema",
+        "keywords": [
+            "json",
+            "schema"
+        ]
+    },
+    {
+        "name": "usabilitydynamics/lib-utility",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/UsabilityDynamics/lib-utility.git",
+            "reference": "97b60c6422e62b2ba6fb26acd4858b99850fc1a7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/UsabilityDynamics/lib-utility/zipball/97b60c6422e62b2ba6fb26acd4858b99850fc1a7",
+            "reference": "97b60c6422e62b2ba6fb26acd4858b99850fc1a7",
+            "shasum": ""
+        },
+        "require": {
+            "justinrainbow/json-schema": "1.1.*"
+        },
+        "time": "2013-10-08 07:29:08",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "UsabilityDynamics": "libs/",
+            "files": [
+                "libs/utility.php"
+            ]
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andy Potanin",
+                "email": "andy.potanin@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Maxim Peshkov",
+                "email": "maxim.peshkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anton Korotkov",
+                "email": "anton.korotkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            }
+        ],
+        "homepage": "http://github.com/usabilitydynamics/lib-utility",
+        "keywords": [
+            "utility"
+        ],
+        "support": {
+            "issues": "https://github.com/usabilitydynamics/lib-utility/issues",
+            "source": "https://github.com/UsabilityDynamics/lib-utility/tree/master"
+        }
+    },
+    {
+        "name": "usabilitydynamics/lib-api",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/UsabilityDynamics/lib-api.git",
+            "reference": "c5a958f35f0dcbb48deb3558a4852e4930725811"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/UsabilityDynamics/lib-api/zipball/c5a958f35f0dcbb48deb3558a4852e4930725811",
+            "reference": "c5a958f35f0dcbb48deb3558a4852e4930725811",
+            "shasum": ""
+        },
+        "require": {
+            "usabilitydynamics/lib-utility": "*"
+        },
+        "time": "2013-10-08 07:29:07",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "UsabilityDynamics": "libs/",
+            "files": [
+                "libs/api.php"
+            ]
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andy Potanin",
+                "email": "andy.potanin@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Maxim Peshkov",
+                "email": "maxim.peshkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anton Korotkov",
+                "email": "anton.korotkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            }
+        ],
+        "homepage": "http://github.com/usabilitydynamics/lib-api",
+        "keywords": [
+            "api"
+        ],
+        "support": {
+            "issues": "https://github.com/usabilitydynamics/lib-api/issues",
+            "source": "https://github.com/UsabilityDynamics/lib-api/tree/master"
+        }
+    },
+    {
+        "name": "usabilitydynamics/lib-models",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/UsabilityDynamics/lib-models.git",
+            "reference": "17c5febed172451671e07e5c6636047f3aed549f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/UsabilityDynamics/lib-models/zipball/17c5febed172451671e07e5c6636047f3aed549f",
+            "reference": "17c5febed172451671e07e5c6636047f3aed549f",
+            "shasum": ""
+        },
+        "require": {
+            "usabilitydynamics/lib-utility": "*"
+        },
+        "time": "2013-10-08 07:39:44",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "UsabilityDynamics": "libs/",
+            "files": [
+                "libs/models.php"
+            ]
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andy Potanin",
+                "email": "andy.potanin@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Maxim Peshkov",
+                "email": "maxim.peshkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anton Korotkov",
+                "email": "anton.korotkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            }
+        ],
+        "homepage": "http://github.com/usabilitydynamics/lib-models",
+        "keywords": [
+            "api"
+        ],
+        "support": {
+            "issues": "https://github.com/usabilitydynamics/lib-models/issues",
+            "source": "https://github.com/UsabilityDynamics/lib-models/tree/master"
+        }
+    },
+    {
+        "name": "usabilitydynamics/lib-settings",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/UsabilityDynamics/lib-settings.git",
+            "reference": "6cc40a337b3bc2ec126bf22784b24c2054574e40"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/UsabilityDynamics/lib-settings/zipball/6cc40a337b3bc2ec126bf22784b24c2054574e40",
+            "reference": "6cc40a337b3bc2ec126bf22784b24c2054574e40",
+            "shasum": ""
+        },
+        "require": {
+            "usabilitydynamics/lib-utility": "*"
+        },
+        "time": "2013-10-08 07:39:23",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "UsabilityDynamics": "libs/",
+            "files": [
+                "libs/settings.php"
+            ]
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andy Potanin",
+                "email": "andy.potanin@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Maxim Peshkov",
+                "email": "maxim.peshkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anton Korotkov",
+                "email": "anton.korotkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            }
+        ],
+        "homepage": "http://github.com/usabilitydynamics/lib-settings",
+        "keywords": [
+            "api"
+        ],
+        "support": {
+            "issues": "https://github.com/usabilitydynamics/lib-settings/issues",
+            "source": "https://github.com/UsabilityDynamics/lib-settings/tree/master"
+        }
+    },
+    {
+        "name": "usabilitydynamics/lib-saas",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/UsabilityDynamics/lib-saas.git",
+            "reference": "c7578b0a1159a2c7e364cb8a7f9814750d1f02e2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/UsabilityDynamics/lib-saas/zipball/c7578b0a1159a2c7e364cb8a7f9814750d1f02e2",
+            "reference": "c7578b0a1159a2c7e364cb8a7f9814750d1f02e2",
+            "shasum": ""
+        },
+        "require": {
+            "usabilitydynamics/lib-utility": "*"
+        },
+        "time": "2013-10-08 07:45:10",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "UsabilityDynamics": "libs/",
+            "files": [
+                "libs/saas.php",
+                "libs/saas.document.php"
+            ]
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andy Potanin",
+                "email": "andy.potanin@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Maxim Peshkov",
+                "email": "maxim.peshkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anton Korotkov",
+                "email": "anton.korotkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            }
+        ],
+        "homepage": "http://github.com/usabilitydynamics/lib-saas",
+        "keywords": [
+            "api"
+        ],
+        "support": {
+            "issues": "https://github.com/usabilitydynamics/lib-saas/issues",
+            "source": "https://github.com/UsabilityDynamics/lib-saas/tree/master"
+        }
+    },
+    {
+        "name": "usabilitydynamics/lib-ui",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/UsabilityDynamics/lib-ui.git",
+            "reference": "825d07427f040bf4eabfa16c395955072b7cde26"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/UsabilityDynamics/lib-ui/zipball/825d07427f040bf4eabfa16c395955072b7cde26",
+            "reference": "825d07427f040bf4eabfa16c395955072b7cde26",
+            "shasum": ""
+        },
+        "require": {
+            "usabilitydynamics/lib-utility": "*"
+        },
+        "time": "2013-10-08 07:41:08",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "UsabilityDynamics": "libs/",
+            "files": [
+                "libs/ui.php"
+            ]
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andy Potanin",
+                "email": "andy.potanin@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Maxim Peshkov",
+                "email": "maxim.peshkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anton Korotkov",
+                "email": "anton.korotkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            }
+        ],
+        "homepage": "http://github.com/usabilitydynamics/lib-ui",
+        "keywords": [
+            "api"
+        ],
+        "support": {
+            "issues": "https://github.com/usabilitydynamics/lib-ui/issues",
+            "source": "https://github.com/UsabilityDynamics/lib-ui/tree/master"
+        }
+    },
+    {
+        "name": "usabilitydynamics/lib-cdn",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/UsabilityDynamics/lib-cdn.git",
+            "reference": "9804c89056e5ab6fb90ff9288699f7a743736d86"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/UsabilityDynamics/lib-cdn/zipball/9804c89056e5ab6fb90ff9288699f7a743736d86",
+            "reference": "9804c89056e5ab6fb90ff9288699f7a743736d86",
+            "shasum": ""
+        },
+        "require": {
+            "usabilitydynamics/lib-utility": "*"
+        },
+        "time": "2013-10-08 07:43:09",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "UsabilityDynamics": "libs/",
+            "files": [
+                "libs/cdn.php"
+            ]
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andy Potanin",
+                "email": "andy.potanin@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Maxim Peshkov",
+                "email": "maxim.peshkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anton Korotkov",
+                "email": "anton.korotkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            }
+        ],
+        "homepage": "http://github.com/usabilitydynamics/lib-cdn",
+        "keywords": [
+            "api"
+        ],
+        "support": {
+            "issues": "https://github.com/usabilitydynamics/lib-cdn/issues",
+            "source": "https://github.com/UsabilityDynamics/lib-cdn/tree/master"
+        }
+    },
+    {
+        "name": "usabilitydynamics/lib-asset",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "git@github.com:UsabilityDynamics/lib-asset.git",
+            "reference": "0fb94d08acd842b54fc0317f0b8f12a846e54df1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/UsabilityDynamics/lib-asset/zipball/0fb94d08acd842b54fc0317f0b8f12a846e54df1",
+            "reference": "0fb94d08acd842b54fc0317f0b8f12a846e54df1",
+            "shasum": ""
+        },
+        "require": {
+            "usabilitydynamics/lib-utility": "*"
+        },
+        "time": "2013-10-08 07:43:54",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "UsabilityDynamics": "libs/",
+            "files": [
+                "libs/asset.php"
+            ]
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andy Potanin",
+                "email": "andy.potanin@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Maxim Peshkov",
+                "email": "maxim.peshkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anton Korotkov",
+                "email": "anton.korotkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            }
+        ],
+        "homepage": "http://github.com/usabilitydynamics/lib-asset",
+        "keywords": [
+            "api"
+        ],
+        "support": {
+            "issues": "https://github.com/usabilitydynamics/lib-asset/issues",
+            "source": "https://github.com/UsabilityDynamics/lib-asset/tree/master"
+        }
     }
 ]

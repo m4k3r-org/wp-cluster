@@ -60,6 +60,10 @@ namespace Veneer {
     /**
      * Constructor.
      *
+     * UsabilityDynamics components should be avialable.
+     * - class_exists( '\UsabilityDynamics\API' );
+     * - class_exists( '\UsabilityDynamics\Utility' );
+     *
      * @for Loader
      * @method __construct
      */
@@ -69,7 +73,7 @@ namespace Veneer {
       self::$instance = & $this;
 
       // Autoload Composer/Vendor
-      if( is_readable( 'vendor/autoload.php' ) ) {
+      if( is_file( untrailingslashit( __DIR__  ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' ) ) {
         require_once( 'vendor/autoload.php' );
       }
 
