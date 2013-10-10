@@ -38,10 +38,16 @@ namespace Veneer {
     /**
      * Register Content Structure
      *
-     * @param string $data
+     * @param array|bool|string $data
+     *
      * @return \Exception|\Veneer\Exception
      */
-    public static function add_content_type( $data = '' ) {
+    public static function add_content_type( $data = false ) {
+
+      // If a a file path is passed try to load
+      if( $data && is_string( $data ) && file_exists( $data ) ) {
+        $data = file_get_contents( $data );
+      }
 
       try {
 
