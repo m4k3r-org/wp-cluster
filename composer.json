@@ -2,6 +2,10 @@
   "name": "usabilitydynamics/wp-veneer",
   "type": "library",
   "description": "Veneer network",
+  "repository": {
+    "type": "git",
+    "urL": "https://github.com/UsabilityDynamics/wp-veneer"
+  },
   "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
   "keywords": [
     "wordpress",
@@ -18,35 +22,35 @@
   ],
   "repositories": [
     {
-      "type": "vcs",
+      "type": "git",
       "url": "https://github.com/UsabilityDynamics/lib-models"
     },
     {
-      "type": "vcs",
+      "type": "git",
       "url": "https://github.com/UsabilityDynamics/lib-settings"
     },
     {
-      "type": "vcs",
+      "type": "git",
       "url": "https://github.com/UsabilityDynamics/lib-utility"
     },
     {
-      "type": "vcs",
+      "type": "git",
       "url": "https://github.com/UsabilityDynamics/lib-saas"
     },
     {
-      "type": "vcs",
+      "type": "git",
       "url": "https://github.com/UsabilityDynamics/lib-cdn"
     },
     {
-      "type": "vcs",
+      "type": "git",
       "url": "https://github.com/UsabilityDynamics/lib-ui"
     },
     {
-      "type": "vcs",
+      "type": "git",
       "url": "https://github.com/UsabilityDynamics/lib-asset"
     },
     {
-      "type": "vcs",
+      "type": "git",
       "url": "https://github.com/UsabilityDynamics/lib-api"
     }
   ],
@@ -67,5 +71,27 @@
       "UsabilityDynamics\\veneer": "core"
     }
   },
-  "extra": {}
+  "config": {
+    "namespace": "Veneer"
+  },
+  "build": {
+    "scripts": {
+      "out": "public/scripts",
+      "settings": {
+        "minify": true
+      }
+    },
+    "styles": {
+      "out": "public/styles",
+      "settings": {
+        "minify": true
+      }
+    },
+    "libs": {
+      "out": "core/vendor",
+      "settings": {
+        "autoload": true
+      }
+    }
+  }
 }

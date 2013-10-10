@@ -36,7 +36,7 @@ namespace Veneer {
      * @property $version
      * @type {Object}
      */
-    public static $version = '0.1.1';
+    public static $version = '0.1.2';
 
     /**
      * Textdomain String
@@ -45,7 +45,7 @@ namespace Veneer {
      * @property text_domain
      * @var string
      */
-    public static $text_domain = 'wp-veneer';
+    public static $text_domain = 'veneer';
 
     /**
      * Singleton Instance Reference.
@@ -90,9 +90,6 @@ namespace Veneer {
       require_once( 'core/helpers/utility.php' );
       require_once( 'core/helpers/log.php' );
       require_once( 'core/helpers/views.php' );
-
-      // Set Custom Error Handler
-      set_error_handler( array( $this, 'error_handler' ) );
 
       // Initialize Controllers and Helpers
       $this->Developer = new Developer();
@@ -144,93 +141,6 @@ namespace Veneer {
       // add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );
       // add_action( 'template_redirect', array( $this, 'template_redirect' ) );
 
-    }
-
-    /**
-     * Triggered on WordPress Shutdown
-     *
-     * @author potanin@UD
-     * @for Veneer
-     */
-    public function shutdown() {
-    }
-
-    /**
-     * Error Handler
-     *
-     * @param $errno
-     * @param $errstr
-     * @param $errfile
-     * @param $errline
-     *
-     * @return bool
-     */
-    public function error_handler( $errno, $errstr, $errfile, $errline ) {
-
-      if( !( error_reporting() & $errno ) ) {
-        // This error code is not included in error_reporting
-        return;
-      }
-      switch( $errno ) {
-
-        // Fatal
-        case E_ERROR:
-        case E_CORE_ERROR:
-        case E_RECOVERABLE_ERROR:
-        case E_COMPILE_ERROR:
-        case E_USER_ERROR:
-          wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologize for the inconvenience and will return shortly.</p>" );
-          break;
-
-        // Do Nothing
-        case E_WARNING:
-        case E_USER_NOTICE:
-          return true;
-          break;
-
-        // No Idea.
-        default:
-          return;
-          // wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologize for the inconvenience and will return shortly.</p>" );
-          break;
-      }
-
-      return true;
-
-    }
-
-    /**
-     * Get Setting.
-     *
-     *    // Get Setting
-     *    Veneer::get( 'my_key' )
-     *
-     * @method get
-     *
-     * @for Flawless
-     * @author potanin@UD
-     * @since 0.1.1
-     */
-    public function get( $key, $default ) {
-      return self::get_instance()->Settings->get( $key, $default );
-    }
-
-    /**
-     * Set Setting.
-     *
-     * @usage
-     *
-     *    // Set Setting
-     *    Veneer::set( 'my_key', 'my-value' )
-     *
-     * @method get
-     * @for Flawless
-     *
-     * @author potanin@UD
-     * @since 0.1.1
-     */
-    public function set( $key, $value ) {
-      return self::get_instance()->Settings->set( $key, $value );
     }
 
     /**
@@ -321,6 +231,98 @@ namespace Veneer {
 
       } );
 
+    }
+
+    /**
+     * Triggered on WordPress Shutdown
+     *
+     * @author potanin@UD
+     * @for Veneer
+     */
+    public static function shutdown() {
+    }
+
+    /**
+     * Error Handler
+     *
+     * @param $errno
+     * @param $errstr
+     * @param $errfile
+     * @param $errline
+     *
+     * @param $errfile
+     *
+     * @return bool
+     */
+    public static function error_handler( $errno, $errstr, $errfile, $errline ) {
+
+      die('Veneer error' );
+
+      // This error code is not included in error_reporting
+      if( !( error_reporting() & $errno ) ) {
+        return;
+      }
+
+      switch( $errno ) {
+
+        // Fatal
+        case E_ERROR:
+        case E_CORE_ERROR:
+        case E_RECOVERABLE_ERROR:
+        case E_COMPILE_ERROR:
+        case E_USER_ERROR:
+          wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologize for the inconvenience and will return shortly.</p>" );
+          break;
+
+        // Do Nothing
+        case E_WARNING:
+        case E_USER_NOTICE:
+          return true;
+          break;
+
+        // No Idea.
+        default:
+          return;
+          // wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologize for the inconvenience and will return shortly.</p>" );
+          break;
+      }
+
+      return true;
+
+    }
+
+    /**
+     * Get Setting.
+     *
+     *    // Get Setting
+     *    Veneer::get( 'my_key' )
+     *
+     * @method get
+     *
+     * @for Flawless
+     * @author potanin@UD
+     * @since 0.1.1
+     */
+    public static function get( $key, $default ) {
+      return self::get_instance()->Settings->get( $key, $default );
+    }
+
+    /**
+     * Set Setting.
+     *
+     * @usage
+     *
+     *    // Set Setting
+     *    Veneer::set( 'my_key', 'my-value' )
+     *
+     * @method get
+     * @for Flawless
+     *
+     * @author potanin@UD
+     * @since 0.1.1
+     */
+    public static function set( $key, $value ) {
+      return self::get_instance()->Settings->set( $key, $value );
     }
 
     /**
