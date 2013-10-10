@@ -3,7 +3,7 @@
  * Plugin Name: Veneer CMS
  * Plugin URI: http://usabilitydynamics.com/
  * Description: Application managing must-use plugins and obfuscation rewrites.
- * Version: 0.1.1
+ * Version: 0.1.2
  * Author: Usability Dynamics
  * Author URI: http://usabilitydynamics.com/
  * License: GPLv2 or later
