@@ -67,9 +67,7 @@
     "dflydev/markdown": "1.0.*@dev"
   },
   "autoload": {
-    "psr-0": {
-      "UsabilityDynamics\\veneer": "core"
-    }
+    "files": [ "wp-veneer.php" ]
   },
   "config": {
     "namespace": "Veneer"
