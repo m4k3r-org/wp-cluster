@@ -1,18 +1,19 @@
 {
-  "name": "usabilitydynamics/wp-provision",
+  "name": "usabilitydynamics/wp-veneer",
   "type": "library",
-  "description": "WordPress plugin for provisioning SVN and Git repositories.",
+  "description": "Veneer network",
   "repository": {
     "type": "git",
-    "urL": "https://github.com/UsabilityDynamics/wp-provision"
+    "urL": "https://github.com/UsabilityDynamics/wp-veneer"
   },
-  "homepage": "https://github.com/UsabilityDynamics/wp-provision",
+  "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
   "keywords": [
     "wordpress",
-    "provision"
+    "multisite",
+    "varnish"
   ],
+  "license": "MIT",
   "minimum-stability": "dev",
-  "license": "GPLv2",
   "authors": [
     {
       "name": "Andy Potanin",
@@ -21,32 +22,49 @@
   ],
   "repositories": [
     {
-      "type": "svn",
-      "url": "https://github.com/UsabilityDynamics/lib-utility",
-      "trunk-path": "trunk",
-      "branches-path": "branches",
-      "tags-path": "tags"
+      "type": "git",
+      "url": "https://github.com/UsabilityDynamics/lib-models"
     },
     {
-      "type": "svn",
-      "url": "https://github.com/UsabilityDynamics/lib-settings",
-      "trunk-path": "trunk",
-      "branches-path": "branches",
-      "tags-path": "tags"
+      "type": "git",
+      "url": "https://github.com/UsabilityDynamics/lib-settings"
     },
     {
-      "type": "svn",
-      "url": "https://github.com/UsabilityDynamics/lib-ui",
-      "trunk-path": "trunk",
-      "branches-path": "branches",
-      "tags-path": "tags"
+      "type": "git",
+      "url": "https://github.com/UsabilityDynamics/lib-utility"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/UsabilityDynamics/lib-saas"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/UsabilityDynamics/lib-cdn"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/UsabilityDynamics/lib-ui"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/UsabilityDynamics/lib-asset"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/UsabilityDynamics/lib-api"
     }
   ],
   "require": {
     "php": ">=5.3",
-    "UsabilityDynamics/lib-utility": "*",
+    "UsabilityDynamics/lib-api": "*",
+    "UsabilityDynamics/lib-models": "*",
     "UsabilityDynamics/lib-settings": "*",
-    "UsabilityDynamics/lib-ui": "*"
+    "UsabilityDynamics/lib-saas": "*",
+    "UsabilityDynamics/lib-ui": "*",
+    "UsabilityDynamics/lib-utility": "*",
+    "UsabilityDynamics/lib-cdn": "*",
+    "UsabilityDynamics/lib-asset": "*",
+    "dflydev/markdown": "1.0.*@dev"
   },
   "autoload": {
     "files": [
@@ -65,5 +83,28 @@
       "lib/class-utility.php",
       "lib/class-views.php"
     ]
+  },
+  "config": {
+    "namespace": "Veneer"
+  },
+  "build": {
+    "scripts": {
+      "out": "public/scripts",
+      "settings": {
+        "minify": true
+      }
+    },
+    "styles": {
+      "out": "public/styles",
+      "settings": {
+        "minify": true
+      }
+    },
+    "libs": {
+      "out": "core/vendor",
+      "settings": {
+        "autoload": true
+      }
+    }
   }
 }
