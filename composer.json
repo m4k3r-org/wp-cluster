@@ -2,6 +2,7 @@
   "name": "usabilitydynamics/wp-veneer",
   "type": "library",
   "description": "Veneer network",
+  "version": "0.1.5",
   "repository": {
     "type": "git",
     "urL": "https://github.com/UsabilityDynamics/wp-veneer"
@@ -20,40 +21,6 @@
       "homepage": "http://usabilitydynamics.com"
     }
   ],
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/UsabilityDynamics/lib-models"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/UsabilityDynamics/lib-settings"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/UsabilityDynamics/lib-utility"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/UsabilityDynamics/lib-saas"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/UsabilityDynamics/lib-cdn"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/UsabilityDynamics/lib-ui"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/UsabilityDynamics/lib-asset"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/UsabilityDynamics/lib-api"
-    }
-  ],
   "require": {
     "php": ">=5.3",
     "UsabilityDynamics/lib-api": "*",
@@ -63,8 +30,7 @@
     "UsabilityDynamics/lib-ui": "*",
     "UsabilityDynamics/lib-utility": "*",
     "UsabilityDynamics/lib-cdn": "*",
-    "UsabilityDynamics/lib-asset": "*",
-    "dflydev/markdown": "1.0.*@dev"
+    "UsabilityDynamics/lib-asset": "*"
   },
   "autoload": {
     "files": [
@@ -77,6 +43,7 @@
       "lib/class-locale.php",
       "lib/class-log.php",
       "lib/class-media.php",
+      "lib/class-mapping.php",
       "lib/class-security.php",
       "lib/class-settings.php",
       "lib/class-theme.php",
@@ -86,25 +53,5 @@
   },
   "config": {
     "namespace": "Veneer"
-  },
-  "build": {
-    "scripts": {
-      "out": "public/scripts",
-      "settings": {
-        "minify": true
-      }
-    },
-    "styles": {
-      "out": "public/styles",
-      "settings": {
-        "minify": true
-      }
-    },
-    "libs": {
-      "out": "core/vendor",
-      "settings": {
-        "autoload": true
-      }
-    }
   }
 }

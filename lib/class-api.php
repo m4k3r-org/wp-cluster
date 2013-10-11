@@ -2,26 +2,32 @@
 /**
  * API Access Controller
  *
+ * @version 0.1.5
  * @module Veneer
  * @author potanin@UD
  */
 namespace UsabilityDynamics\Veneer {
 
-  /**
-   * Class API
-   *
-   * @module Veneer
-   */
-  class API {
+  if( !class_exists( 'UsabilityDynamics\Veneer\API' ) ) {
 
     /**
-     * Initialize API
+     * Class API
      *
-     * @for API
+     * @module Veneer
      */
-    public function __construct() {
+    class API {
+
+      /**
+       * Initialize API
+       *
+       * @version 0.1.5
+       * @for API
+       */
+      public function __construct() {
+
+        $this->actual_url = admin_url( 'admin-ajax.php' );
+      }
 
     }
-
   }
 }

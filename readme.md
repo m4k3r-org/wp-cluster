@@ -5,7 +5,6 @@
 
   die( $markdownParser->transformMarkdown( "#Hello World" ) );
 
-
   // Use Veneer error handler
   error_handler( Veneer\Veneer::error_handler() );
 
