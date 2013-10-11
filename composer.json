@@ -67,7 +67,11 @@
     "dflydev/markdown": "1.0.*@dev"
   },
   "autoload": {
-    "files": [ "wp-veneer.php" ]
+    "files": [
+      "core/class-api.php",
+      "core/class-bootstrap.php",
+      "core/class-dashboard.php"
+    ]
   },
   "config": {
     "namespace": "Veneer"
