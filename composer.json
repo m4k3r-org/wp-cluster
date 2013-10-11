@@ -68,9 +68,9 @@
   },
   "autoload": {
     "files": [
-      "core/class-api.php",
-      "core/class-bootstrap.php",
-      "core/class-dashboard.php"
+      "lib/class-api.php",
+      "lib/class-bootstrap.php",
+      "lib/class-dashboard.php"
     ]
   },
   "config": {
