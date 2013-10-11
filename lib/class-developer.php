@@ -8,7 +8,7 @@
  * Author URI: http://usabilitydynamics.com
  *
  */
-namespace Veneer {
+namespace UsabilityDynamics\Veneer {
 
   /**
    * Class Developer

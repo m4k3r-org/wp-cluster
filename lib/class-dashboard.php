@@ -7,7 +7,7 @@
  *
  * @author potanin@UD
  */
-namespace UsabilityDynamics {
+namespace UsabilityDynamics\Veneer {
 
   /**
    * Class Dashboard

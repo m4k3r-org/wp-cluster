@@ -74,7 +74,8 @@ namespace UsabilityDynamics\Veneer {
       self::$instance = & $this;
 
       // Initialize Controllers and Helpers
-      $this->_developer     = new Developer();
+      $this->_developer   = new Developer();
+      $this->_settings    = new Settings();
 
       // Fix MultiSite URLs
       $this->fix_urls();
@@ -91,7 +92,7 @@ namespace UsabilityDynamics\Veneer {
      * @method plugins_loaded
      * @author potanin@UD
      */
-    private function plugins_loaded() {
+    public function plugins_loaded() {
       add_action( 'admin_init', array( $this, 'admin_init' ) );
 
       // add_action( 'shutdown', array( $this, 'shutdown' ) );
@@ -109,7 +110,7 @@ namespace UsabilityDynamics\Veneer {
      * @method admin_init
      * @author potanin@UD
      */
-    private function admin_init() {
+    public function admin_init() {
 
       /* Remove Akismet API Key Nag */
       remove_action( 'admin_notices', 'akismet_warning' );
@@ -126,7 +127,7 @@ namespace UsabilityDynamics\Veneer {
      * @method admin_bar_menu
      * @author potanin@UD
      */
-    private function admin_bar_menu( $wp_admin_bar = false ) {
+    public function admin_bar_menu( $wp_admin_bar = false ) {
 
       if( !is_super_admin() || !is_multisite() || !$wp_admin_bar ) {
         return;
@@ -159,7 +160,7 @@ namespace UsabilityDynamics\Veneer {
      * Automatically fix MS URLs that get messed up
      *
      */
-    private function fix_urls() {
+    public function fix_urls() {
 
       add_filter( 'network_site_url', function ( $url ) {
         //if( !strpos( $url, '/system' ) ) { return trailingslashit( $url ) . 'system/'; }
@@ -194,15 +195,6 @@ namespace UsabilityDynamics\Veneer {
     }
 
     /**
-     * Triggered on WordPress Shutdown
-     *
-     * @author potanin@UD
-     * @for Veneer
-     */
-    public static function shutdown() {
-    }
-
-    /**
      * Error Handler
      *
      * @param $errno
@@ -214,9 +206,9 @@ namespace UsabilityDynamics\Veneer {
      *
      * @return bool
      */
-    public static function error_handler( $errno = null, $errstr = '', $errfile = null , $errline = null ) {
+    public static function error_handler( $errno = null, $errstr = '', $errfile = null, $errline = null ) {
 
-      die('Veneer error' );
+      die( 'Veneer error' );
 
       // This error code is not included in error_reporting
       if( !( error_reporting() & $errno ) ) {

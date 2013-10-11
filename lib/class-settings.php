@@ -5,7 +5,7 @@
  * @module Veneer
  * @author potanin@UD
  */
-namespace Veneer {
+namespace UsabilityDynamics\Veneer {
 
   /**
    * Class Settings

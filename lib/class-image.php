@@ -6,7 +6,7 @@
  *
  *
  */
-namespace Veneer {
+namespace UsabilityDynamics\Veneer {
   
   class ResizeImage {
 
