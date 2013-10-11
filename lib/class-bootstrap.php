@@ -54,6 +54,36 @@ namespace UsabilityDynamics\Veneer {
     public static $instance = false;
 
     /**
+     * Current site (blog)
+     *
+     * @public
+     * @static
+     * @property $site_id
+     * @type {Object}
+     */
+    public $site_id = null;
+
+    /**
+     * Current Network ID
+     *
+     * @public
+     * @static
+     * @property $network_id
+     * @type {Object}
+     */
+    public $network_id = null;
+
+    /**
+     * Absolute path to site-specific file directory
+     *
+     * @public
+     * @static
+     * @property $file_path
+     * @type {Object}
+     */
+    public $file_path = null;
+
+    /**
      * Constructor.
      *
      * UsabilityDynamics components should be avialable.
@@ -64,6 +94,7 @@ namespace UsabilityDynamics\Veneer {
      * @method __construct
      */
     public function __construct() {
+      global $wpdb, $_veneer;
 
       // Return singleton instance
       if( self::$instance ) {
@@ -71,14 +102,21 @@ namespace UsabilityDynamics\Veneer {
       }
 
       // Save context reference.
-      self::$instance = & $this;
+      $_veneer = self::$instance = & $this;
 
       // Initialize Controllers and Helpers
       $this->_developer   = new Developer();
       $this->_settings    = new Settings();
 
+      // Set conditional properties
+      $this->site_id       = $wpdb->blogid;
+      $this->network_id    = $wpdb->siteid;
+
       // Fix MultiSite URLs
       $this->fix_urls();
+
+      // Absolute uploads path
+      $this->file_path     = BLOGUPLOADDIR;
 
       // Initialize all else.
       add_action( 'plugins_loaded', array( __CLASS__, 'plugins_loaded' ) );
@@ -159,13 +197,20 @@ namespace UsabilityDynamics\Veneer {
     /**
      * Automatically fix MS URLs that get messed up
      *
+     * UPLOADBLOGSDIR must be set in wp-config.php to take affect, UPLOADS is defined based on site's ID
+     * This would be the place to overwrite the media/{ID}/files to something else.
+     *
      */
     public function fix_urls() {
 
+      if( !defined( 'BLOGUPLOADDIR' ) ) {
+        define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADS );
+      }
+
+      // network_site_url - http://network.nightculture.loc/wp-admin/network/ -> http://network.nightculture.loc/system/wp-admin/network/
       add_filter( 'network_site_url', function ( $url ) {
-        //if( !strpos( $url, '/system' ) ) { return trailingslashit( $url ) . 'system/'; }
         return str_replace( 'wp-admin', 'system/wp-admin', $url );
-      } );
+      });
 
       add_filter( 'blog_option_upload_path', function ( $url ) {
 
