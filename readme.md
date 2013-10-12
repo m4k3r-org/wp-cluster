@@ -8,6 +8,7 @@
  - If no site can be found, visitor is directed to network homepage.
  - Virtually all link functions reference "siteurl" and "home" options, we modify them once a request is validated.
 
+ - The network's (WordPress calls it "site") domain setting in wp_sites is used in links but not served.
 
 ## Structure
 

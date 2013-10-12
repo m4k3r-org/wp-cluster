@@ -129,9 +129,6 @@ namespace UsabilityDynamics\Veneer {
           $this->identify_site();
         }
 
-        // Fix MultiSite URLs
-        $this->fix_urls();
-
         // Current site.
         $this->organization     = $current_site->site_name;
         $this->site_id          = $wpdb->blogid;
@@ -146,6 +143,9 @@ namespace UsabilityDynamics\Veneer {
         if( !$this->is_valid ) {
           wp_die( 'Invalid domain.' );
         }
+
+        // Fix MultiSite URLs
+        $this->fix_urls();
 
         // Initialize Controllers and Helpers
         $this->developer = new Developer();
@@ -162,7 +162,6 @@ namespace UsabilityDynamics\Veneer {
         // Initialize all else.
         add_action( 'plugins_loaded', array( __CLASS__, 'plugins_loaded' ) );
         add_action( 'admin_bar_menu', array( __CLASS__, 'admin_bar_menu' ), 21 );
-
 
       }
 
@@ -269,14 +268,20 @@ namespace UsabilityDynamics\Veneer {
       public function fix_urls() {
 
         if( !defined( 'BLOGUPLOADDIR' ) ) {
-          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADS );
+          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/media/' . Bootstrap::get_instance()->site_id );;
         }
 
-        return;
-
         add_filter( 'network_site_url', function ( $url ) {
-          return str_replace( 'wp-admin', 'system/wp-admin', $url );
-        } );
+
+          if( defined( 'WP_SYSTEM_DIRECTORY' ) && WP_SYSTEM_DIRECTORY != '' ) {
+            return str_replace( 'wp-admin', 'system/wp-admin', $url );
+          }
+
+          return $url;
+
+        });
+
+        return
 
         add_filter( 'blog_option_upload_path', function ( $url ) {
 

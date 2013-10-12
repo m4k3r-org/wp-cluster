@@ -33,10 +33,15 @@ namespace UsabilityDynamics\Veneer {
        * @for Media
        */
       public function __construct() {
+        $wp_upload_dir = wp_upload_dir();
 
-        $this->path = BLOGUPLOADDIR;
+        $this->directory = BLOGUPLOADDIR;
+        $this->path      = $wp_upload_dir[ 'path' ];
+        $this->url       = $wp_upload_dir[ 'url' ];
+        $this->basedir   = $wp_upload_dir[ 'basedir' ];
+        $this->baseurl   = $wp_upload_dir[ 'baseurl' ];
 
-        //** Support for custom uploads directory */
+        // Support for custom uploads directory
         if( defined( 'WP_MEDIA_PATH' ) ) {
           // add_filter( 'pre_option_upload_path', create_function( '', ' return WP_MEDIA_PATH; ' ) );
           // add_filter( 'pre_option_upload_url_path', create_function( '', ' return WP_MEDIA_URL; ' ) );
