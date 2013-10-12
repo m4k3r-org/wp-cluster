@@ -55,6 +55,16 @@ namespace UsabilityDynamics\Veneer {
       public static $instance = false;
 
       /**
+       * Current Network ID
+       *
+       * @public
+       * @static
+       * @property $network_id
+       * @type {Object}
+       */
+      public $network_id = null;
+
+      /**
        * Current site (blog)
        *
        * @public
@@ -65,14 +75,34 @@ namespace UsabilityDynamics\Veneer {
       public $site_id = null;
 
       /**
-       * Current Network ID
+       * The literal domain of the current request.
        *
        * @public
        * @static
-       * @property $network_id
+       * @property $site_id
        * @type {Object}
        */
-      public $network_id = null;
+      public $requested_domain = null;
+
+      /**
+       * The main mapped domain of a site.
+       *
+       * @public
+       * @static
+       * @property $primary_domain
+       * @type {Object}
+       */
+      public $primary_domain = null;
+
+      /**
+       * The domain name of the network this site belongs to.
+       *
+       * @public
+       * @static
+       * @property $primary_domain
+       * @type {Object}
+       */
+      public $network_domain = null;
 
       /**
        * Constructor.
@@ -91,48 +121,69 @@ namespace UsabilityDynamics\Veneer {
         if( self::$instance ) {
           return self::$instance;
         }
-
         // Save context reference.
         self::$instance = & $this;
 
+        // Identify site being requested
+        if( !$current_site || !$current_blog ) {
+          $this->identify_site();
+        }
+
         // Fix MultiSite URLs
         $this->fix_urls();
+
+        // Current site.
+        $this->organization     = $current_site->site_name;
+        $this->site_id          = $wpdb->blogid;
+        $this->network_id       = $wpdb->siteid;
+        $this->requested_domain = $current_blog->domain;
+        $this->primary_domain   = $wpdb->get_var( "SELECT domain FROM {$wpdb->blogs} WHERE blog_id = '{$wpdb->blogid}' LIMIT 1" );
+        $this->network_domain   = $wpdb->get_var( "SELECT domain FROM {$wpdb->site} WHERE id = {$this->network_id}" );
+        $this->allowed_domains  = array( $this->primary_domain );
+        $this->is_valid         = in_array( $this->requested_domain, $this->allowed_domains ) ? true : false;
+        $this->is_public        = $current_blog->public;
+
+        if( !$this->is_valid ) {
+          wp_die( 'Invalid domain.' );
+        }
 
         // Initialize Controllers and Helpers
         $this->developer = new Developer();
         $this->settings  = new Settings();
         $this->media     = new Media();
-        $this->mapping  = new Mapping();
-        $this->api      = new API();
+        $this->mapping   = new Mapping();
+        $this->api       = new API();
 
-        // Current site.
-        $this->name              = $current_site->site_name;
-        $this->site_id           = $wpdb->blogid;
-        $this->network_id        = $wpdb->siteid;
-        $this->is_public         = $current_blog->public;
-        $this->real_domain       = $current_blog->domain;
-        $this->network_domain    = $current_site->domain;
-        $this->home_url          = get_home_url();
-        $this->site_url          = get_site_url();
-        $this->admin_url         = get_admin_url();
-        $this->includes_url      = includes_url();
-        $this->content_url       = content_url();
-        $this->plugins_url       = plugins_url();
-        $this->network_site_url  = network_site_url();
-        $this->network_home_url  = network_home_url();
-        $this->network_admin_url = network_admin_url();
-        $this->self_admin_url    = self_admin_url();
-        $this->user_admin_url    = user_admin_url();
 
-        add_filter( 'template_redirect', function() {
-           // die( '<pre>' . print_r( Bootstrap::get_instance(), true ) . '</pre>' );
-        });
+        add_filter( 'template_redirect', function () {
+          // die(STYLESHEETPATH);
+        } );
 
-        // Set conditional properties
         // Initialize all else.
         add_action( 'plugins_loaded', array( __CLASS__, 'plugins_loaded' ) );
         add_action( 'admin_bar_menu', array( __CLASS__, 'admin_bar_menu' ), 21 );
 
+      }
+
+      /**
+       * Identify Request
+       *
+       * @method identify_site
+       */
+      public function identify_site() {
+        global $site_id, $blog_id, $wpdb, $current_blog, $current_site;
+
+        $_lookup = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}blogs WHERE domain = '{$_SERVER[HTTP_HOST]}' LIMIT 1" );
+
+        $blog_id = $wpdb->blogid = $_lookup->blog_id;
+        $site_id = $wpdb->siteid = $_lookup->site_id;
+
+        define( 'COOKIE_DOMAIN', $_lookup->domain );
+
+        $current_site             = $wpdb->get_row( "SELECT * from {$wpdb->prefix}site WHERE id = '{$site_id}' LIMIT 0,1" );
+        $current_site->blog_id    = $blog_id;
+
+        die( '<pre>' . print_r( $wpdb, true ) . '</pre>' );
       }
 
       /**

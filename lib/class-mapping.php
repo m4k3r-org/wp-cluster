@@ -17,38 +17,48 @@ namespace UsabilityDynamics\Veneer {
   class Mapping {
 
     /**
+     * Current site (blog)
+     *
+     * @public
+     * @static
+     * @property $site_id
+     * @type {Object}
+     */
+    public $site_url = null;
+
+    /**
      * Initialize Locale
      *
      * @for Locale
      */
     public function __construct() {
 
-      add_filter( 'wpmu_blogs_columns', array( $this, 'ra_domain_mapping_columns' ) );
+      // URLs
+      $this->home_url          = get_home_url();
+      $this->site_url          = get_site_url();
+      $this->admin_url         = get_admin_url();
+      $this->includes_url      = includes_url();
+      $this->content_url       = content_url();
+      $this->plugins_url       = plugins_url();
+      $this->network_site_url  = network_site_url();
+      $this->network_home_url  = network_home_url();
+      $this->network_admin_url = network_admin_url();
+      $this->self_admin_url    = self_admin_url();
+      $this->user_admin_url    = user_admin_url();
 
-      if( defined( 'DOMAIN_MAPPING' ) ) {
-        add_filter( 'plugins_url', array( $this, 'domain_mapping_plugins_uri' ), 1 );
-        //add_filter( 'pre_option_siteurl', array( $this, 'domain_siteurl' ) );
-        //add_filter( 'pre_option_home', array( $this, 'domain_siteurl' ) );
-        add_filter( 'theme_root_uri', array( $this, 'domain_mapping_themes_uri' ), 1 );
-        add_filter( 'the_content', array( $this, 'domain_mapping_post_content' ) );
+      // overrite "home" option / home_url()
+      add_filter( 'pre_option_home', function() {
+        return ( is_ssl() ? 'https://' : 'http://' ) . Bootstrap::get_instance()->primary_domain;
+      });
 
-        add_action( 'wp_head', array( $this, 'remote_login_js_loader' ) );
-        add_action( 'login_head', array( $this, 'redirect_login_to_orig' ) );
-        add_action( 'wp_logout', array( $this, 'remote_logout_loader' ), 9999 );
+      // Overrite "site" option / site_url()
+      add_filter( 'pre_option_siteurl', function() {
+        return ( is_ssl() ? 'https://' : 'http://' ) . Bootstrap::get_instance()->primary_domain;
+      });
 
-        add_filter( 'stylesheet_uri', array( $this, 'domain_mapping_post_content' ) );
-        add_filter( 'stylesheet_directory', array( $this, 'domain_mapping_post_content' ) );
-        add_filter( 'stylesheet_directory_uri', array( $this, 'domain_mapping_post_content' ) );
-        add_filter( 'template_directory', array( $this, 'domain_mapping_post_content' ) );
-        add_filter( 'template_directory_uri', array( $this, 'domain_mapping_post_content' ) );
-        add_filter( 'plugins_url', array( $this, 'domain_mapping_post_content' ) );
-      } else {
-        add_filter( 'admin_url', array( $this, 'domain_mapping_adminurl' ), 10, 3 );
-      }
+    }
 
-      add_action( 'template_redirect', array( $this, 'redirect_to_mapped_domain' ) );
-      add_action( 'admin_init', array( $this, 'dm_redirect_admin' ) );
-      add_action( 'delete_blog', array( $this, 'delete_blog_domain_mapping' ), 1, 2 );
+    public function legacy() {
 
       add_action( 'manage_blogs_custom_column', array( $this, 'ra_domain_mapping_field' ), 1, 3 );
       add_action( 'manage_sites_custom_column', array( $this, 'ra_domain_mapping_field' ), 1, 3 );
@@ -58,13 +68,47 @@ namespace UsabilityDynamics\Veneer {
       add_action( 'dm_echo_updated_msg', array( $this, 'dm_echo_default_updated_msg' ) );
 
       if( isset( $_GET[ 'page' ] ) && $_GET[ 'page' ] == 'domainmapping' ) {
-        add_action( 'admin_init', array( $this, 'dm_handle_actions' ) );
+        // add_action( 'admin_init', array( $this, 'dm_handle_actions' ) );
       }
 
       if( isset( $_GET[ 'dm' ] ) ) {
-        add_action( 'template_redirect', array( $this, 'remote_login_js' ) );
+        // add_action( 'template_redirect', array( $this, 'remote_login_js' ) );
 
       }
+
+      return;
+
+      add_filter( 'wpmu_blogs_columns', array( $this, 'ra_domain_mapping_columns' ) );
+
+      $this->siteurl = $this->domain_siteurl();
+
+      if( defined( 'DOMAIN_MAPPING' ) ) {
+
+        add_filter( 'pre_option_siteurl', array( $this, 'domain_siteurl' ) );
+        add_filter( 'pre_option_home', array( $this, 'domain_siteurl' ) );
+
+        add_action( 'wp_head', array( $this, 'remote_login_js_loader' ) );
+        add_action( 'login_head', array( $this, 'redirect_login_to_orig' ) );
+        add_action( 'wp_logout', array( $this, 'remote_logout_loader' ), 9999 );
+
+        add_filter( 'the_content', array( $this, 'domain_mapping_post_content' ) );
+        add_filter( 'theme_root_uri', array( $this, 'domain_mapping_themes_uri' ), 1 );
+        add_filter( 'stylesheet_uri', array( $this, 'domain_mapping_post_content' ) );
+        add_filter( 'stylesheet_directory', array( $this, 'domain_mapping_post_content' ) );
+        add_filter( 'stylesheet_directory_uri', array( $this, 'domain_mapping_post_content' ) );
+        add_filter( 'template_directory', array( $this, 'domain_mapping_post_content' ) );
+        add_filter( 'template_directory_uri', array( $this, 'domain_mapping_post_content' ) );
+        add_filter( 'plugins_url', array( $this, 'domain_mapping_post_content' ) ); // Affects self_admin_url - removes the domain name fully
+
+        //add_filter( 'plugins_url', array( $this, 'domain_mapping_plugins_uri' ), 1 );
+
+      } else {
+        add_filter( 'admin_url', array( $this, 'domain_mapping_adminurl' ), 10, 3 );
+      }
+
+      add_action( 'template_redirect', array( $this, 'redirect_to_mapped_domain' ) );
+      add_action( 'admin_init', array( $this, 'dm_redirect_admin' ) );
+      add_action( 'delete_blog', array( $this, 'delete_blog_domain_mapping' ), 1, 2 );
 
     }
 
@@ -704,7 +748,7 @@ namespace UsabilityDynamics\Veneer {
       if( isset( $_POST[ 'customize' ] ) && isset( $_POST[ 'theme' ] ) && $_POST[ 'customize' ] == 'on' )
         return;
 
-      $url = self::domain_siteurl( false );
+      $url      = self::domain_siteurl( false );
       $protocol = is_ssl() ? 'https://' : 'http://';
 
       if( $url && $url != untrailingslashit( $protocol . $current_blog->domain . $current_blog->path ) ) {

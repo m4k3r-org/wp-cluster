@@ -1,12 +1,13 @@
 ## Overview
 
 
-  $markdownParser = new \dflydev\markdown\MarkdownParser();
+## Domain Mapping
 
-  die( $markdownParser->transformMarkdown( "#Hello World" ) );
+ - Each site has a primary domain, which may be a second level domain or a subdomain.
+ - Subdomains could be supported.
+ - If no site can be found, visitor is directed to network homepage.
+ - Virtually all link functions reference "siteurl" and "home" options, we modify them once a request is validated.
 
-  // Use Veneer error handler
-  error_handler( Veneer\Veneer::error_handler() );
 
 ## Structure
 
