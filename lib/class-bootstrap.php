@@ -154,14 +154,15 @@ namespace UsabilityDynamics\Veneer {
         $this->mapping   = new Mapping();
         $this->api       = new API();
 
-
-        add_filter( 'template_redirect', function () {
-          // die(STYLESHEETPATH);
-        } );
+        // Must set or long will not work
+        if( !defined( 'COOKIE_DOMAIN' ) ) {
+          define( 'COOKIE_DOMAIN', $this->requested_domain );
+        }
 
         // Initialize all else.
         add_action( 'plugins_loaded', array( __CLASS__, 'plugins_loaded' ) );
         add_action( 'admin_bar_menu', array( __CLASS__, 'admin_bar_menu' ), 21 );
+
 
       }
 
@@ -270,6 +271,8 @@ namespace UsabilityDynamics\Veneer {
         if( !defined( 'BLOGUPLOADDIR' ) ) {
           define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADS );
         }
+
+        return;
 
         add_filter( 'network_site_url', function ( $url ) {
           return str_replace( 'wp-admin', 'system/wp-admin', $url );
