@@ -92,7 +92,7 @@ namespace UsabilityDynamics\Veneer {
 
       }
 
-      return ( is_ssl() ? 'https://' : 'http://' ) . Bootstrap::get_instance()->primary_domain . ( defined( 'WP_SYSTEM_DIRECTORY' ) ? '/' . WP_SYSTEM_DIRECTORY : '' );
+      return ( is_ssl() ? 'https://' : 'http://' ) . Bootstrap::get_instance()->domain . ( defined( 'WP_SYSTEM_DIRECTORY' ) ? '/' . WP_SYSTEM_DIRECTORY : '' );
 
     }
 
@@ -114,7 +114,7 @@ namespace UsabilityDynamics\Veneer {
 
       }
 
-      return ( is_ssl() ? 'https://' : 'http://' ) . Bootstrap::get_instance()->primary_domain;
+      return ( is_ssl() ? 'https://' : 'http://' ) . Bootstrap::get_instance()->domain;
 
     }
 
