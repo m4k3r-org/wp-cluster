@@ -236,21 +236,21 @@ namespace UsabilityDynamics\Veneer {
         $wp_admin_bar->add_menu( array(
           'parent' => 'network-admin',
           'id'     => 'network-themes',
-          'title'  => __( 'Themes' ),
+          'title'  => __( 'Themes', self::$text_domain ),
           'href'   => network_admin_url( 'themes.php' ),
         ) );
 
         $wp_admin_bar->add_menu( array(
           'parent' => 'network-admin',
           'id'     => 'network-plugins',
-          'title'  => __( 'Plugins' ),
+          'title'  => __( 'Plugins', self::$text_domain ),
           'href'   => network_admin_url( 'plugins.php' ),
         ) );
 
         $wp_admin_bar->add_menu( array(
           'parent' => 'network-admin',
-          'id'     => 'network-plugins',
-          'title'  => __( 'Settings' ),
+          'id'     => 'network-settings',
+          'title'  => __( 'Settings', self::$text_domain ),
           'href'   => network_admin_url( 'settings.php' ),
         ) );
 
