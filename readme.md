@@ -1,5 +1,8 @@
 ## Overview
 
+## Recognized Constants
+
+ - WP_VENEER_DOMAIN_MEDIA - Enable's domain-specific media storage directories instead of blog IDs.
 
 ## Domain Mapping
 

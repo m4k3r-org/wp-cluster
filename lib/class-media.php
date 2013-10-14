@@ -40,6 +40,7 @@ namespace UsabilityDynamics\Veneer {
         $this->url       = $wp_upload_dir[ 'url' ];
         $this->basedir   = $wp_upload_dir[ 'basedir' ];
         $this->baseurl   = $wp_upload_dir[ 'baseurl' ];
+        $this->domain    = defined( 'WP_VENEER_DOMAIN_MEDIA' ) && WP_VENEER_DOMAIN_MEDIA ? undefined : $wp_upload_dir[ 'baseurl' ];
 
         // Support for custom uploads directory
         if( defined( 'WP_MEDIA_PATH' ) ) {

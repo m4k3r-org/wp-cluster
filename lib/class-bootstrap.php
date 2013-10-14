@@ -2,7 +2,7 @@
 /**
  * UsabilityDynamics\Veneer Bootstrap
  *
- * @verison 0.1.5
+ * @verison 0.2.0
  * @author potanin@UD
  * @namespace UsabilityDynamics\Veneer
  */
@@ -33,7 +33,7 @@ namespace UsabilityDynamics\Veneer {
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.1.5';
+      public static $version = '0.2.0';
 
       /**
        * Textdomain String
@@ -89,17 +89,17 @@ namespace UsabilityDynamics\Veneer {
        *
        * @public
        * @static
-       * @property $primary_domain
+       * @property $domain
        * @type {Object}
        */
-      public $primary_domain = null;
+      public $domain = null;
 
       /**
        * The domain name of the network this site belongs to.
        *
        * @public
        * @static
-       * @property $primary_domain
+       * @property $domain
        * @type {Object}
        */
       public $network_domain = null;
@@ -121,6 +121,7 @@ namespace UsabilityDynamics\Veneer {
         if( self::$instance ) {
           return self::$instance;
         }
+
         // Save context reference.
         self::$instance = & $this;
 
@@ -134,9 +135,9 @@ namespace UsabilityDynamics\Veneer {
         $this->site_id          = $wpdb->blogid;
         $this->network_id       = $wpdb->siteid;
         $this->requested_domain = $current_blog->domain;
-        $this->primary_domain   = $wpdb->get_var( "SELECT domain FROM {$wpdb->blogs} WHERE blog_id = '{$wpdb->blogid}' LIMIT 1" );
+        $this->domain           = $wpdb->get_var( "SELECT domain FROM {$wpdb->blogs} WHERE blog_id = '{$wpdb->blogid}' LIMIT 1" );
         $this->network_domain   = $wpdb->get_var( "SELECT domain FROM {$wpdb->site} WHERE id = {$this->network_id}" );
-        $this->allowed_domains  = array( $this->primary_domain );
+        $this->allowed_domains  = array( $this->domain );
         $this->is_valid         = in_array( $this->requested_domain, $this->allowed_domains ) ? true : false;
         $this->is_public        = $current_blog->public;
 
@@ -168,6 +169,8 @@ namespace UsabilityDynamics\Veneer {
       /**
        * Identify Request
        *
+       * Currenty not used and handled by sunrise.php
+       *
        * @method identify_site
        */
       public function identify_site() {
@@ -178,12 +181,9 @@ namespace UsabilityDynamics\Veneer {
         $blog_id = $wpdb->blogid = $_lookup->blog_id;
         $site_id = $wpdb->siteid = $_lookup->site_id;
 
-        define( 'COOKIE_DOMAIN', $_lookup->domain );
+        $current_site          = $wpdb->get_row( "SELECT * from {$wpdb->prefix}site WHERE id = '{$site_id}' LIMIT 0,1" );
+        $current_site->blog_id = $blog_id;
 
-        $current_site             = $wpdb->get_row( "SELECT * from {$wpdb->prefix}site WHERE id = '{$site_id}' LIMIT 0,1" );
-        $current_site->blog_id    = $blog_id;
-
-        die( '<pre>' . print_r( $wpdb, true ) . '</pre>' );
       }
 
       /**
@@ -268,45 +268,75 @@ namespace UsabilityDynamics\Veneer {
       public function fix_urls() {
 
         if( !defined( 'BLOGUPLOADDIR' ) ) {
-          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/media/' . Bootstrap::get_instance()->site_id );;
+
+          if( defined( 'WP_VENEER_DOMAIN_MEDIA' ) && WP_VENEER_DOMAIN_MEDIA ) {
+            define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/media/' . Bootstrap::get_instance()->domain );
+          } else {
+            define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/media/' . Bootstrap::get_instance()->site_id );
+          }
+
         }
 
-        add_filter( 'network_site_url', function ( $url ) {
+        add_filter( 'network_site_url', array( get_class(), 'network_site_url' ) );
 
-          if( defined( 'WP_SYSTEM_DIRECTORY' ) && WP_SYSTEM_DIRECTORY != '' ) {
-            return str_replace( 'wp-admin', 'system/wp-admin', $url );
-          }
+        // add_filter( 'blog_option_upload_path', array( get_class(), 'blog_option_upload_path' ) );
 
-          return $url;
+      }
 
-        });
+      /**
+       * Network URL
+       *
+       *
+       * @author potanin@UD
+       * @method network_site_url
+       *
+       * @param $url
+       *
+       * @return mixed
+       */
+      public static function network_site_url( $url ) {
 
-        return
+        if( defined( 'WP_SYSTEM_DIRECTORY' ) && WP_SYSTEM_DIRECTORY != '' ) {
+          return str_replace( 'wp-admin', 'system/wp-admin', $url );
+        }
 
-        add_filter( 'blog_option_upload_path', function ( $url ) {
+        return $url;
 
-          // In WP 3.5 the UPLOADS constant sets the uploads path relative to the ABSPATH
-          if( defined( 'UPLOADS' ) ) {
+      }
 
-          }
+      /**
+       * Upload Path
+       *
+       *
+       * @author potanin@UD
+       * @method network_site_url
+       *
+       * @param $url
+       *
+       * @return mixed
+       */
+      public static function blog_option_upload_path( $url ) {
 
-          // Legacy WordPress MS
-          if( strpos( $url, 'wp-content/blogs.dir' ) !== false ) {
-            return str_replace( 'wp-content/blogs.dir', 'media/sites', $url );
-          }
+        // In WP 3.5 the UPLOADS constant sets the uploads path relative to the ABSPATH
+        if( defined( 'UPLOADS' ) ) {
 
-          // Contemporary WordPress MS
-          if( strpos( $url, 'wp-content/sites' ) !== false ) {
-            return str_replace( 'wp-content/sites', 'media/sites', $url );
-          }
+        }
 
-          if( strpos( $url, 'wp-content/uploads' ) !== false ) {
-            return str_replace( 'wp-content/uploads', 'media/sites', $url );
-          }
+        // Legacy WordPress MS
+        if( strpos( $url, 'wp-content/blogs.dir' ) !== false ) {
+          return str_replace( 'wp-content/blogs.dir', 'media/sites', $url );
+        }
 
-          return $url;
+        // Contemporary WordPress MS
+        if( strpos( $url, 'wp-content/sites' ) !== false ) {
+          return str_replace( 'wp-content/sites', 'media/sites', $url );
+        }
 
-        } );
+        if( strpos( $url, 'wp-content/uploads' ) !== false ) {
+          return str_replace( 'wp-content/uploads', 'media/sites', $url );
+        }
+
+        return $url;
 
       }
 

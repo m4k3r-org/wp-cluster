@@ -27,6 +27,26 @@ namespace UsabilityDynamics\Veneer {
     public $site_url = null;
 
     /**
+     * Current site's public home URL
+     *
+     * @public
+     * @static
+     * @property $home_url
+     * @type {Object}
+     */
+    public $home_url = null;
+
+    /**
+     * Current site's administration URL
+     *
+     * @public
+     * @static
+     * @property $admin_url
+     * @type {Object}
+     */
+    public $admin_url = null;
+
+    /**
      * Initialize Locale
      *
      * @for Locale

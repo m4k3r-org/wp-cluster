@@ -2,7 +2,7 @@
   "name": "usabilitydynamics/wp-veneer",
   "type": "library",
   "description": "Veneer network",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "urL": "https://github.com/UsabilityDynamics/wp-veneer"
