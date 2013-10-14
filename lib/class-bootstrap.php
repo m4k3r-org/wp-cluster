@@ -161,8 +161,8 @@ namespace UsabilityDynamics\Veneer {
         }
 
         // Initialize all else.
-        add_action( 'plugins_loaded', array( __CLASS__, 'plugins_loaded' ) );
-        add_action( 'admin_bar_menu', array( __CLASS__, 'admin_bar_menu' ), 21 );
+        add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+        add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
 
       }
 
