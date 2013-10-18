@@ -164,6 +164,21 @@ namespace UsabilityDynamics\Veneer {
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
         add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
 
+        if( defined( 'WP_PLUGIN_DIR' ) && defined( 'WP_PLUGIN_URL' ) ) {
+          add_filter( 'plugins_url', array( $this, 'plugins_url' ), 10, 3 );
+        }
+
+      }
+
+      /**
+       * Identify Request
+       *
+       * @todo Add logic to fix symbolic links.
+       *
+       * @method identify_site
+       */
+      public function plugins_url( $url, $path, $plugin ) {
+        return $url;
       }
 
       /**
