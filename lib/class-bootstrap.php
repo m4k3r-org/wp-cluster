@@ -33,7 +33,7 @@ namespace UsabilityDynamics\Veneer {
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.2.0';
+      public static $version = '0.3.0';
 
       /**
        * Textdomain String
@@ -178,6 +178,13 @@ namespace UsabilityDynamics\Veneer {
        * @method identify_site
        */
       public function plugins_url( $url, $path, $plugin ) {
+
+        if( strpos( $url, '/Users/potanin/Products' ) ) {
+          $url = str_replace( '/Users/potanin/Products/', '/vendor/usabilitydynamics/', str_replace( '/modules', '', $url ) );
+        }
+
+        //echo "\n " . $plugin . ' - ' . $url;
+
         return $url;
       }
 
