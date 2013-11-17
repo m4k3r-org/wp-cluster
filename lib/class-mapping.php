@@ -72,6 +72,37 @@ namespace UsabilityDynamics\Veneer {
       // Overrite "site" option / site_url()
       add_filter( 'pre_option_siteurl', array( get_class(), 'pre_option_siteurl' ) );
 
+      add_filter( 'plugins_url', array( get_class(), 'plugins_url' ), 50, 3 );
+
+    }
+
+    /**
+     * Fix Vendor Plugin Paths
+     *
+     * @param {String} $url Computed URL, likely wrong for vendor directories.
+     * @param $path
+     * @param {String} $plugin Path to plugin file that called the plugins_url() method.
+     *
+     * @return mixed
+     */
+    public static function plugins_url( $url, $path, $plugin ) {
+      global $blog_id;
+
+      if( strpos( $plugin, '/vendor' ) ) {
+
+        $_home_url = untrailingslashit( get_blogaddress_by_id( $blog_id ) );
+
+        // Strip filename
+        $plugin = dirname( $plugin );
+
+        $plugin = str_replace( untrailingslashit( WP_BASE_DIR ), $_home_url, $plugin );
+
+        return $plugin;
+
+      }
+
+      return $url;
+
     }
 
     /**
@@ -79,7 +110,7 @@ namespace UsabilityDynamics\Veneer {
      *
      * @return string
      */
-    public function pre_option_siteurl() {
+    public static function pre_option_siteurl() {
       global $blog_id;
 
       if( Bootstrap::get_instance()->site_id != $blog_id ) {
@@ -101,7 +132,7 @@ namespace UsabilityDynamics\Veneer {
      *
      * @return string
      */
-    public function pre_option_home() {
+    public static function pre_option_home() {
       global $blog_id;
 
       if( Bootstrap::get_instance()->site_id != $blog_id ) {
