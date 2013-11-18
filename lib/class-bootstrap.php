@@ -8,12 +8,8 @@
  */
 namespace UsabilityDynamics\Veneer {
 
-  // Seek ./vendor/autoload.php and autoload
-  if( is_file( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' ) ) {
-    include_once( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' );
-  }
-
   if( !class_exists( 'UsabilityDynamics\Veneer\Bootstrap' ) ) {
+
     /**
      * Bootstrap Veneer
      *
@@ -112,15 +108,20 @@ namespace UsabilityDynamics\Veneer {
        * @method __construct
        */
       public function __construct() {
-        global $wpdb, $current_site, $current_blog;
+        global $wpdb, $current_site, $current_blog, $veneer;
 
         // Return singleton instance
         if( self::$instance ) {
           return self::$instance;
         }
 
+        // Seek ./vendor/autoload.php and autoload
+        if( is_file( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' ) ) {
+          include_once( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' );
+        }
+
         // Save context reference.
-        self::$instance = & $this;
+        $veneer = self::$instance = &$this;
 
         // Identify site being requested
         if( !$current_site || !$current_blog ) {
@@ -168,29 +169,8 @@ namespace UsabilityDynamics\Veneer {
         // Initialize all else.
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
         add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
+        add_action( 'wp_before_admin_bar_render', array( $this, 'veneer_toolbar' ), 10 );
 
-        if( defined( 'WP_PLUGIN_DIR' ) && defined( 'WP_PLUGIN_URL' ) ) {
-          // add_filter( 'plugins_url', array( $this, 'plugins_url' ), 10, 3 );
-        }
-
-      }
-
-      /**
-       * Identify Request
-       *
-       * @todo Add logic to fix symbolic links.
-       *
-       * @method identify_site
-       */
-      public function plugins_url( $url, $path, $plugin ) {
-
-        if( strpos( $url, '/Users/potanin/Products' ) ) {
-          $url = str_replace( '/Users/potanin/Products/', '/vendor/usabilitydynamics/', str_replace( '/modules', '', $url ) );
-        }
-
-        //echo "\n " . $plugin . ' - ' . $url;
-
-        return $url;
       }
 
       /**
@@ -266,6 +246,53 @@ namespace UsabilityDynamics\Veneer {
           'title'  => __( 'Settings', self::$text_domain ),
           'href'   => network_admin_url( 'settings.php' ),
         ) );
+
+      }
+
+      /**
+       *
+       */
+      public function veneer_toolbar() {
+        global $wp_admin_bar, $veneer;
+
+        $wp_admin_bar->add_menu( array(
+            'id'   => 'veneer',
+            'meta'   => array(
+              'html'     => '<div class="veneer-toolbar-info"></div>',
+              'target'   => '',
+              'onclick'  => '',
+              'title'    => 'Veneer',
+              'tabindex' => 10,
+              'class' => 'veneer-toolbar'
+            ),
+            'title' => 'Veneer',
+            'href' => ''
+          )
+        );
+
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'veneer',
+          'id'   => 'veneer-cdn',
+          'meta' => array(),
+          'title' => 'CDN',
+          'href' => ''
+        ));
+
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'veneer',
+          'id'   => 'veneer-search',
+          'meta' => array(),
+          'title' => 'Search',
+          'href' => ''
+        ));
+
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'veneer',
+          'id'   => 'veneer-varnish',
+          'meta' => array(),
+          'title' => 'Varnish',
+          'href' => ''
+        ));
 
       }
 
@@ -435,6 +462,7 @@ namespace UsabilityDynamics\Veneer {
       }
 
     }
+
   }
 
 }
