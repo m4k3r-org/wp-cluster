@@ -33,6 +33,10 @@ namespace UsabilityDynamics\Veneer {
        * @for Media
        */
       public function __construct() {
+
+        // Primary image path/url override.
+        add_filter( 'upload_dir', array( get_class(), 'upload_dir' ));
+
         $wp_upload_dir = wp_upload_dir();
 
         $this->directory = BLOGUPLOADDIR;
@@ -42,11 +46,29 @@ namespace UsabilityDynamics\Veneer {
         $this->baseurl   = $wp_upload_dir[ 'baseurl' ];
         $this->domain    = defined( 'WP_VENEER_DOMAIN_MEDIA' ) && WP_VENEER_DOMAIN_MEDIA ? undefined : $wp_upload_dir[ 'baseurl' ];
 
-        // Support for custom uploads directory
-        if( defined( 'WP_MEDIA_PATH' ) ) {
-          // add_filter( 'pre_option_upload_path', create_function( '', ' return WP_MEDIA_PATH; ' ) );
-          // add_filter( 'pre_option_upload_url_path', create_function( '', ' return WP_MEDIA_URL; ' ) );
-        }
+      }
+
+      /**
+       * @param $settings
+       * @param $settings.path
+       * @param $settings.url
+       * @param $settings.subdir
+       * @param $settings.basedir
+       * @param $settings.baseurl
+       * @param $settings.error
+       */
+      public static function upload_dir( $settings ) {
+
+        $_instance = Bootstrap::get_instance();
+
+        // @todo Add hookin to override media path here to a subdomain.
+        // http://demo-site.loc/files to http://demo-site.loc/media
+        $settings[ 'baseurl' ] = ( is_ssl() ? 'https://' : 'http://' ) . untrailingslashit( $_instance->domain ) . '/media';
+
+        // Change http://demo-site.loc/files/2013/11 to http://demo-site.loc/media/2013/11
+        $settings[ 'url' ] = str_replace( '/files/', '/media/', $settings[ 'url' ] );
+
+        return $settings;
 
       }
 

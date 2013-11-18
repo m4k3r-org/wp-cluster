@@ -72,6 +72,7 @@ namespace UsabilityDynamics\Veneer {
       // Overrite "site" option / site_url()
       add_filter( 'pre_option_siteurl', array( get_class(), 'pre_option_siteurl' ) );
 
+      // Support Vendor paths.
       add_filter( 'plugins_url', array( get_class(), 'plugins_url' ), 50, 3 );
 
     }
