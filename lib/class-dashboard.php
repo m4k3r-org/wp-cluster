@@ -66,11 +66,11 @@ namespace UsabilityDynamics\Veneer {
 
         /* Specific scripts and styles should be loaded only on specific pages */
         if( get_current_screen()->id === 'dashboard_page_hddp_manage' ) {
-          wp_enqueue_script( 'jquery-cookie' );
-          wp_enqueue_script( 'ud-load' );
-          wp_enqueue_script( 'ud-socket' );
-          wp_enqueue_script( 'ud-json-editor' );
-          wp_enqueue_style( 'ud-json-editor' );
+          // wp_enqueue_script( 'jquery-cookie' );
+          // wp_enqueue_script( 'ud-load' );
+          // wp_enqueue_script( 'ud-socket' );
+          // wp_enqueue_script( 'ud-json-editor' );
+          // wp_enqueue_style( 'ud-json-editor' );
         }
 
       }

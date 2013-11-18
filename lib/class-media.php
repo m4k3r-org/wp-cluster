@@ -35,7 +35,7 @@ namespace UsabilityDynamics\Veneer {
       public function __construct() {
 
         // Primary image path/url override.
-        add_filter( 'upload_dir', array( get_class(), 'upload_dir' ));
+        add_filter( 'upload_dir', array( get_class(), 'upload_dir' ) );
 
         // Get media/upload vales. (wp_upload_dir() will generate directories).
         $wp_upload_dir = wp_upload_dir();
@@ -54,29 +54,29 @@ namespace UsabilityDynamics\Veneer {
        * @todo Add hookin to override media path here to a subdomain.
        *
        * @param $settings
-       * @param $settings.path
-       * @param $settings.url
-       * @param $settings.subdir
-       * @param $settings.basedir
-       * @param $settings.baseurl
-       * @param $settings.error
+       * @param $settings .path
+       * @param $settings .url
+       * @param $settings .subdir
+       * @param $settings .basedir
+       * @param $settings .baseurl
+       * @param $settings .error
        */
       public static function upload_dir( $settings ) {
 
         $_instance = Bootstrap::get_instance();
 
         // If network main stie.
-        if ( is_main_site() ) {
-          $settings[ 'path' ] = str_replace( '/uploads', '/storage/' . $_instance->domain, $settings[ 'path' ] );
+        if( is_main_site() ) {
+          $settings[ 'path' ]    = str_replace( '/uploads', '/storage/' . $_instance->domain, $settings[ 'path' ] );
           $settings[ 'basedir' ] = str_replace( '/uploads', '/storage/' . $_instance->domain, $settings[ 'basedir' ] );
           $settings[ 'baseurl' ] = str_replace( '/uploads', '/media/', $settings[ 'baseurl' ] );
-          $settings[ 'url' ] = str_replace( '/uploads', '/media', $settings[ 'url' ] );
+          $settings[ 'url' ]     = str_replace( '/uploads', '/media', $settings[ 'url' ] );
         }
 
         // If network main stie.
-        if ( !is_main_site() ) {
+        if( !is_main_site() ) {
           $settings[ 'baseurl' ] = ( is_ssl() ? 'https://' : 'http://' ) . untrailingslashit( $_instance->domain ) . '/media';
-          $settings[ 'url' ] = str_replace( '/files/', '/media/', $settings[ 'url' ] );
+          $settings[ 'url' ]     = str_replace( '/files/', '/media/', $settings[ 'url' ] );
         }
 
         return $settings;

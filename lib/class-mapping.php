@@ -26,7 +26,7 @@ namespace UsabilityDynamics\Veneer {
        * @property $site_id
        * @type {Object}
        */
-      public $site_url = null;
+      static public $site_url = null;
 
       /**
        * Current site's public home URL
@@ -36,7 +36,7 @@ namespace UsabilityDynamics\Veneer {
        * @property $home_url
        * @type {Object}
        */
-      public $home_url = null;
+      static public $home_url = null;
 
       /**
        * Current site's administration URL
@@ -46,7 +46,15 @@ namespace UsabilityDynamics\Veneer {
        * @property $admin_url
        * @type {Object}
        */
-      public $admin_url = null;
+      static public $admin_url = null;
+      static public $includes_url = null;
+      static public $content_url = null;
+      static public $plugins_url = null;
+      static public $network_site_url = null;
+      static public $network_home_url = null;
+      static public $network_admin_url = null;
+      static public $self_admin_url = null;
+      static public $user_admin_url = null;
 
       /**
        * Initialize Locale
@@ -55,18 +63,7 @@ namespace UsabilityDynamics\Veneer {
        */
       public function __construct() {
 
-        // URLs
-        $this->home_url          = get_home_url();
-        $this->site_url          = get_site_url();
-        $this->admin_url         = get_admin_url();
-        $this->includes_url      = includes_url();
-        $this->content_url       = content_url();
-        $this->plugins_url       = plugins_url();
-        $this->network_site_url  = network_site_url();
-        $this->network_home_url  = network_home_url();
-        $this->network_admin_url = network_admin_url();
-        $this->self_admin_url    = self_admin_url();
-        $this->user_admin_url    = user_admin_url();
+        // add_filter( 'content_url', array( get_class(), 'content_url' ), 50, 2 );
 
         // overrite "home" option / home_url()
         add_filter( 'pre_option_home', array( get_class(), 'pre_option_home' ) );
@@ -76,6 +73,19 @@ namespace UsabilityDynamics\Veneer {
 
         // Support Vendor paths.
         add_filter( 'plugins_url', array( get_class(), 'plugins_url' ), 50, 3 );
+
+        // URLs
+        self::$home_url          = get_home_url();
+        self::$site_url          = get_site_url();
+        self::$admin_url         = get_admin_url();
+        self::$includes_url      = includes_url();
+        self::$content_url       = content_url();
+        self::$plugins_url       = plugins_url();
+        self::$network_site_url  = network_site_url();
+        self::$network_home_url  = network_home_url();
+        self::$network_admin_url = network_admin_url();
+        self::$self_admin_url    = self_admin_url();
+        self::$user_admin_url    = user_admin_url();
 
       }
 

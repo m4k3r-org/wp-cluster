@@ -13,9 +13,6 @@ namespace UsabilityDynamics\Veneer {
     include_once( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' );
   }
 
-  use UsabilityDynamics\Utility;
-  use UsabilityDynamics\Settings;
-
   if( !class_exists( 'UsabilityDynamics\Veneer\Bootstrap' ) ) {
     /**
      * Bootstrap Veneer
@@ -291,6 +288,10 @@ namespace UsabilityDynamics\Veneer {
 
         // Add handling for /manage
         add_filter( 'network_site_url', array( get_class(), 'network_site_url' ) );
+        add_filter( 'network_admin_url', array( get_class(), 'network_site_url' ) );
+
+        // Add handling for /manage
+        add_filter( 'admin_url', array( get_class(), 'admin_url' ) );
 
       }
 
@@ -307,6 +308,27 @@ namespace UsabilityDynamics\Veneer {
        */
       public static function network_site_url( $url ) {
         return str_replace( '/wp-admin', '/manage', $url );
+      }
+
+      /**
+       * Manage URL
+       *
+       *
+       * @author potanin@UD
+       * @method network_site_url
+       *
+       * @param $url
+       *
+       * @return mixed
+       */
+      public static function admin_url( $url ) {
+
+        if( defined( 'WP_SYSTEM_DIRECTORY' ) ) {
+          return str_replace( '/system/wp-admin', '/manage', $url );
+        } else {
+          return str_replace( '/wp-admin', '/manage', $url );
+        }
+
       }
 
       /**
