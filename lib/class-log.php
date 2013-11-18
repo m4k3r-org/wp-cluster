@@ -7,21 +7,24 @@
  */
 namespace UsabilityDynamics\Veneer {
 
-  /**
-   * Class Log
-   *
-   * @module Veneer
-   */
-  class Log {
+  if( !class_exists( 'UsabilityDynamics\Veneer\Log' ) ) {
 
     /**
-     * Initialize Log
+     * Class Log
      *
-     * @for Log
+     * @module Veneer
      */
-    public function __construct() {
+    class Log {
+
+      /**
+       * Initialize Log
+       *
+       * @for Log
+       */
+      public function __construct() {
+
+      }
 
     }
-
   }
 }

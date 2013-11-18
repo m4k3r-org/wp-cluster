@@ -140,11 +140,13 @@ namespace UsabilityDynamics\Veneer {
         $this->allowed_domains  = array( $this->domain );
         $this->is_valid         = in_array( $this->requested_domain, $this->allowed_domains ) ? true : false;
         $this->is_public        = $current_blog->public;
+        $this->is_main_site     = is_main_site();
+        $this->is_multisite     = is_multisite();
+        $this->is_main_network  = is_main_network();
 
         if( !$this->is_valid ) {
           wp_die( 'Invalid domain.' );
         }
-
 
         // Must run before fix-urls
         if( !defined( 'UPLOADBLOGSDIR' ) ) {
@@ -281,17 +283,14 @@ namespace UsabilityDynamics\Veneer {
        */
       public function fix_urls() {
 
-
-        if( defined( 'WP_VENEER_DOMAIN_MEDIA' ) && WP_VENEER_DOMAIN_MEDIA ) {
-          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADBLOGSDIR . '/' .  Bootstrap::get_instance()->domain );
+        if( defined( 'WP_VENEER_DOMAIN_MEDIA' ) && WP_VENEER_DOMAIN_MEDIA && !defined( 'BLOGUPLOADDIR' ) ) {
+          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADBLOGSDIR . '/' . Bootstrap::get_instance()->domain );
         } else {
-          define( 'BLOGUPLOADDIR', WP_BASE_DIR  . '/' .  UPLOADBLOGSDIR  . '/' .  Bootstrap::get_instance()->site_id );
+          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADBLOGSDIR . '/' . Bootstrap::get_instance()->site_id );
         }
 
-
+        // Add handling for /manage
         add_filter( 'network_site_url', array( get_class(), 'network_site_url' ) );
-
-        // add_filter( 'blog_option_upload_path', array( get_class(), 'blog_option_upload_path' ) );
 
       }
 
@@ -307,49 +306,7 @@ namespace UsabilityDynamics\Veneer {
        * @return mixed
        */
       public static function network_site_url( $url ) {
-
-        if( defined( 'WP_SYSTEM_DIRECTORY' ) && WP_SYSTEM_DIRECTORY != '' ) {
-          return str_replace( 'wp-admin', 'manage', $url );
-        }
-
-        return $url;
-
-      }
-
-      /**
-       * Upload Path
-       *
-       *
-       * @author potanin@UD
-       * @method network_site_url
-       *
-       * @param $url
-       *
-       * @return mixed
-       */
-      public static function blog_option_upload_path( $url ) {
-
-        // In WP 3.5 the UPLOADS constant sets the uploads path relative to the ABSPATH
-        if( defined( 'UPLOADS' ) ) {
-
-        }
-
-        // Legacy WordPress MS
-        if( strpos( $url, 'wp-content/blogs.dir' ) !== false ) {
-          return str_replace( 'wp-content/blogs.dir', UPLOADBLOGSDIR, $url );
-        }
-
-        // Contemporary WordPress MS
-        if( strpos( $url, 'wp-content/sites' ) !== false ) {
-          return str_replace( 'wp-content/sites', UPLOADBLOGSDIR, $url );
-        }
-
-        if( strpos( $url, 'wp-content/uploads' ) !== false ) {
-          return str_replace( 'wp-content/uploads', UPLOADBLOGSDIR, $url );
-        }
-
-        return $url;
-
+        return str_replace( '/wp-admin', '/manage', $url );
       }
 
       /**
@@ -366,7 +323,7 @@ namespace UsabilityDynamics\Veneer {
        */
       public static function error_handler( $errno = null, $errstr = '', $errfile = null, $errline = null ) {
 
-        die( 'Veneer error' );
+        wp_die( 'Veneer error' );
 
         // This error code is not included in error_reporting
         if( !( error_reporting() & $errno ) ) {

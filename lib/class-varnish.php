@@ -1,25 +1,25 @@
 <?php
 /**
- * Views Access Controller
+ * Varnish Controller
  *
  * @module Veneer
  * @author potanin@UD
  */
 namespace UsabilityDynamics\Veneer {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Views' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Veneer\Varnish' ) ) {
 
     /**
-     * Class Views
+     * Class Varnish
      *
      * @module Veneer
      */
-    class Views {
+    class Varnish {
 
       /**
-       * Initialize Views
+       * Initialize Varnish
        *
-       * @for Views
+       * @for Varnish
        */
       public function __construct() {
 

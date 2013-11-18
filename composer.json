@@ -43,6 +43,7 @@
       "lib/class-settings.php",
       "lib/class-theme.php",
       "lib/class-utility.php",
+      "lib/class-varnish.php",
       "lib/class-views.php"
     ]
   },
