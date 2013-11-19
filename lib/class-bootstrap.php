@@ -202,12 +202,27 @@ namespace UsabilityDynamics\Veneer {
       public function plugins_loaded() {
         add_action( 'admin_init', array( $this, 'admin_init' ) );
 
+        // Add Frontend Headers
+        add_action( 'template_redirect', array( $this, 'template_redirect' ) );
+
         // add_action( 'shutdown', array( $this, 'shutdown' ) );
         // add_action( 'init', array( $this, 'init' ) );
         // add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
         // add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ) );
         // add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );
-        // add_action( 'template_redirect', array( $this, 'template_redirect' ) );
+
+      }
+
+      /**
+       * Add Frontend Headers
+       *
+       */
+      public function template_redirect() {
+
+        if( !headers_sent() ) {
+          header( 'Server: Veneer' );
+          header( 'X-Powered-By: Veneer ' . Bootstrap::$version );
+        }
 
       }
 
