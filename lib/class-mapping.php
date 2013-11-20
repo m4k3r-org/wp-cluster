@@ -75,18 +75,18 @@ namespace UsabilityDynamics\Veneer {
         add_filter( 'plugins_url', array( get_class(), 'plugins_url' ), 50, 3 );
 
         // URLs
-        self::$home_url          = get_home_url();
+        self::$home_url          = get_home_url();    
         self::$site_url          = get_site_url();
-        self::$admin_url         = get_admin_url();
+        self::$admin_url         = get_admin_url();       // http://drop.veneer.io/manage/
         self::$includes_url      = includes_url();
         self::$content_url       = content_url();
         self::$plugins_url       = plugins_url();
         self::$network_site_url  = network_site_url();
-        self::$network_home_url  = network_home_url();
-        self::$network_admin_url = network_admin_url();
+        self::$network_home_url  = network_home_url();    
+        self::$network_admin_url = network_admin_url();   // http://drop.veneer.io/manage/network/
         self::$self_admin_url    = self_admin_url();
         self::$user_admin_url    = user_admin_url();
-
+        
       }
 
       /**
