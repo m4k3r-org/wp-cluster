@@ -143,7 +143,7 @@ namespace UsabilityDynamics\Veneer {
         $this->is_main_network  = is_main_network();
 
         if( !$this->is_valid ) {
-          wp_die( 'Invalid domain.' );
+          wp_die( '<h1>Veneer Network Error</h1><p>Your request is for an invalid domain.</p>' );
         }
 
         // Must run before fix-urls
@@ -171,6 +171,8 @@ namespace UsabilityDynamics\Veneer {
         add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
         add_action( 'admin_menu', array( $this, 'admin_menu' ), 20 );
         add_action( 'wp_before_admin_bar_render', array( $this, 'veneer_toolbar' ), 10 );
+        add_action( 'admin_init', array( $this, 'admin_init' ) );
+        add_action( 'template_redirect', array( $this, 'template_redirect' ) );
 
         // @chainable. (Node.js habbit)
         return $this;
@@ -223,10 +225,6 @@ namespace UsabilityDynamics\Veneer {
        * @author potanin@UD
        */
       public function plugins_loaded() {
-        add_action( 'admin_init', array( $this, 'admin_init' ) );
-
-        // Add Frontend Headers
-        add_action( 'template_redirect', array( $this, 'template_redirect' ) );
 
         // add_action( 'shutdown', array( $this, 'shutdown' ) );
         // add_action( 'init', array( $this, 'init' ) );
@@ -245,6 +243,7 @@ namespace UsabilityDynamics\Veneer {
         if( !headers_sent() ) {
           header( 'Server: Veneer' );
           header( 'X-Powered-By: Veneer ' . Bootstrap::$version );
+          header( 'X-Veneer-Version:' . Bootstrap::$version );
         }
 
       }
