@@ -2,7 +2,7 @@
   "name": "usabilitydynamics/wp-veneer",
   "type": "library",
   "description": "Veneer network",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
   "keywords": [
     "wordpress",
@@ -47,8 +47,5 @@
       "lib/class-varnish.php",
       "lib/class-views.php"
     ]
-  },
-  "config": {
-    "namespace": "Veneer"
   }
 }

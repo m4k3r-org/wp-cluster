@@ -169,7 +169,30 @@ namespace UsabilityDynamics\Veneer {
         // Initialize all else.
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
         add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
+        add_action( 'admin_menu', array( $this, 'admin_menu' ), 20 );
         add_action( 'wp_before_admin_bar_render', array( $this, 'veneer_toolbar' ), 10 );
+
+        // @chainable. (Node.js habbit)
+        return $this;
+
+      }
+
+      /**
+       * Add Veneer Menus
+       *
+       * @method admin_menu
+       */
+      public function admin_menu() {
+
+        // Add Settings -> Veneer
+        add_options_page( __( 'Veneer', self::$text_domain ), __( 'Veneer', self::$text_domain ), 'manage_network', 'veneer', function() {
+          include( dirname( __DIR__ ) . '/views/admin.php' );
+        });
+
+        // Add Tools -> Jobs
+        add_management_page( __( 'Jobs', self::$text_domain ), __( 'Jobs', self::$text_domain ), 'manage_network', 'veneer', function() {
+          include( dirname( __DIR__ ) . '/views/jobs.php' );
+        });
 
       }
 
@@ -260,12 +283,15 @@ namespace UsabilityDynamics\Veneer {
           'id'     => 'network-settings',
           'title'  => __( 'Settings', self::$text_domain ),
           'href'   => network_admin_url( 'settings.php' ),
-        ) );
+        ));
 
       }
 
       /**
+       * Add Veneer Toolbar
        *
+       * @method veneer_toolbar
+       * @for Boostrap
        */
       public function veneer_toolbar() {
         global $wp_admin_bar, $veneer;
@@ -281,7 +307,7 @@ namespace UsabilityDynamics\Veneer {
               'class' => 'veneer-toolbar'
             ),
             'title' => 'Veneer',
-            'href' => ''
+            'href' => admin_url( 'veneer/' )
           )
         );
 
@@ -290,7 +316,7 @@ namespace UsabilityDynamics\Veneer {
           'id'   => 'veneer-cdn',
           'meta' => array(),
           'title' => 'CDN',
-          'href' => ''
+          'href' => admin_url( 'veneer/cdn' )
         ));
 
         $wp_admin_bar->add_menu( array(
@@ -298,7 +324,7 @@ namespace UsabilityDynamics\Veneer {
           'id'   => 'veneer-search',
           'meta' => array(),
           'title' => 'Search',
-          'href' => ''
+          'href' => admin_url( 'veneer/search' )
         ));
 
         $wp_admin_bar->add_menu( array(
@@ -306,7 +332,15 @@ namespace UsabilityDynamics\Veneer {
           'id'   => 'veneer-varnish',
           'meta' => array(),
           'title' => 'Varnish',
-          'href' => ''
+          'href' => admin_url( 'veneer/varnish' )
+        ));
+
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'veneer',
+          'id'   => 'veneer-jobs',
+          'meta' => array(),
+          'title' => 'Jobs',
+          'href' => admin_url( 'veneer/jobs' )
         ));
 
       }
