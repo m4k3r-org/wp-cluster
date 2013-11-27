@@ -174,8 +174,63 @@ namespace UsabilityDynamics\Veneer {
         add_action( 'admin_init', array( $this, 'admin_init' ) );
         add_action( 'template_redirect', array( $this, 'template_redirect' ) );
 
+        add_action( 'admin_enqueue_scripts', array( get_class(), 'admin_enqueue_scripts' ), 20 );
+
+        add_filter( 'wpmu_blogs_columns', array( $this, 'wpmu_blogs_columns' ) );
+        add_action( 'manage_sites_custom_column', array( $this, 'manage_sites_custom_column' ), 10, 2 );
+
         // @chainable. (Node.js habbit)
         return $this;
+
+      }
+
+      public function admin_enqueue_scripts() {
+        wp_enqueue_style( 'veneer-app', home_url( '/vendor/usabilitydynamics/wp-veneer/styles/app.css' ), array(), self::$version );
+      }
+
+      /**
+       * Add "ID" and "Thumbnail" columns to Network Sites table.
+       *
+       * @todo Use register_column_headers();
+       *
+       * @param $sites_columns
+       * @return mixed
+       */
+      public function wpmu_blogs_columns( $sites_columns ) {
+
+        // Insert ID at position.
+        $sites_columns = array_merge( array_slice( $sites_columns, 0, 1 ), array(
+          'blog_id' => __( 'ID', self::$text_domain ),
+        ), array_slice( $sites_columns, 1 ) );
+
+        // Insert Thumbnail at position.
+        $sites_columns = array_merge( array_slice( $sites_columns, 0, 10 ), array(
+          'thumbnail' => __( 'Thumbnail', self::$text_domain )
+        ), array_slice( $sites_columns, 10 ) );
+
+        return $sites_columns;
+
+      }
+
+      /**
+       * Dispaly "ID" and "Thumbnail" cells on Network Sites table.
+       *
+       * @param $column_name
+       * @param $blog_id
+       */
+      public function manage_sites_custom_column( $column_name, $blog_id ) {
+
+        switch ($column_name) {
+
+          case 'blog_id':
+            echo '<p>' . $blog_id . '</p>';
+          break;
+
+          case 'thumbnail':
+            echo '<img src="" class="veneer-site-thumbnail"/>';
+          break;
+
+        }
 
       }
 
@@ -192,8 +247,26 @@ namespace UsabilityDynamics\Veneer {
         });
 
         // Add Tools -> Jobs
-        add_management_page( __( 'Jobs', self::$text_domain ), __( 'Jobs', self::$text_domain ), 'manage_network', 'veneer', function() {
+        add_management_page( __( 'Jobs', self::$text_domain ), __( 'Jobs', self::$text_domain ), 'manage_network', 'veneer-jobs', function() {
+
+          /*
+          require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+
+          $wp_list_table = new WP_List_Table( array(
+            'plural' => '',
+            'singular' => '',
+            'ajax' => false,
+            'screen' => null,
+          ));
+
+          die( '<pre>' . print_r( $wp_list_table, true ) . '</pre>' );
+          */
+
+          // Expose Variables.
+          $_locale = self::$text_domain;
+
           include( dirname( __DIR__ ) . '/views/jobs.php' );
+
         });
 
       }
