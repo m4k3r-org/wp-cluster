@@ -31,6 +31,7 @@
     "files": [
       "lib/class-api.php",
       "lib/class-bootstrap.php",
+      "lib/class-job.php",
       "lib/class-cache.php",
       "lib/class-dashboard.php",
       "lib/class-debug.php",

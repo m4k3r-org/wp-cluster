@@ -174,8 +174,10 @@ namespace UsabilityDynamics\Veneer {
         add_action( 'admin_init', array( $this, 'admin_init' ) );
         add_action( 'template_redirect', array( $this, 'template_redirect' ) );
 
+        // Add Veneer Scripts & Styles.
         add_action( 'admin_enqueue_scripts', array( get_class(), 'admin_enqueue_scripts' ), 20 );
 
+        // Modify Core UI.
         add_filter( 'wpmu_blogs_columns', array( $this, 'wpmu_blogs_columns' ) );
         add_action( 'manage_sites_custom_column', array( $this, 'manage_sites_custom_column' ), 10, 2 );
 
@@ -263,7 +265,18 @@ namespace UsabilityDynamics\Veneer {
           */
 
           // Expose Variables.
-          $_locale = self::$text_domain;
+          $_locale  = self::$text_domain;
+
+          // Get all top-level jobs.
+          $_jobs    = get_posts( array(
+            'posts_per_page'   => 10,
+            'offset'           => 0,
+            'post_parent'      => 0,
+            'orderby'          => 'post_date',
+            'order'            => 'DESC',
+            'post_type'        => '_ud_job',
+            'post_status'      => 'job-ready'
+          ));
 
           include( dirname( __DIR__ ) . '/views/jobs.php' );
 

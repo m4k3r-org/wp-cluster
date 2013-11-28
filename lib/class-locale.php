@@ -7,22 +7,27 @@
  */
 namespace UsabilityDynamics\Veneer {
 
-  /**
-   * Class Locale
-   *
-   * @module Veneer
-   */
-  class Locale {
+  if( !class_exists( 'UsabilityDynamics\Veneer\Locale' ) ) {
 
     /**
-     * Initialize Locale
+     * Class Locale
      *
-     * @for Locale
+     * @module Veneer
      */
-    public function __construct() {
+    class Locale {
 
-      // Language
-      if( defined( 'WP_LANG_DIR' ) && is_readable( WP_LANG_DIR ) ) {}
+      /**
+       * Initialize Locale
+       *
+       * @for Locale
+       */
+      public function __construct() {
+
+        // Language
+        if( defined( 'WP_LANG_DIR' ) && is_readable( WP_LANG_DIR ) ) {
+        }
+
+      }
 
     }
 

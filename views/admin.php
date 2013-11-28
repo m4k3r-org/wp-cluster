@@ -12,42 +12,7 @@
     echo $content;
 
   }
-  if( $_GET[ 'test' ] == 'create_job' ) {
-    global $wpdb;
 
-    include_once( dirname( __DIR__ ) . '/jobs/repair-encoding.php' );
-
-    $encoding_job = new \UsabilityDynamics\Job( array(
-      "type"     => 'repair-encoding',
-      "worker"   => array( "repairEncoding", "worker" )
-    ));
-
-    // Multisite Batches.
-    if( is_multisite() ) {
-
-      foreach( $wpdb->get_col( "SELECT blog_id FROM {$wpdb->blogs};" ) as $_blog_id ) {
-
-        $encoding_job->add_batch( array(
-          "table" => $wpdb->base_prefix . $_blog_id . '_posts'
-        ));
-
-      }
-
-    }
-
-    // Single Site.
-    if( !is_multisite() ) {
-      $encoding_job->add_batch( array(
-        "table" => $wpdb->posts
-      ));
-    }
-
-    // Delete job. (@debug)
-    //$encoding_job->delete();
-
-    die( '<pre>|' . print_r( $encoding_job, true ) . '|</pre>' );
-
-  }
   ?>
 
 </div>
