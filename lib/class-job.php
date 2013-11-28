@@ -1,6 +1,6 @@
 <?php
 /**
- * Veneer Jobs
+ * Veneer Job
  *
  * @module Veneer
  * @author potanin@UD
@@ -12,10 +12,11 @@ namespace UsabilityDynamics\Veneer {
     /**
      * Class Job
      *
+     * @extends UsabilityDynamics\RaaS\Job
      * @class Job
      * @module Veneer
      */
-    class Job extends \UsabilityDynamics\Job {
+    class Job extends \UsabilityDynamics\RaaS\Job {
 
       /**
        * Initialize JOb
@@ -24,7 +25,10 @@ namespace UsabilityDynamics\Veneer {
        */
       public function __construct( $settings ) {
 
+        // Instantaite UsabilityDynamics/RaaS/Job
         parent::__construct( $settings );
+
+        //return $this;
 
       }
 

@@ -6,6 +6,41 @@ require_once( dirname( __DIR__ ) . '/lib/jobs/repair-encoding.php' );
 
 add_filter( 'job::repair-encoding', array( 'repairEncoding', 'worker' ), 10, 3 );
 
+if( $_GET[ 'test' ] == 'create-screenshots' ) {
+
+  // Register Job Type. (Uses UsabilityDynamics\RaaS\Job -> UsabilityDynamics\Job)
+  $_job = new \UsabilityDynamics\Veneer\Job( array(
+    "type"   => 'site-screenshot',
+  ));
+
+  // Push screenshot request for drop.veneer.io
+  $_job->push( array(
+    "url" => "drop.veneer.io",
+    "force" => false,
+    "fullpage" => false,
+    "thumbnail_max_width" => false,
+    "viewport" => "1280x1024"
+  ));
+
+  // Push screenshot request for discodonniepresents.com
+  $_job->push( array(
+    "url" => "discodonniepresents.com",
+    "force" => false,
+    "fullpage" => false,
+    "thumbnail_max_width" => false,
+    "viewport" => "1280x1024"
+  ));
+
+  // Force job execution right now
+  \UsabilityDynamics\Veneer\Job::process_jobs( $_job->id );
+
+  // Delete Job.
+  $_job->delete();
+
+  die( '<pre>' . print_r( $_job, true ) . '</pre>' );
+
+}
+
 if( $_GET[ 'test' ] == 'create-job' ) {
 
   $encoding_job = new \UsabilityDynamics\Job( array(
@@ -42,7 +77,6 @@ if( $_GET[ 'test' ] == 'repair-encoding' ) {
   //die( '<pre>Job::process_jobs:' . print_r( $_results, true ) . '</pre>' );
 
 } ?>
-
 
 <h2><?php _e( 'Jobs', $_locale ); ?></h2>
 
