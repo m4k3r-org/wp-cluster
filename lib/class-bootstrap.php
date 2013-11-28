@@ -265,7 +265,7 @@ namespace UsabilityDynamics\Veneer {
           */
 
           // Expose Variables.
-          $_locale  = self::$text_domain;
+          $_locale  = 'Veneer';
 
           // Get all top-level jobs.
           $_jobs    = get_posts( array(
