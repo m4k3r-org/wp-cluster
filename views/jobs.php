@@ -1,33 +1,42 @@
-<div class="wrap">
-
 <?php
 global $wpdb;
 require_once( dirname( __DIR__ ) . '/lib/jobs/repair-encoding.php' );
+require_once( dirname( __DIR__ ) . '/lib/jobs/site-screenshot.php' );
 
+// Register Job Workers.
 add_filter( 'job::repair-encoding', array( 'repairEncoding', 'worker' ), 10, 3 );
+add_filter( 'job::site-screenshot', array( 'siteScreenshot', 'worker' ), 10, 3 );
 
+/**
+ * Test Basic XML-RPC Call
+ *
+ */
+if( $_GET[ 'test' ] == 'basic-rpc' ) {
+
+  // @todo Make request to http://raas.usabilitydynamics.com to "snapshot.Generate" passing in "url", "viewport" and "timeout"
+
+}
+
+/**
+ * Use RaaS Job to task RaaS Server
+ *
+ */
 if( $_GET[ 'test' ] == 'create-screenshots' ) {
 
   // Register Job Type. (Uses UsabilityDynamics\RaaS\Job -> UsabilityDynamics\Job)
-  $_job = new \UsabilityDynamics\Veneer\Job( array(
-    "type"   => 'site-screenshot',
+  $_job = new \UsabilityDynamics\RaaS\Job( array(
+    "type"   => 'site-screenshot'
   ));
 
   // Push screenshot request for drop.veneer.io
   $_job->push( array(
     "url" => "drop.veneer.io",
-    "force" => false,
-    "fullpage" => false,
-    "thumbnail_max_width" => false,
     "viewport" => "1280x1024"
   ));
 
   // Push screenshot request for discodonniepresents.com
   $_job->push( array(
     "url" => "discodonniepresents.com",
-    "force" => false,
-    "fullpage" => false,
-    "thumbnail_max_width" => false,
     "viewport" => "1280x1024"
   ));
 
@@ -41,6 +50,10 @@ if( $_GET[ 'test' ] == 'create-screenshots' ) {
 
 }
 
+/**
+ * Create Local Job
+ *
+ */
 if( $_GET[ 'test' ] == 'create-job' ) {
 
   $encoding_job = new \UsabilityDynamics\Job( array(
@@ -69,16 +82,10 @@ if( $_GET[ 'test' ] == 'create-job' ) {
 
 }
 
-if( $_GET[ 'test' ] == 'repair-encoding' ) {
+?>
+<div class="wrap">
 
-  $_results = \UsabilityDynamics\Veneer\Job::process_jobs( 'repair-encoding' );
-
-  echo implode( '<br />', $_results );
-  //die( '<pre>Job::process_jobs:' . print_r( $_results, true ) . '</pre>' );
-
-} ?>
-
-<h2><?php _e( 'Jobs', $_locale ); ?></h2>
+  <h2><?php _e( 'Jobs', $_locale ); ?></h2>
 
   <?php /* $wp_list_table->views(); */ ?>
 
