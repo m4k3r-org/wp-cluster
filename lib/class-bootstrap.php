@@ -181,6 +181,16 @@ namespace UsabilityDynamics\Veneer {
         add_filter( 'wpmu_blogs_columns', array( $this, 'wpmu_blogs_columns' ) );
         add_action( 'manage_sites_custom_column', array( $this, 'manage_sites_custom_column' ), 10, 2 );
 
+        add_action( 'init', function(){
+          global $wpi_xml_server;
+          $wpi_xml_server = new \UsabilityDynamics\UD_XMLRPC(
+            'https://raas.usabilitydynamics.com:443',
+            \UsabilityDynamics\get_option('ud_api_public_key'),
+            'WordPress/3.7.1',
+            'ud'
+          );
+        });
+
         // @chainable. (Node.js habbit)
         return $this;
 

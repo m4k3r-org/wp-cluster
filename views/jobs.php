@@ -126,4 +126,6 @@ if( $_GET[ 'test' ] == 'create-job' ) {
   <div id="ajax-response"></div>
   <br class="clear"/>
 
+  <?php global $wpi_xml_server; $wpi_xml_server->ui->render_api_fields(); ?>
+
 </div>
