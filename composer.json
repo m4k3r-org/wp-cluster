@@ -2,7 +2,7 @@
   "name": "usabilitydynamics/wp-veneer",
   "type": "library",
   "description": "Veneer network",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
   "keywords": [
     "wordpress",
@@ -31,7 +31,6 @@
     "files": [
       "lib/class-api.php",
       "lib/class-bootstrap.php",
-      "lib/class-job.php",
       "lib/class-cache.php",
       "lib/class-dashboard.php",
       "lib/class-debug.php",

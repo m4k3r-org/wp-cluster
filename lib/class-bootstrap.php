@@ -26,7 +26,7 @@ namespace UsabilityDynamics\Veneer {
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.3.1';
+      public static $version = '0.3.2';
 
       /**
        * Textdomain String
