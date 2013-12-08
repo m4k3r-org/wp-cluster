@@ -63,7 +63,9 @@ namespace UsabilityDynamics\Veneer {
        */
       public function __construct() {
 
-        // add_filter( 'content_url', array( get_class(), 'content_url' ), 50, 2 );
+        if( !defined( 'WP_BASE_DOMAIN' ) ) {
+          wp_die( '<h1>Network Error</h1><p>The WP_BASE_DOMAIN constant is not defined.</p>' );
+        }
 
         // overrite "home" option / home_url()
         add_filter( 'pre_option_home', array( get_class(), 'pre_option_home' ) );
@@ -71,7 +73,7 @@ namespace UsabilityDynamics\Veneer {
         // Overrite "site" option / site_url()
         add_filter( 'pre_option_siteurl', array( get_class(), 'pre_option_siteurl' ) );
 
-        // Support Vendor paths.
+        // Support Vendor paths. Disabled because references get_blogaddress_by_id() too early.
         add_filter( 'plugins_url', array( get_class(), 'plugins_url' ), 50, 3 );
 
         // URLs
@@ -101,6 +103,11 @@ namespace UsabilityDynamics\Veneer {
       public static function plugins_url( $url, $path, $plugin ) {
         global $blog_id;
 
+        // Being called too early?
+        if( !function_exists( 'get_blogaddress_by_id' ) ) {
+          wp_die('<h1>Network Error</h1><p>The UsabilityDynamics\Veneer\Mapping:plugin_url() method is called prior to get_blogaddress_by_id() being available.</p>');
+        }
+
         if( strpos( $plugin, '/vendor' ) ) {
 
           $_home_url = untrailingslashit( get_blogaddress_by_id( $blog_id ) );
@@ -126,6 +133,10 @@ namespace UsabilityDynamics\Veneer {
       public static function pre_option_siteurl() {
         global $blog_id;
 
+        if( !function_exists( 'get_blogaddress_by_id' ) ) {
+          return 'http://' . WP_BASE_DOMAIN;
+        }
+
         if( Bootstrap::get_instance()->site_id != $blog_id ) {
 
           if( strpos( get_blogaddress_by_id( $blog_id ), 'http' ) === false ) {
@@ -147,6 +158,10 @@ namespace UsabilityDynamics\Veneer {
        */
       public static function pre_option_home() {
         global $blog_id;
+
+        if( !function_exists( 'get_blogaddress_by_id' ) ) {
+          return 'http://' . WP_BASE_DOMAIN;
+        }
 
         if( Bootstrap::get_instance()->site_id != $blog_id ) {
 

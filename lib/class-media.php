@@ -28,24 +28,37 @@ namespace UsabilityDynamics\Veneer {
       public $path = null;
 
       /**
+       * Clean domain.
+       *
+       * @public
+       * @static
+       * @property $domain
+       * @type {Object}
+       */
+      public $domain = null;
+
+      /**
        * Initialize Media
        *
        * @for Media
        */
       public function __construct() {
 
+        if( !defined( 'UPLOADBLOGSDIR' ) ) {
+          wp_die( '<h1>Network Error</h1><p>Unable to instatiate media the UPLOADBLOGSDIR constant is not defined.</p>' );
+        }
+
         // Primary image path/url override.
         add_filter( 'upload_dir', array( get_class(), 'upload_dir' ) );
 
         // Get media/upload vales. (wp_upload_dir() will generate directories).
         $wp_upload_dir = wp_upload_dir();
-
         $this->directory = BLOGUPLOADDIR;
         $this->path      = $wp_upload_dir[ 'path' ];
         $this->url       = $wp_upload_dir[ 'url' ];
         $this->basedir   = $wp_upload_dir[ 'basedir' ];
         $this->baseurl   = $wp_upload_dir[ 'baseurl' ];
-        $this->domain    = defined( 'WP_VENEER_DOMAIN_MEDIA' ) && WP_VENEER_DOMAIN_MEDIA ? undefined : $wp_upload_dir[ 'baseurl' ];
+        $this->domain    = defined( 'WP_VENEER_DOMAIN_MEDIA' ) && WP_VENEER_DOMAIN_MEDIA ? null : $wp_upload_dir[ 'baseurl' ];
 
       }
 
@@ -67,8 +80,8 @@ namespace UsabilityDynamics\Veneer {
 
         // If network main stie.
         if( is_main_site() ) {
-          $settings[ 'path' ]    = str_replace( '/uploads', '/storage/' . $_instance->domain, $settings[ 'path' ] );
-          $settings[ 'basedir' ] = str_replace( '/uploads', '/storage/' . $_instance->domain, $settings[ 'basedir' ] );
+          $settings[ 'path' ]    = str_replace( '/uploads', '/' . UPLOADBLOGSDIR . '/' . $_instance->domain, $settings[ 'path' ] );
+          $settings[ 'basedir' ] = str_replace( '/uploads', '/' . UPLOADBLOGSDIR . '/' . $_instance->domain, $settings[ 'basedir' ] );
           $settings[ 'baseurl' ] = str_replace( '/uploads', '/media/', $settings[ 'baseurl' ] );
           $settings[ 'url' ]     = str_replace( '/uploads', '/media', $settings[ 'url' ] );
         }

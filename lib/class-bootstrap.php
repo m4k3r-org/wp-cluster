@@ -98,6 +98,16 @@ namespace UsabilityDynamics\Veneer {
       public $network_domain = null;
 
       /**
+       * Current theme, instance of WP_Theme object.
+       *
+       * @public
+       * @static
+       * @property $theme
+       * @type {Object}
+       */
+      public $theme = null;
+
+      /**
        * Constructor.
        *
        * UsabilityDynamics components should be avialable.
@@ -115,17 +125,25 @@ namespace UsabilityDynamics\Veneer {
           return self::$instance;
         }
 
+        if( !defined( 'MULTISITE' ) ) {
+          wp_die( 'MULTISITE is not defined.' );
+        }
+
         // Seek ./vendor/autoload.php and autoload
         if( is_file( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' ) ) {
           include_once( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' );
         }
 
         // Save context reference.
-        $veneer = self::$instance = &$this;
+        $veneer = self::$instance = & $this;
 
-        // Identify site being requested
+        // Identify site being requested. This should be handled by sunrise.php.
         if( !$current_site || !$current_blog ) {
           $this->identify_site();
+        }
+
+        if( !$current_site ) {
+          wp_die( 'Site not identified.' );
         }
 
         // Current site.
@@ -160,6 +178,7 @@ namespace UsabilityDynamics\Veneer {
         $this->media     = new Media();
         $this->mapping   = new Mapping();
         $this->api       = new API();
+        $this->theme     = wp_get_theme();
 
         // Must set or long will not work
         if( !defined( 'COOKIE_DOMAIN' ) ) {
@@ -185,13 +204,16 @@ namespace UsabilityDynamics\Veneer {
       public function identify_site() {
         global $site_id, $blog_id, $wpdb, $current_blog, $current_site;
 
-        $_lookup = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}blogs WHERE domain = '{$_SERVER[HTTP_HOST]}' LIMIT 1" );
+        $_host = $_SERVER[ 'HTTP_HOST' ];
 
-        $blog_id = $wpdb->blogid = $_lookup->blog_id;
-        $site_id = $wpdb->siteid = $_lookup->site_id;
+        $_lookup = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE domain = '{$_host}' LIMIT 1" );
 
-        $current_site          = $wpdb->get_row( "SELECT * from {$wpdb->prefix}site WHERE id = '{$site_id}' LIMIT 0,1" );
-        $current_site->blog_id = $blog_id;
+        if( $_lookup ) {
+          $blog_id               = $wpdb->blogid = $_lookup->blog_id;
+          $site_id               = $wpdb->siteid = $_lookup->site_id;
+          $current_site          = $wpdb->get_row( "SELECT * from {$wpdb->site} WHERE id = '{$site_id}' LIMIT 0,1" );
+          $current_site->blog_id = $blog_id;
+        }
 
       }
 
@@ -270,43 +292,43 @@ namespace UsabilityDynamics\Veneer {
         global $wp_admin_bar, $veneer;
 
         $wp_admin_bar->add_menu( array(
-            'id'   => 'veneer',
-            'meta'   => array(
+            'id'    => 'veneer',
+            'meta'  => array(
               'html'     => '<div class="veneer-toolbar-info"></div>',
               'target'   => '',
               'onclick'  => '',
               'title'    => 'Veneer',
               'tabindex' => 10,
-              'class' => 'veneer-toolbar'
+              'class'    => 'veneer-toolbar'
             ),
             'title' => 'Veneer',
-            'href' => ''
+            'href'  => ''
           )
         );
 
         $wp_admin_bar->add_menu( array(
           'parent' => 'veneer',
-          'id'   => 'veneer-cdn',
-          'meta' => array(),
-          'title' => 'CDN',
-          'href' => ''
-        ));
+          'id'     => 'veneer-cdn',
+          'meta'   => array(),
+          'title'  => 'CDN',
+          'href'   => ''
+        ) );
 
         $wp_admin_bar->add_menu( array(
           'parent' => 'veneer',
-          'id'   => 'veneer-search',
-          'meta' => array(),
-          'title' => 'Search',
-          'href' => ''
-        ));
+          'id'     => 'veneer-search',
+          'meta'   => array(),
+          'title'  => 'Search',
+          'href'   => ''
+        ) );
 
         $wp_admin_bar->add_menu( array(
           'parent' => 'veneer',
-          'id'   => 'veneer-varnish',
-          'meta' => array(),
-          'title' => 'Varnish',
-          'href' => ''
-        ));
+          'id'     => 'veneer-varnish',
+          'meta'   => array(),
+          'title'  => 'Varnish',
+          'href'   => ''
+        ) );
 
       }
 

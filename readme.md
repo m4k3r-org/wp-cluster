@@ -1,3 +1,9 @@
+## Changelog
+
+### 0.3.0
+ - Added check for UPLOADBLOGSDIR to be defined or wp_die().
+ - Added support for UPLOADBLOGSDIR when configuring media path and URL.
+
 ## Overview
 
 ## Recognized Constants
