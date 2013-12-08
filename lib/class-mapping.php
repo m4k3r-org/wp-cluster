@@ -109,8 +109,12 @@ namespace UsabilityDynamics\Veneer {
         }
 
         if( strpos( $plugin, '/vendor' ) ) {
-
-          $_home_url = untrailingslashit( get_blogaddress_by_id( $blog_id ) );
+        
+          if( function_exists( 'get_blogaddress_by_id' ) ) {            
+            $_home_url = untrailingslashit( get_blogaddress_by_id( $blog_id ) );
+          } else {
+            $_home_url = WP_SITEURL;            
+          }
 
           // Strip filename
           $plugin = dirname( $plugin );

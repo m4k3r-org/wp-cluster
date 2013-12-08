@@ -2,7 +2,7 @@
 /**
  * UsabilityDynamics\Veneer Bootstrap
  *
- * @verison 0.2.0
+ * @verison 0.3.0
  * @author potanin@UD
  * @namespace UsabilityDynamics\Veneer
  */
@@ -98,11 +98,11 @@ namespace UsabilityDynamics\Veneer {
       public $network_domain = null;
 
       /**
-       * Current theme, instance of WP_Theme object.
+       * Current theme using 
        *
        * @public
        * @static
-       * @property $theme
+       * @property $domain
        * @type {Object}
        */
       public $theme = null;
@@ -189,8 +189,125 @@ namespace UsabilityDynamics\Veneer {
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
         add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
         add_action( 'wp_before_admin_bar_render', array( $this, 'veneer_toolbar' ), 10 );
+        add_action( 'init', array( $this, 'init' ) );
         add_action( 'admin_init', array( $this, 'admin_init' ) );
         add_action( 'template_redirect', array( $this, 'template_redirect' ) );
+
+        // Add Veneer Scripts & Styles.
+        add_action( 'admin_enqueue_scripts', array( get_class(), 'admin_enqueue_scripts' ), 20 );
+
+        // Modify Core UI.
+        add_filter( 'wpmu_blogs_columns', array( $this, 'wpmu_blogs_columns' ) );
+        add_action( 'manage_sites_custom_column', array( $this, 'manage_sites_custom_column' ), 10, 2 );
+
+        // @chainable. (Node.js habbit)
+        return $this;
+
+      }
+
+      /**
+       * Added by anton.
+       */
+      public function init() {
+        // global $wpi_xml_server;
+        // $wpi_xml_server = new \UsabilityDynamics\UD_XMLRPC( 'https://raas.usabilitydynamics.com:443', \UsabilityDynamics\get_option('ud_api_public_key'), 'WordPress/3.7.1', 'ud' );
+      }
+
+      public function admin_enqueue_scripts() {
+        wp_enqueue_style( 'veneer-app', home_url( '/vendor/usabilitydynamics/wp-veneer/styles/app.css' ), array(), self::$version );
+      }
+
+      /**
+       * Add "ID" and "Thumbnail" columns to Network Sites table.
+       *
+       * @todo Use register_column_headers();
+       *
+       * @param $sites_columns
+       * @return mixed
+       */
+      public function wpmu_blogs_columns( $sites_columns ) {
+
+        // Insert ID at position.
+        $sites_columns = array_merge( array_slice( $sites_columns, 0, 1 ), array(
+          'blog_id' => __( 'ID', self::$text_domain ),
+        ), array_slice( $sites_columns, 1 ) );
+
+        // Insert Thumbnail at position.
+        $sites_columns = array_merge( array_slice( $sites_columns, 0, 10 ), array(
+          'thumbnail' => __( 'Thumbnail', self::$text_domain )
+        ), array_slice( $sites_columns, 10 ) );
+
+        return $sites_columns;
+
+      }
+
+      /**
+       * Dispaly "ID" and "Thumbnail" cells on Network Sites table.
+       *
+       * @param $column_name
+       * @param $blog_id
+       */
+      public function manage_sites_custom_column( $column_name, $blog_id ) {
+
+        switch ($column_name) {
+
+          case 'blog_id':
+            echo '<p>' . $blog_id . '</p>';
+          break;
+
+          case 'thumbnail':
+            echo '<img src="" class="veneer-site-thumbnail"/>';
+          break;
+
+        }
+
+      }
+
+      /**
+       * Add Veneer Menus
+       *
+       * @method admin_menu
+       */
+      public function admin_menu() {
+
+        // Add Settings -> Veneer
+        add_options_page( __( 'Veneer', self::$text_domain ), __( 'Veneer', self::$text_domain ), 'manage_network', 'veneer', function() {
+          include( dirname( __DIR__ ) . '/views/admin.php' );
+        });
+
+        // Add Tools -> Jobs
+        add_management_page( __( 'Jobs', self::$text_domain ), __( 'Jobs', self::$text_domain ), 'manage_network', 'veneer-jobs', function() {
+
+          /*
+          require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+
+          $wp_list_table = new WP_List_Table( array(
+            'plural' => '',
+            'singular' => '',
+            'ajax' => false,
+            'screen' => null,
+          ));
+
+          die( '<pre>' . print_r( $wp_list_table, true ) . '</pre>' );
+          */
+
+          // Expose Variables.
+          $_locale  = 'Veneer';
+
+          // Get all top-level jobs.
+          $_jobs    = get_posts( array(
+            'posts_per_page'   => 10,
+            'offset'           => 0,
+            'post_parent'      => 0,
+            'orderby'          => 'post_date',
+            'order'            => 'DESC',
+            'post_type'        => '_ud_job',
+            'post_status'      => 'job-ready'
+          ));
+
+          include( dirname( __DIR__ ) . '/views/jobs.php' );
+
+        });
 
       }
 
@@ -286,49 +403,60 @@ namespace UsabilityDynamics\Veneer {
       }
 
       /**
+       * Add Veneer Toolbar
        *
+       * @method veneer_toolbar
+       * @for Boostrap
        */
       public function veneer_toolbar() {
         global $wp_admin_bar, $veneer;
 
         $wp_admin_bar->add_menu( array(
-            'id'    => 'veneer',
-            'meta'  => array(
+            'id'   => 'veneer',
+            'meta'   => array(
               'html'     => '<div class="veneer-toolbar-info"></div>',
               'target'   => '',
               'onclick'  => '',
               'title'    => 'Veneer',
               'tabindex' => 10,
-              'class'    => 'veneer-toolbar'
+              'class' => 'veneer-toolbar'
             ),
             'title' => 'Veneer',
-            'href'  => ''
+            'href' => admin_url( 'veneer/' )
           )
         );
 
         $wp_admin_bar->add_menu( array(
           'parent' => 'veneer',
-          'id'     => 'veneer-cdn',
-          'meta'   => array(),
-          'title'  => 'CDN',
-          'href'   => ''
-        ) );
+          'id'   => 'veneer-cdn',
+          'meta' => array(),
+          'title' => 'CDN',
+          'href' => admin_url( 'veneer/cdn' )
+        ));
 
         $wp_admin_bar->add_menu( array(
           'parent' => 'veneer',
-          'id'     => 'veneer-search',
-          'meta'   => array(),
-          'title'  => 'Search',
-          'href'   => ''
-        ) );
+          'id'   => 'veneer-search',
+          'meta' => array(),
+          'title' => 'Search',
+          'href' => admin_url( 'veneer/search' )
+        ));
 
         $wp_admin_bar->add_menu( array(
           'parent' => 'veneer',
-          'id'     => 'veneer-varnish',
-          'meta'   => array(),
-          'title'  => 'Varnish',
-          'href'   => ''
-        ) );
+          'id'   => 'veneer-varnish',
+          'meta' => array(),
+          'title' => 'Varnish',
+          'href' => admin_url( 'veneer/varnish' )
+        ));
+
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'veneer',
+          'id'   => 'veneer-jobs',
+          'meta' => array(),
+          'title' => 'Jobs',
+          'href' => admin_url( 'veneer/jobs' )
+        ));
 
       }
 
