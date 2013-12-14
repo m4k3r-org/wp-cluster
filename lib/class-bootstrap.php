@@ -126,7 +126,11 @@ namespace UsabilityDynamics\Veneer {
         }
 
         if( !defined( 'MULTISITE' ) ) {
-          wp_die( 'MULTISITE is not defined.' );
+          wp_die( '<h1>Veneer Fatal Error.</h1><p>MULTISITE constant is not defined.</p>' );
+        }
+
+        if( !defined( 'UPLOADBLOGSDIR' ) ) {
+          wp_die( '<h1>Veneer Fatal Error.</h1><p>UPLOADBLOGSDIR constant is not defined.</p>' );
         }
 
         // Seek ./vendor/autoload.php and autoload
@@ -164,11 +168,6 @@ namespace UsabilityDynamics\Veneer {
           wp_die( '<h1>Veneer Network Error</h1><p>Your request is for an invalid domain.</p>' );
         }
 
-        // Must run before fix-urls
-        if( !defined( 'UPLOADBLOGSDIR' ) ) {
-          define( 'UPLOADBLOGSDIR', 'storage' );
-        }
-
         // Fix MultiSite URLs
         $this->fix_urls();
 
@@ -191,6 +190,7 @@ namespace UsabilityDynamics\Veneer {
         add_action( 'wp_before_admin_bar_render', array( $this, 'veneer_toolbar' ), 10 );
         add_action( 'init', array( $this, 'init' ) );
         add_action( 'admin_init', array( $this, 'admin_init' ) );
+        add_action( 'admin_menu', array( $this, 'admin_menu' ), 500 );
         add_action( 'template_redirect', array( $this, 'template_redirect' ) );
 
         // Add Veneer Scripts & Styles.
@@ -199,6 +199,10 @@ namespace UsabilityDynamics\Veneer {
         // Modify Core UI.
         add_filter( 'wpmu_blogs_columns', array( $this, 'wpmu_blogs_columns' ) );
         add_action( 'manage_sites_custom_column', array( $this, 'manage_sites_custom_column' ), 10, 2 );
+
+        if( is_network_admin() ) {
+          add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ), 100 );
+        }
 
         // @chainable. (Node.js habbit)
         return $this;
@@ -264,48 +268,35 @@ namespace UsabilityDynamics\Veneer {
       }
 
       /**
-       * Add Veneer Menus
+       * Site Administration Menus.
        *
        * @method admin_menu
        */
       public function admin_menu() {
 
-        // Add Settings -> Veneer
-        add_options_page( __( 'Veneer', self::$text_domain ), __( 'Veneer', self::$text_domain ), 'manage_network', 'veneer', function() {
-          include( dirname( __DIR__ ) . '/views/admin.php' );
+        // Add Site Administration (Settings -> Veneer).
+        add_submenu_page( 'options-general.php', __( 'Veneer', self::$text_domain ), __( 'Veneer', self::$text_domain ), 'manage_network', 'veneer', function() {
+          include( dirname( __DIR__ ) . '/views/site-settings.php' );
         });
 
-        // Add Tools -> Jobs
-        add_management_page( __( 'Jobs', self::$text_domain ), __( 'Jobs', self::$text_domain ), 'manage_network', 'veneer-jobs', function() {
+      }
 
-          /*
-          require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+      /**
+       * Network Administration Menu.
+       *
+       */
+      public function network_admin_menu() {
 
-          $wp_list_table = new WP_List_Table( array(
-            'plural' => '',
-            'singular' => '',
-            'ajax' => false,
-            'screen' => null,
-          ));
+        // Only admin can see W3TC notices and errors
+        // add_action('admin_notices', array( &$this, 'admin_notices' ));
+        // add_action('network_admin_notices', array( &$this, 'admin_notices' ));
 
-          die( '<pre>' . print_r( $wp_list_table, true ) . '</pre>' );
-          */
+        // Add Network Administration.
+        add_menu_page( __( 'Veneer', self::$text_domain ), __( 'Veneer', self::$text_domain ), 'manage_network', 'veneer', function() {
 
-          // Expose Variables.
-          $_locale  = 'Veneer';
+          // die( network_admin_url( 'veneer-icon.png' ) );
 
-          // Get all top-level jobs.
-          $_jobs    = get_posts( array(
-            'posts_per_page'   => 10,
-            'offset'           => 0,
-            'post_parent'      => 0,
-            'orderby'          => 'post_date',
-            'order'            => 'DESC',
-            'post_type'        => '_ud_job',
-            'post_status'      => 'job-ready'
-          ));
-
-          include( dirname( __DIR__ ) . '/views/jobs.php' );
+          include( dirname( __DIR__ ) . '/views/network-settings.php' );
 
         });
 
@@ -422,7 +413,7 @@ namespace UsabilityDynamics\Veneer {
               'class' => 'veneer-toolbar'
             ),
             'title' => 'Veneer',
-            'href' => admin_url( 'veneer/' )
+            'href' => network_admin_url( 'admin.php?page=veneer' )
           )
         );
 
@@ -431,7 +422,7 @@ namespace UsabilityDynamics\Veneer {
           'id'   => 'veneer-cdn',
           'meta' => array(),
           'title' => 'CDN',
-          'href' => admin_url( 'veneer/cdn' )
+          'href' => network_admin_url( 'admin.php?page=veneer#panel=cdn' )
         ));
 
         $wp_admin_bar->add_menu( array(
@@ -439,7 +430,7 @@ namespace UsabilityDynamics\Veneer {
           'id'   => 'veneer-search',
           'meta' => array(),
           'title' => 'Search',
-          'href' => admin_url( 'veneer/search' )
+          'href' => network_admin_url( 'admin.php?page=veneer#panel=search' )
         ));
 
         $wp_admin_bar->add_menu( array(
@@ -447,7 +438,7 @@ namespace UsabilityDynamics\Veneer {
           'id'   => 'veneer-varnish',
           'meta' => array(),
           'title' => 'Varnish',
-          'href' => admin_url( 'veneer/varnish' )
+          'href' => network_admin_url( 'admin.php?page=veneer#panel=varnish' )
         ));
 
         $wp_admin_bar->add_menu( array(
@@ -455,7 +446,7 @@ namespace UsabilityDynamics\Veneer {
           'id'   => 'veneer-jobs',
           'meta' => array(),
           'title' => 'Jobs',
-          'href' => admin_url( 'veneer/jobs' )
+          'href' => network_admin_url( 'admin.php?page=veneer#panel=jobs' )
         ));
 
       }

@@ -47,7 +47,7 @@
 
   <div id="advanced" class="changelog point-releases ud-tab hidden">
     <form action="<?php admin_url( 'index.php?page=hddp_manage' ); ?>" method="POST">
-      <input type="hidden" name="hddp_options[update]" value="true" />
+      <input type="hidden" name="hddp_options[update]" value="true"/>
       <?php wp_nonce_field( 'hddp_save_form', 'hddp_save_form' ); ?>
       <table class="form-table">
 
@@ -55,7 +55,7 @@
           <th>Site UID</th>
           <td>
             <label>
-              <input type="text" name="_options[ud::site_uid]" value="<?php echo get_option( 'ud::site_uid' ); ?>" class="regular-text ud_key" />
+              <input type="text" name="_options[ud::site_uid]" value="<?php echo get_option( 'ud::site_uid' ); ?>" class="regular-text ud_key"/>
             </label>
           </td>
         </tr>
@@ -64,7 +64,7 @@
           <th>Cloud Account ID</th>
           <td>
             <label>
-              <input type="text" name="_options[ud::cloud::account-id]" value="<?php echo get_option( 'ud::cloud::account-id' ); ?>" class="regular-text ud_key ud_cloud_id" autocomplete="off" />
+              <input type="text" name="_options[ud::cloud::account-id]" value="<?php echo get_option( 'ud::cloud::account-id' ); ?>" class="regular-text ud_key ud_cloud_id" autocomplete="off"/>
             </label>
           </td>
         </tr>
@@ -73,7 +73,7 @@
           <th>Cloud Access Key</th>
           <td>
             <label>
-              <input type="text" name="_options[ud::cloud::access-key]" value="<?php echo get_option( 'ud::cloud::access-key' ); ?>" class="regular-text ud_key ud_cloud_key" autocomplete="off" />
+              <input type="text" name="_options[ud::cloud::access-key]" value="<?php echo get_option( 'ud::cloud::access-key' ); ?>" class="regular-text ud_key ud_cloud_key" autocomplete="off"/>
             </label>
           </td>
         </tr>
@@ -81,7 +81,7 @@
         <tr class="hddp_advanced">
           <th>Customer Key</th>
           <td>
-            <input type="text" name="_options[ud::customer_key]" value="<?php echo get_option( 'ud::customer_key' ); ?>" class="regular-text" />
+            <input type="text" name="_options[ud::customer_key]" value="<?php echo get_option( 'ud::customer_key' ); ?>" class="regular-text"/>
             <p>This is private key that should not be shared with others. This key is necessary if the current site is on a closed network and fails site verification.</p>
           </td>
         </tr>
@@ -89,7 +89,7 @@
         <tr class="hddp_advanced">
           <th>Public Key</th>
           <td>
-            <input type="text" name="_options[ud::public_key]" value="<?php echo get_option( 'ud::public_key' ); ?>" class="regular-text" />
+            <input type="text" name="_options[ud::public_key]" value="<?php echo get_option( 'ud::public_key' ); ?>" class="regular-text"/>
             <p>This key is automatically provided by the UD API once the site owner has been verified. This key will only work on the IP addresses apporved by the owner.</p>
           </td>
         </tr>
@@ -151,7 +151,7 @@
 
         <tr>
           <td>
-            <input type="submit" class="button-primary" value="Save Settings" />
+            <input type="submit" class="button-primary" value="Save Settings"/>
           </td>
           <td></td>
         </tr>

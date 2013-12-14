@@ -2,7 +2,7 @@
   "name": "usabilitydynamics/wp-veneer",
   "type": "library",
   "description": "Veneer network",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
   "keywords": [
     "wordpress",
@@ -25,7 +25,8 @@
     "UsabilityDynamics/ui": "*",
     "UsabilityDynamics/utility": "*",
     "UsabilityDynamics/cdn": "*",
-    "UsabilityDynamics/asset": "*"
+    "UsabilityDynamics/asset": "*",
+    "UsabilityDynamics/wp-xmlrpc": "*"
   },
   "autoload": {
     "files": [
