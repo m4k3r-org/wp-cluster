@@ -62,6 +62,11 @@ namespace UsabilityDynamics\Veneer {
        * @for Locale
        */
       public function __construct() {
+        global $veneer;
+
+        if( !$veneer ) {
+          wp_die( '<h1>Network Error</h1><p>The $veneer variable is not configured.</p>' );
+        }
 
         if( !defined( 'WP_BASE_DOMAIN' ) ) {
           wp_die( '<h1>Network Error</h1><p>The WP_BASE_DOMAIN constant is not defined.</p>' );
@@ -74,22 +79,48 @@ namespace UsabilityDynamics\Veneer {
         add_filter( 'pre_option_siteurl', array( get_class(), 'pre_option_siteurl' ) );
 
         // Support Vendor paths. Disabled because references get_blogaddress_by_id() too early.
-        add_filter( 'plugins_url', array( get_class(), 'plugins_url' ), 50, 3 );
+        add_filter( 'plugins_url', array( &$this, 'plugins_url' ), 50, 3 );
+        add_filter( 'content_url', array( &$this, 'replace_network_url' ), 50, 2 );
+        add_filter( 'user_admin_url', array( &$this, 'replace_network_url' ), 50, 2 );
 
         // URLs
-        self::$home_url          = get_home_url();    
+        self::$home_url          = get_home_url();
         self::$site_url          = get_site_url();
         self::$admin_url         = get_admin_url();       // http://drop.veneer.io/manage/
         self::$includes_url      = includes_url();
         self::$content_url       = content_url();
         self::$plugins_url       = plugins_url();
         self::$network_site_url  = network_site_url();
-        self::$network_home_url  = network_home_url();    
+        self::$network_home_url  = network_home_url();
         self::$network_admin_url = network_admin_url();   // http://drop.veneer.io/manage/network/
         self::$self_admin_url    = self_admin_url();
         self::$user_admin_url    = user_admin_url();
-        
+
+         /*
+        die( '<pre>' . print_r( array(
+          'get_home_url' => get_home_url(),
+          'get_site_url' => get_site_url(),
+          'get_admin_url' => get_admin_url(),
+          'includes_url' => includes_url(),
+          'content_url' => content_url(),
+          'plugins_url' => plugins_url(),
+          'network_site_url' => network_site_url(),
+          'network_home_url' => network_home_url(),
+          'network_admin_url' => network_admin_url(),
+          'self_admin_url' => self_admin_url(),
+          'user_admin_url' => user_admin_url(),
+          'get_stylesheet_directory_uri' => get_stylesheet_directory_uri(),
+          'get_template_directory_uri' => get_template_directory_uri(),
+        ), true ) . '</pre>' );
+        */
+
       }
+
+      public static function replace_network_url( $url, $path ) {
+        global $veneer;
+        return str_replace( $veneer->network_domain, $veneer->domain, $url );
+      }
+
 
       /**
        * Fix Vendor Plugin Paths
@@ -101,15 +132,17 @@ namespace UsabilityDynamics\Veneer {
        * @return mixed
        */
       public static function plugins_url( $url, $path, $plugin ) {
-        global $blog_id;
+        global $blog_id, $veneer;
 
-        // Being called too early?
-        if( !function_exists( 'get_blogaddress_by_id' ) ) {
-          wp_die('<h1>Network Error</h1><p>The UsabilityDynamics\Veneer\Mapping:plugin_url() method is called prior to get_blogaddress_by_id() being available.</p>');
-        }
+        $url = str_replace( $veneer->network_domain, $veneer->domain, $url );
 
         if( strpos( $plugin, '/vendor' ) ) {
-        
+
+          // Being called too early?
+          if( !function_exists( 'get_blogaddress_by_id' ) ) {
+            wp_die('<h1>Network Error</h1><p>The UsabilityDynamics\Veneer\Mapping:plugin_url() method is called prior to get_blogaddress_by_id() being available.</p>');
+          }
+
           if( function_exists( 'get_blogaddress_by_id' ) ) {            
             $_home_url = untrailingslashit( get_blogaddress_by_id( $blog_id ) );
           } else {

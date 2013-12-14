@@ -2,7 +2,7 @@
 /**
  * UsabilityDynamics\Veneer Bootstrap
  *
- * @verison 0.3.0
+ * @verison 0.4.1
  * @author potanin@UD
  * @namespace UsabilityDynamics\Veneer
  */
@@ -26,7 +26,7 @@ namespace UsabilityDynamics\Veneer {
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.3.0';
+      public static $version = '0.4.1';
 
       /**
        * Textdomain String
@@ -147,7 +147,7 @@ namespace UsabilityDynamics\Veneer {
         }
 
         if( !$current_site ) {
-          wp_die( 'Site not identified.' );
+          wp_die( '<h1>Veneer Fatal Error.</h1><p>Site not identified.</p>' );
         }
 
         // Current site.
@@ -333,6 +333,14 @@ namespace UsabilityDynamics\Veneer {
        */
       public function plugins_loaded() {
 
+        // remove_role( 'manage.stuff' );
+        // $result = add_role( 'manage.stuff', __( 'Manage Stuff' ), array( "manage.stuff.view" => true, "manage.stuff.edit" => true ) );
+        // $role = get_role( 'manage.stuff' );
+        // $current_user = wp_get_current_user();
+        // $current_user->add_role( 'administrator' );
+        // $current_user->add_role( 'manage.stuff' );
+        // die( '<pre>' . print_r( $current_user , true ) . '</pre>' );
+
         // add_action( 'shutdown', array( $this, 'shutdown' ) );
         // add_action( 'init', array( $this, 'init' ) );
         // add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
@@ -348,9 +356,9 @@ namespace UsabilityDynamics\Veneer {
       public function template_redirect() {
 
         if( !headers_sent() ) {
-          header( 'Server: Veneer' );
-          header( 'X-Powered-By: Veneer ' . Bootstrap::$version );
-          header( 'X-Veneer-Version:' . Bootstrap::$version );
+          header( 'server: Veneer' );
+          header( 'x-Powered-by: Veneer ' . Bootstrap::$version );
+          header( 'x-Veneer-version:' . Bootstrap::$version );
         }
 
       }
@@ -362,14 +370,9 @@ namespace UsabilityDynamics\Veneer {
        * @author potanin@UD
        */
       public function admin_init() {
-
-        /* Remove Akismet API Key Nag */
         remove_action( 'admin_notices', 'akismet_warning' );
-
-        /* Disable BuddyPress Nag */
         remove_action( 'admin_notices', 'bp_core_update_nag', 5 );
         remove_action( 'network_admin_notices', 'bp_core_update_nag', 5 );
-
       }
 
       /**
