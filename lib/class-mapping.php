@@ -96,7 +96,7 @@ namespace UsabilityDynamics\Veneer {
         self::$self_admin_url    = self_admin_url();
         self::$user_admin_url    = user_admin_url();
 
-         /*
+         /* @todo Move into a test page.
         die( '<pre>' . print_r( array(
           'get_home_url' => get_home_url(),
           'get_site_url' => get_site_url(),
