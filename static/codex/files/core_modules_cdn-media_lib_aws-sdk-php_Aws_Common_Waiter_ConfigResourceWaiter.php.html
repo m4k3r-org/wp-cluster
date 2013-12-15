@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/cdn-media/lib/aws-sdk-php/Aws/Common/Waiter/ConfigResourceWaiter.php - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/cdn-media/lib/aws-sdk-php/Aws/Common/Waiter/ConfigResourceWaiter.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is distributed
+ * on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+namespace Aws\Common\Waiter;
+
+use Aws\Common\Exception\InvalidArgumentException;
+use Aws\Common\Exception\RuntimeException;
+use Aws\Common\Exception\ServiceResponseException;
+use Guzzle\Service\Resource\Model;
+use Guzzle\Service\Exception\ValidationException;
+
+/**
+ * Resource waiter driven by configuration options
+ */
+class ConfigResourceWaiter extends AbstractResourceWaiter
+{
+    /**
+     * @var WaiterConfig Waiter configuration
+     */
+    protected $waiterConfig;
+
+    /**
+     * @param WaiterConfig $waiterConfig Waiter configuration
+     */
+    public function __construct(WaiterConfig $waiterConfig)
+    {
+        $this-&gt;waiterConfig = $waiterConfig;
+        $this-&gt;setInterval($waiterConfig-&gt;get(WaiterConfig::INTERVAL));
+        $this-&gt;setMaxAttempts($waiterConfig-&gt;get(WaiterConfig::MAX_ATTEMPTS));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setConfig(array $config)
+    {
+        foreach ($config as $key =&gt; $value) {
+            if (substr($key, 0, 7) == &#x27;waiter.&#x27;) {
+                $this-&gt;waiterConfig-&gt;set(substr($key, 7), $value);
+            }
+        }
+
+        if (!isset($config[self::INTERVAL])) {
+            $config[self::INTERVAL] = $this-&gt;waiterConfig-&gt;get(WaiterConfig::INTERVAL);
+        }
+
+        if (!isset($config[self::MAX_ATTEMPTS])) {
+            $config[self::MAX_ATTEMPTS] = $this-&gt;waiterConfig-&gt;get(WaiterConfig::MAX_ATTEMPTS);
+        }
+
+        return parent::setConfig($config);
+    }
+
+    /**
+     * Get the waiter&#x27;s configuration data
+     *
+     * @return WaiterConfig
+     */
+    public function getWaiterConfig()
+    {
+        return $this-&gt;waiterConfig;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doWait()
+    {
+        $params = $this-&gt;config;
+        // remove waiter settings from the operation&#x27;s input
+        foreach (array_keys($params) as $key) {
+            if (substr($key, 0, 7) == &#x27;waiter.&#x27;) {
+                unset($params[$key]);
+            }
+        }
+
+        $operation = $this-&gt;client-&gt;getCommand($this-&gt;waiterConfig-&gt;get(WaiterConfig::OPERATION), $params);
+
+        try {
+            return $this-&gt;checkResult($this-&gt;client-&gt;execute($operation));
+        } catch (ValidationException $e) {
+            throw new InvalidArgumentException(
+                $this-&gt;waiterConfig-&gt;get(WaiterConfig::WAITER_NAME) . &#x27; waiter validation failed:  &#x27; . $e-&gt;getMessage(),
+                $e-&gt;getCode(),
+                $e
+            );
+        } catch (ServiceResponseException $e) {
+
+            // Check if this exception satisfies a success or failure acceptor
+            $transition = $this-&gt;checkErrorAcceptor($e);
+            if (null !== $transition) {
+                return $transition;
+            }
+
+            // Check if this exception should be ignored
+            foreach ((array) $this-&gt;waiterConfig-&gt;get(WaiterConfig::IGNORE_ERRORS) as $ignore) {
+                if ($e-&gt;getExceptionCode() == $ignore) {
+                    // This exception is ignored, so it counts as a failed attempt rather than a fast-fail
+                    return false;
+                }
+            }
+
+            // Allow non-ignore exceptions to bubble through
+            throw $e;
+        }
+    }
+
+    /**
+     * Check if an exception satisfies a success or failure acceptor
+     *
+     * @param ServiceResponseException $e
+     *
+     * @return bool|null Returns true for success, false for failure, and null for no transition
+     */
+    protected function checkErrorAcceptor(ServiceResponseException $e)
+    {
+        if ($this-&gt;waiterConfig-&gt;get(WaiterConfig::SUCCESS_TYPE) == &#x27;error&#x27;) {
+            if ($e-&gt;getExceptionCode() == $this-&gt;waiterConfig-&gt;get(WaiterConfig::SUCCESS_VALUE)) {
+                // Mark as a success
+                return true;
+            }
+        }
+
+        // Mark as an attempt
+        return null;
+    }
+
+    /**
+     * Check to see if the response model satisfies a success or failure state
+     *
+     * @param Model $result Result model
+     *
+     * @return bool
+     * @throws RuntimeException
+     */
+    protected function checkResult(Model $result)
+    {
+        // Check if the result evaluates to true based on the path and output model
+        if ($this-&gt;waiterConfig-&gt;get(WaiterConfig::SUCCESS_TYPE) == &#x27;output&#x27; &amp;&amp;
+            $this-&gt;checkPath(
+                $result,
+                $this-&gt;waiterConfig-&gt;get(WaiterConfig::SUCCESS_PATH),
+                $this-&gt;waiterConfig-&gt;get(WaiterConfig::SUCCESS_VALUE)
+            )
+        ) {
+            return true;
+        }
+
+        // It did not finish waiting yet. Determine if we need to fail-fast based on the failure acceptor.
+        if ($this-&gt;waiterConfig-&gt;get(WaiterConfig::FAILURE_TYPE) == &#x27;output&#x27;) {
+            $failureValue = $this-&gt;waiterConfig-&gt;get(WaiterConfig::FAILURE_VALUE);
+            if ($failureValue) {
+                $key = $this-&gt;waiterConfig-&gt;get(WaiterConfig::FAILURE_PATH);
+                if ($this-&gt;checkPath($result, $key, $failureValue, false)) {
+                    // Determine which of the results triggered the failure
+                    $triggered = array_intersect(
+                        (array) $this-&gt;waiterConfig-&gt;get(WaiterConfig::FAILURE_VALUE),
+                        array_unique((array) $result-&gt;getPath($key))
+                    );
+                    // fast fail because the failure case was satisfied
+                    throw new RuntimeException(
+                        &#x27;A resource entered into an invalid state of &quot;&#x27;
+                        . implode(&#x27;, &#x27;, $triggered) . &#x27;&quot; while waiting with the &quot;&#x27;
+                        . $this-&gt;waiterConfig-&gt;get(WaiterConfig::WAITER_NAME) . &#x27;&quot; waiter.&#x27;
+                    );
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check to see if the path of the output key is satisfied by the value
+     *
+     * @param Model  $model      Result model
+     * @param string $key        Key to check
+     * @param string $checkValue Compare the key to the value
+     * @param bool   $all        Set to true to ensure all value match or false to only match one
+     *
+     * @return bool
+     */
+    protected function checkPath(Model $model, $key = null, $checkValue = array(), $all = true)
+    {
+        // If no key is set, then just assume true because the request succeeded
+        if (!$key) {
+            return true;
+        }
+
+        if (!($result = $model-&gt;getPath($key))) {
+            return false;
+        }
+
+        $total = $matches = 0;
+        foreach ((array) $result as $value) {
+            $total++;
+            foreach ((array) $checkValue as $check) {
+                if ($value == $check) {
+                    $matches++;
+                    break;
+                }
+            }
+        }
+
+        // When matching all values, ensure that the match count matches the total count
+        if ($all &amp;&amp; $total != $matches) {
+            return false;
+        }
+
+        return $matches &gt; 0;
+    }
+}
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

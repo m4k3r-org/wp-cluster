@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/management/scripts/legacy.admin.js - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/management/scripts/legacy.admin.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * WP-Property Global Admin Scripts
+ *
+ * Include on all back-end pages, extends UD global.
+ *
+ * @author team@UD
+ * @version 1.0
+ */
+
+/* Extend WPP Global by Merging in WPP, which in turn contains UD and UD Global */
+var wpp = jQuery.extend( true, wpp, {
+
+  /* Central location for timers */
+  timers: {},
+
+  /* Placeholder */
+  strings: {},
+
+  /**
+   * Enable &quot;Feedback&quot; tab.
+   *
+   * Enabled when SaaS connection exists - allows users to submit suggestions and bug reports from admin UI.
+   * Requires SaaS connection.
+   *
+   * @since 2.0
+   * @author potanin@UD
+   */
+  enable_feedback: function () {
+    wpp.log( &#x27;wpp.admin.enable_feedback()&#x27;, arguments );
+
+  },
+
+  /**
+   * Add WP Pointer
+   *
+   * Actions: toggle, close, open, destroy, sendToTop
+   *
+   * @since 2.0
+   * @author potanin@UD
+   */
+  pointer: function ( target, args, action ) {
+    wpp.log( &#x27;wpp.admin.pointer()&#x27;, arguments );
+
+    args = jQuery.extend( true, {}, {
+      pointerClass: &#x27;wp-pointer ud-pointer&#x27;,
+      pointerWidth: 400,
+      title: &#x27;&#x27;,
+      content: &#x27;&#x27;,
+      position: { &#x27;edge&#x27;: &#x27;top&#x27;, &#x27;align&#x27;: &#x27;left&#x27; }
+    }, args );
+
+    if ( typeof jQuery.prototype.pointer !== &#x27;function&#x27; ) {
+      return false;
+    }
+
+    args.content = &#x27;&lt;h3&gt;&#x27; + args.title + &#x27;&lt;/h3&gt;&#x27; + args.content;
+
+    var this_pointer = jQuery( target ).pointer( args );
+
+    this_pointer.pointer( action ? action : &#x27;open&#x27; );
+
+    wpp.admin[ &#x27;_pointers&#x27; ] = wpp.admin[ &#x27;_pointers&#x27; ] ? wpp.admin[ &#x27;_pointers&#x27; ] : [];
+
+    wpp.admin[ &#x27;_pointers&#x27; ].push( this_pointer );
+
+    return this_pointer;
+
+  },
+
+  /**
+   * Display a full-width notice.
+   *
+   */
+  core_notice: function ( message, type, fadeout ) {
+    wpp.log( &#x27;wpp.admin.core_notice()&#x27;, arguments );
+
+    /* If there is no area for message yet - place it. */
+    if ( jQuery( &#x27;.wpp_core_notice&#x27; ).length === 0 ) {
+      jQuery( &#x27;&lt;div class=&quot;wpp_core_notice&quot;&gt;&lt;/div&gt;&#x27; ).insertBefore( &#x27;div.wrap&#x27; );
+    }
+
+    /* Hide message area if message is empty */
+    if ( typeof message === &#x27;undefined&#x27; || message === &#x27;&#x27; ) {
+      jQuery( &#x27;.wpp_core_notice&#x27; ).fadeOut( 3000, function () {
+        jQuery( this ).hide( 500, function () {
+          jQuery( this ).html( &#x27;&#x27; ).removeClass( type )
+        } );
+      } );
+      return;
+    }
+
+    if ( typeof type === &#x27;undefined&#x27; || type === false ) type = &#x27;wpp_updated&#x27;;
+
+    /* Show message */
+    jQuery( &#x27;.wpp_core_notice&#x27; ).addClass( type ).empty().show().html( message );
+
+    /* FadeOut if needed */
+    if ( typeof fadeout !== &#x27;undefined&#x27; &amp;&amp; fadeout ) {
+      setTimeout( function () {
+        jQuery( &#x27;.wpp_core_notice&#x27; ).fadeOut( 5000, function () {
+          jQuery( this ).hide( 500, function () {
+            jQuery( this ).html( &#x27;&#x27; ).removeClass( type )
+          } );
+        } );
+      }, 5000 );
+    }
+  }
+
+} );
+
+/**
+ * (!!WIP) Open / Get Contextual Help Section
+ *
+ * wpp.toggle_contextual( &#x27;wpp::single_listing&#x27; )
+ *
+ * @todo Need to enable the help-tab-content when there is one.
+ * @author potanin@UD
+ * @param element
+ */
+wpp.toggle_contextual = function ( id, args ) {
+  wpp.log( &#x27;wpp.toggle_contextual()&#x27;, arguments );
+
+  args = jQuery.extend( true, {
+    &#x27;target&#x27;: jQuery( &#x27;[data-contextual-id=&quot;&#x27; + id + &#x27;&quot;]&#x27; ),
+    &#x27;event&#x27;: null
+  }, args );
+
+  if ( args.target.length &lt; 1 ) {
+    return false;
+  }
+
+  var screen_meta = jQuery( &quot;#screen-meta&quot; );
+  var panel = jQuery( &quot;#contextual-help-wrap&quot; );
+  var help_link = jQuery( &quot;#contextual-help-link&quot; );
+
+  /* If Already Open - we close Help */
+  if ( help_link.hasClass( &#x27;screen-meta-active&#x27; ) ) {
+
+    help_link.removeClass( &#x27;screen-meta-active&#x27; );
+
+    panel.slideUp( &#x27;fast&#x27;, function () {
+      panel.hide();
+      screen_meta.hide();
+      jQuery( &#x27;.screen-meta-toggle&#x27; ).css( &#x27;visibility&#x27;, &#x27;&#x27; );
+    } );
+
+    if ( args.target ) {
+      args.target.removeClass( &#x27;wpp_contextual_highlight&#x27; );
+    }
+
+    jQuery( document ).trigger( &#x27;contextual-help-link::toggle&#x27; );
+
+    return args.target.text();
+  }
+
+  /* If not open - we open help and maybe scroll to something */
+  if ( !help_link.hasClass( &#x27;screen-meta-active&#x27; ) ) {
+
+    help_link.addClass( &#x27;screen-meta-active&#x27; );
+
+    if ( args.target ) {
+      args.target.addClass( &#x27;wpp_contextual_highlight&#x27; );
+    }
+
+    panel.slideDown( &#x27;fast&#x27;, function () {
+      panel.show();
+      screen_meta.show();
+
+      if ( args.target ) {
+        jQuery( &#x27;html, body&#x27; ).animate( { scrollTop: args.target.offset().top }, 1000 );
+      }
+
+    } );
+
+  }
+
+  return args.target.text();
+
+}
+
+/**
+ * (WIP) Render a Modal Message on Fatal Frontend (JS/SaaS/View Model) Errors
+ *
+ * Hopefully never happens, but must catch potential errors and call this function so user has some idea of what went wrong.
+ * Will try to submit error report via socket.
+ *
+ * @todo Should display notice as a modal window. - potanin@UD 10/15/12
+ * @since 2.0
+ * @author potanin@UD
+ */
+wpp.fatal_notice = function ( args, callback ) {
+  wpp.log( &#x27;wpp.fatal_notice()&#x27;, arguments );
+
+  args = jQuery.extend( {
+    error: &#x27;&#x27;,
+    submit: false,
+    target: &#x27;.wrap&#x27;,
+    callback: false
+  }, ( args instanceof Error || typeof args !== &#x27;object&#x27; ) ? { error: args } : args );
+
+  var target = typeof args.target === &#x27;object&#x27; ? args.target : jQuery( args.target ), error = ( args.error instanceof Error ? args.error : new Error( &#x27;Fatal UI Error Occured: &#x27; + args.error ) ), notice = jQuery( &#x27;&lt;div class=&quot;wpxi_contextual wpp_large_guide wpp_fatal&quot;&gt;&lt;p&gt;&lt;strong&gt;Sorry!&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&#x27; + ( error.message ) + &#x27;&lt;/p&gt;&lt;/div&gt;&#x27; );
+
+  if ( target.length &gt; 0 ) target.html( notice ).show();
+
+  if ( wpp.saas &amp;&amp; wpp.saas.callback ) {
+    wpp.saas.callback( &#x27;fatal_error&#x27;, args.submit, function ( error, response ) {
+      if ( response.success ) {
+        jQuery( notice ).append( &#x27;&lt;p&gt;&#x27; + response.message + &#x27;&lt;/p&gt;&#x27; );
+      } else {
+        jQuery( notice ).append( &#x27;&lt;p&gt;An error report could not be submitted. Please submit a help request at UsabilityDynamics.com.&lt;/p&gt;&#x27; );
+      }
+      if ( typeof args.callback === &#x27;function&#x27; ) {
+        args.callback( error, response );
+      }
+    } );
+  } else {
+    jQuery( notice ).append( &#x27;&lt;p&gt;An error report could not be submitted. Please submit a help request at UsabilityDynamics.com.&lt;/p&gt;&#x27; );
+  }
+
+};
+
+/**
+ * Enable tabbed UI on a DOM element
+ *
+ */
+wpp.tabbed_ui = function ( element, _args ) {
+  wpp.log( &#x27;wpp.tabbed_ui()&#x27;, arguments );
+
+  /* Ensure all required jQuery libraries are loaded */
+  if ( typeof ko !== &#x27;object&#x27; || typeof jQuery.prototype.tabs !== &#x27;function&#x27; || typeof jQuery.prototype.sortable !== &#x27;function&#x27; || typeof jQuery.prototype.draggable !== &#x27;function&#x27; || typeof jQuery.prototype.droppable !== &#x27;function&#x27; ) {
+    return;
+  }
+
+  var el = jQuery( element );
+
+  /* Load args from DOM attributes */
+  var args = jQuery.extend( true, {
+    &#x27;settings&#x27;: el.attr( &#x27;data-settings&#x27; )
+  }, typeof _args === &#x27;object&#x27; ? _args : {} );
+
+  /* Load settings dynamically from variable */
+  var settings = ( typeof window[ args.settings ] === &#x27;object&#x27; ) ? window[ args.settings ] : {};
+
+  var property_types = [];
+
+  jQuery( element ).tabs( {
+    //panelTemplate: &quot;&lt;li&gt;&lt;/li&gt;&quot;,
+    //tabTemplate: &quot;&quot;
+  } );
+
+};
+
+/**
+ * Adds Standard Attribute and Classification auto completion to a row.
+ *
+ * When a value is selected, it is added to the closest hidden input field.
+ *
+ * @author potanin@UD
+ */
+wpp.attribute_autocompletion = function ( element ) {
+  wpp.log( &#x27;wpp.settings.add_attribute_autocompletion&#x27;, arguments );
+
+  if ( typeof wpp.settings._attribute_feed !== &#x27;object&#x27; ) {
+    return false;
+  }
+
+  if ( !jQuery( element ).length ) {
+    return false;
+  }
+
+  var _parent = jQuery( element ).closest( &#x27;li&#x27; );
+  var _row = jQuery( element ).closest( &#x27;tr.wpp_dynamic_table_row&#x27; );
+  var _label_field = jQuery( &#x27;input.wpp_attribute_label&#x27;, _row );
+
+  jQuery( element ).autocomplete( {
+    minLength: 0,
+    appendTo: _parent,
+    source: wpp.settings._attribute_feed,
+    focus: function ( event, ui ) {
+      return false;
+    }, select: function ( event, ui ) {
+    }
+  } ).data( &#x27;autocomplete&#x27; )._renderItem = function ( ul, item ) {
+    return jQuery( &#x27;&lt;li class=&quot;wpp_result_item&quot;&gt;&lt;/li&gt;&#x27; ).data( &quot;item.autocomplete&quot;, item ).append( &#x27;&lt;a&gt;&lt;span class=&quot;wpp_label&quot;&gt;&#x27; + item.label + &#x27;&lt;/span&gt;&#x27; + ( item.description ? &#x27;&lt;span class=&quot;wpp_description&quot;&gt;&#x27; + item.description + &quot;&lt;/span&gt;&quot; : &#x27;&#x27; ) + &#x27;&lt;/a&gt;&#x27; ).appendTo( ul );
+  };
+
+  /* On value change, add the actual slug to the hidden input field for saving */
+  jQuery( element ).bind( &#x27;autocompleteselect&#x27;, function ( event, ui ) {
+    jQuery( &#x27;input.attribute_classification_slug&#x27;, _parent ).val( ui.item.slug );
+  } );
+
+  /* Render list of all items when clicked. */
+  jQuery( element ).click( function () {
+    jQuery( this ).autocomplete( &quot;search&quot;, &quot;&quot; );
+  } );
+
+  /* Monitor changes to Label field */
+  jQuery( _label_field ).change( function () {
+    wpp.log( &#x27;Label updated...&#x27; );
+  } );
+
+};
+
+/**
+ * Create slug from title
+ * @param slug
+ * @return
+ */
+wpp.create_slug = function ( slug ) {
+  slug = slug.replace( /[^a-zA-Z0-9_\s]/g, &quot;&quot; );
+  slug = slug.toLowerCase();
+  slug = slug.replace( /\s/g, &#x27;_&#x27; );
+  return slug;
+};
+
+/**
+ * Returns random int ID
+ */
+wpp.random_id = function () {
+  return ( Math.floor( Math.random() * (99999999 - 1000000 + 1) ) + 1000000 );
+};
+
+/**
+ * Bind ColorPicker with input fields &#x27;.wpp_input_colorpicker&#x27;
+ *
+ * @param object instance. jQuery object
+ */
+var bindColorPicker = function ( instance ) {
+  if ( typeof window.jQuery.prototype.ColorPicker === &#x27;function&#x27; ) {
+    if ( !instance ) {
+      instance = jQuery( &#x27;body&#x27; );
+    }
+    jQuery( &#x27;.wpp_input_colorpicker&#x27;, instance ).ColorPicker( {
+      onSubmit: function ( hsb, hex, rgb, el ) {
+        jQuery( el ).val( &#x27;#&#x27; + hex );
+        jQuery( el ).ColorPickerHide();
+        jQuery( el ).trigger( &#x27;change&#x27; );
+      },
+      onBeforeShow: function () {
+        jQuery( this ).ColorPickerSetColor( this.value );
+      }
+    } ).bind( &#x27;keyup&#x27;, function () {
+        jQuery( this ).ColorPickerSetColor( this.value );
+      } );
+  }
+};
+
+/**
+ * Updates Row field names
+ *
+ * @param object instance. DOM element
+ * @param boolean allowRandomSlug. Determine if Row can contains random slugs.
+ */
+var updateRowNames = function ( instance, allowRandomSlug ) {
+  if ( typeof instance === &#x27;undefined&#x27; ) {
+    return false;
+  }
+  if ( typeof allowRandomSlug === &#x27;undefined&#x27; ) {
+    var allowRandomSlug = false;
+  }
+
+  var this_row = jQuery( instance ).parents( &#x27;tr.wpp_dynamic_table_row&#x27; );
+  // Slug of row in question
+  var old_slug = jQuery( this_row ).attr( &#x27;slug&#x27; );
+  // Get data from input.slug_setter
+  var new_slug = jQuery( instance ).val();
+  // Convert into slug
+  new_slug = wpp.create_slug( new_slug );
+
+  // Don&#x27;t allow to blank out slugs
+  if ( new_slug === &quot;&quot; ) {
+    if ( allowRandomSlug ) {
+      new_slug = &#x27;random_&#x27; + Math.floor( Math.random() * 1000000 );
+    } else {
+      return;
+    }
+  }
+
+  // There is no sense to continue if slugs are the same /
+  if ( old_slug === new_slug ) {
+    return;
+  }
+
+  // Get all slugs of the table
+  var slugs = jQuery( this_row ).parents( &#x27;table&#x27; ).find( &#x27;input.slug&#x27; );
+  slugs.each( function ( k, v ) {
+    if ( jQuery( v ).val() === new_slug ) {
+      new_slug = &#x27;random_&#x27; + Math.floor( Math.random() * 1000000 );
+      return false;
+    }
+  } );
+
+  // If slug input.slug exists in row, we modify it
+  jQuery( &quot;.slug&quot;, this_row ).val( new_slug );
+  // Update row slug
+  jQuery( this_row ).attr( &#x27;slug&#x27;, new_slug );
+
+  // Cycle through all child elements and fix names
+  jQuery( &#x27;input,select,textarea&#x27;, this_row ).each( function ( i, e ) {
+    var old_name = jQuery( e ).attr( &#x27;name&#x27; );
+    if ( typeof old_name != &#x27;undefined&#x27; &amp;&amp; !jQuery( e ).hasClass( &#x27;wpp_no_change_name&#x27; ) ) {
+      var new_name = old_name.replace( &#x27;[&#x27; + old_slug + &#x27;]&#x27;, &#x27;[&#x27; + new_slug + &#x27;]&#x27; );
+      if ( jQuery( e ).attr( &#x27;id&#x27; ) ) {
+        var old_id = jQuery( e ).attr( &#x27;id&#x27; );
+        var new_id = old_id.replace( &#x27;[&#x27; + old_slug + &#x27;]&#x27;, &#x27;[&#x27; + new_slug + &#x27;]&#x27; );
+      }
+      // Update to new name
+      jQuery( e ).attr( &#x27;name&#x27;, new_name );
+      jQuery( e ).attr( &#x27;id&#x27;, new_id );
+    }
+  } );
+
+  // Cycle through labels too
+  jQuery( &#x27;label&#x27;, this_row ).each( function ( i, e ) {
+    if ( jQuery( e ).attr( &#x27;id&#x27; ) ) {
+      var old_for = jQuery( e ).attr( &#x27;for&#x27; );
+      var new_for = old_for.replace( old_slug, new_slug );
+      // Update to new name
+      jQuery( e ).attr( &#x27;for&#x27;, new_for );
+    }
+  } );
+
+  jQuery( &quot;.slug&quot;, this_row ).trigger( &#x27;change&#x27; );
+};
+
+/**
+ * Assign Property Stat to Group Functionality
+ *
+ * @param object opt Params
+ * @author Maxim Peshkov
+ */
+jQuery.fn.wppGroups = function ( opt ) {
+  var instance = jQuery( this ), //* Default params */
+    defaults = {
+      groupsBox: &#x27;#wpp_attribute_groups&#x27;,
+      groupWrapper: &#x27;#wpp_dialog_wrapper_for_groups&#x27;,
+      closeButton: &#x27;.wpp_close_dialog&#x27;,
+      assignButton: &#x27;.wpp_assign_to_group&#x27;,
+      unassignButton: &#x27;.wpp_unassign_from_group&#x27;,
+      removeButton: &#x27;.wpp_remove_row&#x27;,
+      sortButton: &quot;#sort_stats_by_groups&quot;
+    };
+
+  opt = jQuery.extend( {}, defaults, opt );
+
+  //* Determine if dialog Wrapper exist */
+  if ( !jQuery( opt.groupWrapper ).length &gt; 0 ) {
+    jQuery( &#x27;body&#x27; ).append( &#x27;&lt;div id=&quot;wpp_dialog_wrapper_for_groups&quot;&gt;&lt;/div&gt;&#x27; );
+  }
+
+  var groupsBlock = jQuery( opt.groupsBox ), sortButton = jQuery( opt.sortButton ), statsRow = instance.parents( &#x27;tr.wpp_dynamic_table_row&#x27; ), statsTable = instance.parents( &#x27;#wpp_inquiry_attribute_fields&#x27; ), close = jQuery( opt.closeButton, groupsBlock ), assign = jQuery( opt.assignButton ), unassign = jQuery( opt.unassignButton ), wrapper = jQuery( opt.groupWrapper ), colorpicker = jQuery( &#x27;input.wpp_input_colorpicker&#x27;, groupsBlock ), groupname = jQuery( &#x27;input.slug_setter&#x27;, groupsBlock ), remove = jQuery( opt.removeButton, groupsBlock ), sortButton = jQuery( opt.sortButton ),
+
+  //* Open Groups Block */
+    showGroupBox = function () {
+      groupsBlock.show( 300 );
+      wrapper.css( &#x27;display&#x27;, &#x27;block&#x27; );
+    },
+
+  //* Close Groups Block */
+    closeGroupBox = function () {
+      groupsBlock.hide( 300 );
+      wrapper.css( &#x27;display&#x27;, &#x27;none&#x27; );
+
+      statsRow.each( function ( i, e ) {
+        jQuery( e ).removeClass( &#x27;groups_active&#x27; );
+      } )
+    };
+
+  //* EVENTS */
+  instance.live( &#x27;click&#x27;, function () {
+    showGroupBox();
+    jQuery( this ).parents( &#x27;tr.wpp_dynamic_table_row&#x27; ).addClass( &#x27;groups_active&#x27; );
+  } );
+
+  instance.live( &#x27;focus&#x27;, function () {
+    jQuery( this ).trigger( &#x27;blur&#x27; );
+  } );
+
+  //* Close Group Box */
+  close.live( &#x27;click&#x27;, function () {
+    closeGroupBox();
+  } );
+
+  //* Assign attribute to Group */
+  assign.live( &#x27;click&#x27;, function () {
+    var row = jQuery( this ).parent().parent();
+    statsRow.each( function ( i, e ) {
+      if ( jQuery( e ).hasClass( &#x27;groups_active&#x27; ) ) {
+        jQuery( &#x27;td:first&#x27;, e ).css( &#x27;background-color&#x27;, jQuery( &#x27;input.wpp_input_colorpicker&#x27;, row ).val() );
+
+        jQuery( e ).attr( &#x27;wpp_attribute_group&#x27;, row.attr( &#x27;slug&#x27; ) );
+        jQuery( &#x27;input.wpp_group_slug&#x27;, e ).val( row.attr( &#x27;slug&#x27; ) );
+
+        var groupName = jQuery( &#x27;input.slug_setter&#x27;, row ).val();
+        if ( groupName === &#x27;&#x27; ) {
+          groupName = &#x27;NO NAME&#x27;;
+        }
+
+        jQuery( &#x27;input.wpp_attribute_group&#x27;, e ).val( groupName );
+      }
+    } );
+    closeGroupBox();
+  } );
+
+  //* Unassign attribute from Group */
+  unassign.live( &#x27;click&#x27;, function () {
+    statsRow.each( function ( i, e ) {
+      if ( jQuery( e ).hasClass( &#x27;groups_active&#x27; ) ) {
+        jQuery( e ).find( &#x27;td&#x27; ).css( &#x27;background-color&#x27;, &#x27;&#x27; );
+        jQuery( e ).removeAttr( &#x27;wpp_attribute_group&#x27; );
+        jQuery( &#x27;input.wpp_group_slug&#x27;, e ).val( &#x27;&#x27; );
+        jQuery( &#x27;input.wpp_attribute_group&#x27;, e ).val( &#x27;&#x27; );
+      }
+    } );
+    closeGroupBox();
+  } );
+
+  //* Refresh background of all attributes on color change */
+  colorpicker.live( &#x27;change&#x27;, function () {
+    var cp = jQuery( this );
+    var s = cp.parent().parent().attr( &#x27;slug&#x27; );
+    instance.each( function ( i, e ) {
+      if ( s === jQuery( e ).next().val() ) {
+        var _parent_row = jQuery( e ).closest( &#x27;tr.wpp_dynamic_table_row&#x27; );
+        jQuery( &#x27;td.wpp_draggable_handle&#x27;, _parent_row ).css( &#x27;background-color&#x27;, cp.val() );
+      }
+    } );
+  } );
+
+  //* Refresh Group Name field of all assigned attributes on group name change */
+  groupname.live( &#x27;change&#x27;, function () {
+    var gn = ( jQuery( this ).val() != &#x27;&#x27; ) ? jQuery( this ).val() : &#x27;NO NAME&#x27;;
+    var s = jQuery( this ).parent().parent().attr( &#x27;slug&#x27; );
+    instance.each( function ( i, e ) {
+      if ( s === jQuery( e ).next().val() ) {
+        jQuery( e ).val( gn );
+      }
+    } );
+  } );
+
+  //* Remove group from the list */
+  remove.live( &#x27;click&#x27;, function () {
+    var s = jQuery( this ).parent().parent().attr( &#x27;slug&#x27; );
+    instance.each( function ( i, e ) {
+      if ( s === jQuery( e ).next().val() ) {
+        jQuery( e ).parent().parent().css( &#x27;background-color&#x27;, &#x27;&#x27; );
+        //* HACK FOR IE7 */
+        if ( typeof jQuery.browser.msie != &#x27;undefined&#x27; &amp;&amp; ( parseInt( jQuery.browser.version ) === 7 ) ) {
+          jQuery( e ).parent().parent().find( &#x27;td&#x27; ).css( &#x27;background-color&#x27;, &#x27;&#x27; );
+        }
+        jQuery( e ).val( &#x27;&#x27; );
+        jQuery( e ).next().val( &#x27;&#x27; );
+      }
+    } );
+  } );
+
+  //* Close Groups Box on wrapper click */
+  wrapper.live( &#x27;click&#x27;, function () {
+    closeGroupBox();
+  } );
+
+  //* Sorts all attributes by Groups */
+  sortButton.live( &#x27;click&#x27;, function () {
+    jQuery( &#x27;tbody tr&#x27;, groupsBlock ).each( function ( gi, ge ) {
+      statsRow.each( function ( si, se ) {
+        if ( typeof jQuery( se ).attr( &#x27;wpp_attribute_group&#x27; ) != &#x27;undefined&#x27; ) {
+          if ( jQuery( se ).attr( &#x27;wpp_attribute_group&#x27; ) === jQuery( ge ).attr( &#x27;slug&#x27; ) ) {
+            jQuery( se ).attr( &#x27;sortpos&#x27;, ( gi + 1 ) );
+          }
+        } else {
+          jQuery( se ).attr( &#x27;sortpos&#x27;, &#x27;9999&#x27; );
+        }
+      } );
+    } );
+    var sortlist = jQuery( &#x27;tbody&#x27;, statsTable );
+    var listitems = sortlist.children( &#x27;tr&#x27; ).get();
+    listitems.sort( function ( a, b ) {
+      var compA = parseFloat( jQuery( a ).attr( &#x27;sortpos&#x27; ) );
+      var compB = parseFloat( jQuery( b ).attr( &#x27;sortpos&#x27; ) );
+      return ( compA &lt; compB ) ? -1 : ( compA &gt; compB ) ? 1 : 0;
+    } );
+    jQuery.each( listitems, function ( idx, itm ) {
+      sortlist.append( itm );
+    } );
+  } );
+
+  //* HACK FOR IE7 */
+  //* Set background-color for assigned attributes */
+  if ( typeof jQuery.browser.msie != &#x27;undefined&#x27; &amp;&amp; ( parseInt( jQuery.browser.version ) === 7 ) ) {
+    var sortlist = jQuery( &#x27;tbody&#x27;, statsTable );
+    var listitems = sortlist.children( &#x27;tr&#x27; ).get();
+    jQuery.each( listitems, function ( i, e ) {
+      jQuery( e ).find( &#x27;td&#x27; ).css( &#x27;background-color&#x27;, jQuery( e ).css( &#x27;background-color&#x27; ) );
+    } );
+  }
+};
+
+/**
+
+
+ /**
+ * Adds another input field to multi-value attribute rows.
+ *
+ *
+ * @since 2.0.0
+ * @author potanin@UD
+ */
+function wpp_add_multi_value_field ( this_button ) {
+
+  /* Get elements */
+  var this_entry_list = jQuery( this_button ).closest( &quot;ul.wpp_single_attribute_entry_list&quot; );
+  var field_wrapper = jQuery( this_button ).closest( &quot;li.wpp_field_wrapper&quot; );
+  var input_field = jQuery( &quot;.text-input&quot;, field_wrapper );
+
+  /* Get values that will change */
+  var old_row_count = jQuery( input_field ).attr( &quot;row_count&quot; ) ? parseInt( jQuery( input_field ).attr( &quot;row_count&quot; ) ) : 0;
+  var new_row_count = old_row_count + 1;
+  var old_name = jQuery( input_field ).attr( &quot;name&quot; );
+  var new_name = old_name.replace( &#x27;[&#x27; + old_row_count + &#x27;]&#x27;, &#x27;[&#x27; + new_row_count + &#x27;]&#x27; );
+
+  /* Remove the clicked button */
+  jQuery( this_button ).remove();
+
+  /* Clone the field */
+  var new_field_wrapper = field_wrapper.clone();
+
+  /* Modify cloned field */
+  jQuery( &quot;.text-input&quot;, new_field_wrapper ).attr( &quot;name&quot;, new_name );
+  jQuery( &quot;.text-input&quot;, new_field_wrapper ).attr( &quot;row_count&quot;, new_row_count );
+  jQuery( &quot;.text-input&quot;, new_field_wrapper ).val( &quot;&quot; );
+
+  /* Insert cloned field */
+  var added_field = jQuery( this_entry_list ).append( new_field_wrapper ).find( &quot;:last&quot; );
+
+  var args = {
+    &#x27;do_not_blank&#x27;: true
+  };
+
+  /* Do whatever needs to be done with dynamic fields */
+  wpp_handle_multi_value_field( added_field, args );
+
+}
+
+/**
+ * Handle attribute rows that allow multiple fields.
+ *
+ * Called when a field within a multi-field row is changed
+ *
+ * @since 2.0.0
+ * @author potanin@UD
+ */
+function wpp_handle_multi_value_field ( this_field, args ) {
+
+  var args = ( typeof( args ) === &#x27;object&#x27; ? args : {} );
+
+  if ( !jQuery.isEmptyObject( args ) ) {
+    /*console.log( args );*/
+  }
+
+  var this_entry_list = jQuery( this_field ).closest( &quot;ul.wpp_single_attribute_entry_list&quot; );
+  var field_wrapper = jQuery( this_field ).closest( &quot;li.wpp_field_wrapper&quot; );
+  var fields_in_row = jQuery( &quot;.text-input&quot;, this_entry_list ).length;
+  var value = jQuery( this_field ).val();
+
+  /* If the last row is modified */
+  if ( jQuery( &quot;.text-input:last&quot;, this_entry_list ).get( 0 ) === this_field ) {
+    var last_field = true;
+  } else {
+    var last_field = false;
+  }
+
+  /* If there are more than one fields in row, and this one was blanked, and we didn&#x27;t specifically disable blanking - remove it. */
+  if ( !args.do_not_blank &amp;&amp; value === &quot;&quot; &amp;&amp; fields_in_row &gt; 1 ) {
+    jQuery( this_field ).remove();
+  }
+
+  /* Remove any &quot;Add Line&quot; elements */
+  jQuery( &quot;.wpp_add_line&quot;, this_entry_list ).remove();
+
+  if ( last_field ) {
+    var add_field = &#x27;&lt;span class=&quot;wpp_add_line&quot;&gt;Add Field&lt;/span&gt;&#x27;;
+    jQuery( this_field ).after( add_field );
+  }
+
+}
+
+/**
+ * Basic e-mail validation
+ *
+ * @param address
+ * @return boolean. Returns true if email address is successfully validated.
+ */
+function wpp_validate_email ( address ) {
+  var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+  return reg.test( address ) !== false;
+}
+
+/**
+ * Toggle advanced options that are somehow related to the clicked trigger
+ *
+ * If trigger element has an attr of &#x27;show_type_source&#x27;, then function attempt to find that element and get its value
+ * if value is found, that value is used as an additional requirement when finding which elements to toggle
+ *
+ * Example: &lt;span class=&quot;wpp_show_advanced&quot; show_type_source=&quot;id_of_input_with_a_string&quot; advanced_option_class=&quot;class_of_elements_to_trigger&quot; show_type_element_attribute=&quot;attribute_name_to_match&quot;&gt;Show Advanced&lt;/span&gt;
+ * The above, when clicked, will toggle all elements within the same parent tree of cicked element, with class of &quot;advanced_option_class&quot; and with attribute of &quot;show_type_element_attribute&quot; the equals value of &quot;#id_of_input_with_a_string&quot;
+ *
+ * Clicking the trigger in example when get the value of:
+ * &lt;input id=&quot;value_from_source_element&quot; value=&quot;some_sort_of_identifier&quot; /&gt;
+ *
+ * And then toggle all elements like below:
+ * &lt;li class=&quot;class_of_elements_to_trigger&quot; attribute_name_to_match=&quot;some_sort_of_identifier&quot;&gt;Data that will be toggled.&lt;/li&gt;
+ *
+ * Copyright 2011 Usability Dynamics, Inc. &lt;info@usabilitydynamics.com&gt;
+ */
+function toggle_advanced_options () {
+
+  jQuery( &quot;.wpp_show_advanced&quot; ).live( &quot;click&quot;, function () {
+    wpp.log( &#x27;wpp_show_advanced():click&#x27; );
+
+    var advanced_option_class = false;
+    var show_type = false;
+    var show_type_element_attribute = false;
+    var wrapper = ( jQuery( this ).attr( &#x27;wrapper&#x27; ) ? jQuery( this ).closest( &#x27;.&#x27; + jQuery( this ).attr( &#x27;wrapper&#x27; ) ) : jQuery( this ).parents( &#x27;tr.wpp_dynamic_table_row&#x27; ) );
+    var toggle_target = jQuery( this ).attr( &#x27;toggle_target&#x27; ) ? jQuery( &#x27;.&#x27; + jQuery( this ).attr( &#x27;toggle_target&#x27; ) ) : false;
+
+    if ( jQuery( this ).attr( &quot;advanced_option_class&quot; ) !== undefined ) {
+      var advanced_option_class = &quot;.&quot; + jQuery( this ).attr( &quot;advanced_option_class&quot; );
+    }
+
+    if ( jQuery( this ).attr( &quot;show_type_element_attribute&quot; ) !== undefined ) {
+      var show_type_element_attribute = jQuery( this ).attr( &quot;show_type_element_attribute&quot; );
+    }
+
+    //* If no advanced_option_class is found in attribute, we default to &#x27;wpp_development_advanced_option&#x27; */
+    if ( !advanced_option_class ) {
+      advanced_option_class = &quot;li.wpp_development_advanced_option&quot;;
+    }
+
+    //* If element does not have a table row wrapper, we look for the closts .wpp_something_advanced_wrapper wrapper. .wpp_wrapper is the new short-hand class.  */
+    if ( !wrapper || wrapper.length === 0 ) {
+
+      if ( jQuery( this ).closest( &#x27;.wpp_something_advanced_wrapper&#x27; ).length ) {
+        wrapper = jQuery( this ).closest( &#x27;.wpp_something_advanced_wrapper&#x27; );
+      } else if ( jQuery( this ).closest( &#x27;.wpp_wrapper&#x27; ).length ) {
+        wrapper = jQuery( this ).closest( &#x27;.wpp_wrapper&#x27; );
+      }
+
+    }
+
+    //* get_show_type_value forces the a look up a value of a passed element, ID of which is passed, which is then used as another conditional argument */
+    if ( show_type_source = jQuery( this ).attr( &quot;show_type_source&quot; ) ) {
+      var source_element = jQuery( &quot;#&quot; + show_type_source );
+
+      if ( source_element ) {
+        //* Element found, determine type and get current value */
+        if ( jQuery( source_element ).is( &quot;select&quot; ) ) {
+          show_type = jQuery( &quot;option:selected&quot;, source_element ).val();
+        }
+      }
+    }
+
+    if ( toggle_target ) {
+      var element_path = jQuery( toggle_target );
+    } else {
+      var element_path = false;
+    }
+
+    if ( !element_path &amp;&amp; !show_type ) {
+      element_path = jQuery( advanced_option_class, wrapper );
+    }
+
+    //** Look for advanced options with show type */
+    if ( !element_path &amp;&amp; show_type ) {
+      element_path = jQuery( advanced_option_class + &quot;[&quot; + show_type_element_attribute + &quot;=&#x27;&quot; + show_type + &quot;&#x27;]&quot;, wrapper );
+    }
+
+    /* Check if this element is a checkbox, we assume that we always show things when it is checked, and hiding when unchecked */
+    if ( jQuery( this ).is( &quot;input[type=checkbox]&quot; ) ) {
+
+      var toggle_logic = jQuery( this ).attr( &quot;toggle_logic&quot; );
+
+      if ( jQuery( this ).is( &quot;:checked&quot; ) ) {
+        if ( toggle_logic == &#x27;reverse&#x27; ) {
+          jQuery( element_path ).hide();
+        } else {
+          jQuery( element_path ).show();
+        }
+      } else {
+        if ( toggle_logic == &#x27;reverse&#x27; ) {
+          jQuery( element_path ).show();
+        } else {
+          jQuery( element_path ).hide();
+        }
+      }
+
+      return;
+
+    }
+
+    jQuery( element_path ).toggle();
+
+  } );
+}
+
+/**
+ *
+ * @param functionName
+ * @param context
+ * @param args
+ * @return
+ */
+function wpp_call_function ( functionName, context, args ) {
+
+  var args = Array.prototype.slice.call( arguments ).splice( 2 );
+  var namespaces = functionName.split( &quot;.&quot; );
+  var func = namespaces.pop();
+  for ( var i = 0; i &lt; namespaces.length; i++ ) {
+    context = context[namespaces[i]];
+  }
+  return context[func].apply( this, args );
+}
+
+/**
+ * DOCUMENT READY EVENTS AND ACTIONS
+ */
+jQuery( document ).ready( function () {
+
+  /**
+   * Inserts Arbitrary Content into DOM. Gets Data from DataCloud.
+   *
+   * This is more or less an example/test.
+   * For this to be realized Data API would need to start indexing product-specific materials for content.
+   *
+   * @since 2.0
+   * @author potanin@UD
+   */
+  wpp.insert_content = function ( element, args, event ) {
+    wpp.log( &#x27;wpp.insert_content&#x27;, arguments );
+
+    var args = jQuery.extend( true, {
+      &#x27;ui_class&#x27;: &#x27;wpp_dynamic_content&#x27;
+    }, typeof _args === &#x27;object&#x27; ? _args : {} );
+
+    var _temp = [
+      &#x27;&lt;a href=&quot;#&quot;&gt;Configuring advanced query parameters in URL.&lt;/a&gt;&#x27;, &#x27;&lt;a href=&quot;#&quot;&gt;Best ways of working around low  import limits.&lt;/a&gt;&#x27;, &#x27;&lt;a href=&quot;#&quot;&gt;Some other support topics.&lt;/a&gt;&#x27;
+    ];
+
+    jQuery( &#x27;&lt;ul class=&quot;&#x27; + ( args.ui_class ) + &#x27;&quot;&gt;&lt;li&gt;&#x27; + _temp.join( &#x27;&lt;/li&gt;&lt;li&gt;&#x27; ) + &#x27;&lt;/li&gt;&#x27; ).insertAfter( jQuery( element ).closest( &#x27;p&#x27; ) );
+
+    jQuery( element ).removeAttr( &#x27;data-wpp_action&#x27; ).hide();
+  };
+
+  /**
+   * Backend Action Handler
+   *
+   * @updated 2.0
+   * @author potanin@UD
+   */
+  jQuery( &#x27;*[data-wpp_action]&#x27; ).live( &#x27;click&#x27;, function ( event ) {
+    &#x27;use strict&#x27;;
+    wpp.log( &#x27;data-wpp_action::click&#x27;, arguments );
+
+    var action = jQuery( this ).attr( &#x27;data-wpp_action&#x27; ), args = {};
+
+    if ( typeof window.wpp[ action ] != &#x27;function&#x27; ) {
+      return false;
+    }
+
+    try {
+      args = jQuery.parseJSON( jQuery( this ).attr( &#x27;data-args&#x27; ) );
+    } catch ( error ) { /* We don&#x27;t actually care. */
+    }
+
+    window.wpp[ action ]( this, args, event );
+
+  } );
+
+  /**
+   * {unknown}
+   *
+   *
+   */
+  jQuery( &#x27;.wpp_tabbed_ui&#x27; ).each( function () {
+    wpp.tabbed_ui( this );
+  } );
+
+  /**
+   * Handle JS Events for Dropdowns
+   * @props: https://github.com/star2dev
+   */
+  jQuery( &#x27;.wpp_dropdown .wpp_button&#x27; ).live( &#x27;click&#x27;, function ( e ) {
+    e.preventDefault();
+
+    if ( !jQuery( this ).find( &#x27;span.wpp_toggle&#x27; ).hasClass( &#x27;wpp_active&#x27; ) ) {
+      jQuery( &#x27;.wpp_dropdown_slider&#x27; ).slideUp( 10 );
+      jQuery( &#x27;span.wpp_toggle&#x27; ).removeClass( &#x27;wpp_active&#x27; );
+    }
+
+    jQuery( this ).parent().find( &#x27;.wpp_dropdown_slider&#x27; ).slideToggle( 10 );
+    jQuery( this ).find( &#x27;span.wpp_toggle&#x27; ).toggleClass( &#x27;wpp_active&#x27; );
+
+    jQuery( document ).bind( &#x27;click&#x27;, function ( e ) {
+      if ( e.target.id != jQuery( &#x27;.wpp_dropdown&#x27; ).attr( &#x27;class&#x27; ) ) {
+        jQuery( &#x27;.wpp_dropdown_slider&#x27; ).slideUp( 10 );
+        jQuery( &#x27;span.wpp_toggle&#x27; ).removeClass( &#x27;wpp_active&#x27; );
+      }
+    } );
+
+    return false;
+  } );
+
+  /* Monitor changes to fields that can have multiple values */
+  jQuery( &quot;tr.wpp_attribute_row.wpp_allow_multiple .text-input&quot; ).live( &quot;change&quot;, function () {
+    wpp_handle_multi_value_field( this );
+  } );
+
+  /* Cycle through all multi-value fields on ready  */
+  jQuery( &quot;tr.wpp_attribute_row.wpp_allow_multiple .text-input&quot; ).each( function () {
+    wpp_handle_multi_value_field( this );
+  } );
+
+  /* Add new input field row */
+  jQuery( &quot;tr.wpp_attribute_row.wpp_allow_multiple .wpp_add_line&quot; ).live( &quot;click&quot;, function () {
+    wpp_add_multi_value_field( this );
+  } );
+
+  /* Remove any highlight classes */
+  jQuery( &quot;#contextual-help-link&quot; ).click( function () {
+    jQuery( &quot;#contextual-help-wrap h3&quot; ).removeClass( &quot;wpp_contextual_highlight&quot; );
+    jQuery( document ).trigger( &#x27;contextual-help-link::toggle&#x27; );
+  } );
+
+  toggle_advanced_options();
+
+  // Toggle wpp_wpp_settings_configuration_do_not_override_search_result_page_
+  jQuery( &quot;#wpp_wpp_settings_configuration_automatically_insert_overview_&quot; ).change( function () {
+    if ( jQuery( this ).is( &quot;:checked&quot; ) ) {
+      jQuery( &quot;li.wpp_wpp_settings_configuration_do_not_override_search_result_page_row&quot; ).hide();
+    } else {
+      jQuery( &quot;li.wpp_wpp_settings_configuration_do_not_override_search_result_page_row&quot; ).show();
+    }
+  } );
+
+  // Bind ( Set ) ColorPicker
+  bindColorPicker();
+
+  // Add row to UD UI Dynamic Table
+  jQuery( &quot;.wpp_add_row&quot; ).live( &quot;click&quot;, function () {
+    wpp.table.add_row( this );
+  } );
+
+  // Remove row from UD UI Dynamic Table
+  jQuery( &quot;.wpp_remove_row&quot; ).live( &quot;click&quot;, function () {
+    wpp.table.remove_row( this );
+  } );
+
+  // When the .slug_setter input field is modified, we update names of other elements in row
+  jQuery( &quot;.wpp_dynamic_table_row[new_row=true] input.slug_setter&quot; ).live( &quot;keyup&quot;, function () {
+    updateRowNames( this, true );
+  } );
+  jQuery( &quot;.wpp_dynamic_table_row[new_row=true] select.slug_setter&quot; ).live( &quot;change&quot;, function () {
+    updateRowNames( this, true );
+  } );
+
+  // Delete dynamic row
+  //* @todo: depreciated. wpp.table.remove_row should be used insted of this one. peshkov@UD */
+  jQuery( &quot;.wpp_delete_row&quot; ).live( &quot;click&quot;, function () {
+    var parent = jQuery( this ).parents( &#x27;tr.wpp_dynamic_table_row&#x27; );
+    var table = jQuery( jQuery( this ).parents( &#x27;table&#x27; ).get( 0 ) );
+    var row_count = table.find( &quot;.wpp_delete_row&quot; ).length;
+    if ( jQuery( this ).attr( &#x27;verify_action&#x27; ) === &#x27;true&#x27; ) {
+      if ( !confirm( &#x27;Are you sure?&#x27; ) )
+        return false;
+    }
+    // Blank out all values
+    jQuery( &quot;input[type=text]&quot;, parent ).val( &#x27;&#x27; );
+    jQuery( &quot;input[type=checkbox]&quot;, parent ).attr( &#x27;checked&#x27;, false );
+    // Don&#x27;t hide last row
+    if ( row_count &gt; 1 ) {
+      jQuery( parent ).hide();
+      jQuery( parent ).remove();
+    }
+
+    table.trigger( &#x27;row_removed&#x27;, [parent] );
+  } );
+
+  jQuery( &#x27;.wpp_attach_to_agent&#x27; ).live( &#x27;click&#x27;, function () {
+    var agent_image_id = jQuery( this ).attr( &#x27;id&#x27; );
+    if ( agent_image_id != &#x27;&#x27; )
+      jQuery( &#x27;#library-form&#x27; ).append( &#x27;&lt;input name=&quot;wpp_agent_post_id&quot; type=&quot;text&quot; value=&quot;&#x27; + agent_image_id + &#x27;&quot; /&gt;&#x27; ).submit();
+  } );
+
+  wpp.table.sortable();
+
+  /**
+   * Handles form saving
+   * Do any validation/data work before the settings page form is submitted
+   * @author odokienko@UD
+   */
+  jQuery( &quot;.wpp_settings_page form&quot; ).submit( function ( form ) {
+    var error_field = {object: false, tab_index: false};
+
+    /* The next block make validation for required fields    */
+    jQuery( &quot;form .wpp_tabs :input[validation_required=true],form .wpp_tabs .wpp_required_field :input,form .wpp_tabs :input[required],form .wpp_tabs :input.slug_setter&quot; ).each( function () {
+
+      /* we allow empty value if dynamic_table has only one row */
+      var dynamic_table_row_count = jQuery( this ).closest( &#x27;.wpp_dynamic_table_row&#x27; ).parent().children( &#x27;tr.wpp_dynamic_table_row&#x27; ).length;
+
+      if ( !jQuery( this ).val() &amp;&amp; dynamic_table_row_count != 1 ) {
+        error_field.object = this;
+        error_field.tab_index = jQuery( &#x27;.wpp_tabs a[href=&quot;#&#x27; + jQuery( error_field.object ).closest( &quot;.ui-tabs-panel&quot; ).attr( &#x27;id&#x27; ) + &#x27;&quot;]&#x27; ).parent().index();
+        return false;
+      }
+    } );
+
+    /* if error_field object is not empty then we&#x27;ve error found */
+    if ( error_field.object != false ) {
+      /* do focus on tab with error field */
+      if ( typeof error_field.tab_index != &#x27;undefined&#x27; ) {
+        jQuery( &#x27;.wpp_tabs&#x27; ).tabs( &#x27;select&#x27;, error_field.tab_index );
+      }
+      /* mark error field and remove mark on keyup */
+      jQuery( error_field.object ).addClass( &#x27;ui-state-error&#x27; ).one( &#x27;keyup&#x27;, function () {
+        jQuery( this ).removeClass( &#x27;ui-state-error&#x27; );
+      } );
+      jQuery( error_field.object ).focus();
+      return false;
+    }
+  } );
+
+  if ( typeof jQuery.fn.datepicker == &#x27;function&#x27; ) {
+    jQuery( &#x27;input.wpp_date_picker&#x27; ).datepicker( {
+      changeMonth: true,
+      changeYear: true
+    } );
+  }
+
+  //** Default Property Image Uploader */
+  jQuery( &#x27;.wpp_default_property_image_uploader&#x27; ).live( &#x27;click&#x27;, function () {
+    tb_show( &#x27;&#x27;, &#x27;media-upload.php?type=image&amp;amp;TB_iframe=true&#x27; );
+
+    window.send_to_editor = function ( html ) {
+      var imgurl = jQuery( &#x27;img&#x27;, html ).attr( &#x27;src&#x27; );
+      var classes = jQuery( &#x27;img&#x27;, html ).attr( &#x27;class&#x27; );
+      var attach_id = classes.replace( /(.*?)wp-image-/, &#x27;&#x27; );
+      jQuery( &#x27;.wpp_default_property_image_field&#x27; ).val( imgurl );
+      jQuery( &#x27;.wpp_default_property_image_id&#x27; ).val( attach_id );
+      jQuery( &#x27;.wpp_default_property_image_preview&#x27; ).attr( &#x27;src&#x27;, imgurl );
+      jQuery( &#x27;.wpp_default_property_image_data&#x27; ).show();
+      jQuery( &#x27;.wpp_default_property_image_message&#x27; ).hide();
+      tb_remove();
+    };
+
+    return false;
+  } );
+
+  //** Remove Default Property Image */
+  jQuery( &#x27;.wpp_remove_default_property_image&#x27; ).live( &#x27;click&#x27;, function () {
+    jQuery( &#x27;.wpp_default_property_image_field&#x27; ).val( &#x27;&#x27; );
+    jQuery( &#x27;.wpp_default_property_image_id&#x27; ).val( &#x27;&#x27; );
+    jQuery( &#x27;.wpp_default_property_image_message&#x27; ).show();
+    jQuery( &#x27;.wpp_default_property_image_data&#x27; ).hide();
+  } );
+
+} );
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

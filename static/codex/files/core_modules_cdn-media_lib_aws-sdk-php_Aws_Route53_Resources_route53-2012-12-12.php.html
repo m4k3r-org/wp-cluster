@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/cdn-media/lib/aws-sdk-php/Aws/Route53/Resources/route53-2012-12-12.php - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/cdn-media/lib/aws-sdk-php/Aws/Route53/Resources/route53-2012-12-12.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is distributed
+ * on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+return array (
+    &#x27;apiVersion&#x27; =&gt; &#x27;2012-12-12&#x27;,
+    &#x27;endpointPrefix&#x27; =&gt; &#x27;route53&#x27;,
+    &#x27;serviceFullName&#x27; =&gt; &#x27;Amazon Route 53&#x27;,
+    &#x27;serviceAbbreviation&#x27; =&gt; &#x27;Route 53&#x27;,
+    &#x27;serviceType&#x27; =&gt; &#x27;rest-xml&#x27;,
+    &#x27;globalEndpoint&#x27; =&gt; &#x27;route53.amazonaws.com&#x27;,
+    &#x27;signatureVersion&#x27; =&gt; &#x27;v3https&#x27;,
+    &#x27;namespace&#x27; =&gt; &#x27;Route53&#x27;,
+    &#x27;regions&#x27; =&gt; array(
+        &#x27;us-east-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; false,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;route53.amazonaws.com&#x27;,
+        ),
+        &#x27;us-west-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; false,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;route53.amazonaws.com&#x27;,
+        ),
+        &#x27;us-west-2&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; false,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;route53.amazonaws.com&#x27;,
+        ),
+        &#x27;eu-west-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; false,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;route53.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-northeast-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; false,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;route53.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-southeast-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; false,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;route53.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-southeast-2&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; false,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;route53.amazonaws.com&#x27;,
+        ),
+        &#x27;sa-east-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; false,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;route53.amazonaws.com&#x27;,
+        ),
+    ),
+    &#x27;operations&#x27; =&gt; array(
+        &#x27;ChangeResourceRecordSets&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/2012-12-12/hostedzone/{HostedZoneId}/rrset/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Guzzle\\Service\\Command\\OperationCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;ChangeResourceRecordSetsResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;Use this action to create or change your authoritative DNS information. To use this action, send a POST request to the 2012-12-12/hostedzone/hosted Zone ID/rrset resource. The request body must include an XML document with a ChangeResourceRecordSetsRequest element.&#x27;,
+            &#x27;data&#x27; =&gt; array(
+                &#x27;xmlRoot&#x27; =&gt; array(
+                    &#x27;name&#x27; =&gt; &#x27;ChangeResourceRecordSetsRequest&#x27;,
+                    &#x27;namespaces&#x27; =&gt; array(
+                        &#x27;https://route53.amazonaws.com/doc/2012-12-12/&#x27;,
+                    ),
+                ),
+            ),
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;HostedZoneId&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;Alias resource record sets only: The value of the hosted zone ID for the AWS resource.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;uri&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 32,
+                    &#x27;filters&#x27; =&gt; array(
+                        &#x27;Aws\\Route53\\Route53Client::cleanId&#x27;,
+                    ),
+                ),
+                &#x27;ChangeBatch&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains an optional comment and the Changes element.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;Comment&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Optional: Any comments you want to include about a change batch request.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            &#x27;maxLength&#x27; =&gt; 256,
+                        ),
+                        &#x27;Changes&#x27; =&gt; array(
+                            &#x27;required&#x27; =&gt; true,
+                            &#x27;description&#x27; =&gt; &#x27;A complex type that contains one Change element for each resource record set that you want to create or delete.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                            &#x27;minItems&#x27; =&gt; 1,
+                            &#x27;items&#x27; =&gt; array(
+                                &#x27;name&#x27; =&gt; &#x27;Change&#x27;,
+                                &#x27;description&#x27; =&gt; &#x27;A complex type that contains the information for each change in a change batch request.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                &#x27;properties&#x27; =&gt; array(
+                                    &#x27;Action&#x27; =&gt; array(
+                                        &#x27;required&#x27; =&gt; true,
+                                        &#x27;description&#x27; =&gt; &#x27;The action to perform.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        &#x27;enum&#x27; =&gt; array(
+                                            &#x27;CREATE&#x27;,
+                                            &#x27;DELETE&#x27;,
+                                        ),
+                                    ),
+                                    &#x27;ResourceRecordSet&#x27; =&gt; array(
+                                        &#x27;required&#x27; =&gt; true,
+                                        &#x27;description&#x27; =&gt; &#x27;Information about the resource record set to create or delete.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                        &#x27;properties&#x27; =&gt; array(
+                                            &#x27;Name&#x27; =&gt; array(
+                                                &#x27;required&#x27; =&gt; true,
+                                                &#x27;description&#x27; =&gt; &#x27;The domain name of the current resource record set.&#x27;,
+                                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                &#x27;maxLength&#x27; =&gt; 1024,
+                                            ),
+                                            &#x27;Type&#x27; =&gt; array(
+                                                &#x27;required&#x27; =&gt; true,
+                                                &#x27;description&#x27; =&gt; &#x27;The type of the current resource record set.&#x27;,
+                                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                &#x27;enum&#x27; =&gt; array(
+                                                    &#x27;SOA&#x27;,
+                                                    &#x27;A&#x27;,
+                                                    &#x27;TXT&#x27;,
+                                                    &#x27;NS&#x27;,
+                                                    &#x27;CNAME&#x27;,
+                                                    &#x27;MX&#x27;,
+                                                    &#x27;PTR&#x27;,
+                                                    &#x27;SRV&#x27;,
+                                                    &#x27;SPF&#x27;,
+                                                    &#x27;AAAA&#x27;,
+                                                ),
+                                            ),
+                                            &#x27;SetIdentifier&#x27; =&gt; array(
+                                                &#x27;description&#x27; =&gt; &#x27;Weighted, Regional, and Failover resource record sets only: An identifier that differentiates among multiple resource record sets that have the same combination of DNS name and type.&#x27;,
+                                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                &#x27;minLength&#x27; =&gt; 1,
+                                                &#x27;maxLength&#x27; =&gt; 128,
+                                            ),
+                                            &#x27;Weight&#x27; =&gt; array(
+                                                &#x27;description&#x27; =&gt; &#x27;Weighted resource record sets only: Among resource record sets that have the same combination of DNS name and type, a value that determines what portion of traffic for the current resource record set is routed to the associated location.&#x27;,
+                                                &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                                                &#x27;maximum&#x27; =&gt; 255,
+                                            ),
+                                            &#x27;Region&#x27; =&gt; array(
+                                                &#x27;description&#x27; =&gt; &#x27;Regional resource record sets only: Among resource record sets that have the same combination of DNS name and type, a value that specifies the AWS region for the current resource record set.&#x27;,
+                                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                &#x27;minLength&#x27; =&gt; 1,
+                                                &#x27;maxLength&#x27; =&gt; 64,
+                                                &#x27;enum&#x27; =&gt; array(
+                                                    &#x27;us-east-1&#x27;,
+                                                    &#x27;us-west-1&#x27;,
+                                                    &#x27;us-west-2&#x27;,
+                                                    &#x27;eu-west-1&#x27;,
+                                                    &#x27;ap-southeast-1&#x27;,
+                                                    &#x27;ap-southeast-2&#x27;,
+                                                    &#x27;ap-northeast-1&#x27;,
+                                                    &#x27;sa-east-1&#x27;,
+                                                ),
+                                            ),
+                                            &#x27;Failover&#x27; =&gt; array(
+                                                &#x27;description&#x27; =&gt; &#x27;Failover resource record sets only: Among resource record sets that have the same combination of DNS name and type, a value that indicates whether the current resource record set is a primary or secondary resource record set. A failover set may contain at most one resource record set marked as primary and one resource record set marked as secondary. A resource record set marked as primary will be returned if any of the following are true: (1) an associated health check is passing, (2) if the resource record set is an alias with the evaluate target health and at least one target resource record set is healthy, (3) both the primary and secondary resource record set are failing health checks or (4) there is no secondary resource record set. A secondary resource record set will be returned if: (1) the primary is failing a health check and either the secondary is passing a health check or has no associated health check, or (2) there is no primary resource record set.&#x27;,
+                                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                &#x27;enum&#x27; =&gt; array(
+                                                    &#x27;PRIMARY&#x27;,
+                                                    &#x27;SECONDARY&#x27;,
+                                                ),
+                                            ),
+                                            &#x27;TTL&#x27; =&gt; array(
+                                                &#x27;description&#x27; =&gt; &#x27;The cache time to live for the current resource record set.&#x27;,
+                                                &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                                                &#x27;maximum&#x27; =&gt; 2147483647,
+                                            ),
+                                            &#x27;ResourceRecords&#x27; =&gt; array(
+                                                &#x27;description&#x27; =&gt; &#x27;A complex type that contains the resource records for the current resource record set.&#x27;,
+                                                &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                                &#x27;minItems&#x27; =&gt; 1,
+                                                &#x27;items&#x27; =&gt; array(
+                                                    &#x27;name&#x27; =&gt; &#x27;ResourceRecord&#x27;,
+                                                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains the value of the Value element for the current resource record set.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                                    &#x27;properties&#x27; =&gt; array(
+                                                        &#x27;Value&#x27; =&gt; array(
+                                                            &#x27;required&#x27; =&gt; true,
+                                                            &#x27;description&#x27; =&gt; &#x27;The value of the Value element for the current resource record set.&#x27;,
+                                                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                            &#x27;maxLength&#x27; =&gt; 4000,
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                            &#x27;AliasTarget&#x27; =&gt; array(
+                                                &#x27;description&#x27; =&gt; &#x27;Alias resource record sets only: Information about the AWS resource to which you are redirecting traffic.&#x27;,
+                                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                                &#x27;properties&#x27; =&gt; array(
+                                                    &#x27;HostedZoneId&#x27; =&gt; array(
+                                                        &#x27;required&#x27; =&gt; true,
+                                                        &#x27;description&#x27; =&gt; &#x27;Alias resource record sets only: The value of the hosted zone ID for the AWS resource.&#x27;,
+                                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                        &#x27;maxLength&#x27; =&gt; 32,
+                                                    ),
+                                                    &#x27;DNSName&#x27; =&gt; array(
+                                                        &#x27;required&#x27; =&gt; true,
+                                                        &#x27;description&#x27; =&gt; &#x27;Alias resource record sets only: The external DNS name associated with the AWS Resource.&#x27;,
+                                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                        &#x27;maxLength&#x27; =&gt; 1024,
+                                                    ),
+                                                    &#x27;EvaluateTargetHealth&#x27; =&gt; array(
+                                                        &#x27;required&#x27; =&gt; true,
+                                                        &#x27;description&#x27; =&gt; &#x27;Alias resource record sets only: A boolean value that indicates whether this Resource Record Set should respect the health status of any health checks associated with the ALIAS target record which it is linked to.&#x27;,
+                                                        &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                                                        &#x27;format&#x27; =&gt; &#x27;boolean-string&#x27;,
+                                                    ),
+                                                ),
+                                            ),
+                                            &#x27;HealthCheckId&#x27; =&gt; array(
+                                                &#x27;description&#x27; =&gt; &#x27;Health Check resource record sets only, not required for alias resource record sets: An identifier that is used to identify health check associated with the resource record set.&#x27;,
+                                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                &#x27;maxLength&#x27; =&gt; 64,
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;command.expects&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;default&#x27; =&gt; &#x27;application/xml&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;class&#x27; =&gt; &#x27;NoSuchHostedZoneException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The health check you are trying to get or delete does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NoSuchHealthCheckException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;This error contains a list of one or more error messages. Each error message indicates one error in the change batch. For more information, see Example InvalidChangeBatch Errors.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidChangeBatchException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Some value specified in the request is invalid or the XML document is malformed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidInputException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The request was rejected because Route 53 was still processing a prior request.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;PriorRequestNotCompleteException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;CreateHealthCheck&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/2012-12-12/healthcheck&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Guzzle\\Service\\Command\\OperationCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;CreateHealthCheckResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;This action creates a new health check.&#x27;,
+            &#x27;data&#x27; =&gt; array(
+                &#x27;xmlRoot&#x27; =&gt; array(
+                    &#x27;name&#x27; =&gt; &#x27;CreateHealthCheckRequest&#x27;,
+                    &#x27;namespaces&#x27; =&gt; array(
+                        &#x27;https://route53.amazonaws.com/doc/2012-12-12/&#x27;,
+                    ),
+                ),
+            ),
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;CallerReference&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A unique string that identifies the request and that allows failed CreateHealthCheck requests to be retried without the risk of executing the operation twice. You must use a unique CallerReference string every time you create a health check. CallerReference can be any unique string; you might choose to use a string that identifies your project.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;minLength&#x27; =&gt; 1,
+                    &#x27;maxLength&#x27; =&gt; 64,
+                ),
+                &#x27;HealthCheckConfig&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains health check configuration.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;IPAddress&#x27; =&gt; array(
+                            &#x27;required&#x27; =&gt; true,
+                            &#x27;description&#x27; =&gt; &#x27;IP Address of the instance being checked.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            &#x27;maxLength&#x27; =&gt; 15,
+                        ),
+                        &#x27;Port&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Port on which connection will be opened to the instance to health check. For HTTP this defaults to 80 if the port is not specified.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                            &#x27;minimum&#x27; =&gt; 1,
+                            &#x27;maximum&#x27; =&gt; 65535,
+                        ),
+                        &#x27;Type&#x27; =&gt; array(
+                            &#x27;required&#x27; =&gt; true,
+                            &#x27;description&#x27; =&gt; &#x27;The type of health check to be performed. Currently supported protocols are TCP and HTTP.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            &#x27;enum&#x27; =&gt; array(
+                                &#x27;HTTP&#x27;,
+                                &#x27;TCP&#x27;,
+                            ),
+                        ),
+                        &#x27;ResourcePath&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Path to ping on the instance to check the health. Required only for HTTP health checks, HTTP request is issued to the instance on the given port and path.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            &#x27;maxLength&#x27; =&gt; 255,
+                        ),
+                        &#x27;FullyQualifiedDomainName&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Fully qualified domain name of the instance to be health checked.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            &#x27;maxLength&#x27; =&gt; 255,
+                        ),
+                    ),
+                ),
+                &#x27;command.expects&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;default&#x27; =&gt; &#x27;application/xml&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;class&#x27; =&gt; &#x27;TooManyHealthChecksException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The health check you are trying to create already exists. Route 53 returns this error when a health check has already been created with the specified CallerReference.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;HealthCheckAlreadyExistsException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Some value specified in the request is invalid or the XML document is malformed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidInputException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;CreateHostedZone&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/2012-12-12/hostedzone&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Guzzle\\Service\\Command\\OperationCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;CreateHostedZoneResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;This action creates a new hosted zone.&#x27;,
+            &#x27;data&#x27; =&gt; array(
+                &#x27;xmlRoot&#x27; =&gt; array(
+                    &#x27;name&#x27; =&gt; &#x27;CreateHostedZoneRequest&#x27;,
+                    &#x27;namespaces&#x27; =&gt; array(
+                        &#x27;https://route53.amazonaws.com/doc/2012-12-12/&#x27;,
+                    ),
+                ),
+            ),
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Name&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The name of the domain. This must be a fully-specified domain, for example, www.example.com. The trailing dot is optional; Route 53 assumes that the domain name is fully qualified. This means that Route 53 treats www.example.com (without a trailing dot) and www.example.com. (with a trailing dot) as identical.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 1024,
+                ),
+                &#x27;CallerReference&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A unique string that identifies the request and that allows failed CreateHostedZone requests to be retried without the risk of executing the operation twice. You must use a unique CallerReference string every time you create a hosted zone. CallerReference can be any unique string; you might choose to use a string that identifies your project, such as DNSMigration_01.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;minLength&#x27; =&gt; 1,
+                    &#x27;maxLength&#x27; =&gt; 128,
+                ),
+                &#x27;HostedZoneConfig&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains an optional comment about your hosted zone.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;Comment&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;An optional comment about your hosted zone. If you don\&#x27;t want to specify a comment, you can omit the HostedZoneConfig and Comment elements from the XML document.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            &#x27;maxLength&#x27; =&gt; 256,
+                        ),
+                    ),
+                ),
+                &#x27;command.expects&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;default&#x27; =&gt; &#x27;application/xml&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;This error indicates that the specified domain name is not valid.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidDomainNameException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The hosted zone you are trying to create already exists. Route 53 returns this error when a hosted zone has already been created with the specified CallerReference.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;HostedZoneAlreadyExistsException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;This error indicates that you\&#x27;ve reached the maximum number of hosted zones that can be created for the current AWS account. You can request an increase to the limit on the Contact Us page.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;TooManyHostedZonesException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Some value specified in the request is invalid or the XML document is malformed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidInputException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Route 53 allows some duplicate domain names, but there is a maximum number of duplicate names. This error indicates that you have reached that maximum. If you want to create another hosted zone with the same name and Route 53 generates this error, you can request an increase to the limit on the Contact Us page.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;DelegationSetNotAvailableException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;DeleteHealthCheck&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;DELETE&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/2012-12-12/healthcheck/{HealthCheckId}&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Guzzle\\Service\\Command\\OperationCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;DeleteHealthCheckResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;This action deletes a health check. To delete a health check, send a DELETE request to the 2012-12-12/healthcheck/health check ID resource.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;HealthCheckId&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ID of the health check to delete.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;uri&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 64,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The health check you are trying to get or delete does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NoSuchHealthCheckException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;There are resource records associated with this health check. Before you can delete the health check, you must disassociate it from the resource record sets.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;HealthCheckInUseException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Some value specified in the request is invalid or the XML document is malformed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidInputException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;DeleteHostedZone&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;DELETE&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/2012-12-12/hostedzone/{Id}&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Guzzle\\Service\\Command\\OperationCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;DeleteHostedZoneResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;This action deletes a hosted zone. To delete a hosted zone, send a DELETE request to the 2012-12-12/hostedzone/hosted zone ID resource.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Id&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ID of the request. Include this ID in a call to GetChange to track when the change has propagated to all Route 53 DNS servers.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;uri&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 32,
+                    &#x27;filters&#x27; =&gt; array(
+                        &#x27;Aws\\Route53\\Route53Client::cleanId&#x27;,
+                    ),
+                ),
+                &#x27;command.expects&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;default&#x27; =&gt; &#x27;application/xml&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;class&#x27; =&gt; &#x27;NoSuchHostedZoneException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The hosted zone contains resource record sets in addition to the default NS and SOA resource record sets. Before you can delete the hosted zone, you must delete the additional resource record sets.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;HostedZoneNotEmptyException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The request was rejected because Route 53 was still processing a prior request.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;PriorRequestNotCompleteException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Some value specified in the request is invalid or the XML document is malformed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidInputException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;GetChange&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;GET&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/2012-12-12/change/{Id}&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Guzzle\\Service\\Command\\OperationCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;GetChangeResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;This action returns the current status of a change batch request. The status is one of the following values:&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Id&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ID of the change batch request. The value that you specify here is the value that ChangeResourceRecordSets returned in the Id element when you submitted the request.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;uri&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 32,
+                    &#x27;filters&#x27; =&gt; array(
+                        &#x27;Aws\\Route53\\Route53Client::cleanId&#x27;,
+                    ),
+                ),
+                &#x27;command.expects&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;default&#x27; =&gt; &#x27;application/xml&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;class&#x27; =&gt; &#x27;NoSuchChangeException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Some value specified in the request is invalid or the XML document is malformed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidInputException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;GetHealthCheck&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;GET&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/2012-12-12/healthcheck/{HealthCheckId}&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Guzzle\\Service\\Command\\OperationCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;GetHealthCheckResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;To retrieve the health check, send a GET request to the 2012-12-12/healthcheck/health check ID resource.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;HealthCheckId&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ID of the health check to retrieve.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;uri&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 64,
+                ),
+                &#x27;command.expects&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;default&#x27; =&gt; &#x27;application/xml&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The health check you are trying to get or delete does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NoSuchHealthCheckException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Some value specified in the request is invalid or the XML document is malformed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidInputException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;GetHostedZone&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;GET&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/2012-12-12/hostedzone/{Id}&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Guzzle\\Service\\Command\\OperationCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;GetHostedZoneResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;To retrieve the delegation set for a hosted zone, send a GET request to the 2012-12-12/hostedzone/hosted zone ID resource. The delegation set is the four Route 53 name servers that were assigned to the hosted zone when you created it.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Id&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ID of the hosted zone for which you want to get a list of the name servers in the delegation set.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;uri&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 32,
+                    &#x27;filters&#x27; =&gt; array(
+                        &#x27;Aws\\Route53\\Route53Client::cleanId&#x27;,
+                    ),
+                ),
+                &#x27;command.expects&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;default&#x27; =&gt; &#x27;application/xml&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;class&#x27; =&gt; &#x27;NoSuchHostedZoneException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Some value specified in the request is invalid or the XML document is malformed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidInputException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListHealthChecks&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;GET&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/2012-12-12/healthcheck&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Guzzle\\Service\\Command\\OperationCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;ListHealthChecksResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;To retrieve a list of your health checks, send a GET request to the 2012-12-12/healthcheck resource. The response to this request includes a HealthChecks element with zero, one, or multiple HealthCheck child elements. By default, the list of health checks is displayed on a single page. You can control the length of the page that is displayed by using the MaxItems parameter. You can use the Marker parameter to control the health check that the list begins with.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Marker&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;If the request returned more than one page of results, submit another request and specify the value of NextMarker from the last response in the marker parameter to get the next page of results.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;marker&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 64,
+                ),
+                &#x27;MaxItems&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Specify the maximum number of health checks to return per page of results.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;maxitems&#x27;,
+                ),
+                &#x27;command.expects&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;default&#x27; =&gt; &#x27;application/xml&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Some value specified in the request is invalid or the XML document is malformed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidInputException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListHostedZones&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;GET&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/2012-12-12/hostedzone&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Guzzle\\Service\\Command\\OperationCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;ListHostedZonesResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;To retrieve a list of your hosted zones, send a GET request to the 2012-12-12/hostedzone resource. The response to this request includes a HostedZones element with zero, one, or multiple HostedZone child elements. By default, the list of hosted zones is displayed on a single page. You can control the length of the page that is displayed by using the MaxItems parameter. You can use the Marker parameter to control the hosted zone that the list begins with.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Marker&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;If the request returned more than one page of results, submit another request and specify the value of NextMarker from the last response in the marker parameter to get the next page of results.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;marker&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 64,
+                ),
+                &#x27;MaxItems&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Specify the maximum number of hosted zones to return per page of results.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;maxitems&#x27;,
+                ),
+                &#x27;command.expects&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;default&#x27; =&gt; &#x27;application/xml&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Some value specified in the request is invalid or the XML document is malformed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidInputException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListResourceRecordSets&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;GET&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/2012-12-12/hostedzone/{HostedZoneId}/rrset&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Guzzle\\Service\\Command\\OperationCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;ListResourceRecordSetsResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;Imagine all the resource record sets in a zone listed out in front of you. Imagine them sorted lexicographically first by DNS name (with the labels reversed, like &quot;com.amazon.www&quot; for example), and secondarily, lexicographically by record type. This operation retrieves at most MaxItems resource record sets from this list, in order, starting at a position specified by the Name and Type arguments:&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;HostedZoneId&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ID of the hosted zone that contains the resource record sets that you want to get.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;uri&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 32,
+                    &#x27;filters&#x27; =&gt; array(
+                        &#x27;Aws\\Route53\\Route53Client::cleanId&#x27;,
+                    ),
+                ),
+                &#x27;StartRecordName&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The first name in the lexicographic ordering of domain names that you want the ListResourceRecordSets request to list.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;name&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 1024,
+                ),
+                &#x27;StartRecordType&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The DNS type at which to begin the listing of resource record sets.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;type&#x27;,
+                    &#x27;enum&#x27; =&gt; array(
+                        &#x27;SOA&#x27;,
+                        &#x27;A&#x27;,
+                        &#x27;TXT&#x27;,
+                        &#x27;NS&#x27;,
+                        &#x27;CNAME&#x27;,
+                        &#x27;MX&#x27;,
+                        &#x27;PTR&#x27;,
+                        &#x27;SRV&#x27;,
+                        &#x27;SPF&#x27;,
+                        &#x27;AAAA&#x27;,
+                    ),
+                ),
+                &#x27;StartRecordIdentifier&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Weighted resource record sets only: If results were truncated for a given DNS name and type, specify the value of ListResourceRecordSetsResponse$NextRecordIdentifier from the previous response to get the next resource record set that has the current DNS name and type.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;identifier&#x27;,
+                    &#x27;minLength&#x27; =&gt; 1,
+                    &#x27;maxLength&#x27; =&gt; 128,
+                ),
+                &#x27;MaxItems&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The maximum number of records you want in the response body.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;maxitems&#x27;,
+                ),
+                &#x27;command.expects&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;default&#x27; =&gt; &#x27;application/xml&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;class&#x27; =&gt; &#x27;NoSuchHostedZoneException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Some value specified in the request is invalid or the XML document is malformed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidInputException&#x27;,
+                ),
+            ),
+        ),
+    ),
+    &#x27;models&#x27; =&gt; array(
+        &#x27;ChangeResourceRecordSetsResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;ChangeInfo&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains information about changes made to your hosted zone.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;Id&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The ID of the request. Use this ID to track when the change has completed across all Amazon Route 53 DNS servers.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Status&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The current state of the request. PENDING indicates that this request has not yet been applied to all Amazon Route 53 DNS servers.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;SubmittedAt&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The date and time the change was submitted, in the format YYYY-MM-DDThh:mm:ssZ, as specified in the ISO 8601 standard (for example, 2009-11-19T19:37:58Z). The Z after the time indicates that the time is listed in Coordinated Universal Time (UTC), which is synonymous with Greenwich Mean Time in this context.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Comment&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A complex type that describes change information about changes made to your hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                    ),
+                ),
+                &#x27;RequestId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Request ID of the operation&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;x-amz-request-id&#x27;,
+                ),
+            ),
+        ),
+        &#x27;CreateHealthCheckResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;HealthCheck&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains identifying information about the health check.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;Id&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The ID of the specified health check.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;CallerReference&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A unique string that identifies the request to create the health check.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;HealthCheckConfig&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A complex type that contains the health check configuration.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                            &#x27;properties&#x27; =&gt; array(
+                                &#x27;IPAddress&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;IP Address of the instance being checked.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                ),
+                                &#x27;Port&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;Port on which connection will be opened to the instance to health check. For HTTP this defaults to 80 if the port is not specified.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                                ),
+                                &#x27;Type&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;The type of health check to be performed. Currently supported protocols are TCP and HTTP.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                ),
+                                &#x27;ResourcePath&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;Path to ping on the instance to check the health. Required only for HTTP health checks, HTTP request is issued to the instance on the given port and path.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                ),
+                                &#x27;FullyQualifiedDomainName&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;Fully qualified domain name of the instance to be health checked.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;Location&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The unique URL representing the new health check.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                ),
+                &#x27;RequestId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Request ID of the operation&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;x-amz-request-id&#x27;,
+                ),
+            ),
+        ),
+        &#x27;CreateHostedZoneResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;HostedZone&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains identifying information about the hosted zone.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;Id&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The ID of the specified hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Name&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The name of the domain. This must be a fully-specified domain, for example, www.example.com. The trailing dot is optional; Route 53 assumes that the domain name is fully qualified. This means that Route 53 treats www.example.com (without a trailing dot) and www.example.com. (with a trailing dot) as identical.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;CallerReference&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A unique string that identifies the request to create the hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Config&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A complex type that contains the Comment element.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                            &#x27;properties&#x27; =&gt; array(
+                                &#x27;Comment&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;An optional comment about your hosted zone. If you don\&#x27;t want to specify a comment, you can omit the HostedZoneConfig and Comment elements from the XML document.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                ),
+                            ),
+                        ),
+                        &#x27;ResourceRecordSetCount&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Total number of resource record sets in the hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                        ),
+                    ),
+                ),
+                &#x27;ChangeInfo&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains information about the request to create a hosted zone. This includes an ID that you use when you call the GetChange action to get the current status of the change request.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;Id&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The ID of the request. Use this ID to track when the change has completed across all Amazon Route 53 DNS servers.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Status&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The current state of the request. PENDING indicates that this request has not yet been applied to all Amazon Route 53 DNS servers.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;SubmittedAt&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The date and time the change was submitted, in the format YYYY-MM-DDThh:mm:ssZ, as specified in the ISO 8601 standard (for example, 2009-11-19T19:37:58Z). The Z after the time indicates that the time is listed in Coordinated Universal Time (UTC), which is synonymous with Greenwich Mean Time in this context.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Comment&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A complex type that describes change information about changes made to your hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                    ),
+                ),
+                &#x27;DelegationSet&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains name server information.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;NameServers&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A complex type that contains the authoritative name servers for the hosted zone. Use the method provided by your domain registrar to add an NS record to your domain for each NameServer that is assigned to your hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                            &#x27;items&#x27; =&gt; array(
+                                &#x27;name&#x27; =&gt; &#x27;NameServer&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;sentAs&#x27; =&gt; &#x27;NameServer&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;Location&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The unique URL representing the new hosted zone.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                ),
+                &#x27;RequestId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Request ID of the operation&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;x-amz-request-id&#x27;,
+                ),
+            ),
+        ),
+        &#x27;DeleteHealthCheckResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;RequestId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Request ID of the operation&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;x-amz-request-id&#x27;,
+                ),
+            ),
+        ),
+        &#x27;DeleteHostedZoneResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;ChangeInfo&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains the ID, the status, and the date and time of your delete request.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;Id&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The ID of the request. Use this ID to track when the change has completed across all Amazon Route 53 DNS servers.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Status&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The current state of the request. PENDING indicates that this request has not yet been applied to all Amazon Route 53 DNS servers.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;SubmittedAt&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The date and time the change was submitted, in the format YYYY-MM-DDThh:mm:ssZ, as specified in the ISO 8601 standard (for example, 2009-11-19T19:37:58Z). The Z after the time indicates that the time is listed in Coordinated Universal Time (UTC), which is synonymous with Greenwich Mean Time in this context.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Comment&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A complex type that describes change information about changes made to your hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                    ),
+                ),
+                &#x27;RequestId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Request ID of the operation&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;x-amz-request-id&#x27;,
+                ),
+            ),
+        ),
+        &#x27;GetChangeResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;ChangeInfo&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains information about the specified change batch, including the change batch ID, the status of the change, and the date and time of the request.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;Id&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The ID of the request. Use this ID to track when the change has completed across all Amazon Route 53 DNS servers.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Status&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The current state of the request. PENDING indicates that this request has not yet been applied to all Amazon Route 53 DNS servers.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;SubmittedAt&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The date and time the change was submitted, in the format YYYY-MM-DDThh:mm:ssZ, as specified in the ISO 8601 standard (for example, 2009-11-19T19:37:58Z). The Z after the time indicates that the time is listed in Coordinated Universal Time (UTC), which is synonymous with Greenwich Mean Time in this context.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Comment&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A complex type that describes change information about changes made to your hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                    ),
+                ),
+                &#x27;RequestId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Request ID of the operation&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;x-amz-request-id&#x27;,
+                ),
+            ),
+        ),
+        &#x27;GetHealthCheckResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;HealthCheck&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains the information about the specified health check.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;Id&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The ID of the specified health check.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;CallerReference&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A unique string that identifies the request to create the health check.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;HealthCheckConfig&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A complex type that contains the health check configuration.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                            &#x27;properties&#x27; =&gt; array(
+                                &#x27;IPAddress&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;IP Address of the instance being checked.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                ),
+                                &#x27;Port&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;Port on which connection will be opened to the instance to health check. For HTTP this defaults to 80 if the port is not specified.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                                ),
+                                &#x27;Type&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;The type of health check to be performed. Currently supported protocols are TCP and HTTP.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                ),
+                                &#x27;ResourcePath&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;Path to ping on the instance to check the health. Required only for HTTP health checks, HTTP request is issued to the instance on the given port and path.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                ),
+                                &#x27;FullyQualifiedDomainName&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;Fully qualified domain name of the instance to be health checked.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;RequestId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Request ID of the operation&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;x-amz-request-id&#x27;,
+                ),
+            ),
+        ),
+        &#x27;GetHostedZoneResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;HostedZone&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains the information about the specified hosted zone.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;Id&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The ID of the specified hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Name&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The name of the domain. This must be a fully-specified domain, for example, www.example.com. The trailing dot is optional; Route 53 assumes that the domain name is fully qualified. This means that Route 53 treats www.example.com (without a trailing dot) and www.example.com. (with a trailing dot) as identical.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;CallerReference&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A unique string that identifies the request to create the hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        ),
+                        &#x27;Config&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A complex type that contains the Comment element.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                            &#x27;properties&#x27; =&gt; array(
+                                &#x27;Comment&#x27; =&gt; array(
+                                    &#x27;description&#x27; =&gt; &#x27;An optional comment about your hosted zone. If you don\&#x27;t want to specify a comment, you can omit the HostedZoneConfig and Comment elements from the XML document.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                ),
+                            ),
+                        ),
+                        &#x27;ResourceRecordSetCount&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Total number of resource record sets in the hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                        ),
+                    ),
+                ),
+                &#x27;DelegationSet&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains information about the name servers for the specified hosted zone.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;NameServers&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;A complex type that contains the authoritative name servers for the hosted zone. Use the method provided by your domain registrar to add an NS record to your domain for each NameServer that is assigned to your hosted zone.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                            &#x27;items&#x27; =&gt; array(
+                                &#x27;name&#x27; =&gt; &#x27;NameServer&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;sentAs&#x27; =&gt; &#x27;NameServer&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;RequestId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Request ID of the operation&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;x-amz-request-id&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListHealthChecksResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;HealthChecks&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains information about the health checks associated with the current AWS account.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;HealthCheck&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;A complex type that contains identifying information about the health check.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;HealthCheck&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Id&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The ID of the specified health check.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;CallerReference&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;A unique string that identifies the request to create the health check.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;HealthCheckConfig&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;A complex type that contains the health check configuration.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                &#x27;properties&#x27; =&gt; array(
+                                    &#x27;IPAddress&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;IP Address of the instance being checked.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;Port&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Port on which connection will be opened to the instance to health check. For HTTP this defaults to 80 if the port is not specified.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                                    ),
+                                    &#x27;Type&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The type of health check to be performed. Currently supported protocols are TCP and HTTP.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;ResourcePath&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Path to ping on the instance to check the health. Required only for HTTP health checks, HTTP request is issued to the instance on the given port and path.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;FullyQualifiedDomainName&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Fully qualified domain name of the instance to be health checked.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;Marker&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;If the request returned more than one page of results, submit another request and specify the value of NextMarker from the last response in the marker parameter to get the next page of results.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;IsTruncated&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A flag indicating whether there are more health checks to be listed. If your results were truncated, you can make a follow-up request for the next page of results by using the Marker element.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;NextMarker&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Indicates where to continue listing health checks. If ListHealthChecksResponse$IsTruncated is true, make another request to ListHealthChecks and include the value of the NextMarker element in the Marker element to get the next page of results.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;MaxItems&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The maximum number of health checks to be included in the response body. If the number of health checks associated with this AWS account exceeds MaxItems, the value of ListHealthChecksResponse$IsTruncated in the response is true. Call ListHealthChecks again and specify the value of ListHealthChecksResponse$NextMarker in the ListHostedZonesRequest$Marker element to get the next page of results.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;RequestId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Request ID of the operation&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;x-amz-request-id&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListHostedZonesResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;HostedZones&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains information about the hosted zones associated with the current AWS account.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;HostedZone&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;A complex type that contain information about the specified hosted zone.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;HostedZone&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Id&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The ID of the specified hosted zone.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Name&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The name of the domain. This must be a fully-specified domain, for example, www.example.com. The trailing dot is optional; Route 53 assumes that the domain name is fully qualified. This means that Route 53 treats www.example.com (without a trailing dot) and www.example.com. (with a trailing dot) as identical.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;CallerReference&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;A unique string that identifies the request to create the hosted zone.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Config&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;A complex type that contains the Comment element.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                &#x27;properties&#x27; =&gt; array(
+                                    &#x27;Comment&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;An optional comment about your hosted zone. If you don\&#x27;t want to specify a comment, you can omit the HostedZoneConfig and Comment elements from the XML document.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                ),
+                            ),
+                            &#x27;ResourceRecordSetCount&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Total number of resource record sets in the hosted zone.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;Marker&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;If the request returned more than one page of results, submit another request and specify the value of NextMarker from the last response in the marker parameter to get the next page of results.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;IsTruncated&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A flag indicating whether there are more hosted zones to be listed. If your results were truncated, you can make a follow-up request for the next page of results by using the Marker element.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;NextMarker&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Indicates where to continue listing hosted zones. If ListHostedZonesResponse$IsTruncated is true, make another request to ListHostedZones and include the value of the NextMarker element in the Marker element to get the next page of results.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;MaxItems&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The maximum number of hosted zones to be included in the response body. If the number of hosted zones associated with this AWS account exceeds MaxItems, the value of ListHostedZonesResponse$IsTruncated in the response is true. Call ListHostedZones again and specify the value of ListHostedZonesResponse$NextMarker in the ListHostedZonesRequest$Marker element to get the next page of results.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;RequestId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Request ID of the operation&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;x-amz-request-id&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListResourceRecordSetsResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;ResourceRecordSets&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains information about the resource record sets that are returned by the request.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;ResourceRecordSet&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;A complex type that contains information about the current resource record set.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;ResourceRecordSet&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Name&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The domain name of the current resource record set.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Type&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The type of the current resource record set.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;SetIdentifier&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Weighted, Regional, and Failover resource record sets only: An identifier that differentiates among multiple resource record sets that have the same combination of DNS name and type.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Weight&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Weighted resource record sets only: Among resource record sets that have the same combination of DNS name and type, a value that determines what portion of traffic for the current resource record set is routed to the associated location.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                            ),
+                            &#x27;Region&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Regional resource record sets only: Among resource record sets that have the same combination of DNS name and type, a value that specifies the AWS region for the current resource record set.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Failover&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Failover resource record sets only: Among resource record sets that have the same combination of DNS name and type, a value that indicates whether the current resource record set is a primary or secondary resource record set. A failover set may contain at most one resource record set marked as primary and one resource record set marked as secondary. A resource record set marked as primary will be returned if any of the following are true: (1) an associated health check is passing, (2) if the resource record set is an alias with the evaluate target health and at least one target resource record set is healthy, (3) both the primary and secondary resource record set are failing health checks or (4) there is no secondary resource record set. A secondary resource record set will be returned if: (1) the primary is failing a health check and either the secondary is passing a health check or has no associated health check, or (2) there is no primary resource record set.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;TTL&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The cache time to live for the current resource record set.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                            ),
+                            &#x27;ResourceRecords&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;A complex type that contains the resource records for the current resource record set.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                &#x27;items&#x27; =&gt; array(
+                                    &#x27;name&#x27; =&gt; &#x27;ResourceRecord&#x27;,
+                                    &#x27;description&#x27; =&gt; &#x27;A complex type that contains the value of the Value element for the current resource record set.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                    &#x27;sentAs&#x27; =&gt; &#x27;ResourceRecord&#x27;,
+                                    &#x27;properties&#x27; =&gt; array(
+                                        &#x27;Value&#x27; =&gt; array(
+                                            &#x27;description&#x27; =&gt; &#x27;The value of the Value element for the current resource record set.&#x27;,
+                                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            &#x27;AliasTarget&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Alias resource record sets only: Information about the AWS resource to which you are redirecting traffic.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                &#x27;properties&#x27; =&gt; array(
+                                    &#x27;HostedZoneId&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Alias resource record sets only: The value of the hosted zone ID for the AWS resource.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;DNSName&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Alias resource record sets only: The external DNS name associated with the AWS Resource.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;EvaluateTargetHealth&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Alias resource record sets only: A boolean value that indicates whether this Resource Record Set should respect the health status of any health checks associated with the ALIAS target record which it is linked to.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                                    ),
+                                ),
+                            ),
+                            &#x27;HealthCheckId&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Health Check resource record sets only, not required for alias resource record sets: An identifier that is used to identify health check associated with the resource record set.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;IsTruncated&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A flag that indicates whether there are more resource record sets to be listed. If your results were truncated, you can make a follow-up request for the next page of results by using the ListResourceRecordSetsResponse$NextRecordName element.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;NextRecordName&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;If the results were truncated, the name of the next record in the list. This element is present only if ListResourceRecordSetsResponse$IsTruncated is true.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;NextRecordType&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;If the results were truncated, the type of the next record in the list. This element is present only if ListResourceRecordSetsResponse$IsTruncated is true.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;NextRecordIdentifier&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Weighted resource record sets only: If results were truncated for a given DNS name and type, the value of SetIdentifier for the next resource record set that has the current DNS name and type.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;MaxItems&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The maximum number of records you requested. The maximum value of MaxItems is 100.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;RequestId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Request ID of the operation&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;header&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;x-amz-request-id&#x27;,
+                ),
+            ),
+        ),
+    ),
+    &#x27;iterators&#x27; =&gt; array(
+        &#x27;operations&#x27; =&gt; array(
+            &#x27;ListHealthChecks&#x27; =&gt; array(
+                &#x27;token_param&#x27; =&gt; &#x27;Marker&#x27;,
+                &#x27;token_key&#x27; =&gt; &#x27;Marker&#x27;,
+                &#x27;more_key&#x27; =&gt; &#x27;IsTruncated&#x27;,
+                &#x27;limit_key&#x27; =&gt; &#x27;MaxItems&#x27;,
+                &#x27;result_key&#x27; =&gt; &#x27;HealthChecks&#x27;,
+            ),
+            &#x27;ListHostedZones&#x27; =&gt; array(
+                &#x27;token_param&#x27; =&gt; &#x27;Marker&#x27;,
+                &#x27;token_key&#x27; =&gt; &#x27;Marker&#x27;,
+                &#x27;more_key&#x27; =&gt; &#x27;IsTruncated&#x27;,
+                &#x27;limit_key&#x27; =&gt; &#x27;MaxItems&#x27;,
+                &#x27;result_key&#x27; =&gt; &#x27;HostedZones&#x27;,
+            ),
+            &#x27;ListResourceRecordSets&#x27; =&gt; array(
+                &#x27;more_key&#x27; =&gt; &#x27;IsTruncated&#x27;,
+                &#x27;limit_key&#x27; =&gt; &#x27;MaxItems&#x27;,
+                &#x27;result_key&#x27; =&gt; &#x27;ResourceRecordSets&#x27;,
+                &#x27;token_param&#x27; =&gt; array(
+                    &#x27;StartRecordName&#x27;,
+                    &#x27;StartRecordType&#x27;,
+                    &#x27;StartRecordIdentifier&#x27;,
+                ),
+                &#x27;token_key&#x27; =&gt; array(
+                    &#x27;NextRecordName&#x27;,
+                    &#x27;NextRecordType&#x27;,
+                    &#x27;NextRecordIdentifier&#x27;,
+                ),
+            ),
+        ),
+    ),
+);
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

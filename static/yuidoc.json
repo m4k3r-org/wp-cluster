@@ -1,5 +1,5 @@
 {
-  "name": "flawless",
+  "name": "wp-flawless",
   "description": "Flawless Theme.",
   "version": "0.1.1",
   "url": "https://github.com/UsabilityDynamics/wp-flawless",
@@ -11,7 +11,19 @@
     "tabtospace": 2,
     "outdir": "./static/codex",
     "paths": [
-      "./core",
+      "./404.php",
+      "./archive.php",
+      "./functions.php",
+      "./index.php",
+      "./page.php",
+      "./single.php",
+      "./taxonomy.php",
+      "./templates",
+      "./core/controllers",
+      "./core/extend",
+      "./core/helpers",
+      "./core/modules",
+      "./core/vendor",
       "./ux/scripts"
     ]
   }

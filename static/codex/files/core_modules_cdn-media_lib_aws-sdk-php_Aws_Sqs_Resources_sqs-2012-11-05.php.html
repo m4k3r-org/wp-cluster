@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/cdn-media/lib/aws-sdk-php/Aws/Sqs/Resources/sqs-2012-11-05.php - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/cdn-media/lib/aws-sdk-php/Aws/Sqs/Resources/sqs-2012-11-05.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is distributed
+ * on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+return array (
+    &#x27;apiVersion&#x27; =&gt; &#x27;2012-11-05&#x27;,
+    &#x27;endpointPrefix&#x27; =&gt; &#x27;sqs&#x27;,
+    &#x27;serviceFullName&#x27; =&gt; &#x27;Amazon Simple Queue Service&#x27;,
+    &#x27;serviceAbbreviation&#x27; =&gt; &#x27;Amazon SQS&#x27;,
+    &#x27;serviceType&#x27; =&gt; &#x27;query&#x27;,
+    &#x27;resultWrapped&#x27; =&gt; true,
+    &#x27;signatureVersion&#x27; =&gt; &#x27;v4&#x27;,
+    &#x27;namespace&#x27; =&gt; &#x27;Sqs&#x27;,
+    &#x27;regions&#x27; =&gt; array(
+        &#x27;us-east-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sqs.us-east-1.amazonaws.com&#x27;,
+        ),
+        &#x27;us-west-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sqs.us-west-1.amazonaws.com&#x27;,
+        ),
+        &#x27;us-west-2&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sqs.us-west-2.amazonaws.com&#x27;,
+        ),
+        &#x27;eu-west-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sqs.eu-west-1.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-northeast-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sqs.ap-northeast-1.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-southeast-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sqs.ap-southeast-1.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-southeast-2&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sqs.ap-southeast-2.amazonaws.com&#x27;,
+        ),
+        &#x27;sa-east-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sqs.sa-east-1.amazonaws.com&#x27;,
+        ),
+        &#x27;us-gov-west-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sqs.us-gov-west-1.amazonaws.com&#x27;,
+        ),
+    ),
+    &#x27;operations&#x27; =&gt; array(
+        &#x27;AddPermission&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The AddPermission action adds a permission to a queue for a specific principal. This allows for sharing access to the queue.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;AddPermission&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Label&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The unique identification of the permission you\&#x27;re setting (e.g., AliceSendMessage). Constraints: Maximum 80 characters; alphanumeric characters, hyphens (-), and underscores (_) are allowed.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;AWSAccountIds&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The AWS account number of the principal who will be given permission. The principal must have an AWS account, but does not need to be signed up for Amazon SQS.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;AWSAccountId&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;AWSAccountId&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    ),
+                ),
+                &#x27;Actions&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The action the client wants to allow for the specified principal.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;ActionName&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;ActionName&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The operation that you requested would violate a limit. For example, ReceiveMessage returns this error if the maximum number of messages inflight has already been reached. AddPermission returns this error if the maximum number of permissions for the queue has already been reached.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;OverLimitException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ChangeMessageVisibility&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The ChangeMessageVisibility action changes the visibility timeout of a specified message in a queue to a new value. The maximum allowed timeout value you can set the value to is 12 hours. This means you can\&#x27;t extend the timeout of a message in an existing queue to more than a total visibility timeout of 12 hours. (For more information visibility timeout, see Visibility Timeout in the Amazon SQS Developer Guide.)&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;ChangeMessageVisibility&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;ReceiptHandle&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The receipt handle associated with the message whose visibility timeout should be changed.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;VisibilityTimeout&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The new value (in seconds) for the message\&#x27;s visibility timeout.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The message referred to is not in flight.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;MessageNotInflightException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The receipt handle provided is not valid.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;ReceiptHandleIsInvalidException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ChangeMessageVisibilityBatch&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;ChangeMessageVisibilityBatchResult&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;This is a batch version of ChangeMessageVisibility. It takes multiple receipt handles and performs the operation on each of the them. The result of the operation on each message is reported individually in the response.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;ChangeMessageVisibilityBatch&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Entries&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A list of receipt handles of the messages for which the visibility timeout must be changed.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;ChangeMessageVisibilityBatchRequestEntry&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;ChangeMessageVisibilityBatchRequestEntry&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;Encloses a receipt handle and an entry id for each message in ChangeMessageVisibilityBatchRequest.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Id&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;An identifier for this particular receipt handle. This is used to communicate the result. Note that the Ids of a batch request need to be unique within the request.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;ReceiptHandle&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;A receipt handle.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;VisibilityTimeout&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The new value (in seconds) for the message\&#x27;s visibility timeout.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Batch request contains more number of entries than permissible.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;TooManyEntriesInBatchRequestException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Batch request does not contain an entry.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;EmptyBatchRequestException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Two or more batch entries have the same Id in the request.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;BatchEntryIdsNotDistinctException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The Id of a batch entry in a batch request does not abide by the specification.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidBatchEntryIdException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;CreateQueue&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;CreateQueueResult&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The CreateQueue action creates a new queue, or returns the URL of an existing one. When you request CreateQueue, you provide a name for the queue. To successfully create a new queue, you must provide a name that is unique within the scope of your own queues.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;CreateQueue&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueName&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The name for the queue to be created.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Attributes&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A map of attributes with their corresponding values.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;Attribute&#x27;,
+                    &#x27;additionalProperties&#x27; =&gt; array(
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        &#x27;data&#x27; =&gt; array(
+                            &#x27;shape_name&#x27; =&gt; &#x27;QueueAttributeName&#x27;,
+                        ),
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;You must wait 60 seconds after deleting a queue before you can create another with the same name.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;QueueDeletedRecentlyException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;A queue already exists with this name. SQS returns this error only if the request includes attributes whose values differ from those of the existing queue.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;QueueNameExistsException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;DeleteMessage&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The DeleteMessage action unconditionally removes the specified message from the specified queue. Even if the message is locked by another reader due to the visibility timeout setting, it is still deleted from the queue.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;DeleteMessage&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;ReceiptHandle&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The receipt handle associated with the message to delete.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The receipt handle is not valid for the current version.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidIdFormatException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The receipt handle provided is not valid.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;ReceiptHandleIsInvalidException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;DeleteMessageBatch&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;DeleteMessageBatchResult&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;This is a batch version of DeleteMessage. It takes multiple receipt handles and deletes each one of the messages. The result of the delete operation on each message is reported individually in the response.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;DeleteMessageBatch&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Entries&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A list of receipt handles for the messages to be deleted.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;DeleteMessageBatchRequestEntry&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;DeleteMessageBatchRequestEntry&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;Encloses a receipt handle and an identifier for it.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Id&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;An identifier for this particular receipt handle. This is used to communicate the result. Note that the Ids of a batch request need to be unique within the request.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;ReceiptHandle&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;A receipt handle.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Batch request contains more number of entries than permissible.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;TooManyEntriesInBatchRequestException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Batch request does not contain an entry.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;EmptyBatchRequestException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Two or more batch entries have the same Id in the request.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;BatchEntryIdsNotDistinctException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The Id of a batch entry in a batch request does not abide by the specification.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidBatchEntryIdException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;DeleteQueue&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;This action unconditionally deletes the queue specified by the queue URL. Use this operation WITH CARE! The queue is deleted even if it is NOT empty.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;DeleteQueue&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+        ),
+        &#x27;GetQueueAttributes&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;GetQueueAttributesResult&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;Gets attributes for the specified queue. The following attributes are supported: All - returns all values. ApproximateNumberOfMessages - returns the approximate number of visible messages in a queue. For more information, see Resources Required to Process Messages in the Amazon SQS Developer Guide. ApproximateNumberOfMessagesNotVisible - returns the approximate number of messages that are not timed-out and not deleted. For more information, see Resources Required to Process Messages in the Amazon SQS Developer Guide. VisibilityTimeout - returns the visibility timeout for the queue. For more information about visibility timeout, see Visibility Timeout in the Amazon SQS Developer Guide. CreatedTimestamp - returns the time when the queue was created (epoch time in seconds). LastModifiedTimestamp - returns the time when the queue was last changed (epoch time in seconds). Policy - returns the queue\&#x27;s policy. MaximumMessageSize - returns the limit of how many bytes a message can contain before Amazon SQS rejects it. MessageRetentionPeriod - returns the number of seconds Amazon SQS retains a message. QueueArn - returns the queue\&#x27;s Amazon resource name (ARN). ApproximateNumberOfMessagesDelayed - returns the approximate number of messages that are pending to be added to the queue. DelaySeconds - returns the default delay on the queue in seconds. ReceiveMessageWaitTimeSeconds - returns the time for which a ReceiveMessage call will wait for a message to arrive.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;GetQueueAttributes&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;AttributeNames&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of attributes to retrieve information for.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;AttributeName&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;AttributeName&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        &#x27;enum&#x27; =&gt; array(
+                            &#x27;All&#x27;,
+                            &#x27;Policy&#x27;,
+                            &#x27;VisibilityTimeout&#x27;,
+                            &#x27;MaximumMessageSize&#x27;,
+                            &#x27;MessageRetentionPeriod&#x27;,
+                            &#x27;ApproximateNumberOfMessages&#x27;,
+                            &#x27;ApproximateNumberOfMessagesNotVisible&#x27;,
+                            &#x27;CreatedTimestamp&#x27;,
+                            &#x27;LastModifiedTimestamp&#x27;,
+                            &#x27;QueueArn&#x27;,
+                            &#x27;ApproximateNumberOfMessagesDelayed&#x27;,
+                            &#x27;DelaySeconds&#x27;,
+                            &#x27;ReceiveMessageWaitTimeSeconds&#x27;,
+                        ),
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The attribute referred to does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidAttributeNameException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;GetQueueUrl&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;GetQueueUrlResult&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The GetQueueUrl action returns the URL of an existing queue.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;GetQueueUrl&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueName&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The name of the queue whose URL must be fetched.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;QueueOwnerAWSAccountId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The AWS account number of the queue\&#x27;s owner.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The queue referred to does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;QueueDoesNotExistException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListQueues&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;ListQueuesResult&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;Returns a list of your queues.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;ListQueues&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueNamePrefix&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A string to use for filtering the list results. Only those queues whose name begins with the specified string are returned.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ReceiveMessage&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;ReceiveMessageResult&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;Retrieves one or more messages from the specified queue, including the message body and message ID of each message. Messages returned by this action stay in the queue until you delete them. However, once a message is returned to a ReceiveMessage request, it is not returned on subsequent ReceiveMessage requests for the duration of the VisibilityTimeout. If you do not specify a VisibilityTimeout in the request, the overall visibility timeout for the queue is used for the returned messages.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;ReceiveMessage&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;AttributeNames&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of attributes that need to be returned along with each message. The set of valid attributes are [SenderId, ApproximateFirstReceiveTimestamp, ApproximateReceiveCount, SentTimestamp].&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;AttributeName&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;AttributeName&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    ),
+                ),
+                &#x27;MaxNumberOfMessages&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The maximum number of messages to return. Amazon SQS never returns more messages than this value but may return fewer.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;VisibilityTimeout&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The duration (in seconds) that the received messages are hidden from subsequent retrieve requests after being retrieved by a ReceiveMessage request.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;WaitTimeSeconds&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The duration (in seconds) for which the call will wait for a message to arrive in the queue before returning. If a message is available, the call will return sooner than WaitTimeSeconds.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The operation that you requested would violate a limit. For example, ReceiveMessage returns this error if the maximum number of messages inflight has already been reached. AddPermission returns this error if the maximum number of permissions for the queue has already been reached.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;OverLimitException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;RemovePermission&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The RemovePermission action revokes any permissions in the queue policy that matches the specified Label parameter. Only the owner of the queue can remove permissions.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;RemovePermission&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Label&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The identification of the permission to remove. This is the label added with the AddPermission operation.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+        ),
+        &#x27;SendMessage&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;SendMessageResult&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The SendMessage action delivers a message to the specified queue.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;SendMessage&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;MessageBody&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The message to send.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;DelaySeconds&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The number of seconds the message has to be delayed.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The message contains characters outside the allowed set.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidMessageContentsException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;SendMessageBatch&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;SendMessageBatchResult&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;This is a batch version of SendMessage. It takes multiple messages and adds each of them to the queue. The result of each add operation is reported individually in the response.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;SendMessageBatch&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Entries&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A list of SendMessageBatchRequestEntrys.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;SendMessageBatchRequestEntry&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;SendMessageBatchRequestEntry&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;Contains the details of a single SQS message along with a Id.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Id&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;An identifier for the message in this batch. This is used to communicate the result. Note that the the Ids of a batch request need to be unique within the request.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;MessageBody&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;Body of the message.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;DelaySeconds&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The number of seconds for which the message has to be delayed.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Batch request contains more number of entries than permissible.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;TooManyEntriesInBatchRequestException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Batch request does not contain an entry.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;EmptyBatchRequestException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Two or more batch entries have the same Id in the request.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;BatchEntryIdsNotDistinctException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The length of all the messages put together is more than the limit.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;BatchRequestTooLongException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The Id of a batch entry in a batch request does not abide by the specification.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidBatchEntryIdException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;SetQueueAttributes&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;Sets the value of one or more queue attributes. Valid attributes that can be set are [VisibilityTimeout, Policy, MaximumMessageSize, MessageRetentionPeriod, ReceiveMessageWaitTimeSeconds].&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;SetQueueAttributes&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2012-11-05&#x27;,
+                ),
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The URL of the SQS queue to take action on.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Attributes&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A map of attributes to set.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;Attribute&#x27;,
+                    &#x27;additionalProperties&#x27; =&gt; array(
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        &#x27;data&#x27; =&gt; array(
+                            &#x27;shape_name&#x27; =&gt; &#x27;QueueAttributeName&#x27;,
+                        ),
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;The attribute referred to does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidAttributeNameException&#x27;,
+                ),
+            ),
+        ),
+    ),
+    &#x27;models&#x27; =&gt; array(
+        &#x27;EmptyOutput&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+        ),
+        &#x27;ChangeMessageVisibilityBatchResult&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;Successful&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of ChangeMessageVisibilityBatchResultEntrys.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;ChangeMessageVisibilityBatchResultEntry&#x27;,
+                    &#x27;data&#x27; =&gt; array(
+                        &#x27;xmlFlattened&#x27; =&gt; true,
+                    ),
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;ChangeMessageVisibilityBatchResultEntry&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;Encloses the id of an entry in ChangeMessageVisibilityBatchRequest.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;ChangeMessageVisibilityBatchResultEntry&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Id&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Represents a message whose visibility timeout has been changed successfully.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;Failed&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of BatchResultErrorEntrys.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;BatchResultErrorEntry&#x27;,
+                    &#x27;data&#x27; =&gt; array(
+                        &#x27;xmlFlattened&#x27; =&gt; true,
+                    ),
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;BatchResultErrorEntry&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;This is used in the responses of batch API to give a detailed description of the result of an operation on each entry in the request.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;BatchResultErrorEntry&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Id&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The id of an entry in a batch request.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;SenderFault&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Whether the error happened due to the sender\&#x27;s fault.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                            ),
+                            &#x27;Code&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;An error code representing why the operation failed on this entry.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Message&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;A message explaining why the operation failed on this entry.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        &#x27;CreateQueueResult&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The URL for the created SQS queue.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+            ),
+        ),
+        &#x27;DeleteMessageBatchResult&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;Successful&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of DeleteMessageBatchResultEntrys.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;DeleteMessageBatchResultEntry&#x27;,
+                    &#x27;data&#x27; =&gt; array(
+                        &#x27;xmlFlattened&#x27; =&gt; true,
+                    ),
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;DeleteMessageBatchResultEntry&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;Encloses the id an entry in DeleteMessageBatchRequest.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;DeleteMessageBatchResultEntry&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Id&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Represents a successfully deleted message.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;Failed&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of BatchResultErrorEntrys.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;BatchResultErrorEntry&#x27;,
+                    &#x27;data&#x27; =&gt; array(
+                        &#x27;xmlFlattened&#x27; =&gt; true,
+                    ),
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;BatchResultErrorEntry&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;This is used in the responses of batch API to give a detailed description of the result of an operation on each entry in the request.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;BatchResultErrorEntry&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Id&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The id of an entry in a batch request.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;SenderFault&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Whether the error happened due to the sender\&#x27;s fault.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                            ),
+                            &#x27;Code&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;An error code representing why the operation failed on this entry.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Message&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;A message explaining why the operation failed on this entry.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        &#x27;GetQueueAttributesResult&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;Attributes&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A map of attributes to the respective values.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;Attribute&#x27;,
+                    &#x27;data&#x27; =&gt; array(
+                        &#x27;xmlFlattened&#x27; =&gt; true,
+                        &#x27;xmlMap&#x27; =&gt; array(
+                            &#x27;Policy&#x27;,
+                            &#x27;VisibilityTimeout&#x27;,
+                            &#x27;MaximumMessageSize&#x27;,
+                            &#x27;MessageRetentionPeriod&#x27;,
+                            &#x27;ApproximateNumberOfMessages&#x27;,
+                            &#x27;ApproximateNumberOfMessagesNotVisible&#x27;,
+                            &#x27;CreatedTimestamp&#x27;,
+                            &#x27;LastModifiedTimestamp&#x27;,
+                            &#x27;QueueArn&#x27;,
+                            &#x27;ApproximateNumberOfMessagesDelayed&#x27;,
+                            &#x27;DelaySeconds&#x27;,
+                            &#x27;ReceiveMessageWaitTimeSeconds&#x27;,
+                        ),
+                    ),
+                    &#x27;filters&#x27; =&gt; array(
+                        array(
+                            &#x27;method&#x27; =&gt; &#x27;Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap&#x27;,
+                            &#x27;args&#x27; =&gt; array(
+                                &#x27;@value&#x27;,
+                                &#x27;Attribute&#x27;,
+                                &#x27;Name&#x27;,
+                                &#x27;Value&#x27;,
+                            ),
+                        ),
+                    ),
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;Attribute&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;Attribute&#x27;,
+                        &#x27;additionalProperties&#x27; =&gt; true,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Name&#x27; =&gt; array(
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Value&#x27; =&gt; array(
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                    &#x27;additionalProperties&#x27; =&gt; false,
+                ),
+            ),
+        ),
+        &#x27;GetQueueUrlResult&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;QueueUrl&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The URL for the queue.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListQueuesResult&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;QueueUrls&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of queue URLs, up to 1000 entries.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;QueueUrl&#x27;,
+                    &#x27;data&#x27; =&gt; array(
+                        &#x27;xmlFlattened&#x27; =&gt; true,
+                    ),
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;QueueUrl&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;QueueUrl&#x27;,
+                    ),
+                ),
+            ),
+        ),
+        &#x27;ReceiveMessageResult&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;Messages&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of messages.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;Message&#x27;,
+                    &#x27;data&#x27; =&gt; array(
+                        &#x27;xmlFlattened&#x27; =&gt; true,
+                    ),
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;Message&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;Message&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;MessageId&#x27; =&gt; array(
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;ReceiptHandle&#x27; =&gt; array(
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;MD5OfBody&#x27; =&gt; array(
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Body&#x27; =&gt; array(
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Attributes&#x27; =&gt; array(
+                                &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                &#x27;sentAs&#x27; =&gt; &#x27;Attribute&#x27;,
+                                &#x27;data&#x27; =&gt; array(
+                                    &#x27;xmlFlattened&#x27; =&gt; true,
+                                    &#x27;xmlMap&#x27; =&gt; array(
+                                        &#x27;Policy&#x27;,
+                                        &#x27;VisibilityTimeout&#x27;,
+                                        &#x27;MaximumMessageSize&#x27;,
+                                        &#x27;MessageRetentionPeriod&#x27;,
+                                        &#x27;ApproximateNumberOfMessages&#x27;,
+                                        &#x27;ApproximateNumberOfMessagesNotVisible&#x27;,
+                                        &#x27;CreatedTimestamp&#x27;,
+                                        &#x27;LastModifiedTimestamp&#x27;,
+                                        &#x27;QueueArn&#x27;,
+                                        &#x27;ApproximateNumberOfMessagesDelayed&#x27;,
+                                        &#x27;DelaySeconds&#x27;,
+                                        &#x27;ReceiveMessageWaitTimeSeconds&#x27;,
+                                    ),
+                                ),
+                                &#x27;filters&#x27; =&gt; array(
+                                    array(
+                                        &#x27;method&#x27; =&gt; &#x27;Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap&#x27;,
+                                        &#x27;args&#x27; =&gt; array(
+                                            &#x27;@value&#x27;,
+                                            &#x27;Attribute&#x27;,
+                                            &#x27;Name&#x27;,
+                                            &#x27;Value&#x27;,
+                                        ),
+                                    ),
+                                ),
+                                &#x27;items&#x27; =&gt; array(
+                                    &#x27;name&#x27; =&gt; &#x27;Attribute&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                    &#x27;sentAs&#x27; =&gt; &#x27;Attribute&#x27;,
+                                    &#x27;additionalProperties&#x27; =&gt; true,
+                                    &#x27;properties&#x27; =&gt; array(
+                                        &#x27;Name&#x27; =&gt; array(
+                                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        ),
+                                        &#x27;Value&#x27; =&gt; array(
+                                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        ),
+                                    ),
+                                ),
+                                &#x27;additionalProperties&#x27; =&gt; false,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        &#x27;SendMessageResult&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;MD5OfMessageBody&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;An MD5 digest of the non-URL-encoded message body string. This can be used to verify that SQS received the message correctly. SQS first URL decodes the message before creating the MD5 digest. For information about MD5, go to http://faqs.org/rfcs/rfc1321.html.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;MessageId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The message ID of the message added to the queue.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+            ),
+        ),
+        &#x27;SendMessageBatchResult&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;Successful&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of SendMessageBatchResultEntrys.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;SendMessageBatchResultEntry&#x27;,
+                    &#x27;data&#x27; =&gt; array(
+                        &#x27;xmlFlattened&#x27; =&gt; true,
+                    ),
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;SendMessageBatchResultEntry&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;Encloses a message ID for successfully enqueued message of a SendMessageBatchRequest.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;SendMessageBatchResultEntry&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Id&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;An identifier for the message in this batch.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;MessageId&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;An identifier for the message.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;MD5OfMessageBody&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;An MD5 digest of the non-URL-encoded message body string. This can be used to verify that SQS received the message correctly. SQS first URL decodes the message before creating the MD5 digest. For information about MD5, go to http://faqs.org/rfcs/rfc1321.html.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;Failed&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of BatchResultErrorEntrys with the error detail about each message that could not be enqueued.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;BatchResultErrorEntry&#x27;,
+                    &#x27;data&#x27; =&gt; array(
+                        &#x27;xmlFlattened&#x27; =&gt; true,
+                    ),
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;BatchResultErrorEntry&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;This is used in the responses of batch API to give a detailed description of the result of an operation on each entry in the request.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;BatchResultErrorEntry&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Id&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The id of an entry in a batch request.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;SenderFault&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Whether the error happened due to the sender\&#x27;s fault.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                            ),
+                            &#x27;Code&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;An error code representing why the operation failed on this entry.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Message&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;A message explaining why the operation failed on this entry.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    ),
+    &#x27;iterators&#x27; =&gt; array(
+        &#x27;operations&#x27; =&gt; array(
+            &#x27;ListQueues&#x27; =&gt; array(
+                &#x27;result_key&#x27; =&gt; &#x27;QueueUrls&#x27;,
+            ),
+        ),
+    ),
+);
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

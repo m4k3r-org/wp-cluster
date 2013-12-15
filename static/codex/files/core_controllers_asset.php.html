@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/controllers/asset.php - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/controllers/asset.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+  /**
+   * Flawless
+   *
+   * @author potanin@UD
+   * @version 0.0.1
+   * @namespace Flawless
+   */
+  namespace Flawless {
+
+    /**
+     * Asset
+     *
+     * -
+     *
+     * @author potanin@UD
+     * @version 0.1.0
+     * @class Asset
+     */
+    class Asset {
+
+      /**
+       * Asset Controller Version.
+       *
+       * @static
+       * @property $version
+       * @type {Object}
+       */
+      public static $version = &#x27;0.1.1&#x27;;
+
+      /**
+       * Constructor for the Asset class.
+       *
+       * @author potanin@UD
+       * @version 0.0.1
+       * @method __construct
+       *
+       * @constructor
+       * @for Asset
+       *
+       * @param array|bool $options
+       */
+      public function __construct( $options = false ) {
+
+        // Load additional scripts and styles.
+        add_action( &#x27;flawless::wp_enqueue_scripts&#x27;, array( $this, &#x27;wp_enqueue_scripts&#x27; ), 5 );
+        add_action( &#x27;flawless::wp_print_styles&#x27;,    array( $this, &#x27;wp_print_styles&#x27; ), 5 );
+        add_action( &#x27;flawless::extra_local_assets&#x27;, array( $this, &#x27;extra_local_assets&#x27; ), 5 );
+
+      }
+
+      /**
+       * Load extra front-end assets
+       *
+       * @param $flawless {Object} Flawless instance.
+       *
+       * @method extra_local_assets
+       * @for Asset
+       *
+       * @since 0.0.3
+       */
+      public function extra_local_assets( &amp;$flawless ) {
+
+        //** Fancybox Scripts and Styles - enabled by default */
+        if ( $flawless[ &#x27;disable_fancybox&#x27; ] != &#x27;true&#x27; ) {
+          wp_enqueue_script( &#x27;jquery-fancybox&#x27; );
+        }
+
+        //** Masonry for galleries. */
+        if ( $flawless[ &#x27;disable_masonry&#x27; ] != &#x27;true&#x27; ) {
+          wp_enqueue_script( &#x27;jquery-masonry&#x27; );
+        }
+
+        //** Masonry for galleries. */
+        if ( $flawless[ &#x27;disable_equalheights&#x27; ] != &#x27;true&#x27; ) {
+          wp_enqueue_script( &#x27;jquery-equalheights&#x27; );
+        }
+
+        //** UD Form Helper - enabled on default */
+        if ( $flawless[ &#x27;disable_form_helper&#x27; ] != &#x27;true&#x27; ) {
+          wp_enqueue_script( &#x27;jquery-ud-form_helper&#x27; );
+        }
+
+        /* Dynamic Filter - disabled on default */
+        if ( $flawless[ &#x27;enable_dynamic_filter&#x27; ] == &#x27;true&#x27; ) {
+          wp_enqueue_script( &#x27;jquery-ud-dynamic_filter&#x27; );
+        }
+
+        /* Google Code Pretification - disabled on default */
+        if ( $flawless[ &#x27;enable_google_pretify&#x27; ] == &#x27;true&#x27; ) {
+          wp_enqueue_script( &#x27;google-prettify&#x27; );
+        }
+
+        /* Lazyload for Images - disabled on default */
+        if ( $flawless[ &#x27;enable_lazyload&#x27; ] == &#x27;true&#x27; ) {
+          wp_enqueue_script( &#x27;jquery-lazyload&#x27; );
+        }
+
+      }
+
+      /**
+       * Load extra front-end assets
+       *
+       * Cycles through $flawless-&gt;remote_assets-&gt;css and attempts to enqueue.
+       *
+       * @param $flawless {Object} Flawless instance.
+       *
+       * @method wp_print_styles
+       * @for Asset
+       *
+       * @action flawless::extra_local_assets
+       * @since 0.0.3
+       */
+      public function wp_print_styles( &amp;$flawless ) {
+        global $wp_styles;
+
+        $flawless-&gt;remote_assets = apply_filters( &#x27;flawless::remote_assets&#x27;, (array) $flawless-&gt;remote_assets );
+
+        //** Enqueue remote styles if they are accessible */
+        foreach ( (array) $flawless-&gt;remote_assets[ &#x27;css&#x27; ] as $asset_handle =&gt; $remote_asset ) {
+          $remote_asset = str_replace( array( &#x27;http://&#x27;, &#x27;https://&#x27; ), &#x27;&#x27;, $remote_asset );
+          if ( Asset::can_get( $this[ &#x27;protocol&#x27; ] . $remote_asset, array( &#x27;handle&#x27; =&gt; $asset_handle ) ) ) {
+            wp_enqueue_style( $asset_handle, $this[ &#x27;protocol&#x27; ] . $remote_asset, array(), Flawless_Version );
+          }
+        }
+
+        // Enqueue Google Fonts if specified by theme or skin
+        foreach ( $flawless-&gt;current_theme_options[ &#x27;Google Fonts&#x27; ] as $google_font ) {
+          wp_enqueue_style( &#x27;google-font-&#x27; . sanitize_file_name( $google_font ), &#x27;https://fonts.googleapis.com/css?family=&#x27; . str_replace( &#x27; &#x27;, &#x27;+&#x27;, ucfirst( trim( $google_font ) ) ), array( &#x27;flawless-app&#x27; ) );
+        }
+
+        // Enqueue CSS for active plugins.
+        foreach ( apply_filters( &#x27;flawless::active_plugins&#x27;, (array) Utility::get_active_plugins() ) as $plugin ) {
+
+          // Get a plugin name slug
+          $plugin = dirname( plugin_basename( trim( $plugin ) ) );
+
+          // Look for plugin-specific scripts and load them
+          foreach ( (array) $flawless-&gt;asset_directories as $this_directory =&gt; $this_url ) {
+            if ( file_exists( $this_directory . &#x27;/css/&#x27; . $plugin . &#x27;.css&#x27; ) ) {
+              $asset_url = apply_filters( &#x27;flawless-asset-url&#x27;, $this_url . &#x27;/css/&#x27; . $plugin . &#x27;.css&#x27;, $plugin );
+              $file_data = get_file_data( $this_directory . &#x27;/css/&#x27; . $plugin . &#x27;.css&#x27;, $this[ &#x27;default_header&#x27; ][ &#x27;flawless_style_assets&#x27; ], &#x27;flawless_style_assets&#x27; );
+              wp_enqueue_style( &#x27;flawless-asset-&#x27; . $plugin, $asset_url, array( &#x27;flawless-app&#x27; ), $file_data[ &#x27;Version&#x27; ] ? $file_data[ &#x27;Version&#x27; ] : Flawless_Version, $file_data[ &#x27;Media&#x27; ] ? $file_data[ &#x27;Media&#x27; ] : &#x27;screen&#x27; );
+              Log::add( sprintf( __( &#x27;CSS found for %1s plugin and loaded: %2s.&#x27;, &#x27;flawless&#x27; ), $plugin, $asset_url ), &#x27;info&#x27; );
+            }
+          }
+        }
+
+        // Enqueue child theme style.css.
+        if( file_exists( STYLESHEETPATH . &#x27;/ux/build/app.min.css&#x27; ) ) {
+          //wp_enqueue_style( &#x27;flawless-app&#x27;, STYLESHEETPATH . &#x27;/ux/build/app.min.css&#x27;, array(), Flawless_Version );
+        }
+
+      }
+
+      /**
+       * Load extra front-end assets
+       *
+       * Cycles through $flawless-&gt;remote_assets-&gt;script and attempts to enqueue.
+       *
+       * @param $flawless {Object} Flawless instance.
+       *
+       * @method wp_enqueue_scripts
+       * @for Asset
+       *
+       * @action flawless::extra_local_assets
+       * @since 0.0.3
+       */
+      public function wp_enqueue_scripts( &amp;$flawless ) {
+
+        // API Access
+        $flawless-&gt;remote_assets = apply_filters( &#x27;flawless::remote_assets&#x27;, (array) $flawless-&gt;remote_assets );
+
+        // Check and Load Remote Scripts
+        foreach ( (array) $$flawless-&gt;remote_assets-&gt;script as $asset_handle =&gt; $remote_asset ) {
+
+          //** Remove prix if passed, we set them automatically */
+          $remote_asset = str_replace( array( &#x27;http://&#x27;, &#x27;https://&#x27; ), &#x27;&#x27;, $remote_asset );
+
+          if ( Asset::can_get( $this[ &#x27;protocol&#x27; ] . $remote_asset, array( &#x27;handle&#x27; =&gt; $asset_handle ) ) ) {
+            wp_enqueue_script( $asset_handle, $this[ &#x27;protocol&#x27; ] . $remote_asset, array(), Flawless_Version );
+          } else {
+            Log::add( sprintf( __( &#x27;Could not load remote asset script: %1s.&#x27;, &#x27;flawless&#x27; ), $remote_asset ) );
+          }
+        }
+
+      }
+
+      /**
+       * Scans Asset Directories for the requested assets and returns asset-specific result if found
+       *
+       * @example
+       *
+       *      // Find Script and Style for Carrington
+       *      $css  = Asset::load( &#x27;carrington&#x27;, &#x27;css&#x27; );
+       *      $js   = Asset::load( &#x27;carrington&#x27;, &#x27;js&#x27; );
+       *
+       *      // Enqueue, assuming they are found.
+       *      wp_enqueue_style( &#x27;carrington&#x27;, $css );
+       *      wp_enqueue_script( &#x27;carrington&#x27;, $js );
+       *
+       * - lib - inclues the PHP library if it exists
+       * - less - returns file path if file exists
+       * - image - returns URL if exists
+       * - js - returns URL if exists
+       * - css - returns URL if exists
+       *
+       * @updated 0.0.6
+       * @author peshkov@UD
+       *
+       * @param        $name
+       * @param string $type
+       * @param string $args
+       *
+       * @return bool|mixed|string
+       */
+      static public function load( $name, $type = &#x27;lib&#x27;, $args = &#x27;&#x27; ) {
+
+        //die( &#x27;&lt;pre&gt;&#x27; . print_r( func_get_args(), true ) . &#x27;&lt;/pre&gt;&#x27; );
+
+        $args = wp_parse_args( $args, array(
+          &#x27;return&#x27; =&gt; false
+        ));
+
+        /* if ( $return = wp_cache_get( md5( $name . $type . serialize( $args ) ), &#x27;flawless_load_value&#x27; ) ) {
+          return $return;
+        } */
+
+        foreach ( (array) $flawless-&gt;asset_directories as $assets_path =&gt; $assets_url ) {
+
+          switch ( $type ) {
+
+            case &#x27;lib&#x27;:
+              if ( file_exists( $assets_path . &#x27;/controllers/&#x27; . $name . &#x27;.php&#x27; ) ) {
+                include_once( $assets_path . &#x27;/controllers/&#x27; . $name . &#x27;.php&#x27; );
+                $return = true;
+              }
+            break;
+
+            case &#x27;less&#x27;:
+              if ( file_exists( $assets_path . &#x27;/styles/&#x27; . $name . &#x27;.less&#x27; ) ) {
+                $return = $args[ &#x27;return&#x27; ] == &#x27;path&#x27; ? $assets_path . &#x27;/styles/&#x27; . $name . &#x27;.less&#x27; : $assets_url . &#x27;/styles/&#x27; . $name . &#x27;.less&#x27;;
+              }
+            break;
+
+            case &#x27;img&#x27;:
+            case &#x27;image&#x27;:
+              if ( file_exists( $assets_path . &#x27;/img/&#x27; . $name ) ) {
+                $return = $assets_url . &#x27;/img/&#x27; . $name;
+              }
+              break;
+
+            case &#x27;js&#x27;:
+              if ( file_exists( $assets_path . &#x27;/scripts/&#x27; . $name ) ) {
+                $return = $assets_url . &#x27;/scripts/&#x27; . $name;
+              }
+            break;
+
+            case &#x27;css&#x27;:
+              if ( file_exists( $assets_path . &#x27;/styles/&#x27; . $name . &#x27;.css&#x27; ) ) {
+                $return = $assets_url . &#x27;/styles/&#x27; . $name . &#x27;.css&#x27;;
+              }
+            break;
+
+          }
+
+        }
+
+        if ( !empty( $return ) ) {
+          // wp_cache_set( md5( $name . $type . serialize( $args ) ), $return, &#x27;flawless_load_value&#x27; );
+          return $return;
+        }
+
+        return false;
+
+      }
+
+      /**
+       * Tests if remote script or CSS file can be opened prior to sending it to browser
+       *
+       * @method can_get
+       * @version 0.25.0
+       *
+       * @param bool  $url
+       * @param array $args
+       * @return bool
+       */
+      static public function can_get( $url = false, $args = array() ) {
+        global $flawless;
+
+        if ( empty( $url ) ) {
+          return false;
+        }
+
+        $match = false;
+
+        if ( empty( $args ) ) {
+          $args[ &#x27;timeout&#x27; ] = 10;
+        }
+
+        $result = wp_remote_get( $url, $args );
+
+        if ( is_wp_error( $result ) ) {
+          return false;
+        }
+
+        $type = $result[ &#x27;headers&#x27; ][ &#x27;content-type&#x27; ];
+
+        if ( strpos( $type, &#x27;javascript&#x27; ) !== false ) {
+          $match = true;
+        }
+
+        if ( strpos( $type, &#x27;css&#x27; ) !== false ) {
+          $match = true;
+        }
+
+        if ( !$match || $result[ &#x27;response&#x27; ][ &#x27;code&#x27; ] != 200 ) {
+
+          if ( $flawless[ &#x27;developer_mode&#x27; ] == &#x27;true&#x27; ) {
+            Log::add( &quot;Remote asset ( $url ) could not be loaded, content type returned: &quot; . $result[ &#x27;headers&#x27; ][ &#x27;content-type&#x27; ] );
+          }
+
+          return false;
+        }
+
+        return true;
+
+      }
+
+      /**
+       * Checks if script or style have been loaded.
+       *
+       * Migrated from Flawless::is_asset_loaded()
+       *
+       * @todo Add handler for styles.
+       * @since 0.2.0
+       */
+      static public function is_loaded( $handle = false ) {
+        global $wp_scripts;
+
+        if ( empty( $handle ) ) {
+          return;
+        }
+
+        $footer = (array) $wp_scripts-&gt;in_footer;
+        $done   = (array) $wp_scripts-&gt;done;
+
+        $accepted = array_merge( $footer, $done );
+
+        if ( !in_array( $handle, $accepted ) ) {
+          return false;
+        }
+
+        return true;
+
+      }
+
+    }
+
+  }
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

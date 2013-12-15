@@ -5,7 +5,7 @@
    * @author potanin@UD
    * @version 0.0.1
    *
-   * @submodule Flawless
+   * @module Flawless
    * @namespace Flawless
    */
   namespace Flawless {

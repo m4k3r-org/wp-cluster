@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/cdn-media/lib/Bjork/bjork/core/signing.php - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/cdn-media/lib/Bjork/bjork/core/signing.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+
+namespace bjork\core\signing {
+
+use strutils;
+
+use bjork\conf\settings,
+    bjork\utils\baseconv,
+    bjork\utils\crypto,
+    bjork\utils\http;
+
+/**
+* Signature does not match
+*/
+class BadSignature extends \Exception {}
+
+/**
+* Signature timestamp is older than required max_age
+*/
+class SignatureExpired extends BadSignature {}
+
+class JSONSerializer {
+    function dumps($obj) {
+        return json_encode($obj);
+    }
+    
+    function loads($data) {
+        return json_decode($data);
+    }
+}
+
+function b64_encode($s) {
+    return rtrim(http::urlsafe_b64encode($s), &#x27;=&#x27;);
+}
+
+function b64_decode($s) {
+    $pad = str_repeat(&#x27;=&#x27;, strlen($s) % 4);
+    return http::urlsafe_b64decode($s . $pad);
+}
+
+function b64_hmac($salt, $value, $key) {
+    return b64_encode(crypto::salted_hmac($salt, $value, $key));
+}
+
+class Signer {
+    
+    protected
+        $sep,
+        $key,
+        $salt;
+    
+    function __construct($key=null, $salt=null, $sep=&#x27;:&#x27;) {
+        if (null === $key)
+            $key = settings::get(&#x27;SECRET_KEY&#x27;);
+        if (null === $salt)
+            $salt = get_class();
+        $this-&gt;sep = $sep;
+        $this-&gt;key = $key;
+        $this-&gt;salt = $salt;
+    }
+    
+    function getSignature($value) {
+        return b64_hmac($this-&gt;salt . &#x27;signer&#x27;, $value, $this-&gt;key);
+    }
+    
+    function sign($value) {
+        return sprintf(&#x27;%s%s%s&#x27;,
+            $value,
+            $this-&gt;sep,
+            $this-&gt;getSignature($value)
+        );
+    }
+    
+    function unsign($signed_value) {
+        if (false === mb_strpos($signed_value, $this-&gt;sep))
+            throw new BadSignature(&quot;No &#x27;{$this-&gt;sep}&#x27; found in value&quot;);
+        list($value, $sig) = strutils::rsplit($signed_value, $this-&gt;sep, 1);
+        if (crypto::constant_time_compare($sig, $this-&gt;getSignature($value)))
+            return $value;
+        throw new BadSignature(&quot;Signature &#x27;{$sig}&#x27; does not match&quot;);
+    }
+}
+
+class TimestampSigner extends Signer {
+    
+    function sign($value) {
+        $value = sprintf(&#x27;%s%s%s&#x27;, $value, $this-&gt;sep, $this-&gt;getTimestamp());
+        return parent::sign($value);
+    }
+    
+    function unsign($signed_value, $max_age=null) {
+        $result = parent::unsign($signed_value);
+        list($value, $timestamp) = strutils::rsplit($result, $this-&gt;sep, 1);
+        $timestamp = baseconv::b62decode($timestamp);
+        if (null !== $max_age) {
+            $age = time() - $timestamp;
+            if ($age &gt; $max_age)
+                throw new BadSignature(&quot;Signature age {$age} &gt; {$max_age} seconds&quot;);
+        }
+        return $value;
+    }
+    
+    function getTimestamp() {
+        return baseconv::b62encode(time());
+    }
+}
+
+}
+
+namespace bjork\core {
+
+use bjork\conf\settings;
+
+final class signing {
+    
+    /**
+    * Returns URL-safe, sha1 signed base64 compressed JSON string. If key is
+    * None, settings.SECRET_KEY is used instead.
+    * 
+    * If compress is True (not the default) checks if compressing using zlib can
+    * save some space. Prepends a &#x27;.&#x27; to signify compression. This is included
+    * in the signature, to protect against zip bombs.
+    * 
+    * Salt can be used to namespace the hash, so that a signed string is
+    * only valid for a given namespace. Leaving this at the default
+    * value or re-using a salt value across different parts of your
+    * application without good cause is a security risk.
+    */
+    public static function dumps($obj, $key=null, $salt=&#x27;bjork.core.signing&#x27;,
+            $serializer=&#x27;bjork\core\signing\JSONSerializer&#x27;, $compress=false) {
+        
+        if (is_string($serializer))
+            $serializer = new $serializer();
+        $data = $serializer-&gt;dumps($obj);
+        
+        // flag for if it&#x27;s been compressed or not
+        $is_compressed = false;
+        
+        if ($compress &amp;&amp; function_exists(&#x27;gzcompress&#x27;)) {
+            $compressed = gzcompress($data);
+            if (strlen($compressed) &lt; strlen($data) - 1) {
+                $data = $compressed;
+                $is_compressed = true;
+            }
+        }
+        
+        $base64d = signing\b64_encode($data);
+        if ($is_compressed)
+            $base64d = &#x27;.&#x27; . $base64d;
+        
+        $signer = new signing\TimestampSigner($key, $salt);
+        return $signer-&gt;sign($base64d);
+    }
+    
+    /**
+    * Reverse of dumps(), raises BadSignature if signature fails
+    */
+    public static function loads($s, $key=null, $salt=&#x27;bjork.core.signing&#x27;,
+            $serializer=&#x27;bjork\core\signing\JSONSerializer&#x27;, $max_age=null)
+    {
+        $signer = new signing\TimestampSigner($key, $salt);
+        $base64d = $signer-&gt;unsign($s, $max_age);
+        $decompress = false;
+        
+        if ($base64d{0} === &#x27;.&#x27;) {
+            $base64d = ltrim($base64d, &#x27;.&#x27;);
+            $decompress = true;
+        }
+        
+        $data = signing\b64_decode($base64d);
+        if ($decompress &amp;&amp; function_exists(&#x27;gzuncompress&#x27;))
+            $data = gzuncompress($data);
+        
+        if (is_string($serializer))
+            $serializer = new $serializer();
+        return $serializer-&gt;loads($data);
+    }
+    
+    public static function get_cookie_signer($salt=&#x27;bjork.core.signing.get_cookie_signer&#x27;) {
+        $backend = settings::get(&#x27;SIGNING_BACKEND&#x27;);
+        $signer = new $backend(&#x27;bjork.http.cookies.&#x27;.settings::get(&#x27;SECRET_KEY&#x27;), $salt);
+        return $signer;
+    }
+}
+
+}
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

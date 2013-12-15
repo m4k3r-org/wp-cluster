@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/cdn-media/lib/aws-sdk-php/Aws/Emr/Resources/emr-2009-03-31.php - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/cdn-media/lib/aws-sdk-php/Aws/Emr/Resources/emr-2009-03-31.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is distributed
+ * on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+return array (
+    &#x27;apiVersion&#x27; =&gt; &#x27;2009-03-31&#x27;,
+    &#x27;endpointPrefix&#x27; =&gt; &#x27;elasticmapreduce&#x27;,
+    &#x27;serviceFullName&#x27; =&gt; &#x27;Amazon Elastic MapReduce&#x27;,
+    &#x27;serviceAbbreviation&#x27; =&gt; &#x27;Amazon EMR&#x27;,
+    &#x27;serviceType&#x27; =&gt; &#x27;query&#x27;,
+    &#x27;resultWrapped&#x27; =&gt; true,
+    &#x27;signatureVersion&#x27; =&gt; &#x27;v2&#x27;,
+    &#x27;namespace&#x27; =&gt; &#x27;Emr&#x27;,
+    &#x27;regions&#x27; =&gt; array(
+        &#x27;us-east-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;elasticmapreduce.us-east-1.amazonaws.com&#x27;,
+        ),
+        &#x27;us-west-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;elasticmapreduce.us-west-1.amazonaws.com&#x27;,
+        ),
+        &#x27;us-west-2&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;elasticmapreduce.us-west-2.amazonaws.com&#x27;,
+        ),
+        &#x27;eu-west-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;elasticmapreduce.eu-west-1.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-northeast-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;elasticmapreduce.ap-northeast-1.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-southeast-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;elasticmapreduce.ap-southeast-1.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-southeast-2&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;elasticmapreduce.ap-southeast-2.amazonaws.com&#x27;,
+        ),
+        &#x27;sa-east-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;elasticmapreduce.sa-east-1.amazonaws.com&#x27;,
+        ),
+    ),
+    &#x27;operations&#x27; =&gt; array(
+        &#x27;AddInstanceGroups&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;AddInstanceGroupsOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;AddInstanceGroups adds an instance group to a running cluster.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;AddInstanceGroups&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2009-03-31&#x27;,
+                ),
+                &#x27;InstanceGroups&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;Instance Groups to add.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;InstanceGroups.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;InstanceGroupConfig&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;Configuration defining a new instance group.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Name&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Friendly name given to the instance group.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;maxLength&#x27; =&gt; 256,
+                            ),
+                            &#x27;Market&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Market type of the Amazon EC2 instances used to create a cluster node.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;enum&#x27; =&gt; array(
+                                    &#x27;ON_DEMAND&#x27;,
+                                    &#x27;SPOT&#x27;,
+                                ),
+                            ),
+                            &#x27;InstanceRole&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;The role of the instance group in the cluster.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;enum&#x27; =&gt; array(
+                                    &#x27;MASTER&#x27;,
+                                    &#x27;CORE&#x27;,
+                                    &#x27;TASK&#x27;,
+                                ),
+                            ),
+                            &#x27;BidPrice&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Bid price for each Amazon EC2 instance in the instance group when launching nodes as Spot Instances, expressed in USD.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;maxLength&#x27; =&gt; 256,
+                            ),
+                            &#x27;InstanceType&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;The Amazon EC2 instance type for all instances in the instance group.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;minLength&#x27; =&gt; 1,
+                                &#x27;maxLength&#x27; =&gt; 256,
+                            ),
+                            &#x27;InstanceCount&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;Target number of instances for the instance group.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;JobFlowId&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;Job flow in which to add the instance groups.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 256,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that an error occurred while processing the request and that the request was not completed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalServerErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;AddJobFlowSteps&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;AddJobFlowSteps adds new steps to a running job flow. A maximum of 256 steps are allowed in each job flow.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;AddJobFlowSteps&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2009-03-31&#x27;,
+                ),
+                &#x27;JobFlowId&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A string that uniquely identifies the job flow. This identifier is returned by RunJobFlow and can also be obtained from DescribeJobFlows.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 256,
+                ),
+                &#x27;Steps&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A list of StepConfig to be executed by the job flow.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;Steps.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;StepConfig&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;Specification of a job flow step.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Name&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;The name of the job flow step.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;maxLength&#x27; =&gt; 256,
+                            ),
+                            &#x27;ActionOnFailure&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Specifies the action to take if the job flow step fails.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;enum&#x27; =&gt; array(
+                                    &#x27;TERMINATE_JOB_FLOW&#x27;,
+                                    &#x27;CANCEL_AND_WAIT&#x27;,
+                                    &#x27;CONTINUE&#x27;,
+                                ),
+                            ),
+                            &#x27;HadoopJarStep&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;Specifies the JAR file used for the job flow step.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                &#x27;properties&#x27; =&gt; array(
+                                    &#x27;Properties&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;A list of Java properties that are set when the step runs. You can use these properties to pass key value pairs to your main function.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                        &#x27;sentAs&#x27; =&gt; &#x27;Properties.member&#x27;,
+                                        &#x27;items&#x27; =&gt; array(
+                                            &#x27;name&#x27; =&gt; &#x27;KeyValue&#x27;,
+                                            &#x27;description&#x27; =&gt; &#x27;A key value pair.&#x27;,
+                                            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                            &#x27;properties&#x27; =&gt; array(
+                                                &#x27;Key&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The unique identifier of a key value pair.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                    &#x27;maxLength&#x27; =&gt; 10280,
+                                                ),
+                                                &#x27;Value&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The value part of the identified key.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                    &#x27;maxLength&#x27; =&gt; 10280,
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    &#x27;Jar&#x27; =&gt; array(
+                                        &#x27;required&#x27; =&gt; true,
+                                        &#x27;description&#x27; =&gt; &#x27;A path to a JAR file run during the step.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        &#x27;maxLength&#x27; =&gt; 10280,
+                                    ),
+                                    &#x27;MainClass&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The name of the main class in the specified Java file. If not specified, the JAR file should specify a Main-Class in its manifest file.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        &#x27;maxLength&#x27; =&gt; 10280,
+                                    ),
+                                    &#x27;Args&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;A list of command line arguments passed to the JAR file\&#x27;s main function when executed.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                        &#x27;sentAs&#x27; =&gt; &#x27;Args.member&#x27;,
+                                        &#x27;items&#x27; =&gt; array(
+                                            &#x27;name&#x27; =&gt; &#x27;XmlString&#x27;,
+                                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                            &#x27;maxLength&#x27; =&gt; 10280,
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that an error occurred while processing the request and that the request was not completed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalServerErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;DescribeJobFlows&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;DescribeJobFlowsOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;DescribeJobFlows returns a list of job flows that match all of the supplied parameters. The parameters can include a list of job flow IDs, job flow states, and restrictions on job flow creation date and time.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;DescribeJobFlows&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2009-03-31&#x27;,
+                ),
+                &#x27;CreatedAfter&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Return only job flows created after this date and time.&#x27;,
+                    &#x27;type&#x27; =&gt; array(
+                        &#x27;object&#x27;,
+                        &#x27;string&#x27;,
+                        &#x27;integer&#x27;,
+                    ),
+                    &#x27;format&#x27; =&gt; &#x27;date-time-http&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;CreatedBefore&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Return only job flows created before this date and time.&#x27;,
+                    &#x27;type&#x27; =&gt; array(
+                        &#x27;object&#x27;,
+                        &#x27;string&#x27;,
+                        &#x27;integer&#x27;,
+                    ),
+                    &#x27;format&#x27; =&gt; &#x27;date-time-http&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;JobFlowIds&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Return only job flows whose job flow ID is contained in this list.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;JobFlowIds.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;XmlString&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        &#x27;maxLength&#x27; =&gt; 10280,
+                    ),
+                ),
+                &#x27;JobFlowStates&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Return only job flows whose state is contained in this list.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;JobFlowStates.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;JobFlowExecutionState&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;The type of instance.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        &#x27;enum&#x27; =&gt; array(
+                            &#x27;COMPLETED&#x27;,
+                            &#x27;FAILED&#x27;,
+                            &#x27;TERMINATED&#x27;,
+                            &#x27;RUNNING&#x27;,
+                            &#x27;SHUTTING_DOWN&#x27;,
+                            &#x27;STARTING&#x27;,
+                            &#x27;WAITING&#x27;,
+                            &#x27;BOOTSTRAPPING&#x27;,
+                        ),
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that an error occurred while processing the request and that the request was not completed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalServerErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ModifyInstanceGroups&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;ModifyInstanceGroups modifies the number of nodes and configuration settings of an instance group. The input parameters include the new target instance count for the group and the instance group ID. The call will either succeed or fail atomically.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;ModifyInstanceGroups&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2009-03-31&#x27;,
+                ),
+                &#x27;InstanceGroups&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Instance groups to change.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;InstanceGroups.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;InstanceGroupModifyConfig&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;Modify an instance group size.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;InstanceGroupId&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;Unique ID of the instance group to expand or shrink.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;maxLength&#x27; =&gt; 256,
+                            ),
+                            &#x27;InstanceCount&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;Target size for the instance group.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that an error occurred while processing the request and that the request was not completed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalServerErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;RunJobFlow&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;RunJobFlowOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;RunJobFlow creates and starts running a new job flow. The job flow will run the steps specified. Once the job flow completes, the cluster is stopped and the HDFS partition is lost. To prevent loss of data, configure the last step of the job flow to store results in Amazon S3. If the JobFlowInstancesConfig KeepJobFlowAliveWhenNoSteps parameter is set to TRUE, the job flow will transition to the WAITING state rather than shutting down once the steps have completed.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;RunJobFlow&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2009-03-31&#x27;,
+                ),
+                &#x27;Name&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The name of the job flow.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 256,
+                ),
+                &#x27;LogUri&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Specifies the location in Amazon S3 to write the log files of the job flow. If a value is not provided, logs are not created.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 10280,
+                ),
+                &#x27;AdditionalInfo&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A JSON string for selecting additional features.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 10280,
+                ),
+                &#x27;AmiVersion&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The version of the Amazon Machine Image (AMI) to use when launching Amazon EC2 instances in the job flow. The following values are valid:&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 256,
+                ),
+                &#x27;Instances&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A specification of the number and type of Amazon EC2 instances on which to run the job flow.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;properties&#x27; =&gt; array(
+                        &#x27;MasterInstanceType&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The EC2 instance type of the master node.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            &#x27;minLength&#x27; =&gt; 1,
+                            &#x27;maxLength&#x27; =&gt; 256,
+                        ),
+                        &#x27;SlaveInstanceType&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The EC2 instance type of the slave nodes.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            &#x27;minLength&#x27; =&gt; 1,
+                            &#x27;maxLength&#x27; =&gt; 256,
+                        ),
+                        &#x27;InstanceCount&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;The number of Amazon EC2 instances used to execute the job flow.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                        ),
+                        &#x27;InstanceGroups&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Configuration for the job flow\&#x27;s instance groups.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                            &#x27;sentAs&#x27; =&gt; &#x27;InstanceGroups.member&#x27;,
+                            &#x27;items&#x27; =&gt; array(
+                                &#x27;name&#x27; =&gt; &#x27;InstanceGroupConfig&#x27;,
+                                &#x27;description&#x27; =&gt; &#x27;Configuration defining a new instance group.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                &#x27;properties&#x27; =&gt; array(
+                                    &#x27;Name&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Friendly name given to the instance group.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        &#x27;maxLength&#x27; =&gt; 256,
+                                    ),
+                                    &#x27;Market&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Market type of the Amazon EC2 instances used to create a cluster node.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        &#x27;enum&#x27; =&gt; array(
+                                            &#x27;ON_DEMAND&#x27;,
+                                            &#x27;SPOT&#x27;,
+                                        ),
+                                    ),
+                                    &#x27;InstanceRole&#x27; =&gt; array(
+                                        &#x27;required&#x27; =&gt; true,
+                                        &#x27;description&#x27; =&gt; &#x27;The role of the instance group in the cluster.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        &#x27;enum&#x27; =&gt; array(
+                                            &#x27;MASTER&#x27;,
+                                            &#x27;CORE&#x27;,
+                                            &#x27;TASK&#x27;,
+                                        ),
+                                    ),
+                                    &#x27;BidPrice&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Bid price for each Amazon EC2 instance in the instance group when launching nodes as Spot Instances, expressed in USD.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        &#x27;maxLength&#x27; =&gt; 256,
+                                    ),
+                                    &#x27;InstanceType&#x27; =&gt; array(
+                                        &#x27;required&#x27; =&gt; true,
+                                        &#x27;description&#x27; =&gt; &#x27;The Amazon EC2 instance type for all instances in the instance group.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        &#x27;minLength&#x27; =&gt; 1,
+                                        &#x27;maxLength&#x27; =&gt; 256,
+                                    ),
+                                    &#x27;InstanceCount&#x27; =&gt; array(
+                                        &#x27;required&#x27; =&gt; true,
+                                        &#x27;description&#x27; =&gt; &#x27;Target number of instances for the instance group.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                                    ),
+                                ),
+                            ),
+                        ),
+                        &#x27;Ec2KeyName&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Specifies the name of the Amazon EC2 key pair that can be used to ssh to the master node as the user called &quot;hadoop.&quot;&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            &#x27;maxLength&#x27; =&gt; 256,
+                        ),
+                        &#x27;Placement&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Specifies the Availability Zone the job flow will run in.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                            &#x27;properties&#x27; =&gt; array(
+                                &#x27;AvailabilityZone&#x27; =&gt; array(
+                                    &#x27;required&#x27; =&gt; true,
+                                    &#x27;description&#x27; =&gt; &#x27;The Amazon EC2 Availability Zone for the job flow.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    &#x27;maxLength&#x27; =&gt; 10280,
+                                ),
+                            ),
+                        ),
+                        &#x27;KeepJobFlowAliveWhenNoSteps&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Specifies whether the job flow should terminate after completing all steps.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                            &#x27;format&#x27; =&gt; &#x27;boolean-string&#x27;,
+                        ),
+                        &#x27;TerminationProtected&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Specifies whether to lock the job flow to prevent the Amazon EC2 instances from being terminated by API call, user intervention, or in the event of a job flow error.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                            &#x27;format&#x27; =&gt; &#x27;boolean-string&#x27;,
+                        ),
+                        &#x27;HadoopVersion&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;Specifies the Hadoop version for the job flow. Valid inputs are &quot;0.18&quot;, &quot;0.20&quot;, or &quot;0.20.205&quot;. If you do not set this value, the default of 0.18 is used, unless the AmiVersion parameter is set in the RunJobFlow call, in which case the default version of Hadoop for that AMI version is used.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            &#x27;maxLength&#x27; =&gt; 256,
+                        ),
+                        &#x27;Ec2SubnetId&#x27; =&gt; array(
+                            &#x27;description&#x27; =&gt; &#x27;To launch the job flow in Amazon Virtual Private Cloud (Amazon VPC), set this parameter to the identifier of the Amazon VPC subnet where you want the job flow to launch. If you do not specify this value, the job flow is launched in the normal Amazon Web Services cloud, outside of an Amazon VPC.&#x27;,
+                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            &#x27;maxLength&#x27; =&gt; 256,
+                        ),
+                    ),
+                ),
+                &#x27;Steps&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of steps to be executed by the job flow.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;Steps.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;StepConfig&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;Specification of a job flow step.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Name&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;The name of the job flow step.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;maxLength&#x27; =&gt; 256,
+                            ),
+                            &#x27;ActionOnFailure&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Specifies the action to take if the job flow step fails.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;enum&#x27; =&gt; array(
+                                    &#x27;TERMINATE_JOB_FLOW&#x27;,
+                                    &#x27;CANCEL_AND_WAIT&#x27;,
+                                    &#x27;CONTINUE&#x27;,
+                                ),
+                            ),
+                            &#x27;HadoopJarStep&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;Specifies the JAR file used for the job flow step.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                &#x27;properties&#x27; =&gt; array(
+                                    &#x27;Properties&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;A list of Java properties that are set when the step runs. You can use these properties to pass key value pairs to your main function.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                        &#x27;sentAs&#x27; =&gt; &#x27;Properties.member&#x27;,
+                                        &#x27;items&#x27; =&gt; array(
+                                            &#x27;name&#x27; =&gt; &#x27;KeyValue&#x27;,
+                                            &#x27;description&#x27; =&gt; &#x27;A key value pair.&#x27;,
+                                            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                            &#x27;properties&#x27; =&gt; array(
+                                                &#x27;Key&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The unique identifier of a key value pair.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                    &#x27;maxLength&#x27; =&gt; 10280,
+                                                ),
+                                                &#x27;Value&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The value part of the identified key.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                    &#x27;maxLength&#x27; =&gt; 10280,
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    &#x27;Jar&#x27; =&gt; array(
+                                        &#x27;required&#x27; =&gt; true,
+                                        &#x27;description&#x27; =&gt; &#x27;A path to a JAR file run during the step.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        &#x27;maxLength&#x27; =&gt; 10280,
+                                    ),
+                                    &#x27;MainClass&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The name of the main class in the specified Java file. If not specified, the JAR file should specify a Main-Class in its manifest file.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        &#x27;maxLength&#x27; =&gt; 10280,
+                                    ),
+                                    &#x27;Args&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;A list of command line arguments passed to the JAR file\&#x27;s main function when executed.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                        &#x27;sentAs&#x27; =&gt; &#x27;Args.member&#x27;,
+                                        &#x27;items&#x27; =&gt; array(
+                                            &#x27;name&#x27; =&gt; &#x27;XmlString&#x27;,
+                                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                            &#x27;maxLength&#x27; =&gt; 10280,
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;BootstrapActions&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of bootstrap actions that will be run before Hadoop is started on the cluster nodes.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;BootstrapActions.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;BootstrapActionConfig&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;Configuration of a bootstrap action.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;Name&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;The name of the bootstrap action.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                &#x27;maxLength&#x27; =&gt; 256,
+                            ),
+                            &#x27;ScriptBootstrapAction&#x27; =&gt; array(
+                                &#x27;required&#x27; =&gt; true,
+                                &#x27;description&#x27; =&gt; &#x27;The script run by the bootstrap action.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                &#x27;properties&#x27; =&gt; array(
+                                    &#x27;Path&#x27; =&gt; array(
+                                        &#x27;required&#x27; =&gt; true,
+                                        &#x27;description&#x27; =&gt; &#x27;Location of the script to run during a bootstrap action. Can be either a location in Amazon S3 or on a local file system.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                        &#x27;maxLength&#x27; =&gt; 10280,
+                                    ),
+                                    &#x27;Args&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;A list of command line arguments to pass to the bootstrap action script.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                        &#x27;sentAs&#x27; =&gt; &#x27;Args.member&#x27;,
+                                        &#x27;items&#x27; =&gt; array(
+                                            &#x27;name&#x27; =&gt; &#x27;XmlString&#x27;,
+                                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                            &#x27;maxLength&#x27; =&gt; 10280,
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;SupportedProducts&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of strings that indicates third-party software to use with the job flow. For more information, go to Use Third Party Applications with Amazon EMR. Currently supported values are:&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;SupportedProducts.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;XmlStringMaxLen256&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        &#x27;maxLength&#x27; =&gt; 256,
+                    ),
+                ),
+                &#x27;VisibleToAllUsers&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Whether the job flow is visible to all IAM users of the AWS account associated with the job flow. If this value is set to true, all IAM users of that AWS account can view and (if they have the proper policy permissions set) manage the job flow. If it is set to false, only the IAM user that created the job flow can view and manage it.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                    &#x27;format&#x27; =&gt; &#x27;boolean-string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;JobFlowRole&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;An IAM role for the job flow. The EC2 instances of the job flow assume this role. The default role is EMRJobflowDefault. In order to use the default role, you must have already created it using the CLI.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;maxLength&#x27; =&gt; 10280,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that an error occurred while processing the request and that the request was not completed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalServerErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;SetTerminationProtection&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;SetTerminationProtection locks a job flow so the Amazon EC2 instances in the cluster cannot be terminated by user intervention, an API call, or in the event of a job-flow error. The cluster still terminates upon successful completion of the job flow. Calling SetTerminationProtection on a job flow is analogous to calling the Amazon EC2 DisableAPITermination API on all of the EC2 instances in a cluster.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;SetTerminationProtection&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2009-03-31&#x27;,
+                ),
+                &#x27;JobFlowIds&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A list of strings that uniquely identify the job flows to protect. This identifier is returned by RunJobFlow and can also be obtained from DescribeJobFlows .&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;JobFlowIds.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;XmlString&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        &#x27;maxLength&#x27; =&gt; 10280,
+                    ),
+                ),
+                &#x27;TerminationProtected&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A Boolean that indicates whether to protect the job flow and prevent the Amazon EC2 instances in the cluster from shutting down due to API calls, user intervention, or job-flow error.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                    &#x27;format&#x27; =&gt; &#x27;boolean-string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that an error occurred while processing the request and that the request was not completed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalServerErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;SetVisibleToAllUsers&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;Sets whether all AWS Identity and Access Management (IAM) users under your account can access the specifed job flows. This action works on running job flows. You can also set the visibility of a job flow when you launch it using the VisibleToAllUsers parameter of RunJobFlow. The SetVisibleToAllUsers action can be called only by an IAM user who created the job flow or the AWS account that owns the job flow.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;SetVisibleToAllUsers&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2009-03-31&#x27;,
+                ),
+                &#x27;JobFlowIds&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;Identifiers of the job flows to receive the new visibility setting.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;JobFlowIds.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;XmlString&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        &#x27;maxLength&#x27; =&gt; 10280,
+                    ),
+                ),
+                &#x27;VisibleToAllUsers&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;Whether the specified job flows are visible to all IAM users of the AWS account associated with the job flow. If this value is set to True, all IAM users of that AWS account can view and, if they have the proper IAM policy permissions set, manage the job flows. If it is set to False, only the IAM user that created a job flow can view and manage it.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                    &#x27;format&#x27; =&gt; &#x27;boolean-string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that an error occurred while processing the request and that the request was not completed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalServerErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;TerminateJobFlows&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;TerminateJobFlows shuts a list of job flows down. When a job flow is shut down, any step not yet completed is canceled and the EC2 instances on which the job flow is running are stopped. Any log files not already saved are uploaded to Amazon S3 if a LogUri was specified when the job flow was created.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;TerminateJobFlows&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2009-03-31&#x27;,
+                ),
+                &#x27;JobFlowIds&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A list of job flows to be shutdown.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;JobFlowIds.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;XmlString&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        &#x27;maxLength&#x27; =&gt; 10280,
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that an error occurred while processing the request and that the request was not completed.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalServerErrorException&#x27;,
+                ),
+            ),
+        ),
+    ),
+    &#x27;models&#x27; =&gt; array(
+        &#x27;AddInstanceGroupsOutput&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;JobFlowId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The job flow ID in which the instance groups are added.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+                &#x27;InstanceGroupIds&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Instance group IDs of the newly created instance groups.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;XmlStringMaxLen256&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                    ),
+                ),
+            ),
+        ),
+        &#x27;EmptyOutput&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+        ),
+        &#x27;DescribeJobFlowsOutput&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;JobFlows&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of job flows matching the parameters supplied.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;JobFlowDetail&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;A description of a job flow.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;JobFlowId&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The job flow identifier.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Name&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The name of the job flow.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;LogUri&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The location in Amazon S3 where log files for the job are stored.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;AmiVersion&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The version of the AMI used to initialize Amazon EC2 instances in the job flow. For a list of AMI versions currently supported by Amazon ElasticMapReduce, go to AMI Versions Supported in Elastic MapReduce in the Amazon Elastic MapReduce Developer\&#x27;s Guide.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;ExecutionStatusDetail&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Describes the execution status of the job flow.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                &#x27;properties&#x27; =&gt; array(
+                                    &#x27;State&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The state of the job flow.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;CreationDateTime&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The creation date and time of the job flow.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;StartDateTime&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The start date and time of the job flow.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;ReadyDateTime&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The date and time when the job flow was ready to start running bootstrap actions.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;EndDateTime&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The completion date and time of the job flow.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;LastStateChangeReason&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Description of the job flow last changed state.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                ),
+                            ),
+                            &#x27;Instances&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Describes the Amazon EC2 instances of the job flow.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                &#x27;properties&#x27; =&gt; array(
+                                    &#x27;MasterInstanceType&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The Amazon EC2 master node instance type.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;MasterPublicDnsName&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The DNS name of the master node.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;MasterInstanceId&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The Amazon EC2 instance identifier of the master node.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;SlaveInstanceType&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The Amazon EC2 slave node instance type.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;InstanceCount&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The number of Amazon EC2 instances in the cluster. If the value is 1, the same instance serves as both the master and slave node. If the value is greater than 1, one instance is the master node and all others are slave nodes.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                                    ),
+                                    &#x27;InstanceGroups&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Details about the job flow\&#x27;s instance groups.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                        &#x27;items&#x27; =&gt; array(
+                                            &#x27;name&#x27; =&gt; &#x27;InstanceGroupDetail&#x27;,
+                                            &#x27;description&#x27; =&gt; &#x27;Detailed information about an instance group.&#x27;,
+                                            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                            &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                                            &#x27;properties&#x27; =&gt; array(
+                                                &#x27;InstanceGroupId&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;Unique identifier for the instance group.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;Name&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;Friendly name for the instance group.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;Market&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;Market type of the Amazon EC2 instances used to create a cluster node.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;InstanceRole&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;Instance group role in the cluster&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;BidPrice&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;Bid price for EC2 Instances when launching nodes as Spot Instances, expressed in USD.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;InstanceType&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;Amazon EC2 Instance type.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;InstanceRequestCount&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;Target number of instances to run in the instance group.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                                                ),
+                                                &#x27;InstanceRunningCount&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;Actual count of running instances.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                                                ),
+                                                &#x27;State&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;State of instance group. The following values are deprecated: STARTING, TERMINATED, and FAILED.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;LastStateChangeReason&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;Details regarding the state of the instance group.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;CreationDateTime&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The date/time the instance group was created.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;StartDateTime&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The date/time the instance group was started.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;ReadyDateTime&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The date/time the instance group was available to the cluster.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;EndDateTime&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The date/time the instance group was terminated.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                    &#x27;NormalizedInstanceHours&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;An approximation of the cost of the job flow, represented in m1.small/hours. This value is incremented once for every hour an m1.small runs. Larger instances are weighted more, so an Amazon EC2 instance that is roughly four times more expensive would result in the normalized instance hours being incremented by four. This result is only an approximation and does not reflect the actual billing rate.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;numeric&#x27;,
+                                    ),
+                                    &#x27;Ec2KeyName&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;The name of an Amazon EC2 key pair that can be used to ssh to the master node of job flow.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;Ec2SubnetId&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;For job flows launched within Amazon Virtual Private Cloud, this value specifies the identifier of the subnet where the job flow was launched.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                    &#x27;Placement&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Specifies the Amazon EC2 Availability Zone for the job flow.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                        &#x27;properties&#x27; =&gt; array(
+                                            &#x27;AvailabilityZone&#x27; =&gt; array(
+                                                &#x27;description&#x27; =&gt; &#x27;The Amazon EC2 Availability Zone for the job flow.&#x27;,
+                                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                            ),
+                                        ),
+                                    ),
+                                    &#x27;KeepJobFlowAliveWhenNoSteps&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Specifies whether or not the job flow should terminate after completing all steps.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                                    ),
+                                    &#x27;TerminationProtected&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Specifies whether the Amazon EC2 instances in the cluster are protected from termination by API calls, user intervention, or in the event of a job flow error.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                                    ),
+                                    &#x27;HadoopVersion&#x27; =&gt; array(
+                                        &#x27;description&#x27; =&gt; &#x27;Specifies the Hadoop version for the job flow.&#x27;,
+                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    ),
+                                ),
+                            ),
+                            &#x27;Steps&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;A list of steps run by the job flow.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                &#x27;items&#x27; =&gt; array(
+                                    &#x27;name&#x27; =&gt; &#x27;StepDetail&#x27;,
+                                    &#x27;description&#x27; =&gt; &#x27;Combines the execution state and configuration of a step.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                    &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                                    &#x27;properties&#x27; =&gt; array(
+                                        &#x27;StepConfig&#x27; =&gt; array(
+                                            &#x27;description&#x27; =&gt; &#x27;The step configuration.&#x27;,
+                                            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                            &#x27;properties&#x27; =&gt; array(
+                                                &#x27;Name&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The name of the job flow step.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;ActionOnFailure&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;Specifies the action to take if the job flow step fails.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;HadoopJarStep&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;Specifies the JAR file used for the job flow step.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                                    &#x27;properties&#x27; =&gt; array(
+                                                        &#x27;Properties&#x27; =&gt; array(
+                                                            &#x27;description&#x27; =&gt; &#x27;A list of Java properties that are set when the step runs. You can use these properties to pass key value pairs to your main function.&#x27;,
+                                                            &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                                            &#x27;items&#x27; =&gt; array(
+                                                                &#x27;name&#x27; =&gt; &#x27;KeyValue&#x27;,
+                                                                &#x27;description&#x27; =&gt; &#x27;A key value pair.&#x27;,
+                                                                &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                                                &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                                                                &#x27;properties&#x27; =&gt; array(
+                                                                    &#x27;Key&#x27; =&gt; array(
+                                                                        &#x27;description&#x27; =&gt; &#x27;The unique identifier of a key value pair.&#x27;,
+                                                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                                    ),
+                                                                    &#x27;Value&#x27; =&gt; array(
+                                                                        &#x27;description&#x27; =&gt; &#x27;The value part of the identified key.&#x27;,
+                                                                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                                    ),
+                                                                ),
+                                                            ),
+                                                        ),
+                                                        &#x27;Jar&#x27; =&gt; array(
+                                                            &#x27;description&#x27; =&gt; &#x27;A path to a JAR file run during the step.&#x27;,
+                                                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                        ),
+                                                        &#x27;MainClass&#x27; =&gt; array(
+                                                            &#x27;description&#x27; =&gt; &#x27;The name of the main class in the specified Java file. If not specified, the JAR file should specify a Main-Class in its manifest file.&#x27;,
+                                                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                        ),
+                                                        &#x27;Args&#x27; =&gt; array(
+                                                            &#x27;description&#x27; =&gt; &#x27;A list of command line arguments passed to the JAR file\&#x27;s main function when executed.&#x27;,
+                                                            &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                                            &#x27;items&#x27; =&gt; array(
+                                                                &#x27;name&#x27; =&gt; &#x27;XmlString&#x27;,
+                                                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                                &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        &#x27;ExecutionStatusDetail&#x27; =&gt; array(
+                                            &#x27;description&#x27; =&gt; &#x27;The description of the step status.&#x27;,
+                                            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                            &#x27;properties&#x27; =&gt; array(
+                                                &#x27;State&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The state of the job flow step.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;CreationDateTime&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The creation date and time of the step.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;StartDateTime&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The start date and time of the step.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;EndDateTime&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The completion date and time of the step.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;LastStateChangeReason&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;A description of the step\&#x27;s current state.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            &#x27;BootstrapActions&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;A list of the bootstrap actions run by the job flow.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                &#x27;items&#x27; =&gt; array(
+                                    &#x27;name&#x27; =&gt; &#x27;BootstrapActionDetail&#x27;,
+                                    &#x27;description&#x27; =&gt; &#x27;Reports the configuration of a bootstrap action in a job flow.&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                    &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                                    &#x27;properties&#x27; =&gt; array(
+                                        &#x27;BootstrapActionConfig&#x27; =&gt; array(
+                                            &#x27;description&#x27; =&gt; &#x27;A description of the bootstrap action.&#x27;,
+                                            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                            &#x27;properties&#x27; =&gt; array(
+                                                &#x27;Name&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The name of the bootstrap action.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                ),
+                                                &#x27;ScriptBootstrapAction&#x27; =&gt; array(
+                                                    &#x27;description&#x27; =&gt; &#x27;The script run by the bootstrap action.&#x27;,
+                                                    &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                                                    &#x27;properties&#x27; =&gt; array(
+                                                        &#x27;Path&#x27; =&gt; array(
+                                                            &#x27;description&#x27; =&gt; &#x27;Location of the script to run during a bootstrap action. Can be either a location in Amazon S3 or on a local file system.&#x27;,
+                                                            &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                        ),
+                                                        &#x27;Args&#x27; =&gt; array(
+                                                            &#x27;description&#x27; =&gt; &#x27;A list of command line arguments to pass to the bootstrap action script.&#x27;,
+                                                            &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                                            &#x27;items&#x27; =&gt; array(
+                                                                &#x27;name&#x27; =&gt; &#x27;XmlString&#x27;,
+                                                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                                                &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            &#x27;SupportedProducts&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;A list of strings set by third party software when the job flow is launched. If you are not using third party software to manage the job flow this value is empty.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                                &#x27;items&#x27; =&gt; array(
+                                    &#x27;name&#x27; =&gt; &#x27;XmlStringMaxLen256&#x27;,
+                                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                                    &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                                ),
+                            ),
+                            &#x27;VisibleToAllUsers&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;Specifies whether the job flow is visible to all IAM users of the AWS account associated with the job flow. If this value is set to true, all IAM users of that AWS account can view and (if they have the proper policy permissions set) manage the job flow. If it is set to false, only the IAM user that created the job flow can view and manage it. This value can be changed using the SetVisibleToAllUsers action.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;boolean&#x27;,
+                            ),
+                            &#x27;JobFlowRole&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The IAM role that was specified when the job flow was launched. The EC2 instances of the job flow assume this role.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        &#x27;RunJobFlowOutput&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;JobFlowId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;An unique identifier for the job flow.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+            ),
+        ),
+    ),
+    &#x27;iterators&#x27; =&gt; array(
+        &#x27;operations&#x27; =&gt; array(
+            &#x27;DescribeJobFlows&#x27; =&gt; array(
+                &#x27;result_key&#x27; =&gt; &#x27;JobFlows&#x27;,
+            ),
+        ),
+    ),
+);
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/cdn-media/lib/aws-sdk-php/Aws/DynamoDb/Model/BatchRequest/WriteRequestBatchTransfer.php - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/cdn-media/lib/aws-sdk-php/Aws/DynamoDb/Model/BatchRequest/WriteRequestBatchTransfer.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is distributed
+ * on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+namespace Aws\DynamoDb\Model\BatchRequest;
+
+use Aws\Common\Client\AwsClientInterface;
+use Aws\Common\Enum\UaString as Ua;
+use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\DynamoDb\Exception\UnprocessedWriteRequestsException;
+use Guzzle\Batch\BatchTransferInterface;
+use Guzzle\Common\Exception\ExceptionCollection;
+use Guzzle\Http\Message\EntityEnclosingRequestInterface;
+use Guzzle\Service\Command\CommandInterface;
+
+/**
+ * Transfer logic for executing the write request batch
+ */
+class WriteRequestBatchTransfer implements BatchTransferInterface
+{
+    /**
+     * The maximum number of items allowed in a BatchWriteItem operation
+     */
+    const BATCH_WRITE_MAX_SIZE = 25;
+
+    /**
+     * @var AwsClientInterface The DynamoDB client for doing transfers
+     */
+    protected $client;
+
+    /**
+     * Constructs a transfer using the injected client
+     *
+     * @param AwsClientInterface $client
+     */
+    public function __construct(AwsClientInterface $client)
+    {
+        $this-&gt;client = $client;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function transfer(array $batch)
+    {
+        // Create a container exception for any unprocessed items
+        $unprocessed = new UnprocessedWriteRequestsException();
+
+        // Execute the transfer logic
+        $this-&gt;performTransfer($batch, $unprocessed);
+
+        // Throw an exception containing the unprocessed items if there are any
+        if (count($unprocessed)) {
+            throw $unprocessed;
+        }
+    }
+
+    /**
+     * Transfer a batch of requests and collect any unprocessed items
+     *
+     * @param array                             $batch               A batch of write requests
+     * @param UnprocessedWriteRequestsException $unprocessedRequests Collection of unprocessed items
+     *
+     * @throws \Guzzle\Common\Exception\ExceptionCollection
+     */
+    protected function performTransfer(
+        array $batch,
+        UnprocessedWriteRequestsException $unprocessedRequests
+    ) {
+        // Do nothing if the batch is empty
+        if (empty($batch)) {
+            return;
+        }
+
+        // Chunk the array and prepare a set of parallel commands
+        $commands = array();
+        foreach (array_chunk($batch, self::BATCH_WRITE_MAX_SIZE) as $chunk) {
+            // Convert the request items into the format required by the client
+            $items = array();
+            foreach ($chunk as $item) {
+                if ($item instanceof AbstractWriteRequest) {
+                    /** @var $item AbstractWriteRequest */
+                    $table = $item-&gt;getTableName();
+                    if (!isset($items[$table])) {
+                        $items[$table] = array();
+                    }
+                    $items[$table][] = $item-&gt;toArray();
+                }
+            }
+
+            // Create the BatchWriteItem request
+            $commands[] = $this-&gt;client-&gt;getCommand(&#x27;BatchWriteItem&#x27;, array(
+                &#x27;RequestItems&#x27; =&gt; $items,
+                Ua::OPTION     =&gt; Ua::BATCH
+            ));
+        }
+
+        // Execute the commands and handle exceptions
+        try {
+            $commands = $this-&gt;client-&gt;execute($commands);
+            $this-&gt;getUnprocessedRequestsFromCommands($commands, $unprocessedRequests);
+        } catch (ExceptionCollection $exceptions) {
+            // Create a container exception for any unhandled (true) exceptions
+            $unhandledExceptions = new ExceptionCollection();
+
+            // Loop through caught exceptions and handle RequestTooLarge scenarios
+            /** @var $e DynamoDbException */
+            foreach ($exceptions as $e) {
+                if ($e instanceof DynamoDbException &amp;&amp; $e-&gt;getStatusCode() === 413) {
+                    $request = $e-&gt;getResponse()-&gt;getRequest();
+                    $this-&gt;retryLargeRequest($request, $unprocessedRequests);
+                } else {
+                    $unhandledExceptions-&gt;add($e);
+                }
+            }
+
+            // If there were unhandled exceptions, throw them
+            if (count($unhandledExceptions)) {
+                throw $unhandledExceptions;
+            }
+        }
+    }
+
+    /**
+     * Handles unprocessed items from the executed commands. Unprocessed items
+     * can be collected and thrown in an UnprocessedWriteRequestsException
+     *
+     * @param array                             $commands            Array of commands
+     * @param UnprocessedWriteRequestsException $unprocessedRequests Collection of unprocessed items
+     */
+    protected function getUnprocessedRequestsFromCommands(
+        array $commands,
+        UnprocessedWriteRequestsException $unprocessedRequests
+    ) {
+        /** @var $command CommandInterface */
+        foreach ($commands as $command) {
+            if ($command instanceof CommandInterface &amp;&amp; $command-&gt;isExecuted()) {
+                $result = $command-&gt;getResult();
+                $items = $this-&gt;convertResultsToUnprocessedRequests($result[&#x27;UnprocessedItems&#x27;]);
+                foreach ($items as $request) {
+                    $unprocessedRequests-&gt;addItem($request);
+                }
+            }
+        }
+    }
+
+    /**
+     * Handles exceptions caused by the request being too large (over 1 MB). The
+     * response will have a status code of 413. In this case the batch should be
+     * split up into smaller batches and retried.
+     *
+     * @param EntityEnclosingRequestInterface   $request             The failed request
+     * @param UnprocessedWriteRequestsException $unprocessedRequests Collection of unprocessed items
+     */
+    protected function retryLargeRequest(
+        EntityEnclosingRequestInterface $request,
+        UnprocessedWriteRequestsException $unprocessedRequests
+    ) {
+        // Collect the items out from the request object
+        $items = json_decode($request-&gt;getBody(true), true);
+        $items = $this-&gt;convertResultsToUnprocessedRequests($items[&#x27;RequestItems&#x27;]);
+
+        // Divide batch into smaller batches and transfer them via recursion
+        // NOTE: Dividing the batch into 3 (instead of 2) batches resulted in less recursion during testing
+        if ($items) {
+            $newBatches = array_chunk($items, ceil(count($items) / 3));
+            foreach ($newBatches as $newBatch) {
+                $this-&gt;performTransfer($newBatch, $unprocessedRequests);
+            }
+        }
+    }
+
+    /**
+     * Collects and creates unprocessed request objects from data collected from erroneous cases
+     *
+     * @param array $items Data formatted under &quot;RequestItems&quot; or &quot;UnprocessedItems&quot; keys
+     *
+     * @return array
+     */
+    protected function convertResultsToUnprocessedRequests(array $items)
+    {
+        $unprocessed = array();
+        foreach ($items as $table =&gt; $requests) {
+            foreach ($requests as $request) {
+                $unprocessed[] = new UnprocessedRequest($request, $table);
+            }
+        }
+
+        return $unprocessed;
+    }
+}
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

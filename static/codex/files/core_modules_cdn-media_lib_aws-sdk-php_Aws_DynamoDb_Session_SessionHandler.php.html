@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/cdn-media/lib/aws-sdk-php/Aws/DynamoDb/Session/SessionHandler.php - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/cdn-media/lib/aws-sdk-php/Aws/DynamoDb/Session/SessionHandler.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is distributed
+ * on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+namespace Aws\DynamoDb\Session;
+
+use Aws\Common\Enum\UaString as Ua;
+use Aws\DynamoDb\DynamoDbClient;
+use Aws\DynamoDb\Session\LockingStrategy\LockingStrategyInterface;
+use Aws\DynamoDb\Session\LockingStrategy\LockingStrategyFactory;
+use Aws\DynamoDb\Model\BatchRequest\WriteRequestBatch;
+use Aws\DynamoDb\Model\BatchRequest\DeleteRequest;
+
+/**
+ * Provides an interface for using Amazon DynamoDB as a session store by hooking into PHP&#x27;s session handler hooks. Once
+ * registered, You may use the native &#x60;$_SESSION&#x60; superglobal and session functions, and the sessions will be stored
+ * automatically in DynamoDB. DynamoDB is a great session storage solution due to its speed, scalability, and fault
+ * tolerance.
+ *
+ * For maximum performance, we recommend that you keep the size of your sessions small. Items greater than 1KB require
+ * more throughput in DynamoDB. Also, in this version of the session handler, session locking is turned off by default
+ * since it can drive up latencies and costs under high traffic and poor session management, especially when using ajax.
+ * Only turn it on if you need it.
+ *
+ * By far, the most expensive operation is garbage collection. Therefore, we encourage you to carefully consider your
+ * session garbage collection strategy. We recommend that you change the &#x60;session.gc_probability&#x60; ini setting to 0 so
+ * that garbage collection is not triggered randomly. You should consider using a cron job or similar scheduling
+ * technique for triggering garbage collection at appropriate times.
+ */
+class SessionHandler
+{
+    /**
+     * @var DynamoDbClient The DynamoDB client
+     */
+    protected $client;
+
+    /**
+     * @var LockingStrategyInterface The locking strategy
+     */
+    protected $lockingStrategy;
+
+    /**
+     * @var SessionHandlerConfig The config for the handler and locking strategy
+     */
+    protected $config;
+
+    /**
+     * @var string The session save path
+     */
+    protected $savePath;
+
+    /**
+     * @var string The session name
+     */
+    protected $sessionName;
+
+    /**
+     * @var string Stores the serialized data that was read for tracking changes
+     */
+    protected $dataRead;
+
+    /**
+     * @var string Keeps track of the open session&#x27;s ID
+     */
+    protected $openSessionId;
+
+    /**
+     * @var bool Keeps track of whether the session has been written
+     */
+    protected $sessionWritten;
+
+    /**
+     * Factory method to create a new DynamoDB Session Handler
+     *
+     * The configuration array accepts the following array keys and values:
+     * - locking_strategy:         Locking strategy fused for doing session locking. Default: null
+     * - dynamodb_client:          DynamoDbClient object used for performing DynamoDB operations
+     * - table_name:               Name of the DynamoDB table in which to store the sessions. Default: &quot;sessions&quot;
+     * - hash_key:                 Name of the hash key in the DynamoDB sessions table. Default: &quot;id&quot;
+     * - session_lifetime:         Lifetime of an inactive session before it should be garbage collected.
+     * - consistent_read:          Whether or not to use DynamoDB consistent reads for &#x60;GetItem&#x60;. Default: true
+     * - automatic_gc:             Whether or not to use PHP&#x27;s session auto garbage collection triggers.
+     * - gc_batch_size:            Batch size used for removing expired sessions during garbage collection. Default: 25
+     * - gc_operation_delay:       Delay between service operations during garbage collection
+     * - max_lock_wait_time:       Maximum time (in seconds) to wait to acquire a lock before giving up
+     * - min_lock_retry_microtime: Minimum time (in microseconds) to wait between attempts to acquire a lock
+     * - max_lock_retry_microtime: Maximum time (in microseconds) to wait between attempts to acquire a lock
+     *
+     * @param array $config Configuration options
+     *
+     * @return SessionHandler
+     */
+    public static function factory(array $config = array())
+    {
+        // Setup session handler configuration and get the client
+        $config = new SessionHandlerConfig($config);
+        $client = $config-&gt;get(&#x27;dynamodb_client&#x27;);
+
+        // Make sure locking strategy has been provided or provide a default
+        $strategy = $config-&gt;get(&#x27;locking_strategy&#x27;);
+        if (!($strategy instanceof LockingStrategyInterface)) {
+            $factory  = new LockingStrategyFactory();
+            $strategy = $factory-&gt;factory($strategy, $config);
+        }
+
+        // Return an instance of the session handler
+        return new static($client, $strategy, $config);
+    }
+
+    /**
+     * Constructs a new DynamoDB Session Handler
+     *
+     * @param DynamoDbClient           $client   Client for doing DynamoDB operations
+     * @param LockingStrategyInterface $strategy Locking strategy for performing session locking logic
+     * @param SessionHandlerConfig     $config   Configuration options for the session handler
+     */
+    public function __construct(
+        DynamoDbClient $client,
+        LockingStrategyInterface $strategy,
+        SessionHandlerConfig $config
+    ) {
+        $this-&gt;client          = $client;
+        $this-&gt;lockingStrategy = $strategy;
+        $this-&gt;config          = $config;
+    }
+
+    /**
+     * Destruct the session handler and make sure the session gets written
+     *
+     * NOTE: It is usually better practice to call &#x60;session_write_close()&#x60; manually in your application as soon as
+     * session modifications are complete. This is especially true if session locking is enabled.
+     *
+     * @link http://php.net/manual/en/function.session-set-save-handler.php#refsect1-function.session-set-save-handler-notes
+     */
+    public function __destruct()
+    {
+        session_write_close();
+    }
+
+    /**
+     * Register the DynamoDB session handler.
+     *
+     * Uses the PHP-provided method to register this class as a session handler.
+     *
+     * @return bool Whether or not the handler was registered
+     */
+    public function register()
+    {
+        // Set garbage collection probability based on config
+        $autoGarbageCollection = $this-&gt;config-&gt;get(&#x27;automatic_gc&#x27;) ? &#x27;1&#x27; : &#x27;0&#x27;;
+        ini_set(&#x27;session.gc_probability&#x27;, $autoGarbageCollection);
+
+        // Register the session handler
+        return session_set_save_handler(
+            array($this, &#x27;open&#x27;),
+            array($this, &#x27;close&#x27;),
+            array($this, &#x27;read&#x27;),
+            array($this, &#x27;write&#x27;),
+            array($this, &#x27;destroy&#x27;),
+            array($this, &#x27;gc&#x27;)
+        );
+    }
+
+    /**
+     * Checks if the session is open and writable
+     *
+     * @return bool Whether or not the session is open for writing
+     */
+    public function isSessionOpen()
+    {
+        return (bool) $this-&gt;openSessionId;
+    }
+
+    /**
+     * Checks if the session has been written
+     *
+     * @return bool Whether or not the session has been written
+     */
+    public function isSessionWritten()
+    {
+        return $this-&gt;sessionWritten;
+    }
+
+    /**
+     * Creates a table in DynamoDB for session storage according to provided configuration options.
+     *
+     * Note: This is a one-time operation. It may be better to do this via the AWS management console ahead of time.
+     *
+     * @param int $readCapacityUnits  RCUs for table read throughput
+     * @param int $writeCapacityUnits WCUs table write throughput
+     *
+     * @return array The command result
+     */
+    public function createSessionsTable($readCapacityUnits, $writeCapacityUnits)
+    {
+        $tableName = $this-&gt;config-&gt;get(&#x27;table_name&#x27;);
+        $hashKey = $this-&gt;config-&gt;get(&#x27;hash_key&#x27;);
+
+        $params = array(
+            &#x27;TableName&#x27; =&gt; $tableName,
+            &#x27;ProvisionedThroughput&#x27; =&gt; array(
+                &#x27;ReadCapacityUnits&#x27;  =&gt; (int) $readCapacityUnits,
+                &#x27;WriteCapacityUnits&#x27; =&gt; (int) $writeCapacityUnits,
+            ),
+            Ua::OPTION =&gt; Ua::SESSION
+        );
+
+        if ($this-&gt;client-&gt;getApiVersion() &lt; &#x27;2012-08-10&#x27;) {
+            $params[&#x27;KeySchema&#x27;] = array(
+                &#x27;HashKeyElement&#x27; =&gt; array(
+                    &#x27;AttributeName&#x27; =&gt; $hashKey,
+                    &#x27;AttributeType&#x27; =&gt; &#x27;S&#x27;,
+                )
+            );
+        } else {
+            $params[&#x27;AttributeDefinitions&#x27;] = array(
+                array(
+                    &#x27;AttributeName&#x27; =&gt; $hashKey,
+                    &#x27;AttributeType&#x27; =&gt; &#x27;S&#x27;
+                )
+            );
+            $params[&#x27;KeySchema&#x27;] = array(
+                array(
+                    &#x27;AttributeName&#x27; =&gt; $hashKey,
+                    &#x27;KeyType&#x27; =&gt; &#x27;HASH&#x27;
+                )
+            );
+        }
+
+        $result = $this-&gt;client-&gt;getCommand(&#x27;CreateTable&#x27;, $params)-&gt;execute();
+
+        $this-&gt;client-&gt;waitUntil(&#x27;table_exists&#x27;, array(&#x27;TableName&#x27; =&gt; $tableName));
+
+        return $result;
+    }
+
+    /**
+     * Open a session for writing. Triggered by session_start()
+     *
+     * Part of the standard PHP session handler interface
+     *
+     * @param string $savePath    The session save path
+     * @param string $sessionName The session name
+     *
+     * @return bool Whether or not the operation succeeded
+     */
+    public function open($savePath, $sessionName)
+    {
+        $this-&gt;savePath      = $savePath;
+        $this-&gt;sessionName   = $sessionName;
+        $this-&gt;openSessionId = session_id();
+
+        return $this-&gt;isSessionOpen();
+    }
+
+    /**
+     * Close a session from writing
+     *
+     * Part of the standard PHP session handler interface
+     *
+     * @return bool Success
+     */
+    public function close()
+    {
+        // Make sure the session is unlocked and the expiration time is updated, even if the write did not occur
+        if (!$this-&gt;isSessionWritten()) {
+            $id     = $this-&gt;formatId($this-&gt;openSessionId);
+            $result = $this-&gt;lockingStrategy-&gt;doWrite($id, &#x27;&#x27;, false);
+            $this-&gt;sessionWritten = (bool) $result;
+        }
+
+        $this-&gt;openSessionId = null;
+
+        return $this-&gt;isSessionWritten();
+    }
+
+    /**
+     * Read a session stored in DynamoDB
+     *
+     * Part of the standard PHP session handler interface
+     *
+     * @param string $id The session ID
+     *
+     * @return string The session data
+     */
+    public function read($id)
+    {
+        // PHP expects an empty string to be returned from this method if no
+        // data is retrieved
+        $this-&gt;dataRead = &#x27;&#x27;;
+
+        // Get session data using the selected locking strategy
+        $item = $this-&gt;lockingStrategy-&gt;doRead($this-&gt;formatId($id));
+
+        // Return the data if it is not expired. If it is expired, remove it
+        if (isset($item[&#x27;expires&#x27;]) &amp;&amp; isset($item[&#x27;data&#x27;])) {
+            $this-&gt;dataRead = $item[&#x27;data&#x27;];
+            if ($item[&#x27;expires&#x27;] &lt;= time()) {
+                $this-&gt;dataRead = &#x27;&#x27;;
+                $this-&gt;destroy($id);
+            }
+        }
+
+        return $this-&gt;dataRead;
+    }
+
+    /**
+     * Write a session to DynamoDB
+     *
+     * Part of the standard PHP session handler interface
+     *
+     * @param string $id   The session ID
+     * @param string $data The serialized session data to write
+     *
+     * @return bool Whether or not the operation succeeded
+     */
+    public function write($id, $data)
+    {
+        // Write the session data using the selected locking strategy
+        $this-&gt;sessionWritten = $this-&gt;lockingStrategy-&gt;doWrite(
+            $this-&gt;formatId($id),
+            $data,
+            ($data !== $this-&gt;dataRead)
+        );
+
+        return $this-&gt;isSessionWritten();
+    }
+
+    /**
+     * Delete a session stored in DynamoDB
+     *
+     * Part of the standard PHP session handler interface
+     *
+     * @param string $id The session ID
+     *
+     * @return bool Whether or not the operation succeeded
+     */
+    public function destroy($id)
+    {
+        // Delete the session data using the selected locking strategy
+        $this-&gt;sessionWritten = $this-&gt;lockingStrategy-&gt;doDestroy($this-&gt;formatId($id));
+
+        return $this-&gt;isSessionWritten();
+    }
+
+    /**
+     * Triggers garbage collection on expired sessions
+     *
+     * Part of the standard PHP session handler interface
+     *
+     * @param int $maxLifetime The value of &#x60;session.gc_maxlifetime&#x60;. Ignored
+     *
+     * @return bool
+     */
+    public function gc($maxLifetime)
+    {
+        try {
+            $this-&gt;garbageCollect();
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Performs garbage collection on the sessions stored in the DynamoDB table
+     *
+     * If triggering garbage collection manually, use this method. If your garbage collection is triggered automatically
+     * by php (not recommended), then use the &#x60;gc&#x60; method.
+     */
+    public function garbageCollect()
+    {
+        // Get relevant configuration data
+        $delay     = (int) $this-&gt;config-&gt;get(&#x27;gc_operation_delay&#x27;);
+        $batchSize = (int) $this-&gt;config-&gt;get(&#x27;gc_batch_size&#x27;);
+        $tableName = $this-&gt;config-&gt;get(&#x27;table_name&#x27;);
+        $hashKey   = $this-&gt;config-&gt;get(&#x27;hash_key&#x27;);
+        $expires   = (string) time();
+        $isOldApi  = ($this-&gt;client-&gt;getApiVersion() &lt; &#x27;2012-08-10&#x27;);
+
+        // Instantiate and configure the WriteRequestBatch object that will be deleting the expired sessions
+        if ($delay) {
+            $delayFunction = function () use ($delay) {
+                sleep($delay);
+            };
+            $deleteBatch = WriteRequestBatch::factory($this-&gt;client, $batchSize, $delayFunction);
+        } else {
+            $deleteBatch = WriteRequestBatch::factory($this-&gt;client, $batchSize);
+        }
+
+        // Setup a scan table iterator for finding expired session items
+        $scanParams = array(
+            &#x27;TableName&#x27; =&gt; $tableName,
+            &#x27;AttributesToGet&#x27; =&gt; array(
+                $this-&gt;config-&gt;get(&#x27;hash_key&#x27;)
+            ),
+            &#x27;ScanFilter&#x27; =&gt; array(
+                &#x27;expires&#x27; =&gt; array(
+                    &#x27;ComparisonOperator&#x27; =&gt; &#x27;LT&#x27;,
+                    &#x27;AttributeValueList&#x27; =&gt; array(
+                        array(
+                            &#x27;N&#x27; =&gt; $expires
+                        )
+                    ),
+                ),
+                &#x27;lock&#x27; =&gt; array(
+                    &#x27;ComparisonOperator&#x27; =&gt; &#x27;NULL&#x27;,
+                )
+            ),
+            Ua::OPTION =&gt; Ua::SESSION
+        );
+        if (!$isOldApi) {
+            $scanParams[&#x27;Select&#x27;] = &#x27;SPECIFIC_ATTRIBUTES&#x27;;
+        }
+
+        // Create a scan table iterator for finding expired session items
+        $tableScanner = $this-&gt;client-&gt;getIterator(&#x27;Scan&#x27;, $scanParams);
+
+        // If a delay has been set, then attach the delay function to execute after each scan operation
+        if (isset($delayFunction)) {
+            $tableScanner-&gt;getEventDispatcher()-&gt;addListener(&#x27;resource_iterator.after_send&#x27;, $delayFunction);
+        }
+
+        // Perform scan and batch delete operations as needed
+        $keyName = $isOldApi ? &#x27;HashKeyElement&#x27; : $hashKey;
+        foreach ($tableScanner as $item) {
+            // @codeCoverageIgnoreStart
+            $deleteBatch-&gt;add(new DeleteRequest(array($keyName =&gt; $item[$hashKey]), $tableName));
+            // @codeCoverageIgnoreEnd
+        }
+
+        // Delete any remaining items
+        $deleteBatch-&gt;flush();
+    }
+
+    /**
+     * Prepend the session ID with the session name
+     *
+     * @param string $id The session ID
+     *
+     * @return string Prepared session ID
+     */
+    protected function formatId($id)
+    {
+        return trim($this-&gt;sessionName . &#x27;_&#x27; . $id, &#x27;_&#x27;);
+    }
+}
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

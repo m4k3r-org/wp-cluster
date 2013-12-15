@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/front-end-editor/jquery.ud.frontend_editor.js - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/front-end-editor/jquery.ud.frontend_editor.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/* =========================================================
+ * jquery.ud.frontend_editor.js v1.5.0
+ * http://usabilitydynamics.com
+ * =========================================================
+ * Copyright 2011 Usability Dynamics, Inc.
+ *
+ *
+ * Version 0.0.1
+ * Validation: http://www.jslint.com/
+ *
+ * Copyright (c) 2012 Usability Dynamics, Inc. (usabilitydynamics.com)
+ * ========================================================= */
+
+/*jslint indent: 2 */
+/*global window */
+/*global console */
+/*global clearTimeout */
+/*global setTimeout */
+/*global jQuery */
+( function( jQuery ){
+  jQuery.fn.frontend_editor = function( s ) {
+
+    /* Set Settings */
+    s = jQuery.extend( true, {
+      settings: {
+        movable_elements: &#x27;.flawless_module&#x27;,
+        max_width: false,
+        change_delay: 10,
+        handles: {
+          header: &#x27;s&#x27;,
+          footer: &#x27;s&#x27;
+        },
+        timers: {
+          abandonment: 2000
+        },
+        debug: false
+      },
+      styles: {
+        containers: {},
+        modules: {}
+      },
+      wrapper: jQuery( &#x27;.container:first&#x27; ),
+      ui: {
+        containers: this,
+        panel_container: jQuery( &#x27;&lt;div class=&quot;ffe_panel_container&quot;&gt;&lt;/div&gt;&#x27; ).hide(),
+        panel: jQuery( &#x27;&lt;div class=&quot;container ffe_panel&quot;&gt;&lt;/div&gt;&#x27; ),
+        controls: {
+          layout_width: {
+            element: jQuery( &#x27;&lt;div class=&quot;ffe_layout_width&quot;&gt;&lt;/div&gt;&#x27; ).slider({ value: jQuery( &#x27;div.container&#x27; ).width(), min: 800, max: 1650, step: 10, slide: function( event, ui ) { jQuery( &#x27;body div.container:not(.ffe_panel)&#x27; ).css( &#x27;max-width&#x27;, ui.value ); } }),
+            label: &#x27;Maximum Layout Width:&#x27;
+          },
+          gutter_width: {
+            element: jQuery( &#x27;&lt;div class=&quot;ffe_gutter_width&quot;&gt;&lt;/div&gt;&#x27; ).slider({ value: 10, min: 0, max: 100, step: 1, slide: function( event, ui ) { set_gutter( ui.value ); } }),
+            label: &#x27;Gutter Width:&#x27;
+          },
+          visual_debug_toggle: {
+            element: jQuery( &#x27;&lt;span class=&quot;ffe_visual_debug_toggle btn btn-inverse&quot;&gt;Toggle Layout Helpers&lt;/span&gt;&#x27; ).click( function() { flawless.toggle_visual_debug(); } )
+          }
+        }
+      }
+    }, s );
+
+
+    /* Get Modules */
+    if( typeof s.ui.modules != &#x27;object&#x27; ) {
+      s.ui.modules = jQuery( s.settings.movable_elements, s.ui.containers );
+    }
+
+   /**
+    * Internal logging function
+    *
+    * @author potanin@UD
+    */
+    var log = function( something, type ) {
+
+      if( !s.settings.debug ) {
+        return;
+      }
+
+      if( window.console &amp;&amp; console.debug ) {
+
+        if ( type == &#x27;error&#x27; ) {
+          console.error( typeof something !== &#x27;object&#x27; ? &#x27;frontend_editor:: &#x27; + something : something );
+        } else {
+          console.log( typeof something !== &#x27;object&#x27; ? &#x27;frontend_editor:: &#x27; + something : something  );
+        }
+
+      }
+
+    };
+
+    var set_gutter = s.set_gutter = function( width ) {
+
+      jQuery( &#x27;div.formatted-row.row-fluid.row-fluid &gt; div[class*=&quot;span&quot;] &gt; .cfct-module&#x27; ).css( &#x27;margin-right&#x27;, Math.round( ( width / 2 ) )  );
+      jQuery( &#x27;div.content_wrapper.row-fluid &gt; div[class*=&quot;span&quot;] &gt; .cfct-module&#x27; ).css( &#x27;margin-right&#x27;, Math.round( ( width / 2 ) )  );
+      jQuery( &#x27;div.row-fluid &gt; div[class*=&quot;span&quot;] &gt; .cfct-module&#x27; ).css( &#x27;margin-right&#x27;, Math.round( ( width / 2 ) )  );
+
+      jQuery( &#x27;div.formatted-row.row-fluid.row-fluid &gt; div[class*=&quot;span&quot;] &gt; .cfct-module&#x27; ).css( &#x27;margin-left&#x27;, Math.round( ( width / 2 ) )  );
+      jQuery( &#x27;div.content_wrapper.row-fluid &gt; div[class*=&quot;span&quot;] &gt; .cfct-module&#x27; ).css( &#x27;margin-left&#x27;, Math.round( ( width / 2 ) )  );
+      jQuery( &#x27;div.row-fluid &gt; div[class*=&quot;span&quot;] &gt; .cfct-module&#x27; ).css( &#x27;margin-left&#x27;, Math.round( ( width / 2 ) )  );
+
+      //jQuery( &#x27;.row-fluid &gt; div.first[class*=&quot;span&quot;] &gt; .cfct-module&#x27; ).css( &#x27;margin-left&#x27;, Math.round( ( width / 2 ) ) );
+
+    }
+
+    var _create_panel = s._create_panel = function() {
+
+      if( jQuery( &#x27;body&#x27; ).hasClass( &#x27;ffe_panel_active&#x27; ) ) {
+        s.ui.panel_container.slideUp();
+        jQuery( &#x27;body&#x27; ).removeClass( &#x27;ffe_panel_active&#x27; );
+        return true;
+      }
+
+      //** Show Dropdown */
+      jQuery( &#x27;body&#x27; ).addClass( &#x27;ffe_panel_active&#x27; );
+
+      jQuery( &#x27;body&#x27; ).prepend( s.ui.panel_container );
+
+      s.ui.panel_container.append( s.ui.panel );
+
+      s.ui.panel_container.slideDown( &#x27;fast&#x27;, function() {
+
+        jQuery.each( s.ui.controls, function( control_name, data ) {
+
+          s.ui.panel.append( data.element );
+
+          jQuery( data.element ).wrap( &#x27;&lt;div class=&quot;ffe_control&quot; /&gt;&#x27; );
+
+          if( data.label ) {
+            jQuery( &#x27;&lt;label class=&quot;ffe_label&quot;&gt;&#x27; + data.label + &#x27;&lt;/label&gt;&#x27; ).insertBefore( data.element );
+          }
+
+        });
+
+      });
+
+    }
+
+
+    /**
+     * Ran on Initialization, after the UI references have been created.
+     *
+     * {missing description}
+     *
+     * @author potanin@UD
+     */
+    this.enable = function() {
+      log( &#x27;enable()&#x27; );
+
+      /* Setup Containers */
+      jQuery.each( s.ui.containers, function() {
+
+        var container = this;
+        var container_type = jQuery( container ).attr( &#x27;container_type&#x27; );
+
+        jQuery( container ).css( &#x27;position&#x27;, &#x27;relative&#x27; );
+        jQuery( container ).css( &#x27;height&#x27;, jQuery( container ).height() );
+
+        /* Create data storage point */
+        s.styles[ &#x27;containers&#x27; ][ container_type ] = &#x27;&#x27;;
+
+        jQuery( document ).trigger( &#x27;frontend_editor::update_styles&#x27;, {
+          type: &#x27;container&#x27;,
+          key: container_type,
+          action: &#x27;initialization&#x27;,
+          element: container
+        });
+
+        jQuery( container ).resizable( {
+          delay: s.settings.change_delay,
+          handles: s.settings.handles[ container_type ],
+          stop: function( event, this_ui ) {
+
+            jQuery( document ).trigger( &#x27;frontend_editor::update_styles&#x27;, {
+              type: &#x27;container&#x27;,
+              key: container_type,
+              action: &#x27;resize&#x27;,
+              element: this_ui.helper,
+              ui: this_ui
+            });
+
+            /* Unset CSS styles that should not be applied to containers */
+            jQuery( container ).css( &#x27;top&#x27;, &#x27;&#x27; ).css( &#x27;width&#x27;, &#x27;&#x27; ).css( &#x27;left&#x27;, &#x27;&#x27; ).css( &#x27;right&#x27;, &#x27;&#x27; ).css( &#x27;bottom&#x27;, &#x27;&#x27; );
+
+          }
+        });
+
+        jQuery( container ).addClass( &#x27;editable_container&#x27; );
+
+      });
+
+      /* Setup individual modules */
+      jQuery.each( s.ui.modules, function() {
+
+        var module = this;
+        var abandonment_timer;
+        var element_hash = jQuery( module ).attr( &#x27;element_hash&#x27; );
+        var position = jQuery( module ).position();
+        var selection_shield = jQuery( &#x27;&lt;div class=&quot;selection_shield&quot; style=&quot;position: absolute;top: 0;left: 0;width: 100%;height: 100%;&quot;&gt;&lt;/div&gt;&#x27; );
+
+        s.styles[ &#x27;modules&#x27; ][ element_hash ] = &#x27;&#x27;;
+
+        /* Fix current position by making it absolute (make have issues with older settings which were relative for some reason) */
+        jQuery( module ).css( &#x27;position&#x27;, &#x27;absolute&#x27; );
+        jQuery( module ).css( &#x27;left&#x27;, position.left + &#x27;px&#x27; );
+        jQuery( module ).css( &#x27;top&#x27;, position.top + &#x27;px&#x27; );
+        jQuery( module ).css( &#x27;height&#x27;, jQuery( module ).height()  + &#x27;px&#x27; );
+        jQuery( module ).css( &#x27;width&#x27;, jQuery( module ).width()  + &#x27;px&#x27; );
+
+        jQuery( document ).trigger( &#x27;frontend_editor::update_styles&#x27;, {
+          type: &#x27;module&#x27;,
+          key: element_hash,
+          action: &#x27;initialization&#x27;,
+          element: module
+        });
+
+        jQuery( module ).addClass( &#x27;movable&#x27; );
+
+        /* Make it draggable */
+        jQuery( module ).draggable( {
+          containment: &#x27;parent&#x27;,
+          delay: s.settings.change_delay,
+          grid: [5, 5],
+          stop: function( event, this_ui ) {
+
+            jQuery( document ).trigger( &#x27;frontend_editor::update_styles&#x27;, {
+              type: &#x27;module&#x27;,
+              key: element_hash,
+              action: &#x27;drag&#x27;,
+              element: this_ui.helper,
+              ui: this_ui
+            });
+
+          }
+        });
+
+        /* Make it resizable */
+        jQuery( module ).resizable( {
+          containment: &#x27;parent&#x27;,
+          snap: true,
+          delay: s.settings.change_delay,
+          handles: &#x27;all&#x27;,
+          stop: function( event, this_ui ) {
+
+            jQuery( document ).trigger( &#x27;frontend_editor::update_styles&#x27;, {
+              type: &#x27;module&#x27;,
+              key: element_hash,
+              action: &#x27;resize&#x27;,
+              element: this_ui.helper,
+              ui: this_ui
+            });
+
+          }
+        });
+
+        /* Track user intefaction by way of mouse */
+        jQuery( module ).mouseenter( function() {
+          jQuery( module ).addClass( &#x27;active_now&#x27; );
+
+          /* Add overlay element to cover up entire module to avoid interaction */
+          if( !jQuery( &#x27;.selection_shield&#x27;, module ).length ) {
+            jQuery( module ).append( selection_shield );
+          }
+
+          clearTimeout( abandonment_timer );
+
+        }).mouseleave( function() {
+          abandonment_timer = setTimeout( function() {
+            jQuery( module ).removeClass( &#x27;active_now&#x27; );
+
+            jQuery( selection_shield ).remove();
+
+          }, s.settings.timers.abandonment );
+        });
+
+      });
+
+
+    }
+
+
+    /**
+     * Disable the ditor, removing all classes and stuff
+     *
+     */
+    this.disable = function() {
+      log( &#x27;disable()&#x27; );
+      jQuery(&#x27;.selection_shield&#x27;).remove();
+      jQuery.each( s.ui.modules, function() {
+        jQuery( this ).removeClass( &#x27;movable&#x27; ).removeClass( &#x27;active_now&#x27; ).draggable( &#x27;destroy&#x27; ).resizable( &#x27;destroy&#x27; ).unbind( &#x27;mouseenter mouseleave&#x27; );
+      });
+
+      jQuery.each( s.ui.containers, function() {
+        jQuery( this ).resizable( &#x27;destroy&#x27; ).removeClass( &#x27;editable_container&#x27; );
+      });
+
+    }
+
+
+    /**
+     * Bound to every Module and Container change.
+     *
+     * Styles are updated here, most notably converted from pixels to percentages
+     *
+     * @todo Add some logic to determine if positioning should be left or right based to handle better in responsive layouts. - potanin@UD
+     * @author potanin@UD
+     */
+    jQuery( document ).bind( &#x27;frontend_editor::update_styles&#x27;, function( event, settings ) {
+
+      /* Get the parent and dimensions */
+      var args = {
+        type: settings.type,
+        key: settings.key,
+        parent: jQuery( settings.element ).parent(),
+        styles: {
+          height: jQuery( settings.element ).height()  + &#x27;px&#x27;
+        },
+        print_styles: []
+      };
+
+      /* For Modules only, get the position in relation to the parent */
+      if( settings.type == &#x27;module&#x27; ) {
+
+        args.element = jQuery( settings.element );
+        args.container_width = args.parent.width();
+
+        /* Determine of module is left or right bound */
+        args.left_distance = args.element.position().left;
+        args.right_distance = args.parent.width() - args.element.width() - args.left_distance;
+
+        if( args.right_distance &lt; args.left_distance ) {
+          args.styles.right = parseInt( Math.round( ( args.right_distance / args.container_width ) * 10000 ) / 100 );
+          args.styles.right = ( args.styles.right &gt; 0 &amp;&amp; args.styles.right &lt; 100 ? args.styles.right : 0 ) + &#x27;%&#x27;;
+        } else {
+          args.styles.left = parseInt( Math.round( ( args.left_distance / args.container_width ) * 10000 ) / 100 );
+          args.styles.left = ( args.styles.left &gt; 0 &amp;&amp; args.styles.left &lt; 100 ? args.styles.left : 0 ) + &#x27;%&#x27;;
+        }
+
+        args.styles.top =  parseInt( Math.round( ( jQuery( settings.element ).position().top / args.parent.height() ) * 10000 ) / 100 );
+        args.styles.width = jQuery( settings.element ).width() + &#x27;px&#x27;;
+        args.styles.position = &#x27;absolute&#x27;;
+
+        /** Double-check that dimensions are within range */
+        args.styles.top = ( args.styles.top &gt; 0 &amp;&amp; args.styles.top &lt; 100 ? args.styles.top : 0 ) + &#x27;%&#x27;;
+
+      }
+
+      if( settings.type == &#x27;container&#x27; ) {
+        args.styles.position = &#x27;relative&#x27;;
+      }
+
+      jQuery.each( args.styles, function( key, value ) {
+        args.print_styles.push( key + &#x27;:&#x27; + value );
+      });
+
+      args.print_styles = args.print_styles.join( &#x27;;&#x27; );
+
+      if( args.type == &#x27;module&#x27; ) {
+        s.styles.modules[ args.key ] = args.print_styles;
+      }
+
+      if( args.type == &#x27;container&#x27; ) {
+        s.styles.containers[ args.key ] = args.print_styles;
+      }
+
+      /* console.log( args.print_styles ); */
+
+    });
+
+    /* Automatically Enable */
+    this.enable();
+
+    /* Make available for short access */
+    this.styles = s.styles;
+
+    return s;
+
+  };
+
+}) ( jQuery );
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

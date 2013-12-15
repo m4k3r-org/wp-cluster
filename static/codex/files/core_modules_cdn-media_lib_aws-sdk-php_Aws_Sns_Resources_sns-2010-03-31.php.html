@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/cdn-media/lib/aws-sdk-php/Aws/Sns/Resources/sns-2010-03-31.php - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/cdn-media/lib/aws-sdk-php/Aws/Sns/Resources/sns-2010-03-31.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+/**
+ * Copyright 2010-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ * http://aws.amazon.com/apache2.0
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is distributed
+ * on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+return array (
+    &#x27;apiVersion&#x27; =&gt; &#x27;2010-03-31&#x27;,
+    &#x27;endpointPrefix&#x27; =&gt; &#x27;sns&#x27;,
+    &#x27;serviceFullName&#x27; =&gt; &#x27;Amazon Simple Notification Service&#x27;,
+    &#x27;serviceAbbreviation&#x27; =&gt; &#x27;Amazon SNS&#x27;,
+    &#x27;serviceType&#x27; =&gt; &#x27;query&#x27;,
+    &#x27;resultWrapped&#x27; =&gt; true,
+    &#x27;signatureVersion&#x27; =&gt; &#x27;v2&#x27;,
+    &#x27;namespace&#x27; =&gt; &#x27;Sns&#x27;,
+    &#x27;regions&#x27; =&gt; array(
+        &#x27;us-east-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sns.us-east-1.amazonaws.com&#x27;,
+        ),
+        &#x27;us-west-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sns.us-west-1.amazonaws.com&#x27;,
+        ),
+        &#x27;us-west-2&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sns.us-west-2.amazonaws.com&#x27;,
+        ),
+        &#x27;eu-west-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sns.eu-west-1.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-northeast-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sns.ap-northeast-1.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-southeast-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sns.ap-southeast-1.amazonaws.com&#x27;,
+        ),
+        &#x27;ap-southeast-2&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sns.ap-southeast-2.amazonaws.com&#x27;,
+        ),
+        &#x27;sa-east-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sns.sa-east-1.amazonaws.com&#x27;,
+        ),
+        &#x27;us-gov-west-1&#x27; =&gt; array(
+            &#x27;http&#x27; =&gt; true,
+            &#x27;https&#x27; =&gt; true,
+            &#x27;hostname&#x27; =&gt; &#x27;sns.us-gov-west-1.amazonaws.com&#x27;,
+        ),
+    ),
+    &#x27;operations&#x27; =&gt; array(
+        &#x27;AddPermission&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The AddPermission action adds a statement to a topic\&#x27;s access control policy, granting access for the specified AWS accounts to the specified actions.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;AddPermission&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;TopicArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the topic whose access control policy you wish to modify.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Label&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;A unique identifier for the new policy statement.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;AWSAccountId&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The AWS account IDs of the users (principals) who will be given access to the specified actions. The users must have AWS accounts, but do not need to be signed up for this service.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;AWSAccountId.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;delegate&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    ),
+                ),
+                &#x27;ActionName&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The action you want to allow for the specified principal(s).&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;sentAs&#x27; =&gt; &#x27;ActionName.member&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;action&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    ),
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ConfirmSubscription&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;ConfirmSubscriptionResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The ConfirmSubscription action verifies an endpoint owner\&#x27;s intent to receive messages by validating the token sent to the endpoint by an earlier Subscribe action. If the token is valid, the action creates a new subscription and returns its Amazon Resource Name (ARN). This call requires an AWS signature only when the AuthenticateOnUnsubscribe flag is set to &quot;true&quot;.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;ConfirmSubscription&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;TopicArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the topic for which you wish to confirm a subscription.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Token&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;Short-lived token sent to an endpoint during the Subscribe action.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;AuthenticateOnUnsubscribe&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Indicates that you want to disallow unauthenticated unsubscribes of the subscription. If value of this parameter is &quot;true&quot; and the request has an AWS signature then only the topic owner and the subscription owner will be permitted to unsubscribe the endpoint. The unsubscribe action will require AWS authentication.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the customer already owns the maximum allowed number of subscriptions.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;SubscriptionLimitExceededException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;CreateTopic&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;CreateTopicResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The CreateTopic action creates a topic to which notifications can be published. Users can create at most 25 topics. This action is idempotent, so if the requester already owns a topic with the specified name, that topic\&#x27;s ARN will be returned without creating a new topic.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;CreateTopic&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;Name&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The name of the topic you want to create.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the customer already owns the maximum allowed number of topics.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;TopicLimitExceededException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;DeleteTopic&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The DeleteTopic action deletes a topic and all its subscriptions. Deleting a topic might prevent some messages previously sent to the topic from being delivered to subscribers. This action is idempotent, so deleting a topic that does not exist will not result in an error.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;DeleteTopic&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;TopicArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the topic you want to delete.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;GetSubscriptionAttributes&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;GetSubscriptionAttributesResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The GetSubscriptionAttribtues action returns all of the properties of a subscription.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;GetSubscriptionAttributes&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;SubscriptionArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the subscription whose properties you want to get.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;GetTopicAttributes&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;GetTopicAttributesResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The GetTopicAttribtues action returns all of the properties of a topic customers have created. Topic properties returned might differ based on the authorization of the user.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;GetTopicAttributes&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;TopicArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the topic whose properties you want to get.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListSubscriptions&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;ListSubscriptionsResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The ListSubscriptions action returns a list of the requester\&#x27;s subscriptions. Each call returns a limited list of subscriptions, up to 100. If there are more subscriptions, a NextToken is also returned. Use the NextToken parameter in a new ListSubscriptions call to get further results.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;ListSubscriptions&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;NextToken&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Token returned by the previous ListSubscriptions request.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListSubscriptionsByTopic&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;ListSubscriptionsByTopicResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The ListSubscriptionsByTopic action returns a list of the subscriptions to a specific topic. Each call returns a limited list of subscriptions, up to 100. If there are more subscriptions, a NextToken is also returned. Use the NextToken parameter in a new ListSubscriptionsByTopic call to get further results.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;ListSubscriptionsByTopic&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;TopicArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the topic for which you wish to find subscriptions.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;NextToken&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Token returned by the previous ListSubscriptionsByTopic request.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListTopics&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;ListTopicsResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The ListTopics action returns a list of the requester\&#x27;s topics. Each call returns a limited list of topics, up to 100. If there are more topics, a NextToken is also returned. Use the NextToken parameter in a new ListTopics call to get further results.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;ListTopics&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;NextToken&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Token returned by the previous ListTopics request.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;Publish&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;PublishResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The Publish action sends a message to all of a topic\&#x27;s subscribed endpoints. When a messageId is returned, the message has been saved and Amazon SNS will attempt to deliver it to the topic\&#x27;s subscribers shortly. The format of the outgoing message to each subscribed endpoint depends on the notification protocol selected.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;Publish&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;TopicArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The topic you want to publish to.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Message&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The message you want to send to the topic.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Subject&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Optional parameter to be used as the &quot;Subject&quot; line of when the message is delivered to e-mail endpoints. This field will also be included, if present, in the standard JSON messages delivered to other endpoints.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;MessageStructure&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Optional parameter. It will have one valid value: &quot;json&quot;. If this option, Message is present and set to &quot;json&quot;, the value of Message must: be a syntactically valid JSON object. It must contain at least a top level JSON key of &quot;default&quot; with a value that is a string. For any other top level key that matches one of our transport protocols (e.g. &quot;http&quot;), then the corresponding value (if it is a string) will be used for the message published for that protocol&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;RemovePermission&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The RemovePermission action removes a statement from a topic\&#x27;s access control policy.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;RemovePermission&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;TopicArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the topic whose access control policy you wish to modify.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Label&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The unique label of the statement you want to remove.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;SetSubscriptionAttributes&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The SetSubscriptionAttributes action allows a subscription owner to set an attribute of the topic to a new value.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;SetSubscriptionAttributes&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;SubscriptionArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the subscription to modify.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;AttributeName&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The name of the attribute you want to set. Only a subset of the subscriptions attributes are mutable.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;AttributeValue&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The new value for the attribute.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;SetTopicAttributes&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The SetTopicAttributes action allows a topic owner to set an attribute of the topic to a new value.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;SetTopicAttributes&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;TopicArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the topic to modify.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;AttributeName&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The name of the attribute you want to set. Only a subset of the topic\&#x27;s attributes are mutable.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;AttributeValue&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The new value for the attribute.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;Subscribe&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;SubscribeResponse&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The Subscribe action prepares to subscribe an endpoint by sending the endpoint a confirmation message. To actually create a subscription, the endpoint owner must call the ConfirmSubscription action with the token from the confirmation message. Confirmation tokens are valid for three days.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;Subscribe&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;TopicArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of topic you want to subscribe to.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Protocol&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The protocol you want to use. Supported protocols include:&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+                &#x27;Endpoint&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The endpoint that you want to receive notifications. Endpoints vary by protocol:&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the customer already owns the maximum allowed number of subscriptions.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;SubscriptionLimitExceededException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+            ),
+        ),
+        &#x27;Unsubscribe&#x27; =&gt; array(
+            &#x27;httpMethod&#x27; =&gt; &#x27;POST&#x27;,
+            &#x27;uri&#x27; =&gt; &#x27;/&#x27;,
+            &#x27;class&#x27; =&gt; &#x27;Aws\\Common\\Command\\QueryCommand&#x27;,
+            &#x27;responseClass&#x27; =&gt; &#x27;EmptyOutput&#x27;,
+            &#x27;responseType&#x27; =&gt; &#x27;model&#x27;,
+            &#x27;summary&#x27; =&gt; &#x27;The Unsubscribe action deletes a subscription. If the subscription requires authentication for deletion, only the owner of the subscription or the its topic\&#x27;s owner can unsubscribe, and an AWS signature is required. If the Unsubscribe call does not require authentication and the requester is not the subscription owner, a final cancellation message is delivered to the endpoint, so that the endpoint owner can easily resubscribe to the topic if the Unsubscribe request was unintended.&#x27;,
+            &#x27;parameters&#x27; =&gt; array(
+                &#x27;Action&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;Unsubscribe&#x27;,
+                ),
+                &#x27;Version&#x27; =&gt; array(
+                    &#x27;static&#x27; =&gt; true,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                    &#x27;default&#x27; =&gt; &#x27;2010-03-31&#x27;,
+                ),
+                &#x27;SubscriptionArn&#x27; =&gt; array(
+                    &#x27;required&#x27; =&gt; true,
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the subscription to be deleted.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;aws.query&#x27;,
+                ),
+            ),
+            &#x27;errorResponses&#x27; =&gt; array(
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that a request parameter does not comply with the associated constraints.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InvalidParameterException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates an internal service error.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;InternalErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the user has been denied access to the requested resource.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;AuthorizationErrorException&#x27;,
+                ),
+                array(
+                    &#x27;reason&#x27; =&gt; &#x27;Indicates that the requested resource does not exist.&#x27;,
+                    &#x27;class&#x27; =&gt; &#x27;NotFoundException&#x27;,
+                ),
+            ),
+        ),
+    ),
+    &#x27;models&#x27; =&gt; array(
+        &#x27;EmptyOutput&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+        ),
+        &#x27;ConfirmSubscriptionResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;SubscriptionArn&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the created subscription.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+            ),
+        ),
+        &#x27;CreateTopicResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;TopicArn&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The Amazon Resource Name (ARN) assigned to the created topic.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+            ),
+        ),
+        &#x27;GetSubscriptionAttributesResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;Attributes&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A map of the subscription\&#x27;s attributes. Attributes in this map include the following:&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;data&#x27; =&gt; array(
+                        &#x27;xmlMap&#x27; =&gt; array(
+                        ),
+                    ),
+                    &#x27;filters&#x27; =&gt; array(
+                        array(
+                            &#x27;method&#x27; =&gt; &#x27;Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap&#x27;,
+                            &#x27;args&#x27; =&gt; array(
+                                &#x27;@value&#x27;,
+                                &#x27;entry&#x27;,
+                                &#x27;key&#x27;,
+                                &#x27;value&#x27;,
+                            ),
+                        ),
+                    ),
+                    &#x27;additionalProperties&#x27; =&gt; false,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;entry&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;entry&#x27;,
+                        &#x27;additionalProperties&#x27; =&gt; true,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;key&#x27; =&gt; array(
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;value&#x27; =&gt; array(
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        &#x27;GetTopicAttributesResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;Attributes&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A map of the topic\&#x27;s attributes. Attributes in this map include the following:&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;data&#x27; =&gt; array(
+                        &#x27;xmlMap&#x27; =&gt; array(
+                        ),
+                    ),
+                    &#x27;filters&#x27; =&gt; array(
+                        array(
+                            &#x27;method&#x27; =&gt; &#x27;Aws\\Common\\Command\\XmlResponseLocationVisitor::xmlMap&#x27;,
+                            &#x27;args&#x27; =&gt; array(
+                                &#x27;@value&#x27;,
+                                &#x27;entry&#x27;,
+                                &#x27;key&#x27;,
+                                &#x27;value&#x27;,
+                            ),
+                        ),
+                    ),
+                    &#x27;additionalProperties&#x27; =&gt; false,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;entry&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;entry&#x27;,
+                        &#x27;additionalProperties&#x27; =&gt; true,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;key&#x27; =&gt; array(
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;value&#x27; =&gt; array(
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        &#x27;ListSubscriptionsResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;Subscriptions&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of subscriptions.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;Subscription&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;A wrapper type for the attributes of an SNS subscription.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;SubscriptionArn&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The subscription\&#x27;s ARN.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Owner&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The subscription\&#x27;s owner.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Protocol&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The subscription\&#x27;s protocol.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Endpoint&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The subscription\&#x27;s endpoint (format depends on the protocol).&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;TopicArn&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The ARN of the subscription\&#x27;s topic.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;NextToken&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Token to pass along to the next ListSubscriptions request. This element is returned if there are more subscriptions to retrieve.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListSubscriptionsByTopicResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;Subscriptions&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of subscriptions.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;Subscription&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;A wrapper type for the attributes of an SNS subscription.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;SubscriptionArn&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The subscription\&#x27;s ARN.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Owner&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The subscription\&#x27;s owner.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Protocol&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The subscription\&#x27;s protocol.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;Endpoint&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The subscription\&#x27;s endpoint (format depends on the protocol).&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                            &#x27;TopicArn&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The ARN of the subscription\&#x27;s topic.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;NextToken&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Token to pass along to the next ListSubscriptionsByTopic request. This element is returned if there are more subscriptions to retrieve.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+            ),
+        ),
+        &#x27;ListTopicsResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;Topics&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;A list of topic ARNs.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;array&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                    &#x27;items&#x27; =&gt; array(
+                        &#x27;name&#x27; =&gt; &#x27;Topic&#x27;,
+                        &#x27;description&#x27; =&gt; &#x27;A wrapper type for the topic\&#x27;s Amazon Resource Name (ARN). To retrieve a topic\&#x27;s attributes, use GetTopicAttributes.&#x27;,
+                        &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+                        &#x27;sentAs&#x27; =&gt; &#x27;member&#x27;,
+                        &#x27;properties&#x27; =&gt; array(
+                            &#x27;TopicArn&#x27; =&gt; array(
+                                &#x27;description&#x27; =&gt; &#x27;The topic\&#x27;s ARN.&#x27;,
+                                &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                            ),
+                        ),
+                    ),
+                ),
+                &#x27;NextToken&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Token to pass along to the next ListTopics request. This element is returned if there are additional topics to retrieve.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+            ),
+        ),
+        &#x27;PublishResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;MessageId&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;Unique identifier assigned to the published message.&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+            ),
+        ),
+        &#x27;SubscribeResponse&#x27; =&gt; array(
+            &#x27;type&#x27; =&gt; &#x27;object&#x27;,
+            &#x27;additionalProperties&#x27; =&gt; true,
+            &#x27;properties&#x27; =&gt; array(
+                &#x27;SubscriptionArn&#x27; =&gt; array(
+                    &#x27;description&#x27; =&gt; &#x27;The ARN of the subscription, if the service was able to create a subscription immediately (without requiring endpoint owner confirmation).&#x27;,
+                    &#x27;type&#x27; =&gt; &#x27;string&#x27;,
+                    &#x27;location&#x27; =&gt; &#x27;xml&#x27;,
+                ),
+            ),
+        ),
+    ),
+    &#x27;iterators&#x27; =&gt; array(
+        &#x27;operations&#x27; =&gt; array(
+            &#x27;ListSubscriptions&#x27; =&gt; array(
+                &#x27;token_param&#x27; =&gt; &#x27;NextToken&#x27;,
+                &#x27;token_key&#x27; =&gt; &#x27;NextToken&#x27;,
+                &#x27;result_key&#x27; =&gt; &#x27;Subscriptions&#x27;,
+            ),
+            &#x27;ListSubscriptionsByTopic&#x27; =&gt; array(
+                &#x27;token_param&#x27; =&gt; &#x27;NextToken&#x27;,
+                &#x27;token_key&#x27; =&gt; &#x27;NextToken&#x27;,
+                &#x27;result_key&#x27; =&gt; &#x27;Subscriptions&#x27;,
+            ),
+            &#x27;ListTopics&#x27; =&gt; array(
+                &#x27;token_param&#x27; =&gt; &#x27;NextToken&#x27;,
+                &#x27;token_key&#x27; =&gt; &#x27;NextToken&#x27;,
+                &#x27;result_key&#x27; =&gt; &#x27;Topics/*/TopicArn&#x27;,
+            ),
+        ),
+    ),
+);
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

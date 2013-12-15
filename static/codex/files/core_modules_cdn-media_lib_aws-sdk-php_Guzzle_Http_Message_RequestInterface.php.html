@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>core/modules/cdn-media/lib/aws-sdk-php/Guzzle/Http/Message/RequestInterface.php - wp-flawless</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://a3d72a45d111006ec192-ec5b80a12b0b09b4d52373336afb4254.r80.cf1.rackcdn.com/usability-dynamics.png" title="wp-flawless"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/API.html">API</a></li>
+            
+                <li><a href="../classes/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../classes/Extended_Taxonomies.html">Extended_Taxonomies</a></li>
+            
+                <li><a href="../classes/Flawless.API.html">Flawless.API</a></li>
+            
+                <li><a href="../classes/Flawless.Asset.html">Flawless.Asset</a></li>
+            
+                <li><a href="../classes/Flawless.Branded_Login.html">Flawless.Branded_Login</a></li>
+            
+                <li><a href="../classes/Flawless.BuddyPress.html">Flawless.BuddyPress</a></li>
+            
+                <li><a href="../classes/Flawless.Content.html">Flawless.Content</a></li>
+            
+                <li><a href="../classes/Flawless.Element.html">Flawless.Element</a></li>
+            
+                <li><a href="../classes/Flawless.Flawless\Shortcode.html">Flawless.Flawless\Shortcode</a></li>
+            
+                <li><a href="../classes/Flawless.Management.html">Flawless.Management</a></li>
+            
+                <li><a href="../classes/Flawless.Mobile.html">Flawless.Mobile</a></li>
+            
+                <li><a href="../classes/Flawless.Navbars.html">Flawless.Navbars</a></li>
+            
+                <li><a href="../classes/Flawless.Schema.html">Flawless.Schema</a></li>
+            
+                <li><a href="../classes/Flawless.Settings.html">Flawless.Settings</a></li>
+            
+                <li><a href="../classes/Flawless.Styles.html">Flawless.Styles</a></li>
+            
+                <li><a href="../classes/Flawless.Utility.html">Flawless.Utility</a></li>
+            
+                <li><a href="../classes/Flawless.Widget.html">Flawless.Widget</a></li>
+            
+                <li><a href="../classes/flawless_wpp_extensions.html">flawless_wpp_extensions</a></li>
+            
+                <li><a href="../classes/Legacy.html">Legacy</a></li>
+            
+                <li><a href="../classes/License.html">License</a></li>
+            
+                <li><a href="../classes/Loader.html">Loader</a></li>
+            
+                <li><a href="../classes/Log.html">Log</a></li>
+            
+                <li><a href="../classes/Maintenance.html">Maintenance</a></li>
+            
+                <li><a href="../classes/Models.html">Models</a></li>
+            
+                <li><a href="../classes/Module.html">Module</a></li>
+            
+                <li><a href="../classes/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../classes/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../classes/Shortcode.html">Shortcode</a></li>
+            
+                <li><a href="../classes/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../classes/Template Methods.html">Template Methods</a></li>
+            
+                <li><a href="../classes/Theme.html">Theme</a></li>
+            
+                <li><a href="../classes/UI.html">UI</a></li>
+            
+                <li><a href="../classes/Utility.html">Utility</a></li>
+            
+                <li><a href="../classes/Views.html">Views</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/API.html">API</a></li>
+            
+                <li><a href="../modules/Branded Login.html">Branded Login</a></li>
+            
+                <li><a href="../modules/Carrington.html">Carrington</a></li>
+            
+                <li><a href="../modules/Carrington Build.html">Carrington Build</a></li>
+            
+                <li><a href="../modules/carrington-build.html">carrington-build</a></li>
+            
+                <li><a href="../modules/cfct_build.html">cfct_build</a></li>
+            
+                <li><a href="../modules/default.html">default</a></li>
+            
+                <li><a href="../modules/Flawless.html">Flawless</a></li>
+            
+                <li><a href="../modules/Loader.html">Loader</a></li>
+            
+                <li><a href="../modules/Log.html">Log</a></li>
+            
+                <li><a href="../modules/Maintenence.html">Maintenence</a></li>
+            
+                <li><a href="../modules/Management.html">Management</a></li>
+            
+                <li><a href="../modules/Multisite.html">Multisite</a></li>
+            
+                <li><a href="../modules/SaaS.html">SaaS</a></li>
+            
+                <li><a href="../modules/Services_JSON.html">Services_JSON</a></li>
+            
+                <li><a href="../modules/Shortcodes.html">Shortcodes</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+Released under the GPL license
+http:__www.opensource.org_licenses_gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+http://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+Released under the GPL license
+http://www.opensource.org/licenses/gpl-license.php
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https:__github.com_crowdfavorite_wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http:__crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************.html">taxonomy-landing
+
+This file is part of Taxonomy Landing for WordPress
+https://github.com/crowdfavorite/wp-taxonomy-landing
+
+Copyright (c) 2009-2012 Crowd Favorite, Ltd. All rights reserved.
+http://crowdfavorite.com
+
+**********************************************************************
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+**********************************************************************</a></li>
+            
+                <li><a href="../modules/Theme UI.html">Theme UI</a></li>
+            
+                <li><a href="../modules/UI.html">UI</a></li>
+            
+                <li><a href="../modules/UsabilityDynamics.html">UsabilityDynamics</a></li>
+            
+                <li><a href="../modules/Utility.html">Utility</a></li>
+            
+                <li><a href="../modules/Views.html">Views</a></li>
+            
+                <li><a href="../modules/WP-Property.html">WP-Property</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: core/modules/cdn-media/lib/aws-sdk-php/Guzzle/Http/Message/RequestInterface.php</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&lt;?php
+
+namespace Guzzle\Http\Message;
+
+use Guzzle\Common\Collection;
+use Guzzle\Common\HasDispatcherInterface;
+use Guzzle\Http\Exception\RequestException;
+use Guzzle\Http\ClientInterface;
+use Guzzle\Http\EntityBodyInterface;
+use Guzzle\Http\Url;
+use Guzzle\Http\QueryString;
+
+/**
+ * Generic HTTP request interface
+ */
+interface RequestInterface extends MessageInterface, HasDispatcherInterface
+{
+    const STATE_NEW = &#x27;new&#x27;;
+    const STATE_COMPLETE = &#x27;complete&#x27;;
+    const STATE_TRANSFER = &#x27;transfer&#x27;;
+    const STATE_ERROR = &#x27;error&#x27;;
+
+    const GET = &#x27;GET&#x27;;
+    const PUT = &#x27;PUT&#x27;;
+    const POST = &#x27;POST&#x27;;
+    const DELETE = &#x27;DELETE&#x27;;
+    const HEAD = &#x27;HEAD&#x27;;
+    const CONNECT = &#x27;CONNECT&#x27;;
+    const OPTIONS = &#x27;OPTIONS&#x27;;
+    const TRACE = &#x27;TRACE&#x27;;
+    const PATCH = &#x27;PATCH&#x27;;
+
+    /**
+     * @return string
+     */
+    public function __toString();
+
+    /**
+     * Set the client used to transport the request
+     *
+     * @param ClientInterface $client
+     *
+     * @return self
+     */
+    public function setClient(ClientInterface $client);
+
+    /**
+     * Get the client used to transport the request
+     *
+     * @return ClientInterface $client
+     */
+    public function getClient();
+
+    /**
+     * Set the URL of the request
+     *
+     * @param string $url|Url Full URL to set including query string
+     *
+     * @return self
+     */
+    public function setUrl($url);
+
+    /**
+     * Send the request
+     *
+     * @return Response
+     * @throws RequestException on a request error
+     */
+    public function send();
+
+    /**
+     * Get the previously received {@see Response} or NULL if the request has not been sent
+     *
+     * @return Response|null
+     */
+    public function getResponse();
+
+    /**
+     * Get the collection of key value pairs that will be used as the query string in the request
+     *
+     * @return QueryString
+     */
+    public function getQuery();
+
+    /**
+     * Get the HTTP method of the request
+     *
+     * @return string
+     */
+    public function getMethod();
+
+    /**
+     * Get the URI scheme of the request (http, https, ftp, etc)
+     *
+     * @return string
+     */
+    public function getScheme();
+
+    /**
+     * Set the URI scheme of the request (http, https, ftp, etc)
+     *
+     * @param string $scheme Scheme to set
+     *
+     * @return self
+     */
+    public function setScheme($scheme);
+
+    /**
+     * Get the host of the request
+     *
+     * @return string
+     */
+    public function getHost();
+
+    /**
+     * Set the host of the request. Including a port in the host will modify the port of the request.
+     *
+     * @param string $host Host to set (e.g. www.yahoo.com, www.yahoo.com:80)
+     *
+     * @return self
+     */
+    public function setHost($host);
+
+    /**
+     * Get the HTTP protocol version of the request
+     *
+     * @return string
+     */
+    public function getProtocolVersion();
+
+    /**
+     * Set the HTTP protocol version of the request (e.g. 1.1 or 1.0)
+     *
+     * @param string $protocol HTTP protocol version to use with the request
+     *
+     * @return self
+     */
+    public function setProtocolVersion($protocol);
+
+    /**
+     * Get the path of the request (e.g. &#x27;/&#x27;, &#x27;/index.html&#x27;)
+     *
+     * @return string
+     */
+    public function getPath();
+
+    /**
+     * Set the path of the request (e.g. &#x27;/&#x27;, &#x27;/index.html&#x27;)
+     *
+     * @param string|array $path Path to set or array of segments to implode
+     *
+     * @return self
+     */
+    public function setPath($path);
+
+    /**
+     * Get the port that the request will be sent on if it has been set
+     *
+     * @return int|null
+     */
+    public function getPort();
+
+    /**
+     * Set the port that the request will be sent on
+     *
+     * @param int $port Port number to set
+     *
+     * @return self
+     */
+    public function setPort($port);
+
+    /**
+     * Get the username to pass in the URL if set
+     *
+     * @return string|null
+     */
+    public function getUsername();
+
+    /**
+     * Set HTTP authorization parameters
+     *
+     * @param string|bool $user     User name or false disable authentication
+     * @param string      $password Password
+     * @param string      $scheme   Authentication scheme to use (CURLAUTH_BASIC, CURLAUTH_DIGEST, etc)
+     *
+     * @return self
+     * @link http://www.ietf.org/rfc/rfc2617.txt
+     * @link http://php.net/manual/en/function.curl-setopt.php See the available options for CURLOPT_HTTPAUTH
+     * @throws RequestException
+     */
+    public function setAuth($user, $password = &#x27;&#x27;, $scheme = &#x27;Basic&#x27;);
+
+    /**
+     * Get the password to pass in the URL if set
+     *
+     * @return string|null
+     */
+    public function getPassword();
+
+    /**
+     * Get the resource part of the the request, including the path, query string, and fragment
+     *
+     * @return string
+     */
+    public function getResource();
+
+    /**
+     * Get the full URL of the request (e.g. &#x27;http://www.guzzle-project.com/&#x27;)
+     *
+     * @param bool $asObject Set to TRUE to retrieve the URL as a clone of the URL object owned by the request.
+     *
+     * @return string|Url
+     */
+    public function getUrl($asObject = false);
+
+    /**
+     * Get the state of the request. One of &#x27;complete&#x27;, &#x27;transfer&#x27;, &#x27;new&#x27;, &#x27;error&#x27;
+     *
+     * @return string
+     */
+    public function getState();
+
+    /**
+     * Set the state of the request
+     *
+     * @param string $state   State of the request (&#x27;complete&#x27;, &#x27;transfer&#x27;, &#x27;new&#x27;, &#x27;error&#x27;)
+     * @param array  $context Contextual information about the state change
+     *
+     * @return self
+     */
+    public function setState($state, array $context = array());
+
+    /**
+     * Get the cURL options that will be applied when the cURL handle is created
+     *
+     * @return Collection
+     */
+    public function getCurlOptions();
+
+    /**
+     * The start of a response has been received for a request and the request is still in progress
+     *
+     * @param Response $response Response that has been received so far
+     *
+     * @return self
+     */
+    public function startResponse(Response $response);
+
+    /**
+     * Set the EntityBody that will hold a successful response message&#x27;s entity body.
+     *
+     * This method should be invoked when you need to send the response&#x27;s entity body somewhere other than the normal
+     * php://temp buffer. For example, you can send the entity body to a socket, file, or some other custom stream.
+     *
+     * @param EntityBodyInterface|string|resource $body Response body object. Pass a string to attempt to store the
+     *                                                  response body in a local file.
+     * @return Request
+     */
+    public function setResponseBody($body);
+
+    /**
+     * Get the EntityBody that will hold the resulting response message&#x27;s entity body. This response body will only
+     * be used for successful responses. Intermediate responses (e.g. redirects) will not use the targeted response
+     * body.
+     *
+     * @return EntityBodyInterface
+     */
+    public function getResponseBody();
+
+    /**
+     * Manually set a response for the request.
+     *
+     * This method is useful for specifying a mock response for the request or setting the response using a cache.
+     * Manually setting a response will bypass the actual sending of a request.
+     *
+     * @param Response $response Response object to set
+     * @param bool     $queued   Set to TRUE to keep the request in a state of not having been sent, but queue the
+     *                           response for send()
+     *
+     * @return self Returns a reference to the object.
+     */
+    public function setResponse(Response $response, $queued = false);
+
+    /**
+     * Get an array of Cookies
+     *
+     * @return array
+     */
+    public function getCookies();
+
+    /**
+     * Get a cookie value by name
+     *
+     * @param string $name Cookie to retrieve
+     *
+     * @return null|string
+     */
+    public function getCookie($name);
+
+    /**
+     * Add a Cookie value by name to the Cookie header
+     *
+     * @param string $name  Name of the cookie to add
+     * @param string $value Value to set
+     *
+     * @return self
+     */
+    public function addCookie($name, $value);
+
+    /**
+     * Remove a specific cookie value by name
+     *
+     * @param string $name Cookie to remove by name
+     *
+     * @return self
+     */
+    public function removeCookie($name);
+
+    /**
+     * Returns whether or not the request can be cached based on the request headers
+     *
+     * @return bool
+     */
+    public function canCache();
+
+    /**
+     * Set whether or not the request is a request that resulted from a redirect
+     *
+     * @param bool $isRedirect
+     *
+     * @return self
+     */
+    public function setIsRedirect($isRedirect);
+
+    /**
+     * Check whether or not the request is a request that resulted from a redirect
+     *
+     * @return bool
+     */
+    public function isRedirect();
+}
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
