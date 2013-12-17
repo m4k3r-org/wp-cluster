@@ -79,6 +79,8 @@ namespace UsabilityDynamics\Veneer {
         add_filter( 'pre_option_siteurl', array( get_class(), 'pre_option_siteurl' ) );
 
         // Support Vendor paths. Disabled because references get_blogaddress_by_id() too early.
+        add_filter( 'update_attached_file', array( &$this, 'update_attached_file' ), 50, 2 );
+        add_filter( 'get_the_guid', array( &$this, 'get_the_guid' ), 50 );
         add_filter( 'plugins_url', array( &$this, 'plugins_url' ), 50, 3 );
         add_filter( 'content_url', array( &$this, 'replace_network_url' ), 50, 2 );
         add_filter( 'user_admin_url', array( &$this, 'replace_network_url' ), 50, 2 );
@@ -113,6 +115,45 @@ namespace UsabilityDynamics\Veneer {
           'get_template_directory_uri' => get_template_directory_uri(),
         ), true ) . '</pre>' );
         */
+
+      }
+
+      /**
+       * Regenerate GUID
+       *
+       * For k-boom support, the only thing that uses GUID.
+       *
+       * @param $file
+       * @param $attachment_id
+       *
+       * @return mixed
+       */
+      public static function update_attached_file(  $file, $attachment_id ) {
+        global $wpdb;
+
+        // Update DB Entry with properly generated GUID.
+        $wpdb->update( $wpdb->posts, array( "guid" => get_the_guid( $attachment_id ) ), array( 'ID' => $attachment_id ) );
+
+        return $file;
+
+      }
+
+      /**
+       * Remove system path in GUIDs.
+       *
+       * To fix K-Boom issue, if too esoteric, remove.
+       *
+       * @param $url
+       * @return mixed
+       */
+      public static function get_the_guid( $url ) {
+        global $veneer;
+
+        if( defined( 'WP_SYSTEM_DIRECTORY' ) ) {
+          return str_replace( '/' . WP_SYSTEM_DIRECTORY, '', $url );
+        }
+
+        return $url;
 
       }
 
