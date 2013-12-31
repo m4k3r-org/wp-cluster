@@ -399,6 +399,8 @@ namespace UsabilityDynamics\Veneer {
       /**
        * Add Veneer Toolbar
        *
+       * @todo Add some sort of vidual for Bootstrap::$version and hostname.
+       *
        * @method veneer_toolbar
        * @for Boostrap
        */
