@@ -108,6 +108,12 @@ namespace UsabilityDynamics\Veneer {
       public $theme = null;
 
       /**
+       *
+       * @var null
+       */
+      public $original_host = null;
+
+      /**
        * Constructor.
        *
        * UsabilityDynamics components should be avialable.
@@ -163,6 +169,7 @@ namespace UsabilityDynamics\Veneer {
         $this->is_main_site     = is_main_site();
         $this->is_multisite     = is_multisite();
         $this->is_main_network  = is_main_network();
+        $this->original_host    = $_SERVER[ 'HTTP_HOST' ];
 
         if( !$this->is_valid ) {
           wp_die( '<h1>Veneer Network Error</h1><p>Your request is for an invalid domain.</p>' );
@@ -426,7 +433,7 @@ namespace UsabilityDynamics\Veneer {
           'parent' => 'veneer',
           'id'   => 'veneer-cdn',
           'meta' => array(),
-          'title' => 'CDN',
+          'title' => 'Media',
           'href' => network_admin_url( 'admin.php?page=veneer#panel=cdn' )
         ));
 
@@ -442,16 +449,32 @@ namespace UsabilityDynamics\Veneer {
           'parent' => 'veneer',
           'id'   => 'veneer-varnish',
           'meta' => array(),
-          'title' => 'Varnish',
+          'title' => 'Speed',
           'href' => network_admin_url( 'admin.php?page=veneer#panel=varnish' )
         ));
 
         $wp_admin_bar->add_menu( array(
           'parent' => 'veneer',
-          'id'   => 'veneer-jobs',
+          'id'   => 'veneer-api',
           'meta' => array(),
-          'title' => 'Jobs',
-          'href' => network_admin_url( 'admin.php?page=veneer#panel=jobs' )
+          'title' => 'API',
+          'href' => network_admin_url( 'admin.php?page=veneer#panel=api' )
+        ));
+
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'veneer',
+          'id'   => 'veneer-dns',
+          'meta' => array(),
+          'title' => 'DNS',
+          'href' => network_admin_url( 'admin.php?page=veneer#panel=dns' )
+        ));
+
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'veneer',
+          'id'   => 'veneer-support',
+          'meta' => array(),
+          'title' => 'Support',
+          'href' => network_admin_url( 'admin.php?page=veneer#panel=support' )
         ));
 
       }
@@ -580,6 +603,17 @@ namespace UsabilityDynamics\Veneer {
        * @since 0.1.1
        */
       public static function get( $key, $default = null ) {
+
+        // @temp
+        if( $key === 'cdn.subdomain' ) {
+          return 'media';
+        }
+
+        // @temp
+        if( $key === 'cdn.active' ) {
+         return false;
+        }
+
         return self::$instance->_settings ? self::$instance->_settings->get( $key, $default ) : null;
       }
 

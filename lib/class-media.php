@@ -13,6 +13,8 @@ namespace UsabilityDynamics\Veneer {
     /**
      * Class Media
      *
+     * @todo When CDN is disabled some images seem to use the network's domain as the path.
+     *
      * @module Veneer
      */
     class Media {
@@ -56,7 +58,7 @@ namespace UsabilityDynamics\Veneer {
         add_filter( 'upload_dir', array( &$this, 'upload_dir' ) );
 
         // Get media/upload vales. (wp_upload_dir() will generate directories).
-        $wp_upload_dir = wp_upload_dir();
+        $wp_upload_dir    = wp_upload_dir();
         $this->directory = BLOGUPLOADDIR;
         $this->path      = $wp_upload_dir[ 'path' ];
         $this->url       = $wp_upload_dir[ 'url' ];
@@ -83,7 +85,7 @@ namespace UsabilityDynamics\Veneer {
 
         $_instance = Bootstrap::get_instance();
 
-        // If Currently on Network Main Site.
+        // If Currently on Network Main Site. (Which is unlikely).
         if( is_main_site() ) {
           $settings[ 'path' ]    = str_replace( '/uploads', '/' . UPLOADBLOGSDIR . '/' . $_instance->domain, $settings[ 'path' ] );
           $settings[ 'basedir' ] = str_replace( '/uploads', '/' . UPLOADBLOGSDIR . '/' . $_instance->domain, $settings[ 'basedir' ] );
@@ -98,15 +100,15 @@ namespace UsabilityDynamics\Veneer {
         }
 
         // CDN Media Redirection.
-        if( $veneer->cdn ) {
+        if( $veneer->get( 'cdn.active' ) ) {
 
           // Strip Media from Pathname.
           $settings[ 'baseurl' ] = str_replace( '/media', '', $settings[ 'baseurl' ] );
           $settings[ 'url' ] = str_replace( '/media', '', $settings[ 'url' ] );
 
           // Add media Subdomain. @todo use $veneer->cdn[ 'subdomain' ]
-          $settings[ 'baseurl' ] = str_replace( '://', '://media.', $settings[ 'baseurl' ] );
-          $settings[ 'url' ] = str_replace( '://', '://media.', $settings[ 'url' ] );
+          $settings[ 'baseurl' ] = str_replace( '://', '://' . $veneer->get( 'cdn.subdomain' ) . '.', $settings[ 'baseurl' ] );
+          $settings[ 'url' ] = str_replace( '://', '://' . $veneer->get( 'cdn.subdomain' ) . '.', $settings[ 'url' ] );
 
         }
 
