@@ -3,7 +3,7 @@
  * Domain Mapping
  *
  *
- * @version 0.1.5
+ * @version 0.1.6
  * @module Veneer
  * @author potanin@UD
  */
@@ -175,27 +175,17 @@ namespace UsabilityDynamics\Veneer {
       public static function plugins_url( $url, $path, $plugin ) {
         global $blog_id, $veneer;
 
-        $url = str_replace( $veneer->network_domain, $veneer->domain, $url );
-
+        // Fix Vendor Module UTLs.
         if( strpos( $plugin, '/vendor' ) ) {
 
-          // Being called too early?
-          if( !function_exists( 'get_blogaddress_by_id' ) ) {
-            wp_die('<h1>Network Error</h1><p>The UsabilityDynamics\Veneer\Mapping:plugin_url() method is called prior to get_blogaddress_by_id() being available.</p>');
-          }
+          // Remove Base Directory Path complete.
+          $url = str_replace( trailingslashit( WP_BASE_DIR ), '/', $url );
 
-          if( function_exists( 'get_blogaddress_by_id' ) ) {            
-            $_home_url = untrailingslashit( get_blogaddress_by_id( $blog_id ) );
-          } else {
-            $_home_url = WP_SITEURL;            
-          }
+          // Replace Network URLs with Local URLs.
+          $url = str_replace( $veneer->network_domain, $veneer->domain, $url );
 
-          // Strip filename
-          $plugin = dirname( $plugin );
-
-          $plugin = str_replace( untrailingslashit( WP_BASE_DIR ), $_home_url, $plugin );
-
-          return $plugin;
+          // Replace plugin directory name "e.g. "modules" with nothing
+          $url = str_replace( trailingslashit( basename( WP_PLUGIN_DIR ) ), '', $url );
 
         }
 
