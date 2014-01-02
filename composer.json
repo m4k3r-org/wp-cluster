@@ -24,15 +24,15 @@
     }
   ],
   "require": {
-    "usabilitydynamics/lib-api": "*",
-    "usabilitydynamics/lib-models": "*",
-    "usabilitydynamics/lib-settings": "*",
-    "usabilitydynamics/lib-saas": "*",
-    "usabilitydynamics/lib-ui": "*",
-    "usabilitydynamics/lib-utility": "*",
-    "usabilitydynamics/lib-cdn": "*",
-    "usabilitydynamics/lib-asset": "*",
-    "usabilitydynamics/lib-wp-xmlrpc": "*"
+    "usabilitydynamics/lib-settings": "master",
+    "usabilitydynamics/lib-ui": "master",
+    "usabilitydynamics/lib-utility": "master",
+    "usabilitydynamics/lib-api": "master",
+    "usabilitydynamics/lib-models": "master",
+    "usabilitydynamics/lib-saas": "master",
+    "usabilitydynamics/lib-cdn": "master",
+    "usabilitydynamics/lib-asset": "master",
+    "usabilitydynamics/lib-wp-xmlrpc": "master"
   },
   "autoload": {
     "classmap": [
