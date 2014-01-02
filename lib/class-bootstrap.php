@@ -35,7 +35,7 @@ namespace UsabilityDynamics\Cluster {
        * @property text_domain
        * @var string
        */
-      public static $text_domain = 'cluster';
+      public static $text_domain = 'wp-cluster';
 
       /**
        * Singleton Instance Reference.
@@ -194,7 +194,7 @@ namespace UsabilityDynamics\Cluster {
         // Initialize all else.
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
         add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
-        add_action( 'wp_before_admin_bar_render', array( $this, 'cluster_toolbar' ), 10 );
+
         add_action( 'init', array( $this, 'init' ) );
         add_action( 'admin_init', array( $this, 'admin_init' ) );
         add_action( 'admin_menu', array( $this, 'admin_menu' ), 500 );
@@ -291,6 +291,7 @@ namespace UsabilityDynamics\Cluster {
       /**
        * Network Administration Menu.
        *
+       * network_admin_url( 'cluster-icon.png' )
        */
       public function network_admin_menu() {
 
@@ -299,12 +300,12 @@ namespace UsabilityDynamics\Cluster {
         // add_action('network_admin_notices', array( &$this, 'admin_notices' ));
 
         // Add Network Administration.
-        add_menu_page( __( 'Cluster', self::$text_domain ), __( 'Cluster', self::$text_domain ), 'manage_network', 'cluster', function() {
-
-          // die( network_admin_url( 'cluster-icon.png' ) );
-
+        add_menu_page( __( 'Cluster', self::$text_domain ), __( 'Cluster', self::$text_domain ), 'manage_network', 'cluster-dashboard', function() {
           include( dirname( __DIR__ ) . '/views/network-settings.php' );
+        });
 
+        add_submenu_page( 'cluster-dashboard', __( 'DNS', self::$text_domain ), __( 'DNS', self::$text_domain ), 'manage_network', 'cluster-dns', function() {
+          include( dirname( __DIR__ ) . '/views/-settings.php' );
         });
 
       }
@@ -400,82 +401,6 @@ namespace UsabilityDynamics\Cluster {
           'title'  => __( 'Settings', self::$text_domain ),
           'href'   => network_admin_url( 'settings.php' ),
         ) );
-
-      }
-
-      /**
-       * Add Cluster Toolbar
-       *
-       * @todo Add some sort of vidual for Bootstrap::$version and hostname.
-       *
-       * @method cluster_toolbar
-       * @for Boostrap
-       */
-      public function cluster_toolbar() {
-        global $wp_admin_bar, $cluster;
-
-        $wp_admin_bar->add_menu( array(
-            'id'   => 'cluster',
-            'meta'   => array(
-              'html'     => '<div class="cluster-toolbar-info"></div>',
-              'target'   => '',
-              'onclick'  => '',
-              'title'    => 'Cluster',
-              'tabindex' => 10,
-              'class' => 'cluster-toolbar'
-            ),
-            'title' => 'Cluster',
-            'href' => network_admin_url( 'admin.php?page=cluster' )
-          )
-        );
-
-        $wp_admin_bar->add_menu( array(
-          'parent' => 'cluster',
-          'id'   => 'cluster-cdn',
-          'meta' => array(),
-          'title' => 'Media',
-          'href' => network_admin_url( 'admin.php?page=cluster#panel=cdn' )
-        ));
-
-        $wp_admin_bar->add_menu( array(
-          'parent' => 'cluster',
-          'id'   => 'cluster-search',
-          'meta' => array(),
-          'title' => 'Search',
-          'href' => network_admin_url( 'admin.php?page=cluster#panel=search' )
-        ));
-
-        $wp_admin_bar->add_menu( array(
-          'parent' => 'cluster',
-          'id'   => 'cluster-varnish',
-          'meta' => array(),
-          'title' => 'Speed',
-          'href' => network_admin_url( 'admin.php?page=cluster#panel=varnish' )
-        ));
-
-        $wp_admin_bar->add_menu( array(
-          'parent' => 'cluster',
-          'id'   => 'cluster-api',
-          'meta' => array(),
-          'title' => 'API',
-          'href' => network_admin_url( 'admin.php?page=cluster#panel=api' )
-        ));
-
-        $wp_admin_bar->add_menu( array(
-          'parent' => 'cluster',
-          'id'   => 'cluster-dns',
-          'meta' => array(),
-          'title' => 'DNS',
-          'href' => network_admin_url( 'admin.php?page=cluster#panel=dns' )
-        ));
-
-        $wp_admin_bar->add_menu( array(
-          'parent' => 'cluster',
-          'id'   => 'cluster-support',
-          'meta' => array(),
-          'title' => 'Support',
-          'href' => network_admin_url( 'admin.php?page=cluster#panel=support' )
-        ));
 
       }
 
