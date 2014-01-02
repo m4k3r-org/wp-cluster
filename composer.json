@@ -3,7 +3,7 @@
   "type": "library",
   "description": "Veneer network",
   "version": "0.4.2",
-  "homepage": "https://github.com/UsabilityDynamics/wp-cluster",
+  "homepage": "https://github.com/usabilitydynamics/wp-cluster",
   "keywords": [
     "wordpress",
     "multisite",
@@ -17,16 +17,22 @@
       "homepage": "http://usabilitydynamics.com"
     }
   ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://repository.usabilitydynamics.com"
+    }
+  ],
   "require": {
-    "UsabilityDynamics/api": "*",
-    "UsabilityDynamics/models": "*",
-    "UsabilityDynamics/settings": "*",
-    "UsabilityDynamics/saas": "*",
-    "UsabilityDynamics/ui": "*",
-    "UsabilityDynamics/utility": "*",
-    "UsabilityDynamics/cdn": "*",
-    "UsabilityDynamics/asset": "*",
-    "UsabilityDynamics/wp-xmlrpc": "*"
+    "usabilitydynamics/lib-api": "*",
+    "usabilitydynamics/lib-models": "*",
+    "usabilitydynamics/lib-settings": "*",
+    "usabilitydynamics/lib-saas": "*",
+    "usabilitydynamics/lib-ui": "*",
+    "usabilitydynamics/lib-utility": "*",
+    "usabilitydynamics/lib-cdn": "*",
+    "usabilitydynamics/lib-asset": "*",
+    "usabilitydynamics/lib-wp-xmlrpc": "*"
   },
   "autoload": {
     "classmap": [
