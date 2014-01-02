@@ -1,7 +1,6 @@
 {
   "name": "usabilitydynamics/wp-cluster",
-  "type": "library",
-  "description": "Veneer network",
+  "description": "WP-Cluster.",
   "version": "0.4.2",
   "homepage": "https://github.com/usabilitydynamics/wp-cluster",
   "keywords": [
@@ -38,21 +37,14 @@
     "classmap": [
       "lib/class-api.php",
       "lib/class-bootstrap.php",
-      "lib/class-cache.php",
-      "lib/class-dashboard.php",
       "lib/class-debug.php",
       "lib/class-developer.php",
-      "lib/class-image.php",
       "lib/class-locale.php",
       "lib/class-log.php",
-      "lib/class-media.php",
       "lib/class-mapping.php",
-      "lib/class-security.php",
       "lib/class-settings.php",
       "lib/class-theme.php",
-      "lib/class-utility.php",
-      "lib/class-varnish.php",
-      "lib/class-views.php"
+      "lib/class-utility.php"
     ]
   }
 }
