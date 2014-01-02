@@ -2,17 +2,17 @@
 /**
  * Log Access Controller
  *
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Log' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Log' ) ) {
 
     /**
      * Class Log
      *
-     * @module Veneer
+     * @module Cluster
      */
     class Log {
 

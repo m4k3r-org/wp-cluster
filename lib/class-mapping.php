@@ -4,17 +4,17 @@
  *
  *
  * @version 0.1.6
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Mapping' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Mapping' ) ) {
 
     /**
      * Class Locale
      *
-     * @module Veneer
+     * @module Cluster
      */
     class Mapping {
 
@@ -62,10 +62,10 @@ namespace UsabilityDynamics\Veneer {
        * @for Locale
        */
       public function __construct() {
-        global $veneer;
+        global $cluster;
 
-        if( !$veneer ) {
-          wp_die( '<h1>Network Error</h1><p>The $veneer variable is not configured.</p>' );
+        if( !$cluster ) {
+          wp_die( '<h1>Network Error</h1><p>The $cluster variable is not configured.</p>' );
         }
 
         if( !defined( 'WP_BASE_DOMAIN' ) ) {
@@ -88,13 +88,13 @@ namespace UsabilityDynamics\Veneer {
         // URLs
         self::$home_url          = get_home_url();
         self::$site_url          = get_site_url();
-        self::$admin_url         = get_admin_url();       // http://drop.veneer.io/manage/
+        self::$admin_url         = get_admin_url();       // http://drop.cluster.io/manage/
         self::$includes_url      = includes_url();
         self::$content_url       = content_url();
         self::$plugins_url       = plugins_url();
         self::$network_site_url  = network_site_url();
         self::$network_home_url  = network_home_url();
-        self::$network_admin_url = network_admin_url();   // http://drop.veneer.io/manage/network/
+        self::$network_admin_url = network_admin_url();   // http://drop.cluster.io/manage/network/
         self::$self_admin_url    = self_admin_url();
         self::$user_admin_url    = user_admin_url();
 
@@ -147,7 +147,7 @@ namespace UsabilityDynamics\Veneer {
        * @return mixed
        */
       public static function get_the_guid( $url ) {
-        global $veneer;
+        global $cluster;
 
         if( defined( 'WP_SYSTEM_DIRECTORY' ) ) {
           return str_replace( '/' . WP_SYSTEM_DIRECTORY, '', $url );
@@ -158,8 +158,8 @@ namespace UsabilityDynamics\Veneer {
       }
 
       public static function replace_network_url( $url, $path ) {
-        global $veneer;
-        return str_replace( $veneer->network_domain, $veneer->domain, $url );
+        global $cluster;
+        return str_replace( $cluster->network_domain, $cluster->domain, $url );
       }
 
 
@@ -173,7 +173,7 @@ namespace UsabilityDynamics\Veneer {
        * @return mixed
        */
       public static function plugins_url( $url, $path, $plugin ) {
-        global $blog_id, $veneer;
+        global $blog_id, $cluster;
 
         // Fix Vendor Module UTLs.
         if( strpos( $plugin, '/vendor' ) ) {
@@ -182,7 +182,7 @@ namespace UsabilityDynamics\Veneer {
           $url = str_replace( trailingslashit( WP_BASE_DIR ), '/', $url );
 
           // Replace Network URLs with Local URLs.
-          $url = str_replace( $veneer->network_domain, $veneer->domain, $url );
+          $url = str_replace( $cluster->network_domain, $cluster->domain, $url );
 
           // Replace plugin directory name "e.g. "modules" with nothing
           $url = str_replace( trailingslashit( basename( WP_PLUGIN_DIR ) ), '', $url );

@@ -96,8 +96,8 @@ module.exports = function build( grunt ) {
           }
         },
         files: {
-          'scripts/veneer.js': [
-            'scripts/src/veneer.js'
+          'scripts/cluster.js': [
+            'scripts/src/cluster.js'
           ]
         }
       }

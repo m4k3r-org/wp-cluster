@@ -2,17 +2,17 @@
 /**
  * Locale
  *
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Locale' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Locale' ) ) {
 
     /**
      * Class Locale
      *
-     * @module Veneer
+     * @module Cluster
      */
     class Locale {
 

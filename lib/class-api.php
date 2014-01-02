@@ -3,17 +3,17 @@
  * API Access Controller
  *
  * @version 0.1.5
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\API' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\API' ) ) {
 
     /**
      * Class API
      *
-     * @module Veneer
+     * @module Cluster
      */
     class API {
 

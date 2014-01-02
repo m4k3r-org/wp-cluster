@@ -2,17 +2,17 @@
 /**
  * Security Access Controller
  *
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Security' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Security' ) ) {
 
     /**
      * Class Security
      *
-     * @module Veneer
+     * @module Cluster
      */
     class Security {
 

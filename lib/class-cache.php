@@ -2,19 +2,19 @@
 /**
  * Cache Controller
  *
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Cache' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Cache' ) ) {
 
     /**
      * Class Cache
      *
      * Based on http://wordpress.org/plugins/memcached/.
      *
-     * @module Veneer
+     * @module Cluster
      */
     class Cache {
 

@@ -28,9 +28,9 @@ if( $_GET[ 'test' ] == 'create-screenshots' ) {
     "type"   => 'site-screenshot'
   ));
 
-  // Push screenshot request for drop.veneer.io
+  // Push screenshot request for drop.cluster.io
   $_job->push( array(
-    "url" => "drop.veneer.io",
+    "url" => "drop.cluster.io",
     "viewport" => "1280x1024"
   ));
 
@@ -89,7 +89,7 @@ if( $_GET[ 'test' ] == 'create-job' ) {
 
   <?php /* $wp_list_table->views(); */ ?>
 
-  <form id="jobs-filter" action="<?php echo admin_url( 'tools.php?page=veneer-jobs' ); ?>" method="get">
+  <form id="jobs-filter" action="<?php echo admin_url( 'tools.php?page=cluster-jobs' ); ?>" method="get">
     <?php /* $wp_list_table->search_box( $post_type_object->labels->search_items, 'post' ); */ ?>
     <?php /* $wp_list_table->display(); */ ?>
   </form>

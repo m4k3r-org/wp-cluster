@@ -3,19 +3,19 @@
  * Media Access Controller
  *
  * @version 0.1.5
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Media' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Media' ) ) {
 
     /**
      * Class Media
      *
      * @todo When CDN is disabled some images seem to use the network's domain as the path.
      *
-     * @module Veneer
+     * @module Cluster
      */
     class Media {
 
@@ -45,14 +45,14 @@ namespace UsabilityDynamics\Veneer {
        * @for Media
        */
       public function __construct() {
-        global $veneer;
+        global $cluster;
 
         if( !defined( 'UPLOADBLOGSDIR' ) ) {
           wp_die( '<h1>Network Error</h1><p>Unable to instatiate media the UPLOADBLOGSDIR constant is not defined.</p>' );
         }
 
         // @todo Enable to replace media paths with subdomain path.
-        // $veneer->cdn = array( "subdomain" => "media" );
+        // $cluster->cdn = array( "subdomain" => "media" );
 
         // Primary image path/url override.
         add_filter( 'upload_dir', array( &$this, 'upload_dir' ) );
@@ -81,7 +81,7 @@ namespace UsabilityDynamics\Veneer {
        * @param $settings .error
        */
       public static function upload_dir( $settings ) {
-        global $veneer;
+        global $cluster;
 
         $_instance = Bootstrap::get_instance();
 
@@ -100,15 +100,15 @@ namespace UsabilityDynamics\Veneer {
         }
 
         // CDN Media Redirection.
-        if( $veneer->get( 'cdn.active' ) ) {
+        if( $cluster->get( 'cdn.active' ) ) {
 
           // Strip Media from Pathname.
           $settings[ 'baseurl' ] = str_replace( '/media', '', $settings[ 'baseurl' ] );
           $settings[ 'url' ] = str_replace( '/media', '', $settings[ 'url' ] );
 
-          // Add media Subdomain. @todo use $veneer->cdn[ 'subdomain' ]
-          $settings[ 'baseurl' ] = str_replace( '://', '://' . $veneer->get( 'cdn.subdomain' ) . '.', $settings[ 'baseurl' ] );
-          $settings[ 'url' ] = str_replace( '://', '://' . $veneer->get( 'cdn.subdomain' ) . '.', $settings[ 'url' ] );
+          // Add media Subdomain. @todo use $cluster->cdn[ 'subdomain' ]
+          $settings[ 'baseurl' ] = str_replace( '://', '://' . $cluster->get( 'cdn.subdomain' ) . '.', $settings[ 'baseurl' ] );
+          $settings[ 'url' ] = str_replace( '://', '://' . $cluster->get( 'cdn.subdomain' ) . '.', $settings[ 'url' ] );
 
         }
 

@@ -1,9 +1,9 @@
 {
     "project": {
-        "name": "usabilitydynamics/wp-veneer",
+        "name": "usabilitydynamics/wp-cluster",
         "description": "Veneer network",
         "version": "0.4.0",
-        "url": "https://github.com/UsabilityDynamics/wp-veneer"
+        "url": "https://github.com/UsabilityDynamics/wp-cluster"
     },
     "files": {},
     "modules": {},

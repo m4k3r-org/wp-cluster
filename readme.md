@@ -1,3 +1,5 @@
+This used to be wp-cluster but was renamed to wp-cluster and made private.
+
 ## Changelog
 
 ### 0.3.0
@@ -21,12 +23,12 @@
 
 ## Structure
 
-### Veneer\Loader
+### Cluster\Loader
 
-### Veneer\Core
+### Cluster\Core
 
-### Veneer\Developer
+### Cluster\Developer
 
-### Veneer\ResizeImage
+### Cluster\ResizeImage
 
 ## Deployment

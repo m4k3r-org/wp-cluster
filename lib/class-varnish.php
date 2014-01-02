@@ -2,19 +2,19 @@
 /**
  * Varnish Controller
  *
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Varnish' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Varnish' ) ) {
 
     /**
      * Class Varnish
      *
      * Source from http://wordpress.org/extend/plugins/varnish-http-purge/
      *
-     * @module Veneer
+     * @module Cluster
      */
     class Varnish {
 

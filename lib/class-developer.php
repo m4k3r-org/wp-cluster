@@ -8,14 +8,14 @@
  * Author URI: http://usabilitydynamics.com
  *
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Developer' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Developer' ) ) {
 
     /**
      * Class Developer
      *
-     * @package Veneer
+     * @package Cluster
      */
     class Developer {
 
@@ -30,7 +30,7 @@ namespace UsabilityDynamics\Veneer {
       function admin_menu() {
 
         if( current_user_can( 'manage_options' ) ) {
-          // add_options_page( 'Developer', 'Developer', 'manage_options', 'ud', array( 'Veneer\Developer', 'page_ud' ) );
+          // add_options_page( 'Developer', 'Developer', 'manage_options', 'ud', array( 'Cluster\Developer', 'page_ud' ) );
         }
 
       }

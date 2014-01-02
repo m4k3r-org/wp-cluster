@@ -2,17 +2,17 @@
 /**
  * Settings Access Controller
  *
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Settings' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Settings' ) ) {
 
     /**
      * Class Settings
      *
-     * @module Veneer
+     * @module Cluster
      */
     class Settings {
 
@@ -42,7 +42,7 @@ namespace UsabilityDynamics\Veneer {
        *
        * @param array|bool|string $data
        *
-       * @return \Exception|\Veneer\Exception
+       * @return \Exception|\Cluster\Exception
        */
       public static function add_content_type( $data = false ) {
 

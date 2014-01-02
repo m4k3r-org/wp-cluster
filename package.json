@@ -1,11 +1,11 @@
 {
-  "name": "wp-veneer",
+  "name": "wp-cluster",
   "version": "0.4.1",
-  "description": "wp-veneer plugin",
+  "description": "wp-cluster plugin",
   "private": true,
   "repository": {
     "type": "svn",
-    "url": "https://github.com/UsabilityDynamics/wp-veneer"
+    "url": "https://github.com/UsabilityDynamics/wp-cluster"
   },
   "engines": {
     "node": ">= 0.10.0"

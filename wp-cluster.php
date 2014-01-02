@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Veneer CMS
+ * Plugin Name: WP-Cluster
  * Plugin URI: http://usabilitydynamics.com/
  * Description: Application managing must-use plugins and obfuscation rewrites.
  * Version: 0.2.0
@@ -24,4 +24,4 @@
 include_once( __DIR__ . '/lib/class-bootstrap.php' );
 
 // Initialize.
-new UsabilityDynamics\Veneer\Bootstrap();
+new UsabilityDynamics\Cluster\Bootstrap();

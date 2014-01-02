@@ -2,17 +2,17 @@
 /**
  * Views Access Controller
  *
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Views' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Views' ) ) {
 
     /**
      * Class Views
      *
-     * @module Veneer
+     * @module Cluster
      */
     class Views {
 

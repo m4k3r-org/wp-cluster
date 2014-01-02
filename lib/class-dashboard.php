@@ -7,9 +7,9 @@
  *
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Dashboard' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Dashboard' ) ) {
 
     /**
      * Class Dashboard

@@ -1,9 +1,9 @@
 {
-  "name": "usabilitydynamics/wp-veneer",
+  "name": "usabilitydynamics/wp-cluster",
   "type": "library",
   "description": "Veneer network",
   "version": "0.4.2",
-  "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
+  "homepage": "https://github.com/UsabilityDynamics/wp-cluster",
   "keywords": [
     "wordpress",
     "multisite",
@@ -29,7 +29,7 @@
     "UsabilityDynamics/wp-xmlrpc": "*"
   },
   "autoload": {
-    "files": [
+    "classmap": [
       "lib/class-api.php",
       "lib/class-bootstrap.php",
       "lib/class-cache.php",

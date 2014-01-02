@@ -2,17 +2,17 @@
 /**
  * Theme Access Controller
  *
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Theme' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Theme' ) ) {
 
     /**
      * Class Theme
      *
-     * @module Veneer
+     * @module Cluster
      */
     class Theme {
 

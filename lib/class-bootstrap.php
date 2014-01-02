@@ -1,17 +1,17 @@
 <?php
 /**
- * UsabilityDynamics\Veneer Bootstrap
+ * UsabilityDynamics\Cluster Bootstrap
  *
  * @verison 0.4.1
  * @author potanin@UD
- * @namespace UsabilityDynamics\Veneer
+ * @namespace UsabilityDynamics\Cluster
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Bootstrap' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Bootstrap' ) ) {
 
     /**
-     * Bootstrap Veneer
+     * Bootstrap Cluster
      *
      * @class Bootstrap
      * @author potanin@UD
@@ -20,7 +20,7 @@ namespace UsabilityDynamics\Veneer {
     class Bootstrap {
 
       /**
-       * Veneer core version.
+       * Cluster core version.
        *
        * @static
        * @property $version
@@ -35,7 +35,7 @@ namespace UsabilityDynamics\Veneer {
        * @property text_domain
        * @var string
        */
-      public static $text_domain = 'veneer';
+      public static $text_domain = 'cluster';
 
       /**
        * Singleton Instance Reference.
@@ -124,7 +124,7 @@ namespace UsabilityDynamics\Veneer {
        * @method __construct
        */
       public function __construct() {
-        global $wpdb, $current_site, $current_blog, $veneer;
+        global $wpdb, $current_site, $current_blog, $cluster;
 
         // Return singleton instance
         if( self::$instance ) {
@@ -132,11 +132,11 @@ namespace UsabilityDynamics\Veneer {
         }
 
         if( !defined( 'MULTISITE' ) ) {
-          wp_die( '<h1>Veneer Fatal Error.</h1><p>MULTISITE constant is not defined.</p>' );
+          wp_die( '<h1>Cluster Fatal Error.</h1><p>MULTISITE constant is not defined.</p>' );
         }
 
         if( !defined( 'UPLOADBLOGSDIR' ) ) {
-          wp_die( '<h1>Veneer Fatal Error.</h1><p>UPLOADBLOGSDIR constant is not defined.</p>' );
+          wp_die( '<h1>Cluster Fatal Error.</h1><p>UPLOADBLOGSDIR constant is not defined.</p>' );
         }
 
         // Seek ./vendor/autoload.php and autoload
@@ -145,7 +145,7 @@ namespace UsabilityDynamics\Veneer {
         }
 
         // Save context reference.
-        $veneer = self::$instance = & $this;
+        $cluster = self::$instance = & $this;
 
         // Identify site being requested. This should be handled by sunrise.php.
         if( !$current_site || !$current_blog ) {
@@ -153,7 +153,7 @@ namespace UsabilityDynamics\Veneer {
         }
 
         if( !$current_site ) {
-          wp_die( '<h1>Veneer Fatal Error.</h1><p>Site not identified.</p>' );
+          wp_die( '<h1>Cluster Fatal Error.</h1><p>Site not identified.</p>' );
         }
 
         // Current site.
@@ -172,7 +172,7 @@ namespace UsabilityDynamics\Veneer {
         $this->original_host    = $_SERVER[ 'HTTP_HOST' ];
 
         if( !$this->is_valid ) {
-          wp_die( '<h1>Veneer Network Error</h1><p>Your request is for an invalid domain.</p>' );
+          wp_die( '<h1>Cluster Network Error</h1><p>Your request is for an invalid domain.</p>' );
         }
 
         // Fix MultiSite URLs
@@ -194,13 +194,13 @@ namespace UsabilityDynamics\Veneer {
         // Initialize all else.
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
         add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
-        add_action( 'wp_before_admin_bar_render', array( $this, 'veneer_toolbar' ), 10 );
+        add_action( 'wp_before_admin_bar_render', array( $this, 'cluster_toolbar' ), 10 );
         add_action( 'init', array( $this, 'init' ) );
         add_action( 'admin_init', array( $this, 'admin_init' ) );
         add_action( 'admin_menu', array( $this, 'admin_menu' ), 500 );
         add_action( 'template_redirect', array( $this, 'template_redirect' ) );
 
-        // Add Veneer Scripts & Styles.
+        // Add Cluster Scripts & Styles.
         add_action( 'admin_enqueue_scripts', array( get_class(), 'admin_enqueue_scripts' ), 20 );
 
         // Modify Core UI.
@@ -225,7 +225,7 @@ namespace UsabilityDynamics\Veneer {
       }
 
       public function admin_enqueue_scripts() {
-        wp_enqueue_style( 'veneer-app', home_url( '/vendor/usabilitydynamics/wp-veneer/styles/app.css' ), array(), self::$version );
+        wp_enqueue_style( 'cluster-app', home_url( '/vendor/usabilitydynamics/wp-cluster/styles/app.css' ), array(), self::$version );
       }
 
       /**
@@ -267,7 +267,7 @@ namespace UsabilityDynamics\Veneer {
           break;
 
           case 'thumbnail':
-            echo '<img src="" class="veneer-site-thumbnail"/>';
+            echo '<img src="" class="cluster-site-thumbnail"/>';
           break;
 
         }
@@ -281,8 +281,8 @@ namespace UsabilityDynamics\Veneer {
        */
       public function admin_menu() {
 
-        // Add Site Administration (Settings -> Veneer).
-        add_submenu_page( 'options-general.php', __( 'Veneer', self::$text_domain ), __( 'Veneer', self::$text_domain ), 'manage_network', 'veneer', function() {
+        // Add Site Administration (Settings -> Cluster).
+        add_submenu_page( 'options-general.php', __( 'Cluster', self::$text_domain ), __( 'Cluster', self::$text_domain ), 'manage_network', 'cluster', function() {
           include( dirname( __DIR__ ) . '/views/site-settings.php' );
         });
 
@@ -299,9 +299,9 @@ namespace UsabilityDynamics\Veneer {
         // add_action('network_admin_notices', array( &$this, 'admin_notices' ));
 
         // Add Network Administration.
-        add_menu_page( __( 'Veneer', self::$text_domain ), __( 'Veneer', self::$text_domain ), 'manage_network', 'veneer', function() {
+        add_menu_page( __( 'Cluster', self::$text_domain ), __( 'Cluster', self::$text_domain ), 'manage_network', 'cluster', function() {
 
-          // die( network_admin_url( 'veneer-icon.png' ) );
+          // die( network_admin_url( 'cluster-icon.png' ) );
 
           include( dirname( __DIR__ ) . '/views/network-settings.php' );
 
@@ -363,9 +363,9 @@ namespace UsabilityDynamics\Veneer {
       public function template_redirect() {
 
         if( !headers_sent() ) {
-          header( 'server: Veneer' );
-          header( 'x-Powered-by: Veneer ' . Bootstrap::$version );
-          header( 'x-Veneer-version:' . Bootstrap::$version );
+          header( 'server: Cluster' );
+          header( 'x-Powered-by: Cluster ' . Bootstrap::$version );
+          header( 'x-Cluster-version:' . Bootstrap::$version );
         }
 
       }
@@ -404,77 +404,77 @@ namespace UsabilityDynamics\Veneer {
       }
 
       /**
-       * Add Veneer Toolbar
+       * Add Cluster Toolbar
        *
        * @todo Add some sort of vidual for Bootstrap::$version and hostname.
        *
-       * @method veneer_toolbar
+       * @method cluster_toolbar
        * @for Boostrap
        */
-      public function veneer_toolbar() {
-        global $wp_admin_bar, $veneer;
+      public function cluster_toolbar() {
+        global $wp_admin_bar, $cluster;
 
         $wp_admin_bar->add_menu( array(
-            'id'   => 'veneer',
+            'id'   => 'cluster',
             'meta'   => array(
-              'html'     => '<div class="veneer-toolbar-info"></div>',
+              'html'     => '<div class="cluster-toolbar-info"></div>',
               'target'   => '',
               'onclick'  => '',
-              'title'    => 'Veneer',
+              'title'    => 'Cluster',
               'tabindex' => 10,
-              'class' => 'veneer-toolbar'
+              'class' => 'cluster-toolbar'
             ),
-            'title' => 'Veneer',
-            'href' => network_admin_url( 'admin.php?page=veneer' )
+            'title' => 'Cluster',
+            'href' => network_admin_url( 'admin.php?page=cluster' )
           )
         );
 
         $wp_admin_bar->add_menu( array(
-          'parent' => 'veneer',
-          'id'   => 'veneer-cdn',
+          'parent' => 'cluster',
+          'id'   => 'cluster-cdn',
           'meta' => array(),
           'title' => 'Media',
-          'href' => network_admin_url( 'admin.php?page=veneer#panel=cdn' )
+          'href' => network_admin_url( 'admin.php?page=cluster#panel=cdn' )
         ));
 
         $wp_admin_bar->add_menu( array(
-          'parent' => 'veneer',
-          'id'   => 'veneer-search',
+          'parent' => 'cluster',
+          'id'   => 'cluster-search',
           'meta' => array(),
           'title' => 'Search',
-          'href' => network_admin_url( 'admin.php?page=veneer#panel=search' )
+          'href' => network_admin_url( 'admin.php?page=cluster#panel=search' )
         ));
 
         $wp_admin_bar->add_menu( array(
-          'parent' => 'veneer',
-          'id'   => 'veneer-varnish',
+          'parent' => 'cluster',
+          'id'   => 'cluster-varnish',
           'meta' => array(),
           'title' => 'Speed',
-          'href' => network_admin_url( 'admin.php?page=veneer#panel=varnish' )
+          'href' => network_admin_url( 'admin.php?page=cluster#panel=varnish' )
         ));
 
         $wp_admin_bar->add_menu( array(
-          'parent' => 'veneer',
-          'id'   => 'veneer-api',
+          'parent' => 'cluster',
+          'id'   => 'cluster-api',
           'meta' => array(),
           'title' => 'API',
-          'href' => network_admin_url( 'admin.php?page=veneer#panel=api' )
+          'href' => network_admin_url( 'admin.php?page=cluster#panel=api' )
         ));
 
         $wp_admin_bar->add_menu( array(
-          'parent' => 'veneer',
-          'id'   => 'veneer-dns',
+          'parent' => 'cluster',
+          'id'   => 'cluster-dns',
           'meta' => array(),
           'title' => 'DNS',
-          'href' => network_admin_url( 'admin.php?page=veneer#panel=dns' )
+          'href' => network_admin_url( 'admin.php?page=cluster#panel=dns' )
         ));
 
         $wp_admin_bar->add_menu( array(
-          'parent' => 'veneer',
-          'id'   => 'veneer-support',
+          'parent' => 'cluster',
+          'id'   => 'cluster-support',
           'meta' => array(),
           'title' => 'Support',
-          'href' => network_admin_url( 'admin.php?page=veneer#panel=support' )
+          'href' => network_admin_url( 'admin.php?page=cluster#panel=support' )
         ));
 
       }
@@ -555,7 +555,7 @@ namespace UsabilityDynamics\Veneer {
        */
       public static function error_handler( $errno = null, $errstr = '', $errfile = null, $errline = null ) {
 
-        wp_die( 'Veneer error' );
+        wp_die( 'Cluster error' );
 
         // This error code is not included in error_reporting
         if( !( error_reporting() & $errno ) ) {
@@ -594,7 +594,7 @@ namespace UsabilityDynamics\Veneer {
        * Get Setting.
        *
        *    // Get Setting
-       *    Veneer::get( 'my_key' )
+       *    Cluster::get( 'my_key' )
        *
        * @method get
        *
@@ -623,7 +623,7 @@ namespace UsabilityDynamics\Veneer {
        * @usage
        *
        *    // Set Setting
-       *    Veneer::set( 'my_key', 'my-value' )
+       *    Cluster::set( 'my_key', 'my-value' )
        *
        * @method get
        * @for Flawless
@@ -636,20 +636,20 @@ namespace UsabilityDynamics\Veneer {
       }
 
       /**
-       * Get the Veneer Singleton
+       * Get the Cluster Singleton
        *
        * Concept based on the CodeIgniter get_instance() concept.
        *
        * @example
        *
-       *      var settings = Veneer::get_instance()->Settings;
-       *      var api = Veneer::$instance()->API;
+       *      var settings = Cluster::get_instance()->Settings;
+       *      var api = Cluster::$instance()->API;
        *
        * @static
        * @return object
        *
        * @method get_instance
-       * @for Veneer
+       * @for Cluster
        */
       public static function &get_instance() {
         return self::$instance;

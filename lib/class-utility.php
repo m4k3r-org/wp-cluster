@@ -2,17 +2,17 @@
 /**
  * Utility Access Controller
  *
- * @module Veneer
+ * @module Cluster
  * @author potanin@UD
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Utility' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Utility' ) ) {
 
     /**
      * Class Utility
      *
-     * @module Veneer
+     * @module Cluster
      */
     class Utility {
 

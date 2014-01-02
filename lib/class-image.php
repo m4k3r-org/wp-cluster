@@ -2,13 +2,13 @@
 /**
  * Legacy Class
  *
- * Migrated from VeneerCMS SVN
+ * Migrated from ClusterCMS SVN
  *
  *
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Veneer\Image' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\Image' ) ) {
 
     class Image {
 
