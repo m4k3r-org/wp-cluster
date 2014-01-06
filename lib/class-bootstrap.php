@@ -156,7 +156,8 @@ namespace UsabilityDynamics\Cluster {
           wp_die( '<h1>Cluster Fatal Error.</h1><p>Site not identified.</p>' );
         }
 
-        // Current site.
+        // Current Site.
+        $this->cluster_domain   = WP_BASE_DOMAIN;
         $this->organization     = $current_site->site_name;
         $this->site_id          = $wpdb->blogid;
         $this->network_id       = $wpdb->siteid;

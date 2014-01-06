@@ -72,11 +72,13 @@ namespace UsabilityDynamics\Cluster {
           wp_die( '<h1>Network Error</h1><p>The WP_BASE_DOMAIN constant is not defined.</p>' );
         }
 
-        // overrite "home" option / home_url()
-        add_filter( 'pre_option_home', array( get_class(), 'pre_option_home' ) );
+        //add_filter( 'pre_option_home', array( get_class(), 'pre_option_home' ) );
+        //add_filter( 'pre_option_siteurl', array( get_class(), 'pre_option_siteurl' ) );
 
-        // Overrite "site" option / site_url()
-        add_filter( 'pre_option_siteurl', array( get_class(), 'pre_option_siteurl' ) );
+        add_filter( 'admin_url', array( &$this, 'admin_url' ), 50, 3 );
+        add_filter( 'includes_url', array( &$this, 'includes_url' ), 50, 3 );
+        //add_filter( 'content_url', array( &$this, 'admin_url' ), 50, 2 );
+
 
         // Support Vendor paths. Disabled because references get_blogaddress_by_id() too early.
         add_filter( 'update_attached_file', array( &$this, 'update_attached_file' ), 50, 2 );
@@ -98,7 +100,7 @@ namespace UsabilityDynamics\Cluster {
         self::$self_admin_url    = self_admin_url();
         self::$user_admin_url    = user_admin_url();
 
-         /* @todo Move into a test page.
+        /*
         die( '<pre>' . print_r( array(
           'get_home_url' => get_home_url(),
           'get_site_url' => get_site_url(),
@@ -115,6 +117,58 @@ namespace UsabilityDynamics\Cluster {
           'get_template_directory_uri' => get_template_directory_uri(),
         ), true ) . '</pre>' );
         */
+
+      }
+
+      /**
+       * Includes URL
+       *
+       * http://sugarsociety.com/wp-includes -> http://sugarsociety.com/includes
+       * @param $url
+       * @return mixed
+       */
+      public static function includes_url( $url ) {
+        global $wp_cluster;
+
+        $url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->domain, $url );
+        $url = str_replace( 'wp-includes', 'includes', $url );
+        return $url;
+      }
+
+      /**
+       * Content URL
+       *
+       * http://edm.network.stuff.com -> http://sugarsociety.com
+       *
+       * @param $url
+       *
+       * @return mixed
+       */
+      public static function content_url( $url ) {
+        global $wp_cluster;
+
+        $url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->domain, $url );
+        return $url;
+
+      }
+
+      /**
+       * Site Admin URL
+       *
+       * get_admin_url && self_admin_url
+       *
+       * http://sugarsociety.com/wp-admin/ -> http://sugarsociety.com/manage
+       *
+       * @param $url
+       * @param $path
+       * @param $blog_id
+       *
+       * @return mixed
+       */
+      public static function admin_url( $url, $path, $blog_id ) {
+
+        $url = str_replace( 'wp-admin', 'manage', $url );
+        return $url;
 
       }
 
@@ -157,11 +211,21 @@ namespace UsabilityDynamics\Cluster {
 
       }
 
+      /**
+       * Network URL
+       *
+       * @param $url
+       * @param $path
+       *
+       * @return mixed
+       */
       public static function replace_network_url( $url, $path ) {
         global $wp_cluster;
+
+        $url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->network_domain, $url );
+
         return str_replace( $wp_cluster->network_domain, $wp_cluster->domain, $url );
       }
-
 
       /**
        * Fix Vendor Plugin Paths
@@ -175,8 +239,14 @@ namespace UsabilityDynamics\Cluster {
       public static function plugins_url( $url, $path, $plugin ) {
         global $wp_cluster;
 
+        $url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->network_domain, $url );
+
+
         // Fix Vendor Module UTLs.
         if( strpos( $plugin, '/vendor' ) ) {
+
+          // @todo Automate by removing the path preior to site's domain, e.g. http://sugarsociety.com/Users/potanin/Sites/sugarsociety.com/vendor/usabilitydynamics/wp-simplify
+          $url = str_replace( '/Users/potanin/Sites/', 'http://', $url );
 
           // Remove Base Directory Path complete.
           $url = str_replace( trailingslashit( WP_BASE_DIR ), '/', $url );
@@ -199,13 +269,9 @@ namespace UsabilityDynamics\Cluster {
        * @return string
        */
       public static function pre_option_siteurl() {
-        global $blog_id;
+        global $wp_cluster, $blog_id;
 
-        if( !function_exists( 'get_blogaddress_by_id' ) ) {
-          return 'http://' . WP_BASE_DOMAIN;
-        }
-
-        if( Bootstrap::get_instance()->site_id != $blog_id ) {
+        if( $wp_cluster->site_id != $blog_id ) {
 
           if( strpos( get_blogaddress_by_id( $blog_id ), 'http' ) === false ) {
             return ( is_ssl() ? 'https://' : 'http://' ) . untrailingslashit( get_blogaddress_by_id( $blog_id ) ) . ( defined( 'WP_SYSTEM_DIRECTORY' ) ? '/' . WP_SYSTEM_DIRECTORY : '' );

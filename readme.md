@@ -1,3 +1,7 @@
+Removed temporarily
+    "usabilitydynamics/wp-elastic": "master",
+
+
 This used to be wp-cluster but was renamed to wp-cluster and made private.
 
 ## Network Concepts
