@@ -30,7 +30,7 @@
     "usabilitydynamics/lib-models": "master",
     "usabilitydynamics/lib-saas": "master",
     "usabilitydynamics/lib-cdn": "master",
-    "usabilitydynamics/lib-asset": "master",
+    "usabilitydynamics/lib-require": "master",
     "usabilitydynamics/lib-wp-xmlrpc": "master"
   },
   "autoload": {
