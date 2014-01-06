@@ -101,14 +101,16 @@ namespace UsabilityDynamics\Cluster {
        * Current theme using 
        *
        * @public
-       * @static
        * @property $domain
        * @type {Object}
        */
       public $theme = null;
 
       /**
-       *
+       * Original host, when proxied.
+       * @public
+       * @property $original_host
+       * @type {String}
        * @var null
        */
       public $original_host = null;
@@ -126,7 +128,7 @@ namespace UsabilityDynamics\Cluster {
       public function __construct() {
         global $wpdb, $current_site, $current_blog, $wp_cluster;
 
-        // Return singleton instance
+        // Return Singleton Instance.
         if( self::$instance ) {
           return self::$instance;
         }
@@ -139,7 +141,7 @@ namespace UsabilityDynamics\Cluster {
           wp_die( '<h1>Cluster Fatal Error.</h1><p>UPLOADBLOGSDIR constant is not defined.</p>' );
         }
 
-        // Save context reference.
+        // Save Instance.
         $wp_cluster = self::$instance = &$this;
 
         // Seek ./vendor/autoload.php and autoload
