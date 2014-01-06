@@ -62,10 +62,10 @@ namespace UsabilityDynamics\Cluster {
        * @for Locale
        */
       public function __construct() {
-        global $cluster;
+        global $wp_cluster;
 
-        if( !$cluster ) {
-          wp_die( '<h1>Network Error</h1><p>The $cluster variable is not configured.</p>' );
+        if( !$wp_cluster ) {
+          wp_die( '<h1>Network Error</h1><p>The $wp_cluster variable is not configured.</p>' );
         }
 
         if( !defined( 'WP_BASE_DOMAIN' ) ) {
@@ -147,7 +147,7 @@ namespace UsabilityDynamics\Cluster {
        * @return mixed
        */
       public static function get_the_guid( $url ) {
-        global $cluster;
+        global $wp_cluster;
 
         if( defined( 'WP_SYSTEM_DIRECTORY' ) ) {
           return str_replace( '/' . WP_SYSTEM_DIRECTORY, '', $url );
@@ -158,8 +158,8 @@ namespace UsabilityDynamics\Cluster {
       }
 
       public static function replace_network_url( $url, $path ) {
-        global $cluster;
-        return str_replace( $cluster->network_domain, $cluster->domain, $url );
+        global $wp_cluster;
+        return str_replace( $wp_cluster->network_domain, $wp_cluster->domain, $url );
       }
 
 
@@ -173,7 +173,7 @@ namespace UsabilityDynamics\Cluster {
        * @return mixed
        */
       public static function plugins_url( $url, $path, $plugin ) {
-        global $blog_id, $cluster;
+        global $wp_cluster;
 
         // Fix Vendor Module UTLs.
         if( strpos( $plugin, '/vendor' ) ) {
@@ -182,7 +182,7 @@ namespace UsabilityDynamics\Cluster {
           $url = str_replace( trailingslashit( WP_BASE_DIR ), '/', $url );
 
           // Replace Network URLs with Local URLs.
-          $url = str_replace( $cluster->network_domain, $cluster->domain, $url );
+          $url = str_replace( $wp_cluster->network_domain, $wp_cluster->domain, $url );
 
           // Replace plugin directory name "e.g. "modules" with nothing
           $url = str_replace( trailingslashit( basename( WP_PLUGIN_DIR ) ), '', $url );

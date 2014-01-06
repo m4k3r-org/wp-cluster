@@ -124,7 +124,7 @@ namespace UsabilityDynamics\Cluster {
        * @method __construct
        */
       public function __construct() {
-        global $wpdb, $current_site, $current_blog, $cluster;
+        global $wpdb, $current_site, $current_blog, $wp_cluster;
 
         // Return singleton instance
         if( self::$instance ) {
@@ -139,13 +139,13 @@ namespace UsabilityDynamics\Cluster {
           wp_die( '<h1>Cluster Fatal Error.</h1><p>UPLOADBLOGSDIR constant is not defined.</p>' );
         }
 
+        // Save context reference.
+        $wp_cluster = self::$instance = &$this;
+
         // Seek ./vendor/autoload.php and autoload
         if( is_file( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' ) ) {
           include_once( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' );
         }
-
-        // Save context reference.
-        $cluster = self::$instance = & $this;
 
         // Identify site being requested. This should be handled by sunrise.php.
         if( !$current_site || !$current_blog ) {
@@ -181,7 +181,6 @@ namespace UsabilityDynamics\Cluster {
         // Initialize Controllers and Helpers
         $this->developer = new Developer();
         $this->settings  = new Settings();
-        $this->media     = new Media();
         $this->mapping   = new Mapping();
         $this->api       = new API();
         $this->theme     = wp_get_theme();
