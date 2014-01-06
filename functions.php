@@ -6,7 +6,7 @@
  * @author potanin@UD
  * @namespace Network
  */
-namespace EDM\Theme {
+namespace UsabilityDynamics\Theme {
 
   /**
    * Class Splash
@@ -27,7 +27,7 @@ namespace EDM\Theme {
      * @property version
      * @var string
      */
-    public static $version = '1.0.0';
+    public static $version = '0.1.0';
 
     /**
      * Textdomain String

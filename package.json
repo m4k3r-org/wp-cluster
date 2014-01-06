@@ -1,18 +1,16 @@
 {
-  "name": "network-splash",
-  "version": "2.0.0",
-  "description": "NightCulture Network Splash theme.",
+  "name": "wp-splash",
+  "version": "0.1.0",
+  "description": "WP Splash Theme.",
   "private": true,
-  "homepage": "http://nightculture.com",
   "repository": {
-    "type": "svn",
-    "url": "https://ud.svn.beanstalkapp.com/nightculture/themes/network-splash"
+    "type": "git",
+    "url": "https://github.com/UsabilityDynamics/wp-splash"
   },
   "engines": {
     "node": ">= 0.10.0"
   },
   "devDependencies": {
-    "grunt": "*",
     "grunt-contrib-symlink": "~0.2.0",
     "grunt-contrib-requirejs": "*",
     "grunt-contrib-yuidoc": "*",
