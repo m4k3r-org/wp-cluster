@@ -75,17 +75,22 @@ namespace UsabilityDynamics\Cluster {
         //add_filter( 'pre_option_home', array( get_class(), 'pre_option_home' ) );
         //add_filter( 'pre_option_siteurl', array( get_class(), 'pre_option_siteurl' ) );
 
-        add_filter( 'admin_url', array( &$this, 'admin_url' ), 50, 3 );
-        add_filter( 'includes_url', array( &$this, 'includes_url' ), 50, 3 );
-        //add_filter( 'content_url', array( &$this, 'admin_url' ), 50, 2 );
 
+        // Replace Network URL with Site URL.
+        add_filter( 'content_url', array( &$this, 'replace_network_url' ), 10, 2 );
+        add_filter( 'user_admin_url', array( &$this, 'replace_network_url' ), 10, 2 );
+        add_filter( 'home_url', array( &$this, 'replace_network_url' ), 10, 2 );
 
         // Support Vendor paths. Disabled because references get_blogaddress_by_id() too early.
         add_filter( 'update_attached_file', array( &$this, 'update_attached_file' ), 50, 2 );
         add_filter( 'get_the_guid', array( &$this, 'get_the_guid' ), 50 );
         add_filter( 'plugins_url', array( &$this, 'plugins_url' ), 50, 3 );
-        add_filter( 'content_url', array( &$this, 'replace_network_url' ), 50, 2 );
-        add_filter( 'user_admin_url', array( &$this, 'replace_network_url' ), 50, 2 );
+
+        add_filter( 'admin_url', array( &$this, 'admin_url' ), 100, 3 );
+        add_filter( 'includes_url', array( &$this, 'includes_url' ), 100, 3 );
+        add_filter( 'home_url', array( &$this, 'home_url' ), 100, 4 );
+        add_filter( 'login_url', array( &$this, 'login_url' ), 100, 2 );
+
 
         // URLs
         self::$home_url          = get_home_url();
@@ -100,8 +105,10 @@ namespace UsabilityDynamics\Cluster {
         self::$self_admin_url    = self_admin_url();
         self::$user_admin_url    = user_admin_url();
 
-        /*
+        return;
+
         die( '<pre>' . print_r( array(
+          'wp_login_url' => wp_login_url(),
           'get_home_url' => get_home_url(),
           'get_site_url' => get_site_url(),
           'get_admin_url' => get_admin_url(),
@@ -116,8 +123,39 @@ namespace UsabilityDynamics\Cluster {
           'get_stylesheet_directory_uri' => get_stylesheet_directory_uri(),
           'get_template_directory_uri' => get_template_directory_uri(),
         ), true ) . '</pre>' );
-        */
 
+      }
+
+      /**
+       *
+       * http://usabilitydynamics.com/wp-login.php -> http://usabilitydynamics.com/manage/login/
+       * @param $login_url
+       * @param $redirect
+       *
+       * @return mixed
+       */
+      public static function login_url( $login_url, $redirect ) {
+
+        $login_url = str_replace( 'wp-login.php', 'manage/login/', $login_url );
+
+        return $login_url;
+      }
+
+      /**
+       *
+       * http://usabilitydynamics.com/vendor/wordpress/core -> http://usabilitydynamics.com
+       * @param $url
+       * @param $path
+       * @param $orig_scheme
+       * @param $blog_id
+       *
+       * @return mixed
+       */
+      public static function home_url( $url, $path, $orig_scheme, $blog_id ) {
+
+        $url = str_replace( '/vendor/wordpress/core', '', $url );
+
+        return $url;
       }
 
       /**
@@ -167,7 +205,11 @@ namespace UsabilityDynamics\Cluster {
        */
       public static function admin_url( $url, $path, $blog_id ) {
 
-        $url = str_replace( 'wp-admin', 'manage', $url );
+        $url = str_replace( '/wp-admin/', '/manage/', $url );
+
+        // @todo replace with api.site.com
+        // $url = str_replace( 'wp-ajax.php', '/manage/', $url );
+
         return $url;
 
       }
