@@ -77,6 +77,7 @@ namespace UsabilityDynamics\Cluster {
 
         add_filter( 'admin_url', array( &$this, 'admin_url' ), 50, 3 );
         add_filter( 'includes_url', array( &$this, 'includes_url' ), 50, 3 );
+        add_filter( 'logout_url', array( &$this, 'logout_url' ), 50, 2 );
         //add_filter( 'content_url', array( &$this, 'admin_url' ), 50, 2 );
 
 
@@ -118,6 +119,18 @@ namespace UsabilityDynamics\Cluster {
         ), true ) . '</pre>' );
         */
 
+      }
+
+      /**
+       * Must Match manage/login exactly without trailing slash.
+       *
+       * @param $url
+       *
+       * @return mixed
+       */
+      public static function logout_url( $url ) {
+        $url = str_replace( 'wp-login.php', 'manage/login', $url );
+        return $url;
       }
 
       /**
