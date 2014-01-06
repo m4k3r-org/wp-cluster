@@ -75,13 +75,10 @@ namespace UsabilityDynamics\Cluster {
         //add_filter( 'pre_option_home', array( get_class(), 'pre_option_home' ) );
         //add_filter( 'pre_option_siteurl', array( get_class(), 'pre_option_siteurl' ) );
 
-<<<<<<< HEAD
         add_filter( 'admin_url', array( &$this, 'admin_url' ), 50, 3 );
         add_filter( 'includes_url', array( &$this, 'includes_url' ), 50, 3 );
         add_filter( 'logout_url', array( &$this, 'logout_url' ), 50, 2 );
         //add_filter( 'content_url', array( &$this, 'admin_url' ), 50, 2 );
-=======
->>>>>>> 8c08bfea4e45c1945b2df967ae6b4508bacef595
 
         // Replace Network URL with Site URL.
         add_filter( 'content_url', array( &$this, 'replace_network_url' ), 10, 2 );
@@ -115,26 +112,25 @@ namespace UsabilityDynamics\Cluster {
         return;
 
         die( '<pre>' . print_r( array(
-          'wp_login_url' => wp_login_url(),
-          'get_home_url' => get_home_url(),
-          'get_site_url' => get_site_url(),
-          'get_admin_url' => get_admin_url(),
-          'includes_url' => includes_url(),
-          'content_url' => content_url(),
-          'plugins_url' => plugins_url(),
-          'network_site_url' => network_site_url(),
-          'network_home_url' => network_home_url(),
-          'network_admin_url' => network_admin_url(),
-          'self_admin_url' => self_admin_url(),
-          'user_admin_url' => user_admin_url(),
-          'get_stylesheet_directory_uri' => get_stylesheet_directory_uri(),
-          'get_template_directory_uri' => get_template_directory_uri(),
-        ), true ) . '</pre>' );
+            'wp_login_url' => wp_login_url(),
+            'get_home_url' => get_home_url(),
+            'get_site_url' => get_site_url(),
+            'get_admin_url' => get_admin_url(),
+            'includes_url' => includes_url(),
+            'content_url' => content_url(),
+            'plugins_url' => plugins_url(),
+            'network_site_url' => network_site_url(),
+            'network_home_url' => network_home_url(),
+            'network_admin_url' => network_admin_url(),
+            'self_admin_url' => self_admin_url(),
+            'user_admin_url' => user_admin_url(),
+            'get_stylesheet_directory_uri' => get_stylesheet_directory_uri(),
+            'get_template_directory_uri' => get_template_directory_uri(),
+          ), true ) . '</pre>' );
 
       }
 
       /**
-<<<<<<< HEAD
        * Must Match manage/login exactly without trailing slash.
        *
        * @param $url
@@ -143,8 +139,10 @@ namespace UsabilityDynamics\Cluster {
        */
       public static function logout_url( $url ) {
         $url = str_replace( 'wp-login.php', 'manage/login', $url );
-=======
-       *
+        return $url;
+      }
+
+      /**
        * http://usabilitydynamics.com/wp-login.php -> http://usabilitydynamics.com/manage/login/
        * @param $login_url
        * @param $redirect
@@ -171,8 +169,6 @@ namespace UsabilityDynamics\Cluster {
       public static function home_url( $url, $path, $orig_scheme, $blog_id ) {
 
         $url = str_replace( '/vendor/wordpress/core', '', $url );
-
->>>>>>> 8c08bfea4e45c1945b2df967ae6b4508bacef595
         return $url;
       }
 
