@@ -243,7 +243,6 @@ namespace UsabilityDynamics\Cluster {
        * @return mixed
        */
       public static function get_the_guid( $url ) {
-        global $wp_cluster;
 
         if( defined( 'WP_SYSTEM_DIRECTORY' ) ) {
           return str_replace( '/' . WP_SYSTEM_DIRECTORY, '', $url );
@@ -283,21 +282,19 @@ namespace UsabilityDynamics\Cluster {
 
         $url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->network_domain, $url );
 
-
         // Fix Vendor Module UTLs.
         if( strpos( $plugin, '/vendor' ) ) {
 
-          // @todo Automate by removing the path preior to site's domain, e.g. http://sugarsociety.com/Users/potanin/Sites/sugarsociety.com/vendor/usabilitydynamics/wp-simplify
-          $url = str_replace( '/Users/potanin/Sites/', 'http://', $url );
+          $url = ( is_ssl() ? 'https://' : 'http://' ) . ( $wp_cluster->domain  . '' . end( explode( $wp_cluster->domain, $url ) ) );
 
           // Remove Base Directory Path complete.
-          $url = str_replace( trailingslashit( WP_BASE_DIR ), '/', $url );
+          // $url = str_replace( trailingslashit( WP_BASE_DIR ), '/', $url );
 
           // Replace Network URLs with Local URLs.
-          $url = str_replace( $wp_cluster->network_domain, $wp_cluster->domain, $url );
+          // $url = str_replace( $wp_cluster->network_domain, $wp_cluster->domain, $url );
 
           // Replace plugin directory name "e.g. "modules" with nothing
-          $url = str_replace( trailingslashit( basename( WP_PLUGIN_DIR ) ), '', $url );
+          // $url = str_replace( trailingslashit( basename( WP_PLUGIN_DIR ) ), '', $url );
 
         }
 
