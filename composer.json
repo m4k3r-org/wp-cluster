@@ -3,8 +3,6 @@
   "name": "usabilitydynamics/wp-splash",
   "version": "0.1.0",
   "description": "Wordpress Splash Theme.",
-  "homepage": "http://github.com/UsabilityDynamics/wp-splash",
-  "private": true,
   "author": {
     "name": "Usability Dynamics",
     "url": "http://UsabilityDynamics.com"
@@ -19,6 +17,10 @@
     "wordpress",
     "theme"
   ],
+  "require": {
+    "usabilitydynamics/lib-requires": "master",
+    "usabilitydynamics/lib-ui": "master"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/UsabilityDynamics/wp-splash.git"
@@ -28,5 +30,6 @@
       "type": "composer",
       "url": "http://repository.usabilitydynamics.com"
     }
-  ]
+  ],
+  "minimum-stability": "dev"
 }

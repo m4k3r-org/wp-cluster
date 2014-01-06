@@ -36,18 +36,25 @@ namespace UsabilityDynamics\Theme {
      * @property text_domain
      * @var string
      */
-    public static $text_domain = 'NetworkTheme';
+    public static $text_domain = 'Splash';
 
     /**
      * Class Initializer
      *
      * @author potanin@UD
-     * @for NetworkTheme
+     * @for Splash
      */
-
     public function __construct() {
-      add_action( 'init', array( $this, 'init' ) );
-      add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
+      add_action( 'init', array( &$this, 'init' ) );
+      add_action( 'wp_enqueue_scripts', array( &$this, 'wp_enqueue_scripts' ) );
+
+      // Enable JavaScript Library Loading.
+      new \UsabilityDynamics\Requires(array(
+        'name' => 'splash.state',
+        'scopes' => [ 'public', 'customizer' ],
+        'debug' => true
+      ));
+
     }
 
     /**
@@ -66,8 +73,8 @@ namespace UsabilityDynamics\Theme {
      * @method wp_enqueue_scripts
      */
     public function wp_enqueue_scripts() {
-      wp_enqueue_style( 'app' );
       wp_enqueue_script( 'app' );
+      wp_enqueue_style( 'app' );
     }
 
   }

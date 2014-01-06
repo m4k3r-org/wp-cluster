@@ -12,6 +12,6 @@
       <p><?php the_content(); ?></p>
     </article>
     <footer class="header"></footer>
-  </body>
   <?php wp_footer(); ?>
+  </body>
 </html>
