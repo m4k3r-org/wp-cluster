@@ -55,6 +55,7 @@ namespace UsabilityDynamics\Theme {
         'debug' => true
       ));
 
+      // $this->requires->set( 'scopes', 'public' );
       // $this->requires->add();
 
     }
