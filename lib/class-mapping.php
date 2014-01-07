@@ -90,6 +90,11 @@ namespace UsabilityDynamics\Cluster {
         add_filter( 'get_the_guid', array( &$this, 'get_the_guid' ), 50 );
         add_filter( 'plugins_url', array( &$this, 'plugins_url' ), 50, 3 );
 
+        add_filter( 'network_site_url', array( &$this, 'masked_url_fixes' ), 100, 3 );
+        add_filter( 'site_url', array( &$this, 'masked_url_fixes' ), 100, 3 );
+        add_filter( 'login_redirect', array( &$this, 'masked_url_fixes' ), 100, 3 );
+
+        add_filter( 'lostpassword_url', array( &$this, 'lostpassword_url' ), 100, 3 );
         add_filter( 'admin_url', array( &$this, 'admin_url' ), 100, 3 );
         add_filter( 'includes_url', array( &$this, 'includes_url' ), 100, 3 );
         add_filter( 'home_url', array( &$this, 'home_url' ), 100, 4 );
@@ -205,6 +210,36 @@ namespace UsabilityDynamics\Cluster {
       }
 
       /**
+       * Fixes Various Masked URLs
+       *
+       * Fixes redirect_to hidden value on login forms.
+       *
+       * @todo There is a redirection issue after password reset where forwarded to manage/wp-login.php which is fixed via .htaccess 301 redirection.
+       * @todo Password reset e-mails use http://domain.com/wp-login.php?action=rp&key=XW9Bzard301lWKjNOTRE&login=andypotanin reset URLs.
+       * @todo registration_redirect filter
+       *
+       * @param $url
+       * @param $path
+       * @param $scheme
+       * @param $blog_id
+       *
+       * @return mixed
+       */
+      public static function masked_url_fixes( $url, $path, $scheme, $blog_id ) {
+
+        if( strpos( $url, '/vendor/wordpress/core/wp-admin' ) ) {
+          $url = str_replace( '/vendor/wordpress/core/wp-admin', '/manage', $url );
+        }
+
+        if( strpos( $url, '/wp-login.php' ) ) {
+          $url = str_replace( '/wp-login.php', '/manage/login', $url );
+        }
+
+        return $url;
+
+      }
+
+      /**
        * Site Admin URL
        *
        * get_admin_url && self_admin_url
@@ -220,6 +255,23 @@ namespace UsabilityDynamics\Cluster {
       public static function admin_url( $url, $path, $blog_id ) {
 
         $url = str_replace( '/wp-admin/', '/manage/', $url );
+
+        // @todo replace with api.site.com
+        // $url = str_replace( 'wp-ajax.php', '/manage/', $url );
+
+        return $url;
+
+      }
+
+      /**
+       * @param $url
+       * @param $redirect
+       *
+       * @return mixed
+       */
+      public static function lostpassword_url( $url, $redirect ) {
+
+        $url = str_replace( 'wp-login.php', 'manage/login', $url );
 
         // @todo replace with api.site.com
         // $url = str_replace( 'wp-ajax.php', '/manage/', $url );
