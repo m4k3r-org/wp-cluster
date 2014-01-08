@@ -116,6 +116,15 @@ namespace UsabilityDynamics\Cluster {
       public $original_host = null;
 
       /**
+       * Settings.
+       *
+       * @public
+       * @property $_settings
+       * @type {Mixed}
+       */
+      public $_settings = null;
+
+      /**
        * Constructor.
        *
        * UsabilityDynamics components should be avialable.
@@ -178,8 +187,76 @@ namespace UsabilityDynamics\Cluster {
           wp_die( '<h1>Cluster Network Error</h1><p>Your request is for an invalid domain.</p>' );
         }
 
+        // Initialize Settings.
+        $this->_settings();
+
+        // Initialize Components.
+        $this->_components();
+
+        // Initialize Interfaces.
+        $this->_interfaces();
+
         // Fix MultiSite URLs
-        $this->fix_urls();
+        $this->_fix_urls();
+
+        // Must set or long will not work
+        if( !defined( 'COOKIE_DOMAIN' ) ) {
+          define( 'COOKIE_DOMAIN', $this->requested_domain );
+        }
+
+        // Initialize all else.
+        add_action( 'plugins_loaded', array( &$this, 'plugins_loaded' ) );
+        add_action( 'admin_bar_menu', array( &$this, 'admin_bar_menu' ), 21 );
+
+        add_action( 'init', array( &$this, 'init' ) );
+        add_action( 'admin_init', array( &$this, 'admin_init' ) );
+        add_action( 'admin_menu', array( &$this, 'admin_menu' ), 500 );
+        add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
+
+        // Add Cluster Scripts & Styles.
+        add_action( 'admin_enqueue_scripts', array( &$this, 'admin_enqueue_scripts' ), 20 );
+
+        // Modify Core UI.
+        add_filter( 'wpmu_blogs_columns', array( &$this, 'wpmu_blogs_columns' ) );
+        add_action( 'manage_sites_custom_column', array( &$this, 'manage_sites_custom_column' ), 10, 2 );
+
+        if( is_network_admin() ) {
+          add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ), 100 );
+        }
+
+      }
+
+
+      /**
+       * Initialize Settings.
+       *
+       */
+      private function _settings() {
+
+        // Initialize Settings.
+        $this->_settings = new Settings(array(
+          "store" => "options",
+          "key"   => "ud:cluster",
+        ));
+
+        // ElasticSearch Service Settings.
+        $this->set( 'documents', array(
+          "active" => true,
+          "host"   => "localhost",
+          "port"   => 9200,
+          "token"  => null,
+        ));
+
+        // Save Settings.
+        // $this->_settings->commit();
+
+      }
+
+      /**
+       * Initialize Media, Varnish, etc.
+       *
+       */
+      private function _components() {
 
         // Initialize Controllers and Helpers
         $this->developer = new Developer();
@@ -188,33 +265,88 @@ namespace UsabilityDynamics\Cluster {
         $this->api       = new API();
         $this->theme     = wp_get_theme();
 
-        // Must set or long will not work
-        if( !defined( 'COOKIE_DOMAIN' ) ) {
-          define( 'COOKIE_DOMAIN', $this->requested_domain );
+        // Enable CDN Media.
+        //$this->_media = new Media( $this->get( 'media' ) );
+
+        // Enable Varnish.
+        //$this->_varnish = new Varnish($this->get( 'varnish' ));
+
+      }
+
+      /**
+       * Initialize Interface Compnents
+       *
+       */
+      private function _interfaces() {
+
+        // Render Toolbar.
+        add_action( 'wp_before_admin_bar_render', array( &$this, 'toolbar' ), 10 );
+
+      }
+
+      /**
+       * Automatically fix MS URLs that get messed up
+       *
+       * UPLOADBLOGSDIR must be set in wp-config.php to take affect, UPLOADS is defined based on site's ID
+       * This would be the place to overwrite the media/{ID}/files to something else.
+       *
+       * network_site_url - http://network.nightculture.loc/wp-admin/network/ -> http://network.nightculture.loc/system/wp-admin/network/
+       *
+       */
+      private function _fix_urls() {
+
+        if( defined( 'WP_VENEER_DOMAIN_MEDIA' ) && WP_VENEER_DOMAIN_MEDIA && !defined( 'BLOGUPLOADDIR' ) ) {
+          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADBLOGSDIR . '/' . Bootstrap::get_instance()->domain );
+        } else {
+          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADBLOGSDIR . '/' . Bootstrap::get_instance()->site_id );
         }
 
-        // Initialize all else.
-        add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
-        add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
+        // Add handling for /manage
+        add_filter( 'network_site_url', array( get_class(), 'network_site_url' ) );
+        add_filter( 'network_admin_url', array( get_class(), 'network_site_url' ) );
 
-        add_action( 'init', array( $this, 'init' ) );
-        add_action( 'admin_init', array( $this, 'admin_init' ) );
-        add_action( 'admin_menu', array( $this, 'admin_menu' ), 500 );
-        add_action( 'template_redirect', array( $this, 'template_redirect' ) );
+        // Add handling for /manage
+        add_filter( 'admin_url', array( get_class(), 'admin_url' ) );
 
-        // Add Cluster Scripts & Styles.
-        add_action( 'admin_enqueue_scripts', array( get_class(), 'admin_enqueue_scripts' ), 20 );
+      }
 
-        // Modify Core UI.
-        add_filter( 'wpmu_blogs_columns', array( $this, 'wpmu_blogs_columns' ) );
-        add_action( 'manage_sites_custom_column', array( $this, 'manage_sites_custom_column' ), 10, 2 );
+      /**
+       * Add Cluster Toolbar
+       *
+       * @method cluster_toolbar
+       * @for Boostrap
+       */
+      public function toolbar() {
+        global $wp_admin_bar;
 
-        if( is_network_admin() ) {
-          add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ), 100 );
-        }
+        $wp_admin_bar->add_menu(array(
+          'id'    => 'cluster',
+          'meta'  => array(
+            'html'     => '<div class="cluster-toolbar-info"></div>',
+            'target'   => '',
+            'onclick'  => '',
+            'tabindex' => 10,
+            'class'    => 'cluster-toolbar'
+          ),
+          'title' => 'Cluster',
+          'href'  => network_admin_url( 'admin.php?page=cluster' )
+        ));
 
-        // @chainable. (Node.js habbit)
-        return $this;
+        $wp_admin_bar->add_menu(array(
+          'parent' => 'cluster',
+          'id'     => 'cluster-networks',
+          'meta'   => array(),
+          'title'  => 'Networks',
+          'href'   => network_admin_url( 'admin.php?page=cluster#panel=networks' )
+        ));
+
+        $wp_admin_bar->add_menu(array(
+          'parent' => 'cluster',
+          'id'     => 'cluster-dns',
+          'meta'   => array(),
+          'title'  => 'DNS',
+          'href'   => network_admin_url( 'admin.php?page=cluster#panel=dns' )
+        ));
 
       }
 
@@ -226,6 +358,9 @@ namespace UsabilityDynamics\Cluster {
         // $wpi_xml_server = new \UsabilityDynamics\UD_XMLRPC( 'https://raas.usabilitydynamics.com:443', \UsabilityDynamics\get_option('ud_api_public_key'), 'WordPress/3.7.1', 'ud' );
       }
 
+      /**
+       *
+       */
       public function admin_enqueue_scripts() {
         wp_enqueue_style( 'cluster-app', home_url( '/vendor/usabilitydynamics/wp-cluster/styles/app.css' ), array(), self::$version );
       }
@@ -407,32 +542,6 @@ namespace UsabilityDynamics\Cluster {
       }
 
       /**
-       * Automatically fix MS URLs that get messed up
-       *
-       * UPLOADBLOGSDIR must be set in wp-config.php to take affect, UPLOADS is defined based on site's ID
-       * This would be the place to overwrite the media/{ID}/files to something else.
-       *
-       * network_site_url - http://network.nightculture.loc/wp-admin/network/ -> http://network.nightculture.loc/system/wp-admin/network/
-       *
-       */
-      public function fix_urls() {
-
-        if( defined( 'WP_VENEER_DOMAIN_MEDIA' ) && WP_VENEER_DOMAIN_MEDIA && !defined( 'BLOGUPLOADDIR' ) ) {
-          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADBLOGSDIR . '/' . Bootstrap::get_instance()->domain );
-        } else {
-          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADBLOGSDIR . '/' . Bootstrap::get_instance()->site_id );
-        }
-
-        // Add handling for /manage
-        add_filter( 'network_site_url', array( get_class(), 'network_site_url' ) );
-        add_filter( 'network_admin_url', array( get_class(), 'network_site_url' ) );
-
-        // Add handling for /manage
-        add_filter( 'admin_url', array( get_class(), 'admin_url' ) );
-
-      }
-
-      /**
        * Network URL
        *
        *
@@ -530,17 +639,6 @@ namespace UsabilityDynamics\Cluster {
        * @since 0.1.1
        */
       public static function get( $key, $default = null ) {
-
-        // @temp
-        if( $key === 'cdn.subdomain' ) {
-          return 'media';
-        }
-
-        // @temp
-        if( $key === 'cdn.active' ) {
-         return false;
-        }
-
         return self::$instance->_settings ? self::$instance->_settings->get( $key, $default ) : null;
       }
 
