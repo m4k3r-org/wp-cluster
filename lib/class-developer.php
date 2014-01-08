@@ -20,7 +20,7 @@ namespace UsabilityDynamics\Cluster {
     class Developer {
 
       function __construct() {
-        add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ), 50 );
+        //add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ), 50 );
       }
 
       /**

@@ -84,6 +84,7 @@ namespace UsabilityDynamics\Cluster {
         add_filter( 'content_url', array( &$this, 'replace_network_url' ), 10, 2 );
         add_filter( 'user_admin_url', array( &$this, 'replace_network_url' ), 10, 2 );
         add_filter( 'home_url', array( &$this, 'replace_network_url' ), 10, 2 );
+        add_filter( 'site_url', array( &$this, 'replace_network_url' ), 10, 2 );
 
         // Support Vendor paths. Disabled because references get_blogaddress_by_id() too early.
         add_filter( 'update_attached_file', array( &$this, 'update_attached_file' ), 50, 2 );
@@ -219,13 +220,10 @@ namespace UsabilityDynamics\Cluster {
        * @todo registration_redirect filter
        *
        * @param $url
-       * @param $path
-       * @param $scheme
-       * @param $blog_id
        *
-       * @return mixed
+       * @return string
        */
-      public static function masked_url_fixes( $url, $path, $scheme, $blog_id ) {
+      public static function masked_url_fixes( $url ) {
 
         if( strpos( $url, '/vendor/wordpress/core/wp-admin' ) ) {
           $url = str_replace( '/vendor/wordpress/core/wp-admin', '/manage', $url );
@@ -322,11 +320,10 @@ namespace UsabilityDynamics\Cluster {
        * Network URL
        *
        * @param $url
-       * @param $path
        *
        * @return mixed
        */
-      public static function replace_network_url( $url, $path ) {
+      public static function replace_network_url( $url ) {
         global $wp_cluster;
 
         $url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->network_domain, $url );
@@ -351,7 +348,7 @@ namespace UsabilityDynamics\Cluster {
         // Fix Vendor Module UTLs.
         if( strpos( $plugin, '/vendor' ) ) {
 
-          $url = ( is_ssl() ? 'https://' : 'http://' ) . ( $wp_cluster->domain  . '' . end( explode( $wp_cluster->domain, $url ) ) );
+          @$url = ( is_ssl() ? 'https://' : 'http://' ) . ( $wp_cluster->domain  . '' . end( explode( $wp_cluster->domain, $url ) ) );
 
           // Remove Base Directory Path complete.
           // $url = str_replace( trailingslashit( WP_BASE_DIR ), '/', $url );
