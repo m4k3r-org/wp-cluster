@@ -101,6 +101,9 @@ namespace UsabilityDynamics\Cluster {
         add_filter( 'home_url', array( &$this, 'home_url' ), 100, 4 );
         add_filter( 'login_url', array( &$this, 'login_url' ), 100, 2 );
 
+        // Special Cases.
+        add_filter( 'user_admin_url', array( &$this, 'user_admin_url' ), 100, 2 );
+        add_filter( 'network_admin_url', array( &$this, 'network_admin_url' ), 100, 2 );
 
         // URLs
         self::$home_url          = get_home_url();
@@ -115,25 +118,68 @@ namespace UsabilityDynamics\Cluster {
         self::$self_admin_url    = self_admin_url();
         self::$user_admin_url    = user_admin_url();
 
-        return;
+        // die( '<pre>' . print_r( $this->_debug(), true ) . '</pre>' );
 
-        die( '<pre>' . print_r( array(
-            'wp_login_url' => wp_login_url(),
-            'get_home_url' => get_home_url(),
-            'get_site_url' => get_site_url(),
-            'get_admin_url' => get_admin_url(),
-            'includes_url' => includes_url(),
-            'content_url' => content_url(),
-            'plugins_url' => plugins_url(),
-            'network_site_url' => network_site_url(),
-            'network_home_url' => network_home_url(),
-            'network_admin_url' => network_admin_url(),
-            'self_admin_url' => self_admin_url(),
-            'user_admin_url' => user_admin_url(),
-            'get_stylesheet_directory_uri' => get_stylesheet_directory_uri(),
-            'get_template_directory_uri' => get_template_directory_uri(),
-          ), true ) . '</pre>' );
+        return $this;
 
+      }
+
+      /**
+       * Return URL Mapping Array
+       *
+       * @return array
+       */
+      private function _debug() {
+
+        return array(
+          'wp_login_url' => wp_login_url(),
+          'get_home_url' => get_home_url(),
+          'get_site_url' => get_site_url(),
+          'get_admin_url' => get_admin_url(),
+          'includes_url' => includes_url(),
+          'content_url' => content_url(),
+          'plugins_url' => plugins_url(),
+          'network_site_url' => network_site_url(),
+          'network_home_url' => network_home_url(),
+          'network_admin_url' => network_admin_url(),
+          'self_admin_url' => self_admin_url(),
+          'user_admin_url' => user_admin_url(),
+          'get_stylesheet_directory_uri' => get_stylesheet_directory_uri(),
+          'get_template_directory_uri' => get_template_directory_uri()
+        );
+
+      }
+
+      /**
+       * @param $url
+       *
+       * @return mixed
+       */
+      public static function user_admin_url( $url ) {
+        global $wp_cluster;
+        //$url = str_replace( $wp_cluster->network_domain, $wp_cluster->domain, $url );
+        //$url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->domain, $url );
+        $url = str_replace( '/wp-admin', '/manage', $url );
+        return $url;
+      }
+
+      /**
+       * Causes a redirect loop when trying to use any sites domain instead of "network" domain
+       *
+       * e.g.
+       *  works:        http://usabilitydynamics.com/manage/network/
+       *  doesn't:      http://the-denali.dev/manage/network/
+       *
+       * @param $url
+       *
+       * @return mixed
+       */
+      public static function network_admin_url( $url ) {
+        global $wp_cluster;
+        //$url = str_replace( $wp_cluster->network_domain, $wp_cluster->domain, $url );
+        //$url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->domain, $url );
+        $url = str_replace( '/wp-admin/network/', '/manage/network', $url );
+        return $url;
       }
 
       /**
@@ -157,7 +203,7 @@ namespace UsabilityDynamics\Cluster {
        */
       public static function login_url( $login_url, $redirect ) {
 
-        $login_url = str_replace( 'wp-login.php', 'manage/login/', $login_url );
+        $login_url = str_replace( 'wp-login.php', 'manage/login', $login_url );
 
         return $login_url;
       }
@@ -173,7 +219,6 @@ namespace UsabilityDynamics\Cluster {
        * @return mixed
        */
       public static function home_url( $url, $path, $orig_scheme, $blog_id ) {
-
         $url = str_replace( '/vendor/wordpress/core', '', $url );
         return $url;
       }
@@ -343,7 +388,8 @@ namespace UsabilityDynamics\Cluster {
       public static function plugins_url( $url, $path, $plugin ) {
         global $wp_cluster;
 
-        $url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->network_domain, $url );
+
+        $url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->domain, $url );
 
         // Fix Vendor Module UTLs.
         if( strpos( $plugin, '/vendor' ) ) {
