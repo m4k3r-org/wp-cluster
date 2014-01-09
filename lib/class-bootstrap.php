@@ -98,15 +98,6 @@ namespace UsabilityDynamics\Cluster {
       public $network_domain = null;
 
       /**
-       * Current theme using 
-       *
-       * @public
-       * @property $domain
-       * @type {Object}
-       */
-      public $theme = null;
-
-      /**
        * Original host, when proxied.
        * @public
        * @property $original_host
@@ -123,6 +114,10 @@ namespace UsabilityDynamics\Cluster {
        * @type {Mixed}
        */
       public $_settings = null;
+      public $_mapping = null;
+      public $_developer = null;
+      public $_api = null;
+      public $_theme = null;
 
       /**
        * Constructor.
@@ -258,11 +253,11 @@ namespace UsabilityDynamics\Cluster {
       private function _components() {
 
         // Initialize Controllers and Helpers
-        $this->developer = new Developer();
-        $this->settings  = new Settings();
-        $this->mapping   = new Mapping();
-        $this->api       = new API();
-        $this->theme     = wp_get_theme();
+        $this->_developer = new Developer();
+        $this->_settings  = new Settings();
+        $this->_mapping   = new Mapping();
+        $this->_api       = new API();
+        $this->_theme     = new Theme();
 
         // Enable CDN Media.
         //$this->_media = new Media( $this->get( 'media' ) );
@@ -270,6 +265,15 @@ namespace UsabilityDynamics\Cluster {
         // Enable Varnish.
         //$this->_varnish = new Varnish($this->get( 'varnish' ));
 
+      }
+
+      /**
+       * Output Fatal Error Message
+       *
+       * @param $message
+       */
+      public function fatal( $message ) {
+        wp_die( '<h1>Cluster Error</h1><p>' . $message . '</p>' );
       }
 
       /**

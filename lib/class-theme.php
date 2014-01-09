@@ -9,6 +9,7 @@ namespace UsabilityDynamics\Cluster {
 
   if( !class_exists( 'UsabilityDynamics\Cluster\Theme' ) ) {
 
+
     /**
      * Class Theme
      *
@@ -16,24 +17,31 @@ namespace UsabilityDynamics\Cluster {
      */
     class Theme {
 
+
+      /**
+       * Theme Exists.
+       *
+       * @public
+       * @property $exists
+       * @type {Boolean}
+       */
+      public $exists = null;
+
+      /**
+       * WordPrsss WP_Theme Instance
+       *
+       * @private
+       * @property $_theme
+       * @type {WP_Theme}
+       */
+      private $_theme = null;
+
       /**
        * Initialize Theme
        *
        * @for Theme
        */
       public function __construct() {
-
-        add_action( 'init', array( $this, 'init' ) );
-
-      }
-
-      /**
-       * Support for custom theme directory
-       *
-       */
-      public function init() {
-
-        // $this->add_site_directories();
 
         if( defined( 'WP_PRIMARY_THEME_DIR' ) && is_dir( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'network-themes' ) ) {
           add_filter( 'template_directory', create_function( '', ' return WP_PRIMARY_THEME_DIR; ' ) );
@@ -46,6 +54,36 @@ namespace UsabilityDynamics\Cluster {
           register_theme_directory( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'network-themes' );
         }
 
+        // $this->add_site_directories();
+
+        // Get WP_Theme Instance.
+        $this->_theme = wp_get_theme();
+
+        $this->exists = $this->_theme->exists();
+
+        add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
+
+      }
+
+      /**
+       * Output Fatal Error Message
+       *
+       * @param $message
+       */
+      public function fatal( $message ) {
+        wp_die( '<h1>Cluster Theme Error</h1><p>' . $message . '</p>' );
+      }
+
+      /**
+       * Check Theme Existance.
+       *
+       */
+      public function template_redirect() {
+
+        if( !$this->exists ) {
+          self::fatal( 'The site is operational but the configured theme does not exist.' );
+        }
+
       }
 
       /**
@@ -56,7 +94,7 @@ namespace UsabilityDynamics\Cluster {
        *
        * @method add_site_directories
        */
-      public function add_site_directories() {
+      private function add_site_directories() {
         global $wpdb;
 
         if( is_dir( WP_CONTENT_DIR . '/themes-client' ) ) {
