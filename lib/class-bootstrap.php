@@ -226,7 +226,6 @@ namespace UsabilityDynamics\Cluster {
 
       }
 
-
       /**
        * Initialize Settings.
        *

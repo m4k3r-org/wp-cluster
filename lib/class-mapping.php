@@ -72,8 +72,8 @@ namespace UsabilityDynamics\Cluster {
           wp_die( '<h1>Network Error</h1><p>The WP_BASE_DOMAIN constant is not defined.</p>' );
         }
 
-        //add_filter( 'pre_option_home', array( get_class(), 'pre_option_home' ) );
-        //add_filter( 'pre_option_siteurl', array( get_class(), 'pre_option_siteurl' ) );
+        // add_filter( 'pre_option_home', array( get_class(), 'pre_option_home' ) );
+        // add_filter( 'pre_option_siteurl', array( &$this, 'replace_network_url' ) );
 
         add_filter( 'admin_url', array( &$this, 'admin_url' ), 50, 3 );
         add_filter( 'includes_url', array( &$this, 'includes_url' ), 50, 3 );
@@ -119,8 +119,6 @@ namespace UsabilityDynamics\Cluster {
         self::$user_admin_url    = user_admin_url();
 
         // die( '<pre>' . print_r( $this->_debug(), true ) . '</pre>' );
-
-        return $this;
 
       }
 
@@ -196,16 +194,18 @@ namespace UsabilityDynamics\Cluster {
 
       /**
        * http://usabilitydynamics.com/wp-login.php -> http://usabilitydynamics.com/manage/login/
-       * @param $login_url
+       * @param $url
        * @param $redirect
        *
+       * @internal param $login_url
        * @return mixed
        */
-      public static function login_url( $login_url, $redirect ) {
+      public static function login_url( $url, $redirect ) {
 
-        $login_url = str_replace( 'wp-login.php', 'manage/login', $login_url );
+        //$url = str_replace( '/vendor/wordpress/core', '', $url );
+        $url = str_replace( 'wp-login.php', 'manage/login', $url );
 
-        return $login_url;
+        return $url;
       }
 
       /**
@@ -270,8 +270,9 @@ namespace UsabilityDynamics\Cluster {
        */
       public static function masked_url_fixes( $url ) {
 
-        if( strpos( $url, '/vendor/wordpress/core/wp-admin' ) ) {
-          $url = str_replace( '/vendor/wordpress/core/wp-admin', '/manage', $url );
+        // Conceal WordPress Location.
+        if( strpos( $url, '/vendor/wordpress/core' ) ) {
+          $url = str_replace( '/vendor/wordpress/core', '', $url );
         }
 
         if( strpos( $url, '/wp-login.php' ) ) {
@@ -370,9 +371,7 @@ namespace UsabilityDynamics\Cluster {
        */
       public static function replace_network_url( $url ) {
         global $wp_cluster;
-
         $url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->network_domain, $url );
-
         return str_replace( $wp_cluster->network_domain, $wp_cluster->domain, $url );
       }
 
