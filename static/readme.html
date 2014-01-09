@@ -112,7 +112,23 @@
     </style>
   </head>
   <body>  
-    <h2 id="changelog">Changelog</h2>
+    <p>Removed temporarily
+    &quot;usabilitydynamics/wp-elastic&quot;: &quot;master&quot;,</p>
+<p>This used to be wp-cluster but was renamed to wp-cluster and made private.</p>
+<h2 id="network-concepts">Network Concepts</h2>
+<ul>
+<li>upload_url_path honored when serving images although option is hidden in MS.</li>
+<li>upload_path is honored but relative to /system and re-creates directory structure on load.</li>
+<li>the main wp_ tables should store vIndustry settings. vOrganization settings stored in wp_sitemeta</li>
+<li>$current_site has wrong blog_id while $current_blog is fine.</li>
+<li>the /manage/network should probably only be accessible via the &quot;main&quot; site domain.</li>
+<li>Veneer .htaccess rules must be inserted before WP rules.</li>
+<li>&quot;vendor&quot; libraries should be excluded from most repositories
+? &quot;components&quot; should almost always be included in repository since they are usually in built state</li>
+<li>&quot;modules&quot; should probably be excluded from repositories to allow WordPress-based control.</li>
+<li>sites (blogs) within a network that are not part of the same organization should be logically seperated by &quot;site&quot;</li>
+</ul>
+<h2 id="changelog">Changelog</h2>
 <h3 id="0-3-0">0.3.0</h3>
 <ul>
 <li>Added check for UPLOADBLOGSDIR to be defined or wp_die().</li>
@@ -134,10 +150,10 @@
 </li>
 </ul>
 <h2 id="structure">Structure</h2>
-<h3 id="cluster-loader">Veneer\Loader</h3>
-<h3 id="cluster-core">Veneer\Core</h3>
-<h3 id="cluster-developer">Veneer\Developer</h3>
-<h3 id="cluster-resizeimage">Veneer\ResizeImage</h3>
+<h3 id="cluster-loader">Cluster\Loader</h3>
+<h3 id="cluster-core">Cluster\Core</h3>
+<h3 id="cluster-developer">Cluster\Developer</h3>
+<h3 id="cluster-resizeimage">Cluster\ResizeImage</h3>
 <h2 id="deployment">Deployment</h2>
 
   </body>
