@@ -8,6 +8,7 @@
     }
   ],
   "require": {
+    "php": ">=5.3",
     "usabilitydynamics/lib-carrington-build": "master"
   },
   "license": "GPLv2",
