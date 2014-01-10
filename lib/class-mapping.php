@@ -275,6 +275,10 @@ namespace UsabilityDynamics\Cluster {
           $url = str_replace( '/vendor/wordpress/core', '', $url );
         }
 
+        if( strpos( $url, '/wp-admin' ) ) {
+          $url = str_replace( '/wp-admin', '/manage', $url );
+        }
+
         if( strpos( $url, '/wp-login.php' ) ) {
           $url = str_replace( '/wp-login.php', '/manage/login', $url );
         }
