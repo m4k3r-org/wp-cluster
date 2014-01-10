@@ -272,7 +272,7 @@ namespace UsabilityDynamics\Cluster {
        *
        */
       public function admin_footer_text() {
-        return '<span id="footer-thankyou">' . __( 'Provided by the <a href="http://' . $this->network_domain . '">' . $this->organization . '</a>.' ) . ' network.</span>';
+        return '<span id="footer-thankyou">' . __( 'Provided by the <a href="http://' . $this->network_domain . '">' . $this->organization . '</a>' ) . ' network.</span>';
       }
 
 
