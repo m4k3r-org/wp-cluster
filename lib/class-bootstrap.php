@@ -10,7 +10,7 @@
  * @author team@UD
  * @version 0.1.1
  */
-namespace Flawless {
+namespace UsabilityDynamics\Flawless {
 
   /**
    * Flawless
@@ -24,7 +24,7 @@ namespace Flawless {
    * @class Flawless
    * @since 0.0.2
    */
-  final class Flawless {
+  final class Bootstrap {
 
     /**
      * Flawless core version.
@@ -61,7 +61,7 @@ namespace Flawless {
      * Sets up global $flawless variable, loads defaults and binds primary actions.
      *
      *      var $instance = new Flawless();
-     *      $instance->Loader = require( 'core/controllers/flawless/loader.php' );
+     *      $instance->Loader = require( 'lib/controllers/flawless/loader.php' );
      *
      * @method __construct
      * @for Flawless
@@ -70,7 +70,7 @@ namespace Flawless {
      * @version  0.0.6
      *
      * @author potanin@UD
-     * @return \Flawless\Flawless
+     * @return \UsabilityDynamics\Flawless\Bootstrap
      */
     public function __construct() {
 
@@ -94,11 +94,11 @@ namespace Flawless {
           )),
           'paths' =>  array(
             'root'        => untrailingslashit( get_template_directory() ),
-            'controllers' => trailingslashit( get_template_directory() ) . 'core/controllers',
-            'modules'     => trailingslashit( get_template_directory() ) . 'core/modules',
-            'extend'      => trailingslashit( get_template_directory() ) . 'core/extend',
-            'helpers'     => trailingslashit( get_template_directory() ) . 'core/helpers',
-            'vendor'      => trailingslashit( get_template_directory() ) . 'core/vendor',
+            'controllers' => trailingslashit( get_template_directory() ) . 'lib/controllers',
+            'modules'     => trailingslashit( get_template_directory() ) . 'lib/modules',
+            'extend'      => trailingslashit( get_template_directory() ) . 'lib/extend',
+            'helpers'     => trailingslashit( get_template_directory() ) . 'lib/helpers',
+            'vendor'      => trailingslashit( get_template_directory() ) . 'lib/vendor',
             'models'      => trailingslashit( get_template_directory() ) . 'static/models',
             'schemas'     => trailingslashit( get_template_directory() ) . 'static/schemas',
             'templates'   => trailingslashit( get_template_directory() ) . 'templates',
@@ -120,7 +120,9 @@ namespace Flawless {
       define( 'Flawless_Transdomain', 'flawless' );
 
       // Get Loader Class.
-      require_once( $this->state->computed->paths->controllers . '/loader.php' );
+      // require_once( $this->state->computed->paths->controllers . '/loader.php' );
+
+      return;
 
       // Load Controllers, Modules, Helpers and Schemas.
       new Loader( array(
@@ -148,16 +150,16 @@ namespace Flawless {
       ));
 
       // Controllers.
-      $this->API      = new API();
-      $this->Asset    = new Asset();
-      $this->Content  = new Content();
-      $this->Settings = new Settings();
-      $this->Legacy   = new Legacy();
-      $this->Loader   = new Loader();
-      $this->Utility  = new Utility();
-      $this->Theme    = new Theme();
-      $this->Views    = new Views();
-      $this->Log      = new Log();
+      //$this->API      = new API();
+      //$this->Asset    = new Asset();
+      //$this->Content  = new Content();
+      //$this->Settings = new Settings();
+      //$this->Legacy   = new Legacy();
+      //$this->Loader   = new Loader();
+      //$this->Utility  = new Utility();
+      //$this->Theme    = new Theme();
+      ///$this->Views    = new Views();
+      //$this->Log      = new Log();
 
       // Compute additional data once controllers are loaded.
       $this->state->computed->theme_data = Loader::get_file_data( is_child_theme() ? untrailingslashit( get_stylesheet_directory() ) . '/style.css' : TEMPLATEPATH . '/style.css' );
@@ -184,7 +186,7 @@ namespace Flawless {
      * @since 0.0.2
      */
     public function after_setup_theme() {
-      self::log( 'Executed: Flawless::after_setup_theme();' );
+      self::log( 'Executed: Bootstrap::after_setup_theme();' );
       do_action( 'flawless::theme_setup', $this );
       do_action( 'flawless::theme_setup::after', $this );
     }
@@ -201,7 +203,7 @@ namespace Flawless {
      * @since 0.0.2
      */
     public function init_upper() {
-      self::log( 'Executed: Flawless::init_upper();' );
+      self::log( 'Executed: Bootstrap::init_upper();' );
 
       // Admin Action Wrappers.
       add_action( 'admin_menu', array( $this, 'admin_menu' ) );
@@ -231,7 +233,7 @@ namespace Flawless {
      * @since 0.0.2
      */
     public function init_lower() {
-      self::log( 'Executed: Flawless::init_lower();' );
+      self::log( 'Executed: Bootstrap::init_lower();' );
 
       // Do not load these styles if we are on admin side or the WP login page.
       if ( strpos( $_SERVER[ 'SCRIPT_NAME' ], 'wp-login.php' ) ) {
@@ -252,7 +254,7 @@ namespace Flawless {
      * @for Flawless
      */
     public function admin_menu() {
-      self::log( 'Executed: Flawless::admin_menu();' );
+      self::log( 'Executed: Bootstrap::admin_menu();' );
       do_action( 'flawless::admin_menu', $this );
     }
 
@@ -263,7 +265,7 @@ namespace Flawless {
      * @since 0.0.2
      */
     public function admin_init() {
-      self::log( 'Executed: Flawless::admin_init();' );
+      self::log( 'Executed: Bootstrap::admin_init();' );
       do_action( 'flawless::admin_init', $this );
     }
 
@@ -274,7 +276,7 @@ namespace Flawless {
      * @since 0.0.2
      */
     public function template_redirect() {
-      self::log( 'Executed: Flawless::template_redirect();' );
+      self::log( 'Executed: Bootstrap::template_redirect();' );
 
       // Load Template helpers.
       require_once( $this->state->computed->paths->helpers . '/template.php' );
@@ -296,7 +298,7 @@ namespace Flawless {
      * @since 0.0.2
      */
     public function wp_enqueue_scripts() {
-      self::log( 'Executed: Flawless::wp_enqueue_scripts();' );
+      self::log( 'Executed: Bootstrap::wp_enqueue_scripts();' );
 
       // Enqueue Scripts in context.
       do_action( 'flawless::wp_enqueue_scripts', $this );
@@ -319,7 +321,7 @@ namespace Flawless {
      * @since 0.0.6
      */
     public function wp_print_styles() {
-      self::log( 'Executed: Flawless::wp_print_styles();' );
+      self::log( 'Executed: Bootstrap::wp_print_styles();' );
 
       // Enqueue client-side styles.
       wp_enqueue_style( 'flawless-app', get_stylesheet_directory_uri() . '/public/styles/app.min.css', array(), Flawless_Version );
@@ -339,7 +341,7 @@ namespace Flawless {
      * @since 0.1.1
      */
     public function get( $key, $default ) {
-      return Flawless::get_instance()->Settings->get( $key, $default );
+      return Bootstrap::get_instance()->Settings->get( $key, $default );
     }
 
     /**
@@ -352,7 +354,7 @@ namespace Flawless {
      * @since 0.1.1
      */
     public function set( $key, $value ) {
-      return Flawless::get_instance()->Settings->set( $key, $value );
+      return Bootstrap::get_instance()->Settings->set( $key, $value );
     }
 
     /**
@@ -375,8 +377,8 @@ namespace Flawless {
      *
      * @example
      *
-     *      var settings = Flawless::get_instance()->Settings;
-     *      var api = Flawless::$instance()->API;
+     *      var settings = Bootstrap::get_instance()->Settings;
+     *      var api = Bootstrap::$instance()->API;
      *
      * @static
      * @return object
@@ -390,8 +392,5 @@ namespace Flawless {
     }
 
   }
-
-  // Initialize the theme.
-  new Flawless();
 
 }

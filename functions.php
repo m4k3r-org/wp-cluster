@@ -11,7 +11,8 @@
  * @version 0.1.1
  */
 
+include_once( __DIR__ . '/lib/class-bootstrap.php' );
 
 // Initialize the theme.
-new Flawless();
+new UsabilityDynamics\Flawless\Bootstrap();
 

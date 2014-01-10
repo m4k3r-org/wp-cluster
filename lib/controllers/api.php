@@ -8,7 +8,7 @@
    * @module Flawless
    * @namespace Flawless
    */
-  namespace Flawless {
+  namespace UsabilityDynamics\Flawless {
 
     /**
      * API

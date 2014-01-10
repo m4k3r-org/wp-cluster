@@ -7,10 +7,12 @@
  * @version 0.0.3
  * @author potanin@UD
  */
-namespace Flawless {
+namespace UsabilityDynamics\Flawless {
 
   // Get UsabilityDynamics Loader
-  require_once( TEMPLATEPATH . DIRECTORY_SEPARATOR . '/core/vendor/usabilitydynamics/loader.php' );
+  if( file_exists( TEMPLATEPATH . DIRECTORY_SEPARATOR . '/vendor/autoload.php' ) ) {
+    require_once( TEMPLATEPATH . DIRECTORY_SEPARATOR . '/vendor/autoload.php' );
+  }
 
   /**
    * Loader implements a PSR-0 class loader
@@ -38,7 +40,7 @@ namespace Flawless {
    * @author Fabien Potencier <fabien@symfony.com>
    * @author Jordi Boggiano <j.boggiano@seld.be>
    */
-  class Loader extends \UsabilityDynamics\Loader {
+  class Loader extends \UsabilityDynamics\Utility\Loader {
 
     /**
      * Loader Class version.
@@ -93,9 +95,9 @@ namespace Flawless {
      * @for Loader
      * @constructor
      *
-     * @param $settings {Object|Array|boolean}
+     * @param bool $settings {Object|Array|boolean}
      *
-     * @return \Flawless\Loader
+     * @return \UsabilityDynamics\Flawless\Loader
      * @version 0.0.2
      * @since 0.0.2
      */

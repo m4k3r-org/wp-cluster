@@ -5,7 +5,7 @@
  *
  * @namespace Flawless
  */
-namespace Flawless {
+namespace UsabilityDynamics\Flawless {
 
   /**
    * Class Element

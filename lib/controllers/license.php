@@ -7,7 +7,7 @@
  * @time: 10:33 AM
  *
  */
-namespace Flawless {
+namespace UsabilityDynamics\Flawless {
 
   /**
    * Class License

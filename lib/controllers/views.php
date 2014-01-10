@@ -7,7 +7,7 @@
  * @namespace Flawless
  * @module Flawless
  */
-namespace Flawless {
+namespace UsabilityDynamics\Flawless {
 
   /**
    * Views
