@@ -42,6 +42,7 @@ namespace UsabilityDynamics\Cluster {
        * @for Theme
        */
       public function __construct() {
+        global $wp_cluster;
 
         if( defined( 'WP_PRIMARY_THEME_DIR' ) && is_dir( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'network-themes' ) ) {
           add_filter( 'template_directory', create_function( '', ' return WP_PRIMARY_THEME_DIR; ' ) );
@@ -58,8 +59,9 @@ namespace UsabilityDynamics\Cluster {
 
         // Get WP_Theme Instance.
         $this->_theme = wp_get_theme();
-
         $this->exists = $this->_theme->exists();
+        $this->domain = $wp_cluster->domain;
+        $this->site_name = $wp_cluster->site_name;
 
         add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
 
@@ -71,7 +73,7 @@ namespace UsabilityDynamics\Cluster {
        * @param $message
        */
       public function fatal( $message ) {
-        wp_die( '<h1>Cluster Theme Error</h1><p>' . $message . '</p>' );
+        wp_die( '<h1>' . $this->site_name . '</h1><p>' . $message . '</p>', $this->domain );
       }
 
       /**
@@ -81,7 +83,7 @@ namespace UsabilityDynamics\Cluster {
       public function template_redirect() {
 
         if( !$this->exists ) {
-          self::fatal( 'The site is operational but the configured theme does not exist.' );
+          self::fatal( 'This website is not yet set up, please check back later.' );
         }
 
       }

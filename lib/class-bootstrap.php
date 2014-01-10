@@ -163,6 +163,7 @@ namespace UsabilityDynamics\Cluster {
         }
 
         // Current Site.
+        $this->site_name        = get_option( 'blogname' );
         $this->cluster_domain   = WP_BASE_DOMAIN;
         $this->organization     = $current_site->site_name;
         $this->site_id          = $wpdb->blogid;
@@ -179,7 +180,7 @@ namespace UsabilityDynamics\Cluster {
         $this->original_host    = $_SERVER[ 'HTTP_HOST' ];
 
         if( !$this->is_valid ) {
-          wp_die( '<h1>Cluster Network Error</h1><p>Your request is for an invalid domain.</p>' );
+          wp_die( '<h1>Cluster Network Error</h1><p>Your request is for an invalid domain.</p>', $this->domain );
         }
 
         // Initialize Settings.
