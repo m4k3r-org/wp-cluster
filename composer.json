@@ -1,0 +1,15 @@
+{
+  "name": "usabilitydynamics/wp-flawless",
+  "type": "library",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://repository.usabilitydynamics.com"
+    }
+  ],
+  "require": {
+    "usabilitydynamics/lib-carrington-build": "master"
+  },
+  "license": "GPLv2",
+  "minimum-stability": "dev"
+}
