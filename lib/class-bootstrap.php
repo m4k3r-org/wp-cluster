@@ -212,7 +212,7 @@ namespace UsabilityDynamics\Cluster {
         add_action( 'admin_enqueue_scripts', array( &$this, 'admin_enqueue_scripts' ), 20 );
 
         // Modify Core UI.
-        add_filter( 'wpmu_blogs_columns', array( &$this, 'wpmu_blogs_columns' ) );
+        add_filter( 'admin_footer_text', array( &$this, 'admin_footer_text' ) );
         add_action( 'manage_sites_custom_column', array( &$this, 'manage_sites_custom_column' ), 10, 2 );
 
         if( is_network_admin() ) {
@@ -266,6 +266,15 @@ namespace UsabilityDynamics\Cluster {
         //$this->_varnish = new Varnish($this->get( 'varnish' ));
 
       }
+
+      /**
+       * Modify Admin Footer Text
+       *
+       */
+      public function admin_footer_text() {
+        return '<span id="footer-thankyou">' . __( 'Provided by the <a href="http://' . $this->network_domain . '">' . $this->organization . '</a>.' ) . ' network.</span>';
+      }
+
 
       /**
        * Output Fatal Error Message
@@ -332,15 +341,15 @@ namespace UsabilityDynamics\Cluster {
             'class'    => 'cluster-toolbar'
           ),
           'title' => 'Cluster',
-          'href'  => network_admin_url( 'admin.php?page=cluster' )
+          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
         ));
 
         $wp_admin_bar->add_menu(array(
           'parent' => 'cluster',
-          'id'     => 'cluster-networks',
+          'id'     => 'cluster-network',
           'meta'   => array(),
           'title'  => 'Networks',
-          'href'   => network_admin_url( 'admin.php?page=cluster#panel=networks' )
+          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
         ));
 
         $wp_admin_bar->add_menu(array(
@@ -348,7 +357,7 @@ namespace UsabilityDynamics\Cluster {
           'id'     => 'cluster-dns',
           'meta'   => array(),
           'title'  => 'DNS',
-          'href'   => network_admin_url( 'admin.php?page=cluster#panel=dns' )
+          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=dns'
         ));
 
       }
