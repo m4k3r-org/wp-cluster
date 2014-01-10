@@ -7,6 +7,9 @@
       "url": "http://repository.usabilitydynamics.com"
     }
   ],
+  "autoload": {
+    "classmap": [ "lib/class-flawless.php" ]
+  },
   "require": {
     "php": ">=5.3",
     "usabilitydynamics/lib-carrington-build": "master"
