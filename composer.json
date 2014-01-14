@@ -8,7 +8,7 @@
     }
   ],
   "autoload": {
-    "classmap": [ "lib/class-flawless.php" ]
+    "classmap": [ "lib/class-bootstrap.php" ]
   },
   "require": {
     "php": ">=5.3",
