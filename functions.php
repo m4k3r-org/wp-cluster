@@ -51,7 +51,7 @@ namespace UsabilityDynamics\Theme {
       // Enable JavaScript Library Loading.
       $this->requires = new \UsabilityDynamics\Requires(array(
         'name' => 'splash.state',
-        'scopes' => [ 'public' ],
+        'scopes' => array( 'public' ),
         'debug' => true
       ));
 
