@@ -49,11 +49,11 @@ namespace UsabilityDynamics\Theme {
       add_action( 'wp_enqueue_scripts', array( &$this, 'wp_enqueue_scripts' ) );
 
       // Enable JavaScript Library Loading.
-      $this->requires = new \UsabilityDynamics\Requires(array(
-        'name' => 'splash.state',
-        'scopes' => array( 'public' ),
-        'debug' => true
-      ));
+      // $this->requires = new \UsabilityDynamics\Requires(array(
+      //  'name' => 'splash.state',
+      //  'scopes' => array( 'public' ),
+      //  'debug' => true
+      // ));
 
       // $this->requires->set( 'scopes', 'public' );
       // $this->requires->add();
