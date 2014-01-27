@@ -1,0 +1,4 @@
+[21-Oct-2013 15:32:59 America/Los_Angeles] PHP Fatal error:  Class 'UD_Functions' not found in /home/ddp/public_html/production/wp-content/themes/flawless-hddp/core-assets/ud_cloud.php on line 12
+[21-Oct-2013 15:32:59 America/Los_Angeles] PHP Fatal error:  Class 'WP_Widget' not found in /home/ddp/public_html/production/wp-content/themes/flawless-hddp/core-assets/hdp_widgets.php on line 17
+[21-Oct-2013 15:32:59 America/Los_Angeles] PHP Fatal error:  Class 'UD_Saas' not found in /home/ddp/public_html/production/wp-content/themes/flawless-hddp/core-assets/ud_functions.php on line 20
+[21-Oct-2013 15:32:59 America/Los_Angeles] PHP Fatal error:  Call to undefined function add_filter() in /home/ddp/public_html/production/wp-content/themes/flawless-hddp/core-assets/backend_functions.php on line 22
