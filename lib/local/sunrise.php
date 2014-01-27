@@ -39,12 +39,15 @@ if( $domain_mapping_id ) {
   $current_blog         = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE blog_id = '$domain_mapping_id' LIMIT 1" );
   $current_blog->domain = $_host;
   $current_blog->path   = '/';
-  $current_blog->path   = '/';
   $blog_id              = $domain_mapping_id;
   $site_id              = $current_blog->site_id;
 
   // Add cookie with subdomain support
   define( 'COOKIE_DOMAIN', '.' . $_host );
+  define( 'DOMAIN_CURRENT_SITE', $current_blog->domain );
+  define( 'SITE_ID_CURRENT_SITE', $site_id );
+  define( 'BLOG_ID_CURRENT_SITE', $blog_id );
+  define( 'PATH_CURRENT_SITE', $current_blog->path );
 
   $current_site          = $wpdb->get_row( "SELECT * from {$wpdb->site} WHERE id = '{$current_blog->site_id}' LIMIT 0,1" );
   $current_site->blog_id = $wpdb->get_var( "SELECT blog_id FROM {$wpdb->blogs} WHERE domain='{$current_site->domain}' AND path='{$current_site->path}'" );

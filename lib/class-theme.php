@@ -17,7 +17,6 @@ namespace UsabilityDynamics\Cluster {
      */
     class Theme {
 
-
       /**
        * Theme Exists.
        *
@@ -28,13 +27,22 @@ namespace UsabilityDynamics\Cluster {
       public $exists = null;
 
       /**
+       * Theme Directories.
+       *
+       * @public
+       * @property $directories
+       * @type {Array}
+       */
+      public $directories = Array();
+
+      /**
        * WordPrsss WP_Theme Instance
        *
        * @private
-       * @property $_theme
+       * @property $active
        * @type {WP_Theme}
        */
-      private $_theme = null;
+      private $active = null;
 
       /**
        * Initialize Theme
@@ -44,22 +52,22 @@ namespace UsabilityDynamics\Cluster {
       public function __construct() {
         global $wp_cluster;
 
-        if( defined( 'WP_PRIMARY_THEME_DIR' ) && is_dir( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'network-themes' ) ) {
-          add_filter( 'template_directory', create_function( '', ' return WP_PRIMARY_THEME_DIR; ' ) );
-          add_filter( 'stylesheet_directory', create_function( '', ' return WP_PRIMARY_THEME_URL; ' ) );
-          add_filter( 'template_directory_uri', create_function( '', ' return WP_PRIMARY_THEME_URL; ' ) );
-          add_filter( 'stylesheet_directory_uri', create_function( '', ' return WP_PRIMARY_THEME_URL; ' ) );
+        if( defined( 'WP_PRIMARY_THEME_DIR' ) && is_dir( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'themes' ) ) {
+          //add_filter( 'template_directory', create_function( '', ' return WP_PRIMARY_THEME_DIR; ' ) );
+          //add_filter( 'stylesheet_directory', create_function( '', ' return WP_PRIMARY_THEME_URL; ' ) );
+          //add_filter( 'template_directory_uri', create_function( '', ' return WP_PRIMARY_THEME_URL; ' ) );
+          //add_filter( 'stylesheet_directory_uri', create_function( '', ' return WP_PRIMARY_THEME_URL; ' ) );
         }
 
-        if( defined( 'WP_BASE_DIR' ) && is_dir( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'network-themes' ) ) {
-          register_theme_directory( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'network-themes' );
+        if( defined( 'WP_BASE_DIR' ) && is_dir( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'themes' ) ) {
+          //register_theme_directory( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'themes' );
         }
 
         // $this->add_site_directories();
 
         // Get WP_Theme Instance.
-        $this->_theme = wp_get_theme();
-        $this->exists = $this->_theme->exists();
+        $this->active = wp_get_theme();
+        $this->exists = $this->active->exists();
         $this->domain = $wp_cluster->domain;
         $this->site_name = $wp_cluster->site_name;
 
@@ -100,7 +108,7 @@ namespace UsabilityDynamics\Cluster {
         global $wpdb;
 
         if( is_dir( WP_CONTENT_DIR . '/themes-client' ) ) {
-          $this->theme_directories[ ] = WP_CONTENT_DIR . '/themes-client';
+          $this->directories[ ] = WP_CONTENT_DIR . '/themes-client';
         }
 
         foreach( $wpdb->get_col( "SELECT blog_id FROM {$wpdb->blogs}" ) as $blog_id ) {
@@ -110,7 +118,7 @@ namespace UsabilityDynamics\Cluster {
           if( $_upload_path && $_blog_theme_directory = str_replace( 'files', 'themes', WP_BASE_DIR . '/' . $_upload_path ) ) {
 
             if( is_dir( $_blog_theme_directory ) ) {
-              $this->theme_directories[ ] = $_blog_theme_directory;
+              $this->directories[ ] = $_blog_theme_directory;
 
             }
 
@@ -118,7 +126,7 @@ namespace UsabilityDynamics\Cluster {
 
         }
 
-        foreach( (array) $this->theme_directories as $directory ) {
+        foreach( (array) $this->directories as $directory ) {
           register_theme_directory( $directory );
         }
 
