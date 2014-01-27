@@ -18,9 +18,8 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "UsabilityDynamics/lib-utility": "master",
+    "UsabilityDynamics/lib-wp-theme": "master",
     "UsabilityDynamics/lib-settings": "master",
-    "UsabilityDynamics/lib-ui": "master",
     "UsabilityDynamics/lib-carrington-build": "master",
     "UsabilityDynamics/wp-meta-box": "master"
   },
