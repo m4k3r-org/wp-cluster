@@ -8,11 +8,12 @@
  * @subpackage Flawless
  * @package Flawless
  */
-include_once( untrailingslashit( TEMPLATEPATH ) . '/core-assets/class_ud.php' );
+//include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/class_ud.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_saas.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_functions.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_tests.php' );
-
+include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/template_functions.php' );
+//die(untrailingslashit( TEMPLATEPATH ) );
 // UD_Tests::http_methods( 'http://' );
 
 /* Define Child Theme Version */
@@ -21,20 +22,13 @@ define( 'HDDP_Version', 0.10 );
 /* Transdomain */
 define( 'HDDP', 'HDDP' );
 
-/* Initialize */
-add_action( 'flawless::theme_setup::after', array( 'hddp', 'theme_setup' ) );
-add_action( 'flawless::init_upper', array( 'hddp', 'init_upper' ) );
-add_action( 'flawless::init_lower', array( 'hddp', 'init_lower' ) );
-
-__('hdp_artist_name', HDDP);
-
 /**
  * Functionality for Theme
  * Adding Admin Notices: $hddp[ 'runtime' ][ 'notices' ][ 'error'][] = 'This is a notice';
  *
  * @author potanin@UD
  */
-class hddp extends Flawless_F {
+class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
   /** Setup our post types */
   public static $hdp_post_types = array(
@@ -268,7 +262,7 @@ class hddp extends Flawless_F {
    *
    * @author potanin@UD
    */
-  static function theme_setup() {
+  public function theme_setup() {
 
     remove_theme_support( 'header-dropdowns' );
     remove_theme_support( 'custom-header' );
@@ -290,7 +284,7 @@ class hddp extends Flawless_F {
    *
    * @author potanin@UD
    */
-  static function init_upper() {
+  public function init_upper() {
     global $wpdb, $flawless;
 
     wp_register_script( 'knockout', get_stylesheet_directory_uri() . '/js/knockout.js', array(), '2.1', true );
@@ -393,7 +387,7 @@ class hddp extends Flawless_F {
    *
    * @author potanin@UD
    */
-  static function init_lower() {
+  public function init_lower() {
     global $hddp, $wpdb;
 
     /** Must be defined for UD Cloud API to work in static mode */
@@ -401,12 +395,9 @@ class hddp extends Flawless_F {
     define( 'UD_Customer_Key', UD_Functions::get_key( 'customer_key' ) );
     define( 'UD_Public_Key', UD_Functions::get_key( 'public_key' ) ? UD_Functions::get_key( 'public_key' ) : md5( UD_Customer_Key ) );
 
-    UD_Cloud::initialize( array(
+    // Define which post types to store in cloud
 
-      // Define which post types to store in cloud
-      'types' => array( 'hdp_event', 'hdp_video', 'hdp_photo_gallery' )
-
-    ) );
+    // UD_Cloud::initialize( array( 'types' => array( 'hdp_event', 'hdp_video', 'hdp_photo_gallery' ) ) );
 
     /**
      * Structure Documents for CloudData
@@ -579,11 +570,12 @@ class hddp extends Flawless_F {
     $_all_attributes = (array) hddp::$all_attributes;
 
     foreach( $_all_attributes as $key => &$arr ) {
-      $arr = hddp::array_merge_recursive_distinct( hddp::$default_attribute, $arr );
+      $arr = \UsabilityDynamics\Utility::extend( hddp::$default_attribute, $arr );
     }
 
     /** Now go through our attributes */
     $attributes = array();
+
     foreach( hddp::$hdp_post_types as $key => $val ) {
       $attributes[$key] = array();
       foreach( (array) $val as $att ) {
@@ -592,7 +584,7 @@ class hddp extends Flawless_F {
     }
 
     /* Merge default settings with DB settings */
-    $hddp = self::array_merge_recursive_distinct( array(
+    $hddp = \UsabilityDynamics\Utility::extend( array(
       'runtime' => array(
         'notices' => array()
       ),
@@ -709,7 +701,7 @@ class hddp extends Flawless_F {
         if( !$vars[ 'admin_label' ] ) continue;
 
         /** If we made it, add the item */
-        flawless_theme::add_post_type_option( array( 'post_type' => $type, 'type' => $vars[ 'admin_type' ], 'position' => $x++, 'meta_key' => $slug, 'label' => $vars[ 'admin_label' ], 'placeholder' => $vars[ 'placeholder' ], ) );
+        //\Flawless\Management::add_post_type_option( array( 'post_type' => $type, 'type' => $vars[ 'admin_type' ], 'position' => $x++, 'meta_key' => $slug, 'label' => $vars[ 'admin_label' ], 'placeholder' => $vars[ 'placeholder' ], ) );
 
       }
 
@@ -771,7 +763,7 @@ class hddp extends Flawless_F {
    *@action template_redirect (10)
    * @author potanin@UD
    */
-  static function template_redirect() {
+  public function template_redirect() {
     global $post, $flawless;
 
     /** Modify our HTML  for the mobile nav bar */
@@ -800,7 +792,7 @@ class hddp extends Flawless_F {
    * Task: https://basecamp.com/1847866/projects/419234-hddp-new-website/messages/2100601-event-post-type-and
    *
    */
-  static function extended_term_form_fields( $tag, $post ) {
+  public function extended_term_form_fields( $tag, $post ) {
     include 'templates/admin.extended_term_form_fields.php';
   }
 
@@ -808,7 +800,7 @@ class hddp extends Flawless_F {
    * Get HDP-Event Posts.
    *
    */
-  static function _get_event_posts( $args = array() ) {
+  public function _get_event_posts( $args = array() ) {
     global $wpdb, $hddp;
 
     return $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type IN ( '" . implode( "','", array_keys( array( hddp::$hdp_post_types ) ) ) . "' ) AND post_status = 'publish' " );
@@ -817,7 +809,7 @@ class hddp extends Flawless_F {
   /**
    * Gets total events in the db
    */
-  static function get_events_count() {
+  public function get_events_count() {
     global $wpdb;
 
     $wpdb->show_errors();
@@ -829,7 +821,7 @@ class hddp extends Flawless_F {
    * Maintanance Tasks that are run once a day
    *
    */
-  static function daily_maintenance_cron() {
+  public function daily_maintenance_cron() {
     $stats = array();
 
     //** Attempt geolocation for all events that are likely to have locatoins */
@@ -850,7 +842,7 @@ class hddp extends Flawless_F {
    *
    * @version 1.1.0
    */
-  static function save_post( $post_id, $post ) {
+  public function save_post( $post_id, $post ) {
     global $hddp, $wpdb;
 
     //**  Verify if this is an auto save routine.  */
@@ -928,7 +920,7 @@ class hddp extends Flawless_F {
    *
    * @author potanin@UD
    */
-  static function _get_qa_attributes( $post_type ) {
+  public function _get_qa_attributes( $post_type ) {
     global $hddp;
 
     $return = array();
@@ -948,7 +940,7 @@ class hddp extends Flawless_F {
    * @action template_redirect (10)
    * @author potanin@UD
    */
-  static function dynamic_filter_shortcode_handler() {
+  public function dynamic_filter_shortcode_handler() {
     global $post;
 
     // Disable Elastic shortcodes since unused. - potanin@UD
@@ -1234,7 +1226,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * @return bool true if posts location information was updated, false if it was not geolocated or already exists
    * @author potanin@UD
    */
-  static function update_event_location( $post_id = false, $args = array() ) {
+  public function update_event_location( $post_id = false, $args = array() ) {
 
     if( !is_numeric( $post_id ) ) {
       return false;
@@ -1299,7 +1291,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * @action admin_init (10)
    * @author potanin@UD
    */
-  static function admin_init() {
+  public function admin_init() {
     global $wpdb, $hddp, $current_user;
 
     /* Adds options to Publish metabox */
@@ -1436,7 +1428,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    *
    * @author potanin@UD
    */
-  static function all_admin_notices() {
+  public function all_admin_notices() {
     global $hddp;
 
     foreach( (array) $hddp[ 'runtime' ][ 'notices' ][ 'error' ] as $notice ) {
@@ -1455,7 +1447,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * @action admin_init (10)
    * @author potanin@UD
    */
-  static function event_venue_columns_data( $null, $column, $term_id ) {
+  public function event_venue_columns_data( $null, $column, $term_id ) {
 
     if( $column != 'formatted_address' ) {
       return;
@@ -1471,7 +1463,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * @action admin_init (10)
    * @author potanin@UD
    */
-  static function manage_hdp_event_posts_custom_column( $column, $post_id ) {
+  public function manage_hdp_event_posts_custom_column( $column, $post_id ) {
 
     $event = get_event( $post_id );
 
@@ -1526,7 +1518,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    *
    * @author potanin@UD
    */
-  static function admin_enqueue_scripts() {
+  public function admin_enqueue_scripts() {
 
     /* General Scripts and CSS styles */
     wp_enqueue_script( 'hddp-backend-js' );
@@ -1549,7 +1541,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * @action admin_print_footer_scripts (10)
    * @author potanin@UD
    */
-  static function admin_print_footer_scripts() {
+  public function admin_print_footer_scripts() {
 
     global $hddp, $post, $pagenow;
 
@@ -1566,7 +1558,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * Checks to see if the value is blank
    *
    */
-  static function check_blank_array( $value ) {
+  public function check_blank_array( $value ) {
     $value = trim( $value );
     return !empty( $value );
   }
@@ -1576,7 +1568,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    *
    * @author potanin@UD
    */
-  static function df_post_query( $request = false ) {
+  public function df_post_query( $request = false ) {
 
 //    $client = new Elasticsearch\Client(array(
 //        'hosts' => array(
@@ -1849,7 +1841,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    *
    * @author williams@UD
    */
-  static function post_query_error( $err ) {
+  public function post_query_error( $err ) {
 
     $response = array( 'all_results' => array(), 'total_results' => 0, 'current_filters' => array(), 'error' => $err, );
 
@@ -1861,7 +1853,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    *
    * @author potanin@UD
    */
-  static function post_submitbox_misc_actions() {
+  public function post_submitbox_misc_actions() {
 
     global $post, $hddp;
 
@@ -1900,7 +1892,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * @shortcode dynamic_filter
    * @author potanin@UD
    */
-  static function shortcode_dynamic_filter( $args = false, $content = '' ) {
+  public function shortcode_dynamic_filter( $args = false, $content = '' ) {
     global $flawless;
 
     /** Setup the shortcode attributes first */
@@ -2010,7 +2002,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    * @shortcode elastic_filter
    * @author potanin@UD
    */
-//  static function shortcode_elastic_results($args = false, $content = '') {
+//  public function shortcode_elastic_results($args = false, $content = '') {
 //    global $flawless;
 //
 //    $args = shortcode_atts( array(
@@ -2040,7 +2032,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    * @shortcode elastic_filter
    * @author potanin@UD
    */
-//  static function shortcode_elastic_facets( $args = false, $content = '' ) {
+//  public function shortcode_elastic_facets( $args = false, $content = '' ) {
 //    global $flawless;
 //
 //    $args = shortcode_atts( array( 'debug' => 'false', 'profile' => 'false' ), $args );
@@ -2064,7 +2056,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    * @param string $content
    * @return string
    */
-//  static function shortcode_elastic_popup_filter( $args = false, $content = '' ) {
+//  public function shortcode_elastic_popup_filter( $args = false, $content = '' ) {
 //    ob_start();
 //    include 'templates/elastic_popup_filter.php';
 //    return ob_get_clean();
@@ -2176,7 +2168,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    * =USAGE=
    * [hdp_custom_loop type="event"
    */
-  static function shortcode_hdp_custom_loop( $args = false, $content = '' ) {
+  public function shortcode_hdp_custom_loop( $args = false, $content = '' ) {
 
     /** Setup the shortcode attributes first */
     $shortcode_attributes = array( 'post_type' => 'hdp_event', 'per_page' => hddp::$hdp_posts_per_page,
@@ -2200,7 +2192,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
     $do_shortcode = $args[ 'do_shortcode' ];
     unset( $args[ 'do_shortcode' ] );
 
-    $attributes = hddp::array_merge_recursive_distinct( $attributes, $args );
+    $attributes = \UsabilityDynamics\Utility::extend( $attributes, $args );
 
     /** Call the function */
     $ret = hddp::custom_loop( $type, $attributes, true, $do_shortcode );
@@ -2210,7 +2202,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
   /**
    * Hold our custom function for show the events header
    */
-  static function custom_loop( $type = false, $filter = array(), $from_shortcode = false, $do_shortcode = true ) {
+  public function custom_loop( $type = false, $filter = array(), $from_shortcode = false, $do_shortcode = true ) {
     global $wpdb, $post, $WP_Query;
 
     $post_backup = $post;
@@ -2296,7 +2288,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    *
    * @author potanin@UD
    */
-  static function hddp_manage() {
+  public function hddp_manage() {
     global $wpdb, $hddp;
 
     $ud_log = Flawless_F::get_log( array( 'limit' => 100 ) );
@@ -2310,7 +2302,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    *
    * @author potanin@UD
    */
-  static function get_post_title( $post = false ) {
+  public function get_post_title( $post = false ) {
 
     if( !is_object( $post ) ) {
       $post = get_post( $post );
@@ -2351,7 +2343,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    *
    * @author potanin@UD
    */
-  static function get_post_name( $post = false ) {
+  public function get_post_name( $post = false ) {
 
     $post = get_post( $post );
     if( !is_object( $post ) ) {
@@ -2426,7 +2418,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    *
    *@author potanin@UD
    */
-  static function get_post_excerpt( $event_id = false ) {
+  public function get_post_excerpt( $event_id = false ) {
 
     global $post, $wpdb;
 
@@ -2530,3 +2522,10 @@ function _elastic_label( $key ) {
   }
 
 }
+
+
+/* Initialize */
+add_action( 'flawless::theme_setup::after', array( 'hddp', 'theme_setup' ) );
+add_action( 'flawless::init_upper', array( 'hddp', 'init_upper' ) );
+add_action( 'flawless::init_lower', array( 'hddp', 'init_lower' ) );
+
