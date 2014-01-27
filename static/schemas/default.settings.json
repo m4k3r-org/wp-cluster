@@ -1,0 +1,114 @@
+{
+  "post_types": [
+    "artist",
+    "social"
+  ],
+  "configuration": {
+    "color_schema": "default",
+    "custom_colors": {},
+    "social_stream": {
+      "instagram": {},
+      "facebook": {},
+      "twitter": {}
+    }
+  },
+  "meta": {
+    "attributes": {
+      "start_date": {
+        "name": "Start Date",
+        "value": "",
+        "description": "Date the Festival will begin.",
+        "group": "general"
+      },
+      "end_date": {
+        "name": "End Date",
+        "value": "",
+        "description": "Some festivals will be multi-day.",
+        "group": "general"
+      },
+      "venue": {
+        "name": "Venue",
+        "value": "",
+        "description": "Name of venue where the festival will take place.",
+        "group": "general"
+      },
+      "city": {
+        "name": "City",
+        "value": "",
+        "description": "Location of Festival.",
+        "group": "general"
+      },
+      "state": {
+        "name": "State",
+        "value": "",
+        "description": "State or country of festival.",
+        "group": "general"
+      },
+      "latitude": {
+        "name": "Latitude",
+        "value": "",
+        "description": "May be used later to render a map, not required.",
+        "group": "coordinates"
+      },
+      "longitude": {
+        "name": "Longitude",
+        "value": "",
+        "description": "May be used later to render a map, not required.",
+        "group": "coordinates"
+      },
+      "buy_tickets_url": {
+        "name": "Buy Tickets URL",
+        "value": "",
+        "description": "External URL.",
+        "group": "general"
+      },
+      "internal_tickets_url": {
+        "name": "Tickets Information Page.",
+        "value": "",
+        "description": "Internal page.",
+        "group": "general"
+      },
+      "trailer_video_url": {
+        "name": "Trailer Video ",
+        "value": "",
+        "description": "YouTube video url.",
+        "group": "general"
+      },
+      "facebook_url": {
+        "name": "Facebook Social Link",
+        "value": "",
+        "description": "",
+        "group": "socials"
+      },
+      "twitter_url": {
+        "name": "Twitter Social Link",
+        "value": "",
+        "description": "Social Link",
+        "group": "socials"
+      },
+      "google_plus_url": {
+        "name": "Google Plus Social Link",
+        "value": "",
+        "description": "Social Link",
+        "group": "socials"
+      },
+      "youtube_url": {
+        "name": "Youtube Social Link",
+        "value": "",
+        "description": "Social Link",
+        "group": "socials"
+      },
+      "instagram_url": {
+        "name": "Instagram Social Link",
+        "value": "",
+        "description": "Social Link",
+        "group": "socials"
+      }
+    },
+    "groups": {
+      "general": "General",
+      "socials": "Social Links",
+      "coordinates": "Coordinates"
+    }
+  }
+}

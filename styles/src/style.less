@@ -1,0 +1,812 @@
+// General Theme Styles
+//
+// @version 0.1.0
+// @author Usability Dynamics
+
+span.hr {
+  display:block;
+  height: 1px;
+  font-size: 1px;
+  line-height: 1px;
+  margin: 25px 33%;
+  background-color: @hr-color;
+  content: '&nbsp;';
+}
+
+.block {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.container-wrap {
+
+  &.inner-page {
+    margin-top: 50px;
+  }
+
+}
+
+/* ==============
+ Home Header
+============== */
+
+#poster {
+  background-color: @header-bg-color;
+
+  h1, h2, h3, h4, h5, h6, span, div {
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+
+    span.icon {
+      margin-right: 4px;
+    }
+
+  }
+
+  .container {
+    padding: 110px 0;
+
+    h1, h2, h3, h4, h5, h6 {
+      text-align: center;
+    }
+
+    h6 {
+      font-size: 150%;
+    }
+
+    .logo {
+      text-align: center;
+
+      img {
+        display: inline-block;
+      }
+    }
+
+    .event-time {
+      text-align: center;
+
+      span {
+        font-size: 400%;
+        line-height: 50%;
+        font-family: @font-family-countdown;
+      }
+
+    }
+
+    .event-place {
+      text-align: left;
+
+      span {
+        display: block;
+        text-align: left;
+
+        &.label {
+          padding: 0 0 10px 0;
+        }
+
+        &.value {
+          text-transform: none;
+        }
+      }
+
+    }
+
+    .right-header {
+
+      h6 {
+        font-size: 125%;
+        padding-top: 10px;
+        margin-bottom: 40px;
+      }
+
+      span.hr {
+        margin-top: 40px;
+        margin-bottom: 40px;
+      }
+
+    }
+
+    .action-slider {
+      text-align: center;
+
+      .btn {
+        border-radius: 0;
+        font-size: 225%;
+        padding: 6px 40px 10px;
+      }
+
+    }
+
+  }
+
+}
+
+/* ==============
+ Navbar
+============== */
+
+.customize-support {
+
+  .navbar-fixed-top {
+    top: 32px;
+  }
+
+}
+
+.navbar {
+
+  z-index: 1000;
+  width: 100%;
+
+  .container {
+    position: relative;
+  }
+
+  &.navbar-inverse {
+    border-radius: 0;
+    border-top: 0;
+  }
+
+  .sticky {
+    display: none;
+  }
+
+  a {
+    text-transform: uppercase;
+  }
+
+  .navbar-brand {
+    padding: 7px;
+    height: 50px;
+    margin-left: 0;
+    padding-left: 0;
+
+    .logo {
+      float: left;
+    }
+
+    .btn {
+      margin: 2px 30px 0 20px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+  }
+
+  .social-wrap {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    bottom: 0;
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      float: right;
+
+      li {
+        display: block;
+        float: left;
+        padding-left: 2px;
+        margin: 0;
+      }
+
+      li:last-child {
+        padding-right: 2px;
+      }
+
+      a {
+        display: block;
+        text-decoration: none;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+      }
+
+      [class^="icon-"],[class*=" icon-"] {
+        font-size: 22px;
+        line-height: 50px;
+      }
+
+    }
+
+  }
+
+}
+
+.navbar-top {
+  border-left: 0px;
+  border-right: 0px;
+}
+
+.is-sticky .navbar-top,
+.navbar-fixed-top {
+
+  .sticky {
+    display: block;
+  }
+
+  .no-sticky {
+    display: none;
+  }
+
+  .social-wrap {
+
+    .social-collapse {
+      float:none;
+      clear: both;
+    }
+
+    ul {
+
+      li {
+        float: none;
+        padding-bottom: 2px;
+
+        &:first-child {
+          padding-top: 4px;
+        }
+
+      }
+
+    }
+
+    button.navbar-toggle {
+      float: right;
+      display: block;
+      border: 0;
+      width: 54px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 22px;
+      margin: 0;
+      padding: 0;
+      border-style: solid;
+      border-left-width: 2px;
+      border-right-width: 2px;
+      border-radius: 0;
+    }
+
+  }
+
+
+}
+
+/* ==============
+ Carousel
+============== */
+
+.carousel-wrap {
+
+  h3 {
+    margin: 0 0 40px 0;
+    text-align: center;
+  }
+
+  .carousel-inner {
+
+    .item {
+
+      .description {
+        min-height: 200px;
+      }
+
+      span.date {
+        display: block;
+        text-transform: uppercase;
+        margin: 20px 0;
+        font-weight: 700;
+      }
+
+      span.hr {
+        margin: 0;
+        height: 2px;
+        width: 10%;
+      }
+
+      h5 {
+        font-size: 125%;
+        margin: 20px 0;
+        font-weight: 700;
+      }
+
+    }
+
+  }
+
+}
+
+/* ==============
+ Parallax Block
+============== */
+
+.parallax-block {
+  background: @body-prlx-bg url("@{img-url}/bg-prlx.png") left top repeat-x;
+  height: 324px;
+  position: relative;
+
+  .parallax-img {
+    position: absolute;
+    background-image: url("@{img-url}/temp/parallax.png");
+    background-position: 0 0;
+    background-repeat: repeat;
+    right: 0;
+    left: 30%;
+    top: 0;
+    bottom: 0;
+  }
+
+  h3 {
+    font-size: 200%;
+    margin-top: 80px;
+    margin-bottom: 20px;
+  }
+}
+
+/* ==============
+ Custom
+============== */
+
+.theme-dropdown .dropdown-menu {
+  display: block;
+  position: static;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+/* ==============
+ Footer
+============== */
+
+footer {
+  background-color: @header-bg-color;
+  margin-top: 100px;
+  padding: 20px 0 40px 0;
+
+  .row {
+    padding-top: 20px;
+  }
+
+  ul.social {
+    list-style-type: none;
+    padding: 0;
+    float: right;
+
+    li {
+      display: inline-block;
+      margin-bottom: 2px;
+      margin-right: 2px;
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+    }
+
+    [class^="icon-"],[class*=" icon-"] {
+      font-size: 22px;
+      line-height: 40px;
+    }
+
+  }
+
+  .footer-nav {
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: inline-block;
+        padding: 0 12px 0 10px;
+        border-right-width: 1px;
+        border-right-style: solid;
+
+        &:first-child {
+          margin-left: 0;
+          padding-left: 0;
+        }
+
+        &:last-child {
+          border: 0;
+        }
+
+        a {
+          text-transform: uppercase;
+        }
+
+      }
+
+    }
+
+  }
+
+  p {
+    display: block;
+    clear: both;
+    text-align: right;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+}
+
+/* ==============
+ The Artist
+============== */
+
+.the-artist {
+  .heading {
+    span {
+      &.hr {
+        height: 2px;
+        margin: 15px auto;
+        width: 40px;
+      }
+    }
+  }
+  .artist-previews {
+    .artist-preview {
+      .date {
+        height: 60px;
+        text-transform: uppercase;
+        font-size: 140%;
+        font-weight: bold;
+        .hr {
+          height: 2px;
+          margin-top: 10px;
+          margin-bottom: 20px;
+          margin-left: 0;
+          width: 40px;
+        }
+      }
+      .image {
+        .caption {
+          padding: 12px;
+        }
+      }
+    }
+  }
+}
+
+/* ==============
+ Artist Alphabetical
+============== */
+
+.artist-alphabetical {
+  background: url("@{img-url}/temp/header-bg.jpg") repeat;
+  padding-bottom: 60px;
+
+  .heading {
+    margin-bottom: 40px;
+    h3 {
+      margin-top: 45px;
+    }
+    .hr {
+      height: 2px;
+      margin: 20px auto;
+      width: 40px;
+    }
+  }
+
+  .artist-alpha {
+    a {
+      text-decoration: none;
+      .image {
+        margin-bottom: 40px;
+        .caption {
+          padding: 12px;
+          position: relative;
+          .pin {
+            display: none;
+            position: absolute;
+            top: -5px;
+            left: 49%;
+            width: 8px;
+            height: 5px;
+            background: url("@{img-url}/pin.png") center center no-repeat;
+          }
+        }
+      }
+      &:hover {
+        .image {
+          .caption {
+            .pin {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ==============
+ Local Support Artist
+============== */
+
+.local-support-artist {
+
+  .heading {
+    span {
+      &.hr {
+        height: 2px;
+        margin: 15px auto;
+        width: 40px;
+      }
+    }
+    margin-bottom: 30px;
+  }
+
+  ul {
+    padding: 0;
+    display: block;
+    margin: 0 auto 20px;
+    li {
+      padding-left: 30px;
+      padding-right: 30px;
+      border-right: 2px solid;
+      display: inline-block;
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+}
+
+/* ==============
+ Bottom Content
+============== */
+
+#bottom-headings {
+  background: #fff;
+  z-index: 100;
+  width: inherit;
+}
+
+.is-sticky {
+  #bottom-headings {
+    h3 {
+      font-size: 15px;
+      line-height: 17px;
+    }
+    .hr {
+      margin-top: 15px;
+      margin-bottom: 0;
+      width: 80px;
+      margin-left: 1px;
+    }
+  }
+}
+
+.bottom-content {
+  border-top: 2px solid;
+  padding-top: 40px;
+
+  .head {
+
+    .bottom-line {
+      display: none;
+      background: none repeat scroll 0 0 #eee;
+      height: 1px;
+      width: 100%;
+      z-index: 100;
+    }
+
+    .is-sticky {
+      .bottom-line {
+        display: block;
+      }
+    }
+
+  }
+
+  .heading {
+    h3 {
+      text-transform: uppercase;
+      font-size: 150%;
+      font-weight: bold;
+    }
+    .hr {
+      height: 2px;
+      margin: 15px auto 15px 0;
+      width: 40px;
+    }
+  }
+
+  ul {
+    padding-left: 0;
+    list-style: none;
+
+    > li {
+      border: 1px solid;
+      box-shadow: 0 1px 2px #dfdfdf;
+      margin-bottom: 40px;
+    }
+  }
+
+  .stream-items {
+    li {
+      margin-bottom: 80px;
+      &.stream-item {
+        .text {
+          padding: 45px 20px 20px;
+    }
+      }
+      .title {
+        font-size: 100%;
+      }
+      .content {
+        font-size: 90%;
+      }
+      .meta {
+        text-transform: uppercase;
+        font-size: 80%;
+      }
+    }
+    .icon {
+      position: absolute;
+      width: 68px;
+      height: 68px;
+    }
+    .instagram {
+      .photo {
+        position: relative;
+        .icon {
+          background: url("@{img-url}/icon-instagram.png") center center no-repeat;
+          left: 50%;
+          margin-left: -34px;
+          top: 80%;
+        }
+      }
+    }
+    .facebook {
+      position: relative;
+      .icon {
+        background: url("@{img-url}/icon-facebook.png") center center no-repeat;
+        left: 50%;
+        margin-left: -34px;
+        top: -34px;
+      }
+    }
+    .twitter {
+      position: relative;
+      .icon {
+        background: url("@{img-url}/icon-twitter.png") center center no-repeat;
+        left: 50%;
+        margin-left: -34px;
+        top: -34px;
+      }
+    }
+  }
+
+  .blog-updates {
+    .blog-item {
+      .hr {
+        height: 2px;
+        margin: 0 0 0 20px;
+        width: 40px;
+}
+      .featured-image {
+        border-bottom: 1px solid;
+      }
+      .category {
+        padding: 10px 20px;
+        
+        ul {
+        
+          li {
+            display: inline-block;
+            border: 0;
+            margin: 0 10px 0 0;
+            padding: 0;
+            box-shadow: none;
+          }
+        
+        }
+        
+        a {
+          text-transform: uppercase;
+          font-size: 80%;
+        }
+      }
+      .title {
+        padding-left: 20px;
+        padding-left: 20px;
+        font-size: 100%;
+        margin: 13px 0;
+      }
+      .share {
+        padding-left: 20px;
+        font-size: 70%;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .festival-news {
+  
+    .news-item {
+    
+      h4 {
+        margin: 0;
+      }
+    
+      .category {
+        
+        ul {
+        
+          li {
+            display: inline-block;
+            border: 0;
+            margin: 0 10px 0 0;
+            padding: 0;
+            box-shadow: none;
+          }
+        
+        }
+        
+      }
+    
+      .image {
+        position: relative;
+        
+        .category {
+          position: absolute;
+          left: 20px;
+          right: 20px;
+          bottom: 0;
+          padding: 10px 20px;
+          
+          a {
+            text-transform: uppercase;
+            font-size: 80%;
+          }
+        }
+        
+        .hr {
+          height: 2px;
+          margin: 10px 0 0;
+          width: 40px;
+        }
+        
+        img {
+          width: 100%;
+        }
+        
+      }
+      
+      .text {
+        padding: 20px 40px;
+        
+        .title {
+          font-size: 150%;
+        }
+        
+        .content {
+          font-size: 90%;
+        }
+        
+        .share {
+          font-size: 70%;
+          text-transform: uppercase;
+        }
+        
+      }
+      
+    }
+  }
+}

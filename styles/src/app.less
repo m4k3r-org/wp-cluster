@@ -1,0 +1,31 @@
+// Application Styles
+//
+// @version 0.1.0
+// @author Usability Dynamics
+
+// Google Font CSS
+@import url(http://fonts.googleapis.com/css?family=Candal);
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+/*--------------------------------------------------------------
+We import bootstrap.less in order to take advantage of its classes and mixins.
+AFTER THAT we import the variables.less which is Bootstrap variables.less
+that we copied and altered in order to override the original variables and make our custom bootstrap skin.
+This way we leave Bootstrap unharmed.
+--------------------------------------------------------------*/
+@import "bootstrap/bootstrap.less";
+@import "variables.less";
+
+// Theme specific
+@import "font-awesome.less";
+@import "glyphicons.less";
+@import "style.less";
+@import "countdown.less";
+@import "carousel.less";
+@import "custom.less";
+
+// Responsive
+@import "responsive.less";
+
+// Allow overrides in style.css
+// @import (less) "../../style.css";

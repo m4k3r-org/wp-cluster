@@ -1,0 +1,85 @@
+// Responsive styles
+//
+// @author UsabilityDynamics, Inc
+// @version 0.1.0
+
+/* =Responsive: Large desktop and up
+-------------------------------------------------------------- */
+@media (min-width: @screen-lg) {
+//------------------------------------------------------------
+
+
+
+
+//------------------------------------------------------------
+}
+/* =Responsive: Desktop
+-------------------------------------------------------------- */
+@media (min-width: @screen-md) and (max-width: @screen-md-max) {
+//------------------------------------------------------------
+
+
+
+//------------------------------------------------------------
+}
+/* =Responsive: Tablet to desktop
+-------------------------------------------------------------- */
+@media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+//------------------------------------------------------------
+
+#countdown {
+  .countdown_row {
+    .countdown_section {
+      .countdown_amount {
+        font-size: 300%;
+      }
+    }
+  }
+}
+
+//------------------------------------------------------------
+}
+/* =Responsive: Landscape Phone to Tablet
+-------------------------------------------------------------- */
+@media only screen and (max-width: @screen-xs-max) {
+//------------------------------------------------------------
+
+#bottom-headings {
+  display: none;
+}
+
+#bottom-headings-sticky-wrapper {
+  display: none;
+}
+
+.head {
+  .bottom-line {
+    display: none !important;
+  }
+}
+
+#poster {
+  background: url("@{img-url}/mobile-poster-bg.jpg") center center repeat;
+
+  .event-place {
+    text-align: center !important;
+
+    span {
+      text-align: center !important;
+    }
+
+  }
+}
+
+//------------------------------------------------------------
+}
+/* =Responsive: Portrait Phone
+-------------------------------------------------------------- */
+@media only screen and (max-width: @screen-xs) {
+//------------------------------------------------------------
+
+
+
+
+//------------------------------------------------------------
+}

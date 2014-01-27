@@ -1,0 +1,347 @@
+// Application Colour schema
+//
+// @version 0.1.0
+// @author Usability Dynamics
+
+/* ==============
+ Home Header
+============== */
+
+#poster {
+
+  h1, h2, h3, h4, h5, h6 {
+    color: @navbar-default-color;
+  }
+
+  .value {
+    color: @navbar-default-color;
+  }
+
+  .event-place .label,
+  .event-time span {
+    color: @countdown_n;
+  }
+
+  #countdown .countdown_section {
+
+    span {
+      color: @countdown_n;
+    }
+
+    .countdown_label {
+      color: @countdown_l;
+    }
+
+  }
+
+  .btn {
+    background-color: @default-color;
+    color: @navbar-default-color;
+  }
+
+}
+
+/* ==============
+ Navbar
+============== */
+
+.navbar {
+
+  &.navbar-inverse {
+    background-color: @default-color;
+    border-bottom: 4px solid @default-color-active;
+
+    .navbar-brand {
+      color: @navbar-default-color;
+    }
+
+    .navbar-nav {
+
+      a {
+        color: @navbar-default-color;
+      }
+
+      & > .active > a,
+      & > .active > a:hover,
+      & > .active > a:focus {
+        background-color: @default-color-active;
+      }
+
+    }
+
+    .btn {
+      background-color: @countdown_n;
+      color: @navbar-default-color;
+      border-color: @countdown_n;
+    }
+
+    .social-wrap {
+
+      button.navbar-toggle {
+        color: @navbar-default-color;
+        border-color: @default-color-active;
+
+        &:hover, &:focus {
+          background-color: @default-color-active;
+        }
+      }
+
+      ul {
+        background-color: @default-color-active;
+
+        a {
+          color: @navbar-default-color;
+          background-color: @default-color;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+/* ==============
+ Carousel
+============== */
+
+.carousel-inner {
+
+  .item {
+
+    span.date {
+      color: @text-gray-color;
+    }
+
+    span.hr {
+      background-color: @text-gray-color;
+    }
+
+    h5 {
+      color: @default-color;
+    }
+
+    p {
+      color: @text-gray-color;
+    }
+
+  }
+
+}
+
+.carousel-indicators {
+  bottom: 0px;
+
+  li {
+    background-color: @carousel-indicator-bg;
+  }
+  .active {
+    background-color: @carousel-indicator-active-bg;
+  }
+}
+
+/* ==============
+ Footer
+============== */
+
+footer {
+  background-color: @footer-background;
+
+  span, div, p, a, a:hover {
+    color: @footer-color;
+  }
+
+  .social a {
+    background-color: @footer-social-button;
+  }
+
+  .footer-nav li {
+    border-right-color: @footer-color;
+  }
+
+}
+
+/* ==============
+ The Artist
+============== */
+
+.the-artist {
+  color: @the-artist-color;
+  .heading {
+    span {
+      &.hr {
+        background: @default-color;
+      }
+    }
+  }
+  .artist-previews {
+    .artist-preview {
+      .date {
+        .month, .day {
+          color: @default-color;
+        }
+        .hr {
+          background: @default-color;
+        }
+      }
+      .image {
+        .caption {
+          color: @artist-preview-caption;
+          background: @artist-preview-caption-bg;
+        }
+      }
+    }
+  }
+}
+
+/* ==============
+ Artist Alphabetical
+============== */
+
+.artist-alphabetical {
+  .heading {
+    h3 {
+      color: @artist-alpha-heading;
+      span {
+        color: @default-color;
+      }
+    }
+    .hr {
+      background: @default-color;
+    }
+  }
+  .artist-alpha {
+    a {
+      .image {
+        .caption {
+          color: @artist-preview-caption;
+          background: @artist-preview-caption-bg;
+        }
+      }
+      &:hover {
+        .image {
+          .caption {
+            background: @default-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ==============
+ Local Support Artist
+============== */
+
+.local-support-artist {
+  color: @the-artist-color;
+  .heading {
+    span {
+      &.hr {
+        background: @default-color;
+      }
+    }
+  }
+
+  ul {
+    li {
+      border-color: @gray-light;
+      a {
+        color: @gray-light;
+      }
+    }
+  }
+}
+
+
+/* ==============
+ Bottom Content
+============== */
+
+.bottom-content {
+  border-color: @gray-lighter;
+
+  ul {
+    > li {
+      border-color: @gray-lighter;
+      box-shadow-color: @gray-lighter;
+    }
+  }
+
+  .stream-items {
+    li {
+      &.stream-item {
+        .text {
+          color: @gray;
+}
+      }
+      .title {
+        a {
+          color: @gray;
+        }
+      }
+      .content {
+        color: @gray-light;
+      }
+      .network {
+        color: @dark-blue;
+      }
+    }
+  }
+
+  .blog-updates {
+    .blog-item {
+      .hr {
+        background: @default-color;
+      }
+      .featured-image {
+        border-bottom-color: @gray-lighter;
+      }
+      .category {
+        a {
+          color: @category-link;
+        }
+      }
+      .title {
+        a {
+          color: @gray;
+        }
+      }
+      .share {
+        a {
+          color: @gray-light;
+        }
+      }
+    }
+  }
+
+  .festival-news {
+    .news-item {
+      .image {
+        .category {
+          background: #fff;
+          a {
+            color: @category-link;
+          }
+        }
+        .hr {
+          background: @default-color;
+        }
+      }
+      .title {
+        a {
+          color: @gray;
+        }
+      }
+      .content {
+        color: @gray-light;
+      }
+      .share {
+        a {
+          color: @gray-light;
+        }
+      }
+    }
+  }
+}
