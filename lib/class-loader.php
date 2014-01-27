@@ -40,7 +40,7 @@ namespace UsabilityDynamics\Flawless {
    * @author Fabien Potencier <fabien@symfony.com>
    * @author Jordi Boggiano <j.boggiano@seld.be>
    */
-  class Loader extends \UsabilityDynamics\Utility\Loader {
+  class Loader  {
 
     /**
      * Loader Class version.
@@ -229,7 +229,7 @@ namespace UsabilityDynamics\Flawless {
             continue;
           }
 
-          $file_data = Loader::get_file_data( $path . '/' . $file_name, 'module' );
+          $file_data = \get_file_data( $path . '/' . $file_name, 'module' );
 
           $file_data[ 'Location' ] = 'theme_functions';
           $file_data[ 'File Name' ] = $file_name;
@@ -296,7 +296,7 @@ namespace UsabilityDynamics\Flawless {
 
           //** Check if directory includes a with the same name as directory, AND there is no filename in root */
           if( is_dir( $path . '/' . $file_name ) && file_exists( $path . '/' . $file_name . '/' . $file_name . '.php' ) && !file_exists( $path . '/' . $file_name . '.php' ) ) {
-            $file_data = array_filter( (array) @get_file_data( $path . '/' . $file_name . '/' . $file_name . '.php', $flawless[ 'default_header' ][ 'flawless_extra_assets' ], 'flawless_extra_assets' ) );
+            $file_data = array_filter( (array) \get_file_data( $path . '/' . $file_name . '/' . $file_name . '.php', $flawless[ 'default_header' ][ 'flawless_extra_assets' ], 'flawless_extra_assets' ) );
             $file_data[ 'path' ] = $path . '/' . $file_name . '/' . $file_name . '.php';
             $file_data[ 'file_name' ] = $file_name . '.php';
             load_file( $file_data );
@@ -307,7 +307,7 @@ namespace UsabilityDynamics\Flawless {
             continue;
           }
 
-          $file_data = array_filter( (array) @get_file_data( $path . '/' . $file_name, $flawless[ 'default_header' ][ 'flawless_extra_assets' ], 'flawless_extra_assets' ) );
+          $file_data = array_filter( (array) \get_file_data( $path . '/' . $file_name, $flawless[ 'default_header' ][ 'flawless_extra_assets' ], 'flawless_extra_assets' ) );
 
           $file_data[ 'file_name' ] = $file_name;
           $file_data[ 'path' ] = $path . '/' . $file_name;

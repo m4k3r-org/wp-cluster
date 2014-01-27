@@ -417,7 +417,7 @@ if ( !function_exists( 'flawless_image_link' ) ) {
       return false;
     }
 
-    $image_sizes = Flawless::image_sizes();
+    $image_sizes = \UsabilityDynamics\Flawless\Utility::all_image_sizes();
 
     $args = wp_parse_args( $args, array(
       'return' => 'string',
@@ -459,9 +459,9 @@ if ( !function_exists( 'flawless_image_link' ) ) {
       }
     }
 
-    $image_resize = image_resize( get_attached_file( $attachment_id, true ), $image_sizes[ $size ][ 'width' ], $image_sizes[ $size ][ 'height' ], $image_sizes[ $size ][ 'crop' ], 'test' );
+    $wp_get_image_editor = wp_get_image_editor( get_attached_file( $attachment_id, true ), $image_sizes[ $size ][ 'width' ], $image_sizes[ $size ][ 'height' ], $image_sizes[ $size ][ 'crop' ], 'test' );
 
-    if ( is_wp_error( $image_resize ) || !file_exists( $image_resize ) ) {
+    if ( is_wp_error( $wp_get_image_editor ) || !file_exists( $wp_get_image_editor ) ) {
 
       if ( $attachment_image_src[ 0 ] ) {
         $return = $args[ 'default' ] ? $args[ 'default' ] : $attachment_image_src[ 0 ];
@@ -794,7 +794,7 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
         if ( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] ) {
           $content_type_home = get_permalink( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] );
         } else {
-          $content_type_home = Flawless::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
+          $content_type_home = \UsabilityDynamics\Flawless\Utility::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
         }
 
         /** Fix 'Pages' */
@@ -834,7 +834,7 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
       if ( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] ) {
         $content_type_home = get_permalink( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] );
       } else {
-        $content_type_home = Flawless::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
+        $content_type_home = \UsabilityDynamics\Flawless\Utility::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
       }
 
       /** Fix 'Pages' */

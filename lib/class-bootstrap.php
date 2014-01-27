@@ -53,7 +53,7 @@ namespace UsabilityDynamics\Flawless {
      * @property $_state
      * @type {Object}
      */
-    private $state = stdClass;
+    private $state;
 
     /**
      * Initializes Theme
@@ -85,7 +85,7 @@ namespace UsabilityDynamics\Flawless {
           'using_permalinks'  => ( get_option( 'permalink_structure' ) != '' ? true : false ),
           'have_blog_home'    => ( get_option( 'show_on_front' ) == 'page' || get_option( 'page_for_posts' ) ? true : false ),
           'protocol'          => ( is_ssl() ? 'https://' : 'http://' ),
-          'deregister_empty_widget_areas'  => flase,
+          'deregister_empty_widget_areas'  => false,
           'asset_directories' => apply_filters( 'flawless::asset_locations', array(
             trailingslashit( get_template_directory() ) . 'core' => trailingslashit( get_template_directory_uri() ) . 'core',
             trailingslashit( get_template_directory() ) . 'ux' => trailingslashit( get_template_directory_uri() ) . 'ux',
@@ -123,15 +123,9 @@ namespace UsabilityDynamics\Flawless {
       // Get Loader Class.
       // require_once( $this->state->computed->paths->controllers . '/loader.php' );
 
-      return;
-
+      /*
       // Load Controllers, Modules, Helpers and Schemas.
       new Loader( array(
-        /*'controllers' => array(
-          'Flawless\\'          => array( $this->state->computed->paths->controllers ),
-          'UsabilityDynamics\\' => array( $this->state->computed->paths->vendor ),
-          'JsonSchema\\'        => array( $this->state->computed->paths->vendor . '/justinrainbow' )
-        ),*/
         'modules' => array(
           'modules' => $this->state->computed->paths->modules,
           'extend'  => $this->state->computed->paths->extend
@@ -149,6 +143,7 @@ namespace UsabilityDynamics\Flawless {
           'state'    => $this->state->computed->paths->schemas . '/state.json'
         )
       ));
+      */
 
       // Controllers.
       //$this->API      = new API();
@@ -163,7 +158,9 @@ namespace UsabilityDynamics\Flawless {
       //$this->Log      = new Log();
 
       // Compute additional data once controllers are loaded.
-      $this->state->computed->theme_data = Loader::get_file_data( is_child_theme() ? untrailingslashit( get_stylesheet_directory() ) . '/style.css' : TEMPLATEPATH . '/style.css' );
+      $this->state->computed->theme_data = \get_file_data( is_child_theme() ? untrailingslashit( get_stylesheet_directory() ) . '/style.css' : TEMPLATEPATH . '/style.css', array(
+
+      ));
 
       // Setup Primary Actions.
       add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ) );
@@ -280,7 +277,7 @@ namespace UsabilityDynamics\Flawless {
       self::log( 'Executed: Bootstrap::template_redirect();' );
 
       // Load Template helpers.
-      require_once( $this->state->computed->paths->helpers . '/template.php' );
+      require_once( $this->state->computed->paths->lib . '/template.php' );
 
       // Call template redirection - the front-end initializer.
       do_action( 'flawless::template_redirect', $this );

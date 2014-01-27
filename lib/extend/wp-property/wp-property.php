@@ -63,21 +63,21 @@ namespace Flawless {
         return 'Search Properties';
       } );
 
-      Flawless::add_post_type_option( array(
+      Management::add_post_type_option( array(
         'post_type' => 'property',
         'position' => 300,
         'meta_key' => 'hide_default_google_map',
         'label' => sprintf( __( 'Hide Location Map.', 'flawless' ) )
       ) );
 
-      Flawless::add_post_type_option( array(
+      Management::add_post_type_option( array(
         'post_type' => 'property',
         'position' => 310,
         'meta_key' => 'hide_property_attributes',
         'label' => sprintf( __( 'Hide Attributes.', 'flawless' ) )
       ) );
 
-      Flawless::add_post_type_option( array(
+      Management::add_post_type_option( array(
         'post_type' => 'property',
         'position' => 320,
         'meta_key' => 'hide_property_taxonomies',

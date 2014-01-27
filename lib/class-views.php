@@ -163,7 +163,7 @@ namespace UsabilityDynamics\Flawless {
         $views[ 'post_types' ][ $post_type ][ 'settings' ] = $post_type_data;
         $views[ 'post_types' ][ $post_type ][ 'widget_areas' ] = array();
 
-        Flawless::add_post_type_option( array(
+        \Flawless\Management::add_post_type_option( array(
           'post_type' => $post_type,
           'position' => 50,
           'meta_key' => 'hide_page_title',
@@ -172,7 +172,7 @@ namespace UsabilityDynamics\Flawless {
 
         /** If breadcrumbs are not globally hidden, show an option to hide them */
         if ( $flawless[ 'hide_breadcrumbs' ] != 'true' ) {
-          Flawless::add_post_type_option( array(
+          Management::add_post_type_option( array(
             'post_type' => $post_type,
             'position' => 70,
             'meta_key' => 'hide_breadcrumbs',
@@ -181,7 +181,7 @@ namespace UsabilityDynamics\Flawless {
         }
 
         if ( post_type_supports( $post_type, 'author' ) && $post_type_data[ 'disable_author' ] != 'true' ) {
-          Flawless::add_post_type_option( array(
+          Management::add_post_type_option( array(
             'post_type' => $post_type,
             'position' => 100,
             'meta_key' => 'hide_post_author',
@@ -190,7 +190,7 @@ namespace UsabilityDynamics\Flawless {
         }
 
         if ( post_type_supports( $post_type, 'capability_restrictions' ) ) {
-          Flawless::add_post_type_option( array(
+          Management::add_post_type_option( array(
             'post_type' => $post_type,
             'position' => 1000,
             'meta_key' => 'must_be_logged_in',
@@ -201,7 +201,7 @@ namespace UsabilityDynamics\Flawless {
         //** Load used widget areas into array */
         foreach ( (array) $post_type_data[ 'widget_areas' ] as $was_slug => $these_widget_areas ) {
 
-          Flawless::add_post_type_option( array(
+          Management::add_post_type_option( array(
             'post_type' => $post_type,
             'position' => 200,
             'meta_key' => 'disable_' . $was_slug,

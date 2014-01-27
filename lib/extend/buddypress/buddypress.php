@@ -161,7 +161,7 @@ namespace Flawless {
         return;
       }
 
-      Flawless::add_post_type_option( array(
+      Management::add_post_type_option( array(
         'post_type' => $wpdb->get_var( "SELECT post_type FROM {$wpdb->posts} WHERE ID = $post_id" ),
         'position' => 1000,
         'meta_key' => 'override_buddypress_template',
