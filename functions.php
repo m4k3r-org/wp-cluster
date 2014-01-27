@@ -8,16 +8,25 @@
  * @subpackage Flawless
  * @package Flawless
  */
-//include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/class_ud.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_saas.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_functions.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_tests.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/template_functions.php' );
-//die(untrailingslashit( TEMPLATEPATH ) );
-// UD_Tests::http_methods( 'http://' );
+
+// Legacy Flawless Libraries.
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/ud_saas.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/ud_functions.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/ud_tests.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/backend-functions.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/business-card.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/class-flawless-utility.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/front-end-editor.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/login_module.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/theme_ui.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/shortcodes.php' );
+
+// Disco Libraries.
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/widgets.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/template.php' );
 
 /* Define Child Theme Version */
-define( 'HDDP_Version', 0.10 );
+define( 'HDDP_Version', '1.0.0' );
 
 /* Transdomain */
 define( 'HDDP', 'HDDP' );
@@ -31,8 +40,8 @@ define( 'HDDP', 'HDDP' );
 class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
   /** Setup our post types */
-  public static $hdp_post_types = array(
-    'hdp_event' => array(
+  static public $hdp_post_types = array(
+    'hdp_event'         => array(
       'post_title',
       'post_name',
       'hdp_event_date',
@@ -56,7 +65,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       'hdp_facebook_rsvp_url',
       'hdp_date_range'
     ),
-    'hdp_video' => array(
+    'hdp_video'         => array(
       'post_title',
       'post_name',
       'hdp_event_date',
@@ -95,14 +104,14 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
   );
 
   /** Some variables to hold our QA table items */
-  public static $all_attributes = array(
-    'post_title' => array(
+  static public $all_attributes = array(
+    'post_title'            => array(
       'label' => 'Title',
     ),
-    'post_name' => array(
+    'post_name'             => array(
       'label' => 'Slug',
     ),
-    'hdp_event_date' => array(
+    'hdp_event_date'        => array(
       'label'       => 'Date',
       'admin_label' => 'Date',
       'admin_type'  => 'datetime',
@@ -110,20 +119,20 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       'summarize'   => 105,
 
     ),
-    'hdp_event_time' => array(
+    'hdp_event_time'        => array(
       'label'       => 'Time',
       'admin_label' => 'Time',
       'type'        => 'post_meta',
       'summarize'   => 110,
 
     ),
-    'hdp_artist' => array(
+    'hdp_artist'            => array(
       'label'     => 'Artist',
       'type'      => 'taxonomy',
       'summarize' => 225,
 
     ),
-    'hdp_tour' => array(
+    'hdp_tour'              => array(
       'label'     => 'Tour',
       'type'      => 'taxonomy',
       'summarize' => 220,
@@ -153,18 +162,18 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       'summarize' => 205,
 
     ),
-    'hdp_type' => array(
+    'hdp_type'              => array(
       'label'     => 'Type',
       'type'      => 'taxonomy',
       'summarize' => 210,
 
     ),
-    'hdp_credit' => array(
+    'hdp_credit'            => array(
       'type'      => 'taxonomy',
       'label'     => 'Credit',
       'summarize' => 230,
     ),
-    'credit' => array(
+    'credit'                => array(
       'type'      => 'taxonomy',
       'label'     => 'Credit',
       'summarize' => 231,
@@ -174,7 +183,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       'type' => 'post_meta',
 
     ),
-    'latitude' => array(
+    'latitude'              => array(
       'type' => 'post_meta',
 
     ),
@@ -183,27 +192,27 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
     ),
 
-    'hdp_city' => array(
+    'hdp_city'              => array(
       'type'      => 'taxonomy',
 
       'label'     => 'City',
-      'summarize' => - 1,
+      'summarize' => -1,
     ),
     'hdp_state'             => array(
       'type'      => 'taxonomy',
 
       'label'     => 'State',
-      'summarize' => - 2,
+      'summarize' => -2,
     ),
-    'city'   => array(
+    'city'                  => array(
       'type' => 'post_meta',
 
     ),
-    'state'  => array(
+    'state'                 => array(
       'type' => 'post_meta',
 
     ),
-    'state_code' => array(
+    'state_code'            => array(
       'type' => 'post_meta',
 
     ),
@@ -234,35 +243,35 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       'admin_label' => 'Source',
       'placeholder' => 'Full Source URL',
     ),
-    'hdp_poster_id' => array(
-      'type' => 'post_meta',
+    'hdp_poster_id'         => array(
+      'type'        => 'post_meta',
       'admin_label' => 'Poster ID'
     ),
-    'hdp_date_range' => array(
+    'hdp_date_range'        => array(
       'type' => 'post_meta'
     )
   );
 
   /** Defaults */
-  public static $default_attribute = array(
-    'type'  => 'primary',
-    'summarize' => false, /** False, or # in sort order */
-    'label' => false,
+  static public $default_attribute = array(
+    'type'        => 'primary',
+    'summarize'   => false, /** False, or # in sort order */
+    'label'       => false,
     'admin_label' => false,
-    'admin_type' => 'input',
-    'qa' => false,
+    'admin_type'  => 'input',
+    'qa'          => false,
     'placeholder' => ''
   );
 
   /** Setup the global per page number */
-  public static $hdp_posts_per_page = 15;
+  static public $hdp_posts_per_page = 15;
 
   /**
    * Primary Loader
    *
    * @author potanin@UD
    */
-  public function theme_setup() {
+  static public function theme_setup() {
 
     remove_theme_support( 'header-dropdowns' );
     remove_theme_support( 'custom-header' );
@@ -271,10 +280,10 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     remove_theme_support( 'frontend-editor' );
     remove_theme_support( 'custom-skins' );
 
-    remove_custom_background();
-    remove_custom_image_header();
+    remove_theme_support( 'custom-background' );
+    remove_theme_support( 'custom-header' );
 
-    load_theme_textdomain(HDDP, get_template_directory() . '/lang');
+    load_theme_textdomain( HDDP, get_stylesheet_directory() . '/languages' );
 
   }
 
@@ -287,43 +296,45 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
   public function init_upper() {
     global $wpdb, $flawless;
 
-    wp_register_script( 'knockout', get_stylesheet_directory_uri() . '/js/knockout.js', array(), '2.1', true );
-    wp_register_script( 'jquery-ud-form_helper', get_stylesheet_directory_uri() . '/js/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1.3', true );
-    wp_register_script( 'jquery-ud-smart_buttons', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.smart_buttons/0.6/jquery.ud.smart_buttons.js', array( 'jquery-ui-core' ), '0.6', true );
-    wp_register_script( 'jquery-ud-social', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.social/0.3/jquery.ud.social.js', array( 'jquery-ui-core' ), '0.3', true );
-    wp_register_script( 'jquery-ud-execute_triggers', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.execute_triggers/0.2/jquery.ud.execute_triggers.js', array( 'jquery-ui-core' ), '0.2', true );
+    add_filter( 'the_content', 'featured_image_in_feed' );
 
-    wp_register_script( 'jquery-ud-elastic_filter', get_stylesheet_directory_uri() . '/js/jquery.ud.elastic_filter.js', array( 'jquery' ), '0.5', true );
-    wp_register_script( 'jquery-new-ud-elasticsearch', get_stylesheet_directory_uri() . '/js/jquery.new.ud.elasticsearch.js', array( 'jquery' ), '1.0', true );
+    wp_register_script( 'knockout', get_stylesheet_directory_uri() . '/scripts/knockout.js', array(), '2.1', true );
+    wp_register_script( 'jquery-ud-form_helper', get_stylesheet_directory_uri() . '/scripts/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1.3', true );
+    wp_register_script( 'jquery-ud-smart_buttons', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/scripts/jquery.ud.smart_buttons/0.6/jquery.ud.smart_buttons.js', array( 'jquery-ui-core' ), '0.6', true );
+    wp_register_script( 'jquery-ud-social', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/scripts/jquery.ud.social/0.3/jquery.ud.social.js', array( 'jquery-ui-core' ), '0.3', true );
+    wp_register_script( 'jquery-ud-execute_triggers', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/scripts/jquery.ud.execute_triggers/0.2/jquery.ud.execute_triggers.js', array( 'jquery-ui-core' ), '0.2', true );
 
-    wp_register_script( 'ud-load',  get_stylesheet_directory_uri() . '/js/ud.loader.js', array( 'jquery' ), '1.0', false );
-    wp_register_script( 'ud-socket',  get_stylesheet_directory_uri() . '/js/ud.socket.js', array( 'jquery' ), '1.0.0', false );
-    wp_register_script( 'ud-json-editor', ( is_ssl() ? 'https://' : 'http://' ) . 'cdn.usabilitydynamics.com/js/ud.json.editor/latest/ud.json.editor.js', array( 'jquery' ), '1.0', false );
-    wp_register_style( 'ud-json-editor',  ( is_ssl() ? 'https://' : 'http://' ) . 'cdn.usabilitydynamics.com/js/ud.json.editor/latest/assets/ud.json.editor.css' );
+    wp_register_script( 'jquery-ud-elastic_filter', get_stylesheet_directory_uri() . '/scripts/jquery.ud.elastic_filter.js', array( 'jquery' ), '0.5', true );
+    wp_register_script( 'jquery-new-ud-elasticsearch', get_stylesheet_directory_uri() . '/scripts/jquery.new.ud.elasticsearch.js', array( 'jquery' ), '1.0', true );
 
-    wp_register_script( 'jquery-ud-dynamic_filter', get_stylesheet_directory_uri() . '/js/jquery.ud.dynamic_filter.js', array( 'jquery' ), '1.1.3', true );
-    wp_register_script( 'jquery-ud-date-slector', get_stylesheet_directory_uri() . '/js/jquery.ud.date_selector.js', array( 'jquery-ui-core' ), '0.1.1', true );
-    wp_register_script( 'jquery-jqtransform', get_stylesheet_directory_uri() . '/js/jquery.jqtransform.js', array( 'jquery' ), HDDP_Version, true );
-    wp_register_script( 'jquery-simplyscroll', get_stylesheet_directory_uri() . '/js/jquery.simplyscroll.min.js', array( 'jquery' ), HDDP_Version, true );
-    wp_register_script( 'jquery-flexslider-1.8', get_stylesheet_directory_uri() . '/js/jquery.flexslider.1.8.js', array( 'jquery' ), '1.8', true );
-    wp_register_script( 'jquery-flexslider', get_stylesheet_directory_uri() . '/js/jquery.flexslider.js', array( 'jquery' ), '2.2.2', true );
-    wp_register_script( 'jquery-cookie', get_stylesheet_directory_uri() . '/js/jquery.cookie.js', array( 'jquery' ), '1.7.3', false );
+    wp_register_script( 'ud-load', get_stylesheet_directory_uri() . '/scripts/ud.loader.js', array( 'jquery' ), '1.0', false );
+    wp_register_script( 'ud-socket', get_stylesheet_directory_uri() . '/scripts/ud.socket.js', array( 'jquery' ), '1.0.0', false );
+    wp_register_script( 'ud-json-editor', ( is_ssl() ? 'https://' : 'http://' ) . 'cdn.usabilitydynamics.com/scripts/ud.json.editor/latest/ud.json.editor.js', array( 'jquery' ), '1.0', false );
+    wp_register_style( 'ud-json-editor', ( is_ssl() ? 'https://' : 'http://' ) . 'cdn.usabilitydynamics.com/scripts/ud.json.editor/latest/assets/ud.json.editor.css' );
 
-    wp_register_script( 'hddp-frontend-js', get_stylesheet_directory_uri() . '/js/hddp.frontend.js', array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-cookie', 'flawless-frontend' ), HDDP_Version, true );
-    wp_register_script( 'hddp-backend-js', get_stylesheet_directory_uri() . '/js/hddp.backend.js', array( 'jquery-ui-tabs', 'flawless-admin-global', 'jquery-ud-execute_triggers' ), HDDP_Version, true );
+    wp_register_script( 'jquery-ud-dynamic_filter', get_stylesheet_directory_uri() . '/scripts/jquery.ud.dynamic_filter.js', array( 'jquery' ), '1.1.3', true );
+    wp_register_script( 'jquery-ud-date-slector', get_stylesheet_directory_uri() . '/scripts/jquery.ud.date_selector.js', array( 'jquery-ui-core' ), '0.1.1', true );
+    wp_register_script( 'jquery-jqtransform', get_stylesheet_directory_uri() . '/scripts/jquery.jqtransform.js', array( 'jquery' ), HDDP_Version, true );
+    wp_register_script( 'jquery-simplyscroll', get_stylesheet_directory_uri() . '/scripts/jquery.simplyscroll.min.js', array( 'jquery' ), HDDP_Version, true );
+    wp_register_script( 'jquery-flexslider-1.8', get_stylesheet_directory_uri() . '/scripts/jquery.flexslider.1.8.js', array( 'jquery' ), '1.8', true );
+    wp_register_script( 'jquery-flexslider', get_stylesheet_directory_uri() . '/scripts/jquery.flexslider.js', array( 'jquery' ), '2.2.2', true );
+    wp_register_script( 'jquery-cookie', get_stylesheet_directory_uri() . '/scripts/jquery.cookie.js', array( 'jquery' ), '1.7.3', false );
+
+    wp_register_script( 'hddp-frontend-js', get_stylesheet_directory_uri() . '/scripts/hddp.frontend.js', array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-cookie', 'flawless-frontend' ), HDDP_Version, true );
+    wp_register_script( 'hddp-backend-js', get_stylesheet_directory_uri() . '/scripts/hddp.backend.js', array( 'jquery-ui-tabs', 'flawless-admin-global', 'jquery-ud-execute_triggers' ), HDDP_Version, true );
     wp_register_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?sensor=true' );
 
-    wp_register_style( 'hddp-backend-css', get_stylesheet_directory_uri() . '/css/hddp.backend.css' );
-    wp_register_style( 'jquery-jqtransform', get_stylesheet_directory_uri() . '/css/jqtransform.css' );
-    wp_register_style( 'jquery-simplyscroll', get_stylesheet_directory_uri() . '/css/jquery.simplyscroll.css' );
+    wp_register_style( 'hddp-backend-css', get_stylesheet_directory_uri() . '/styles/hddp.backend.css' );
+    wp_register_style( 'jquery-jqtransform', get_stylesheet_directory_uri() . '/styles/jqtransform.css' );
+    wp_register_style( 'jquery-simplyscroll', get_stylesheet_directory_uri() . '/styles/jquery.simplyscroll.css' );
 
-    wp_register_script( 'jquery-fitvids', get_stylesheet_directory_uri() . '/js/jquery.fitvids.js', array('jquery'), HDDP_Version, true);
+    wp_register_script( 'jquery-fitvids', get_stylesheet_directory_uri() . '/scripts/jquery.fitvids.js', array( 'jquery' ), HDDP_Version, true );
 
     add_action( 'widgets_init', function () {
       if( class_exists( 'HDP_Latest_Posts_Widget' ) ) {
         register_widget( 'HDP_Latest_Posts_Widget' );
       }
-    });
+    } );
 
     add_action( 'edit_term', function ( $term_id, $something, $taxonomy ) {
       hddp::update_event_location( get_post_for_extended_term( $term_id, $taxonomy )->ID );
@@ -364,15 +375,16 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       cfct_build_deregister_module( 'cfct_module_plain_text' );
     } );
 
-    add_filter( 'elasticsearch_indexer_build_document', function( $doc, $post ) {
-      $doc['event_date_time'] = date('c',strtotime( get_post_meta($post->ID, 'hdp_event_date', 1).' '.get_post_meta($post->ID, 'hdp_event_time', 1) ));
-      $lat = get_post_meta( $post->ID, 'latitude', 1 );
-      $lon = get_post_meta( $post->ID, 'longitude', 1 );
-      $doc['location'] = array(
-          'lat' => !empty( $lat )?$lat:0,
-          'lon' => !empty( $lon )?$lon:0
+    add_filter( 'elasticsearch_indexer_build_document', function ( $doc, $post ) {
+      $doc[ 'event_date_time' ] = date( 'c', strtotime( get_post_meta( $post->ID, 'hdp_event_date', 1 ) . ' ' . get_post_meta( $post->ID, 'hdp_event_time', 1 ) ) );
+      $lat                      = get_post_meta( $post->ID, 'latitude', 1 );
+      $lon                      = get_post_meta( $post->ID, 'longitude', 1 );
+      $doc[ 'location' ]        = array(
+        'lat' => !empty( $lat ) ? $lat : 0,
+        'lon' => !empty( $lon ) ? $lon : 0
       );
-      $doc['raw'] = get_event( $post->ID );
+      $doc[ 'raw' ]             = get_event( $post->ID );
+
       return $doc;
     }, 10, 2 );
 
@@ -415,13 +427,14 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       switch( $object->post_type ) {
 
         //** Process photos */
-        case 'hdp_photo_gallery': {
+        case 'hdp_photo_gallery':
+        {
 
           //** We can use get_events() for other types because it works well for them too. */
           $object = (object) get_event( $object->ID );
 
           //** Date for photo gallery may not include the time. */
-          $time = ( $object->meta['hdp_event_date'] ? strtotime( $object->meta['hdp_event_date'] ) : 0 );
+          $time = ( $object->meta[ 'hdp_event_date' ] ? strtotime( $object->meta[ 'hdp_event_date' ] ) : 0 );
           $time = $time ? date( 'Y/m/d H:i:s', $time ) : '';
 
           /** @var $return array */
@@ -431,7 +444,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
             'type'      => $object->post_type,
             'summary'   => $object->post_excerpt,
             'time'      => $time,
-            'thumbnail' => $object->meta['hdp_poster_id'] ? UD_Functions::get_image_link( $object->meta['hdp_poster_id'], 'hd_small' ) : '',
+            'thumbnail' => $object->meta[ 'hdp_poster_id' ] ? UD_Functions::get_image_link( $object->meta[ 'hdp_poster_id' ], 'hd_small' ) : '',
             'url'       => get_permalink( $object->ID ),
             'venue'     => array(),
             'artists'   => array(),
@@ -446,13 +459,14 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
         }
 
         //** Process videos */
-        case 'hdp_video': {
+        case 'hdp_video':
+        {
 
           //** We can use get_events() for other types because it works well for them too. */
           $object = (object) get_event( $object->ID );
 
           //** Date for photo gallery may not include the time. */
-          $time = ( $object->meta['hdp_event_date'] ? strtotime( $object->meta['hdp_event_date'] ) : 0 );
+          $time = ( $object->meta[ 'hdp_event_date' ] ? strtotime( $object->meta[ 'hdp_event_date' ] ) : 0 );
           $time = $time ? date( 'Y/m/d H:i:s', $time ) : '';
 
           /** @var $return array */
@@ -462,7 +476,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
             'type'      => $object->post_type,
             'summary'   => $object->post_excerpt,
             'time'      => $time,
-            'thumbnail' => $object->meta['hdp_poster_id'] ? UD_Functions::get_image_link( $object->meta['hdp_poster_id'], 'hd_small' ) : '',
+            'thumbnail' => $object->meta[ 'hdp_poster_id' ] ? UD_Functions::get_image_link( $object->meta[ 'hdp_poster_id' ], 'hd_small' ) : '',
             'url'       => get_permalink( $object->ID ),
             'venue'     => array(),
             'artists'   => array(),
@@ -477,11 +491,12 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
         }
 
         //** Process events */
-        case 'hdp_event': {
+        case 'hdp_event':
+        {
 
           $object = (object) get_event( $object->ID );
 
-          $time = ( $object->meta['hdp_event_date'] && $object->meta['hdp_event_time'] ? strtotime( $object->meta['hdp_event_date'] . ' ' . $object->meta['hdp_event_time'] ) : '' );
+          $time = ( $object->meta[ 'hdp_event_date' ] && $object->meta[ 'hdp_event_time' ] ? strtotime( $object->meta[ 'hdp_event_date' ] . ' ' . $object->meta[ 'hdp_event_time' ] ) : '' );
 
           $time = $time ? date( 'Y/m/d H:i:s', $time ) : '';
 
@@ -492,10 +507,10 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
             'type'      => $object->post_type,
             'summary'   => $object->post_excerpt,
             'time'      => $time,
-            'thumbnail' => $object->meta['_thumbnail_id'] ? UD_Functions::get_image_link( $object->meta['_thumbnail_id'], 'events_flyer_thumb' ) : '',
+            'thumbnail' => $object->meta[ '_thumbnail_id' ] ? UD_Functions::get_image_link( $object->meta[ '_thumbnail_id' ], 'events_flyer_thumb' ) : '',
             'url'       => get_permalink( $object->ID ),
-            'rsvp'      => $object->meta['facebook_rsvp_url'],
-            'purchase'  => $object->meta['hdp_purchase_url'],
+            'rsvp'      => $object->meta[ 'facebook_rsvp_url' ],
+            'purchase'  => $object->meta[ 'hdp_purchase_url' ],
             'venue'     => array(),
             'artists'   => array(),
             '_meta'     => array(
@@ -513,32 +528,32 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       //** Common part for every type */
       foreach( (array) $object->terms as $slug => $items ) {
         foreach( (array) $items as $data ) {
-          $return['terms'][str_replace( 'hdp_', '', $data['taxonomy'] )][] = $data['name'];
+          $return[ 'terms' ][ str_replace( 'hdp_', '', $data[ 'taxonomy' ] ) ][ ] = $data[ 'name' ];
         }
       }
 
       foreach( (array) $object->terms[ 'hdp_artist' ] as $artist_data ) {
 
-        $return['artists'][] = array(
-          'id'      => $artist_data['term_id'],
-          'name'    => $artist_data['name'],
-          'summary' => get_post_for_extended_term( $artist_data['term_id'], 'hdp_artist' )->post_excerpt,
-          'url'     => ! is_wp_error( get_term_link( $artist_data['slug'], 'hdp_artist' ) ) ? get_term_link( $artist_data['slug'], 'hdp_artist' ) : ''
+        $return[ 'artists' ][ ] = array(
+          'id'      => $artist_data[ 'term_id' ],
+          'name'    => $artist_data[ 'name' ],
+          'summary' => get_post_for_extended_term( $artist_data[ 'term_id' ], 'hdp_artist' )->post_excerpt,
+          'url'     => !is_wp_error( get_term_link( $artist_data[ 'slug' ], 'hdp_artist' ) ) ? get_term_link( $artist_data[ 'slug' ], 'hdp_artist' ) : ''
         );
 
       }
 
-      $venue = get_post_for_extended_term( $object->terms['hdp_venue'][0]['term_id'], 'hdp_venue' );
+      $venue = get_post_for_extended_term( $object->terms[ 'hdp_venue' ][ 0 ][ 'term_id' ], 'hdp_venue' );
 
       foreach( (array) get_post_custom( $venue->ID ) as $key => $value ) {
-        $venue->{$key} = $value[0];
+        $venue->{$key} = $value[ 0 ];
       }
 
       $return[ 'venue' ] = array(
         'id'       => $venue->extended_term_id,
         'name'     => $venue->post_title,
         'summary'  => $venue->post_excerpt,
-        'url'      => ! is_wp_error( get_term_link( $venue->post_name, 'hdp_venue' ) ) ? get_term_link( $venue->post_name, 'hdp_venue' ) : '',
+        'url'      => !is_wp_error( get_term_link( $venue->post_name, 'hdp_venue' ) ) ? get_term_link( $venue->post_name, 'hdp_venue' ) : '',
         'address'  => $venue->formatted_address,
         'location' => array(
           '@type'        => $venue->location_type,
@@ -564,7 +579,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
       return $return;
 
-    });
+    } );
 
     /** First, go through my local items, and update my attributes */
     $_all_attributes = (array) hddp::$all_attributes;
@@ -577,24 +592,24 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     $attributes = array();
 
     foreach( hddp::$hdp_post_types as $key => $val ) {
-      $attributes[$key] = array();
+      $attributes[ $key ] = array();
       foreach( (array) $val as $att ) {
-        $attributes[$key][$att] = $_all_attributes[$att];
+        $attributes[ $key ][ $att ] = $_all_attributes[ $att ];
       }
     }
 
     /* Merge default settings with DB settings */
     $hddp = \UsabilityDynamics\Utility::extend( array(
-      'runtime' => array(
+      'runtime'                   => array(
         'notices' => array()
       ),
-      'automated_attributes' => array(
-        'hdp_event' => array(
+      'automated_attributes'      => array(
+        'hdp_event'         => array(
           'post_title',
           'post_excerpt',
           'post_name'
         ),
-        'hdp_video' => array(
+        'hdp_video'         => array(
           'post_title',
           'post_excerpt',
           'post_name'
@@ -605,12 +620,12 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
           'post_name'
         )
       ),
-      'attributes' => $attributes,
-      'manage_options' => 'manage_options',
-      'page_template' => array( '_template-all-events.php' ),
-      'event_related_post_types' => array( 'hdp_event', 'hdp_video', 'hdp_photo_gallery' ),
+      'attributes'                => $attributes,
+      'manage_options'            => 'manage_options',
+      'page_template'             => array( '_template-all-events.php' ),
+      'event_related_post_types'  => array( 'hdp_event', 'hdp_video', 'hdp_photo_gallery' ),
       'dynamic_filter_post_types' => array( 'hdp_photo_gallery', 'hdp_event', 'hdp_video' )
-    ), get_option( 'hddp_options' ));
+    ), get_option( 'hddp_options' ) );
 
     add_action( 'wp_enqueue_scripts', function () {
 
@@ -628,12 +643,12 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
       wp_enqueue_script( 'jquery-ui-datepicker' );
       /** If we're on the front page, do simply scroll */
-      if( is_front_page() ){
+      if( is_front_page() ) {
         wp_enqueue_script( 'jquery-simplyscroll' );
         wp_enqueue_style( 'jquery-simplyscroll' );
       }
 
-    });
+    } );
 
     add_action( 'admin_enqueue_scripts', array( 'hddp', 'admin_enqueue_scripts' ) );
 
@@ -642,7 +657,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     add_action( 'admin_menu', function () {
       global $hddp;
       $hddp[ 'manage_page' ] = add_dashboard_page( __( 'Manage', HDDP ), __( 'Manage', HDDP ), $hddp[ 'manage_options' ], 'hddp_manage', array( 'hddp', 'hddp_manage' ) );
-    });
+    } );
 
     add_action( 'admin_init', array( 'hddp', 'admin_init' ) );
 
@@ -651,8 +666,8 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     add_action( 'wp_ajax_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ) );
 
     //** Ajax for new Elastic Search */
-    add_action( 'wp_ajax_elasticsearch_query', array('hddp', 'elasticsearch_query') );
-    add_action( 'wp_ajax_nopriv_elasticsearch_query', array('hddp', 'elasticsearch_query') );
+    add_action( 'wp_ajax_elasticsearch_query', array( 'hddp', 'elasticsearch_query' ) );
+    add_action( 'wp_ajax_nopriv_elasticsearch_query', array( 'hddp', 'elasticsearch_query' ) );
 
     /* Setup Dynamic Filter */
     add_action( 'template_redirect', array( 'hddp', 'template_redirect' ) );
@@ -670,7 +685,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
     add_filter( 'the_category', function ( $c ) {
       return hddp::_backtrace_function( 'wp_popular_terms_checklist' ) ? '<span class="do_inline_hierarchial_taxonomy_stuff do_not_esc_html">' . $c . '</span>' : $c;
-    });
+    } );
 
     add_filter( 'esc_html', function ( $s, $u = '' ) {
       return strpos( $s, 'do_not_esc_html' ) ? $u : $s;
@@ -680,16 +695,17 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
     add_filter( 'flawless_remote_assets', function ( $assets ) {
       $assets[ 'css' ][ 'google-font-droid-sans' ] = 'http://fonts.googleapis.com/css?family=Droid+Sans';
+
       return $assets;
     } );
 
     add_action( 'flawless::header_bottom', function () {
       $header = flawless_breadcrumbs( array( 'hide_breadcrumbs' => false, 'wrapper_class' => 'breadcrumbs container', 'hide_on_home' => false, 'return' => true ) );
-      $share = hdp_share_button( false, true );
+      $share  = hdp_share_button( false, true );
       /** Do a preg replace to add our share button */
       /**$header = preg_replace( '/(<div[^>]*?>)/i', '$1' . $share, $header );
-      /** Echo it out */
-      echo $share.$header;
+       * /** Echo it out */
+      echo $share . $header;
     } );
 
     //** Add post date to editor screen of "Event Related" post types */
@@ -712,9 +728,9 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     } );
 
     //** */
-    add_filter( 'gform_shortcode_form', function( $form ) {
-      return preg_replace('%(<select.*?>.+?<\/select>)%', '<div class="select-styled">$1</div>', $form);
-    }, 10, 3);
+    add_filter( 'gform_shortcode_form', function ( $form ) {
+      return preg_replace( '%(<select.*?>.+?<\/select>)%', '<div class="select-styled">$1</div>', $form );
+    }, 10, 3 );
 
     /**
      * Custom Blog Pagination
@@ -722,45 +738,49 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
      * @author korotkov@ud
      * @ticket https://ud-dev.com/projects/projects/discodonniepresentscom-november-2012/tasks/19
      */
-    add_filter( 'cfct-module-loop-query-args', function( $args, $data ) {
-      if ( !empty( $_REQUEST['paging'] ) ) {
-        $args['paged'] = $_REQUEST['paging'];
+    add_filter( 'cfct-module-loop-query-args', function ( $args, $data ) {
+      if( !empty( $_REQUEST[ 'paging' ] ) ) {
+        $args[ 'paged' ] = $_REQUEST[ 'paging' ];
       }
+
       return $args;
-    }, 10, 2);
-    add_filter( 'cfct-module-looploop-html', function( $html, $data, $args, $query ){
+    }, 10, 2 );
+    add_filter( 'cfct-module-looploop-html', function ( $html, $data, $args, $query ) {
       $pagination = '';
-      if (function_exists('wp_pagenavi') ) {
-        $pagination = wp_pagenavi(array(
-            'query' => $query,
-            'echo' => false
-        ));
+      if( function_exists( 'wp_pagenavi' ) ) {
+        $pagination = wp_pagenavi( array(
+          'query' => $query,
+          'echo'  => false
+        ) );
       }
-      return $html.$pagination;
-    }, 10, 4);
-    add_filter( 'get_pagenum_link', function( $link ){
-      $link = preg_replace('%/blog\?paging.*%', '/blog', $link);
-      if ( strpos( $link, 'blog/page' ) ) {
-        $link = preg_replace('%/page/(\d{1,10}).*%', '?paging=$1', $link);
+
+      return $html . $pagination;
+    }, 10, 4 );
+    add_filter( 'get_pagenum_link', function ( $link ) {
+      $link = preg_replace( '%/blog\?paging.*%', '/blog', $link );
+      if( strpos( $link, 'blog/page' ) ) {
+        $link = preg_replace( '%/page/(\d{1,10}).*%', '?paging=$1', $link );
       }
+
       return $link;
-    });
+    } );
     //** */
 
     //** Remove URL from comments form */
-    add_filter( 'comment_form_default_fields', function( $fields ) {
-      unset( $fields['url'] );
+    add_filter( 'comment_form_default_fields', function ( $fields ) {
+      unset( $fields[ 'url' ] );
+
       return $fields;
-    });
-    
-    add_filter( 'img_caption_shortcode', array('hddp', 'img_caption_shortcode' ),10,3);
+    } );
+
+    add_filter( 'img_caption_shortcode', array( 'hddp', 'img_caption_shortcode' ), 10, 3 );
 
   }
 
   /**
    * Force our custom template to load for Event post types
    *
-   *@action template_redirect (10)
+   * @action template_redirect (10)
    * @author potanin@UD
    */
   public function template_redirect() {
@@ -787,12 +807,153 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
   }
 
   /**
+   * Return JSON post results Dynamic Filter requests
+   *
+   * @action admin_init (10)
+   * @author potanin@UD
+   */
+  public function admin_init() {
+    global $wpdb, $hddp, $current_user;
+
+    /* Adds options to Publish metabox */
+    add_action( 'post_submitbox_misc_actions', array( 'hddp', 'post_submitbox_misc_actions' ) );
+
+    /* Add Address column to Venues taxonomy overview */
+    add_filter( 'manage_edit-hdp_venue_columns', function ( $columns ) {
+
+        $columns[ 'formatted_address' ] = __( 'Address', HDDP );
+
+        return $columns;
+      }
+    );
+
+    add_filter( 'manage_hdp_venue_custom_column', array( 'hddp', 'event_venue_columns_data' ), 10, 3 );
+
+    /* Add Event Date column to Event listings */
+    add_filter( 'manage_hdp_event_posts_columns', function ( $columns ) {
+
+        unset( $columns[ 'tags' ] );
+        unset( $columns[ 'date' ] );
+        $columns[ 'formatted_address' ] = __( 'Geolocation & Cloud API Status', HDDP );
+        //$columns[ 'sync_status' ] = __( 'Cloud API Status' , HDDP);
+        //$columns[ 'hdp_event_date' ] = __( 'Event Date' , HDDP);
+        $columns[ 'post_excerpt' ] = __( 'Tagline', HDDP );
+
+        return $columns;
+      }
+    );
+
+    add_filter( 'manage_hdp_event_posts_custom_column', array( 'hddp', 'manage_hdp_event_posts_custom_column' ), 10, 2
+    );
+
+    /* HDDP Options Update - monitor for nonce */
+    if( !empty( $_REQUEST[ 'hddp_options' ] ) && wp_verify_nonce( $_POST[ 'hddp_save_form' ], 'hddp_save_form' ) ) {
+      update_option( 'hddp_options', $_REQUEST[ 'hddp_options' ] );
+
+      foreach( (array) $_POST[ '_options' ] as $option_name => $option_value ) {
+        update_option( $option_name, $option_value );
+      }
+
+      die( wp_redirect( admin_url( 'index.php?page=hddp_manage&message=updated' ) ) );
+    }
+
+    /* Temporary placement */
+    switch( $_GET[ 'request' ] ) {
+
+      case 'test' :
+        //wp_die('sdaf');
+        break;
+
+      case 'synchronize_with_cloud' :
+        UD_Functions::timer_start( 'synchronize_with_cloud' );
+
+        foreach( (array) $hddp[ 'dynamic_filter_post_types' ] as $post_type ) {
+
+          set_time_limit( 0 );
+
+          $batch = array();
+
+          if( $_GET[ 'start' ] && $_GET[ 'limit' ] ) {
+            $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC LIMIT {$_GET['start']}, {$_GET['limit']};";
+          } else {
+            $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC;";
+          }
+
+          foreach( $wpdb->get_col( $query ) as $post_id ) {
+            $result[ ] = UD_Cloud::index( get_event( $post_id ) );
+          }
+
+        }
+
+        Flawless_F::log( 'Batch Cloud API update complete, pushed ' . count( $result ) . ' batches of 50 items in ' . UD_Functions::timer_stop( 'synchronize_with_cloud' ) . ' seconds.' );
+
+        break;
+
+      case 'update_qa_all_tables' :
+
+        set_time_limit( 0 );
+
+        foreach( (array) $hddp[ 'dynamic_filter_post_types' ] as $post_type ) {
+          if( is_wp_error( Flawless_F::update_qa_table( $post_type, array( 'update'     => $post_type,
+                                                                           'attributes' => hddp::_get_qa_attributes( $post_type ) )
+            )
+          )
+          ) {
+            $hddp[ 'runtime' ][ 'notices' ][ 'error' ][ ] = 'Could not create QA table for ' . $post_type . ' Post Type.';
+          } else {
+            Flawless_F::log( 'Succesfully created QA table for ' . $post_type . ' Post Type.' );
+          }
+        }
+
+        wp_die( 'done updating' );
+
+        break;
+
+      case 'update_lat_long' :
+        $updated = array();
+
+        foreach( hddp::_get_event_posts() as $post_id ) {
+          $updated[ ] = hddp::update_event_location( $post_id, array( 'add_log_entries' => false ) );
+        }
+
+        if( count( $updated ) > 0 ) {
+          Flawless_F::log( 'Successfully updated addresses for (' . count( $updated ) . ') event(s).' );
+        } else {
+          Flawless_F::log( 'Attempted to do a bulk address update for all events, but no events were updated.' );
+        }
+
+        break;
+
+      case 'clear_event_log' :
+        Flawless_F::delete_log();
+        Flawless_F::log( 'Event log cleared by ' . $current_user->data->display_name . '.' );
+        break;
+
+      case 'delete_hddp_options' :
+        delete_option( 'hddp_options' );
+        Flawless_F::log( 'HDDP-Theme options deleted by ' . $current_user->data->display_name . '.' );
+        break;
+    }
+
+    add_filter( 'update_footer', function ( $text ) {
+
+        global $wpdb;
+
+        return $text . ' | ' . timer_stop() . ' seconds | ' . $wpdb->num_queries . ' queries | ' . round( ( memory_get_peak_usage() / 1048576 ) ) . ' mb';
+      }, 15
+    );
+
+    add_action( 'all_admin_notices', array( 'hddp', 'all_admin_notices' ) );
+
+  }
+
+  /**
    * Adds input fields to taxonomy term editing pages.
-   * The submitted data is saved in flawless_theme::term_editor_loader();
+   * The submitted data is saved in \UsabilityDynamics\Flawless\Utility::term_editor_loader();
    * Task: https://basecamp.com/1847866/projects/419234-hddp-new-website/messages/2100601-event-post-type-and
    *
    */
-  public function extended_term_form_fields( $tag, $post ) {
+  static public function extended_term_form_fields( $tag, $post ) {
     include 'templates/admin.extended_term_form_fields.php';
   }
 
@@ -800,7 +961,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
    * Get HDP-Event Posts.
    *
    */
-  public function _get_event_posts( $args = array() ) {
+  static public function _get_event_posts( $args = array() ) {
     global $wpdb, $hddp;
 
     return $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type IN ( '" . implode( "','", array_keys( array( hddp::$hdp_post_types ) ) ) . "' ) AND post_status = 'publish' " );
@@ -809,7 +970,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
   /**
    * Gets total events in the db
    */
-  public function get_events_count() {
+  static public function get_events_count() {
     global $wpdb;
 
     $wpdb->show_errors();
@@ -821,13 +982,13 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
    * Maintanance Tasks that are run once a day
    *
    */
-  public function daily_maintenance_cron() {
+  static public function daily_maintenance_cron() {
     $stats = array();
 
     //** Attempt geolocation for all events that are likely to have locatoins */
     foreach( hddp::_get_event_posts() as $post_id ) {
       if( !get_post_meta( $post_id, 'formatted_address', true ) ) {
-        $stats[ 'geo_located' ][] = hddp::update_event_location( $post_id, array( 'add_log_entries' => false ) );
+        $stats[ 'geo_located' ][ ] = hddp::update_event_location( $post_id, array( 'add_log_entries' => false ) );
       }
     }
 
@@ -842,7 +1003,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
    *
    * @version 1.1.0
    */
-  public function save_post( $post_id, $post ) {
+  static public function save_post( $post_id, $post ) {
     global $hddp, $wpdb;
 
     //**  Verify if this is an auto save routine.  */
@@ -903,7 +1064,8 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       /** Not published, get it out of the QA table */
       $wpdb->query( "DELETE FROM {$wpdb->prefix}ud_qa_{$post->post_type} WHERE post_id = {$post->ID}" );
 
-    } if ( $post->post_status == 'publish' ) {
+    }
+    if( $post->post_status == 'publish' ) {
 
       Flawless_F::update_qa_table_item( $post_id, array(
           'attributes' => hddp::_get_qa_attributes( $post->post_type ),
@@ -920,16 +1082,17 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
    *
    * @author potanin@UD
    */
-  public function _get_qa_attributes( $post_type ) {
+  static public function _get_qa_attributes( $post_type ) {
     global $hddp;
 
     $return = array();
 
     foreach( (array) $hddp[ 'attributes' ][ $post_type ] as $key => $settings ) {
       //if( $settings[ 'qa' ] ) {
-        $return[ $key ] = $settings[ 'type' ];
+      $return[ $key ] = $settings[ 'type' ];
       //}
     }
+
     return $return;
 
   }
@@ -940,7 +1103,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
    * @action template_redirect (10)
    * @author potanin@UD
    */
-  public function dynamic_filter_shortcode_handler() {
+  static public function dynamic_filter_shortcode_handler() {
     global $post;
 
     // Disable Elastic shortcodes since unused. - potanin@UD
@@ -950,28 +1113,29 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     // add_shortcode('elastic_popup_filter', array('hddp', 'shortcode_elastic_popup_filter'));
 
     /* Add Shortcode */
-    add_shortcode('dynamic_filter', array('hddp', 'shortcode_dynamic_filter'));
-    add_shortcode('hdp_custom_loop', array('hddp', 'shortcode_hdp_custom_loop'));
-    add_shortcode('hddp_gallery', array('hddp', 'shortcode_hddp_gallery'));
+    add_shortcode( 'dynamic_filter', array( 'hddp', 'shortcode_dynamic_filter' ) );
+    add_shortcode( 'hdp_custom_loop', array( 'hddp', 'shortcode_hdp_custom_loop' ) );
+    add_shortcode( 'hddp_gallery', array( 'hddp', 'shortcode_hddp_gallery' ) );
 
     //** New Elastic Search Shortcodes */
-    add_shortcode( 'elasticsearch_results', array('hddp', 'elasticsearch_results') );
-    add_shortcode( 'elasticsearch_facets', array('hddp', 'elasticsearch_facets') );
+    add_shortcode( 'elasticsearch_results', array( 'hddp', 'elasticsearch_results' ) );
+    add_shortcode( 'elasticsearch_facets', array( 'hddp', 'elasticsearch_facets' ) );
 
     /* Detect shortcode usage in this post - and add Sidebar */
-    if (strpos($post->post_content, '[dynamic_filter') !== false) {
-      add_action('flawless::sidebar_top', function () {
+    if( strpos( $post->post_content, '[dynamic_filter' ) !== false ) {
+      add_action( 'flawless::sidebar_top', function () {
         echo '<div class="cfct-module single-widget-area"><div id="df_sidebar_filters" class="df_sidebar_filters flawless_widget theme_widget widget  widget_text clearfix"></div></div>';
-      });
+      } );
     }
 
   }
 
   /**
+   * Elasticsearch Query
    *
    * @global type $post
    */
-  function elasticsearch_query() {
+  static public function elasticsearch_query() {
 
     try {
 
@@ -979,190 +1143,192 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       $elastica_client = new Elastica\Client(
         array(
           'connections' => array(
-              'config' => array(
-                  'headers' => array('Accept' => 'application/json'),
-                  'url' => elasticsearch\Config::option('server_url')
-              )
+            'config' => array(
+              'headers' => array( 'Accept' => 'application/json' ),
+              'url'     => elasticsearch\Config::option( 'server_url' )
+            )
           )
         )
       );
-      $index = $elastica_client->getIndex(elasticsearch\Config::option('server_index'));
-      $type = $index->getType($_REQUEST['type']);
-      $path = $index->getName() . '/' . $type->getName() . '/_search';
+      $index           = $elastica_client->getIndex( elasticsearch\Config::option( 'server_index' ) );
+      $type            = $index->getType( $_REQUEST[ 'type' ] );
+      $path            = $index->getName() . '/' . $type->getName() . '/_search';
 
-      $params['body'] = array();
+      $params[ 'body' ] = array();
 
       //** Set size */
-      $params['body']['size'] = $_REQUEST['size'];
+      $params[ 'body' ][ 'size' ] = $_REQUEST[ 'size' ];
 
       //** Set offset */
-      $params['body']['from'] = $_REQUEST['from'];
+      $params[ 'body' ][ 'from' ] = $_REQUEST[ 'from' ];
 
-      switch( $_REQUEST['sort_by'] ) {
+      switch( $_REQUEST[ 'sort_by' ] ) {
         case 'hdp_event_date':
-          $params['body']['sort'] = array(
-              array(
-                  'event_date_time' => array(
-                      'order' => strtolower($_REQUEST['sort_dir'])
-                  )
+          $params[ 'body' ][ 'sort' ] = array(
+            array(
+              'event_date_time' => array(
+                'order' => strtolower( $_REQUEST[ 'sort_dir' ] )
               )
+            )
           );
           break;
 
         case 'distance':
-          $lat = ( isset( $_COOKIE[ 'latitude' ] ) && is_numeric( $_COOKIE[ 'latitude' ] ) ? $_COOKIE[ 'latitude' ] : false );
-          $lon = ( isset( $_COOKIE[ 'longitude' ] ) && is_numeric( $_COOKIE[ 'longitude' ] ) ? $_COOKIE[ 'longitude' ] : false );
-          $params['body']['sort'] = array(
-              array(
-                  '_geo_distance' => array(
-                      'location' => array(
-                          $lat?$lat:0, $lon?$lon:0
-                      ),
-                      'order' => strtolower($_REQUEST['sort_dir'])
-                  )
+          $lat                        = ( isset( $_COOKIE[ 'latitude' ] ) && is_numeric( $_COOKIE[ 'latitude' ] ) ? $_COOKIE[ 'latitude' ] : false );
+          $lon                        = ( isset( $_COOKIE[ 'longitude' ] ) && is_numeric( $_COOKIE[ 'longitude' ] ) ? $_COOKIE[ 'longitude' ] : false );
+          $params[ 'body' ][ 'sort' ] = array(
+            array(
+              '_geo_distance' => array(
+                'location' => array(
+                  $lat ? $lat : 0, $lon ? $lon : 0
+                ),
+                'order'    => strtolower( $_REQUEST[ 'sort_dir' ] )
               )
+            )
           );
           break;
 
-        default: break;
+        default:
+          break;
       }
 
       //** Determine period */
-      if ( $_REQUEST['period'] ) {
-        switch( $_REQUEST['period'] ) {
+      if( $_REQUEST[ 'period' ] ) {
+        switch( $_REQUEST[ 'period' ] ) {
           case 'upcoming':
-            $params['body']['filter']['bool']['must'][] = array(
-                'range' => array(
-                    'event_date_time' => array(
-                        'gte' => 'now'
-                    )
+            $params[ 'body' ][ 'filter' ][ 'bool' ][ 'must' ][ ] = array(
+              'range' => array(
+                'event_date_time' => array(
+                  'gte' => 'now'
                 )
+              )
             );
             break;
           case 'past':
-            $params['body']['filter']['bool']['must'][] = array(
-                'range' => array(
-                    'event_date_time' => array(
-                        'lte' => 'now'
-                    )
+            $params[ 'body' ][ 'filter' ][ 'bool' ][ 'must' ][ ] = array(
+              'range' => array(
+                'event_date_time' => array(
+                  'lte' => 'now'
                 )
+              )
             );
             break;
-          default: break;
+          default:
+            break;
         }
       }
 
-      parse_str( $_REQUEST['query'], $query );
+      parse_str( $_REQUEST[ 'query' ], $query );
 
-      $query['date_range'] = array_filter($query['date_range']);
-      if ( !empty( $query['date_range'] ) ) {
-        $params['body']['filter']['bool']['must'][] = array(
-            'range' => array(
-                'event_date_time' => $query['date_range']
-            )
+      $query[ 'date_range' ] = array_filter( $query[ 'date_range' ] );
+      if( !empty( $query[ 'date_range' ] ) ) {
+        $params[ 'body' ][ 'filter' ][ 'bool' ][ 'must' ][ ] = array(
+          'range' => array(
+            'event_date_time' => $query[ 'date_range' ]
+          )
         );
       }
 
-      if ( $query['q'] ) {
-        $query_string = array('query' => $query['q']);
-        $params['body']['query'] = array(
-            'query_string' => $query_string
+      if( $query[ 'q' ] ) {
+        $query_string                = array( 'query' => $query[ 'q' ] );
+        $params[ 'body' ][ 'query' ] = array(
+          'query_string' => $query_string
         );
       }
 
-      if ( !empty($query['terms']) ) {
-        foreach( $query['terms'] as $field => $term ) {
-          if ( $term != '0' ) {
-            $params['body']['filter']['bool']['must'][] = array(
-                'term' => array(
-                    $field => htmlspecialchars(stripslashes($term))
-                )
+      if( !empty( $query[ 'terms' ] ) ) {
+        foreach( $query[ 'terms' ] as $field => $term ) {
+          if( $term != '0' ) {
+            $params[ 'body' ][ 'filter' ][ 'bool' ][ 'must' ][ ] = array(
+              'term' => array(
+                $field => htmlspecialchars( stripslashes( $term ) )
+              )
             );
           }
         }
       }
 
-      $params['body']['fields'] = array("raw");
+      $params[ 'body' ][ 'fields' ] = array( "raw" );
 
-      $params['body']['facets'] = array(
-          'hdp_artist_name' => array(
-              'terms' => array(
-                  'field' => 'hdp_artist_name',
-                  'size' => 999
-              )
-          ),
-          'hdp_state_name' => array(
-              'terms' => array(
-                  'field' => 'hdp_state_name',
-                  'size' => 999
-              )
-          ),
-          'hdp_city_name' => array(
-              'terms' => array(
-                  'field' => 'hdp_city_name',
-                  'size' => 999
-              )
-          ),
-          'hdp_venue_name' => array(
-              'terms' => array(
-                  'field' => 'hdp_venue_name',
-                  'size' => 999
-              )
-          ),
-          'hdp_promoter_name' => array(
-              'terms' => array(
-                  'field' => 'hdp_promoter_name',
-                  'size' => 999
-              )
-          ),
-          'hdp_tour_name' => array(
-              'terms' => array(
-                  'field' => 'hdp_tour_name',
-                  'size' => 999
-              )
-          ),
-          'hdp_type_name' => array(
-              'terms' => array(
-                  'field' => 'hdp_type_name',
-                  'size' => 999
-              )
-          ),
-          'hdp_genre_name' => array(
-              'terms' => array(
-                  'field' => 'hdp_genre_name',
-                  'size' => 999
-              )
-          ),
-          'hdp_age_limit_name' => array(
-              'terms' => array(
-                  'field' => 'hdp_age_limit_name',
-                  'size' => 999
-              )
+      $params[ 'body' ][ 'facets' ] = array(
+        'hdp_artist_name'    => array(
+          'terms' => array(
+            'field' => 'hdp_artist_name',
+            'size'  => 999
           )
+        ),
+        'hdp_state_name'     => array(
+          'terms' => array(
+            'field' => 'hdp_state_name',
+            'size'  => 999
+          )
+        ),
+        'hdp_city_name'      => array(
+          'terms' => array(
+            'field' => 'hdp_city_name',
+            'size'  => 999
+          )
+        ),
+        'hdp_venue_name'     => array(
+          'terms' => array(
+            'field' => 'hdp_venue_name',
+            'size'  => 999
+          )
+        ),
+        'hdp_promoter_name'  => array(
+          'terms' => array(
+            'field' => 'hdp_promoter_name',
+            'size'  => 999
+          )
+        ),
+        'hdp_tour_name'      => array(
+          'terms' => array(
+            'field' => 'hdp_tour_name',
+            'size'  => 999
+          )
+        ),
+        'hdp_type_name'      => array(
+          'terms' => array(
+            'field' => 'hdp_type_name',
+            'size'  => 999
+          )
+        ),
+        'hdp_genre_name'     => array(
+          'terms' => array(
+            'field' => 'hdp_genre_name',
+            'size'  => 999
+          )
+        ),
+        'hdp_age_limit_name' => array(
+          'terms' => array(
+            'field' => 'hdp_age_limit_name',
+            'size'  => 999
+          )
+        )
       );
 
       $result = array();
 
-      $result['raw'] = $elastica_client->request($path, Elastica\Request::POST, json_encode($params['body']))->getData();
-    } catch ( Exception $e ) {
+      $result[ 'raw' ] = $elastica_client->request( $path, Elastica\Request::POST, json_encode( $params[ 'body' ] ) )->getData();
+    } catch( Exception $e ) {
       $error = array(
-          'success' => false
+        'success' => false
       );
-      $error = array_merge($error, array('error' => $e->getMessage()));
+      $error = array_merge( $error, array( 'error' => $e->getMessage() ) );
       die( json_encode( $error ) );
     }
 
     ob_start();
-    foreach( (array)$result['raw']['facets'] as $facet_key => $facet_data ) {
+    foreach( (array) $result[ 'raw' ][ 'facets' ] as $facet_key => $facet_data ) {
       include "templates/facets/facet-{$facet_data['_type']}.php";
     }
     $facets = ob_get_clean();
 
     ob_start();
-    if ( $result['raw']['hits']['total'] != 0 ) {
-      foreach( (array)$result['raw']['hits']['hits'] as $hit_data ) {
+    if( $result[ 'raw' ][ 'hits' ][ 'total' ] != 0 ) {
+      foreach( (array) $result[ 'raw' ][ 'hits' ][ 'hits' ] as $hit_data ) {
         global $post;
-        $post = $hit_data['fields']['raw'];
+        $post = $hit_data[ 'fields' ][ 'raw' ];
         include "templates/results/result-{$hit_data['_type']}.php";
       }
     } else {
@@ -1170,48 +1336,55 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     }
     $results = ob_get_clean();
 
-    $result['facets'] = $facets;
-    $result['results'] = $results;
-    $result['query'] = $params['body'];
+    $result[ 'facets' ]  = $facets;
+    $result[ 'results' ] = $results;
+    $result[ 'query' ]   = $params[ 'body' ];
 
-    die(json_encode($result));
+    die( json_encode( $result ) );
   }
 
   /**
    * New Elastic Search Facets
+   *
    * @param type $atts
+   *
    * @return type
    */
-  function elasticsearch_facets( $atts ) {
-    extract( shortcode_atts(array(
-        'id' => 'none',
-        'action' => 'elasticsearch_query',
-        'type' => '',
-        'size' => 10
+  static public function elasticsearch_facets( $atts ) {
+    extract( shortcode_atts( array(
+      'id'     => 'none',
+      'action' => 'elasticsearch_query',
+      'type'   => '',
+      'size'   => 10
     ), $atts ) );
 
     flawless_render_in_footer(
-'<script type="text/javascript">
-if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(document).ready(function(){ jQuery("#elasticsearch-facets-' . $id . '").new_ud_elasticsearch()}); }
+      '<script type="text/javascript">
+      if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(document).ready(function(){ jQuery("#elasticsearch-facets-' . $id . '").new_ud_elasticsearch()}); }
 </script>'
     );
 
     ob_start();
     include 'templates/elasticsearch_facets.php';
+
     return ob_get_clean();
   }
 
   /**
    * New Elastic Search Results
+   *
+   * @param $atts
+   *
    * @return type
    */
-  function elasticsearch_results( $atts ) {
-    extract( shortcode_atts(array(
-        'id' => 'none'
+  static public function elasticsearch_results( $atts ) {
+    extract( shortcode_atts( array(
+      'id' => 'none'
     ), $atts ) );
 
     ob_start();
     include 'templates/elasticsearch_results.php';
+
     return ob_get_clean();
   }
 
@@ -1226,7 +1399,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * @return bool true if posts location information was updated, false if it was not geolocated or already exists
    * @author potanin@UD
    */
-  public function update_event_location( $post_id = false, $args = array() ) {
+  static public function update_event_location( $post_id = false, $args = array() ) {
 
     if( !is_numeric( $post_id ) ) {
       return false;
@@ -1240,12 +1413,12 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
     if( $post->post_type == '_tp_hdp_venue' ) {
 
       $extended_term_post_id = $post_id;
-      $formatted_address = get_post_meta( $extended_term_post_id, 'formatted_address', true );
+      $formatted_address     = get_post_meta( $extended_term_post_id, 'formatted_address', true );
 
     } else {
 
-      $hdp_venue = wp_get_object_terms( $post_id, 'hdp_venue' );
-      $venue_term_id = !is_wp_error( $hdp_venue ) ? $hdp_venue[ 0 ]->term_id : false;
+      $hdp_venue         = wp_get_object_terms( $post_id, 'hdp_venue' );
+      $venue_term_id     = !is_wp_error( $hdp_venue ) ? $hdp_venue[ 0 ]->term_id : false;
       $formatted_address = get_term_meta( $venue_term_id, 'formatted_address', true );
 
     }
@@ -1286,149 +1459,11 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
   }
 
   /**
-   * Return JSON post results Dynamic Filter requests
-   *
-   * @action admin_init (10)
-   * @author potanin@UD
-   */
-  public function admin_init() {
-    global $wpdb, $hddp, $current_user;
-
-    /* Adds options to Publish metabox */
-    add_action( 'post_submitbox_misc_actions', array( 'hddp', 'post_submitbox_misc_actions' ) );
-
-    /* Add Address column to Venues taxonomy overview */
-    add_filter( 'manage_edit-hdp_venue_columns', function ( $columns ) {
-
-        $columns[ 'formatted_address' ] = __( 'Address', HDDP );
-        return $columns;
-      }
-    );
-
-    add_filter( 'manage_hdp_venue_custom_column', array( 'hddp', 'event_venue_columns_data' ), 10, 3 );
-
-    /* Add Event Date column to Event listings */
-    add_filter( 'manage_hdp_event_posts_columns', function ( $columns ) {
-
-        unset( $columns[ 'tags' ] );
-        unset( $columns[ 'date' ] );
-        $columns[ 'formatted_address' ] = __( 'Geolocation & Cloud API Status', HDDP );
-        //$columns[ 'sync_status' ] = __( 'Cloud API Status' , HDDP);
-        //$columns[ 'hdp_event_date' ] = __( 'Event Date' , HDDP);
-        $columns[ 'post_excerpt' ] = __( 'Tagline', HDDP );
-        return $columns;
-      }
-    );
-
-    add_filter( 'manage_hdp_event_posts_custom_column', array( 'hddp', 'manage_hdp_event_posts_custom_column' ), 10, 2
-    );
-
-    /* HDDP Options Update - monitor for nonce */
-    if( !empty( $_REQUEST[ 'hddp_options' ] ) && wp_verify_nonce( $_POST[ 'hddp_save_form' ], 'hddp_save_form' ) ) {
-      update_option( 'hddp_options', $_REQUEST[ 'hddp_options' ] );
-
-      foreach( (array) $_POST[ '_options' ] as $option_name => $option_value ) {
-        update_option( $option_name, $option_value );
-      }
-
-      die( wp_redirect( admin_url( 'index.php?page=hddp_manage&message=updated' ) ) );
-    }
-
-    /* Temporary placement */
-    switch( $_GET[ 'request' ] ) {
-
-      case 'test' :
-        //wp_die('sdaf');
-      break;
-
-      case 'synchronize_with_cloud' :
-        UD_Functions::timer_start( 'synchronize_with_cloud' );
-
-        foreach( (array) $hddp[ 'dynamic_filter_post_types' ] as $post_type ) {
-
-          set_time_limit( 0 );
-
-          $batch = array();
-
-          if( $_GET[ 'start' ] && $_GET[ 'limit' ] ) {
-            $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC LIMIT {$_GET[ 'start' ]}, {$_GET[ 'limit' ]};";
-          } else {
-            $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC;";
-          }
-
-          foreach( $wpdb->get_col( $query ) as $post_id ) {
-            $result[] = UD_Cloud::index( get_event( $post_id ) );
-          }
-
-        }
-
-        Flawless_F::log( 'Batch Cloud API update complete, pushed ' . count( $result ) . ' batches of 50 items in ' . UD_Functions::timer_stop( 'synchronize_with_cloud' ) . ' seconds.' );
-
-        break;
-
-      case 'update_qa_all_tables' :
-
-          set_time_limit( 0 );
-
-        foreach( (array) $hddp[ 'dynamic_filter_post_types' ] as $post_type ) {
-          if( is_wp_error( Flawless_F::update_qa_table( $post_type, array( 'update' => $post_type,
-                'attributes' => hddp::_get_qa_attributes( $post_type ) )
-            )
-          )
-          ) {
-            $hddp[ 'runtime' ][ 'notices' ][ 'error' ][] = 'Could not create QA table for ' . $post_type . ' Post Type.';
-          } else {
-            Flawless_F::log( 'Succesfully created QA table for ' . $post_type . ' Post Type.' );
-          }
-        }
-
-        wp_die('done updating');
-
-        break;
-
-      case 'update_lat_long' :
-        $updated = array();
-
-        foreach( hddp::_get_event_posts() as $post_id ) {
-          $updated[] = hddp::update_event_location( $post_id, array( 'add_log_entries' => false ) );
-        }
-
-        if( count( $updated ) > 0 ) {
-          Flawless_F::log( 'Successfully updated addresses for (' . count( $updated ) . ') event(s).' );
-        } else {
-          Flawless_F::log( 'Attempted to do a bulk address update for all events, but no events were updated.' );
-        }
-
-        break;
-
-      case 'clear_event_log' :
-        Flawless_F::delete_log();
-        Flawless_F::log( 'Event log cleared by ' . $current_user->data->display_name . '.' );
-        break;
-
-      case 'delete_hddp_options' :
-        delete_option( 'hddp_options' );
-        Flawless_F::log( 'HDDP-Theme options deleted by ' . $current_user->data->display_name . '.' );
-        break;
-    }
-
-    add_filter( 'update_footer', function ( $text ) {
-
-        global $wpdb;
-        return $text . ' | ' . timer_stop() . ' seconds | ' . $wpdb->num_queries . ' queries | ' . round( ( memory_get_peak_usage() / 1048576 ) ) . ' mb';
-      }, 15
-    );
-
-    add_action( 'all_admin_notices', array( 'hddp', 'all_admin_notices' ) );
-
-  }
-
-  /**
    * Automated QA table updating by having pre-configured attributes for the used DF Post Types
    *
    * @author potanin@UD
    */
-  public function all_admin_notices() {
+  static public function all_admin_notices() {
     global $hddp;
 
     foreach( (array) $hddp[ 'runtime' ][ 'notices' ][ 'error' ] as $notice ) {
@@ -1447,7 +1482,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * @action admin_init (10)
    * @author potanin@UD
    */
-  public function event_venue_columns_data( $null, $column, $term_id ) {
+  static public function event_venue_columns_data( $null, $column, $term_id ) {
 
     if( $column != 'formatted_address' ) {
       return;
@@ -1463,51 +1498,57 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * @action admin_init (10)
    * @author potanin@UD
    */
-  public function manage_hdp_event_posts_custom_column( $column, $post_id ) {
+  static public function manage_hdp_event_posts_custom_column( $column, $post_id ) {
 
     $event = get_event( $post_id );
 
     switch( $column ) {
 
-      case 'post_excerpt': {
+      case 'post_excerpt':
+      {
         echo $event[ 'post_excerpt' ] ? $event[ 'post_excerpt' ] : ' - ';
 
-        break; }
+        break;
+      }
 
-      case 'formatted_address': {
+      case 'formatted_address':
+      {
 
         $_items = array();
 
         $formatted_address = get_post_meta( $post_id, 'formatted_address', true );
-        $_items[] = $formatted_address ? $formatted_address : ' -';
+        $_items[ ]         = $formatted_address ? $formatted_address : ' -';
 
         if( $synchronized = get_post_meta( $post_id, 'ud::cloud::synchronized', true ) ) {
-          $_items[] = 'Synchronized ' . human_time_diff( $synchronized ) . ' ago.';
+          $_items[ ] = 'Synchronized ' . human_time_diff( $synchronized ) . ' ago.';
         } else {
-          $_items[] = 'Not Synchronized.';
+          $_items[ ] = 'Not Synchronized.';
         }
 
         echo implode( '<br />', (array) $_items );
 
-        break; }
+        break;
+      }
 
-      case 'hdp_event_date': {
+      case 'hdp_event_date':
+      {
         $hdp_event_date = strtotime( get_post_meta( $post_id, 'hdp_event_date', true ) );
         $hdp_event_time = strtotime( get_post_meta( $post_id, 'hdp_event_time', true ) );
 
         if( $hdp_event_date ) {
-          $print_date[] = date( get_option( 'date_format' ), $hdp_event_date );
+          $print_date[ ] = date( get_option( 'date_format' ), $hdp_event_date );
         }
 
         if( $hdp_event_time ) {
-          $print_date[] = date( get_option( 'time_format' ), $hdp_event_time );
+          $print_date[ ] = date( get_option( 'time_format' ), $hdp_event_time );
         }
 
         if( $print_date ) {
           echo implode( '<br />', (array) $print_date );
         }
 
-        break; }
+        break;
+      }
 
     }
 
@@ -1518,7 +1559,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    *
    * @author potanin@UD
    */
-  public function admin_enqueue_scripts() {
+  static public function admin_enqueue_scripts() {
 
     /* General Scripts and CSS styles */
     wp_enqueue_script( 'hddp-backend-js' );
@@ -1541,7 +1582,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * @action admin_print_footer_scripts (10)
    * @author potanin@UD
    */
-  public function admin_print_footer_scripts() {
+  static public function admin_print_footer_scripts() {
 
     global $hddp, $post, $pagenow;
 
@@ -1558,8 +1599,9 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * Checks to see if the value is blank
    *
    */
-  public function check_blank_array( $value ) {
+  static public function check_blank_array( $value ) {
     $value = trim( $value );
+
     return !empty( $value );
   }
 
@@ -1568,7 +1610,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    *
    * @author potanin@UD
    */
-  public function df_post_query( $request = false ) {
+  static public function df_post_query( $request = false ) {
 
 //    $client = new Elasticsearch\Client(array(
 //        'hosts' => array(
@@ -1599,7 +1641,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
 
     global $wpdb, $hddp;
 
-    set_time_limit(0);
+    set_time_limit( 0 );
 
     $myFile = "request.log";
     $fh = fopen( $myFile, 'w' ) or die( "can't open file" );
@@ -1624,14 +1666,14 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
     $filtered_table = "U" . md5( time() ) . "D";
 
     /** Go ahead and setup the query */
-    $query = "SELECT * FROM {$wpdb->prefix}ud_qa_{$args[ 'post_type' ]} WHERE 1=1";
+    $query = "SELECT * FROM {$wpdb->prefix}ud_qa_{$args['post_type']} WHERE 1=1";
 
     /** If we're an event, we don't want past events */
     if( $args[ 'post_type' ] == 'hdp_event' ) {
-      if( !isset( $args[ 'filter_events' ] ) || isset( $args[ 'filter_events' ] ) && $args[ 'filter_events' ] == 'upcoming' ){
+      if( !isset( $args[ 'filter_events' ] ) || isset( $args[ 'filter_events' ] ) && $args[ 'filter_events' ] == 'upcoming' ) {
         $query .= " AND STR_TO_DATE( CONCAT(hdp_event_date,' ',hdp_event_time), '%m/%d/%Y %h:%i %p' ) >= DATE_ADD(CONCAT(CURDATE(), ' 00:00:01'), INTERVAL 3 HOUR)";
       }
-      if( isset( $args[ 'filter_events' ] ) && $args[ 'filter_events' ] == 'past' ){
+      if( isset( $args[ 'filter_events' ] ) && $args[ 'filter_events' ] == 'past' ) {
         $query .= " AND STR_TO_DATE( CONCAT(hdp_event_date,' ',hdp_event_time), '%m/%d/%Y %h:%i %p' ) < DATE_ADD(CONCAT(CURDATE(), ' 00:00:01'), INTERVAL 3 HOUR)";
       }
     }
@@ -1648,17 +1690,17 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
         switch( $key ) {
 
           case 'hdp_date_range':
-            if ( !empty( $filter['max'] ) ) {
-              $query .= " AND STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) <= STR_TO_DATE( '".$filter['max']."', '%m/%d/%Y' ) ";
+            if( !empty( $filter[ 'max' ] ) ) {
+              $query .= " AND STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) <= STR_TO_DATE( '" . $filter[ 'max' ] . "', '%m/%d/%Y' ) ";
             }
-            if ( !empty( $filter['min'] ) ) {
-              $query .= " AND STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) >= STR_TO_DATE( '".$filter['min']."', '%m/%d/%Y' ) ";
+            if( !empty( $filter[ 'min' ] ) ) {
+              $query .= " AND STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) >= STR_TO_DATE( '" . $filter[ 'min' ] . "', '%m/%d/%Y' ) ";
             }
             break;
 
           case 'post_title':
             $q = $wpdb->escape( $filter );
-            if ( $args[ 'post_type' ] == 'hdp_event' ) {
+            if( $args[ 'post_type' ] == 'hdp_event' ) {
               $query .= " AND (
                 LOWER(hdp_artist) LIKE LOWER('%{$q}%') OR
                 LOWER(hdp_venue) LIKE LOWER('%{$q}%') OR
@@ -1719,14 +1761,14 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
       $args[ 'sort_by' ] = 'hdp_event_date';
     }
     if( isset( $args[ 'sort_by' ] ) && !empty( $args[ 'sort_by' ] ) ) {
-      if( $args[ 'post_type' ] == 'hdp_event' ){
+      if( $args[ 'post_type' ] == 'hdp_event' ) {
         $direction = 'ASC';
-        if( isset( $args[ 'filter_events' ] ) ){
-          if( $args[ 'filter_events' ] == 'past' || $args[ 'filter_events' ] == 'all' ){
+        if( isset( $args[ 'filter_events' ] ) ) {
+          if( $args[ 'filter_events' ] == 'past' || $args[ 'filter_events' ] == 'all' ) {
             $direction = 'DESC';
           }
         }
-      }else{
+      } else {
         $direction = 'DESC';
       }
       if( isset( $args[ 'sort_direction' ] ) && $args[ 'sort_direction' ] == 'DESC' ) $direction = 'DESC';
@@ -1749,28 +1791,28 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
     }
 
     /** Setup the query hash */
-    $query_hash = 'df_' . $args[ 'post_type' ] . '_' . md5( $query );
+    $query_hash   = 'df_' . $args[ 'post_type' ] . '_' . md5( $query );
     $force_update = isset( $_REQUEST[ 'force_update' ] ) ? true : false;
-    $cached = false;
+    $cached       = false;
 
     /** Check to see if we need to use the query */
     if( !$force_update && $cached = get_transient( $query_hash ) ) {
       die( $cached );
     }
 
-    $all_ids = array();
+    $all_ids        = array();
     $mapped_results = array();
-    $full_results = $wpdb->get_results( $query );
+    $full_results   = $wpdb->get_results( $query );
     foreach( $full_results as $res ) {
       $mapped_results[ $res->post_id ] = $res;
-      $all_ids[] = $res->post_id;
+      $all_ids[ ]                      = $res->post_id;
     }
 
     /** No go through and setup our returned filters */
     $current_filters = array();
     foreach( (array) $args[ 'filterable_attributes' ] as $name => $att ) {
       $filter_query = false;
-      $filter_key = false;
+      $filter_key   = false;
       switch( $att[ 'filter' ] ) {
         case 'checkbox':
         case 'dropdown':
@@ -1809,23 +1851,23 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
     $all_results = array();
     /** Now get the requested range subset of IDs */
     $start = ( isset( $args[ 'request_range' ][ 'start' ] ) && is_numeric( $args[ 'request_range' ][ 'start' ] ) ? $args[ 'request_range' ][ 'start' ] : false );
-    $end = ( isset( $args[ 'request_range' ][ 'end' ] ) && is_numeric( $args[ 'request_range' ][ 'end' ] ) ? $args[ 'request_range' ][ 'end' ] : false );
+    $end   = ( isset( $args[ 'request_range' ][ 'end' ] ) && is_numeric( $args[ 'request_range' ][ 'end' ] ) ? $args[ 'request_range' ][ 'end' ] : false );
     if( $start !== false && $end !== false ) {
       /** We're here, calculate the limit and slice the array */
-      $limit = $end - $start;
+      $limit   = $end - $start;
       $all_ids = array_slice( $all_ids, $start, $limit );
     }
     foreach( $all_ids as $id ) {
       global $post;
       $post = json_decode( $mapped_results[ $id ]->object, true );
 
-      $all_results[] = array( 'id' => $id, 'df_attribute_class' => join( ' ', get_post_class( $class, $id ) ),
-        'template' => 'loop-' . $args[ 'post_type' ],
-        'raw_html' => '<ul>' . Flawless_F::get_template_part( 'loop', $args[ 'post_type' ] ), '</ul>', );
+      $all_results[ ] = array( 'id'       => $id, 'df_attribute_class' => join( ' ', get_post_class( $class, $id ) ),
+                               'template' => 'loop-' . $args[ 'post_type' ],
+                               'raw_html' => '<ul>' . Flawless_F::get_template_part( 'loop', $args[ 'post_type' ] ), '</ul>', );
     }
 
-    $response = array( 'query' => false, //$query,
-      'total_results' => $total_results, 'all_results' => $all_results, 'current_filters' => $current_filters, );
+    $response = array( 'query'         => false, //$query,
+                       'total_results' => $total_results, 'all_results' => $all_results, 'current_filters' => $current_filters, );
 
     /** We're here, go ahead and cache the response */
     if( !$cached ) {
@@ -1841,7 +1883,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    *
    * @author williams@UD
    */
-  public function post_query_error( $err ) {
+  static public function post_query_error( $err ) {
 
     $response = array( 'all_results' => array(), 'total_results' => 0, 'current_filters' => array(), 'error' => $err, );
 
@@ -1853,7 +1895,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    *
    * @author potanin@UD
    */
-  public function post_submitbox_misc_actions() {
+  static public function post_submitbox_misc_actions() {
 
     global $post, $hddp;
 
@@ -1866,19 +1908,19 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
 
     }
 
-    $html[] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'do_not_generate_post_title', 'do_not_generate_post_title', checked( 'true', get_post_meta( $post->ID, 'do_not_generate_post_title', true ), false ), 'Do not generate title.' );
+    $html[ ] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'do_not_generate_post_title', 'do_not_generate_post_title', checked( 'true', get_post_meta( $post->ID, 'do_not_generate_post_title', true ), false ), 'Do not generate title.' );
 
-    $html[] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'do_not_generate_post_name', 'do_not_generate_post_name', checked( 'true', get_post_meta( $post->ID, 'do_not_generate_post_name', true ), false ), 'Do not generate permalink.');
+    $html[ ] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'do_not_generate_post_name', 'do_not_generate_post_name', checked( 'true', get_post_meta( $post->ID, 'do_not_generate_post_name', true ), false ), 'Do not generate permalink.' );
 
     // Added cross-domain tracking support.
     // @task https://projects.usabilitydynamics.com/projects/discodonniepresentscom-november-2012/tasks/55
     // @author potanin@UD
     if( $post->post_type === 'hdp_event' ) {
-      $html[] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'disable_cross_domain_tracking', 'disable_cross_domain_tracking', checked( 'true', get_post_meta( $post->ID, 'disable_cross_domain_tracking', true ), false ), 'Disable cross domain tracking.');
+      $html[ ] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'disable_cross_domain_tracking', 'disable_cross_domain_tracking', checked( 'true', get_post_meta( $post->ID, 'disable_cross_domain_tracking', true ), false ), 'Disable cross domain tracking.' );
     }
 
     if( is_array( $html ) ) {
-      echo '<ul class="flawless_post_type_options wp-tab-panel"><li>' . implode( '</li><li>', $html) . '</li></ul>';
+      echo '<ul class="flawless_post_type_options wp-tab-panel"><li>' . implode( '</li><li>', $html ) . '</li></ul>';
     }
 
   }
@@ -1892,15 +1934,15 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
    * @shortcode dynamic_filter
    * @author potanin@UD
    */
-  public function shortcode_dynamic_filter( $args = false, $content = '' ) {
+  static public function shortcode_dynamic_filter( $args = false, $content = '' ) {
     global $flawless;
 
     /** Setup the shortcode attributes first */
     $shortcode_attributes = array(
-      'post_type' => 'hdp_event',
-      'filter_dom_id' => 'dynamic_filter',
+      'post_type'      => 'hdp_event',
+      'filter_dom_id'  => 'dynamic_filter',
       'filter_element' => '#df_sidebar_filters', 'sorter_element' => "<div></div>",
-      'per_page' => (int) hddp::$hdp_posts_per_page, );
+      'per_page'       => (int) hddp::$hdp_posts_per_page, );
 
     /** Now setup our attributes */
     $attributes = array();
@@ -1941,33 +1983,33 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
     $attributes[ 'raw_html' ] = array( 'display' => true );
     /** Get our post type object */
     $post_type_object = get_post_type_object( $args[ 'post_type' ] );
-    $filter_config = array(
+    $filter_config    = array(
       'attributes' => $attributes,
-      'ajax' => array(
-        'url' => admin_url( 'admin-ajax.php' ) . ( isset( $_REQUEST[ 'force_update' ] ) ? '?force_update=1' : '' ),
+      'ajax'       => array(
+        'url'  => admin_url( 'admin-ajax.php' ) . ( isset( $_REQUEST[ 'force_update' ] ) ? '?force_update=1' : '' ),
         'args' => array( 'action' => 'ud_df_post_query', 'post_type' => $args[ 'post_type' ] )
       ),
-      'ux' => array(
-        'filter' => $args[ 'filter_element' ],
-        'sorter' => $args[ 'sorter_element' ],
+      'ux'         => array(
+        'filter'       => $args[ 'filter_element' ],
+        'sorter'       => $args[ 'sorter_element' ],
         'filter_label' => '<span></span>',
       ),
-      'classes' => array(
+      'classes'    => array(
         'wrappers' => array(
           'results_wrapper' => 'hdp_results',
-          'results' => 'hdp_results_items',
-          'element' => 'df_top_wrapper ' . $args[ 'post_type' ],
+          'results'         => 'hdp_results_items',
+          'element'         => 'df_top_wrapper ' . $args[ 'post_type' ],
         ),
-        'results' => array( 'row' => 'hdp_results_item' )
+        'results'  => array( 'row' => 'hdp_results_item' )
       ),
-      'settings' => array(
-        'dom_limit' => 9999,
-        'per_page' => $args[ 'per_page' ],
+      'settings'   => array(
+        'dom_limit'  => 9999,
+        'per_page'   => $args[ 'per_page' ],
         'unique_tag' => 'id',
-        'debug' => $debug,
-        'messages' => array(
+        'debug'      => $debug,
+        'messages'   => array(
           'no_results' => sprintf( __( 'No %s Found.', HDDP ), $post_type_object->labels->name ),
-          'load_more' => sprintf( __( '
+          'load_more'  => sprintf( __( '
 <div class="df_load_status">
 	<span>Displaying {1}</span> of {2} %s
 </div><a class="btn"><span>Show <em>{3}</em> More</span></a>', HDDP ), $post_type_object->labels->name ),
@@ -1980,7 +2022,7 @@ if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(docum
       $filter_config[ 'ajax' ][ 'args' ][ 'filter_query' ] = $filter_query;
     }
     /** Build/return our html */
-    $html[] = $content;
+    $html[ ] = $content;
 
     flawless_render_in_footer( '
 <script type="text/javascript">
@@ -1989,7 +2031,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
     );
 
     if( $debug && current_user_can( 'manage_options' ) ) {
-      $html[] = '<pre class="flawless_toggable_debug">$filter_config debug: ' . print_r( $filter_config, true ) . '</pre>';
+      $html[ ] = '<pre class="flawless_toggable_debug">$filter_config debug: ' . print_r( $filter_config, true ) . '</pre>';
     }
 
     return implode( '', (array) $html );
@@ -1997,73 +2039,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
   }
 
   /**
-   * Facets for ElasticFilter
-   *
-   * @shortcode elastic_filter
-   * @author potanin@UD
-   */
-//  public function shortcode_elastic_results($args = false, $content = '') {
-//    global $flawless;
-//
-//    $args = shortcode_atts( array(
-//      'url' => 'https://cloud.usabilitydynamics.com:443',
-//      'account_id' => '',
-//      'access_key' => '',
-//      'per_page' => 10,
-//      'debug' => false,
-//      'profile' => 'false',
-//      'index' => ''
-//    ), $args );
-//
-//    foreach ((array) array_filter($args) as $key => $value) {
-//      $elastic[] = "{$key}: '{$value}'";
-//    }
-//
-//    $elastic = implode(', ', (array) $elastic);
-//
-//    ob_start();
-//    include 'templates/elastic_results.php';
-//    return ob_get_clean();
-//  }
-
-  /**
-   * Facets for ElasticFilter
-   *
-   * @shortcode elastic_filter
-   * @author potanin@UD
-   */
-//  public function shortcode_elastic_facets( $args = false, $content = '' ) {
-//    global $flawless;
-//
-//    $args = shortcode_atts( array( 'debug' => 'false', 'profile' => 'false' ), $args );
-//
-//    $elastic = array( "url: 'https://cloud.usabilitydynamics.com:443'" );
-//
-//    foreach( (array) array_filter( $args ) as $key => $value ) {
-//      $elastic[] = "{$key}: '{$value}'";
-//    }
-//    $elastic = implode( ', ', (array) $elastic );
-//
-//    ob_start();
-//    include 'templates/elastic_facets.php';
-//    return ob_get_clean();
-//  }
-
-  /**
-   * {unknown}
-   *
-   * @param bool $args
-   * @param string $content
-   * @return string
-   */
-//  public function shortcode_elastic_popup_filter( $args = false, $content = '' ) {
-//    ob_start();
-//    include 'templates/elastic_popup_filter.php';
-//    return ob_get_clean();
-//  }
-
-  /**
-   * Renders Gallery 
+   * Renders Gallery
    *
    * =USAGE=
    * [hdp_gallery title="{Some title}" content="{Some content}" show_as="{list}"] - Show images of current post. Default view is 'list'
@@ -2073,25 +2049,25 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    */
   static public function shortcode_hddp_gallery( $args = false ) {
     global $post;
-    
+
     $content = '';
-    
-    $data = wp_parse_args( $args, array( 
+
+    $data = wp_parse_args( $args, array(
       'post_id' => is_object( $post ) ? $post->ID : false,
-      'title' => false, // Optional. Custom title
+      'title'   => false, // Optional. Custom title
       'content' => false, // Optional. Custom content
-      'ids' => '', // Optional. List of media item IDs.
+      'ids'     => '', // Optional. List of media item IDs.
       'show_as' => 'gallery', // Optional. Default is 'gallery'. Values: 'gallery', 'list'
       'orderby' => false, // Optional. Allows custom (random) sorting. Values: 'rand', 'ID', 'title', 'name', 'date', 'modified'
     ) );
-    
+
     $_post = ( is_object( $post ) && $post->ID == $data[ 'post_id' ] ) ? $post : get_post( $data[ 'post_id' ], ARRAY_A );
-    
+
     // Break if there is no post
     if( empty( $_post ) ) {
       return $content;
     }
-    
+
     $ids = explode( ',', trim( $data[ 'ids' ] ) );
     foreach( $ids as $k => $id ) {
       $ids[ $k ] = trim( $id );
@@ -2099,59 +2075,59 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
         unset( $ids[ $k ] );
       }
     }
-    
+
     $orderby = $data[ 'orderby' ] && in_array( $data[ 'orderby' ], array( 'rand', 'ID', 'title', 'name', 'date', 'modified' ) ) ? $data[ 'orderby' ] : false;
-    
+
     if( !empty( $ids ) ) {
       $query = array(
-        'post__in' => $ids,
-        'post_type' => 'attachment',
+        'post__in'       => $ids,
+        'post_type'      => 'attachment',
         'post_mime_type' => 'image',
-        'numberposts' => -1,
-        'orderby' => ( $orderby ? $orderby : 'post__in' ),
+        'numberposts'    => -1,
+        'orderby'        => ( $orderby ? $orderby : 'post__in' ),
       );
     } else {
       $query = array(
-        'post_parent' => $_post->ID,
-        'exclude' => get_post_thumbnail_id(),
-        'post_status' => 'inherit',
-        'post_type' => 'attachment',
+        'post_parent'    => $_post->ID,
+        'exclude'        => get_post_thumbnail_id(),
+        'post_status'    => 'inherit',
+        'post_type'      => 'attachment',
         'post_mime_type' => 'image',
-        'order' => 'ASC',
-        'numberposts' => -1,
-        'orderby' => ( $orderby ? $orderby : 'menu_order ID' ),
+        'order'          => 'ASC',
+        'numberposts'    => -1,
+        'orderby'        => ( $orderby ? $orderby : 'menu_order ID' ),
       );
     }
-    
+
     $data[ 'images' ] = get_posts( $query );
-    
+
     // Break if there are no images
     if( empty( $data[ 'images' ] ) ) {
       return $content;
     }
 
     // Set title and content if they are undefined.
-    $data[ 'title' ] = ( ( !is_object( $post ) || $post->ID != $_post->ID ) && !$data[ 'title' ] ) ? $_post->post_title : (string)$data[ 'title' ];
-    $data[ 'content' ] = ( ( !is_object( $post ) || $post->ID != $_post->ID ) && !$data[ 'content' ] ) ? $_post->post_content : (string)$data[ 'content' ];
-    
+    $data[ 'title' ]   = ( ( !is_object( $post ) || $post->ID != $_post->ID ) && !$data[ 'title' ] ) ? $_post->post_title : (string) $data[ 'title' ];
+    $data[ 'content' ] = ( ( !is_object( $post ) || $post->ID != $_post->ID ) && !$data[ 'content' ] ) ? $_post->post_content : (string) $data[ 'content' ];
+
     // Check and fix if needed 'show_as' argument
     $data[ 'show_as' ] = in_array( $data[ 'show_as' ], array( 'gallery', 'list' ) ) ? $data[ 'show_as' ] : 'gallery';
-    
+
     $data[ 'anchors' ] = array(
-      'gallery' => array( 
-        'icon' => 'icon-events', 
-        'text' => __( 'Show As List' ) 
+      'gallery' => array(
+        'icon' => 'icon-events',
+        'text' => __( 'Show As List' )
       ),
-      'list' => array( 
-        'icon' => 'icon-hdp_photo_gallery', 
-        'text' => __( 'Show As Gallery' ) 
+      'list'    => array(
+        'icon' => 'icon-hdp_photo_gallery',
+        'text' => __( 'Show As Gallery' )
       )
     );
-    
+
     $data[ 'anchor' ] = $data[ 'anchors' ][ $data[ 'show_as' ] ];
-    
-    wp_enqueue_script( 'hddp_shortcode', get_stylesheet_directory_uri() . '/js/hddp.gallery.js', array( 'jquery', 'jquery-flexslider' ), HDDP_Version, true );
-    
+
+    wp_enqueue_script( 'hddp_shortcode', get_stylesheet_directory_uri() . '/scripts/hddp.gallery.js', array( 'jquery', 'jquery-flexslider' ), HDDP_Version, true );
+
     /** Buffer output */
     ob_start();
 
@@ -2159,7 +2135,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
 
     /** Get the content */
     $content = ob_get_clean();
-    
+
     return $content;
   }
 
@@ -2168,11 +2144,11 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    * =USAGE=
    * [hdp_custom_loop type="event"
    */
-  public function shortcode_hdp_custom_loop( $args = false, $content = '' ) {
+  static public function shortcode_hdp_custom_loop( $args = false, $content = '' ) {
 
     /** Setup the shortcode attributes first */
-    $shortcode_attributes = array( 'post_type' => 'hdp_event', 'per_page' => hddp::$hdp_posts_per_page,
-      'do_shortcode' => true, 'include_filter' => false, );
+    $shortcode_attributes = array( 'post_type'    => 'hdp_event', 'per_page' => hddp::$hdp_posts_per_page,
+                                   'do_shortcode' => true, 'include_filter' => false, );
 
     /** Now setup our attributes */
     $attributes = array();
@@ -2196,13 +2172,14 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
 
     /** Call the function */
     $ret = hddp::custom_loop( $type, $attributes, true, $do_shortcode );
+
     return $ret;
   }
 
   /**
    * Hold our custom function for show the events header
    */
-  public function custom_loop( $type = false, $filter = array(), $from_shortcode = false, $do_shortcode = true ) {
+  static public function custom_loop( $type = false, $filter = array(), $from_shortcode = false, $do_shortcode = true ) {
     global $wpdb, $post, $WP_Query;
 
     $post_backup = $post;
@@ -2211,9 +2188,9 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
     /** Old date shortcode - depreciating for the time being
      * '[dynamic_filter per_page='.hddp::$hdp_posts_per_page.' sorter_element="#hdp_results_sorter" post_title="label=Post Title,filter=input,filter_show_label=false,display=false" hdp_artist="label=Artist,filter=dropdown,display=false,filter_show_count=true" state="label=State,filter=dropdown,display=false,filter_show_count=true" city="label=City,filter=dropdown,display=false,filter_show_count=true" hdp_venue="label=Venue,filter=dropdown,display=false,filter_show_count=true" hdp_promoter="label=Promoter,filter=dropdown,display=false,filter_show_count=true" hdp_event_tour="label=Tour,filter=dropdown,display=false,filter_show_count=true" hdp_type="label=Event Type,filter=dropdown,display=false,filter_show_count=true" hdp_genre="label=Genre(s),filter=dropdown,display=false,filter_show_count=true" hdp_age_limit="label=Age Limit,filter=dropdown,display=false,filter_show_count=true" raw_html="label=Raw HTML" hdp_meta_date="label=Date,filter_ux=date_selector,filter=range,display=false,sortable=true" distance="label=Distance,sortable=true"]',
      */
-    $shortcode_array = array( 'hdp_event' => '[dynamic_filter per_page=' . hddp::$hdp_posts_per_page . ' sorter_element="#hdp_results_sorter" post_title="label=Post Title,filter=input,filter_show_label=false,display=false,filter_placeholder=Enter Artist&#44; City&#44; State&#44; or Venue" hdp_artist="label=Artist,filter=dropdown,display=false,filter_show_count=true" hdp_state="label=State,filter=dropdown,display=false,filter_show_count=true" hdp_city="label=City,filter=dropdown,display=false,filter_show_count=true" hdp_venue="label=Venue,filter=dropdown,display=false,filter_show_count=true" hdp_promoter="label=Promoter,filter=dropdown,display=false,filter_show_count=true" hdp_tour="label=Tour,filter=dropdown,display=false,filter_show_count=true" hdp_type="label=Event Type,filter=dropdown,display=false,filter_show_count=true" hdp_genre="label=Genre,filter=dropdown,display=false,filter_show_count=true" hdp_age_limit="label=Age Limit,filter=dropdown,display=false,filter_show_count=true" hdp_date_range="label=Date Range,filter=range" raw_html="label=Raw HTML" hdp_event_date="label=Date,display=false,sortable=true" distance="label=Distance,sortable=true"]',
-      'hdp_video' => '[dynamic_filter post_type="hdp_video" per_page=' . hddp::$hdp_posts_per_page . ' sorter_element="#hdp_results_sorter" hdp_artist="label=Artist,filter=dropdown,display=false,filter_show_count=true" hdp_state="label=State,filter=dropdown,display=false,filter_show_count=true" hdp_city="label=City,filter=dropdown,display=false,filter_show_count=true" hdp_venue="label=Venue,filter=dropdown,display=false,filter_show_count=true" hdp_promoter="label=Promoter,filter=dropdown,display=false,filter_show_count=true" hdp_type="label=Event Type,filter=dropdown,display=false,filter_show_count=true" raw_html="label=Raw HTML"]',
-      'hdp_photo_gallery' => '[dynamic_filter post_type="hdp_photo_gallery" per_page=' . hddp::$hdp_posts_per_page . ' sorter_element="#hdp_results_sorter" hdp_artist="label=Artist,filter=dropdown,display=false,filter_show_count=true" hdp_state="label=State,filter=dropdown,display=false,filter_show_count=true" hdp_city="label=City,filter=dropdown,display=false,filter_show_count=true" hdp_venue="label=Venue,filter=dropdown,display=false,filter_show_count=true" hdp_promoter="label=Promoter,filter=dropdown,display=false,filter_show_count=true" hdp_type="label=Event Type,filter=dropdown,display=false,filter_show_count=true" raw_html="label=Raw HTML"]', );
+    $shortcode_array = array( 'hdp_event'         => '[dynamic_filter per_page=' . hddp::$hdp_posts_per_page . ' sorter_element="#hdp_results_sorter" post_title="label=Post Title,filter=input,filter_show_label=false,display=false,filter_placeholder=Enter Artist&#44; City&#44; State&#44; or Venue" hdp_artist="label=Artist,filter=dropdown,display=false,filter_show_count=true" hdp_state="label=State,filter=dropdown,display=false,filter_show_count=true" hdp_city="label=City,filter=dropdown,display=false,filter_show_count=true" hdp_venue="label=Venue,filter=dropdown,display=false,filter_show_count=true" hdp_promoter="label=Promoter,filter=dropdown,display=false,filter_show_count=true" hdp_tour="label=Tour,filter=dropdown,display=false,filter_show_count=true" hdp_type="label=Event Type,filter=dropdown,display=false,filter_show_count=true" hdp_genre="label=Genre,filter=dropdown,display=false,filter_show_count=true" hdp_age_limit="label=Age Limit,filter=dropdown,display=false,filter_show_count=true" hdp_date_range="label=Date Range,filter=range" raw_html="label=Raw HTML" hdp_event_date="label=Date,display=false,sortable=true" distance="label=Distance,sortable=true"]',
+                              'hdp_video'         => '[dynamic_filter post_type="hdp_video" per_page=' . hddp::$hdp_posts_per_page . ' sorter_element="#hdp_results_sorter" hdp_artist="label=Artist,filter=dropdown,display=false,filter_show_count=true" hdp_state="label=State,filter=dropdown,display=false,filter_show_count=true" hdp_city="label=City,filter=dropdown,display=false,filter_show_count=true" hdp_venue="label=Venue,filter=dropdown,display=false,filter_show_count=true" hdp_promoter="label=Promoter,filter=dropdown,display=false,filter_show_count=true" hdp_type="label=Event Type,filter=dropdown,display=false,filter_show_count=true" raw_html="label=Raw HTML"]',
+                              'hdp_photo_gallery' => '[dynamic_filter post_type="hdp_photo_gallery" per_page=' . hddp::$hdp_posts_per_page . ' sorter_element="#hdp_results_sorter" hdp_artist="label=Artist,filter=dropdown,display=false,filter_show_count=true" hdp_state="label=State,filter=dropdown,display=false,filter_show_count=true" hdp_city="label=City,filter=dropdown,display=false,filter_show_count=true" hdp_venue="label=Venue,filter=dropdown,display=false,filter_show_count=true" hdp_promoter="label=Promoter,filter=dropdown,display=false,filter_show_count=true" hdp_type="label=Event Type,filter=dropdown,display=false,filter_show_count=true" raw_html="label=Raw HTML"]', );
 
     /** If w can't find the shortcode, return */
     if( !in_array( $type, array_keys( $shortcode_array ) ) ) return false;
@@ -2225,14 +2202,14 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
     $per_page = hddp::$hdp_posts_per_page;
     if( isset( $filter[ 'per_page' ] ) && is_numeric( $filter[ 'per_page' ] ) ) {
       $shortcode = str_ireplace( 'per_page=' . hddp::$hdp_posts_per_page, 'per_page=' . $filter[ 'per_page' ], $shortcode );
-      $per_page = $filter[ 'per_page' ];
+      $per_page  = $filter[ 'per_page' ];
       unset( $filter[ 'per_page' ] );
     }
 
     /** If we have a GET request, lets add it to the filter */
     if( isset( $_REQUEST[ 'df_q' ] ) && !empty( $_REQUEST[ 'df_q' ] ) && $type == 'hdp_event' ) {
-      $dfq = str_ireplace( '"', '', $_REQUEST[ 'df_q' ] );
-      $dfq = str_ireplace( ',', '', $dfq );
+      $dfq       = str_ireplace( '"', '', $_REQUEST[ 'df_q' ] );
+      $dfq       = str_ireplace( ',', '', $dfq );
       $shortcode = str_ireplace( 'post_title="', 'post_title="default_value=' . $dfq . ',', $shortcode );
     }
 
@@ -2242,8 +2219,8 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
     /** If we have a filter, we need to update our call to the shortcode */
     $where = '';
     if( count( $filter ) ) {
-      $key = array_keys( $filter );
-      $key = $key[ 0 ];
+      $key   = array_keys( $filter );
+      $key   = $key[ 0 ];
       $value = $filter[ $key ];
       /** We have our key and value, modify the shortcode to reflect */
       $shortcode = str_ireplace( $key . '="', $key . '="default_value=' . $value . ',', $shortcode );
@@ -2253,9 +2230,9 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
     }
 
     /** Setup the query array */
-    $query_array = array( 'hdp_event' => "SELECT SQL_CALC_FOUND_ROWS * FROM {$wpdb->prefix}ud_qa_hdp_event WHERE 1=1 {$where} AND STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) >= CURDATE() ORDER BY STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) ASC LIMIT " . $per_page,
-      'hdp_video' => "SELECT SQL_CALC_FOUND_ROWS * FROM {$wpdb->prefix}ud_qa_hdp_video WHERE 1=1 {$where} ORDER BY STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) DESC LIMIT " . $per_page,
-      'hdp_photo_gallery' => "SELECT SQL_CALC_FOUND_ROWS * FROM {$wpdb->prefix}ud_qa_hdp_photo_gallery WHERE 1=1 {$where} ORDER BY STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) DESC LIMIT " . $per_page, );
+    $query_array = array( 'hdp_event'         => "SELECT SQL_CALC_FOUND_ROWS * FROM {$wpdb->prefix}ud_qa_hdp_event WHERE 1=1 {$where} AND STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) >= CURDATE() ORDER BY STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) ASC LIMIT " . $per_page,
+                          'hdp_video'         => "SELECT SQL_CALC_FOUND_ROWS * FROM {$wpdb->prefix}ud_qa_hdp_video WHERE 1=1 {$where} ORDER BY STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) DESC LIMIT " . $per_page,
+                          'hdp_photo_gallery' => "SELECT SQL_CALC_FOUND_ROWS * FROM {$wpdb->prefix}ud_qa_hdp_photo_gallery WHERE 1=1 {$where} ORDER BY STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) DESC LIMIT " . $per_page, );
 
     /** If the per page is 0, remove the limit factor */
     if( (int) $per_page === 0 ) {
@@ -2288,7 +2265,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    *
    * @author potanin@UD
    */
-  public function hddp_manage() {
+  static public function hddp_manage() {
     global $wpdb, $hddp;
 
     $ud_log = Flawless_F::get_log( array( 'limit' => 100 ) );
@@ -2302,7 +2279,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    *
    * @author potanin@UD
    */
-  public function get_post_title( $post = false ) {
+  static public function get_post_title( $post = false ) {
 
     if( !is_object( $post ) ) {
       $post = get_post( $post );
@@ -2319,8 +2296,8 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
       case 'hdp_photo_gallery':
 
         $return[ 'artists' ] = implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_artist', array( 'fields' => 'names' ) ) ) . '';
-        $return[] = 'at';
-        $return[ 'venues' ] = implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ) . '';
+        $return[ ]           = 'at';
+        $return[ 'venues' ]  = implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ) . '';
 
         break;
 
@@ -2343,7 +2320,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    *
    * @author potanin@UD
    */
-  public function get_post_name( $post = false ) {
+  static public function get_post_name( $post = false ) {
 
     $post = get_post( $post );
     if( !is_object( $post ) ) {
@@ -2356,58 +2333,62 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
     $hdp_event_date = strtotime( get_post_meta( $post->ID, 'hdp_event_date', true ) );
 
     if( $hdp_event_date ) {
-      $return[] = date( 'Y-md', $hdp_event_date );
+      $return[ ] = date( 'Y-md', $hdp_event_date );
     }
 
     switch( $post->post_type ) {
 
       case 'hdp_video' :
-        $return[] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-        $return[] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
 
         break;
 
       case 'hdp_photo_gallery' :
-        $return[] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-        $return[] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
 
         break;
 
       case 'hdp_event' :
-        $return[] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-        $return[] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
 
         break;
     }
 
     return wp_unique_post_slug( sanitize_title( implode( ' ', array_filter( ( array ) $return ) ) ), $post->ID, $post->post_status, $post->post_type, $post->post_parent );
   }
-  
+
   /**
    * Filter to replace the [caption] shortcode text with HTML5 compliant code
    *
+   * @param      $val
+   * @param      $attr
+   * @param null $content
+   *
    * @return text HTML content describing embedded figure
-   **/
-  function img_caption_shortcode($val, $attr, $content = null) {
+   */
+  static public function img_caption_shortcode( $val, $attr, $content = null ) {
     extract( shortcode_atts( array(
-      'id'    => '',
-      'align' => '',
-      'width' => '',
+      'id'      => '',
+      'align'   => '',
+      'width'   => '',
       'caption' => ''
     ), $attr ) );
-    
-    if ( 1 > (int) $width || empty($caption) ) {
+
+    if( 1 > (int) $width || empty( $caption ) ) {
       return $val;
     }
-    
+
     $capid = '';
-    if ( $id ) {
-      $id = esc_attr($id);
-      $capid = 'id="figcaption_'. $id . '" ';
-      $id = 'id="' . $id . '" aria-labelledby="figcaption_' . $id . '" ';
+    if( $id ) {
+      $id    = esc_attr( $id );
+      $capid = 'id="figcaption_' . $id . '" ';
+      $id    = 'id="' . $id . '" aria-labelledby="figcaption_' . $id . '" ';
     }
-    
-    return '<figure ' . $id . 'class="wp-caption ' . esc_attr($align) . '" >' . do_shortcode( $content ) . '<figcaption ' . $capid . 'class="wp-caption-text">' . $caption . '</figcaption></figure>';
+
+    return '<figure ' . $id . 'class="wp-caption ' . esc_attr( $align ) . '" >' . do_shortcode( $content ) . '<figcaption ' . $capid . 'class="wp-caption-text">' . $caption . '</figcaption></figure>';
   }
 
   /**
@@ -2416,9 +2397,9 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
    * Videos: Video from [POSTS NAME] in [City], [State] on [Date].
    * Events: [POSTS NAME] in [City], [State] on [Date] at [TIME].
    *
-   *@author potanin@UD
+   * @author potanin@UD
    */
-  public function get_post_excerpt( $event_id = false ) {
+  static public function get_post_excerpt( $event_id = false ) {
 
     global $post, $wpdb;
 
@@ -2440,15 +2421,15 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
     switch( $event[ 'post_type' ] ) {
 
       case 'hdp_video' :
-        $return[] = 'Video from ';
+        $return[ ] = 'Video from ';
         break;
 
       case 'hdp_photo_gallery' :
-        $return[] = 'Photos from ';
+        $return[ ] = 'Photos from ';
         break;
     }
 
-    $return[] = $post_tite;
+    $return[ ] = $post_tite;
 
     if( $event[ 'attributes' ][ 'hdp_city' ] ) {
       $return[ 'city' ] = trim( 'in ' . $event[ 'attributes' ][ 'hdp_city' ] );
@@ -2468,11 +2449,11 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
     $hdp_event_time = strtotime( get_post_meta( $event_id, 'hdp_event_time', true ) );
 
     if( !empty( $return ) && $event[ 'attributes' ][ 'hdp_event_date' ] ) {
-      $return[] = 'on ' . $event[ 'attributes' ][ 'hdp_event_date' ];
+      $return[ ] = 'on ' . $event[ 'attributes' ][ 'hdp_event_date' ];
     }
 
     if( !empty( $return ) && $event[ 'attributes' ][ 'hdp_event_time' ] ) {
-      $return[] = 'at ' . $event[ 'attributes' ][ 'hdp_event_time' ];
+      $return[ ] = 'at ' . $event[ 'attributes' ][ 'hdp_event_time' ];
     }
 
     if( empty( $return ) ) {
@@ -2489,42 +2470,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
 
 }
 
-function featured_image_in_feed($content) {
-    global $post;
-    if(is_feed()) {
-        if ( has_post_thumbnail( $post->ID ) ){
-            $output = get_the_post_thumbnail( $post->ID, 'hd_large', array( 'style' => 'margin:10px 0 10px 0;' ) );
-            $content = $output.$content;
-        }
-    }
-    return $content;
-}
-add_filter('the_content', 'featured_image_in_feed');
-
-function _elastic_label( $key ) {
-
-  $translates = array(
-      'hdp_artist_name' => 'Artist',
-      'hdp_state_name' => 'State',
-      'hdp_city_name' => 'City',
-      'hdp_venue_name' => 'Venue',
-      'hdp_promoter_name' => 'Promoter',
-      'hdp_tour_name' => 'Tour',
-      'hdp_type_name' => 'Event Type',
-      'hdp_genre_name' => 'Genre',
-      'hdp_age_limit_name' => 'Age Limit'
-  );
-
-  if ( !empty( $translates[$key] ) ) {
-    echo $translates[$key];
-  } else {
-    echo $key;
-  }
-
-}
-
-
-/* Initialize */
+// Initialize.
 add_action( 'flawless::theme_setup::after', array( 'hddp', 'theme_setup' ) );
 add_action( 'flawless::init_upper', array( 'hddp', 'init_upper' ) );
 add_action( 'flawless::init_lower', array( 'hddp', 'init_lower' ) );

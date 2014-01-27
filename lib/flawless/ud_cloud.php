@@ -80,7 +80,7 @@ if( !class_exists( 'UD_Cloud' ) ) {
         $post->{$meta_key} = array_shift( array_values( $values ) );
       }
 
-      $post->terms = is_object( $post ) && $post->terms ? $post->terms : wp_get_object_terms( $post->ID, get_object_taxonomies( $post->post_type ) );
+      $post->terms    = is_object( $post ) && $post->terms ? $post->terms : wp_get_object_terms( $post->ID, get_object_taxonomies( $post->post_type ) );
       $post->comments = is_object( $post ) && $post->comments ? $post->comments : get_comments( array( 'post_id' => $post->ID ) );
 
       // Execute Filters and Clean
@@ -99,25 +99,25 @@ if( !class_exists( 'UD_Cloud' ) ) {
         'documents',
         $post->type ? $post->type : 'post',
         $post->id
-      ));
+      ) );
 
       $_response = wp_remote_post( $post_url, array(
         'sslverify' => false,
-        'timeout' => 60,
-        'body' => array(
+        'timeout'   => 60,
+        'body'      => array(
           'document' => $post
         ),
-        'headers' => array(
+        'headers'   => array(
           'Authorization' => 'Basic ' . base64_encode( get_option( 'ud::cloud::access-hash' ) )
         )
-      ));
+      ) );
 
       if( is_wp_error( $_response ) ) {
         return $_response;
       }
 
       $_response[ 'post_url' ] = $post_url;
-      $_response[ 'timer' ] = self::timer_stop( __METHOD__ );
+      $_response[ 'timer' ]    = self::timer_stop( __METHOD__ );
 
       $body = $_response[ 'body' ] = (object) array_filter( (array) json_decode( $_response[ 'body' ], true ) );
 
@@ -196,7 +196,7 @@ if( !class_exists( 'UD_Cloud' ) ) {
       }
 
       // Private API call can use Customer Key
-      $url = implode( '/', array( self::$url, 'api/v' . self::$api_version, 'documents', $post->post_type, get_post_meta( $post->ID, 'ud::cloud::id', true ) ));
+      $url = implode( '/', array( self::$url, 'api/v' . self::$api_version, 'documents', $post->post_type, get_post_meta( $post->ID, 'ud::cloud::id', true ) ) );
 
       wp_remote_request( $url, array( 'method' => 'DELETE' ) );
 
@@ -229,6 +229,7 @@ if( !class_exists( 'UD_Cloud' ) ) {
      */
     static function object_log( $id, $data ) {
       add_post_meta( $id, 'ud::cloud::log', $data );
+
       return $id;
     }
 
@@ -257,15 +258,15 @@ if( !class_exists( 'UD_Cloud' ) ) {
 
       $html = array();
 
-      $html[] = '<div class="misc-pub-section curtime">';
+      $html[ ] = '<div class="misc-pub-section curtime">';
 
       if( $synchronized ) {
-        $html[] = '<span id="timestamp">Cloud Synchronization: <b>' . $synchronized . '</b></span>';
+        $html[ ] = '<span id="timestamp">Cloud Synchronization: <b>' . $synchronized . '</b></span>';
       } else {
-        $html[] = '<span id="timestamp">Pending Cloud Synchronization.</span>';
+        $html[ ] = '<span id="timestamp">Pending Cloud Synchronization.</span>';
       }
 
-      $html[] = '</div>';
+      $html[ ] = '</div>';
 
       echo implode( '', $html );
 
