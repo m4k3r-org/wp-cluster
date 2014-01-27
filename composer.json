@@ -8,7 +8,8 @@
     }
   ],
   "autoload": {
-    "classmap": [ "lib/class-bootstrap.php" ]
+    "classmap": [ "lib" ],
+    "files": [ "lib/template.php" ]
   },
   "require": {
     "php": ">=5.3",

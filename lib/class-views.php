@@ -733,6 +733,8 @@ namespace UsabilityDynamics\Flawless {
         return array();
       }
 
+      $response = array();
+
       foreach ( (array) $flawless[ 'current_view' ][ 'widget_areas' ][ $widget_area_type ] as $sidebar_id ) {
 
         $response[ ] = array(
@@ -742,8 +744,8 @@ namespace UsabilityDynamics\Flawless {
 
       }
 
-      self::log( 'Executed: Views::get_current_sidebars();' );
-      self::log( $response );
+      //self::log( 'Executed: Views::get_current_sidebars();' );
+      //self::log( $response );
 
       return $response;
 

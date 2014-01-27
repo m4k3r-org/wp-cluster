@@ -24,7 +24,7 @@ namespace UsabilityDynamics\Flawless {
    * @class Flawless
    * @since 0.0.2
    */
-  final class Bootstrap {
+  class Bootstrap {
 
     /**
      * Flawless core version.
@@ -94,7 +94,8 @@ namespace UsabilityDynamics\Flawless {
           )),
           'paths' =>  array(
             'root'        => untrailingslashit( get_template_directory() ),
-            'controllers' => trailingslashit( get_template_directory() ) . 'lib/controllers',
+            'lib'         => trailingslashit( get_template_directory() ) . 'lib',
+            //'controllers' => trailingslashit( get_template_directory() ) . 'lib/controllers',
             'modules'     => trailingslashit( get_template_directory() ) . 'lib/modules',
             'extend'      => trailingslashit( get_template_directory() ) . 'lib/extend',
             'helpers'     => trailingslashit( get_template_directory() ) . 'lib/helpers',
@@ -126,17 +127,17 @@ namespace UsabilityDynamics\Flawless {
 
       // Load Controllers, Modules, Helpers and Schemas.
       new Loader( array(
-        'controllers' => array(
+        /*'controllers' => array(
           'Flawless\\'          => array( $this->state->computed->paths->controllers ),
           'UsabilityDynamics\\' => array( $this->state->computed->paths->vendor ),
           'JsonSchema\\'        => array( $this->state->computed->paths->vendor . '/justinrainbow' )
-        ),
+        ),*/
         'modules' => array(
           'modules' => $this->state->computed->paths->modules,
           'extend'  => $this->state->computed->paths->extend
         ),
         'helpers' => array(
-          'helpers' => $this->state->computed->paths->helpers . '/template.php'
+          'helpers' => $this->state->computed->paths->lib . '/template.php'
         ),
         'models' => array(
           'component' => $this->state->computed->paths->root . '/component.json',
