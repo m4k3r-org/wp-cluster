@@ -1,0 +1,135 @@
+{
+    "schema": {
+        "label": "Event",
+        "properties": {
+            "post_title": {
+                "type": "multi_field",
+                "fields": {
+                    "post_title": {
+                        "type": "string",
+                        "index": "analyzed"
+                    },
+                    "untouched": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                    }
+                }
+            },
+            "madeup_field:full": {
+                "path": "full",
+                "type": "multi_field",
+                "fields": {
+                    "madeup_field1": {
+                        "type": "string",
+                        "index_name": "post_name"
+                    },
+                    "post_name2": {
+                        "type": "string",
+                        "index_name": "post_name"
+                    }
+                }
+            },
+            "madeup_field:just_name": {
+                "path": "just_name",
+                "type": "multi_field",
+                "fields": {
+                    "madeup_field3": {
+                        "type": "string",
+                        "index_name": "post_name",
+                        "index": "not_analyzed"
+                    },
+                    "post_name4": {
+                        "type": "string",
+                        "index_name": "post_name",
+                        "index": "not_analyzed"
+                    }
+                }
+            },
+            "comment_status": {
+                "type": "string",
+                "index_name": "status_of_comment",
+                "path": "just_name"
+            },
+            "filter": {
+                "index_name": "the_filter_index_name",
+                "path": "full",
+                "type": "string"
+            },
+            "location": {
+                "type": "object",
+                "store": "yes",
+                "path": "full",
+                "properties": {
+                    "city": {
+                        "type": "string"
+                    },
+                    "coordinates": {
+                        "type": "string",
+                        "index_name": "latitude"
+                    }
+                },
+                "geohash": {
+                    "type": "geohash"
+                }
+            },
+            "post_author": {
+                "type": "integer"
+            }
+        }
+    },
+    "dynamic_templates": {
+        "post": {
+            "match": "post*",
+            "mapping": {
+                "type": "multi_field",
+                "fields": {
+                    "{name}": {
+                        "type": "{dynamic_type}",
+                        "index": "analyzed"
+                    },
+                    "post_date": {
+                        "type": "Date"
+                    }
+                }
+            }
+        },
+        "strings": {
+            "match": "*",
+            "match_mapping_type": "string",
+            "mapping": {
+                "type": "string",
+                "not_analyzed": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                }
+            }
+        }
+    },
+    "settings": {
+        "callback_url": "http://discodonniepresents.com/wp-admin/admin-ajax.php?action=ud::es_bridge&api_key=gEStLpbkKOOFbdM",
+        "dynamic_date_formats": true,
+        "date_detection": true,
+        "index_analyzer": "standard",
+        "acl": {
+            "_public": {
+                "view": [
+                    "ID",
+                    "post_title",
+                    "post_content",
+                    "location.*",
+                    "comments.*",
+                    "terms.*"
+                ],
+                "update": false,
+                "add": false
+            },
+            "editor": {
+                "view": "*",
+                "update": [
+                    "Post Title",
+                    "post_content"
+                ]
+            }
+        }
+    }
+}

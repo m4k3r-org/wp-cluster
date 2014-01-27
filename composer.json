@@ -22,9 +22,10 @@
     "UsabilityDynamics/lib-settings": "master",
     "UsabilityDynamics/lib-ui": "master",
     "UsabilityDynamics/lib-carrington-build": "master",
+    "UsabilityDynamics/lib-wp-theme": "master",
     "UsabilityDynamics/wp-meta-box": "master"
   },
   "autoload": {
-    "classmap": [ "lib" ]
+    "classmap": [ "lib/class-bootstrap.php" ]
   }
 }
