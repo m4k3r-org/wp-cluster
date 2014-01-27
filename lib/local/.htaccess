@@ -1,16 +1,11 @@
-# Cluster Site Rewrite Rules
+# Cluster Rewrites
 #
-# Notice, W3 Total Cache adds an .htaccess to /system which will break /system redirects here.
+# This file should be symbolically linked to Cluster Network root.
 #
-# @version 2.0.1
+# @version 3.0.0
 # @author potanin@UD
 
-# Cross-domain AJAX requests
-<IfModule mod_headers.c>
-  Header set Access-Control-Allow-Origin "*"
-</IfModule>
-
-# MIME TYPES AND ENCODING
+# Cluster Mimes BEGIN
 <IfModule mod_mime.c>
 
   # Audio
@@ -18,8 +13,6 @@
   AddType audio/ogg                                   oga ogg
 
   # JavaScript
-  # Normalize to standard type (it's sniffed in IE anyways):
-  # http://tools.ietf.org/html/rfc4329#section-7.2
   AddType application/javascript                      js
   AddType application/json                            json
 
@@ -60,44 +53,78 @@
   AddType text/x-vcard                                vcf
 
 </IfModule>
+# Cluster Mimes END
 
-# UTF-8 encoding
-AddDefaultCharset utf-8
-
-# Force UTF-8 for certain file formats.
+# Cluster Format BEGIN
 <IfModule mod_mime.c>
   AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
 </IfModule>
+# Cluster Format END
 
-# URL REWRITES
+# Cluster Modules BEGIN
 <IfModule mod_rewrite.c>
-  Options +FollowSymlinks
-  RewriteEngine On
-  RewriteBase /
+  RewriteRule ^vendor/wordpress/core/wp-content/plugins/(.*)$ modules/$1 [R=301,L]
+  RewriteRule ^wp-content/plugins/(.*)$ modules/$1 [L]
 </IfModule>
+# Cluster Modules END
 
-# Suppressing / Forcing the "www." at the beginning of URLs
+# Cluster Theme BEGIN
 <IfModule mod_rewrite.c>
-  RewriteCond %{HTTPS} !=on
-  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-  RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+  #RewriteRule themes/k-boom/(.*)$ themes/rockstar/images/legacy/$1 [L]
+  RewriteRule ^wp-content/themes/(.*)$ themes/$1 [L]
 </IfModule>
+# Cluster Theme END
 
-# Block access to hidden files and directories.
+# Cluster Management BEGIN
 <IfModule mod_rewrite.c>
-  RewriteCond %{SCRIPT_FILENAME} -d [OR]
-  RewriteCond %{SCRIPT_FILENAME} -f
-  RewriteRule "(^|/)\." - [F]
-</IfModule>
+  RewriteRule ^manage/wp-login.php$ /manage/login [R=301,L]
+  RewriteRule ^wp-admin(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
+  RewriteRule ^wp-includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
+  RewriteRule ^includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
 
-# Block access to backup and source files.
-<FilesMatch "(^#.*#|\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|sw[op])|~)$">
+  #RewriteRule ^vendor/wordpress/core/wp-login.php /manage/login [R=301,L]
+  #RewriteRule ^manage$ /vendor/wordpress/core/wp-admin [R=301,L]
+  RewriteRule ^wp-signup.php$ /vendor/wordpress/core/wp-signup.php$1 [L]
+  RewriteRule ^manage/login/$ /vendor/wordpress/core/wp-login.php [L]
+  RewriteRule ^manage/login$ /vendor/wordpress/core/wp-login.php [L]
+  RewriteRule ^manage/(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
+  RewriteRule ^manage$ /vendor/wordpress/core/wp-admin [L]
+</IfModule>
+# Cluster Management END
+
+# Cluster Access Control BEGIN
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+</IfModule>
+# Cluster Access Control End
+
+# Cluster Security BEGIN
+<IfModule mod_rewrite.c>
+  RewriteRule ^node_modules/(.*)$ /index.php [L]
+  RewriteRule ^readme.md$ /index.php [L]
+  RewriteRule ^wp-cli.yml$ /index.php [L]
+  RewriteRule ^package.json$ /index.php [L]
+  RewriteRule ^gruntfile.js$ /index.php [L]
+  RewriteRule ^composer.json$ /index.php [L]
+  RewriteRule ^composer.lock$ /index.php [L]
+  RewriteRule ^wp-config.php$ /index.php [L]
+
+  # W3 Total Cache Configuration Files.
+  RewriteRule ^w3tc-config/master.php$ /index.php [L]
+  RewriteRule ^w3tc-config/master-admin.php$ /index.php [L]
+
+  # Application Access.
+  RewriteRule ^application/$ /index.php [L]
+  RewriteRule ^application/(config|defaults|lib)/(.*)$ /index.php [L]
+</IfModule>
+<FilesMatch "(^#.*#|\.(md|lock|yml|json|bak|config|dist|fla|inc|ini|log|psd|sh|sql|sw[op])|~)$">
   Order allow,deny
   Deny from all
   Satisfy All
 </FilesMatch>
+# Cluster Security END
 
-# Expires headers (for better cache control)
+# Cluster Expires BEGIN
 <IfModule mod_expires.c>
 
   ExpiresActive on
@@ -148,62 +175,19 @@ AddDefaultCharset utf-8
   ExpiresByType image/svg+xml                         "access plus 1 month"
 
 </IfModule>
+# Cluster Expires END
 
-# Modules
+# Cluster Media BEGIN
 <IfModule mod_rewrite.c>
-  RewriteRule ^system/wp-content/plugins/(.*)$ modules/$1 [R=301,L]
-  RewriteRule ^wp-content/plugins/(.*)$ modules/$1 [L]
-</IfModule>
-
-# Themes
-<IfModule mod_rewrite.c>
-  # RewriteRule ^wp-content/themes/nightculture-theme/images(.*)$ themes/rockstar/images/legacy/$1 [L]
-  RewriteRule ^wp-content/themes/(.*)$ themes/$1 [L]
-</IfModule>
-
-# Management
-<IfModule mod_rewrite.c>
-  RewriteRule ^manage/network(.*)$ /vendor/wordpress/core/wp-admin/network$1 [L]
-  RewriteRule ^manage/login$ /vendor/wordpress/core/wp-login.php [L]
-  RewriteRule ^manage/(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
-  RewriteRule ^manage$ /vendor/wordpress/core/wp-admin/$1 [L]
-</IfModule>
-
-# Security
-<IfModule mod_rewrite.c>
-  RewriteRule ^node_modules/(.*)$ /index.php [L]
-  RewriteRule ^readme.md$ /index.php [L]
-  RewriteRule ^wp-cli.yml$ /index.php [L]
-  RewriteRule ^package.json$ /index.php [L]
-  RewriteRule ^gruntfile.js$ /index.php [L]
-  RewriteRule ^composer.json$ /index.php [L]
-  RewriteRule ^composer.lock$ /index.php [L]
-  RewriteRule ^wp-config.php$ /index.php [L]
-
-  # W3 Total Cache Configuration Files.
-  RewriteRule ^w3tc-config/master.php$ /index.php [L]
-  RewriteRule ^w3tc-config/master-admin.php$ /index.php [L]
-
-  # Application Access.
-  RewriteRule ^application/$ /index.php [L]
-  RewriteRule ^application/(config|defaults|lib)/(.*)$ /index.php [L]
-
-  # Legacy Paths
-  #RewriteRule ^wp-login.php$ /index.php [L]
-  #RewriteRule ^wp-admin/$ /index.php [L]
-
-</IfModule>
-
-# Media
-<IfModule mod_rewrite.c>
-  RewriteRule ^uploads/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
+  RewriteRule ^system/files/(.*)$ /static/storage/%{SERVER_NAME}/$1 [R=301,L]
+  RewriteRule ^system/media/(.*)$ /static/storage/%{SERVER_NAME}/$1 [R=301,L]
+  RewriteRule ^files/(.*)$ /static/storage/%{SERVER_NAME}/$1 [R=301,L]
+  RewriteRule ^uploads/(.*)$ /static/storage/%{SERVER_NAME}/$1 [R=301,L]
   RewriteRule ^media/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
-  #RewriteRule ^wp-content/uploads/(.*)$ media/%{SERVER_NAME}/$1 [L]
-  #RewriteRule ^system/files/(.*)$ media/%{SERVER_NAME}/$1 [L]
-  #RewriteRule ^media/(.*)$ media/%{SERVER_NAME}/$1 [L]
 </IfModule>
+# Cluster Media END
 
-# Caching
+# Cluster Cache BEGIN
 <IfModule mod_deflate.c>
 
   <IfModule mod_headers.c>
@@ -218,8 +202,9 @@ AddDefaultCharset utf-8
   </IfModule>
 
 </IfModule>
+# Cluster Cache END
 
-# Standard WordPress
+# WordPress BEGIN
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -228,3 +213,4 @@ AddDefaultCharset utf-8
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.php [L]
 </IfModule>
+# WordPress END
