@@ -16,7 +16,6 @@
     "usabilitydynamics/lib-carrington-build": "master",
     "UsabilityDynamics/lib-wp-theme": "master"
   },
-  "license": "GPLv2",
   "minimum-stability": "dev",
   "extra": {
     "component": {
