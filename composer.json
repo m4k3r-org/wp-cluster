@@ -13,8 +13,8 @@
   },
   "require": {
     "php": ">=5.3",
-    "usabilitydynamics/lib-utility": "master",
-    "usabilitydynamics/lib-carrington-build": "master"
+    "usabilitydynamics/lib-carrington-build": "master",
+    "UsabilityDynamics/lib-wp-theme": "master"
   },
   "license": "GPLv2",
   "minimum-stability": "dev",
