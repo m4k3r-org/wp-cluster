@@ -18,8 +18,8 @@
     <h1>Fugiat dapibus, tellus ac cursus commodo, mauesris condime ntum nibh, ut fermentum mas justo sitters amet risus.</h1>
     <h2><i class="icon-time"></i> March 1, 2013 <a href="#post_comments"><i class="icon-comments-alt"></i> 6 comments</a></h2>
     <ul class="breadcrumb pull-right">
-         <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-         <li><a href="blog.html">Blog</a></li>
+       <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+       <li><a href="blog.html">Blog</a></li>
     </ul>
   </div>
 

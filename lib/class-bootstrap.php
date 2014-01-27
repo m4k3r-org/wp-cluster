@@ -214,7 +214,7 @@ namespace UsabilityDynamics\Flawless {
       do_action( 'flawless::init_upper', $this );
 
       // Compiled JavaScript library.
-      wp_register_script( 'flawless-app', get_stylesheet_directory_uri() . '/public/scripts/app.min.js', array( 'flawless-framework' ), Flawless_Version, true );
+      wp_register_script( 'app', get_home_url( null, '/app.js' ), array( 'flawless-framework' ), Flawless_Version, true );
 
     }
 
@@ -305,7 +305,7 @@ namespace UsabilityDynamics\Flawless {
       do_action( 'flawless::extra_local_assets', $this );
 
       // Enqueue compiled front-end library.
-      wp_enqueue_script( 'flawless-app' );
+      wp_enqueue_script( 'app' );
 
     }
 
@@ -322,7 +322,7 @@ namespace UsabilityDynamics\Flawless {
       self::log( 'Executed: Bootstrap::wp_print_styles();' );
 
       // Enqueue client-side styles.
-      wp_enqueue_style( 'flawless-app', get_stylesheet_directory_uri() . '/public/styles/app.min.css', array(), Flawless_Version );
+      wp_enqueue_style( 'app', get_home_url( null, '/app.css' ), array(), Flawless_Version );
 
       // Print extra styles in context.
       do_action( 'flawless::wp_print_styles', $this );
