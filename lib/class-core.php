@@ -62,15 +62,14 @@ namespace UsabilityDynamics\Festival {
      * @since 0.1.0
      */
     public function __construct() {
-      global $festival;
 
       // Get information about current theme
-      $_theme_info = get_file_data( __DIR__ . '/style.css', array( 'version' => 'Version' ) );
+      $_theme_info = get_file_data( dirname( __DIR__ ) . '/style.css', array( 'version' => 'Version' ) );
 
       // Configure properties.
-      self::$version = $_theme_info[ 'version' ];
-      self::$id = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => ':' ) );
-      self::$text_domain = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ) );
+      $this->version = $_theme_info[ 'version' ];
+      $this->id = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => ':' ) );
+      $this->text_domain = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ) );
 
       // Configure Theme.
       $this->initialize( array(
@@ -178,9 +177,6 @@ namespace UsabilityDynamics\Festival {
         return false;
       } );
 
-      // Globalize.
-      return $festival = &$this;
-
     }
 
     /**
@@ -221,7 +217,7 @@ namespace UsabilityDynamics\Festival {
 
       // Make theme available for translation
       if( is_dir( get_template_directory() . '/static/languages' ) ) {
-        load_theme_textdomain( self::$text_domain, get_template_directory() . '/static/languages' );
+        load_theme_textdomain( $this->text_domain, get_template_directory() . '/static/languages' );
       }
 
       add_theme_support( 'html5' );
@@ -256,10 +252,10 @@ namespace UsabilityDynamics\Festival {
       add_theme_support( 'post-thumbnails' );
 
       // Register Navigation Menus
-      register_nav_menu( 'primary', __( 'Primary Menu', self::$text_domain ) );
+      register_nav_menu( 'primary', __( 'Primary Menu', $this->text_domain ) );
 
-      //register_nav_menu( 'mobile', __( 'Mobile Menu', self::$text_domain ) );
-      register_nav_menu( 'footer', __( 'Footer Menu', self::$text_domain ) );
+      //register_nav_menu( 'mobile', __( 'Mobile Menu', $this->text_domain ) );
+      register_nav_menu( 'footer', __( 'Footer Menu', $this->text_domain ) );
 
       // Enable Carrington Build / Layout Engine
       //$this->layout_engine();
@@ -361,13 +357,13 @@ namespace UsabilityDynamics\Festival {
       $this->sync_streams();
 
       // Register scripts
-      wp_register_script( self::$text_domain . '-require', get_template_directory_uri() . '/scripts/require.js', array(), self::$version, true );
+      wp_register_script( $this->text_domain . '-require', get_template_directory_uri() . '/scripts/require.js', array(), $this->version, true );
 
       // Register styles
-      wp_register_style( self::$text_domain . '-app', defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? get_template_directory_uri() . '/styles/app.dev.css' : get_template_directory_uri() . '/styles/app.css', array(), self::$version, 'all' );
+      wp_register_style( $this->text_domain . '-app', defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? get_template_directory_uri() . '/styles/app.dev.css' : get_template_directory_uri() . '/styles/app.css', array(), $this->version, 'all' );
 
       // Register Color schema
-      wp_register_style( self::$text_domain . '-color', get_template_directory_uri() . '/styles/' . $this->get( 'configuration.color_schema' ) . '.css', array( self::$text_domain . '-app' ), self::$version, 'all' );
+      wp_register_style( $this->text_domain . '-color', get_template_directory_uri() . '/styles/' . $this->get( 'configuration.color_schema' ) . '.css', array( $this->text_domain . '-app' ), $this->version, 'all' );
 
       // Add custom editor styles
       add_editor_style( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'styles/editor-style.dev.css' : 'styles/editor-style.css' );
@@ -384,7 +380,7 @@ namespace UsabilityDynamics\Festival {
     private function register_post_types_and_taxonomies() {
       $post_types = array();
       foreach( (array) $this->get( 'post_types' ) as $post_type ) {
-        $class = '\UsabilityDynamics\Theme\Post_Type_' . ucfirst( $post_type );
+        $class = '\UsabilityDynamics\Festival\Post_Type_' . ucfirst( $post_type );
         if( class_exists( $class ) ) {
           $object = new $class;
           $post_types[ $object->object_type ] = $object;
@@ -400,7 +396,7 @@ namespace UsabilityDynamics\Festival {
     private function sync_streams() {
 
       // Enable Twitter
-      if( class_exists( '\UsabilityDynamics\Theme\Sync_Twitter' ) ) {
+      if( class_exists( '\UsabilityDynamics\Festival\Sync_Twitter' ) ) {
         $tw = new Sync_Twitter(
           array(
             'id' => 'twitter',
@@ -443,11 +439,11 @@ namespace UsabilityDynamics\Festival {
       add_filter( 'clean_url', array( __CLASS__, 'fix_requirejs_script' ), 11, 1 );
 
       // Require will load app.js and other Require.js modules
-      wp_enqueue_script( self::$text_domain . '-require' );
+      wp_enqueue_script( $this->text_domain . '-require' );
 
       // Compiled styles which include Bootstrap and custom styles.
-      wp_enqueue_style( self::$text_domain . '-app' );
-      wp_enqueue_style( self::$text_domain . '-color' );
+      wp_enqueue_style( $this->text_domain . '-app' );
+      wp_enqueue_style( $this->text_domain . '-color' );
 
     }
 
@@ -567,8 +563,8 @@ namespace UsabilityDynamics\Festival {
         if ( $default ) {
 
           $wp_upload_dir = wp_upload_dir();
-          $dir = $wp_upload_dir[ 'basedir' ] . '/no_image/' . md5( self::$text_domain ) . '';
-          $url = $wp_upload_dir[ 'baseurl' ] . '/no_image/' . md5( self::$text_domain ) . '';
+          $dir = $wp_upload_dir[ 'basedir' ] . '/no_image/' . md5( $this->text_domain ) . '';
+          $url = $wp_upload_dir[ 'baseurl' ] . '/no_image/' . md5( $this->text_domain ) . '';
           $path = $dir . '/' . $this->get( 'configuration.color_schema' ) . ( !empty( $post_type ) ? "-{$post_type}" : "" ) . '.' . $args->default_filetype;
           $default_path = get_template_directory() . '/images/no_image/' . basename( $path );
           $guid = $url . '/' . basename( $path );
@@ -592,7 +588,7 @@ namespace UsabilityDynamics\Festival {
             $attachment = array(
               'guid' => $guid,
               'post_mime_type' => $wp_filetype['type'],
-              'post_title' => __( 'No Image', self::$text_domain ),
+              'post_title' => __( 'No Image', $this->text_domain ),
               'post_content' => '',
               'post_status' => 'inherit'
             );
