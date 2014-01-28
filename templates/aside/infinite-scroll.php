@@ -24,21 +24,21 @@ global $festival;
 
       <div class="col-md-3 col-sm-3 social-stream">
         <div class="heading">
-          <h3><?php _e( 'Social Stream', $festival->text_domain ); ?></h3>
+          <h3><?php _e( 'Social Stream', wp_festival( 'domain' ) ); ?></h3>
           <span class="hr"></span>
         </div>
       </div>
 
       <div class="col-md-3 col-sm-3 blog-updates">
         <div class="heading">
-          <h3><?php _e( 'Blog Updates', $festival->text_domain ); ?></h3>
+          <h3><?php _e( 'Blog Updates', wp_festival( 'domain' ) ); ?></h3>
           <span class="hr"></span>
         </div>
       </div>
 
       <div class="col-md-6 col-sm-6 festival-news">
         <div class="heading">
-          <h3><?php _e( 'Festival News', $festival->text_domain ); ?></h3>
+          <h3><?php _e( 'Festival News', wp_festival( 'domain' ) ); ?></h3>
           <span class="hr"></span>
         </div>
       </div>

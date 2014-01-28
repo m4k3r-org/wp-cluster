@@ -6,9 +6,6 @@
  * @module festival  
  * @since festival 0.1.0
  */
-
-global $festival;
- 
 ?>
 <article <?php post_class(); ?> data-type="<?php get_post_type(); ?>">
 
@@ -16,8 +13,8 @@ global $festival;
 		<h1 class="article-title" data-type="post_title"><?php the_title(); ?></h1>
 	</header>
 
-  <section class="article-content" data-type="post_content">
-		<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', $festival->text_domain ) ); ?>
+  <section class="article-content" data-type="content">
+		<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', wp_festival( 'domain' ) ) ); ?>
   </section>
 
 </article>

@@ -14,7 +14,12 @@ namespace UsabilityDynamics\Festival {
    * @author Usability Dynamics
    */
   final class Bootstrap {
-  
+
+    /**
+     * Instance.
+     *
+     * @var $instance
+     */
     static private $instance;
 
     /**
@@ -23,30 +28,24 @@ namespace UsabilityDynamics\Festival {
      * @author Usability Dynamics
      * @since 0.1.0
      */
-    private function __construct() {
-      
-      if( !class_exists( '\UsabilityDynamics\Festival\Core' ) ) {
+    public function __construct() {
+
+      if( !class_exists( '\UsabilityDynamics\Festival' ) ) {
         wp_die( '<h1>Fatal Error</h1><p>Festival Theme not found.</p>' );
       }
-      
+
       // Instantaite Disco.
-      $this->theme = new Core;
-      
+      $this->theme = new \UsabilityDynamics\Festival;
+
     }
-    
+
     /**
-     * Return Theme Instance
+     * Determine if instance already exists and Return Theme Instance
      *
      */
-    public function get_instance() {
-      // Determine if instance already exists
-      if ( null === self::$instance ) {
-          // Inits new instance
-          self::$instance = new self();
-      }
-      return self::$instance->theme;
+    public static function get_instance() {
+      return null === self::$instance ? self::$instance = new self() : self::$instance->theme;
     }
-    
 
   }
 
