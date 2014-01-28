@@ -20,7 +20,7 @@
   "require": {
     "UsabilityDynamics/lib-wp-theme": "master",
     "UsabilityDynamics/lib-settings": "master",
-    "UsabilityDynamics/lib-carrington-build": "master",
+    "UsabilityDynamics/lib-carrington": "master",
     "UsabilityDynamics/wp-meta-box": "master"
   },
   "autoload": {
