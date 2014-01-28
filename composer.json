@@ -31,7 +31,7 @@
   },
   "require": {
     "php": ">=5.3",
-    "usabilitydynamics/lib-carrington-build": "master",
+    "usabilitydynamics/lib-carrington": "master",
     "UsabilityDynamics/lib-wp-theme": "master"
   },
   "minimum-stability": "dev",
