@@ -226,6 +226,7 @@ namespace UsabilityDynamics\Flawless {
       add_action( 'wp_print_styles', array( $this, 'wp_print_styles' ), 100 );
 
       do_action( 'flawless::init_lower', $this );
+      do_action( 'flawless::init', $this );
 
     }
 
