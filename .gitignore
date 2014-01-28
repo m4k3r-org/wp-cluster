@@ -1,6 +1,7 @@
 composer.lock
 npm-debug.log
 core/premium
+static/codex
 .svn
 .idea
 .idea/workspace.xml
@@ -9,7 +10,6 @@ core/premium
 .Trashes
 *.sublime-project
 *.sublime-workspace
-
 *.seed
 *.log
 *.csv
