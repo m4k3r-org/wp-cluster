@@ -472,9 +472,9 @@ namespace UsabilityDynamics {
       // Add Management UI.
       $this->manage(array(
         'id' => 'hddp_manage',
-        'title' => __( 'Manage', HDDP ),
-        'capability' => $hddp[ 'manage_options' ],
-        'template' => include dirname( __DIR__ ) . '/templates/admin.site_management.php'
+        'title' => __( 'Manage', $this->domain ),
+        //'capability' => $hddp[ 'manage_options' ],
+        'template' => dirname( __DIR__ ) . '/templates/admin.site_management.php'
       ));
 
       $this->set( 'stuff.ss', 'asdfdsf' );

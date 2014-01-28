@@ -50,7 +50,6 @@ namespace UsabilityDynamics\Disco {
 
         // Setup Core Actions.
         add_action( 'flawless::init', array( $this, 'init' ) );
-        add_action( 'flawless::theme_setup::after', array( $this->theme, 'setup' ) );
         add_action( 'template_redirect', array( $this, 'redirect' ) );
         add_action( 'admin_init', array( $this, 'admin' ) );
 
