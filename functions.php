@@ -11,5 +11,6 @@ if( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 
 // Instantiate Class.
 if( class_exists( 'UsabilityDynamics\Festival\Bootstrap' ) ) {
-  new UsabilityDynamics\Festival\Bootstrap;
+  global $festival;
+  $festival = UsabilityDynamics\Festival\Bootstrap::get_instance();
 }
