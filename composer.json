@@ -23,6 +23,9 @@
     "UsabilityDynamics/lib-wp-theme": "master"
   },
   "autoload": {
-    "classmap": [ "lib/class-start.php" ]
+    "classmap": [
+      "lib/class-start.php",
+      "lib/class-disco.php"
+    ]
   }
 }

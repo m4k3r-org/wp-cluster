@@ -534,7 +534,7 @@ if( !function_exists( 'flawless_have_business_card' ) ) {
   function flawless_have_business_card( $scope = false ) {
     global $flawless;
 
-    if( !$scope || !is_array( $flawless[ 'business_card' ][ $scope ] ) ) {
+    if( !isset( $flawless[ 'business_card' ] ) || !$scope || !is_array( $flawless[ 'business_card' ][ $scope ] ) ) {
       return;
     }
 
