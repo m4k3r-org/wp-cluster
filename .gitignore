@@ -1,6 +1,7 @@
 composer.lock
+node_modules
+vendor
 npm-debug.log
-core/premium
 static/codex
 .svn
 .idea
