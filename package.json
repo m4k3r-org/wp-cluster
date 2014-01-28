@@ -1,20 +1,14 @@
 {
-  "name": "Festival",
+  "name": "wp-festival",
   "description": "Festival Theme for the Drop Network",
   "version": "0.1.0",
-  "homepage": "http://github.com/UsabilityDynamics/festival",
-  "author": {
-    "name": "Usability Dynamics",
-    "email": "info@UsabilityDynamics.com",
-    "url": "http://UsabilityDynamics.com"
-  },
-  "bugs": {
-    "url": "http://github.com/UsabilityDynamics/festival/issues"
+  "repository": {
+    "type": "git",
+    "url": "https://ud.git.beanstalkapp.com/wp-festival.git"
   },
   "engines": {
     "node": ">=0.10.21"
   },
-  "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-symlink": "~0.2.0",
@@ -38,7 +32,6 @@
   "keywords": [
     "wordpress",
     "theme",
-    "wp-property",
     "responsive"
   ]
 }
