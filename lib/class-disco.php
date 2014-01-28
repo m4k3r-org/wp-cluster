@@ -307,8 +307,8 @@ namespace UsabilityDynamics {
 
       // Declare Public Models.
       $this->models(array(
-        'theme'  => '{}',
-        'locale' => '{}'
+        'theme'  => array(),
+        'locale' => array()
       ));
 
       // Configure Post Types and Meta.
