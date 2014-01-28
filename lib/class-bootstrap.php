@@ -74,6 +74,83 @@ namespace UsabilityDynamics\Festival {
       self::$id = \UsabilityDynamics\Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => ':' ) );
       self::$text_domain = \UsabilityDynamics\Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ) );
 
+      // Configure Theme.
+      $this->initialize( array(
+        'minify'    => true,
+        'obfuscate' => true
+      ) );
+
+      // Initialize Settings.
+      $this->settings( array(
+        'key' => 'hddp_options'
+      ));
+
+      // Declare Dynamic Assets.
+      $this->dynamic( array(
+        'scripts' => array(
+          'app.js' => 'console.log( "app.js" );'
+        ),
+        'models'  => array(
+          'theme.json'  => '{}',
+          'locale.json' => '{}'
+        )
+      ) );
+
+      // Enable Public Assets.
+      $this->rewrites( array(
+        'scripts' => true,
+        'styles'  => true
+      ) );
+
+      // Handle Theme Version Changes.
+      $this->upgrade();
+
+      // Configure Post Types and Meta.
+      $this->structure( array(
+        'artist'            => array(
+          'type' => 'post'
+        ),
+        'venue'             => array(
+          'type' => 'post'
+        ),
+        'location'          => array(
+          'type' => 'post'
+        )
+      ) );
+
+      // Configure API Methods.
+      $this->api( array(
+        'search.Elastic'       => array(),
+        'search.DynamicFilter' => array()
+      ) );
+
+      // Configure Image Sizes.
+      $this->media( array(
+        'thumbnail'      => array(),
+        'hd_large'       => array(),
+        'hd_small'       => array(),
+        'gallery'        => array(),
+        'sidebar_poster' => array(),
+        'tiny_thumbnail' => array(),
+        'sidebar_thumb'  => array(),
+      ) );
+
+      // Declare Supported Theme Features.
+      $this->supports( array(
+        'custom-header'        => array(),
+        'custom-skins'         => array(),
+        'custom-background'    => array(),
+        'header-dropdowns'     => array(),
+        'header-business-card' => array(),
+        'frontend-editor'      => array()
+      ) );
+
+      // Enables Customizer for Options.
+      $this->customizer( array(
+        'background-color' => array(),
+        'header-banner'    => array()
+      ) );
+
       // Instantiate settings.
       $this->_settings = Settings::define();
 
