@@ -7,9 +7,9 @@
  * @namespace UsabilityDynamics
  */
 
-namespace UsabilityDynamics\Theme {
+namespace UsabilityDynamics\Festival {
 
-  if( !class_exists( 'UsabilityDynamics\Theme\Sync_Stream' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Festival\Sync_Stream' ) ) {
 
     /**
      * Abstract class for Social Network Syncronization

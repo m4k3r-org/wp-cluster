@@ -6,9 +6,9 @@
  * @package Theme
  * @since 2.0.0
  */
-namespace UsabilityDynamics\Theme {
+namespace UsabilityDynamics\Festival {
 
-  if( !class_exists( 'UsabilityDynamics\Theme\Less_Builder' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Festival\Less_Builder' ) ) {
 
     class Less_Builder {
     

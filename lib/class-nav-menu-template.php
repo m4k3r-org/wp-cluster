@@ -8,7 +8,7 @@
  * @since 0.1.0
  */
 
-namespace UsabilityDynamics\Theme {
+namespace UsabilityDynamics\Festival {
 
   /**
    * Create HTML list of nav menu items.

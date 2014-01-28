@@ -7,7 +7,7 @@
  * @namespace UsabilityDynamics
  */
 
-namespace UsabilityDynamics\Theme {
+namespace UsabilityDynamics\Festival {
 
   // Localize UsabilityDynamics classes
   use UsabilityDynamics\Utility;

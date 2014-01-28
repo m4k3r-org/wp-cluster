@@ -6,9 +6,9 @@
  * @package Theme
  * @author peshkov@UD
  */
-namespace UsabilityDynamics\Theme {
+namespace UsabilityDynamics\Festival {
 
-  if( !class_exists( 'UsabilityDynamics\Theme\Post_Type' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Festival\Post_Type' ) ) {
 
     class Post_Type {
     

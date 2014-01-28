@@ -22,7 +22,7 @@ namespace UsabilityDynamics\Festival {
      * @property version
      * @var string
      */
-    public static $version = null;
+    public $version = null;
 
     /**
      * Textdomain String
@@ -33,7 +33,7 @@ namespace UsabilityDynamics\Festival {
      * @property text_domain
      * @var string
      */
-    public static $text_domain = null;
+    public $text_domain = null;
 
     /**
      * ID of instance, used for settings.
@@ -44,7 +44,7 @@ namespace UsabilityDynamics\Festival {
      * @property id
      * @var string
      */
-    public static $id = null;
+    public $id = null;
 
     /**
      * Settings.
@@ -53,8 +53,6 @@ namespace UsabilityDynamics\Festival {
      * @property id
      * @var string
      */
-    public $settings;
-
     public $carringon;
 
     /**
@@ -71,8 +69,8 @@ namespace UsabilityDynamics\Festival {
 
       // Configure properties.
       self::$version = $_theme_info[ 'version' ];
-      self::$id = \UsabilityDynamics\Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => ':' ) );
-      self::$text_domain = \UsabilityDynamics\Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ) );
+      self::$id = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => ':' ) );
+      self::$text_domain = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ) );
 
       // Configure Theme.
       $this->initialize( array(
@@ -217,6 +215,7 @@ namespace UsabilityDynamics\Festival {
       }
 
       add_theme_support( 'html5' );
+
       add_theme_support( 'comment-list' );
 
       // Enable relative URLs
@@ -253,7 +252,6 @@ namespace UsabilityDynamics\Festival {
       register_nav_menu( 'footer', __( 'Footer Menu', self::$text_domain ) );
 
       // Enable Carrington Build / Layout Engine
-      // Commented out temporary
       //$this->layout_engine();
 
     }

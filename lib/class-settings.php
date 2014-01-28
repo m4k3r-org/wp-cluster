@@ -6,9 +6,9 @@
  * @package Theme
  * @since 2.0.0
  */
-namespace UsabilityDynamics\Theme {
+namespace UsabilityDynamics\Festival {
 
-  if( !class_exists( 'UsabilityDynamics\Theme\Settings' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Festival\Settings' ) ) {
 
     class Settings extends \UsabilityDynamics\Settings {
     
