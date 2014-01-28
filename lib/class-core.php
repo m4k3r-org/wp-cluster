@@ -78,9 +78,9 @@ namespace UsabilityDynamics\Festival {
       ) );
 
       // Initialize Settings.
-      $this->settings( array(
-        'key' => 'hddp_options'
-      ));
+      $this->settings();
+      
+      //echo "<pre>"; print_r( $this->get() ); echo "</pre>"; die();
 
       // Declare Public Scripts.
       $this->scripts(array(
@@ -158,9 +158,6 @@ namespace UsabilityDynamics\Festival {
         'header-banner'    => array()
       ) );
 
-      // Instantiate settings.
-      $this->_settings = Settings::define();
-
       // Core Actions
       add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ) );
       add_action( 'widgets_init', array( $this, 'widgets_init' ), 100 );
@@ -177,34 +174,6 @@ namespace UsabilityDynamics\Festival {
         return false;
       } );
 
-    }
-
-    /**
-     * Get Setting.
-     *
-     * // Get Setting
-     * $wpp::get( 'my_key' )
-     *
-     * @method get
-     * @since 0.1.0
-     */
-    public function get( $key = false, $default = null ) {
-      return is_object( $this->_settings ) ? $this->_settings->get( $key, $default ) : null;
-    }
-
-    /**
-     * Set Setting.
-     *
-     * @usage
-     *
-     * // Set Setting
-     * $wpp::set( 'my_key', 'my-value' )
-     *
-     * @method set
-     * @since 0.1.0
-     */
-    public function set( $key = null, $value = null ) {
-      return is_object( $this->_settings ) ? $this->_settings->set( $key, $value ) : null;
     }
 
     /**
