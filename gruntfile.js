@@ -7,7 +7,7 @@
  */
 module.exports = function( grunt ) {
 
-  grunt.initConfig({
+  grunt.initConfig( {
 
     // Load configuration about project
     pkg: grunt.file.readJSON( 'composer.json' ),
@@ -19,7 +19,7 @@ module.exports = function( grunt ) {
           beautify: false
         },
         files: {
-          'scripts/app.js':     [ 'scripts/app.dev.js' ],
+          'scripts/app.js': [ 'scripts/app.dev.js' ],
           'scripts/require.js': [ 'vendor/usabilitydynamics/lib-utility/scripts/require.js' ],
           'scripts/utility/jquery.countdown.js': [ 'scripts/src/jquery.countdown.js' ],
           'scripts/utility/skrollr.js': [ 'scripts/src/skrollr.js' ],
@@ -112,8 +112,6 @@ module.exports = function( grunt ) {
 
     },
 
-
-
     // Watcher
     watch: {
       options: {
@@ -162,7 +160,7 @@ module.exports = function( grunt ) {
       }
     }
 
-  });
+  } );
 
   // Load tasks
   grunt.loadNpmTasks( 'grunt-component' );

@@ -4,13 +4,12 @@
  *
  */
 
-// Be sure that vendors installed ( composer install ). See: http://getcomposer.org/
-if( !file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-  wp_die( '<h1>Critical Error</h1>' . '<p>The website is currently being updated, please wait a few moments.</p><p>Theme is missing the vendor directory, the theme appears to be unbuilt.</p>' );
+// Load Vendor and Theme Classes.
+if( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+  require_once( __DIR__ . '/vendor/autoload.php' );
 }
 
-// Load Vendor and Theme Classes.
-require_once( __DIR__ . '/vendor/autoload.php' );
-
 // Instantiate Class.
-new UsabilityDynamics\Festival\Bootstrap;
+if( class_exists( 'UsabilityDynamics\Festival\Bootstrap' ) ) {
+  new UsabilityDynamics\Festival\Bootstrap;
+}
