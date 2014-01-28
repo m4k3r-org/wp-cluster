@@ -323,7 +323,7 @@ namespace UsabilityDynamics\Flawless {
      * @author potanin@UD
      * @since 0.1.1
      */
-    public function get( $key, $default ) {
+    public function get( $key  = null, $default  = null ) {
       return Bootstrap::get_instance()->Settings->get( $key, $default );
     }
 
@@ -336,7 +336,7 @@ namespace UsabilityDynamics\Flawless {
      * @author potanin@UD
      * @since 0.1.1
      */
-    public function set( $key, $value ) {
+    public function set( $key = null, $value  = null ) {
       return Bootstrap::get_instance()->Settings->set( $key, $value );
     }
 

@@ -44,7 +44,7 @@ namespace UsabilityDynamics\Flawless {
      *
      * @since 0.0.6
      */
-    public function set( $key = false, $value = '' ) {
+    public function set( $key = null, $value = null ) {
       global $flawless;
 
       if ( !$key ) {
@@ -71,7 +71,7 @@ namespace UsabilityDynamics\Flawless {
 
     }
 
-    public function get( $key, $value ) {
+    public function get( $key = null, $value = null ) {
 
     }
 
