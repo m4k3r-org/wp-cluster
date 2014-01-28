@@ -197,7 +197,7 @@ namespace UsabilityDynamics\Festival {
      * @method set
      * @since 0.1.0
      */
-    public function set( $key, $value = null ) {
+    public function set( $key = null, $value = null ) {
       return is_object( $this->_settings ) ? $this->_settings->set( $key, $value ) : null;
     }
 
