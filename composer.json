@@ -19,7 +19,7 @@
   "minimum-stability": "dev",
   "require": {
     "UsabilityDynamics/lib-settings": "master",
-    "UsabilityDynamics/lib-carrington-build": "master",
+    "UsabilityDynamics/lib-carrington": "master",
     "UsabilityDynamics/lib-wp-theme": "master"
   },
   "autoload": {

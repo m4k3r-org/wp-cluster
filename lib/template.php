@@ -8,7 +8,13 @@
  */
 
 if( !function_exists( 'wp_disco' ) ) {
-  function wp_disco( $key ) {
+  /**
+   * @param bool $key
+   *
+   * @method wp_disco
+   * @return mixed
+   */
+  function wp_disco( $key = false ) {
     global $wp_disco;
     return $key ? $wp_disco->get( $key ) : $wp_disco;
   }
