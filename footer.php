@@ -71,7 +71,7 @@
           <div class="cfct-module">
           <img width="100px" alt="Eventribe" style="float:right;margin-left:20px;" src="<?php echo get_stylesheet_directory_uri(); ?>/img/eb-ticketing-white.png" />
           <div class="footer_events_count">
-            <p class="count"><?php echo UsabilityDynamics\Theme\Disco\Start::get_events_count(); ?></p><p>events hosted &amp; counting</p>
+            <p class="count"><?php echo UsabilityDynamics\Theme\Disco::get_events_count(); ?></p><p>events hosted &amp; counting</p>
           </div>
           </div>
         </div>

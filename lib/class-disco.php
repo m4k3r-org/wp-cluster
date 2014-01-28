@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Disco Theme
+ *
+ */
 namespace UsabilityDynamics\Theme {
 
   /**
@@ -8,6 +11,232 @@ namespace UsabilityDynamics\Theme {
    * @author Usability Dynamics
    */
   class Disco {
+
+    /** Setup our post types */
+    static public $_types = array(
+      'hdp_event'         => array(
+        'post_title',
+        'post_name',
+        'hdp_event_date',
+        'hdp_event_time',
+        'hdp_artist',
+        'hdp_tour',
+        'hdp_age_limit',
+        'hdp_genre',
+        'hdp_venue',
+        'hdp_promoter',
+        'hdp_type',
+        'hdp_city',
+        'hdp_state',
+        '_thumbnail_id',
+        'latitude',
+        'longitude',
+        'city',
+        'state',
+        'state_code',
+        'hdp_purchase_url',
+        'hdp_facebook_rsvp_url',
+        'hdp_date_range'
+      ),
+      'hdp_video'         => array(
+        'post_title',
+        'post_name',
+        'hdp_event_date',
+        'hdp_event_time',
+        'hdp_artist',
+        'hdp_tour',
+        'hdp_age_limit',
+        'hdp_genre',
+        'hdp_venue',
+        'hdp_promoter',
+        'hdp_type',
+        'hdp_credit',
+        'hdp_video_url',
+        'hdp_poster_id',
+        'hdp_city',
+        'hdp_state',
+      ),
+      'hdp_photo_gallery' => array(
+        'post_title',
+        'post_name',
+        'hdp_event_date',
+        'hdp_event_time',
+        'hdp_artist',
+        'hdp_tour',
+        'hdp_age_limit',
+        'hdp_genre',
+        'hdp_venue',
+        'hdp_promoter',
+        'hdp_type',
+        'hdp_credit',
+        'hdp_facebook_url',
+        'hdp_poster_id',
+        'hdp_city',
+        'hdp_state',
+      )
+    );
+
+    /** Some variables to hold our QA table items */
+    static public $_attributes = array(
+      'post_title'            => array(
+        'label' => 'Title',
+      ),
+      'post_name'             => array(
+        'label' => 'Slug',
+      ),
+      'hdp_event_date'        => array(
+        'label'       => 'Date',
+        'admin_label' => 'Date',
+        'admin_type'  => 'datetime',
+        'type'        => 'post_meta',
+        'summarize'   => 105,
+
+      ),
+      'hdp_event_time'        => array(
+        'label'       => 'Time',
+        'admin_label' => 'Time',
+        'type'        => 'post_meta',
+        'summarize'   => 110,
+
+      ),
+      'hdp_artist'            => array(
+        'label'     => 'Artist',
+        'type'      => 'taxonomy',
+        'summarize' => 225,
+      ),
+      'hdp_tour'              => array(
+        'label'     => 'Tour',
+        'type'      => 'taxonomy',
+        'summarize' => 220,
+
+      ),
+      'hdp_age_limit'         => array(
+        'label'     => 'Age Limit',
+        'type'      => 'taxonomy',
+        'summarize' => 115,
+
+      ),
+      'hdp_genre'             => array(
+        'label'     => 'Genre',
+        'type'      => 'taxonomy',
+        'summarize' => 215,
+
+      ),
+      'hdp_venue'             => array(
+        'label'     => 'Venue',
+        'type'      => 'taxonomy',
+        'summarize' => 120,
+
+      ),
+      'hdp_promoter'          => array(
+        'label'     => 'Promoter',
+        'type'      => 'taxonomy',
+        'summarize' => 205,
+
+      ),
+      'hdp_type'              => array(
+        'label'     => 'Type',
+        'type'      => 'taxonomy',
+        'summarize' => 210,
+
+      ),
+      'hdp_credit'            => array(
+        'type'      => 'taxonomy',
+        'label'     => 'Credit',
+        'summarize' => 230,
+      ),
+      'credit'                => array(
+        'type'      => 'taxonomy',
+        'label'     => 'Credit',
+        'summarize' => 231,
+
+      ),
+      '_thumbnail_id'         => array(
+        'type' => 'post_meta',
+
+      ),
+      'latitude'              => array(
+        'type' => 'post_meta',
+
+      ),
+      'longitude'             => array(
+        'type' => 'post_meta',
+
+      ),
+
+      'hdp_city'              => array(
+        'type'      => 'taxonomy',
+
+        'label'     => 'City',
+        'summarize' => -1,
+      ),
+      'hdp_state'             => array(
+        'type'      => 'taxonomy',
+
+        'label'     => 'State',
+        'summarize' => -2,
+      ),
+      'city'                  => array(
+        'type' => 'post_meta',
+
+      ),
+      'state'                 => array(
+        'type' => 'post_meta',
+
+      ),
+      'state_code'            => array(
+        'type' => 'post_meta',
+
+      ),
+      'formatted_address'     => array(
+        'type' => 'post_meta',
+      ),
+      'hdp_purchase_url'      => array(
+        'label'       => 'Buy Tickets',
+        'type'        => 'post_meta',
+        'admin_label' => 'Purchase',
+        'placeholder' => 'Full Purchase URL',
+      ),
+      'hdp_facebook_rsvp_url' => array(
+        'label'       => 'RSVP on Facebook',
+        'type'        => 'post_meta',
+        'placeholder' => 'Full RSVP URL',
+        'admin_label' => 'RSVP',
+      ),
+      'hdp_facebook_url'      => array(
+        'label'       => 'View on Facebook',
+        'type'        => 'post_meta',
+        'admin_label' => 'Facebook',
+        'placeholder' => 'Full Facebook URL',
+      ),
+      'hdp_video_url'         => array(
+        'label'       => 'View on Source',
+        'type'        => 'post_meta',
+        'admin_label' => 'Source',
+        'placeholder' => 'Full Source URL',
+      ),
+      'hdp_poster_id'         => array(
+        'type'        => 'post_meta',
+        'admin_label' => 'Poster ID'
+      ),
+      'hdp_date_range'        => array(
+        'type' => 'post_meta'
+      )
+    );
+
+    /** Defaults */
+    static public $default_attribute = array(
+      'type'        => 'primary',
+      'summarize'   => false, /** False, or # in sort order */
+      'label'       => false,
+      'admin_label' => false,
+      'admin_type'  => 'input',
+      'qa'          => false,
+      'placeholder' => ''
+    );
+
+    /** Setup the global per page number */
+    static public $hdp_posts_per_page = 15;
 
     /**
      * Adds input fields to taxonomy term editing pages.
