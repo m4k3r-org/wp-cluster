@@ -4,7 +4,7 @@
       <div class="inner_bottom clearfix cfct-block c6-123456">
         <div class="alpha"></div>
         <div class="cfct-module">
-          <ul id="sponsors_scroller">
+          <ul id="sponsors_scroller" data-requires="udx.ui.simply-scroll">
             <li style="width: 165px;"><a href="http://www.suncitymusicfestival.com"><img src="<?php bloginfo( 'stylesheet_directory' ); ?>/img/sponsor_logos/scmf.png" /></a></li>
             <li style="width: 158px;"><a href="http://www.meltdowndallas.com"><img src="<?php bloginfo( 'stylesheet_directory' ); ?>/img/sponsor_logos/meltdown.png" /></a></li>
             <li><a href="http://smftampa.com"><img src="<?php bloginfo( 'stylesheet_directory' ); ?>/img/sponsor_logos/smf.png" /></a></li>
@@ -24,22 +24,7 @@
             <li><a href="http://somethingwickedfestival.com"><img src="<?php bloginfo( 'stylesheet_directory' ); ?>/img/sponsor_logos/something_wicked.png" /></a></li>
             <li><a href="javascript:void(0);"><img src="<?php bloginfo( 'stylesheet_directory' ); ?>/img/sponsor_logos/zoolu.png" /></a></li>
             <li><a href="http://dayafter.com"><img src="<?php bloginfo( 'stylesheet_directory' ); ?>/img/sponsor_logos/day_after.png" /></a></li>
-
-            <?php /** Leaving as example
-            <!-- Extras -->
-            <li><a href="#"><img src="http://placekitten.com/141/48" / ></a></li>
-            <li><a href="#"><img src="http://placekitten.com/142/48" / ></a></li>
-            <li><a href="#"><img src="http://placekitten.com/143/48" / ></a></li>
-            <li><a href="#"><img src="http://placekitten.com/144/48" / ></a></li>
-            <li><a href="#"><img src="http://placekitten.com/145/48" / ></a></li> */ ?>
           </ul>
-          <script type="text/javascript">
-            ( function ( $ ){
-              $( function (){ //on DOM ready
-                $( "#sponsors_scroller" ).simplyScroll();
-              } );
-            })( jQuery );
-          </script>
         </div>
       </div>
     </div>
@@ -49,7 +34,7 @@
 
   <div class="footer bottom-of-page clearfix">
 
-    <div class="inner_footer container row-fluid" container_type="footer">
+    <div class="inner_footer container row-fluid" data-container-type="footer">
 
       <div class="logo span4 first">
         <div class="cfct-module">
@@ -69,8 +54,6 @@
         </div>
       </div>
 
-
-
     </div>
 
     <hr />
@@ -88,8 +71,7 @@
           <div class="cfct-module">
           <img width="100px" alt="Eventribe" style="float:right;margin-left:20px;" src="<?php echo get_stylesheet_directory_uri(); ?>/img/eb-ticketing-white.png" />
           <div class="footer_events_count">
-            <p class="count"><?php echo hddp::get_events_count(); ?></p>
-            <p>events hosted &amp; counting</p>
+            <p class="count"><?php echo UsabilityDynamics\Theme\Disco\Bootstrap::get_events_count(); ?></p><p>events hosted &amp; counting</p>
           </div>
           </div>
         </div>
@@ -98,7 +80,7 @@
 
   </div>
 
-</div><?php //** .wrapper */ ?>
+</div>
 <?php wp_footer(); ?>
 </body>
 </html>

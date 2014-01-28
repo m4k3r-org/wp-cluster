@@ -1,11 +1,11 @@
 /**
- * Theme Name: Insidedesign Child Theme 2
+ * Theme Name: WP-Disco
  * Theme URI: http://www.insidedesign.info/
- * Description: Dynamic WordPress theme.
+ * Description: Custom theme for DiscoDonniePresents.com.
  * Version: 0.1.0
  * Template: wp-flawless
- * Author: Insidedesign
- * Author URI: http://www.insidedesign.info/
+ * Author: UsabilityDynamics, Inc.
+ * Author URI: http://www.usabilitydynamics.com/
  *
  */
 
@@ -31,7 +31,7 @@
 @media screen {
 
   body {
-    background: #182830 url(img/body.jpg);
+    background: #182830 url(/images/body.jpg);
   }
 
   body.have-navbar {
@@ -64,7 +64,7 @@
     line-height: 18px;
     vertical-align: text-top;
     width: 18px;
-    background: url(img/global.sprite.png);
+    background: url(/images/global.sprite.png);
   }
 
   .icon-big-dd {
@@ -215,12 +215,12 @@
     left: 0;
     right: 0;
     height: 400px;
-    background: url(img/background_header_image.jpg) no-repeat left;
+    background: url(/images/background_header_image.jpg) no-repeat left;
   }
 
   .general_header_wrapper {
     height: 160px;
-    background: url("img/content_container.png") repeat-x scroll center 0 transparent;
+    background: url("/images/content_container.png") repeat-x scroll center 0 transparent;
     margin-bottom: 0;
     border: 0;
     width: 100%;
@@ -229,7 +229,7 @@
   }
 
   .container.header {
-    background: url(img/header.png) repeat-x top center transparent;
+    background: url(/images/header.png) repeat-x top center transparent;
     height: 80px;
   }
 
@@ -279,7 +279,7 @@
   }
 
   .navbar .brand {
-    background-image: url(img/logo-nav.png);
+    background-image: url(/images/logo-nav.png);
     background-repeat: no-repeat;
     text-indent: -9999px;
     background-position: 10px -5px;
@@ -308,7 +308,7 @@
   }
 
   .navbar-inner {
-    background-image: url(img/mobilenavbar.jpg);
+    background-image: url(/images/mobilenavbar.jpg);
     background-color: #18272E;
   }
 
@@ -382,7 +382,7 @@
   }
 
   div.header .header_search_wrapper form.search_format input.search_button {
-    background: url("img/global.sprite.png") no-repeat scroll 4px -31px transparent;
+    background: url("/images/global.sprite.png") no-repeat scroll 4px -31px transparent;
     border: 0 none;
     box-shadow: none;
     color: transparent;
@@ -419,7 +419,7 @@
 
   div.breadcrumbs a.home_link,
   div.breadcrumbs a.home_link:hover {
-    background: url(img/global.sprite.png) no-repeat;
+    background: url(/images/global.sprite.png) no-repeat;
     background-position: 10px -6px;
     color: transparent;
     text-shadow: none;
@@ -430,7 +430,7 @@
   }
 
   div.breadcrumbs .divider {
-    background: url(img/breadcrumbs.divider.png) no-repeat scroll center center transparent;
+    background: url(/images/breadcrumbs.divider.png) no-repeat scroll center center transparent;
     color: transparent;
     padding: 0 15px;
   }
@@ -481,7 +481,7 @@
   .c6-3456.cfct-block h2.cfct-mod-title,
   .hdp_gallery .block-title-wrapper h2,
   h1 {
-    background: url("img/global.sprite.png") no-repeat scroll 0 -392px transparent;
+    background: url("/images/global.sprite.png") no-repeat scroll 0 -392px transparent;
     min-height: 30px;
     line-height: 27px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.14);
@@ -500,7 +500,7 @@
   div.footer {
     color: #74787e;
     border-top: 1px solid #253e4a;
-    background: url(img/footer.png) center center #11171a;
+    background: url(/images/footer.png) center center #11171a;
     padding: 30px 0;
     min-height: 200px;
   }
@@ -546,7 +546,7 @@
   }
 
   ul.entry-meta.gray_bar {
-    background: url("img/global.sprite.png") repeat-x scroll 0 -495px transparent;
+    background: url("/images/global.sprite.png") repeat-x scroll 0 -495px transparent;
     color: #B0B0B0;
     height: 43px;
     margin-left: -20px;
@@ -581,7 +581,7 @@
     height: 35px;
     line-height: 35px;
     padding: 0 10px;
-    background: url("img/global.sprite.png") repeat-x 0 -322px #168fa7;
+    background: url("/images/global.sprite.png") repeat-x 0 -322px #168fa7;
     text-shadow: 0 1px 1px rgba(34, 34, 34, 0.75);
     color: #FFF;
   }
@@ -590,7 +590,7 @@
     height: 35px;
     line-height: 35px;
     padding: 0 10px;
-    background: url("img/global.sprite.png") repeat-x 0 -266px #4669ac;
+    background: url("/images/global.sprite.png") repeat-x 0 -266px #4669ac;
     text-shadow: 0 1px 1px rgba(34, 34, 34, 0.75);
     color: #FFF;
   }
@@ -599,7 +599,7 @@
     height: 35px;
     line-height: 35px;
     padding: 0 10px;
-    background: url("img/global.sprite.png") repeat-x 0 -210px #b42e28;
+    background: url("/images/global.sprite.png") repeat-x 0 -210px #b42e28;
     text-shadow: 0 1px 1px rgba(34, 34, 34, 0.75);
     color: #FFF;
   }
@@ -816,11 +816,11 @@
   }
 
   li.hdp_video_thumbnail div.overlay {
-    background-image: url('img/overlays/overlay_vid.png');
+    background-image: url('/images/overlays/overlay_vid.png');
   }
 
   li.hdp_photo_thumbnail div.overlay {
-    background-image: url('img/overlays/overlay_img.png');
+    background-image: url('/images/overlays/overlay_img.png');
   }
 
   .gallery.gallery-columns-0 .gallery-item {
@@ -956,7 +956,7 @@
   }
 
   .widget.hdp_latest_posts .hdp_lp_single_post .bottom-transparency {
-    background: transparent url('img/gradient-recent-post-widget.png') repeat-x bottom;
+    background: transparent url('/images/gradient-recent-post-widget.png') repeat-x bottom;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -1010,7 +1010,7 @@
 
   .hdp_latest_posts a.prev,
   .hdp_latest_posts a.flex-prev {
-    background: url(img/global.sprite.png) no-repeat -65px -152px;
+    background: url(/images/global.sprite.png) no-repeat -65px -152px;
     left: auto;
     height: 20px;
     right: 30px;
@@ -1032,7 +1032,7 @@
 
   .hdp_latest_posts a.next,
   .hdp_latest_posts a.flex-next {
-    background: url(img/global.sprite.png) no-repeat -94px -152px;
+    background: url(/images/global.sprite.png) no-repeat -94px -152px;
     height: 20px;
     right: 0px;
     top: 0;
@@ -1736,7 +1736,7 @@
   }
 
   #df_sidebar_filters .jqTransformSelectWrapper div span {
-    background: url("img/df/filter_right_dropdown_bg_left.png") no-repeat;
+    background: url("/images/df/filter_right_dropdown_bg_left.png") no-repeat;
     height: 36px;
     margin-right: 31px;
     position: static;
@@ -1745,7 +1745,7 @@
   }
 
   #df_sidebar_filters .jqTransformSelectWrapper a.jqTransformSelectOpen {
-    background: url("img/df/filter_right_dropdown_bg_right.png") no-repeat scroll center center transparent;
+    background: url("/images/df/filter_right_dropdown_bg_right.png") no-repeat scroll center center transparent;
     height: 36px;
     width: 31px;
     float: right;
@@ -1768,7 +1768,7 @@
   }
 
   #df_sidebar_filters .jqTransformInputInner {
-    background: url("img/df/filter_right_text_input.png") no-repeat scroll left top transparent;
+    background: url("/images/df/filter_right_text_input.png") no-repeat scroll left top transparent;
     height: 36px;
     margin-right: 36px;
   }
@@ -1777,7 +1777,7 @@
     float: right;
     height: 36px;
     width: 36px;
-    background: url("img/df/filter_right_text_input.png") no-repeat scroll right top transparent;
+    background: url("/images/df/filter_right_text_input.png") no-repeat scroll right top transparent;
   }
 
   #df_sidebar_filters .jqTransformInputInner div {
@@ -1824,7 +1824,7 @@
     /*float: right;
     width: 9px;
     height: 5px;
-    background: url(img/global.sprite.png) no-repeat -162px -100px transparent;
+    background: url(/images/global.sprite.png) no-repeat -162px -100px transparent;
     position: relative;
     right: -8px;
     top: 8px;*/
@@ -1836,7 +1836,7 @@
     visibility: hidden;
     width: 409px;
     height: 345px;
-    background: url(img/filter_bg.png) no-repeat 0 0 transparent;
+    background: url(/images/filter_bg.png) no-repeat 0 0 transparent;
     z-index: 1000;
   }
 
@@ -1918,7 +1918,7 @@
     position: relative;
     top: 80px;
     padding-left: 25px;
-    background: url("img/breadcrumbs-fader.png") no-repeat scroll left center transparent;
+    background: url("/images/breadcrumbs-fader.png") no-repeat scroll left center transparent;
   }
 
   .hdp_share_wrapper .hdp_share_button {
@@ -1956,7 +1956,7 @@
 
   .hdp_share_wrapper .hdp_share_links {
     display: none;
-    background: url(img/share_bg.png) no-repeat 0 0 transparent;
+    background: url(/images/share_bg.png) no-repeat 0 0 transparent;
     height: 169px;
     position: absolute;
     width: 257px;
@@ -2116,25 +2116,25 @@
   }
 
   .archive .tax_meta li {
-    background: transparent url('img/tax_meta_icons/w.png') no-repeat left center;
+    background: transparent url('/images/tax_meta_icons/w.png') no-repeat left center;
     padding-left: 25px;
     margin-bottom: 5px;
   }
 
   .archive .tax_meta li.hdp_facebook_url {
-    background-image: url('img/tax_meta_icons/f.png');
+    background-image: url('/images/tax_meta_icons/f.png');
   }
 
   .archive .tax_meta li.hdp_youtube_url {
-    background-image: url('img/tax_meta_icons/y.png');
+    background-image: url('/images/tax_meta_icons/y.png');
   }
 
   .archive .tax_meta li.hdp_google_plus_url {
-    background-image: url('img/tax_meta_icons/g.png');
+    background-image: url('/images/tax_meta_icons/g.png');
   }
 
   .archive .tax_meta li.hdp_twitter_url {
-    background-image: url('img/tax_meta_icons/t.png');
+    background-image: url('/images/tax_meta_icons/t.png');
   }
 
   .archive .tax_meta li a {
@@ -2428,35 +2428,35 @@
   }
 
   .footer .social .t {
-    background: transparent url('img/social_logos/t.png');
+    background: transparent url('/images/social_logos/t.png');
   }
 
   .footer .social .t:hover {
-    background: transparent url('img/social_logos/t_hover.png');
+    background: transparent url('/images/social_logos/t_hover.png');
   }
 
   .footer .social .f {
-    background: transparent url('img/social_logos/f.png');
+    background: transparent url('/images/social_logos/f.png');
   }
 
   .footer .social .f:hover {
-    background: transparent url('img/social_logos/f_hover.png');
+    background: transparent url('/images/social_logos/f_hover.png');
   }
 
   .footer .social .y {
-    background: transparent url('img/social_logos/y.png');
+    background: transparent url('/images/social_logos/y.png');
   }
 
   .footer .social .y:hover {
-    background: transparent url('img/social_logos/y_hover.png');
+    background: transparent url('/images/social_logos/y_hover.png');
   }
 
   .footer .social .g {
-    background: transparent url('img/social_logos/i.png');
+    background: transparent url('/images/social_logos/i.png');
   }
 
   .footer .social .g:hover {
-    background: transparent url('img/social_logos/i_hover.png');
+    background: transparent url('/images/social_logos/i_hover.png');
   }
 
   .footer .footer_events_count .count {
@@ -2800,7 +2800,7 @@
   }
 
   .hdp_share_wrapper .hdp_share_links {
-    background: url(img/share_bg_iphone.png) no-repeat 0 0 transparent;
+    background: url(/images/share_bg_iphone.png) no-repeat 0 0 transparent;
     position: absolute;
     left: inherit;
     margin-left: 0;
@@ -2916,7 +2916,7 @@
 
 .wp-pagenavi a, .wp-pagenavi span {
   color: white;
-  background: url("img/global.sprite.png") repeat scroll 0 -500px transparent;
+  background: url("/images/global.sprite.png") repeat scroll 0 -500px transparent;
   border-top: 1px solid #6a7c85 !important;
   border-bottom: 1px solid #354248 !important;
   border-right: 1px solid #354248 !important;
@@ -2930,7 +2930,7 @@
 
 .wp-pagenavi a:hover, .wp-pagenavi span.current {
   color: white;
-  background: url("img/global.sprite.png") repeat scroll 0 -324px transparent;
+  background: url("/images/global.sprite.png") repeat scroll 0 -324px transparent;
   border-top: 1px solid #1fa8ba !important;
   border-bottom: 1px solid #177d95 !important;
   border-right: 1px solid #177d95 !important;
@@ -2941,7 +2941,7 @@
   overflow: hidden;
   width: 98%;
   max-width: 328px !important;
-  background: url("img/select-bg-long.png") no-repeat scroll center right rgba(0, 0, 0, 0);
+  background: url("/images/select-bg-long.png") no-repeat scroll center right rgba(0, 0, 0, 0);
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
@@ -3074,11 +3074,11 @@
 }
 
 .ui-datepicker .ui-datepicker-prev span {
-  background: url("img/left.png") no-repeat scroll 50% 50%;
+  background: url("/images/left.png") no-repeat scroll 50% 50%;
 }
 
 .ui-datepicker .ui-datepicker-next span {
-  background: url("img/right.png") no-repeat scroll 50% 50%;
+  background: url("/images/right.png") no-repeat scroll 50% 50%;
 }
 
 #df_sidebar_filters [attribute_key="hdp_date_range"] .jqTransformInputWrapper {
@@ -3100,7 +3100,7 @@
 }
 
 #df_sidebar_filters [attribute_key="hdp_date_range"] .jqTransformInputInnerRight {
-  background: url("img/global.sprite.png") no-repeat scroll -88px -106px rgba(0, 0, 0, 0);
+  background: url("/images/global.sprite.png") no-repeat scroll -88px -106px rgba(0, 0, 0, 0);
 }
 
 /* New filter */
@@ -3168,7 +3168,7 @@
 }
 
 .inputs-container .jqTransformSelectWrapper div span {
-  background: url("img/df/filter_right_dropdown_bg_left.png") no-repeat;
+  background: url("/images/df/filter_right_dropdown_bg_left.png") no-repeat;
   height: 36px;
   margin-right: 31px;
   position: static;
@@ -3177,7 +3177,7 @@
 }
 
 .inputs-container .jqTransformSelectWrapper a.jqTransformSelectOpen {
-  background: url("img/df/filter_right_dropdown_bg_right.png") no-repeat scroll center center transparent;
+  background: url("/images/df/filter_right_dropdown_bg_right.png") no-repeat scroll center center transparent;
   height: 36px;
   width: 31px;
   float: right;
@@ -3200,7 +3200,7 @@
 }
 
 .inputs-container .jqTransformInputInner {
-  background: url("img/df/filter_right_text_input.png") no-repeat scroll left top transparent !important;
+  background: url("/images/df/filter_right_text_input.png") no-repeat scroll left top transparent !important;
   height: 36px;
   margin-right: 36px;
 }
@@ -3209,7 +3209,7 @@
   float: right;
   height: 36px;
   width: 36px;
-  background: url("img/df/filter_right_text_input.png") no-repeat scroll right top transparent;
+  background: url("/images/df/filter_right_text_input.png") no-repeat scroll right top transparent;
 }
 
 .inputs-container .jqTransformInputInner div {
@@ -3218,7 +3218,6 @@
 
 .inputs-container .jqTransformInputInner div input {
   padding: 3px;
-  width: auto;
   color: white;
   width: 100%;
   /*outline: none;*/
@@ -3243,7 +3242,7 @@
 }
 
 .inputs-container[attribute_key="hdp_date_range"] .jqTransformInputInnerRight {
-  background: url("img/global.sprite.png") no-repeat scroll -88px -106px rgba(0, 0, 0, 0);
+  background: url("/images/global.sprite.png") no-repeat scroll -88px -106px rgba(0, 0, 0, 0);
 }
 
 form.jqtransformdone.elastic_form label {
@@ -3258,7 +3257,6 @@ form.jqtransformdone.elastic_form label {
 .df_not_found {
   padding: 20px;
   background-color: #29353b;
-  background-image: -moz-linear-gradient(top, #435761, #29353b);
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.00, #435761), color-stop(1.0, #29353b));
   border-top: 1px solid #5e717a;
   border-bottom: 1px solid black;
