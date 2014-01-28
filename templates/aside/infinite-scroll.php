@@ -16,7 +16,7 @@
 global $festival;
 
 ?>
-<div class="bottom-content block">
+<div class="container bottom-content block">
 
   <div class="head">
 

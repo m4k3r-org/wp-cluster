@@ -37,6 +37,7 @@ function Bootstrap( jQuery ) {
       topSpacing:st + jQuery(".navbar-top").height() + 4,
       wrapperClassName: 'container sticky-wrapper'
     });
+    console.log( 'test', jQuery(".bottom-content .head .bottom-line") );
     jQuery(".bottom-content .head .bottom-line").sticky({
       topSpacing:st + jQuery(".navbar-top").height() + 58,
       wrapperClassName: 'sticky-wrapper'

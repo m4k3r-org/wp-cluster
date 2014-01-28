@@ -15,7 +15,6 @@ namespace UsabilityDynamics\Festival {
       /**
        * Create Settings Instance
        *
-       * @author potanin@UD
        * @since 2.0.0
        */
       static function define( $args = false ) {
