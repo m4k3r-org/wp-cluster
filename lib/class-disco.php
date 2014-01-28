@@ -264,6 +264,11 @@ namespace UsabilityDynamics {
     /**
      * Initialize Drop Theme.
      *
+     *
+     * @todo https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js
+     * @todo https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js
+     *
+     *
      * @example
      *      $this->set( 'stuff.ss', 'asdfdsf' );
      *      $this->set( 'stuff.gruff', 'asdfdsf' );
@@ -283,7 +288,8 @@ namespace UsabilityDynamics {
 
       // Initialize Settings.
       $this->settings(array(
-        'key' => 'hddp_options'
+        'key' => 'hddp_options',
+        'version' => $this->version
       ));
 
       // Declare Public Scripts.
@@ -315,7 +321,7 @@ namespace UsabilityDynamics {
       ));
 
       // Configure Post Types and Meta.
-      $this->structure( array(
+      $this->structure(array(
         'artist' => array(
           'type' => 'post'
         ),
@@ -548,6 +554,55 @@ namespace UsabilityDynamics {
         'header-dropdowns'     => array(),
         'header-business-card' => array(),
         'frontend-editor'      => array()
+      ));
+
+      // Head Tags.
+      $this->head(array(
+        array(
+          'tag' => 'meta',
+          'http-equip' => 'X-UA-Compatible',
+          'content' => 'IE=edge'
+        ),
+        array(
+          'tag' => 'meta',
+          'name' => 'viewport',
+          'content' => 'width=device-width, initial-scale=1.0'
+        ),
+        array(
+          'tag' => 'meta',
+          'charset' => get_bloginfo( 'charset' )
+        ),
+        array(
+          'tag' => 'meta',
+          'name' => 'description',
+          'content' => ''
+        ),
+        array(
+          'tag' => 'link',
+          'rel' => 'shortcut icon',
+          'href' => home_url( '/images/favicon.png' )
+        ),
+        array(
+          'tag' => 'link',
+          'rel' => 'pingback',
+          'href' => get_bloginfo( 'pingback_url' )
+        ),
+        array(
+          'tag' => 'link',
+          'rel' => 'profile',
+          'href' => 'http://gmpg.org/xfn/11'
+        ),
+        array(
+          'tag' => 'script',
+          'type' => 'application/javascript',
+          'data-main' => '/scripts/app',
+          'href' => 'cdn.udx.io/udx.requires.js'
+        ),
+        array(
+          'tag' => 'link',
+          'rel' => 'pingback',
+          'href' => get_bloginfo( 'pingback_url' )
+        )
       ));
 
       // Enables Customizer for Options.
@@ -788,6 +843,36 @@ namespace UsabilityDynamics {
       }, 10, 3 );
 
     }
+
+    /**
+     * Display Nav Menu.
+     *
+     * @todo Add a way to configure depth from setings.
+     *
+     * @temporary
+     */
+    public function nav( $name, $location ) {
+
+      $_class = array( 'flawless-menu', $name, $location );
+
+      $_menu = wp_nav_menu( apply_filters( $name, array(
+        'theme_location' => $location,
+        'menu_class' => implode( ' ', $_class ),
+        'fallback_cb' => false,
+        'echo' => false )
+      ));
+
+    }
+
+    /**
+     * Add Header Tag.
+     *
+     * @todo apply_filters( 'disco::head' );
+     * @todo add_action( 'wp_head', function () {});
+     *
+     * @temporary
+     */
+    public function head() {}
 
     /**
      * Force our custom template to load for Event post types

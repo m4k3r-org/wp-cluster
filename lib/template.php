@@ -8,9 +8,9 @@
  */
 
 if( !function_exists( 'wp_disco' ) ) {
-  function wp_disco() {
+  function wp_disco( $key ) {
     global $wp_disco;
-    return $wp_disco;
+    return $key ? $wp_disco->get( $key ) : $wp_disco;
   }
 }
 

@@ -1,0 +1,1 @@
+<div class="background_header_image"></div>

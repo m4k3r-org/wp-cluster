@@ -7,24 +7,24 @@
  * @version 3.0.0
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
  * @package Flawless
-*/
+ */
 
-  //** Bail out if page is being loaded directly and flawless_theme does not exist */
-  if(!function_exists('get_header')) {
-    die();
-  }
+//** Bail out if page is being loaded directly and flawless_theme does not exist */
+if( !function_exists( 'get_header' ) ) {
+  die();
+}
 
 ?>
 
-<?php get_header( 'archive' ) ?>
+<?php get_template_part( 'templates/page/header', 'archive' ); ?>
 
-<?php get_template_part('attention', 'archive'); ?>
+<?php get_template_part( 'attention', 'archive' ); ?>
 
-<div class="<?php flawless_wrapper_class(); ?>">
+  <div class="<?php flawless_wrapper_class(); ?>">
 
-  <?php flawless_widget_area('left_sidebar'); ?>
+  <?php flawless_widget_area( 'left_sidebar' ); ?>
 
-  <div class="<?php flawless_block_class( 'main cfct-block' ); ?>">
+    <div class="<?php flawless_block_class( 'main cfct-block' ); ?>">
     <div class="<?php flawless_module_class( 'archive-hentry' ); ?>">
 
       <?php do_action( 'flawless_ui::above_header' ); ?>
@@ -32,13 +32,13 @@
       <header class="entry-title-wrapper">
         <?php flawless_breadcrumbs(); ?>
         <?php
-          /**
-           * Commented out regarding ticket.
-           *
-           * @author korotkov@ud
-           * @ticket https://ud-dev.com/projects/projects/discodonniepresentscom-november-2012/tasks/12 comment #2
-           */
-          //flawless_page_title();
+        /**
+         * Commented out regarding ticket.
+         *
+         * @author korotkov@ud
+         * @ticket https://ud-dev.com/projects/projects/discodonniepresentscom-november-2012/tasks/12 comment #2
+         */
+        //flawless_page_title();
         ?>
 
         <?php if( term_description() != '' ) { ?>
@@ -57,8 +57,8 @@
 
   </div> <?php /* .main.cfct-block */ ?>
 
-  <?php flawless_widget_area('right_sidebar'); ?>
+    <?php flawless_widget_area( 'right_sidebar' ); ?>
 
 </div> <!-- #content -->
 
-<?php get_footer(); ?>
+<?php get_template_part( 'templates/page/footer', 'archive' ); ?>
