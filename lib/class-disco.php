@@ -611,23 +611,6 @@ namespace UsabilityDynamics {
         'header-banner'    => array()
       ));
 
-      // Add Management UI.
-      $this->manage(array(
-        'id' => 'hddp_manage',
-        'title' => __( 'Manage', $this->domain ),
-        //'capability' => $hddp[ 'manage_options' ],
-        'template' => dirname( __DIR__ ) . '/templates/admin.site_management.php'
-      ));
-
-      // Enable Carrington Build.
-      $this->carrington(array(
-        'bootstrap' => true,
-        'templates' => true,
-        'styles' => array(),
-        'modules' => array(),
-        'rows' => array()
-      ));
-
       // Handle Theme Version Changes.
       $this->upgrade();
 
