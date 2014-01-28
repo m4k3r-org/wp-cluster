@@ -21,12 +21,12 @@
   <div class="super_wrapper">
     <div class="background_header_image"></div>
     <div class="general_header_wrapper">
-      <div class="header container clearfix flawless_dynamic_area" container_type="header">
+      <div class="header container clearfix flawless_dynamic_area" data-container-type="header">
 
-        <?php if( current_theme_supports( 'header-logo' ) && $flawless['flawless_logo']['url'] ): ?>
+        <?php if( current_theme_supports( 'header-logo' ) && wp_disco()->get( 'logo.url' ) ) : ?>
           <div <?php flawless_element( 'logo_area_wrapper cfct-block inner_container' ); ?>>
             <a href="<?php echo home_url(); ?>" class="header_logo_image" title="<?php bloginfo( 'name' ); ?>">
-              <img class="header_logo_image"  src="<?php echo $flawless['flawless_logo']['url']; ?>" alt="<?php bloginfo( 'name' ); ?>" />
+              <img class="header_logo_image"  src="<?php echo wp_disco()->get( 'logo.url' ); ?>" alt="<?php bloginfo( 'name' ); ?>" />
             </a>
           </div>
         <?php endif; ?>
@@ -48,7 +48,7 @@
         <?php endif; ?>
 
         <div <?php flawless_element( 'header_text' ); ?>>
-          <?php echo do_shortcode( nl2br( $flawless[ 'header' ][ 'header_text' ] ) ); ?>
+          <?php echo do_shortcode( nl2br( wp_disco()->get( 'header.text' ) ) ); ?>
         </div>
 
         <?php if( $flawless_header_menu = wp_nav_menu( apply_filters( 'flawless_header_menu', array( 'theme_location' => 'header-menu', 'menu_class' => 'header-nav flawless-menu no-print clearfix', 'fallback_cb' => false, 'echo' => false ) ) ) ): ?>

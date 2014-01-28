@@ -7,6 +7,13 @@
  *
  */
 
+if( !function_exists( 'wp_disco' ) ) {
+  function wp_disco() {
+    global $wp_disco;
+    return $wp_disco;
+  }
+}
+
 if( !function_exists( 'get_event' ) ) {
   /**
    * Get modified post object for events containing addition information.

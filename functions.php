@@ -15,6 +15,6 @@ if( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 }
 
 // Bootstrap WP-Disco Theme.
-if( class_exists( 'UsabilityDynamics\Theme\Disco\Start' ) ) {
-  new UsabilityDynamics\Theme\Disco\Start;
+if( class_exists( 'UsabilityDynamics\Disco\Bootstrap' ) ) {
+  new UsabilityDynamics\Disco\Bootstrap;
 }
