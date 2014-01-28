@@ -837,7 +837,8 @@ if ( !function_exists( 'flawless_image_link' ) ) {
 
     /** Get the metadata */
     $metadata = wp_get_attachment_metadata( $attachment_id );
-    /** If we have metadata, we need to check it before continuing */
+
+    // If we have metadata, we need to check it before continuing
     if ( $metadata ) {
       /** Check to see if the original file exists */
       if ( isset( $metadata[ 'sizes' ] ) && isset( $metadata[ 'sizes' ][ $size ] ) && isset( $metadata[ 'sizes' ][ $size ][ 'file' ] ) ) {

@@ -9,7 +9,7 @@
  * @package Flawless
 */
 
-  if( $flawless['404_page'] ) {
+  if( isset( $flawless['404_page'] ) && $flawless['404_page'] ) {
     $wp_query->post_count = 1;
     $wp_query->posts[0] = get_post( $flawless['404_page'] );
   }

@@ -10,16 +10,16 @@
  */
 
 // Legacy Flawless Libraries.
-include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/ud_saas.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/ud_functions.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/ud_tests.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/backend-functions.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/business-card.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/class-flawless-utility.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/front-end-editor.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/login_module.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/theme_ui.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/flawless/shortcodes.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/legacy/ud_saas.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/legacy/ud_functions.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/legacy/ud_tests.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/legacy/backend-functions.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/legacy/business-card.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/legacy/class-flawless-utility.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/legacy/front-end-editor.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/legacy/login_module.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/legacy/theme_ui.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/legacy/shortcodes.php' );
 
 // Disco Libraries.
 include_once( untrailingslashit( STYLESHEETPATH ) . '/lib/widgets.php' );
@@ -40,7 +40,7 @@ define( 'HDDP', 'HDDP' );
 class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
   /** Setup our post types */
-  static public $hdp_post_types = array(
+  static public $_types = array(
     'hdp_event'         => array(
       'post_title',
       'post_name',
@@ -104,7 +104,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
   );
 
   /** Some variables to hold our QA table items */
-  static public $all_attributes = array(
+  static public $_attributes = array(
     'post_title'            => array(
       'label' => 'Title',
     ),
@@ -130,7 +130,6 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       'label'     => 'Artist',
       'type'      => 'taxonomy',
       'summarize' => 225,
-
     ),
     'hdp_tour'              => array(
       'label'     => 'Tour',
@@ -271,19 +270,14 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
    *
    * @author potanin@UD
    */
-  static public function theme_setup() {
+  static public function setup() {
 
-    // parent::scripts();
-
-    remove_theme_support( 'header-dropdowns' );
     remove_theme_support( 'custom-header' );
+    remove_theme_support( 'custom-skins' );
     remove_theme_support( 'custom-background' );
+    remove_theme_support( 'header-dropdowns' );
     remove_theme_support( 'header-business-card' );
     remove_theme_support( 'frontend-editor' );
-    remove_theme_support( 'custom-skins' );
-
-    remove_theme_support( 'custom-background' );
-    remove_theme_support( 'custom-header' );
 
     load_theme_textdomain( HDDP, get_stylesheet_directory() . '/languages' );
 
@@ -295,25 +289,122 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
    *
    * @author potanin@UD
    */
-  public function init_upper() {
-    global $wpdb, $flawless;
+  static public function init() {
 
-    add_filter( 'the_content', 'featured_image_in_feed' );
+    // Configure Theme.
+    parent::initialize( array(
+      'minify' => true
+    ));
 
+    // Declare Dynamic Assets.
+    parent::dynamic_assets( array(
+      'scripts' => array(
+        'app.js' => 'console.log( "app.js" );'
+      ),
+      'models'  => array(
+        'theme.json'  => '{}',
+        'locale.json' => '{}'
+      )
+    ));
+
+    // Enable Public Assets.
+    parent::rewrite_assets( array(
+      'scripts' => true,
+      'styles'  => true
+    ));
+
+    // Handle Theme Version Changes.
+    parent::handle_updates();
+
+    // Configure Post Types and Meta.
+    parent::data_structure( array(
+      'artist' => array(
+        'type' => 'post'
+      ),
+      'venue' => array(
+        'type' => 'post'
+      ),
+      'location' => array(
+        'type' => 'post'
+      ),
+      'hdp_event' => array(
+        'type' => 'post',
+        'attributes' => array(
+          'post_title',
+          'post_name',
+          'hdp_event_date',
+          'hdp_event_time',
+          'hdp_artist',
+          'hdp_tour',
+          'hdp_age_limit',
+          'hdp_genre',
+          'hdp_venue',
+          'hdp_promoter',
+          'hdp_type',
+          'hdp_city',
+          'hdp_state',
+          '_thumbnail_id',
+          'latitude',
+          'longitude',
+          'city',
+          'state',
+          'state_code',
+          'hdp_purchase_url',
+          'hdp_facebook_rsvp_url',
+          'hdp_date_range'
+        )
+      ),
+      'hdp_video'         => array(
+        'type' => 'post',
+        'attributes' => array(
+          'post_title',
+          'post_name',
+          'hdp_event_date',
+          'hdp_event_time',
+          'hdp_artist',
+          'hdp_tour',
+          'hdp_age_limit',
+          'hdp_genre',
+          'hdp_venue',
+          'hdp_promoter',
+          'hdp_type',
+          'hdp_credit',
+          'hdp_video_url',
+          'hdp_poster_id',
+          'hdp_city',
+          'hdp_state'
+        )
+      ),
+      'hdp_photo_gallery' => array(
+        'type' => 'post',
+        'attributes' => array(
+          'post_title',
+          'post_name',
+          'hdp_event_date',
+          'hdp_event_time',
+          'hdp_artist',
+          'hdp_tour',
+          'hdp_age_limit',
+          'hdp_genre',
+          'hdp_venue',
+          'hdp_promoter',
+          'hdp_type',
+          'hdp_credit',
+          'hdp_facebook_url',
+          'hdp_poster_id',
+          'hdp_city',
+          'hdp_state'
+        )
+      )
+    ));
+
+    // Register Scripts.
+    wp_register_script( 'app', home_url( '/scripts/app.js' ), array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-cookie', 'flawless' ), HDDP_Version, true );
+    wp_register_script( 'app.admin', home_url( '/scripts/app.admin.js' ), array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-cookie', 'flawless' ), HDDP_Version, true );
     wp_register_script( 'knockout', get_stylesheet_directory_uri() . '/scripts/knockout.js', array(), '2.1', true );
     wp_register_script( 'jquery-ud-form_helper', get_stylesheet_directory_uri() . '/scripts/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1.3', true );
-    wp_register_script( 'jquery-ud-smart_buttons', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/scripts/jquery.ud.smart_buttons/0.6/jquery.ud.smart_buttons.js', array( 'jquery-ui-core' ), '0.6', true );
-    wp_register_script( 'jquery-ud-social', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/scripts/jquery.ud.social/0.3/jquery.ud.social.js', array( 'jquery-ui-core' ), '0.3', true );
-    wp_register_script( 'jquery-ud-execute_triggers', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/scripts/jquery.ud.execute_triggers/0.2/jquery.ud.execute_triggers.js', array( 'jquery-ui-core' ), '0.2', true );
-
     wp_register_script( 'jquery-ud-elastic_filter', get_stylesheet_directory_uri() . '/scripts/jquery.ud.elastic_filter.js', array( 'jquery' ), '0.5', true );
     wp_register_script( 'jquery-new-ud-elasticsearch', get_stylesheet_directory_uri() . '/scripts/jquery.new.ud.elasticsearch.js', array( 'jquery' ), '1.0', true );
-
-    wp_register_script( 'ud-load', get_stylesheet_directory_uri() . '/scripts/ud.loader.js', array( 'jquery' ), '1.0', false );
-    wp_register_script( 'ud-socket', get_stylesheet_directory_uri() . '/scripts/ud.socket.js', array( 'jquery' ), '1.0.0', false );
-    wp_register_script( 'ud-json-editor', ( is_ssl() ? 'https://' : 'http://' ) . 'cdn.usabilitydynamics.com/js/ud.json.editor/latest/ud.json.editor.js', array( 'jquery' ), '1.0', false );
-    wp_register_style( 'ud-json-editor', ( is_ssl() ? 'https://' : 'http://' ) . 'cdn.usabilitydynamics.com/js/ud.json.editor/latest/assets/ud.json.editor.css' );
-
     wp_register_script( 'jquery-ud-dynamic_filter', get_stylesheet_directory_uri() . '/scripts/jquery.ud.dynamic_filter.js', array( 'jquery' ), '1.1.3', true );
     wp_register_script( 'jquery-ud-date-slector', get_stylesheet_directory_uri() . '/scripts/jquery.ud.date_selector.js', array( 'jquery-ui-core' ), '0.1.1', true );
     wp_register_script( 'jquery-jqtransform', get_stylesheet_directory_uri() . '/scripts/jquery.jqtransform.js', array( 'jquery' ), HDDP_Version, true );
@@ -322,15 +413,18 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     wp_register_script( 'jquery-flexslider', get_stylesheet_directory_uri() . '/scripts/jquery.flexslider.js', array( 'jquery' ), '2.2.2', true );
     wp_register_script( 'jquery-cookie', get_stylesheet_directory_uri() . '/scripts/jquery.cookie.js', array( 'jquery' ), '1.7.3', false );
     wp_register_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?sensor=true' );
-
-    wp_register_script( 'app', get_stylesheet_directory_uri() . '/scripts/hddp.frontend.js', array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-cookie', 'flawless' ), HDDP_Version, true );
-    wp_register_script( 'app.admin', get_stylesheet_directory_uri() . '/scripts/app.admin.js', array( 'jquery-ui-tabs', 'flawless-admin-global', 'jquery-ud-execute_triggers' ), HDDP_Version, true );
-
-    wp_register_style( 'app.admin', get_stylesheet_directory_uri() . '/styles/app.admin.css' );
-    wp_register_style( 'jquery-jqtransform', get_stylesheet_directory_uri() . '/styles/jqtransform.css' );
-    wp_register_style( 'jquery-simplyscroll', get_stylesheet_directory_uri() . '/styles/jquery.simplyscroll.css' );
-
+    wp_register_script( 'jquery-ud-smart_buttons', '//cdn.usabilitydynamics.com/scripts/jquery.ud.smart_buttons/0.6/jquery.ud.smart_buttons.js', array( 'jquery-ui-core' ), '0.6', true );
+    wp_register_script( 'jquery-ud-social', 'http' . '//cdn.usabilitydynamics.com/scripts/jquery.ud.social/0.3/jquery.ud.social.js', array( 'jquery-ui-core' ), '0.3', true );
+    wp_register_script( 'jquery-ud-execute_triggers', '//cdn.usabilitydynamics.com/scripts/jquery.ud.execute_triggers/0.2/jquery.ud.execute_triggers.js', array( 'jquery-ui-core' ), '0.2', true );
     wp_register_script( 'jquery-fitvids', get_stylesheet_directory_uri() . '/scripts/jquery.fitvids.js', array( 'jquery' ), HDDP_Version, true );
+
+    // Register Styles.
+    wp_register_style( 'app', home_url( '/styles/app.css' ));
+    wp_register_style( 'app.admin', home_url( '/styles/app.admin.css' ));
+    wp_register_style( 'jquery-jqtransform', home_url( '/styles/jquery-jqtransform.css' ));
+    wp_register_style( 'jquery.simplyscroll', home_url( '/styles/jquery.simplyscroll.css' ));
+
+    add_filter( 'the_content', 'featured_image_in_feed' );
 
     add_action( 'widgets_init', function () {
       if( class_exists( 'HDP_Latest_Posts_Widget' ) ) {
@@ -378,7 +472,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     } );
 
     add_filter( 'elasticsearch_indexer_build_document', function ( $doc, $post ) {
-      $doc[ 'event_date_time' ] = date( 'c', strtotime( get_post_meta( $post->ID, 'hdp_event_date', 1 ) . ' ' . get_post_meta( $post->ID, 'hdp_event_time', 1 ) ) );
+      $doc[ 'event_date_time' ] = date( 'c', strtotime( get_post_meta( $post->ID, 'hdp_event_date', 1 ) . ' ' . get_post_meta( $post->ID, 'hdp_event_time', 1 ) ));
       $lat                      = get_post_meta( $post->ID, 'latitude', 1 );
       $lon                      = get_post_meta( $post->ID, 'longitude', 1 );
       $doc[ 'location' ]        = array(
@@ -392,26 +486,13 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
     flawless_set_color_scheme( 'skin-default.css' );
 
-    flush_rewrite_rules();
-
-  }
-
-  /**
-   * Primary Loader
-   *
-   * @author potanin@UD
-   */
-  public function init_lower() {
-    global $hddp, $wpdb;
-
-    /** Must be defined for UD Cloud API to work in static mode */
-    define( 'UD_Site_UID', UD_Functions::get_key( 'site_uid' ) );
-    define( 'UD_Customer_Key', UD_Functions::get_key( 'customer_key' ) );
-    define( 'UD_Public_Key', UD_Functions::get_key( 'public_key' ) ? UD_Functions::get_key( 'public_key' ) : md5( UD_Customer_Key ) );
+    // Must be defined for UD Cloud API to work in static mode
+    define( 'UD_Site_UID', UD_Functions::get_key( 'site_uid' ));
+    define( 'UD_Customer_Key', UD_Functions::get_key( 'customer_key' ));
+    define( 'UD_Public_Key', UD_Functions::get_key( 'public_key' ) ? UD_Functions::get_key( 'public_key' ) : md5( UD_Customer_Key ));
 
     // Define which post types to store in cloud
-
-    // UD_Cloud::initialize( array( 'types' => array( 'hdp_event', 'hdp_video', 'hdp_photo_gallery' ) ) );
+    // UD_Cloud::initialize( array( 'types' => array( 'hdp_event', 'hdp_video', 'hdp_photo_gallery' ) ));
 
     /**
      * Structure Documents for CloudData
@@ -584,19 +665,19 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     } );
 
     /** First, go through my local items, and update my attributes */
-    $_all_attributes = (array) hddp::$all_attributes;
+    $__attributes = (array) hddp::$_attributes;
 
-    foreach( $_all_attributes as $key => &$arr ) {
+    foreach( $__attributes as $key => &$arr ) {
       $arr = \UsabilityDynamics\Utility::extend( hddp::$default_attribute, $arr );
     }
 
     /** Now go through our attributes */
     $attributes = array();
 
-    foreach( hddp::$hdp_post_types as $key => $val ) {
+    foreach( hddp::$_types as $key => $val ) {
       $attributes[ $key ] = array();
       foreach( (array) $val as $att ) {
-        $attributes[ $key ][ $att ] = $_all_attributes[ $att ];
+        $attributes[ $key ][ $att ] = $__attributes[ $att ];
       }
     }
 
@@ -627,53 +708,70 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       'page_template'             => array( 'template-all-events.php' ),
       'event_related_post_types'  => array( 'hdp_event', 'hdp_video', 'hdp_photo_gallery' ),
       'dynamic_filter_post_types' => array( 'hdp_photo_gallery', 'hdp_event', 'hdp_video' )
-    ), get_option( 'hddp_options' ) );
+    ), get_option( 'hddp_options' ));
 
+    // Theme Setup Hook.
+    add_action( 'flawless::theme_setup::after', array( 'hddp', 'setup' ));
+
+    // Enqueue Frontend Scripts & Styles.
     add_action( 'wp_enqueue_scripts', function () {
 
-      wp_enqueue_script( 'knockout' );
-      wp_enqueue_script( 'ud-load' );
+      // Enqueue Scripts.
       wp_enqueue_script( 'app' );
-      //wp_enqueue_script( 'jquery-ud-elastic_filter' );
       wp_enqueue_script( 'jquery-new-ud-elasticsearch' );
       wp_enqueue_script( 'jquery-ui-tabs' );
       wp_enqueue_script( 'google-maps' );
-      wp_enqueue_style( 'jquery-jqtransform' );
-
       wp_enqueue_script( 'jquery-fitvids' );
-
+      wp_enqueue_script( 'jquery-simplyscroll' );
       wp_enqueue_script( 'jquery-ui-datepicker' );
 
-      // If we're on the front page, do simply scroll
-      if( is_front_page() ) {
-        wp_enqueue_script( 'jquery-simplyscroll' );
-        wp_enqueue_style( 'jquery-simplyscroll' );
-      }
+      // Enqueue Styles.
+      wp_enqueue_style( 'jquery-simplyscroll' );
+      wp_enqueue_style( 'jquery-jqtransform' );
 
     } );
 
-    add_action( 'admin_enqueue_scripts', array( 'hddp', 'admin_enqueue_scripts' ) );
+    // Enqueue Admin Scripts & Styles.
+    add_action( 'admin_enqueue_scripts', function () {
 
-    add_action( 'admin_print_footer_scripts', array( 'hddp', 'admin_print_footer_scripts' ) );
+      wp_enqueue_script( 'app.admin' );
+      wp_enqueue_script( 'jquery-cookie' );
+
+      wp_enqueue_style( 'app.admin' );
+
+    } );
+
+    // Admin Footer Scripts.
+    add_action( 'admin_print_footer_scripts', function () {
+      global $hddp, $post, $pagenow;
+
+      /* Determine if current post is a "Event Related" post */
+      if( in_array( $post->post_type, $hddp[ 'event_related_post_types' ] ) ) {
+        $hddp[ 'automated_title' ] = true;
+      }
+
+      echo '<script type="text/javascript">var hddp_dynamic = jQuery.parseJSON( ' . json_encode( json_encode( $hddp ) ) . ' );</script>';
+
+    } );
 
     add_action( 'admin_menu', function () {
       global $hddp;
-      $hddp[ 'manage_page' ] = add_dashboard_page( __( 'Manage', HDDP ), __( 'Manage', HDDP ), $hddp[ 'manage_options' ], 'hddp_manage', array( 'hddp', 'hddp_manage' ) );
+      $hddp[ 'manage_page' ] = add_dashboard_page( __( 'Manage', HDDP ), __( 'Manage', HDDP ), $hddp[ 'manage_options' ], 'hddp_manage', array( 'hddp', 'hddp_manage' ));
     } );
 
-    add_action( 'admin_init', array( 'hddp', 'admin_init' ) );
+    add_action( 'admin_init', array( 'hddp', 'admin' ));
 
     // Register AJAX listeners
-    add_action( 'wp_ajax_nopriv_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ) );
-    add_action( 'wp_ajax_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ) );
+    add_action( 'wp_ajax_nopriv_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ));
+    add_action( 'wp_ajax_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ));
 
     // Ajax for new Elastic Search
-    add_action( 'wp_ajax_elasticsearch_query', array( 'hddp', 'elasticsearch_query' ) );
-    add_action( 'wp_ajax_nopriv_elasticsearch_query', array( 'hddp', 'elasticsearch_query' ) );
+    add_action( 'wp_ajax_elasticsearch_query', array( 'hddp', 'elasticsearch_query' ));
+    add_action( 'wp_ajax_nopriv_elasticsearch_query', array( 'hddp', 'elasticsearch_query' ));
 
     // Setup Dynamic Filter
-    add_action( 'template_redirect', array( 'hddp', 'template_redirect' ) );
-    add_action( 'template_redirect', array( 'hddp', 'dynamic_filter_shortcode_handler' ) );
+    add_action( 'template_redirect', array( 'hddp', 'template' ));
+    add_action( 'template_redirect', array( 'hddp', 'dynamic_filter_shortcode_handler' ));
 
     // Saving and deleting posts from QA table
     add_action( 'save_post', array( 'hddp', 'save_post' ), 1, 2 );
@@ -683,7 +781,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       wp_schedule_event( time(), 'daily', 'hddp_daily_cron' );
     }
 
-    add_action( 'hddp_daily_cron', array( 'hddp', 'daily_maintenance_cron' ) );
+    add_action( 'hddp_daily_cron', array( 'hddp', 'daily_maintenance_cron' ));
 
     add_filter( 'the_category', function ( $c ) {
       return hddp::_backtrace_function( 'wp_popular_terms_checklist' ) ? '<span class="do_inline_hierarchial_taxonomy_stuff do_not_esc_html">' . $c . '</span>' : $c;
@@ -702,7 +800,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     } );
 
     add_action( 'flawless::header_bottom', function () {
-      $header = flawless_breadcrumbs( array( 'hide_breadcrumbs' => false, 'wrapper_class' => 'breadcrumbs container', 'hide_on_home' => false, 'return' => true ) );
+      $header = flawless_breadcrumbs( array( 'hide_breadcrumbs' => false, 'wrapper_class' => 'breadcrumbs container', 'hide_on_home' => false, 'return' => true ));
       $share  = hdp_share_button( false, true );
       /** Do a preg replace to add our share button */
       /**$header = preg_replace( '/(<div[^>]*?>)/i', '$1' . $share, $header );
@@ -710,16 +808,16 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       echo $share . $header;
     } );
 
-    //** Add post date to editor screen of "Event Related" post types */
+    // Add post date to editor screen of "Event Related" post types
     $x = 1;
     foreach( $hddp[ 'attributes' ] as $type => $attribs ) {
       foreach( $attribs as $slug => $vars ) {
 
-        /** If we have an admin label, we're shoing */
+        // If we have an admin label, we're shoing
         if( !$vars[ 'admin_label' ] ) continue;
 
-        /** If we made it, add the item */
-        //\Flawless\Management::add_post_type_option( array( 'post_type' => $type, 'type' => $vars[ 'admin_type' ], 'position' => $x++, 'meta_key' => $slug, 'label' => $vars[ 'admin_label' ], 'placeholder' => $vars[ 'placeholder' ], ) );
+        // If we made it, add the item
+        //\Flawless\Management::add_post_type_option( array( 'post_type' => $type, 'type' => $vars[ 'admin_type' ], 'position' => $x++, 'meta_key' => $slug, 'label' => $vars[ 'admin_label' ], 'placeholder' => $vars[ 'placeholder' ], ));
 
       }
 
@@ -752,7 +850,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
         $pagination = wp_pagenavi( array(
           'query' => $query,
           'echo'  => false
-        ) );
+        ));
       }
 
       return $html . $pagination;
@@ -783,11 +881,13 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
    * @action template_redirect (10)
    * @author potanin@UD
    */
-  public function template_redirect() {
+  static public function template() {
     global $post, $flawless;
 
-    /** Modify our HTML  for the mobile nav bar */
-    $flawless[ 'mobile_navbar' ][ 'html' ][ 'left' ] = hdp_share_button( true, true ) . $flawless[ 'mobile_navbar' ][ 'html' ][ 'left' ];
+    // Modify our HTML for the mobile nav bar
+    if( isset( $flawless[ 'mobile_navbar' ] ) ) {
+      $flawless[ 'mobile_navbar' ][ 'html' ][ 'left' ] = hdp_share_button( true, true ) . $flawless[ 'mobile_navbar' ][ 'html' ][ 'left' ];
+    }
 
     add_filter( 'single_template', function ( $template ) {
       global $post, $hddp;
@@ -797,7 +897,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       }
 
       add_filter( 'body_class', function ( $classes ) {
-        return array_merge( $classes, array( 'single_event_page' ) );
+        return array_merge( $classes, array( 'single_event_page' ));
       } );
 
       return $template = locate_template( (array) $hddp[ 'page_template' ] );
@@ -812,11 +912,11 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
    * @action admin_init (10)
    * @author potanin@UD
    */
-  public function admin_init() {
+  static public function admin() {
     global $wpdb, $hddp, $current_user;
 
     /* Adds options to Publish metabox */
-    add_action( 'post_submitbox_misc_actions', array( 'hddp', 'post_submitbox_misc_actions' ) );
+    add_action( 'post_submitbox_misc_actions', array( 'hddp', 'post_submitbox_misc_actions' ));
 
     /* Add Address column to Venues taxonomy overview */
     add_filter( 'manage_edit-hdp_venue_columns', function ( $columns ) {
@@ -854,7 +954,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
         update_option( $option_name, $option_value );
       }
 
-      die( wp_redirect( admin_url( 'index.php?page=hddp_manage&message=updated' ) ) );
+      die( wp_redirect( admin_url( 'index.php?page=hddp_manage&message=updated' ) ));
     }
 
     /* Temporary placement */
@@ -880,7 +980,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
           }
 
           foreach( $wpdb->get_col( $query ) as $post_id ) {
-            $result[ ] = UD_Cloud::index( get_event( $post_id ) );
+            $result[ ] = UD_Cloud::index( get_event( $post_id ));
           }
 
         }
@@ -913,7 +1013,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
         $updated = array();
 
         foreach( hddp::_get_event_posts() as $post_id ) {
-          $updated[ ] = hddp::update_event_location( $post_id, array( 'add_log_entries' => false ) );
+          $updated[ ] = hddp::update_event_location( $post_id, array( 'add_log_entries' => false ));
         }
 
         if( count( $updated ) > 0 ) {
@@ -943,7 +1043,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       }, 15
     );
 
-    add_action( 'all_admin_notices', array( 'hddp', 'all_admin_notices' ) );
+    add_action( 'all_admin_notices', array( 'hddp', 'all_admin_notices' ));
 
   }
 
@@ -964,7 +1064,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
   static public function _get_event_posts( $args = array() ) {
     global $wpdb, $hddp;
 
-    return $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type IN ( '" . implode( "','", array_keys( array( hddp::$hdp_post_types ) ) ) . "' ) AND post_status = 'publish' " );
+    return $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type IN ( '" . implode( "','", array_keys( array( hddp::$_types ) ) ) . "' ) AND post_status = 'publish' " );
   }
 
   /**
@@ -988,7 +1088,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     //** Attempt geolocation for all events that are likely to have locatoins */
     foreach( hddp::_get_event_posts() as $post_id ) {
       if( !get_post_meta( $post_id, 'formatted_address', true ) ) {
-        $stats[ 'geo_located' ][ ] = hddp::update_event_location( $post_id, array( 'add_log_entries' => false ) );
+        $stats[ 'geo_located' ][ ] = hddp::update_event_location( $post_id, array( 'add_log_entries' => false ));
       }
     }
 
@@ -1015,7 +1115,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       return;
     }
 
-    if( !in_array( $post->post_type, array_keys( self::$hdp_post_types ) ) ) {
+    if( !in_array( $post->post_type, array_keys( self::$_types ) ) ) {
       return;
     }
 
@@ -1040,17 +1140,17 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
         case 'post_title':
           if( $_REQUEST[ 'do_not_generate_post_title' ] != 'true' ) {
-            $wpdb->update( $wpdb->posts, array( 'post_title' => hddp::get_post_title( $post->ID ) ), array( 'ID' => $post_id ) );
+            $wpdb->update( $wpdb->posts, array( 'post_title' => hddp::get_post_title( $post->ID ) ), array( 'ID' => $post_id ));
           }
           break;
 
         case 'post_excerpt':
-          $wpdb->update( $wpdb->posts, array( 'post_excerpt' => hddp::get_post_excerpt( $post->ID ) ), array( 'ID' => $post_id ) );
+          $wpdb->update( $wpdb->posts, array( 'post_excerpt' => hddp::get_post_excerpt( $post->ID ) ), array( 'ID' => $post_id ));
           break;
 
         case 'post_name':
           if( $_REQUEST[ 'do_not_generate_post_name' ] != 'true' ) {
-            $wpdb->update( $wpdb->posts, array( 'post_name' => hddp::get_post_name( $post->ID ) ), array( 'ID' => $post_id ) );
+            $wpdb->update( $wpdb->posts, array( 'post_name' => hddp::get_post_name( $post->ID ) ), array( 'ID' => $post_id ));
           }
           break;
 
@@ -1113,16 +1213,16 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     // add_shortcode('elastic_popup_filter', array('hddp', 'shortcode_elastic_popup_filter'));
 
     /* Add Shortcode */
-    add_shortcode( 'dynamic_filter', array( 'hddp', 'shortcode_dynamic_filter' ) );
-    add_shortcode( 'hdp_custom_loop', array( 'hddp', 'shortcode_hdp_custom_loop' ) );
-    add_shortcode( 'hddp_gallery', array( 'hddp', 'shortcode_hddp_gallery' ) );
+    add_shortcode( 'dynamic_filter', array( 'hddp', 'shortcode_dynamic_filter' ));
+    add_shortcode( 'hdp_custom_loop', array( 'hddp', 'shortcode_hdp_custom_loop' ));
+    add_shortcode( 'hddp_gallery', array( 'hddp', 'shortcode_hddp_gallery' ));
 
     //** New Elastic Search Shortcodes */
-    add_shortcode( 'elasticsearch_results', array( 'hddp', 'elasticsearch_results' ) );
-    add_shortcode( 'elasticsearch_facets', array( 'hddp', 'elasticsearch_facets' ) );
+    add_shortcode( 'elasticsearch_results', array( 'hddp', 'elasticsearch_results' ));
+    add_shortcode( 'elasticsearch_facets', array( 'hddp', 'elasticsearch_facets' ));
 
     /* Detect shortcode usage in this post - and add Sidebar */
-    if( strpos( $post->post_content, '[dynamic_filter' ) !== false ) {
+    if( isset( $post ) && strpos( $post->post_content, '[dynamic_filter' ) !== false ) {
       add_action( 'flawless::sidebar_top', function () {
         echo '<div class="cfct-module single-widget-area"><div id="df_sidebar_filters" class="df_sidebar_filters flawless_widget theme_widget widget  widget_text clearfix"></div></div>';
       } );
@@ -1150,7 +1250,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
           )
         )
       );
-      $index           = $elastica_client->getIndex( elasticsearch\Config::option( 'server_index' ) );
+      $index           = $elastica_client->getIndex( elasticsearch\Config::option( 'server_index' ));
       $type            = $index->getType( $_REQUEST[ 'type' ] );
       $path            = $index->getName() . '/' . $type->getName() . '/_search';
 
@@ -1314,8 +1414,8 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       $error = array(
         'success' => false
       );
-      $error = array_merge( $error, array( 'error' => $e->getMessage() ) );
-      die( json_encode( $error ) );
+      $error = array_merge( $error, array( 'error' => $e->getMessage() ));
+      die( json_encode( $error ));
     }
 
     ob_start();
@@ -1340,7 +1440,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     $result[ 'results' ] = $results;
     $result[ 'query' ]   = $params[ 'body' ];
 
-    die( json_encode( $result ) );
+    die( json_encode( $result ));
   }
 
   /**
@@ -1356,7 +1456,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       'action' => 'elasticsearch_query',
       'type'   => '',
       'size'   => 10
-    ), $atts ) );
+    ), $atts ));
 
     flawless_render_in_footer(
       '<script type="text/javascript">
@@ -1380,7 +1480,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
   static public function elasticsearch_results( $atts ) {
     extract( shortcode_atts( array(
       'id' => 'none'
-    ), $atts ) );
+    ), $atts ));
 
     ob_start();
     include 'templates/elasticsearch_results.php';
@@ -1405,7 +1505,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       return false;
     }
 
-    $args = wp_parse_args( $args, array( 'add_log_entries' => true ) );
+    $args = wp_parse_args( $args, array( 'add_log_entries' => true ));
 
     /* Set coordinates for event */
     $post = get_post( $post_id );
@@ -1532,8 +1632,8 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
       case 'hdp_event_date':
       {
-        $hdp_event_date = strtotime( get_post_meta( $post_id, 'hdp_event_date', true ) );
-        $hdp_event_time = strtotime( get_post_meta( $post_id, 'hdp_event_time', true ) );
+        $hdp_event_date = strtotime( get_post_meta( $post_id, 'hdp_event_date', true ));
+        $hdp_event_time = strtotime( get_post_meta( $post_id, 'hdp_event_time', true ));
 
         if( $hdp_event_date ) {
           $print_date[ ] = date( get_option( 'date_format' ), $hdp_event_date );
@@ -1551,47 +1651,6 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       }
 
     }
-
-  }
-
-  /**
-   * Admin Scripts
-   *
-   * @author potanin@UD
-   */
-  static public function admin_enqueue_scripts() {
-
-    /* General Scripts and CSS styles */
-    wp_enqueue_script( 'app.admin' );
-    wp_enqueue_style( 'app.admin' );
-
-    /* Specific scripts and styles should be loaded only on specific pages */
-    if( get_current_screen()->id === 'dashboard_page_hddp_manage' ) {
-      wp_enqueue_script( 'jquery-cookie' );
-      wp_enqueue_script( 'ud-load' );
-      wp_enqueue_script( 'ud-socket' );
-      wp_enqueue_script( 'ud-json-editor' );
-      wp_enqueue_style( 'ud-json-editor' );
-    }
-
-  }
-
-  /**
-   * Dynamic Footer variable
-   *
-   * @action admin_print_footer_scripts (10)
-   * @author potanin@UD
-   */
-  static public function admin_print_footer_scripts() {
-
-    global $hddp, $post, $pagenow;
-
-    /* Determine if current post is a "Event Related" post */
-    if( in_array( $post->post_type, $hddp[ 'event_related_post_types' ] ) ) {
-      $hddp[ 'automated_title' ] = true;
-    }
-
-    echo '<script type="text/javascript">var hddp_dynamic = jQuery.parseJSON( ' . json_encode( json_encode( $hddp ) ) . ' );</script>';
 
   }
 
@@ -1637,7 +1696,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 //
 //    $results = $client->search($params);
 //
-//    die( json_encode($results) );
+//    die( json_encode($results));
 
     global $wpdb, $hddp;
 
@@ -1645,15 +1704,15 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
     $myFile = "request.log";
     $fh = fopen( $myFile, 'w' ) or die( "can't open file" );
-    fwrite( $fh, print_r( $_REQUEST, 1 ) );
-    fwrite( $fh, print_r( $_COOKIE, 1 ) );
+    fwrite( $fh, print_r( $_REQUEST, 1 ));
+    fwrite( $fh, print_r( $_COOKIE, 1 ));
     fclose( $fh );
 
     if( !$request ) {
       return array();
     }
 
-    $args = wp_parse_args( $request, array( 'post_type' => 'post' ) );
+    $args = wp_parse_args( $request, array( 'post_type' => 'post' ));
 
     /** Go through our static var to get this information */
     if( !isset( $hddp[ 'attributes' ][ $args[ 'post_type' ] ] ) ) {
@@ -1887,7 +1946,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
     $response = array( 'all_results' => array(), 'total_results' => 0, 'current_filters' => array(), 'error' => $err, );
 
-    die( json_encode( $response ) );
+    die( json_encode( $response ));
   }
 
   /**
@@ -2059,7 +2118,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
       'ids'     => '', // Optional. List of media item IDs.
       'show_as' => 'gallery', // Optional. Default is 'gallery'. Values: 'gallery', 'list'
       'orderby' => false, // Optional. Allows custom (random) sorting. Values: 'rand', 'ID', 'title', 'name', 'date', 'modified'
-    ) );
+    ));
 
     $_post = ( is_object( $post ) && $post->ID == $data[ 'post_id' ] ) ? $post : get_post( $data[ 'post_id' ], ARRAY_A );
 
@@ -2068,7 +2127,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
       return $content;
     }
 
-    $ids = explode( ',', trim( $data[ 'ids' ] ) );
+    $ids = explode( ',', trim( $data[ 'ids' ] ));
     foreach( $ids as $k => $id ) {
       $ids[ $k ] = trim( $id );
       if( empty( $ids[ $k ] ) || !is_numeric( $ids[ $k ] ) ) {
@@ -2268,7 +2327,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
   static public function hddp_manage() {
     global $wpdb, $hddp;
 
-    $ud_log = Flawless_F::get_log( array( 'limit' => 100 ) );
+    $ud_log = Flawless_F::get_log( array( 'limit' => 100 ));
 
     include 'templates/admin.site_management.php';
 
@@ -2309,7 +2368,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
       return $post->post_title;
     }
 
-    $return = html_entity_decode( implode( ' ', (array) $return ) );
+    $return = html_entity_decode( implode( ' ', (array) $return ));
 
     return $return;
 
@@ -2330,7 +2389,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
       return;
     }
 
-    $hdp_event_date = strtotime( get_post_meta( $post->ID, 'hdp_event_date', true ) );
+    $hdp_event_date = strtotime( get_post_meta( $post->ID, 'hdp_event_date', true ));
 
     if( $hdp_event_date ) {
       $return[ ] = date( 'Y-md', $hdp_event_date );
@@ -2339,20 +2398,20 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
     switch( $post->post_type ) {
 
       case 'hdp_video' :
-        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
 
         break;
 
       case 'hdp_photo_gallery' :
-        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
 
         break;
 
       case 'hdp_event' :
-        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
+        $return[ ] = Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
 
         break;
     }
@@ -2375,7 +2434,7 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
       'align'   => '',
       'width'   => '',
       'caption' => ''
-    ), $attr ) );
+    ), $attr ));
 
     if( 1 > (int) $width || empty( $caption ) ) {
       return $val;
@@ -2445,8 +2504,8 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
 
     $return = array_filter( (array) $return );
 
-    $hdp_event_date = strtotime( get_post_meta( $event_id, 'hdp_event_date', true ) );
-    $hdp_event_time = strtotime( get_post_meta( $event_id, 'hdp_event_time', true ) );
+    $hdp_event_date = strtotime( get_post_meta( $event_id, 'hdp_event_date', true ));
+    $hdp_event_time = strtotime( get_post_meta( $event_id, 'hdp_event_time', true ));
 
     if( !empty( $return ) && $event[ 'attributes' ][ 'hdp_event_date' ] ) {
       $return[ ] = 'on ' . $event[ 'attributes' ][ 'hdp_event_date' ];
@@ -2471,7 +2530,5 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
 }
 
 // Initialize.
-add_action( 'flawless::theme_setup::after', array( 'hddp', 'theme_setup' ) );
-add_action( 'flawless::init_upper', array( 'hddp', 'init_upper' ) );
-add_action( 'flawless::init_lower', array( 'hddp', 'init_lower' ) );
+add_action( 'flawless::init_upper', array( 'hddp', 'init' ));
 
