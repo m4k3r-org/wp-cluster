@@ -1,13 +1,13 @@
 <?php
 
-namespace UsabilityDynamics\Theme {
+namespace UsabilityDynamics\Theme\Disco {
 
   /**
    * Disco Theme
    *
    * @author Usability Dynamics
    */
-  class Disco {
+  class Utility {
 
   }
 
