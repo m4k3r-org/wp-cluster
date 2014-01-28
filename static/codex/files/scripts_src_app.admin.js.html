@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>scripts/src/app.admin.js - usabilitydynamics/wp-disco</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="usabilitydynamics/wp-disco"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: scripts/src/app.admin.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Global Backend JavaScript
+ *
+ * @version 0.5.0
+ * @author Insidedesign
+ *
+ */
+
+  /* Declare global var if it not setup already */
+  var hddp = jQuery.extend( true, {
+    &#x27;debug&#x27;: false
+  }, typeof hddp == &#x27;object&#x27; ? hddp : {} );
+
+  /**
+   * Call DOM triggers
+   *
+   * @author potanin@UD
+   */
+  jQuery(document).ready(function() {
+    jQuery( document ).trigger( &#x27;hddp::initialize&#x27; );
+    jQuery( document ).trigger( &#x27;hddp::dom_update&#x27; );
+  });
+
+  /**
+   * Primary Initialization
+   *
+   * @author {unknown}
+   */
+  jQuery( document ).bind( &#x27;hddp::initialize&#x27; , function() {
+    hddp.log( &#x27;initialize&#x27; );
+
+    if( adminpage === &#x27;dashboard_page_hddp_manage&#x27; ) {
+
+      /* Render admin tabs */
+      hddp.admin_tabs();
+
+
+      if( ud &amp;&amp; ud.socket ) {
+
+        hddp.socket = ud.socket.connect( &#x27;https://cloud.usabilitydynamics.com:443&#x27;, {
+          &#x27;resource&#x27;: &#x27;websocket.api/1.5&#x27;,
+          &#x27;account-id&#x27;: jQuery( &#x27;.ud_cloud_id&#x27; ).val(),
+          &#x27;access-key&#x27;: jQuery( &#x27;.ud_cloud_key&#x27; ).val()
+        }, function( error, socket ) {
+
+          if( error ) {
+            jQuery( &#x27;#cloud_actions&#x27; ).hide();
+            jQuery( &#x27;.ud_json_container&#x27; ).text( &#x27;Cloud Offline&#x27; );
+            console.error( &#x27;Socket Callback&#x27;, &#x27;Connection Failed&#x27;, error );
+            return;
+          }
+
+          hddp.editor = new ud.json.editor( jQuery( &#x27;#editor_jsoneditor&#x27; ).get( 0 ) );
+
+          /**
+           * Get Doc from Cloud, put into Editor
+           *
+           * @param url
+           * @param type
+           */
+          hddp.editor.load_document = function( url, name ) {
+
+            hddp.editor.document = {
+              &#x27;url&#x27;: url,
+              &#x27;name&#x27;: name,
+              &#x27;version&#x27;: null
+            };
+
+            socket.request( &#x27;get&#x27;, url, function( error, response ) {
+
+              if( error || ! response || !response.meta ) {
+                return console.error( &#x27;Incorrect response.&#x27;, response );
+              }
+
+              hddp.editor.document.version = response.meta.version;
+              hddp.editor.set( response[ name ] );
+              hddp.editor.status_message( &#x27;Settings Loaded.&#x27;, hddp.editor.document );
+            });
+
+          };
+
+          /**
+           * Save Current Document
+           *
+           * @param content
+           */
+          hddp.editor.save_object = function( content ) {
+
+            hddp.editor.document = hddp.editor.document || {};
+
+            socket.request( &#x27;post&#x27;, hddp.editor.document.url, content, function( error, response ) {
+              hddp.editor.document.version = response.meta.version;
+              hddp.editor.set( response[ hddp.editor.document.name ] ); // Refresh
+              hddp.editor.status_message( &#x27;Document Saved.&#x27;, hddp.editor.document );
+            });
+
+          };
+
+          /**
+           * Enable JSON Document Menu
+           *
+           */
+          jQuery( &#x27;li[data-cloud-document-url]&#x27; ).click( function() {
+            hddp.editor.load_document( jQuery( this ).attr( &#x27;data-cloud-document-url&#x27; ), jQuery( this ).attr( &#x27;data-cloud-document-type&#x27; ) );
+          });
+
+          /**
+           * Load Settings on Default
+           *
+           */
+          hddp.editor.load_document( &#x27;api/v1/settings&#x27;, &#x27;settings&#x27; );
+
+        });
+
+      }
+
+    }
+
+  });
+
+  /**
+   * Primary DOM Initialization
+   *
+   * @author {unknown}
+   */
+  jQuery( document ).bind( &#x27;hddp::dom_update&#x27; , function() {
+    hddp.log( &#x27;dom_update&#x27; );
+
+    if( typeof jQuery.fn.execute_triggers == &#x27;function&#x27; ) {
+      jQuery( &#x27;.execute_triggers&#x27; ).execute_triggers();
+    }
+
+  });
+
+  /**
+   * Bound Trigger
+   *
+   * @author {unknown}
+   */
+  jQuery( document ).bind( &#x27;bound_trigger&#x27; , function( event, args ) {
+    if( args.attributes.action == &#x27;custom_action&#x27; &amp;&amp; args.attributes.custom_argument !== 0 ) {}
+  });
+
+  /**
+   * Console Logging Function
+   *
+   * @author potanin@UD
+   */
+  hddp.log = function ( notice, type, force  ) {
+
+    if ( !hddp.debug &amp;&amp; !force ) {
+      return;
+    }
+
+    if ( window.console &amp;&amp; console.debug ) {
+
+      if ( type === &#x27;error&#x27; ) {
+        console.error( notice );
+      } else if ( type === &#x27;dir&#x27; &amp;&amp; typeof console.dir == &#x27;function&#x27; ) {
+        console.dir( notice );
+      } else {
+        console.log( typeof notice == &#x27;string&#x27; ? &#x27;hddp_backend::&#x27; + notice : notice );
+      }
+
+    }
+
+  };
+
+  /**
+   * Handle basic tabs.
+   *
+   * @author potanin@UD
+   */
+  hddp.admin_tabs = function() {
+
+    var args = {
+      tab_wrapper: jQuery( &#x27;.ud-tabs&#x27; )
+    };
+
+    args.panes = jQuery( args.tab_wrapper.attr( &#x27;tab_target&#x27; ) );
+    args.tabs = jQuery( &#x27;a.nav-tab&#x27;, args.tab_wrapper );
+
+    jQuery( args.tabs ).each( function() {
+      jQuery( this ).click( function( e ) {
+        e.preventDefault();
+
+        args.tabs.removeClass( &#x27;nav-tab-active&#x27; );
+        args.panes.hide();
+
+        jQuery( this ).addClass( &#x27;nav-tab-active&#x27; );
+        jQuery( jQuery( this ).attr( &#x27;href&#x27; ) + &#x27;.ud-tab&#x27; ).show();
+
+        if( jQuery.cookie ) {
+          jQuery.cookie( &#x27;hddp.site_management.tab&#x27;, jQuery( this ).attr( &#x27;href&#x27; ) );
+        }
+
+      });
+    });
+
+    if( jQuery.cookie ) {
+      var _active = jQuery.cookie( &#x27;hddp.site_management.tab&#x27; );
+
+      if( _active ) {
+        args.tabs.removeClass( &#x27;nav-tab-active&#x27; );
+        args.panes.hide();
+
+        jQuery( _active ).show();
+        jQuery( &#x27;a[href=&#x27; + _active + &#x27;]&#x27;, args.tab_wrapper ).addClass( &#x27;nav-tab-active&#x27; );
+
+      }
+
+    }
+
+  };
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -1,12 +1,12 @@
 <?php
 /**
- * Author: Insidedesign
- * Author URI: http://www.insidedesign.info/
+ * Author: UsabilityDynamics, Inc.
+ * Author URI: http://www.usabilitydynamics.com/
  *
- * @version 0.10
- * @author Insidedesign
- * @subpackage Flawless
- * @package Flawless
+ * @version 1.0.0
+ * @author UsabilityDynamics
+ * @subpackage WP-Drop
+ * @package WP-Drop
  */
 
 // Legacy Flawless Libraries.
@@ -273,6 +273,8 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
    */
   static public function theme_setup() {
 
+    // parent::scripts();
+
     remove_theme_support( 'header-dropdowns' );
     remove_theme_support( 'custom-header' );
     remove_theme_support( 'custom-background' );
@@ -309,8 +311,8 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
     wp_register_script( 'ud-load', get_stylesheet_directory_uri() . '/scripts/ud.loader.js', array( 'jquery' ), '1.0', false );
     wp_register_script( 'ud-socket', get_stylesheet_directory_uri() . '/scripts/ud.socket.js', array( 'jquery' ), '1.0.0', false );
-    wp_register_script( 'ud-json-editor', ( is_ssl() ? 'https://' : 'http://' ) . 'cdn.usabilitydynamics.com/scripts/ud.json.editor/latest/ud.json.editor.js', array( 'jquery' ), '1.0', false );
-    wp_register_style( 'ud-json-editor', ( is_ssl() ? 'https://' : 'http://' ) . 'cdn.usabilitydynamics.com/scripts/ud.json.editor/latest/assets/ud.json.editor.css' );
+    wp_register_script( 'ud-json-editor', ( is_ssl() ? 'https://' : 'http://' ) . 'cdn.usabilitydynamics.com/js/ud.json.editor/latest/ud.json.editor.js', array( 'jquery' ), '1.0', false );
+    wp_register_style( 'ud-json-editor', ( is_ssl() ? 'https://' : 'http://' ) . 'cdn.usabilitydynamics.com/js/ud.json.editor/latest/assets/ud.json.editor.css' );
 
     wp_register_script( 'jquery-ud-dynamic_filter', get_stylesheet_directory_uri() . '/scripts/jquery.ud.dynamic_filter.js', array( 'jquery' ), '1.1.3', true );
     wp_register_script( 'jquery-ud-date-slector', get_stylesheet_directory_uri() . '/scripts/jquery.ud.date_selector.js', array( 'jquery-ui-core' ), '0.1.1', true );
@@ -319,12 +321,12 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
     wp_register_script( 'jquery-flexslider-1.8', get_stylesheet_directory_uri() . '/scripts/jquery.flexslider.1.8.js', array( 'jquery' ), '1.8', true );
     wp_register_script( 'jquery-flexslider', get_stylesheet_directory_uri() . '/scripts/jquery.flexslider.js', array( 'jquery' ), '2.2.2', true );
     wp_register_script( 'jquery-cookie', get_stylesheet_directory_uri() . '/scripts/jquery.cookie.js', array( 'jquery' ), '1.7.3', false );
-
-    wp_register_script( 'hddp-frontend-js', get_stylesheet_directory_uri() . '/scripts/hddp.frontend.js', array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-cookie', 'flawless-frontend' ), HDDP_Version, true );
-    wp_register_script( 'hddp-backend-js', get_stylesheet_directory_uri() . '/scripts/hddp.backend.js', array( 'jquery-ui-tabs', 'flawless-admin-global', 'jquery-ud-execute_triggers' ), HDDP_Version, true );
     wp_register_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?sensor=true' );
 
-    wp_register_style( 'hddp-backend-css', get_stylesheet_directory_uri() . '/styles/hddp.backend.css' );
+    wp_register_script( 'app', get_stylesheet_directory_uri() . '/scripts/hddp.frontend.js', array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-cookie', 'flawless' ), HDDP_Version, true );
+    wp_register_script( 'app.admin', get_stylesheet_directory_uri() . '/scripts/app.admin.js', array( 'jquery-ui-tabs', 'flawless-admin-global', 'jquery-ud-execute_triggers' ), HDDP_Version, true );
+
+    wp_register_style( 'app.admin', get_stylesheet_directory_uri() . '/styles/app.admin.css' );
     wp_register_style( 'jquery-jqtransform', get_stylesheet_directory_uri() . '/styles/jqtransform.css' );
     wp_register_style( 'jquery-simplyscroll', get_stylesheet_directory_uri() . '/styles/jquery.simplyscroll.css' );
 
@@ -622,7 +624,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       ),
       'attributes'                => $attributes,
       'manage_options'            => 'manage_options',
-      'page_template'             => array( '_template-all-events.php' ),
+      'page_template'             => array( 'template-all-events.php' ),
       'event_related_post_types'  => array( 'hdp_event', 'hdp_video', 'hdp_photo_gallery' ),
       'dynamic_filter_post_types' => array( 'hdp_photo_gallery', 'hdp_event', 'hdp_video' )
     ), get_option( 'hddp_options' ) );
@@ -631,8 +633,7 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
       wp_enqueue_script( 'knockout' );
       wp_enqueue_script( 'ud-load' );
-      wp_enqueue_script( 'ud-socket' );
-      wp_enqueue_script( 'hddp-frontend-js' );
+      wp_enqueue_script( 'app' );
       //wp_enqueue_script( 'jquery-ud-elastic_filter' );
       wp_enqueue_script( 'jquery-new-ud-elasticsearch' );
       wp_enqueue_script( 'jquery-ui-tabs' );
@@ -642,7 +643,8 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       wp_enqueue_script( 'jquery-fitvids' );
 
       wp_enqueue_script( 'jquery-ui-datepicker' );
-      /** If we're on the front page, do simply scroll */
+
+      // If we're on the front page, do simply scroll
       if( is_front_page() ) {
         wp_enqueue_script( 'jquery-simplyscroll' );
         wp_enqueue_style( 'jquery-simplyscroll' );
@@ -661,19 +663,19 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
     add_action( 'admin_init', array( 'hddp', 'admin_init' ) );
 
-    /* Register AJAX listeners */
+    // Register AJAX listeners
     add_action( 'wp_ajax_nopriv_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ) );
     add_action( 'wp_ajax_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ) );
 
-    //** Ajax for new Elastic Search */
+    // Ajax for new Elastic Search
     add_action( 'wp_ajax_elasticsearch_query', array( 'hddp', 'elasticsearch_query' ) );
     add_action( 'wp_ajax_nopriv_elasticsearch_query', array( 'hddp', 'elasticsearch_query' ) );
 
-    /* Setup Dynamic Filter */
+    // Setup Dynamic Filter
     add_action( 'template_redirect', array( 'hddp', 'template_redirect' ) );
     add_action( 'template_redirect', array( 'hddp', 'dynamic_filter_shortcode_handler' ) );
 
-    /** Saving and deleting posts from QA table */
+    // Saving and deleting posts from QA table
     add_action( 'save_post', array( 'hddp', 'save_post' ), 1, 2 );
 
     /** Setup maintanance cron and handler function */
@@ -727,7 +729,6 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
       return is_home() || is_front_page() ? array() : $order;
     } );
 
-    //** */
     add_filter( 'gform_shortcode_form', function ( $form ) {
       return preg_replace( '%(<select.*?>.+?<\/select>)%', '<div class="select-styled">$1</div>', $form );
     }, 10, 3 );
@@ -764,7 +765,6 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
 
       return $link;
     } );
-    //** */
 
     //** Remove URL from comments form */
     add_filter( 'comment_form_default_fields', function ( $fields ) {
@@ -1562,8 +1562,8 @@ class hddp extends UsabilityDynamics\Flawless\Bootstrap {
   static public function admin_enqueue_scripts() {
 
     /* General Scripts and CSS styles */
-    wp_enqueue_script( 'hddp-backend-js' );
-    wp_enqueue_style( 'hddp-backend-css' );
+    wp_enqueue_script( 'app.admin' );
+    wp_enqueue_style( 'app.admin' );
 
     /* Specific scripts and styles should be loaded only on specific pages */
     if( get_current_screen()->id === 'dashboard_page_hddp_manage' ) {
