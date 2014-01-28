@@ -33,7 +33,7 @@ namespace UsabilityDynamics\Flawless {
      * @property $version
      * @type {Object}
      */
-    public static $version = '0.1.1';
+    public $version = '0.1.1';
 
     /**
      * Singleton Instance Reference.
@@ -113,8 +113,8 @@ namespace UsabilityDynamics\Flawless {
         'loader' => array()
       )));
 
-      define( 'Flawless_Core_Version', self::$version );
-      define( 'Flawless_Version', self::$version );
+      define( 'Flawless_Core_Version', $this->version);
+      define( 'Flawless_Version', $this->version );
       define( 'Flawless_Option_Key', 'settings::' . Flawless_Core_Version );
       define( 'Flawless_Directory', basename( TEMPLATEPATH ) );
       define( 'Flawless_Path', untrailingslashit( get_template_directory() ) );
