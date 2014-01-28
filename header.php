@@ -5,18 +5,12 @@
   <title><?php wp_title(''); ?></title>
   <link rel="profile" href="http://gmpg.org/xfn/11" />
   <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
+  <script type="application/javascript" data-main="/scripts/app" href="cdn.udx.io/udx.requires.js" />
   <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
 
   <?php do_action( 'header-navbar' ); ?>
-
-  <?php edit_post_link( __( 'Edit' ), '<span class="floating_edit_trigger hidden-tablet hidden-phone">', '</span>' ); ?>
-
-  <div class="flawless_header_expandable_sections">
-    <?php get_template_part( 'header-element', 'contact-us' ); ?>
-    <?php get_template_part( 'header-element', 'login' ); ?>
-  </div>
 
   <div class="super_wrapper">
     <div class="background_header_image"></div>

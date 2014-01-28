@@ -46,7 +46,7 @@ namespace UsabilityDynamics\Disco {
         }
 
         // Instantaite Disco.
-        $this->theme = new \UsabilityDynamics\Disco();
+        $this->theme = new \UsabilityDynamics\Disco;
 
         // Setup Core Actions.
         add_action( 'flawless::init', array( $this, 'init' ) );

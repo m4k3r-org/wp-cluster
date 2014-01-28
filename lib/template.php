@@ -1137,7 +1137,7 @@ if ( !function_exists( 'flawless_element' ) ) {
     //** Generate unique ID for this element, as long as classes don't change and it stays in same template part, it'll be good */
     $element_hash = md5( $classes . $template_part );
 
-    echo ' class="' . $classes . '" template_part="' . $template_part . '" element_hash="' . $element_hash . '" ';
+    echo ' class="' . $classes . '" data-template-part="' . $template_part . '" data-element-hash="' . $element_hash . '" ';
 
   }
 

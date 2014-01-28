@@ -187,7 +187,6 @@ namespace UsabilityDynamics {
         'type' => 'post_meta',
 
       ),
-
       'hdp_city'              => array(
         'type'      => 'taxonomy',
 
@@ -264,7 +263,11 @@ namespace UsabilityDynamics {
 
     /**
      * Initialize Drop Theme.
-     * 
+     *
+     * @example
+     *      $this->set( 'stuff.ss', 'asdfdsf' );
+     *      $this->set( 'stuff.gruff', 'asdfdsf' );
+     *
      */
     public function __construct() {
       global $wp_disco;
@@ -395,8 +398,95 @@ namespace UsabilityDynamics {
 
       // Configure API Methods.
       $this->api(array(
-        'search.Elastic' => array(),
-        'search.DynamicFilter' => array()
+        'search.AutoSuggest' => array(
+          'key' => 'search_auto_suggest'
+        ),
+        'search.ElasticSearch' => array(
+          'key' => 'search_elastic_search'
+        ),
+        'search.ElasticFilter' => array(
+          'key' => 'search_elastic_filter'
+        ),
+        'compute.QuickAccessTables' => array(
+          'key' => 'update_qa_all_tables',
+          'callback' => function() {
+            set_time_limit( 0 );
+
+            foreach( (array) $hddp[ 'dynamic_filter_post_types' ] as $post_type ) {
+              if( is_wp_error( Flawless_F::update_qa_table( $post_type, array( 'update'     => $post_type,
+                                                                               'attributes' => self::_get_qa_attributes( $post_type ) )
+                )
+              )
+              ) {
+                $hddp[ 'runtime' ][ 'notices' ][ 'error' ][ ] = 'Could not create QA table for ' . $post_type . ' Post Type.';
+              } else {
+                Flawless_F::log( 'Succesfully created QA table for ' . $post_type . ' Post Type.' );
+              }
+            }
+
+            wp_die( 'done updating' );
+
+          }
+        ),
+        'compute.Coordinates' => array(
+          'key' => 'update_lat_long',
+          'callback' => function() {
+            $updated = array();
+
+            foreach( self::_get_event_posts() as $post_id ) {
+              $updated[ ] = self::update_event_location( $post_id, array( 'add_log_entries' => false ) );
+            }
+
+            if( count( $updated ) > 0 ) {
+              Flawless_F::log( 'Successfully updated addresses for (' . count( $updated ) . ') event(s).' );
+            } else {
+              Flawless_F::log( 'Attempted to do a bulk address update for all events, but no events were updated.' );
+            }
+
+
+            }
+        ),
+        'cloud.Synchronize' => array(
+          'key' => 'synchronize_with_cloud',
+          'callback' => function() {
+            \UD_Functions::timer_start( 'synchronize_with_cloud' );
+
+            foreach( (array) $hddp[ 'dynamic_filter_post_types' ] as $post_type ) {
+
+              set_time_limit( 0 );
+
+              $batch = array();
+
+              if( $_GET[ 'start' ] && $_GET[ 'limit' ] ) {
+                $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC LIMIT {$_GET['start']}, {$_GET['limit']};";
+              } else {
+                $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC;";
+              }
+
+              foreach( $wpdb->get_col( $query ) as $post_id ) {
+                $result[] = UD_Cloud::index( get_event( $post_id ) );
+              }
+
+            }
+
+            Flawless_F::log( 'Batch Cloud API update complete, pushed ' . count( $result ) . ' batches of 50 items in ' . \UD_Functions::timer_stop( 'synchronize_with_cloud' ) . ' seconds.' );
+
+          }
+        ),
+        'flush.Logs' => array(
+          'key' => 'clear_event_log',
+          'callback' => function() {
+            Flawless_F::delete_log();
+            Flawless_F::log( 'Event log cleared by ' . $current_user->data->display_name . '.' );
+          }
+        ),
+        'flush.Settings' => array(
+          'key' => 'delete_hddp_options',
+          'callback' => function() {
+            delete_option( 'hddp_options' );
+            Flawless_F::log( 'HDDP-Theme options deleted by ' . $current_user->data->display_name . '.' );
+          }
+        )
       ));
 
       // Configure Image Sizes.
@@ -466,9 +556,6 @@ namespace UsabilityDynamics {
         'header-banner'    => array()
       ));
 
-      // Handle Theme Version Changes.
-      $this->upgrade();
-
       // Add Management UI.
       $this->manage(array(
         'id' => 'hddp_manage',
@@ -477,8 +564,8 @@ namespace UsabilityDynamics {
         'template' => dirname( __DIR__ ) . '/templates/admin.site_management.php'
       ));
 
-      $this->set( 'stuff.ss', 'asdfdsf' );
-      $this->set( 'stuff.gruff', 'asdfdsf' );
+      // Handle Theme Version Changes.
+      $this->upgrade();
 
       return $wp_disco = $this;
 
@@ -500,7 +587,7 @@ namespace UsabilityDynamics {
 
       load_theme_textdomain( $this->domain, get_stylesheet_directory() . '/languages' );
 
-      // Register Scripts.
+      // Register Standard Scripts.
       wp_register_script( 'jquery-ud-form_helper', get_stylesheet_directory_uri() . '/scripts/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1.3', true );
       wp_register_script( 'jquery-ud-elastic_filter', get_stylesheet_directory_uri() . '/scripts/jquery.ud.elastic_filter.js', array( 'jquery' ), '0.5', true );
       wp_register_script( 'jquery-new-ud-elasticsearch', get_stylesheet_directory_uri() . '/scripts/jquery.new.ud.elasticsearch.js', array( 'jquery' ), '1.0', true );
@@ -739,10 +826,37 @@ namespace UsabilityDynamics {
     public function admin() {
       global $wpdb, $hddp, $current_user;
 
-      /* Adds options to Publish metabox */
-      add_action( 'post_submitbox_misc_actions', array( 'UsabilityDynamics\Disco', 'post_submitbox_misc_actions' ) );
+      // Adds options to Publish metabox.
+      add_action( 'post_submitbox_misc_actions', function() {
+        global $post, $hddp;
 
-      /* Add Address column to Venues taxonomy overview */
+        /* Check if this Post Type is Event Related */
+        if( !in_array( $post->post_type, (array) $hddp[ 'event_related_post_types' ] ) ) {
+          return;
+        }
+
+        if( $post->post_status == 'post_status' ) {
+
+        }
+
+        $html[ ] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'do_not_generate_post_title', 'do_not_generate_post_title', checked( 'true', get_post_meta( $post->ID, 'do_not_generate_post_title', true ), false ), 'Do not generate title.' );
+
+        $html[ ] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'do_not_generate_post_name', 'do_not_generate_post_name', checked( 'true', get_post_meta( $post->ID, 'do_not_generate_post_name', true ), false ), 'Do not generate permalink.' );
+
+        // Added cross-domain tracking support.
+        // @task https://projects.usabilitydynamics.com/projects/discodonniepresentscom-november-2012/tasks/55
+        // @author potanin@UD
+        if( $post->post_type === 'hdp_event' ) {
+          $html[ ] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'disable_cross_domain_tracking', 'disable_cross_domain_tracking', checked( 'true', get_post_meta( $post->ID, 'disable_cross_domain_tracking', true ), false ), 'Disable cross domain tracking.' );
+        }
+
+        if( is_array( $html ) ) {
+          echo '<ul class="flawless_post_type_options wp-tab-panel"><li>' . implode( '</li><li>', $html ) . '</li></ul>';
+        }
+
+      });
+
+      // Add Address column to Venues taxonomy overview.
       add_filter( 'manage_edit-hdp_venue_columns', function ( $columns ) {
 
           $columns[ 'formatted_address' ] = __( 'Address', HDDP );
@@ -751,9 +865,18 @@ namespace UsabilityDynamics {
         }
       );
 
-      add_filter( 'manage_hdp_venue_custom_column', array( 'UsabilityDynamics\Disco', 'event_venue_columns_data' ), 10, 3 );
+      // Venue Column Content.
+      add_filter( 'manage_hdp_venue_custom_column', function( $null, $column, $term_id ) {
 
-      /* Add Event Date column to Event listings */
+        if( $column != 'formatted_address' ) {
+          return;
+        }
+
+        return get_term_meta( $term_id, 'formatted_address', true );
+
+      }, 10, 3 );
+
+      // Add Event Date column to Event listings
       add_filter( 'manage_hdp_event_posts_columns', function ( $columns ) {
 
           unset( $columns[ 'tags' ] );
@@ -767,107 +890,67 @@ namespace UsabilityDynamics {
         }
       );
 
-      add_filter( 'manage_hdp_event_posts_custom_column', array( 'UsabilityDynamics\Disco', 'manage_hdp_event_posts_custom_column' ), 10, 2
-      );
+      // Event Column Content.
+      add_filter( 'manage_hdp_event_posts_custom_column', function( $column, $post_id ) {
+        $event = get_event( $post_id );
 
-      /* HDDP Options Update - monitor for nonce */
-      if( !empty( $_REQUEST[ 'hddp_options' ] ) && wp_verify_nonce( $_POST[ 'hddp_save_form' ], 'hddp_save_form' ) ) {
-        update_option( 'hddp_options', $_REQUEST[ 'hddp_options' ] );
+        switch( $column ) {
 
-        foreach( (array) $_POST[ '_options' ] as $option_name => $option_value ) {
-          update_option( $option_name, $option_value );
+          case 'post_excerpt':
+            echo $event[ 'post_excerpt' ] ? $event[ 'post_excerpt' ] : ' - ';
+          break;
+
+          case 'formatted_address':
+
+            $_items = array();
+
+            $formatted_address = get_post_meta( $post_id, 'formatted_address', true );
+            $_items[ ]         = $formatted_address ? $formatted_address : ' -';
+
+            if( $synchronized = get_post_meta( $post_id, 'ud::cloud::synchronized', true ) ) {
+              $_items[ ] = 'Synchronized ' . human_time_diff( $synchronized ) . ' ago.';
+            } else {
+              $_items[ ] = 'Not Synchronized.';
+            }
+
+            echo implode( '<br />', (array) $_items );
+
+          break;
+
+          case 'hdp_event_date':
+            $hdp_event_date = strtotime( get_post_meta( $post_id, 'hdp_event_date', true ) );
+            $hdp_event_time = strtotime( get_post_meta( $post_id, 'hdp_event_time', true ) );
+
+            if( $hdp_event_date ) {
+              $print_date[ ] = date( get_option( 'date_format' ), $hdp_event_date );
+            }
+
+            if( $hdp_event_time ) {
+              $print_date[ ] = date( get_option( 'time_format' ), $hdp_event_time );
+            }
+
+            if( $print_date ) {
+              echo implode( '<br />', (array) $print_date );
+            }
+
+          break;
+
         }
 
-        die( wp_redirect( admin_url( 'index.php?page=hddp_manage&message=updated' ) ) );
-      }
+      }, 10, 2 );
 
-      /* Temporary placement */
-      switch( $_GET[ 'request' ] ) {
+      add_action( 'all_admin_notices', function() {
+        global $hddp;
 
-        case 'test' :
-          //wp_die('sdaf');
-          break;
+        foreach( (array) $hddp[ 'runtime' ][ 'notices' ][ 'error' ] as $notice ) {
+          echo '<div class="error"><p>' . $notice . '</p></div>';
+        }
 
-        case 'synchronize_with_cloud' :
-          \UD_Functions::timer_start( 'synchronize_with_cloud' );
+        foreach( (array) $hddp[ 'runtime' ][ 'notices' ][ 'update' ] as $notice ) {
+          echo '<div class="fade updated"><p>' . $notice . '</p></div>';
+        }
 
-          foreach( (array) $hddp[ 'dynamic_filter_post_types' ] as $post_type ) {
-
-            set_time_limit( 0 );
-
-            $batch = array();
-
-            if( $_GET[ 'start' ] && $_GET[ 'limit' ] ) {
-              $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC LIMIT {$_GET['start']}, {$_GET['limit']};";
-            } else {
-              $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC;";
-            }
-
-            foreach( $wpdb->get_col( $query ) as $post_id ) {
-              $result[ ] = UD_Cloud::index( get_event( $post_id ) );
-            }
-
-          }
-
-          Flawless_F::log( 'Batch Cloud API update complete, pushed ' . count( $result ) . ' batches of 50 items in ' . \UD_Functions::timer_stop( 'synchronize_with_cloud' ) . ' seconds.' );
-
-          break;
-
-        case 'update_qa_all_tables' :
-
-          set_time_limit( 0 );
-
-          foreach( (array) $hddp[ 'dynamic_filter_post_types' ] as $post_type ) {
-            if( is_wp_error( Flawless_F::update_qa_table( $post_type, array( 'update'     => $post_type,
-                                                                             'attributes' => self::_get_qa_attributes( $post_type ) )
-              )
-            )
-            ) {
-              $hddp[ 'runtime' ][ 'notices' ][ 'error' ][ ] = 'Could not create QA table for ' . $post_type . ' Post Type.';
-            } else {
-              Flawless_F::log( 'Succesfully created QA table for ' . $post_type . ' Post Type.' );
-            }
-          }
-
-          wp_die( 'done updating' );
-
-          break;
-
-        case 'update_lat_long' :
-          $updated = array();
-
-          foreach( self::_get_event_posts() as $post_id ) {
-            $updated[ ] = self::update_event_location( $post_id, array( 'add_log_entries' => false ) );
-          }
-
-          if( count( $updated ) > 0 ) {
-            Flawless_F::log( 'Successfully updated addresses for (' . count( $updated ) . ') event(s).' );
-          } else {
-            Flawless_F::log( 'Attempted to do a bulk address update for all events, but no events were updated.' );
-          }
-
-          break;
-
-        case 'clear_event_log' :
-          Flawless_F::delete_log();
-          Flawless_F::log( 'Event log cleared by ' . $current_user->data->display_name . '.' );
-          break;
-
-        case 'delete_hddp_options' :
-          delete_option( 'hddp_options' );
-          Flawless_F::log( 'HDDP-Theme options deleted by ' . $current_user->data->display_name . '.' );
-          break;
-      }
-
-      add_filter( 'update_footer', function ( $text ) {
-
-          global $wpdb;
-
-          return $text . ' | ' . timer_stop() . ' seconds | ' . $wpdb->num_queries . ' queries | ' . round( ( memory_get_peak_usage() / 1048576 ) ) . ' mb';
-        }, 15
-      );
-
-      add_action( 'all_admin_notices', array( 'UsabilityDynamics\Disco', 'all_admin_notices' ) );
+      });
 
     }
 
@@ -1007,264 +1090,6 @@ namespace UsabilityDynamics {
     }
 
     /**
-     * Elasticsearch Query
-     *
-     * @global type $post
-     */
-    static public function elasticsearch_query() {
-
-      try {
-
-        //** Server connection. Settings go from ElasticSearch Plugin Settings page. */
-        $elastica_client = new Elastica\Client(
-          array(
-            'connections' => array(
-              'config' => array(
-                'headers' => array( 'Accept' => 'application/json' ),
-                'url'     => elasticsearch\Config::option( 'server_url' )
-              )
-            )
-          )
-        );
-        $index           = $elastica_client->getIndex( elasticsearch\Config::option( 'server_index' ) );
-        $type            = $index->getType( $_REQUEST[ 'type' ] );
-        $path            = $index->getName() . '/' . $type->getName() . '/_search';
-
-        $params[ 'body' ] = array();
-
-        //** Set size */
-        $params[ 'body' ][ 'size' ] = $_REQUEST[ 'size' ];
-
-        //** Set offset */
-        $params[ 'body' ][ 'from' ] = $_REQUEST[ 'from' ];
-
-        switch( $_REQUEST[ 'sort_by' ] ) {
-          case 'hdp_event_date':
-            $params[ 'body' ][ 'sort' ] = array(
-              array(
-                'event_date_time' => array(
-                  'order' => strtolower( $_REQUEST[ 'sort_dir' ] )
-                )
-              )
-            );
-            break;
-
-          case 'distance':
-            $lat                        = ( isset( $_COOKIE[ 'latitude' ] ) && is_numeric( $_COOKIE[ 'latitude' ] ) ? $_COOKIE[ 'latitude' ] : false );
-            $lon                        = ( isset( $_COOKIE[ 'longitude' ] ) && is_numeric( $_COOKIE[ 'longitude' ] ) ? $_COOKIE[ 'longitude' ] : false );
-            $params[ 'body' ][ 'sort' ] = array(
-              array(
-                '_geo_distance' => array(
-                  'location' => array(
-                    $lat ? $lat : 0, $lon ? $lon : 0
-                  ),
-                  'order'    => strtolower( $_REQUEST[ 'sort_dir' ] )
-                )
-              )
-            );
-            break;
-
-          default:
-            break;
-        }
-
-        //** Determine period */
-        if( $_REQUEST[ 'period' ] ) {
-          switch( $_REQUEST[ 'period' ] ) {
-            case 'upcoming':
-              $params[ 'body' ][ 'filter' ][ 'bool' ][ 'must' ][ ] = array(
-                'range' => array(
-                  'event_date_time' => array(
-                    'gte' => 'now'
-                  )
-                )
-              );
-              break;
-            case 'past':
-              $params[ 'body' ][ 'filter' ][ 'bool' ][ 'must' ][ ] = array(
-                'range' => array(
-                  'event_date_time' => array(
-                    'lte' => 'now'
-                  )
-                )
-              );
-              break;
-            default:
-              break;
-          }
-        }
-
-        parse_str( $_REQUEST[ 'query' ], $query );
-
-        $query[ 'date_range' ] = array_filter( $query[ 'date_range' ] );
-        if( !empty( $query[ 'date_range' ] ) ) {
-          $params[ 'body' ][ 'filter' ][ 'bool' ][ 'must' ][ ] = array(
-            'range' => array(
-              'event_date_time' => $query[ 'date_range' ]
-            )
-          );
-        }
-
-        if( $query[ 'q' ] ) {
-          $query_string                = array( 'query' => $query[ 'q' ] );
-          $params[ 'body' ][ 'query' ] = array(
-            'query_string' => $query_string
-          );
-        }
-
-        if( !empty( $query[ 'terms' ] ) ) {
-          foreach( $query[ 'terms' ] as $field => $term ) {
-            if( $term != '0' ) {
-              $params[ 'body' ][ 'filter' ][ 'bool' ][ 'must' ][ ] = array(
-                'term' => array(
-                  $field => htmlspecialchars( stripslashes( $term ) )
-                )
-              );
-            }
-          }
-        }
-
-        $params[ 'body' ][ 'fields' ] = array( "raw" );
-
-        $params[ 'body' ][ 'facets' ] = array(
-          'hdp_artist_name'    => array(
-            'terms' => array(
-              'field' => 'hdp_artist_name',
-              'size'  => 999
-            )
-          ),
-          'hdp_state_name'     => array(
-            'terms' => array(
-              'field' => 'hdp_state_name',
-              'size'  => 999
-            )
-          ),
-          'hdp_city_name'      => array(
-            'terms' => array(
-              'field' => 'hdp_city_name',
-              'size'  => 999
-            )
-          ),
-          'hdp_venue_name'     => array(
-            'terms' => array(
-              'field' => 'hdp_venue_name',
-              'size'  => 999
-            )
-          ),
-          'hdp_promoter_name'  => array(
-            'terms' => array(
-              'field' => 'hdp_promoter_name',
-              'size'  => 999
-            )
-          ),
-          'hdp_tour_name'      => array(
-            'terms' => array(
-              'field' => 'hdp_tour_name',
-              'size'  => 999
-            )
-          ),
-          'hdp_type_name'      => array(
-            'terms' => array(
-              'field' => 'hdp_type_name',
-              'size'  => 999
-            )
-          ),
-          'hdp_genre_name'     => array(
-            'terms' => array(
-              'field' => 'hdp_genre_name',
-              'size'  => 999
-            )
-          ),
-          'hdp_age_limit_name' => array(
-            'terms' => array(
-              'field' => 'hdp_age_limit_name',
-              'size'  => 999
-            )
-          )
-        );
-
-        $result = array();
-
-        $result[ 'raw' ] = $elastica_client->request( $path, Elastica\Request::POST, json_encode( $params[ 'body' ] ) )->getData();
-      } catch( Exception $e ) {
-        $error = array(
-          'success' => false
-        );
-        $error = array_merge( $error, array( 'error' => $e->getMessage() ) );
-        die( json_encode( $error ) );
-      }
-
-      ob_start();
-      foreach( (array) $result[ 'raw' ][ 'facets' ] as $facet_key => $facet_data ) {
-        include dirname( __DIR__ ) . "/templates/facets/facet-{$facet_data['_type']}.php";
-      }
-      $facets = ob_get_clean();
-
-      ob_start();
-      if( $result[ 'raw' ][ 'hits' ][ 'total' ] != 0 ) {
-        foreach( (array) $result[ 'raw' ][ 'hits' ][ 'hits' ] as $hit_data ) {
-          global $post;
-          $post = $hit_data[ 'fields' ][ 'raw' ];
-          include dirname( __DIR__ ) . "/templates/results/result-{$hit_data['_type']}.php";
-        }
-      } else {
-        echo '<li class="df_not_found">Nothing found for current filter</li>';
-      }
-      $results = ob_get_clean();
-
-      $result[ 'facets' ]  = $facets;
-      $result[ 'results' ] = $results;
-      $result[ 'query' ]   = $params[ 'body' ];
-
-      die( json_encode( $result ) );
-    }
-
-    /**
-     * New Elastic Search Facets
-     *
-     * @param type $atts
-     *
-     * @return type
-     */
-    static public function elasticsearch_facets( $atts ) {
-      extract( shortcode_atts( array(
-        'id'     => 'none',
-        'action' => 'elasticsearch_query',
-        'type'   => '',
-        'size'   => 10
-      ), $atts ) );
-
-      flawless_render_in_footer(
-        '<script type="text/javascript">
-        if( typeof jQuery.prototype.new_ud_elasticsearch === "function" ) { jQuery(document).ready(function(){ jQuery("#elasticsearch-facets-' . $id . '").new_ud_elasticsearch()}); }
-  </script>'
-      );
-
-      ob_start();
-      include dirname( __DIR__ ) . '/templates/elasticsearch_facets.php';
-
-      return ob_get_clean();
-    }
-
-    /**
-     * New Elastic Search Results
-     *
-     * @param $atts
-     *
-     * @return type
-     */
-    static public function elasticsearch_results( $atts ) {
-      extract( shortcode_atts( array(
-        'id' => 'none'
-      ), $atts ) );
-
-      ob_start();
-      include dirname( __DIR__ ) . '/templates/elasticsearch_results.php';
-
-      return ob_get_clean();
-    }
-
-    /**
      * Geo-locates and event based on venue address and updates the event meta.
      *
      * @todo Ideally address information should only be stored in the term's meta, not duplicated. - potanin@UD 5/17/12
@@ -1335,102 +1160,6 @@ namespace UsabilityDynamics {
     }
 
     /**
-     * Automated QA table updating by having pre-configured attributes for the used DF Post Types
-     *
-     * @author potanin@UD
-     */
-    static public function all_admin_notices() {
-      global $hddp;
-
-      foreach( (array) $hddp[ 'runtime' ][ 'notices' ][ 'error' ] as $notice ) {
-        echo '<div class="error"><p>' . $notice . '</p></div>';
-      }
-
-      foreach( (array) $hddp[ 'runtime' ][ 'notices' ][ 'update' ] as $notice ) {
-        echo '<div class="fade updated"><p>' . $notice . '</p></div>';
-      }
-
-    }
-
-    /**
-     * Adds Address Column to Event Venue taxonomy table
-     *
-     * @action admin_init (10)
-     * @author potanin@UD
-     */
-    static public function event_venue_columns_data( $null, $column, $term_id ) {
-
-      if( $column != 'formatted_address' ) {
-        return;
-      }
-
-      return get_term_meta( $term_id, 'formatted_address', true );
-
-    }
-
-    /**
-     * Adds Address Column to Event Venue taxonomy table
-     *
-     * @action admin_init (10)
-     * @author potanin@UD
-     */
-    static public function manage_hdp_event_posts_custom_column( $column, $post_id ) {
-
-      $event = get_event( $post_id );
-
-      switch( $column ) {
-
-        case 'post_excerpt':
-        {
-          echo $event[ 'post_excerpt' ] ? $event[ 'post_excerpt' ] : ' - ';
-
-          break;
-        }
-
-        case 'formatted_address':
-        {
-
-          $_items = array();
-
-          $formatted_address = get_post_meta( $post_id, 'formatted_address', true );
-          $_items[ ]         = $formatted_address ? $formatted_address : ' -';
-
-          if( $synchronized = get_post_meta( $post_id, 'ud::cloud::synchronized', true ) ) {
-            $_items[ ] = 'Synchronized ' . human_time_diff( $synchronized ) . ' ago.';
-          } else {
-            $_items[ ] = 'Not Synchronized.';
-          }
-
-          echo implode( '<br />', (array) $_items );
-
-          break;
-        }
-
-        case 'hdp_event_date':
-        {
-          $hdp_event_date = strtotime( get_post_meta( $post_id, 'hdp_event_date', true ) );
-          $hdp_event_time = strtotime( get_post_meta( $post_id, 'hdp_event_time', true ) );
-
-          if( $hdp_event_date ) {
-            $print_date[ ] = date( get_option( 'date_format' ), $hdp_event_date );
-          }
-
-          if( $hdp_event_time ) {
-            $print_date[ ] = date( get_option( 'time_format' ), $hdp_event_time );
-          }
-
-          if( $print_date ) {
-            echo implode( '<br />', (array) $print_date );
-          }
-
-          break;
-        }
-
-      }
-
-    }
-
-    /**
      * Checks to see if the value is blank
      *
      */
@@ -1438,279 +1167,6 @@ namespace UsabilityDynamics {
       $value = trim( $value );
 
       return !empty( $value );
-    }
-
-    /**
-     * Return JSON post results Dynamic Filter requests (Quick Access Table)
-     *
-     * @author potanin@UD
-     */
-    static public function df_post_query( $request = false ) {
-
-      //    $client = new Elasticsearch\Client(array(
-      //        'hosts' => array(
-      //            'http://91.240.22.17:9200'
-      //        )
-      //    ));
-      //
-      //    $params['index'] = 'eney';
-      //    $params['type']  = 'hdp_event';
-      //
-      //    $params['body']['query']['bool']['must'] = array(
-      //        "term" => array(
-      //            'hdp_promoter' => 'nightculture'
-      //        )
-      //    );
-      //
-      //    $params['body']['facets'] = array(
-      //        'hdp_promoter' => array(
-      //            'terms' => array(
-      //                'field' => 'hdp_promoter'
-      //            )
-      //        )
-      //    );
-      //
-      //    $results = $client->search($params);
-      //
-      //    die( json_encode($results));
-
-      global $wpdb, $hddp;
-
-      set_time_limit( 0 );
-
-      $myFile = "request.log";
-      $fh = fopen( $myFile, 'w' ) or die( "can't open file" );
-      fwrite( $fh, print_r( $_REQUEST, 1 ) );
-      fwrite( $fh, print_r( $_COOKIE, 1 ) );
-      fclose( $fh );
-
-      if( !$request ) {
-        return array();
-      }
-
-      $args = wp_parse_args( $request, array( 'post_type' => 'post' ) );
-
-      /** Go through our static var to get this information */
-      if( !isset( $hddp[ 'attributes' ][ $args[ 'post_type' ] ] ) ) {
-        return false;
-      }
-
-      $attributes = $hddp[ 'attributes' ][ $args[ 'post_type' ] ];
-
-      /** Setup our temp table name */
-      $filtered_table = "U" . md5( time() ) . "D";
-
-      /** Go ahead and setup the query */
-      $query = "SELECT * FROM {$wpdb->prefix}ud_qa_{$args['post_type']} WHERE 1=1";
-
-      /** If we're an event, we don't want past events */
-      if( $args[ 'post_type' ] == 'hdp_event' ) {
-        if( !isset( $args[ 'filter_events' ] ) || isset( $args[ 'filter_events' ] ) && $args[ 'filter_events' ] == 'upcoming' ) {
-          $query .= " AND STR_TO_DATE( CONCAT(hdp_event_date,' ',hdp_event_time), '%m/%d/%Y %h:%i %p' ) >= DATE_ADD(CONCAT(CURDATE(), ' 00:00:01'), INTERVAL 3 HOUR)";
-        }
-        if( isset( $args[ 'filter_events' ] ) && $args[ 'filter_events' ] == 'past' ) {
-          $query .= " AND STR_TO_DATE( CONCAT(hdp_event_date,' ',hdp_event_time), '%m/%d/%Y %h:%i %p' ) < DATE_ADD(CONCAT(CURDATE(), ' 00:00:01'), INTERVAL 3 HOUR)";
-        }
-      }
-
-      /** If we have a request, go through each one and filter the results */
-      if( isset( $request ) && isset( $request[ 'filter_query' ] ) && is_array( $request[ 'filter_query' ] ) && count( $request[ 'filter_query' ] ) ) {
-        $filter_query =& $request[ 'filter_query' ];
-        foreach( $filter_query as $key => $filter ) {
-          if( is_array( $filter ) && $filter[ 0 ] == 'Show All' ) continue;
-          /** Determine the kind of filter we're looking for */
-          if( !in_array( $key, array_keys( $attributes ) ) ) continue;
-
-          /** Determine the query we need */
-          switch( $key ) {
-
-            case 'hdp_date_range':
-              if( !empty( $filter[ 'max' ] ) ) {
-                $query .= " AND STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) <= STR_TO_DATE( '" . $filter[ 'max' ] . "', '%m/%d/%Y' ) ";
-              }
-              if( !empty( $filter[ 'min' ] ) ) {
-                $query .= " AND STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) >= STR_TO_DATE( '" . $filter[ 'min' ] . "', '%m/%d/%Y' ) ";
-              }
-              break;
-
-            case 'post_title':
-              $q = $wpdb->escape( $filter );
-              if( $args[ 'post_type' ] == 'hdp_event' ) {
-                $query .= " AND (
-                  LOWER(hdp_artist) LIKE LOWER('%{$q}%') OR
-                  LOWER(hdp_venue) LIKE LOWER('%{$q}%') OR
-                  LOWER(city) LIKE LOWER('%{$q}%') OR
-                  LOWER(state) LIKE LOWER('%{$q}%') OR
-                  LOWER(state_code) LIKE LOWER('%{$q}%') OR
-                  LOWER(post_title) LIKE LOWER('%{$q}%') OR
-                  LOWER(hdp_tour) LIKE LOWER('%{$q}%') OR
-                  LOWER(hdp_genre) LIKE LOWER('%{$q}%') OR
-                  LOWER(hdp_venue) LIKE LOWER('%{$q}%') OR
-                  LOWER(hdp_promoter) LIKE LOWER('%{$q}%') OR
-                  LOWER(hdp_type) LIKE LOWER('%{$q}%')
-                  )";
-              } else {
-                $query .= " AND (
-                  LOWER(hdp_artist) LIKE LOWER('%{$q}%') OR
-                  LOWER(hdp_venue) LIKE LOWER('%{$q}%') OR
-                  LOWER(city) LIKE LOWER('%{$q}%') OR
-                  LOWER(state) LIKE LOWER('%{$q}%') OR
-                  LOWER(state_code) LIKE LOWER('%{$q}%')
-                  )";
-              }
-              break;
-
-            default:
-              switch( $attributes[ $key ][ 'type' ] ) {
-                case 'taxonomy':
-                  $filter = array_filter( (array) $filter, 'UsabilityDynamics\Disco\Bootstrap::check_blank_array' );
-                  if( !count( $filter ) ) break;
-                  $query .= " AND ( 1=2";
-                  foreach( (array) $filter as $q ) {
-                    if( empty( $q ) ) continue;
-                    $query .= " OR FIND_IN_SET( '" . $wpdb->escape( $q ) . "', `{$key}_ids` )";
-                  }
-                  $query .= " )";
-                  break;
-                case 'post_meta':
-                  $filter = array_filter( (array) $filter, 'UsabilityDynamics\Disco\Bootstrap::check_blank_array' );
-                  if( !count( $filter ) ) break;
-                  $query .= " AND ( 1=2";
-                  foreach( (array) $filter as $q ) {
-                    if( empty( $q ) ) continue;
-                    $query .= " OR `{$key}` LIKE '%" . $wpdb->escape( $q ) . "%'";
-                  }
-                  $query .= " )";
-                  break;
-                default:
-                  break;
-              }
-              break;
-          }
-        }
-      }
-
-      /** Add on the sorting query */
-      /** Hack to make it default by date */
-      if( !isset( $args[ 'sort_by' ] ) || empty( $args[ 'sort_by' ] ) ) {
-        $args[ 'sort_by' ] = 'hdp_event_date';
-      }
-      if( isset( $args[ 'sort_by' ] ) && !empty( $args[ 'sort_by' ] ) ) {
-        if( $args[ 'post_type' ] == 'hdp_event' ) {
-          $direction = 'ASC';
-          if( isset( $args[ 'filter_events' ] ) ) {
-            if( $args[ 'filter_events' ] == 'past' || $args[ 'filter_events' ] == 'all' ) {
-              $direction = 'DESC';
-            }
-          }
-        } else {
-          $direction = 'DESC';
-        }
-        if( isset( $args[ 'sort_direction' ] ) && $args[ 'sort_direction' ] == 'DESC' ) $direction = 'DESC';
-        /** Determine what we're sorting by */
-        switch( $args[ 'sort_by' ] ) {
-          case 'hdp_event_date':
-            $query .= " ORDER BY STR_TO_DATE( hdp_event_date, '%m/%d/%Y' ) {$direction}";
-            break;
-          case 'distance':
-            /** First, make sure we have latitude and longitude */
-            $lat = ( isset( $_COOKIE[ 'latitude' ] ) && is_numeric( $_COOKIE[ 'latitude' ] ) ? $_COOKIE[ 'latitude' ] : false );
-            $lon = ( isset( $_COOKIE[ 'longitude' ] ) && is_numeric( $_COOKIE[ 'longitude' ] ) ? $_COOKIE[ 'longitude' ] : false );
-            if( $lat === false || $lon === false ) break;
-            /** Continue here with writing our query */
-            $query .= " ORDER BY ROUND(((ACOS(SIN($lat * PI() / 180) * SIN(`latitude` * PI() / 180) + COS($lat * PI() / 180) * COS(`latitude` * PI() / 180) * COS(($lon - `longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515), -1) {$direction}, STR_TO_DATE( hdp_event_date, '%W, %M %e, %Y' ) ASC";
-            break;
-          default:
-            break;
-        }
-      }
-
-      /** Setup the query hash */
-      $query_hash   = 'df_' . $args[ 'post_type' ] . '_' . md5( $query );
-      $force_update = isset( $_REQUEST[ 'force_update' ] ) ? true : false;
-      $cached       = false;
-
-      /** Check to see if we need to use the query */
-      if( !$force_update && $cached = get_transient( $query_hash ) ) {
-        die( $cached );
-      }
-
-      $all_ids        = array();
-      $mapped_results = array();
-      $full_results   = $wpdb->get_results( $query );
-      foreach( $full_results as $res ) {
-        $mapped_results[ $res->post_id ] = $res;
-        $all_ids[ ]                      = $res->post_id;
-      }
-
-      /** No go through and setup our returned filters */
-      $current_filters = array();
-      foreach( (array) $args[ 'filterable_attributes' ] as $name => $att ) {
-        $filter_query = false;
-        $filter_key   = false;
-        switch( $att[ 'filter' ] ) {
-          case 'checkbox':
-          case 'dropdown':
-            switch( $attributes[ $name ][ 'type' ] ) {
-              case 'taxonomy':
-                $filter_query = "SELECT t.name AS 'value', t.term_id AS 'filter_key', COUNT(*) AS 'value_count' FROM {$wpdb->term_relationships} AS tr LEFT JOIN {$wpdb->term_taxonomy} AS tt ON tt.term_taxonomy_id = tr.term_taxonomy_id LEFT JOIN {$wpdb->terms} AS t ON t.term_id = tt.term_id WHERE tr.object_id IN ( " . implode( ',', $all_ids ) . ") AND tt.taxonomy = '{$wpdb->escape( $name )}' GROUP BY t.term_id ORDER BY COUNT(*) DESC, t.name ASC";
-                break;
-              case 'post_meta':
-                $filter_query = "SELECT meta_value AS 'value', meta_value AS 'filter_key', COUNT(*) AS 'value_count' FROM {$wpdb->postmeta} WHERE meta_key = '{$wpdb->escape( $name )}' AND post_id IN ( " . implode( ',', $all_ids ) . " ) GROUP BY meta_value ORDER BY COUNT(*) DESC, meta_value ASC";
-                break;
-              case 'primary': /* Not used with these type of inputs */
-              default:
-                break;
-            }
-            break;
-          case 'input':
-            /** We'll bring these in later, because they are combined */
-            switch( $name ) {
-              case 'post_title':
-                break;
-              default:
-                break;
-            }
-            break;
-          default:
-            break;
-        }
-        if( $filter_query ) {
-          $current_filters[ $name ] = $wpdb->get_results( $filter_query, ARRAY_A );
-        }
-      }
-
-      /** Get our count */
-      $total_results = count( $all_ids );
-      /** Setup 'all_results' */
-      $all_results = array();
-      /** Now get the requested range subset of IDs */
-      $start = ( isset( $args[ 'request_range' ][ 'start' ] ) && is_numeric( $args[ 'request_range' ][ 'start' ] ) ? $args[ 'request_range' ][ 'start' ] : false );
-      $end   = ( isset( $args[ 'request_range' ][ 'end' ] ) && is_numeric( $args[ 'request_range' ][ 'end' ] ) ? $args[ 'request_range' ][ 'end' ] : false );
-      if( $start !== false && $end !== false ) {
-        /** We're here, calculate the limit and slice the array */
-        $limit   = $end - $start;
-        $all_ids = array_slice( $all_ids, $start, $limit );
-      }
-      foreach( $all_ids as $id ) {
-        global $post;
-        $post = json_decode( $mapped_results[ $id ]->object, true );
-
-        $all_results[ ] = array( 'id'       => $id, 'df_attribute_class' => join( ' ', get_post_class( $class, $id ) ),
-                                 'template' => 'loop-' . $args[ 'post_type' ],
-                                 'raw_html' => '<ul>' . \Flawless_F::get_template_part( 'loop', $args[ 'post_type' ] ), '</ul>', );
-      }
-
-      $response = array( 'query'         => false, //$query,
-                         'total_results' => $total_results, 'all_results' => $all_results, 'current_filters' => $current_filters, );
-
-      /** We're here, go ahead and cache the response */
-      if( !$cached ) {
-        set_transient( $query_hash, json_encode( $response ), 60 * 30 );
-      }
-
-      return $response;
-
     }
 
     /**
@@ -1723,41 +1179,6 @@ namespace UsabilityDynamics {
       $response = array( 'all_results' => array(), 'total_results' => 0, 'current_filters' => array(), 'error' => $err, );
 
       die( json_encode( $response ) );
-    }
-
-    /**
-     * Post Box Options
-     *
-     * @author potanin@UD
-     */
-    static public function post_submitbox_misc_actions() {
-
-      global $post, $hddp;
-
-      /* Check if this Post Type is Event Related */
-      if( !in_array( $post->post_type, (array) $hddp[ 'event_related_post_types' ] ) ) {
-        return;
-      }
-
-      if( $post->post_status == 'post_status' ) {
-
-      }
-
-      $html[ ] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'do_not_generate_post_title', 'do_not_generate_post_title', checked( 'true', get_post_meta( $post->ID, 'do_not_generate_post_title', true ), false ), 'Do not generate title.' );
-
-      $html[ ] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'do_not_generate_post_name', 'do_not_generate_post_name', checked( 'true', get_post_meta( $post->ID, 'do_not_generate_post_name', true ), false ), 'Do not generate permalink.' );
-
-      // Added cross-domain tracking support.
-      // @task https://projects.usabilitydynamics.com/projects/discodonniepresentscom-november-2012/tasks/55
-      // @author potanin@UD
-      if( $post->post_type === 'hdp_event' ) {
-        $html[ ] = sprintf( '<input type="hidden" name="%1s" value="false" /><label><input type="checkbox" name="%2s" value="true" %3s />%4s</label>', 'disable_cross_domain_tracking', 'disable_cross_domain_tracking', checked( 'true', get_post_meta( $post->ID, 'disable_cross_domain_tracking', true ), false ), 'Disable cross domain tracking.' );
-      }
-
-      if( is_array( $html ) ) {
-        echo '<ul class="flawless_post_type_options wp-tab-panel"><li>' . implode( '</li><li>', $html ) . '</li></ul>';
-      }
-
     }
 
     /**
