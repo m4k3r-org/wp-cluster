@@ -60,7 +60,7 @@ namespace UsabilityDynamics\Festival {
       } );
 
       add_filter( 'cfct-build-module-url-unknown', function ( $url, $module, $file_key ) {
-        return get_stylesheet_directory_uri() . "/vendor/usabilitydynamics/lib-carrington-build/lib/modules/" . $file_key . '/';
+        return get_stylesheet_directory_uri() . "/vendor/usabilitydynamics/lib-carrington/lib/modules/" . $file_key . '/';
       }, 10, 3 );
 
       add_filter( 'cfct-block-c6-12-classes', function ( $classes ) {
@@ -131,7 +131,7 @@ namespace UsabilityDynamics\Festival {
         return __DIR__ . '/lib/carrington-build/modules/post-callout/view.php';
       } );
 
-      include_once( __DIR__ . '/../vendor/usabilitydynamics/lib-carrington-build/lib/carrington-build.php' );
+      include_once( __DIR__ . '/../vendor/usabilitydynamics/lib-carrington/lib/carrington-build.php' );
 
     }
 

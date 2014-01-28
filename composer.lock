@@ -61,16 +61,16 @@
             "time": "2012-01-03 00:33:17"
         },
         {
-            "name": "usabilitydynamics/lib-carrington-build",
+            "name": "usabilitydynamics/lib-carrington",
             "version": "master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-carrington-build",
+                "url": "git@github.com:UsabilityDynamics/lib-carrington",
                 "reference": "master"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-carrington-build/archive/master.zip",
+                "url": "https://github.com/usabilitydynamics/lib-carrington/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
