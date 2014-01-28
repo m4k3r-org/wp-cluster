@@ -24,56 +24,5 @@
     "UsabilityDynamics/lib-wp-theme": "master"
   },
   "minimum-stability": "dev",
-  "extra": {
-    "component": {
-      "repository": {
-        "url": "https://github.com/UsabilityDynamics/wp-flawless",
-        "type": "git"
-      },
-      "config": {
-        "out": "./components",
-        "namespace": "Flawless",
-        "basename": "app"
-      },
-      "build": {
-        "scripts": {
-          "out": "./scripts",
-          "settings": {
-            "minify": true
-          }
-        },
-        "styles": {
-          "out": "./styles",
-          "settings": {
-            "minify": true
-          }
-        },
-        "views": {
-          "out": "./views"
-        },
-        "schemas": {
-          "out": "./schemas"
-        }
-      },
-      "scripts": [
-        "scripts/app.js"
-      ],
-      "styles": [
-        "styles/content.less",
-        "styles/mixins.less",
-        "styles/app.less"
-      ],
-      "views": [
-        "views/template.html"
-      ],
-      "images": [
-        "images/ajax-loader.gif",
-        "images/no-skin-thumbanil.gif",
-        "images/fancybox-sprite.png",
-        "images/flawless-default-logo.png",
-        "images/glyphicons-halflings-white.png",
-        "images/glyphicons-halflings.png"
-      ]
-    }
-  }
+  "extra": {}
 }
