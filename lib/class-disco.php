@@ -262,6 +262,10 @@ namespace UsabilityDynamics {
     /** Setup the global per page number */
     static public $hdp_posts_per_page = 15;
 
+    /**
+     * Initialize Drop Theme.
+     * 
+     */
     public function __construct() {
       global $wp_disco;
 
@@ -290,10 +294,26 @@ namespace UsabilityDynamics {
         )
       ));
 
-      // Enable Public Assets.
-      $this->rewrites(array(
-        'scripts' => true,
-        'styles'  => true
+      // Declare Public Scripts.
+      $this->scripts(array(
+        'app' => get_stylesheet_directory() . '/scripts/app.js',
+        'app.admin' => get_stylesheet_directory() . '/scripts/app.admin.js',
+        'jquery.elasticsearch' => get_stylesheet_directory() . '/scripts/jquery.new.ud.elasticsearch.js',
+        'jquery.fitvids' => get_stylesheet_directory() . '/scripts/jquery.fitvids.js',
+        'jquery.cookie' => get_stylesheet_directory() . '/scripts/jquery.cookie.js',
+        'jquery.flexslider' => get_stylesheet_directory() . '/scripts/jquery.flexslider.js',
+        'jquery.jqtransform' => get_stylesheet_directory() . '/scripts/jquery.jqtransform.js',
+        'jquery.simplyscroll' => get_stylesheet_directory() . '/scripts/jquery.simplyscroll.js'
+      ));
+
+      // Declare Public Styles.
+      $this->styles(array(
+        'app' => get_stylesheet_directory() . '/styles/app.css',
+        'app.admin' => get_stylesheet_directory() . '/styles/app.admin.css',
+        'content' => get_stylesheet_directory() . '/styles/content.css',
+        'bootstrap' => get_stylesheet_directory() . '/styles/bootstrap.css',
+        'jquery.jqtransform' => get_stylesheet_directory() . '/styles/jqtransform.css',
+        'jquery.simplyscroll' => get_stylesheet_directory() . '/styles/simplyscroll.css'
       ));
 
       // Configure Post Types and Meta.
@@ -454,6 +474,14 @@ namespace UsabilityDynamics {
       // Handle Theme Version Changes.
       $this->upgrade();
 
+      // Add Management UI.
+      $this->manage(array(
+        'id' => 'hddp_manage',
+        'title' => __( 'Manage', HDDP ),
+        'capability' => $hddp[ 'manage_options' ],
+        'template' => include dirname( __DIR__ ) . '/templates/admin.site_management.php'
+      ));
+
       $this->set( 'stuff.ss', 'asdfdsf' );
       $this->set( 'stuff.gruff', 'asdfdsf' );
 
@@ -475,33 +503,19 @@ namespace UsabilityDynamics {
       /* Transdomain */
       define( 'HDDP', $this->domain );
 
+      load_theme_textdomain( $this->domain, get_stylesheet_directory() . '/languages' );
+
       // Register Scripts.
-      wp_register_script( 'app', home_url( '/scripts/app.js' ), array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-cookie', 'flawless' ), HDDP_Version, true );
-      wp_register_script( 'app.admin', home_url( '/scripts/app.admin.js' ), array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-cookie', 'flawless' ), HDDP_Version, true );
-      wp_register_script( 'knockout', get_stylesheet_directory_uri() . '/scripts/knockout.js', array(), '2.1', true );
       wp_register_script( 'jquery-ud-form_helper', get_stylesheet_directory_uri() . '/scripts/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1.3', true );
       wp_register_script( 'jquery-ud-elastic_filter', get_stylesheet_directory_uri() . '/scripts/jquery.ud.elastic_filter.js', array( 'jquery' ), '0.5', true );
       wp_register_script( 'jquery-new-ud-elasticsearch', get_stylesheet_directory_uri() . '/scripts/jquery.new.ud.elasticsearch.js', array( 'jquery' ), '1.0', true );
       wp_register_script( 'jquery-ud-dynamic_filter', get_stylesheet_directory_uri() . '/scripts/jquery.ud.dynamic_filter.js', array( 'jquery' ), '1.1.3', true );
       wp_register_script( 'jquery-ud-date-slector', get_stylesheet_directory_uri() . '/scripts/jquery.ud.date_selector.js', array( 'jquery-ui-core' ), '0.1.1', true );
-      wp_register_script( 'jquery-jqtransform', get_stylesheet_directory_uri() . '/scripts/jquery.jqtransform.js', array( 'jquery' ), HDDP_Version, true );
-      wp_register_script( 'jquery-simplyscroll', get_stylesheet_directory_uri() . '/scripts/jquery.simplyscroll.min.js', array( 'jquery' ), HDDP_Version, true );
-      wp_register_script( 'jquery-flexslider-1.8', get_stylesheet_directory_uri() . '/scripts/jquery.flexslider.1.8.js', array( 'jquery' ), '1.8', true );
-      wp_register_script( 'jquery-flexslider', get_stylesheet_directory_uri() . '/scripts/jquery.flexslider.js', array( 'jquery' ), '2.2.2', true );
-      wp_register_script( 'jquery-cookie', get_stylesheet_directory_uri() . '/scripts/jquery.cookie.js', array( 'jquery' ), '1.7.3', false );
-      wp_register_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?sensor=true' );
       wp_register_script( 'jquery-ud-smart_buttons', '//cdn.usabilitydynamics.com/scripts/jquery.ud.smart_buttons/0.6/jquery.ud.smart_buttons.js', array( 'jquery-ui-core' ), '0.6', true );
       wp_register_script( 'jquery-ud-social', 'http' . '//cdn.usabilitydynamics.com/scripts/jquery.ud.social/0.3/jquery.ud.social.js', array( 'jquery-ui-core' ), '0.3', true );
       wp_register_script( 'jquery-ud-execute_triggers', '//cdn.usabilitydynamics.com/scripts/jquery.ud.execute_triggers/0.2/jquery.ud.execute_triggers.js', array( 'jquery-ui-core' ), '0.2', true );
-      wp_register_script( 'jquery-fitvids', get_stylesheet_directory_uri() . '/scripts/jquery.fitvids.js', array( 'jquery' ), HDDP_Version, true );
-
-      // Register Styles.
-      wp_register_style( 'app', home_url( '/styles/app.css' ) );
-      wp_register_style( 'app.admin', home_url( '/styles/app.admin.css' ) );
-      wp_register_style( 'jquery-jqtransform', home_url( '/styles/jquery-jqtransform.css' ) );
-      wp_register_style( 'jquery.simplyscroll', home_url( '/styles/jquery.simplyscroll.css' ) );
-
-      load_theme_textdomain( $this->domain, get_stylesheet_directory() . '/languages' );
+      wp_register_script( 'jquery-cookie', get_stylesheet_directory_uri() . '/scripts/jquery.cookie.js', array( 'jquery' ), '1.7.3', false );
+      wp_register_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?sensor=true' );
 
       add_filter( 'the_content', 'featured_image_in_feed' );
 
@@ -539,191 +553,11 @@ namespace UsabilityDynamics {
         return $doc;
       }, 10, 2 );
 
-      flawless_set_color_scheme( 'skin-default.css' );
-
-      // Must be defined for UD Cloud API to work in static mode
-      define( 'UD_Site_UID', \UD_Functions::get_key( 'site_uid' ) );
-      define( 'UD_Customer_Key', \UD_Functions::get_key( 'customer_key' ) );
-      define( 'UD_Public_Key', \UD_Functions::get_key( 'public_key' ) ? \UD_Functions::get_key( 'public_key' ) : md5( UD_Customer_Key ) );
-
-      // Define which post types to store in cloud
-      // UD_Cloud::initialize( array( 'types' => array( 'hdp_event', 'hdp_video', 'hdp_photo_gallery' ) ));
-
-      /**
-       * Structure Documents for CloudData
-       * Following rules applied via CloudAPI:
-       * - All properties with underscore prefix are excluded from output automatically
-       *
-       * @author potanin@UD
-       */
-      add_filter( 'ud::cloud::document', function ( $object ) {
-
-        //** Flush vars */
-        $return = array();
-
-        //** Do different things for different types */
-        switch( $object->post_type ) {
-
-          //** Process photos */
-          case 'hdp_photo_gallery':
-          {
-
-            //** We can use get_events() for other types because it works well for them too. */
-            $object = (object) get_event( $object->ID );
-
-            //** Date for photo gallery may not include the time. */
-            $time = ( $object->meta[ 'hdp_event_date' ] ? strtotime( $object->meta[ 'hdp_event_date' ] ) : 0 );
-            $time = $time ? date( 'Y/m/d H:i:s', $time ) : '';
-
-            /** @var $return array */
-            $return = array(
-              'id'        => $object->ID,
-              'title'     => html_entity_decode( $object->post_title ),
-              'type'      => $object->post_type,
-              'summary'   => $object->post_excerpt,
-              'time'      => $time,
-              'thumbnail' => $object->meta[ 'hdp_poster_id' ] ? \UD_Functions::get_image_link( $object->meta[ 'hdp_poster_id' ], 'hd_small' ) : '',
-              'url'       => get_permalink( $object->ID ),
-              'venue'     => array(),
-              'artists'   => array(),
-              '_meta'     => array(
-                'status'    => $object->post_status,
-                'modified'  => date( 'Y/m/d H:i:s', strtotime( $object->post_modified ) ),
-                'published' => date( 'Y/m/d H:i:s', strtotime( $object->post_date ) )
-              ),
-            );
-
-            break;
-          }
-
-          //** Process videos */
-          case 'hdp_video':
-          {
-
-            //** We can use get_events() for other types because it works well for them too. */
-            $object = (object) get_event( $object->ID );
-
-            //** Date for photo gallery may not include the time. */
-            $time = ( $object->meta[ 'hdp_event_date' ] ? strtotime( $object->meta[ 'hdp_event_date' ] ) : 0 );
-            $time = $time ? date( 'Y/m/d H:i:s', $time ) : '';
-
-            /** @var $return array */
-            $return = array(
-              'id'        => $object->ID,
-              'title'     => html_entity_decode( $object->post_title ),
-              'type'      => $object->post_type,
-              'summary'   => $object->post_excerpt,
-              'time'      => $time,
-              'thumbnail' => $object->meta[ 'hdp_poster_id' ] ? \UD_Functions::get_image_link( $object->meta[ 'hdp_poster_id' ], 'hd_small' ) : '',
-              'url'       => get_permalink( $object->ID ),
-              'venue'     => array(),
-              'artists'   => array(),
-              '_meta'     => array(
-                'status'    => $object->post_status,
-                'modified'  => date( 'Y/m/d H:i:s', strtotime( $object->post_modified ) ),
-                'published' => date( 'Y/m/d H:i:s', strtotime( $object->post_date ) )
-              ),
-            );
-
-            break;
-          }
-
-          //** Process events */
-          case 'hdp_event':
-          {
-
-            $object = (object) get_event( $object->ID );
-
-            $time = ( $object->meta[ 'hdp_event_date' ] && $object->meta[ 'hdp_event_time' ] ? strtotime( $object->meta[ 'hdp_event_date' ] . ' ' . $object->meta[ 'hdp_event_time' ] ) : '' );
-
-            $time = $time ? date( 'Y/m/d H:i:s', $time ) : '';
-
-            /** @var $return array */
-            $return = array(
-              'id'        => $object->ID,
-              'title'     => html_entity_decode( $object->post_title ),
-              'type'      => $object->post_type,
-              'summary'   => $object->post_excerpt,
-              'time'      => $time,
-              'thumbnail' => $object->meta[ '_thumbnail_id' ] ? \UD_Functions::get_image_link( $object->meta[ '_thumbnail_id' ], 'events_flyer_thumb' ) : '',
-              'url'       => get_permalink( $object->ID ),
-              'rsvp'      => $object->meta[ 'facebook_rsvp_url' ],
-              'purchase'  => $object->meta[ 'hdp_purchase_url' ],
-              'venue'     => array(),
-              'artists'   => array(),
-              '_meta'     => array(
-                'status'    => $object->post_status,
-                'modified'  => date( 'Y/m/d H:i:s', strtotime( $object->post_modified ) ),
-                'published' => date( 'Y/m/d H:i:s', strtotime( $object->post_date ) )
-              ),
-            );
-
-            break;
-          }
-
-        }
-
-        //** Common part for every type */
-        foreach( (array) $object->terms as $slug => $items ) {
-          foreach( (array) $items as $data ) {
-            $return[ 'terms' ][ str_replace( 'hdp_', '', $data[ 'taxonomy' ] ) ][ ] = $data[ 'name' ];
-          }
-        }
-
-        foreach( (array) $object->terms[ 'hdp_artist' ] as $artist_data ) {
-
-          $return[ 'artists' ][ ] = array(
-            'id'      => $artist_data[ 'term_id' ],
-            'name'    => $artist_data[ 'name' ],
-            'summary' => get_post_for_extended_term( $artist_data[ 'term_id' ], 'hdp_artist' )->post_excerpt,
-            'url'     => !is_wp_error( get_term_link( $artist_data[ 'slug' ], 'hdp_artist' ) ) ? get_term_link( $artist_data[ 'slug' ], 'hdp_artist' ) : ''
-          );
-
-        }
-
-        $venue = get_post_for_extended_term( $object->terms[ 'hdp_venue' ][ 0 ][ 'term_id' ], 'hdp_venue' );
-
-        foreach( (array) get_post_custom( $venue->ID ) as $key => $value ) {
-          $venue->{$key} = $value[ 0 ];
-        }
-
-        $return[ 'venue' ] = array(
-          'id'       => $venue->extended_term_id,
-          'name'     => $venue->post_title,
-          'summary'  => $venue->post_excerpt,
-          'url'      => !is_wp_error( get_term_link( $venue->post_name, 'hdp_venue' ) ) ? get_term_link( $venue->post_name, 'hdp_venue' ) : '',
-          'address'  => $venue->formatted_address,
-          'location' => array(
-            '@type'        => $venue->location_type,
-            '@precision'   => $venue->precision,
-            'city'         => $venue->city,
-            'county'       => $venue->county,
-            'state'        => $venue->state,
-            'country'      => $venue->country,
-            'state_code'   => $venue->state_code,
-            'country_code' => $venue->country_code,
-            'coordinates'  => array(
-              'lat' => $venue->latitude,
-              'lon' => $venue->longitude
-            )
-          )
-        );
-
-        $return = \UD_Functions::array_filter_deep( $return );
-
-        if( !$return[ 'venue' ] ) {
-          return array();
-        }
-
-        return $return;
-
-      } );
-
       /** First, go through my local items, and update my attributes */
       $__attributes = (array) self::$_attributes;
 
       foreach( $__attributes as $key => &$arr ) {
-        $arr = \UsabilityDynamics\Utility::extend( \UsabilityDynamics\Disco::$default_attribute, $arr );
+        $arr = Utility::extend( \UsabilityDynamics\Disco::$default_attribute, $arr );
       }
 
       /** Now go through our attributes */
@@ -737,7 +571,7 @@ namespace UsabilityDynamics {
       }
 
       /* Merge default settings with DB settings */
-      $hddp = \UsabilityDynamics\Utility::extend( array(
+      $hddp = Utility::extend( array(
         'runtime'                   => array(
           'notices' => array()
         ),
@@ -767,48 +601,21 @@ namespace UsabilityDynamics {
 
       // Enqueue Frontend Scripts & Styles.
       add_action( 'wp_enqueue_scripts', function () {
-
-        // Enqueue Scripts.
         wp_enqueue_script( 'app' );
         wp_enqueue_script( 'jquery-new-ud-elasticsearch' );
+        wp_enqueue_script( 'jquery-ui-datepicker' );
         wp_enqueue_script( 'jquery-ui-tabs' );
         wp_enqueue_script( 'google-maps' );
-        wp_enqueue_script( 'jquery-fitvids' );
-        wp_enqueue_script( 'jquery-simplyscroll' );
-        wp_enqueue_script( 'jquery-ui-datepicker' );
-
-        // Enqueue Styles.
-        wp_enqueue_style( 'jquery-simplyscroll' );
-        wp_enqueue_style( 'jquery-jqtransform' );
-
-      } );
+      });
 
       // Enqueue Admin Scripts & Styles.
       add_action( 'admin_enqueue_scripts', function () {
-
         wp_enqueue_script( 'app.admin' );
-        wp_enqueue_script( 'jquery-cookie' );
-
-        wp_enqueue_style( 'app.admin' );
-
-      } );
+      });
 
       // Admin Footer Scripts.
-      add_action( 'admin_print_footer_scripts', function () {
-        global $hddp, $post, $pagenow;
-
-        /* Determine if current post is a "Event Related" post */
-        if( in_array( $post->post_type, $hddp[ 'event_related_post_types' ] ) ) {
-          $hddp[ 'automated_title' ] = true;
-        }
-
-        echo '<script type="text/javascript">var hddp_dynamic = jQuery.parseJSON( ' . json_encode( json_encode( $hddp ) ) . ' );</script>';
-
-      } );
-
       add_action( 'admin_menu', function () {
         global $hddp;
-        $hddp[ 'manage_page' ] = add_dashboard_page( __( 'Manage', HDDP ), __( 'Manage', HDDP ), $hddp[ 'manage_options' ], 'hddp_manage', array( 'UsabilityDynamics\Disco', 'hddp_manage' ) );
       } );
 
       // add_action( 'wp_ajax_nopriv_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ));
@@ -837,37 +644,15 @@ namespace UsabilityDynamics {
         return strpos( $s, 'do_not_esc_html' ) ? $u : $s;
       }, 10, 2 );
 
-      add_action( 'flawless::extended_term_form_fields', array( 'UsabilityDynamics\Disco', 'extended_term_form_fields' ), 10, 2 );
+      add_action( 'flawless::extended_term_form_fields', function( $tag, $post ) {
+        include dirname( __DIR__ ) . '/templates/admin.extended_term_form_fields.php';
+      }, 10, 2 );
 
-      add_filter( 'flawless_remote_assets', function ( $assets ) {
-        $assets[ 'css' ][ 'google-font-droid-sans' ] = 'http://fonts.googleapis.com/css?family=Droid+Sans';
-
-        return $assets;
-      } );
-
-      add_action( 'flawless::header_bottom', function () {
+      add_action( 'flawless::header_bottom', function() {
         $header = flawless_breadcrumbs( array( 'hide_breadcrumbs' => false, 'wrapper_class' => 'breadcrumbs container', 'hide_on_home' => false, 'return' => true ) );
         $share  = hdp_share_button( false, true );
-        /** Do a preg replace to add our share button */
-        /**$header = preg_replace( '/(<div[^>]*?>)/i', '$1' . $share, $header );
-         * /** Echo it out */
         echo $share . $header;
       } );
-
-      // Add post date to editor screen of "Event Related" post types
-      $x = 1;
-      foreach( $hddp[ 'attributes' ] as $type => $attribs ) {
-        foreach( $attribs as $slug => $vars ) {
-
-          // If we have an admin label, we're shoing
-          if( !$vars[ 'admin_label' ] ) continue;
-
-          // If we made it, add the item
-          //\Flawless\Management::add_post_type_option( array( 'post_type' => $type, 'type' => $vars[ 'admin_type' ], 'position' => $x++, 'meta_key' => $slug, 'label' => $vars[ 'admin_label' ], 'placeholder' => $vars[ 'placeholder' ], ));
-
-        }
-
-      }
 
       add_filter( 'cfct-module-carousel-control-layout-order', function ( $order ) {
         return is_home() || is_front_page() ? array() : $order;
@@ -877,12 +662,6 @@ namespace UsabilityDynamics {
         return preg_replace( '%(<select.*?>.+?<\/select>)%', '<div class="select-styled">$1</div>', $form );
       }, 10, 3 );
 
-      /**
-       * Custom Blog Pagination
-       *
-       * @author korotkov@ud
-       * @ticket https://ud-dev.com/projects/projects/discodonniepresentscom-november-2012/tasks/19
-       */
       add_filter( 'cfct-module-loop-query-args', function ( $args, $data ) {
         if( !empty( $_REQUEST[ 'paging' ] ) ) {
           $args[ 'paged' ] = $_REQUEST[ 'paging' ];
@@ -912,14 +691,36 @@ namespace UsabilityDynamics {
         return $link;
       } );
 
-      //** Remove URL from comments form */
+      // Remove URL from Comments Form.
       add_filter( 'comment_form_default_fields', function ( $fields ) {
         unset( $fields[ 'url' ] );
 
         return $fields;
       } );
 
-      add_filter( 'img_caption_shortcode', array( 'UsabilityDynamics\Disco', 'img_caption_shortcode' ), 10, 3 );
+      // Filter to replace the [caption] shortcode text with HTML5 compliant code.
+      add_filter( 'img_caption_shortcode', function( $val, $attr, $content = null ) {
+
+        $args = extract( shortcode_atts( array(
+          'id'      => '',
+          'align'   => '',
+          'width'   => '',
+          'caption' => ''
+        ), $attr ) );
+
+        if( 1 > (int) $width || empty( $caption ) ) {
+          return $val;
+        }
+
+        $capid = '';
+        if( $id ) {
+          $id    = esc_attr( $id );
+          $capid = 'id="figcaption_' . $id . '" ';
+          $id    = 'id="' . $id . '" aria-labelledby="figcaption_' . $id . '" ';
+        }
+
+        return '<figure ' . $id . 'class="wp-caption ' . esc_attr( $align ) . '" >' . do_shortcode( $content ) . '<figcaption ' . $capid . 'class="wp-caption-text">' . $caption . '</figcaption></figure>';
+      }, 10, 3 );
 
     }
 
@@ -1095,22 +896,11 @@ namespace UsabilityDynamics {
     }
 
     /**
-     * Adds input fields to taxonomy term editing pages.
-     * The submitted data is saved in \UsabilityDynamics\Flawless\Utility::term_editor_loader();
-     * Task: https://basecamp.com/1847866/projects/419234-hddp-new-website/messages/2100601-event-post-type-and
-     *
-     */
-    static public function extended_term_form_fields( $tag, $post ) {
-      include dirname( __DIR__ ) . '/templates/admin.extended_term_form_fields.php';
-    }
-
-    /**
      * Get HDP-Event Posts.
      *
      */
     static public function _get_event_posts( $args = array() ) {
       global $wpdb, $hddp;
-
       return $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type IN ( '" . implode( "','", array_keys( array( self::$_types ) ) ) . "' ) AND post_status = 'publish' " );
     }
 
@@ -1259,9 +1049,9 @@ namespace UsabilityDynamics {
       // add_shortcode('elastic_popup_filter', array(get_class(), 'shortcode_elastic_popup_filter'));
 
       /* Add Shortcode */
-      add_shortcode( 'dynamic_filter', array( get_class(), 'shortcode_dynamic_filter' ) );
-      add_shortcode( 'hdp_custom_loop', array( get_class(), 'shortcode_hdp_custom_loop' ) );
-      add_shortcode( 'hddp_gallery', array( get_class(), 'shortcode_hddp_gallery' ) );
+      add_shortcode( 'dynamic_filter', array( get_class(), '_shortcode_dynamic_filter' ) );
+      add_shortcode( 'hdp_custom_loop', array( get_class(), '_shortcode_loop' ) );
+      add_shortcode( 'hddp_gallery', array( get_class(), '_shortcode_gallery' ) );
 
       //** New Elastic Search Shortcodes */
       add_shortcode( 'elasticsearch_results', array( get_class(), 'elasticsearch_results' ) );
@@ -2039,7 +1829,7 @@ namespace UsabilityDynamics {
      * @shortcode dynamic_filter
      * @author potanin@UD
      */
-    static public function shortcode_dynamic_filter( $args = false, $content = '' ) {
+    static public function _shortcode_dynamic_filter( $args = false, $content = '' ) {
       global $flawless;
 
       /** Setup the shortcode attributes first */
@@ -2149,7 +1939,7 @@ namespace UsabilityDynamics {
      *
      * @author peshkov@UD
      */
-    static public function shortcode_hddp_gallery( $args = false ) {
+    static public function _shortcode_gallery( $args = false ) {
       global $post;
 
       $content = '';
@@ -2246,7 +2036,7 @@ namespace UsabilityDynamics {
      * =USAGE=
      * [hdp_custom_loop type="event"
      */
-    static public function shortcode_hdp_custom_loop( $args = false, $content = '' ) {
+    static public function _shortcode_loop( $args = false, $content = '' ) {
 
       /** Setup the shortcode attributes first */
       $shortcode_attributes = array( 'post_type'    => 'hdp_event', 'per_page' => self::$hdp_posts_per_page,
@@ -2270,7 +2060,7 @@ namespace UsabilityDynamics {
       $do_shortcode = $args[ 'do_shortcode' ];
       unset( $args[ 'do_shortcode' ] );
 
-      $attributes = \UsabilityDynamics\Utility::extend( $attributes, $args );
+      $attributes = Utility::extend( $attributes, $args );
 
       /** Call the function */
       $ret = self::custom_loop( $type, $attributes, true, $do_shortcode );
@@ -2364,20 +2154,6 @@ namespace UsabilityDynamics {
     }
 
     /**
-     * Management Page
-     *
-     * @author potanin@UD
-     */
-    static public function hddp_manage() {
-      global $wpdb, $hddp;
-
-      $ud_log = \Flawless_F::get_log( array( 'limit' => 100 ) );
-
-      include dirname( __DIR__ ) . '/templates/admin.site_management.php';
-
-    }
-
-    /**
      * Returns Post-Type specific tagline
      *
      * @author potanin@UD
@@ -2461,37 +2237,6 @@ namespace UsabilityDynamics {
       }
 
       return wp_unique_post_slug( sanitize_title( implode( ' ', array_filter( ( array ) $return ) ) ), $post->ID, $post->post_status, $post->post_type, $post->post_parent );
-    }
-
-    /**
-     * Filter to replace the [caption] shortcode text with HTML5 compliant code
-     *
-     * @param      $val
-     * @param      $attr
-     * @param null $content
-     *
-     * @return text HTML content describing embedded figure
-     */
-    static public function img_caption_shortcode( $val, $attr, $content = null ) {
-      extract( shortcode_atts( array(
-        'id'      => '',
-        'align'   => '',
-        'width'   => '',
-        'caption' => ''
-      ), $attr ) );
-
-      if( 1 > (int) $width || empty( $caption ) ) {
-        return $val;
-      }
-
-      $capid = '';
-      if( $id ) {
-        $id    = esc_attr( $id );
-        $capid = 'id="figcaption_' . $id . '" ';
-        $id    = 'id="' . $id . '" aria-labelledby="figcaption_' . $id . '" ';
-      }
-
-      return '<figure ' . $id . 'class="wp-caption ' . esc_attr( $align ) . '" >' . do_shortcode( $content ) . '<figcaption ' . $capid . 'class="wp-caption-text">' . $caption . '</figcaption></figure>';
     }
 
     /**
