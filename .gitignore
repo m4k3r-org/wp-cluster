@@ -1,5 +1,6 @@
-temp
+composer.lock
 node_modules
+vendor
 npm-debug.log
 static/codex
 .svn
@@ -10,7 +11,6 @@ static/codex
 .Trashes
 *.sublime-project
 *.sublime-workspace
-
 *.seed
 *.log
 *.csv
