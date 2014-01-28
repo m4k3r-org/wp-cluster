@@ -8,7 +8,14 @@
     }
   ],
   "autoload": {
-    "classmap": [ "lib" ],
+    "classmap": [
+      "lib/class-api.php",
+      "lib/class-asset.php",
+      "lib/class-bootstrap.php",
+      "lib/class-theme.php",
+      "lib/class-utility.php",
+      "lib/class-views.php"
+    ],
     "files": [ "lib/template.php" ]
   },
   "require": {

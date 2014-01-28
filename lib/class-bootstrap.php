@@ -24,7 +24,7 @@ namespace UsabilityDynamics\Flawless {
    * @class Flawless
    * @since 0.0.2
    */
-  class Bootstrap {
+  class Bootstrap extends \UsabilityDynamics\Theme\Scaffold {
 
     /**
      * Flawless core version.
@@ -103,10 +103,11 @@ namespace UsabilityDynamics\Flawless {
             'models'      => trailingslashit( get_template_directory() ) . 'static/models',
             'schemas'     => trailingslashit( get_template_directory() ) . 'static/schemas',
             'templates'   => trailingslashit( get_template_directory() ) . 'templates',
-            'fonts'       => trailingslashit( get_template_directory() ) . 'ux/styles',
-            'images'      => trailingslashit( get_template_directory() ) . 'ux/styles',
-            'views'       => trailingslashit( get_template_directory() ) . 'ux/views',
-            'scripts'     => trailingslashit( get_template_directory() ) . 'ux/scripts'
+            'fonts'       => trailingslashit( get_template_directory() ) . 'fonts',
+            'styles'      => trailingslashit( get_template_directory() ) . 'styles',
+            'images'      => trailingslashit( get_template_directory() ) . 'images',
+            'views'       => trailingslashit( get_template_directory() ) . 'views',
+            'scripts'     => trailingslashit( get_template_directory() ) . 'scripts'
           )
         ),
         'loader' => array()
@@ -120,12 +121,8 @@ namespace UsabilityDynamics\Flawless {
       define( 'Flawless_URL', untrailingslashit( get_template_directory_uri() ) );
       define( 'Flawless_Transdomain', 'flawless' );
 
-      // Get Loader Class.
-      // require_once( $this->state->computed->paths->controllers . '/loader.php' );
-
-      /*
       // Load Controllers, Modules, Helpers and Schemas.
-      new Loader( array(
+      new \UsabilityDynamics\Loader( array(
         'modules' => array(
           'modules' => $this->state->computed->paths->modules,
           'extend'  => $this->state->computed->paths->extend
@@ -143,19 +140,6 @@ namespace UsabilityDynamics\Flawless {
           'state'    => $this->state->computed->paths->schemas . '/state.json'
         )
       ));
-      */
-
-      // Controllers.
-      //$this->API      = new API();
-      //$this->Asset    = new Asset();
-      //$this->Content  = new Content();
-      //$this->Settings = new Settings();
-      //$this->Legacy   = new Legacy();
-      //$this->Loader   = new Loader();
-      //$this->Utility  = new Utility();
-      //$this->Theme    = new Theme();
-      ///$this->Views    = new Views();
-      //$this->Log      = new Log();
 
       // Compute additional data once controllers are loaded.
       $this->state->computed->theme_data = \get_file_data( is_child_theme() ? untrailingslashit( get_stylesheet_directory() ) . '/style.css' : TEMPLATEPATH . '/style.css', array(
