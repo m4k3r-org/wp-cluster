@@ -57,15 +57,6 @@ namespace UsabilityDynamics\Disco {
       }
 
       /**
-       * Theme Setup.
-       *
-       * @author potanin@UD
-       */
-      public function setup() {
-        $this->theme->setup();
-      }
-
-      /**
        * Primary Loader.
        * Scripts and styles are registered here so they overwriten Flawless scripts if needed.
        *

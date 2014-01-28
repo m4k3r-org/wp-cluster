@@ -283,17 +283,6 @@ namespace UsabilityDynamics {
         'key' => 'hddp_options'
       ));
 
-      // Declare Dynamic Assets.
-      $this->dynamic(array(
-        'scripts' => array(
-          'app.js' => 'console.log( "app.js" );'
-        ),
-        'models'  => array(
-          'theme.json'  => '{}',
-          'locale.json' => '{}'
-        )
-      ));
-
       // Declare Public Scripts.
       $this->scripts(array(
         'app' => get_stylesheet_directory() . '/scripts/app.js',
@@ -314,6 +303,12 @@ namespace UsabilityDynamics {
         'bootstrap' => get_stylesheet_directory() . '/styles/bootstrap.css',
         'jquery.jqtransform' => get_stylesheet_directory() . '/styles/jqtransform.css',
         'jquery.simplyscroll' => get_stylesheet_directory() . '/styles/simplyscroll.css'
+      ));
+
+      // Declare Public Models.
+      $this->models(array(
+        'theme'  => '{}',
+        'locale' => '{}'
       ));
 
       // Configure Post Types and Meta.
@@ -529,9 +524,7 @@ namespace UsabilityDynamics {
         self::update_event_location( get_post_for_extended_term( $term_id, $taxonomy )->ID );
       }, 10, 3 );
 
-      unregister_nav_menu( 'footer-menu' );
-
-      //** Disable unsupported Carrington Build modules */
+      // Disable unsupported Carrington Build modules
       add_action( 'cfct-modules-included', function () {
         cfct_build_deregister_module( 'cfct_module_hero' );
         cfct_build_deregister_module( 'cfct_module_notice' );
@@ -599,6 +592,9 @@ namespace UsabilityDynamics {
         'dynamic_filter_post_types' => array( 'hdp_photo_gallery', 'hdp_event', 'hdp_video' )
       ), get_option( 'hddp_options' ) );
 
+      // Saving and deleting posts from QA table
+      add_action( 'save_post', array( 'UsabilityDynamics\Disco', 'save_post' ), 1, 2 );
+
       // Enqueue Frontend Scripts & Styles.
       add_action( 'wp_enqueue_scripts', function () {
         wp_enqueue_script( 'app' );
@@ -617,24 +613,6 @@ namespace UsabilityDynamics {
       add_action( 'admin_menu', function () {
         global $hddp;
       } );
-
-      // add_action( 'wp_ajax_nopriv_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ));
-      // add_action( 'wp_ajax_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ));
-      // add_action( 'wp_ajax_elasticsearch_query', array( 'UsabilityDynamics\Disco', 'elasticsearch_query' ) );
-      // add_action( 'wp_ajax_nopriv_elasticsearch_query', array( 'UsabilityDynamics\Disco', 'elasticsearch_query' ) );
-
-      // Setup Dynamic Filter
-      add_action( 'template_redirect', array( 'UsabilityDynamics\Disco', 'dynamic_filter_shortcode_handler' ) );
-
-      // Saving and deleting posts from QA table
-      add_action( 'save_post', array( 'UsabilityDynamics\Disco', 'save_post' ), 1, 2 );
-
-      /** Setup maintanance cron and handler function */
-      if( !wp_next_scheduled( 'hddp_daily_cron' ) ) {
-        wp_schedule_event( time(), 'daily', 'hddp_daily_cron' );
-      }
-
-      add_action( 'hddp_daily_cron', array( 'UsabilityDynamics\Disco', 'daily_maintenance_cron' ) );
 
       add_filter( 'the_category', function ( $c ) {
         return self::_backtrace_function( 'wp_popular_terms_checklist' ) ? '<span class="do_inline_hierarchial_taxonomy_stuff do_not_esc_html">' . $c . '</span>' : $c;
@@ -724,10 +702,6 @@ namespace UsabilityDynamics {
 
     }
 
-    public function setup() {
-
-    }
-
     /**
      * Force our custom template to load for Event post types
      *
@@ -751,6 +725,8 @@ namespace UsabilityDynamics {
         return $template = locate_template( (array) $hddp[ 'page_template' ] );
 
       } );
+
+      self::dynamic_filter_shortcode_handler();
 
     }
 
@@ -916,26 +892,6 @@ namespace UsabilityDynamics {
     }
 
     /**
-     * Maintanance Tasks that are run once a day
-     *
-     */
-    static public function daily_maintenance_cron() {
-      $stats = array();
-
-      //** Attempt geolocation for all events that are likely to have locatoins */
-      foreach( self::_get_event_posts() as $post_id ) {
-        if( !get_post_meta( $post_id, 'formatted_address', true ) ) {
-          $stats[ 'geo_located' ][ ] = self::update_event_location( $post_id, array( 'add_log_entries' => false ) );
-        }
-      }
-
-      if( array_filter( (array) $stats[ 'geo_located' ] ) ) {
-        \Flawless_F::log( 'Geo-located (' . count( $stats[ 'geo_located' ] ) . ') events during maintanance. ' );
-      }
-
-    }
-
-    /**
      * Placeholder so we can update post's location
      *
      * @version 1.1.0
@@ -995,22 +951,6 @@ namespace UsabilityDynamics {
 
       }
 
-      /** Do different things based on the status of the post */
-      if( $post->post_status != 'publish' ) {
-
-        /** Not published, get it out of the QA table */
-        $wpdb->query( "DELETE FROM {$wpdb->prefix}ud_qa_{$post->post_type} WHERE post_id = {$post->ID}" );
-
-      }
-      if( $post->post_status == 'publish' ) {
-
-        \Flawless_F::update_qa_table_item( $post_id, array(
-          'attributes' => self::_get_qa_attributes( $post->post_type ),
-          'table_name' => "{$wpdb->prefix}ud_qa_{$post->post_type}"
-        ));
-
-      }
-
     }
 
     /**
@@ -1036,7 +976,7 @@ namespace UsabilityDynamics {
     /**
      * Handle addition of shortcode and listener
      *
-     * @action template_redirect (10)
+     * @action redirect)
      * @author potanin@UD
      */
     static public function dynamic_filter_shortcode_handler() {
