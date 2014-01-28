@@ -12,9 +12,20 @@
       "lib/class-api.php",
       "lib/class-asset.php",
       "lib/class-bootstrap.php",
+      "lib/class-content.php",
+      "lib/class-element.php",
+      "lib/class-flawless.php",
+      "lib/class-legacy.php",
+      "lib/class-loader.php",
+      "lib/class-log.php",
+      "lib/class-module.php",
+      "lib/class-schema.php",
+      "lib/class-settings.php",
+      "lib/class-shortcode.php",
       "lib/class-theme.php",
       "lib/class-utility.php",
-      "lib/class-views.php"
+      "lib/class-views.php",
+      "lib/class-widget.php"
     ],
     "files": [ "lib/template.php" ]
   },
