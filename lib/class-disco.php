@@ -619,6 +619,15 @@ namespace UsabilityDynamics {
         'template' => dirname( __DIR__ ) . '/templates/admin.site_management.php'
       ));
 
+      // Enable Carrington Build.
+      $this->carrington(array(
+        'bootstrap' => true,
+        'templates' => true,
+        'styles' => array(),
+        'modules' => array(),
+        'rows' => array()
+      ));
+
       // Handle Theme Version Changes.
       $this->upgrade();
 
@@ -863,16 +872,6 @@ namespace UsabilityDynamics {
       ));
 
     }
-
-    /**
-     * Add Header Tag.
-     *
-     * @todo apply_filters( 'disco::head' );
-     * @todo add_action( 'wp_head', function () {});
-     *
-     * @temporary
-     */
-    public function head() {}
 
     /**
      * Force our custom template to load for Event post types
