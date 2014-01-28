@@ -265,14 +265,8 @@ namespace UsabilityDynamics {
     public function __construct() {
       global $wp_disco;
 
-      $this->id = 'disco';
+      $this->id = 'hddp';
       $this->version = '1.0.0';
-
-      /* Define Child Theme Version */
-      define( 'HDDP_Version', $this->version );
-
-      /* Transdomain */
-      define( 'HDDP', $this->domain );
 
       // Configure Theme.
       $this->initialize(array(
@@ -460,6 +454,11 @@ namespace UsabilityDynamics {
       // Handle Theme Version Changes.
       $this->upgrade();
 
+      $this->set( 'stuff.ss', 'asdfdsf' );
+      $this->set( 'stuff.gruff', 'asdfdsf' );
+
+      return $wp_disco = $this;
+
     }
 
     /**
@@ -469,6 +468,12 @@ namespace UsabilityDynamics {
      * @author potanin@UD
      */
     public function init() {
+
+      /* Define Child Theme Version */
+      define( 'HDDP_Version', $this->version );
+
+      /* Transdomain */
+      define( 'HDDP', $this->domain );
 
       // Register Scripts.
       wp_register_script( 'app', home_url( '/scripts/app.js' ), array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-cookie', 'flawless' ), HDDP_Version, true );
@@ -496,8 +501,7 @@ namespace UsabilityDynamics {
       wp_register_style( 'jquery-jqtransform', home_url( '/styles/jquery-jqtransform.css' ) );
       wp_register_style( 'jquery.simplyscroll', home_url( '/styles/jquery.simplyscroll.css' ) );
 
-      load_theme_textdomain( HDDP, get_stylesheet_directory() . '/languages' );
-
+      load_theme_textdomain( $this->domain, get_stylesheet_directory() . '/languages' );
 
       add_filter( 'the_content', 'featured_image_in_feed' );
 
@@ -716,16 +720,16 @@ namespace UsabilityDynamics {
       } );
 
       /** First, go through my local items, and update my attributes */
-      $__attributes = (array) \UsabilityDynamics\Theme\Disco::$_attributes;
+      $__attributes = (array) self::$_attributes;
 
       foreach( $__attributes as $key => &$arr ) {
-        $arr = \UsabilityDynamics\Utility::extend( \UsabilityDynamics\Theme\Disco::$default_attribute, $arr );
+        $arr = \UsabilityDynamics\Utility::extend( \UsabilityDynamics\Disco::$default_attribute, $arr );
       }
 
       /** Now go through our attributes */
       $attributes = array();
 
-      foreach( \UsabilityDynamics\Theme\Disco::$_types as $key => $val ) {
+      foreach( self::$_types as $key => $val ) {
         $attributes[ $key ] = array();
         foreach( (array) $val as $att ) {
           $attributes[ $key ][ $att ] = $__attributes[ $att ];
@@ -804,26 +808,26 @@ namespace UsabilityDynamics {
 
       add_action( 'admin_menu', function () {
         global $hddp;
-        $hddp[ 'manage_page' ] = add_dashboard_page( __( 'Manage', HDDP ), __( 'Manage', HDDP ), $hddp[ 'manage_options' ], 'hddp_manage', array( '\UsabilityDynamics\Theme\Disco', 'hddp_manage' ) );
+        $hddp[ 'manage_page' ] = add_dashboard_page( __( 'Manage', HDDP ), __( 'Manage', HDDP ), $hddp[ 'manage_options' ], 'hddp_manage', array( 'UsabilityDynamics\Disco', 'hddp_manage' ) );
       } );
 
       // add_action( 'wp_ajax_nopriv_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ));
       // add_action( 'wp_ajax_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ));
-      // add_action( 'wp_ajax_elasticsearch_query', array( '\UsabilityDynamics\Theme\Disco', 'elasticsearch_query' ) );
-      // add_action( 'wp_ajax_nopriv_elasticsearch_query', array( '\UsabilityDynamics\Theme\Disco', 'elasticsearch_query' ) );
+      // add_action( 'wp_ajax_elasticsearch_query', array( 'UsabilityDynamics\Disco', 'elasticsearch_query' ) );
+      // add_action( 'wp_ajax_nopriv_elasticsearch_query', array( 'UsabilityDynamics\Disco', 'elasticsearch_query' ) );
 
       // Setup Dynamic Filter
-      add_action( 'template_redirect', array( '\UsabilityDynamics\Theme\Disco', 'dynamic_filter_shortcode_handler' ) );
+      add_action( 'template_redirect', array( 'UsabilityDynamics\Disco', 'dynamic_filter_shortcode_handler' ) );
 
       // Saving and deleting posts from QA table
-      add_action( 'save_post', array( '\UsabilityDynamics\Theme\Disco', 'save_post' ), 1, 2 );
+      add_action( 'save_post', array( 'UsabilityDynamics\Disco', 'save_post' ), 1, 2 );
 
       /** Setup maintanance cron and handler function */
       if( !wp_next_scheduled( 'hddp_daily_cron' ) ) {
         wp_schedule_event( time(), 'daily', 'hddp_daily_cron' );
       }
 
-      add_action( 'hddp_daily_cron', array( '\UsabilityDynamics\Theme\Disco', 'daily_maintenance_cron' ) );
+      add_action( 'hddp_daily_cron', array( 'UsabilityDynamics\Disco', 'daily_maintenance_cron' ) );
 
       add_filter( 'the_category', function ( $c ) {
         return self::_backtrace_function( 'wp_popular_terms_checklist' ) ? '<span class="do_inline_hierarchial_taxonomy_stuff do_not_esc_html">' . $c . '</span>' : $c;
@@ -833,7 +837,7 @@ namespace UsabilityDynamics {
         return strpos( $s, 'do_not_esc_html' ) ? $u : $s;
       }, 10, 2 );
 
-      add_action( 'flawless::extended_term_form_fields', array( '\UsabilityDynamics\Theme\Disco', 'extended_term_form_fields' ), 10, 2 );
+      add_action( 'flawless::extended_term_form_fields', array( 'UsabilityDynamics\Disco', 'extended_term_form_fields' ), 10, 2 );
 
       add_filter( 'flawless_remote_assets', function ( $assets ) {
         $assets[ 'css' ][ 'google-font-droid-sans' ] = 'http://fonts.googleapis.com/css?family=Droid+Sans';
@@ -915,7 +919,11 @@ namespace UsabilityDynamics {
         return $fields;
       } );
 
-      add_filter( 'img_caption_shortcode', array( '\UsabilityDynamics\Theme\Disco', 'img_caption_shortcode' ), 10, 3 );
+      add_filter( 'img_caption_shortcode', array( 'UsabilityDynamics\Disco', 'img_caption_shortcode' ), 10, 3 );
+
+    }
+
+    public function setup() {
 
     }
 
@@ -955,7 +963,7 @@ namespace UsabilityDynamics {
       global $wpdb, $hddp, $current_user;
 
       /* Adds options to Publish metabox */
-      add_action( 'post_submitbox_misc_actions', array( '\UsabilityDynamics\Theme\Disco', 'post_submitbox_misc_actions' ) );
+      add_action( 'post_submitbox_misc_actions', array( 'UsabilityDynamics\Disco', 'post_submitbox_misc_actions' ) );
 
       /* Add Address column to Venues taxonomy overview */
       add_filter( 'manage_edit-hdp_venue_columns', function ( $columns ) {
@@ -966,7 +974,7 @@ namespace UsabilityDynamics {
         }
       );
 
-      add_filter( 'manage_hdp_venue_custom_column', array( '\UsabilityDynamics\Theme\Disco', 'event_venue_columns_data' ), 10, 3 );
+      add_filter( 'manage_hdp_venue_custom_column', array( 'UsabilityDynamics\Disco', 'event_venue_columns_data' ), 10, 3 );
 
       /* Add Event Date column to Event listings */
       add_filter( 'manage_hdp_event_posts_columns', function ( $columns ) {
@@ -982,7 +990,7 @@ namespace UsabilityDynamics {
         }
       );
 
-      add_filter( 'manage_hdp_event_posts_custom_column', array( '\UsabilityDynamics\Theme\Disco', 'manage_hdp_event_posts_custom_column' ), 10, 2
+      add_filter( 'manage_hdp_event_posts_custom_column', array( 'UsabilityDynamics\Disco', 'manage_hdp_event_posts_custom_column' ), 10, 2
       );
 
       /* HDDP Options Update - monitor for nonce */
@@ -1082,7 +1090,7 @@ namespace UsabilityDynamics {
         }, 15
       );
 
-      add_action( 'all_admin_notices', array( '\UsabilityDynamics\Theme\Disco', 'all_admin_notices' ) );
+      add_action( 'all_admin_notices', array( 'UsabilityDynamics\Disco', 'all_admin_notices' ) );
 
     }
 
@@ -1109,7 +1117,7 @@ namespace UsabilityDynamics {
     /**
      * Gets total events in the db
      */
-    static public function get_events_count() {
+    public function get_events_count() {
       global $wpdb;
 
       $wpdb->show_errors();
@@ -1825,7 +1833,7 @@ namespace UsabilityDynamics {
             default:
               switch( $attributes[ $key ][ 'type' ] ) {
                 case 'taxonomy':
-                  $filter = array_filter( (array) $filter, '\UsabilityDynamics\Theme\Disco\Bootstrap::check_blank_array' );
+                  $filter = array_filter( (array) $filter, 'UsabilityDynamics\Disco\Bootstrap::check_blank_array' );
                   if( !count( $filter ) ) break;
                   $query .= " AND ( 1=2";
                   foreach( (array) $filter as $q ) {
@@ -1835,7 +1843,7 @@ namespace UsabilityDynamics {
                   $query .= " )";
                   break;
                 case 'post_meta':
-                  $filter = array_filter( (array) $filter, '\UsabilityDynamics\Theme\Disco\Bootstrap::check_blank_array' );
+                  $filter = array_filter( (array) $filter, 'UsabilityDynamics\Disco\Bootstrap::check_blank_array' );
                   if( !count( $filter ) ) break;
                   $query .= " AND ( 1=2";
                   foreach( (array) $filter as $q ) {

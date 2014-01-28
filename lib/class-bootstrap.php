@@ -1,5 +1,7 @@
 <?php
-
+/**
+ *
+ */
 namespace UsabilityDynamics\Disco {
 
   if( !class_exists( 'UsabilityDynamics\Disco\Bootstrap' ) ) {
@@ -11,6 +13,12 @@ namespace UsabilityDynamics\Disco {
      */
     final class Bootstrap {
 
+      /**
+       * Theme Instance.
+       *
+       * @param $theme
+       * @var string
+       */
       public $theme;
 
       /**
@@ -19,13 +27,12 @@ namespace UsabilityDynamics\Disco {
        */
       public function __construct() {
 
+        // Load Libraries.
         include_once( untrailingslashit( __DIR__ ) . '/legacy/ud_saas.php' );
         include_once( untrailingslashit( __DIR__ ) . '/legacy/ud_functions.php' );
-        include_once( untrailingslashit( __DIR__ ) . '/legacy/ud_tests.php' );
         include_once( untrailingslashit( __DIR__ ) . '/legacy/backend-functions.php' );
         include_once( untrailingslashit( __DIR__ ) . '/legacy/business-card.php' );
         include_once( untrailingslashit( __DIR__ ) . '/legacy/class-flawless-utility.php' );
-        include_once( untrailingslashit( __DIR__ ) . '/legacy/front-end-editor.php' );
         include_once( untrailingslashit( __DIR__ ) . '/legacy/login_module.php' );
         include_once( untrailingslashit( __DIR__ ) . '/legacy/theme_ui.php' );
         include_once( untrailingslashit( __DIR__ ) . '/legacy/shortcodes.php' );
@@ -38,8 +45,10 @@ namespace UsabilityDynamics\Disco {
           wp_die( '<h1>Fatal Error</h1><p>Disco Theme not found.</p>' );
         }
 
-        $this->theme = new \UsabilityDynamics\Theme\Disco();
+        // Instantaite Disco.
+        $this->theme = new \UsabilityDynamics\Disco();
 
+        // Setup Core Actions.
         add_action( 'flawless::init', array( $this, 'init' ) );
         add_action( 'flawless::theme_setup::after', array( $this->theme, 'setup' ) );
         add_action( 'template_redirect', array( $this, 'redirect' ) );
@@ -74,15 +83,7 @@ namespace UsabilityDynamics\Disco {
        * @author potanin@UD
        */
       public function redirect() {
-        global $post, $flawless;
-
-        // Modify our HTML for the mobile nav bar
-        if( isset( $flawless[ 'mobile_navbar' ] ) ) {
-          $flawless[ 'mobile_navbar' ][ 'html' ][ 'left' ] = hdp_share_button( true, true ) . $flawless[ 'mobile_navbar' ][ 'html' ][ 'left' ];
-        }
-
         $this->theme->redirect();
-
       }
 
       /**

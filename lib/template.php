@@ -865,7 +865,17 @@ if ( !function_exists( 'flawless_image_link' ) ) {
       }
     }
 
-    $wp_get_image_editor = wp_get_image_editor( get_attached_file( $attachment_id, true ), $image_sizes[ $size ][ 'width' ], $image_sizes[ $size ][ 'height' ], $image_sizes[ $size ][ 'crop' ], 'test' );
+    $file = get_attached_file( $attachment_id, true );
+
+    if( !$file || !is_string( $file ) ) {
+      return '';
+    }
+
+    $wp_get_image_editor = wp_get_image_editor( get_attached_file( $attachment_id, true ), array(
+      //$image_sizes[ $size ][ 'width' ],
+      //$image_sizes[ $size ][ 'height' ],
+      //$image_sizes[ $size ][ 'crop' ] )
+    ));
 
     if ( is_wp_error( $wp_get_image_editor ) || !file_exists( $wp_get_image_editor ) ) {
 

@@ -50,7 +50,8 @@
               <li attribute_key="raw_html">
                 <ul> <?php
                   $count++;
-                  get_template_part( 'loop', $type ); ?>
+                  get_template_part( 'loop', $type );
+                  ?>
                 </ul>
               </li>
             </ul>
