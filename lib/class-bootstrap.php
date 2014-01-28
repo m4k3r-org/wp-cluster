@@ -13,7 +13,7 @@ namespace UsabilityDynamics\Festival {
    *
    * @author Usability Dynamics
    */
-  final class Bootstrap {
+  class Bootstrap extends \UsabilityDynamics\Theme\Scaffold {
 
     /**
      * Version of theme
