@@ -9,7 +9,7 @@ namespace UsabilityDynamics\Festival {
 
   if( !class_exists( 'UsabilityDynamics\Festival\Post_Type_Artist' ) ) {
 
-    class Post_Type_Artist extends UsabilityDynamics\Theme\Post_Type {
+    class Post_Type_Artist extends \UsabilityDynamics\Post_Type {
     
       public function __construct() {
         global $festival;

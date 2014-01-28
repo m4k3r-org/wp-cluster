@@ -9,7 +9,7 @@ namespace UsabilityDynamics\Festival {
 
   if( !class_exists( 'UsabilityDynamics\Festival\Post_Type_Social' ) ) {
 
-    class Post_Type_Social extends UsabilityDynamics\Theme\Post_Type {
+    class Post_Type_Social extends \UsabilityDynamics\Post_Type {
     
       public $taxonomies = array();
     
