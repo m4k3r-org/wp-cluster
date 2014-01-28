@@ -83,35 +83,34 @@ namespace UsabilityDynamics\Festival {
         'key' => 'hddp_options'
       ));
 
-      // Declare Dynamic Assets.
-      $this->dynamic( array(
-        'scripts' => array(
-          'app.js' => 'console.log( "app.js" );'
-        ),
-        'models'  => array(
-          'theme.json'  => '{}',
-          'locale.json' => '{}'
-        )
-      ) );
+      // Declare Public Scripts.
+      $this->scripts(array(
+        'app' => get_stylesheet_directory() . '/scripts/app.js',
+        'app.admin' => get_stylesheet_directory() . '/scripts/app.admin.js'
+      ));
 
-      // Enable Public Assets.
-      $this->rewrites( array(
-        'scripts' => true,
-        'styles'  => true
-      ) );
+      // Declare Public Styles.
+      $this->styles(array(
+        'app' => get_stylesheet_directory() . '/styles/app.css',
+        'app.admin' => get_stylesheet_directory() . '/styles/app.admin.css',
+        'content' => get_stylesheet_directory() . '/styles/content.css'
+      ));
 
-      // Handle Theme Version Changes.
-      $this->upgrade();
+      // Declare Public Models.
+      $this->models(array(
+        'theme'  => '{}',
+        'locale' => '{}'
+      ));
 
       // Configure Post Types and Meta.
       $this->structure( array(
-        'artist'            => array(
+        'artist' => array(
           'type' => 'post'
         ),
-        'venue'             => array(
+        'venue' => array(
           'type' => 'post'
         ),
-        'location'          => array(
+        'location' => array(
           'type' => 'post'
         )
       ) );
@@ -123,15 +122,26 @@ namespace UsabilityDynamics\Festival {
       ) );
 
       // Configure Image Sizes.
-      $this->media( array(
-        'thumbnail'      => array(),
-        'hd_large'       => array(),
-        'hd_small'       => array(),
-        'gallery'        => array(),
-        'sidebar_poster' => array(),
-        'tiny_thumbnail' => array(),
-        'sidebar_thumb'  => array(),
-      ) );
+      $this->media(array(
+        'post-thumbnail' => array(
+          'description' => '',
+          'width' => 120,
+          'height' => 90,
+          'crop' => true
+        ),
+        'gallery' => array(
+          'description' => '',
+          'width' => 200,
+          'height' => 999,
+          'crop' => false
+        ),
+        'sidebar_thumb' => array(
+          'description' => '',
+          'width' => 120,
+          'height' => 100,
+          'crop' => true
+        )
+      ));
 
       // Declare Supported Theme Features.
       $this->supports( array(
