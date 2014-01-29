@@ -25,7 +25,7 @@
   "autoload": {
     "classmap": [
       "lib/class-bootstrap.php",
-      "lib/class-utlity.php",
+      "lib/class-utility.php",
       "lib/class-disco.php"
     ]
   }
