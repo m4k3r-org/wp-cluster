@@ -355,9 +355,6 @@ namespace UsabilityDynamics {
       //register_nav_menu( 'mobile', __( 'Mobile Menu', $this->domain ));
       register_nav_menu( 'footer', __( 'Footer Menu', $this->domain ));
 
-      // Enable Carrington Build / Layout Engine
-      //$this->layout_engine();
-
     }
 
     /**
