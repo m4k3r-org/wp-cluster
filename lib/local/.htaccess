@@ -77,7 +77,7 @@
 
 # Cluster Management BEGIN
 <IfModule mod_rewrite.c>
-  RewriteRule ^manage/wp-login.php$ /manage/login [R=301,L]
+  RewriteRule ^xmlrpc.php$ /vendor/wordpress/core/xmlrpc.php [L]
   RewriteRule ^wp-admin(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
   RewriteRule ^wp-includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
   RewriteRule ^includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
@@ -179,11 +179,12 @@
 
 # Cluster Media BEGIN
 <IfModule mod_rewrite.c>
+  RewriteRule ^media/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
+  RewriteRule ^assets/(.*)$ /static/storage/%{SERVER_NAME}/assets/$1 [L]
   RewriteRule ^system/files/(.*)$ /static/storage/%{SERVER_NAME}/$1 [R=301,L]
   RewriteRule ^system/media/(.*)$ /static/storage/%{SERVER_NAME}/$1 [R=301,L]
   RewriteRule ^files/(.*)$ /static/storage/%{SERVER_NAME}/$1 [R=301,L]
   RewriteRule ^uploads/(.*)$ /static/storage/%{SERVER_NAME}/$1 [R=301,L]
-  RewriteRule ^media/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
 </IfModule>
 # Cluster Media END
 
