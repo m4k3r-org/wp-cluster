@@ -295,7 +295,7 @@ namespace UsabilityDynamics\Festival {
           switch( $map[1] ) {
               
             case 'date':
-              $_value = strtotime( $_value );
+              $_value = date( 'yy-mm-dd hh:mm', strtotime( $_value ) );
               break;
               
           }

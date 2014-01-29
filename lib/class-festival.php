@@ -470,7 +470,7 @@ namespace UsabilityDynamics {
     public function init() {
 
       // Register Custom Post Types and set their taxonomies
-      $this->structure();
+      $this->structure( $this->get( 'structure' ) );
 
       // Sync 'Social Streams' data with social networks
       $this->sync_streams();
