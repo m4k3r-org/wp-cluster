@@ -309,16 +309,15 @@ namespace UsabilityDynamics\Theme {
         try {
 
           //** Server connection. Settings go from ElasticSearch Plugin Settings page. */
-          $elastica_client = new Elastica\Client(
-            array(
-              'connections' => array(
-                'config' => array(
-                  'headers' => array( 'Accept' => 'application/json' ),
-                  'url'     => elasticsearch\Config::option( 'server_url' )
-                )
+          $elastica_client = new Elastica\Client( array(
+            'connections' => array(
+              'config' => array(
+                'headers' => array( 'Accept' => 'application/json' ),
+                'url'     => elasticsearch\Config::option( 'server_url' )
               )
             )
-          );
+          ));
+
           $index           = $elastica_client->getIndex( elasticsearch\Config::option( 'server_index' ) );
           $type            = $index->getType( $_REQUEST[ 'type' ] );
           $path            = $index->getName() . '/' . $type->getName() . '/_search';
@@ -480,17 +479,21 @@ namespace UsabilityDynamics\Theme {
 
           $result[ 'raw' ] = $elastica_client->request( $path, Elastica\Request::POST, json_encode( $params[ 'body' ] ) )->getData();
         } catch( Exception $e ) {
-          $error = array(
-            'success' => false
-          );
+
+          $error = array( 'success' => false );
+
           $error = array_merge( $error, array( 'error' => $e->getMessage() ) );
+
           die( json_encode( $error ) );
+
         }
 
         ob_start();
+
         foreach( (array) $result[ 'raw' ][ 'facets' ] as $facet_key => $facet_data ) {
           include dirname( __DIR__ ) . "/templates/facets/facet-{$facet_data['_type']}.php";
         }
+
         $facets = ob_get_clean();
 
         ob_start();
