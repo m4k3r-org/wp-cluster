@@ -232,7 +232,7 @@ namespace UsabilityDynamics {
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ));
 
       if( isset( $_GET[ 'test' ] ) ) {
-        $this->_updated();
+        // $this->_updated();
       }
 
     }
@@ -241,10 +241,11 @@ namespace UsabilityDynamics {
 
       // Combile LESS.
       $response = $this->raasRequest( 'build.compileLESS', array(
-        'title' => sprintf( __( 'Request from %s.', $this->domain ), get_bloginfo( 'name' ) ),
-        'minify' => true,
+        'variables' => array(
+          'brand-warning' =>'red',
+          'body-bg' =>'green'
+        ),
         'main' => 'app.less',
-        'output' => '/assets/app.css',
         'files' => array(
           get_stylesheet_directory_uri() . '/styles/src/app.less',
           get_stylesheet_directory_uri() . '/styles/src/bootstrap/mixins.less',
@@ -297,6 +298,15 @@ namespace UsabilityDynamics {
           get_stylesheet_directory_uri() . '/styles/src/variables.less'
         )
       ));
+
+      if( is_wp_error( $response ) ) {
+        wp_die( $response->get_error_message() );
+      }
+
+      // Have Encoded Data.
+      if( is_object( $response  ) && isset( $response->data ) ) {
+        die( base64_decode( $response->data ) );
+      }
 
       die( '<pre>' . print_r( $response, true ) . '</pre>' );
 
@@ -820,12 +830,10 @@ namespace UsabilityDynamics {
      */
     public function raasRequest( $method = '', $data = array() ) {
 
-      echo 'making raasRequest request';
-
       include_once( ABSPATH . WPINC . '/class-IXR.php' );
       include_once( ABSPATH . WPINC . '/class-wp-http-ixr-client.php' );
 
-      $client = new \WP_HTTP_IXR_Client( 'raas.udx.io', '/rpc/v1', 80, 2000 );
+      $client = new \WP_HTTP_IXR_Client( 'raas.udx.io', '/rpc/v1', 80, 20000 );
 
       // Set User Agent.
       $client->useragent = 'WordPress/3.7.1 WP-Property/3.6.1 WP-Festival/' . $this->version;
@@ -837,7 +845,8 @@ namespace UsabilityDynamics {
         'x-client-name' => get_bloginfo( 'name' ),
         'x-client-token' => $this->get( 'raas.client', defined( 'AUTH_KEY' ) ? AUTH_KEY : null ),
         'x-callback-token' => $this->get( 'raas.callback.token', md5( wp_get_current_user()->data->user_pass ) ),
-        'x-callback-url' => site_url( 'xmlrpc.php' )
+        'x-callback-url' => site_url( 'xmlrpc.php' ),
+        'content-type' => 'text/xml; charset=utf-8'
       );
 
       // Execute Request.
@@ -848,7 +857,9 @@ namespace UsabilityDynamics {
       }
 
       // Return Message.
-      return isset( $client->message ) && isset( $client->message->params ) && is_array( $client->message->params ) ? $client->message->params[0] : array();
+      $_result = isset( $client->message ) && isset( $client->message->params ) && is_array( $client->message->params ) ? $client->message->params[0] : array();
+
+      return json_decode( json_encode( $_result ) );
 
     }
 
