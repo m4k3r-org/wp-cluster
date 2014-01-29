@@ -79,12 +79,6 @@ namespace UsabilityDynamics {
       $this->domain   = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ));
       $this->version  = wp_get_theme()->get( 'Version' );
 
-      // Configure Theme.
-      $this->initialize( array(
-        'minify'    => true,
-        'obfuscate' => true
-      ));
-
       // Initialize Settings.
       $this->settings(array(
         'key' => 'festival',
@@ -107,12 +101,6 @@ namespace UsabilityDynamics {
         'app' => get_stylesheet_directory() . '/styles/app.css',
         'app.admin' => get_stylesheet_directory() . '/styles/app.admin.css',
         'content' => get_stylesheet_directory() . '/styles/content.css'
-      ));
-
-      // Declare Public Models.
-      $this->models(array(
-        'theme'  => '{}',
-        'locale' => '{}'
       ));
 
       // Configure Post Types and Meta.
@@ -243,18 +231,69 @@ namespace UsabilityDynamics {
 
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ));
 
+      if( isset( $_GET[ 'test' ] ) ) {
+        $this->_updated();
+      }
+
     }
 
     private function _updated( $type = '' ) {
 
-      // Recombile LESS.
+      // Combile LESS.
       $response = $this->raasRequest( 'build.compileLESS', array(
-        'variables' => array(),
+        'title' => sprintf( __( 'Request from %s.', $this->domain ), get_bloginfo( 'name' ) ),
         'minify' => true,
+        'main' => 'app.less',
         'output' => '/assets/app.css',
         'files' => array(
           get_stylesheet_directory_uri() . '/styles/src/app.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/mixins.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/normalize.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/print.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/scaffolding.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/type.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/code.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/grid.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/tables.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/forms.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/buttons.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/component-animations.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/glyphicons.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/dropdowns.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/button-groups.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/input-groups.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/navs.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/navbar.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/breadcrumbs.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/pagination.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/pager.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/labels.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/badges.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/jumbotron.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/thumbnails.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/alerts.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/progress-bars.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/media.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/list-group.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/panels.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/wells.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/close.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/modals.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/tooltip.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/popovers.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/carousel.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/utilities.less',
+          get_stylesheet_directory_uri() . '/styles/src/bootstrap/responsive-utilities.less',
           get_stylesheet_directory_uri() . '/styles/src/carousel.less',
+          get_stylesheet_directory_uri() . '/styles/src/color.less',
+          get_stylesheet_directory_uri() . '/styles/src/countdown.less',
+          get_stylesheet_directory_uri() . '/styles/src/custom.less',
+          get_stylesheet_directory_uri() . '/styles/src/editor-style.less',
+          get_stylesheet_directory_uri() . '/styles/src/font-awesome.less',
+          get_stylesheet_directory_uri() . '/styles/src/fonts.less',
+          get_stylesheet_directory_uri() . '/styles/src/glyphicons.less',
+          get_stylesheet_directory_uri() . '/styles/src/responsive.less',
+          get_stylesheet_directory_uri() . '/styles/src/style.less',
           get_stylesheet_directory_uri() . '/styles/src/variables.less'
         )
       ));
@@ -357,6 +396,7 @@ namespace UsabilityDynamics {
       )));
 
     }
+
     /**
      * Register Sidebars
      *
@@ -783,10 +823,12 @@ namespace UsabilityDynamics {
      */
     public function raasRequest( $method = '', $data = array() ) {
 
+      echo 'making raasRequest request';
+
       include_once( ABSPATH . WPINC . '/class-IXR.php' );
       include_once( ABSPATH . WPINC . '/class-wp-http-ixr-client.php' );
 
-      $client = new \WP_HTTP_IXR_Client( 'raas.udx.io', '/rpc/v1', 80, 20 );
+      $client = new \WP_HTTP_IXR_Client( 'raas.udx.io', '/rpc/v1', 80, 2000 );
 
       // Set User Agent.
       $client->useragent = 'WordPress/3.7.1 WP-Property/3.6.1 WP-Festival/' . $this->version;
@@ -794,6 +836,8 @@ namespace UsabilityDynamics {
       // Request Headers.
       $client->headers = array(
         'authorization' => 'Basic '. $this->get( 'raas.token' ) . ':' . $this->get( 'raas.session', defined( 'NONCE_KEY' ) ? NONCE_KEY : null ),
+        'x-request-id' => uniqid(),
+        'x-client-name' => get_bloginfo( 'name' ),
         'x-client-token' => $this->get( 'raas.client', defined( 'AUTH_KEY' ) ? AUTH_KEY : null ),
         'x-callback-token' => $this->get( 'raas.callback.token', md5( wp_get_current_user()->data->user_pass ) ),
         'x-callback-url' => site_url( 'xmlrpc.php' )
