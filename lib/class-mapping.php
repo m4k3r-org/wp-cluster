@@ -391,7 +391,11 @@ namespace UsabilityDynamics\Cluster {
       public static function plugins_url( $url, $path, $plugin ) {
         global $wp_cluster;
 
+<<<<<<< HEAD
         $url = str_replace( $wp_cluster->cluster_domain, $wp_cluster->domain, $url );
+=======
+        $url = str_replace( array( $wp_cluster->cluster_domain, 'public_html', 'www' ), array( $wp_cluster->domain, '', '' ), $url );
+>>>>>>> 175880d7e77fa07a0ec8360dccd113bd237662b0
 
         // Fix Vendor Module UTLs.
         if( strpos( $plugin, '/vendor' ) ) {
