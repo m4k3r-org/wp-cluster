@@ -196,12 +196,28 @@ namespace UsabilityDynamics {
 
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ));
 
+      add_filter( 'body_class', array( $this, 'body_class' ));
+
       if( isset( $_GET[ 'test' ] ) ) {
         // $this->_updated();
       }
 
     }
-    
+
+    /**
+     * Add Body Classes.
+     *
+     *
+     * * external-referrer Added when visitor is new to the site.
+     * * internal-referrer Added when visitor opened current view after being referred.
+     *
+     * @param $class
+     * @return array
+     */
+    public function body_class( $class ) {
+      return array_merge( $class, array( is_external_referrer() ? 'external-referrer' : 'internal-referrer' ) );
+    }
+
     /**
      * On settings init we also merge structure with global network settings
      *

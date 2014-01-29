@@ -32,3 +32,20 @@ if( !function_exists( 'wp_festival' ) ) {
   }
 }
 
+if( !function_exists( 'is_external_referrer' ) ) {
+
+  /**
+   * Detect if Visitor is browing or coming in.
+   *
+   * @example
+   *
+   *      if( is_external_referrer() ) {
+   *        die( 'new fucking guy' );
+   *      }
+   *
+   * @return bool
+   */
+  function is_external_referrer() {
+    return strpos( wp_get_referer(), home_url() ) === 0 ? true : false;
+  }
+}
