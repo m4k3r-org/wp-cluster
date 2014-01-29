@@ -80,15 +80,9 @@ namespace UsabilityDynamics {
       $this->version  = wp_get_theme()->get( 'Version' );
 
       // Initialize Settings.
-      $this->settings(array(
-        'key' => 'festival',
-        'fields' => array(),
-        'data' => array(
-          'id' => $this->id,
-          'version' => $this->version,
-          'domain' => $this->domain
-        )
-      ));
+      $this->settings();
+      
+      //echo "<pre>"; print_r( $this->get() ); echo "</pre>";die();
       
       // Declare Public Scripts.
       $this->scripts(array(
@@ -101,16 +95,6 @@ namespace UsabilityDynamics {
         'app' => get_stylesheet_directory() . '/styles/app.css',
         'app.admin' => get_stylesheet_directory() . '/styles/app.admin.css',
         'content' => get_stylesheet_directory() . '/styles/content.css'
-      ));
-
-      // Configure Post Types and Meta.
-      $this->structure(array(
-        'artist' => array(
-          'type' => 'post'
-        ),
-        'location' => array(
-          'type' => 'post'
-        )
       ));
 
       // Configure API Methods.
@@ -469,8 +453,8 @@ namespace UsabilityDynamics {
      */
     public function init() {
 
-      // Register Custom Psot Types and set their taxonomies
-      $this->register_post_types_and_taxonomies();
+      // Register Custom Post Types and set their taxonomies
+      $this->structure();
 
       // Sync 'Social Streams' data with social networks
       $this->sync_streams();
@@ -491,25 +475,6 @@ namespace UsabilityDynamics {
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
-
-    }
-
-    /**
-     * Registers post types and taxonomies
-     *
-     */
-    private function register_post_types_and_taxonomies() {
-      $post_types = array();
-
-      foreach( (array) $this->get( 'post_types' ) as $post_type ) {
-        $class = '\UsabilityDynamics\Festival\Post_Type_' . ucfirst( $post_type );
-        if( class_exists( $class ) ) {
-          $object = new $class;
-          $post_types[ $object->object_type ] = $object;
-        }
-      }
-
-      $this->set( 'post_types', $post_types );
 
     }
 
