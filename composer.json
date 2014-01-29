@@ -23,6 +23,6 @@
     "UsabilityDynamics/wp-meta-box": "master"
   },
   "autoload": {
-    "classmap": [ "lib/*.php" ]
+    "classmap": [ "lib/" ]
   }
 }
