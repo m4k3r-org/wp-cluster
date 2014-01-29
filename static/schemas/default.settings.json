@@ -1,6 +1,4 @@
 {
-  "name": "Festival Schema",
-  "version": "0.0.1",
   "configuration": {
     "color_schema": "default",
     "custom_colors": {},
