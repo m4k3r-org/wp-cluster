@@ -2,7 +2,7 @@
  * Application Loader
  *
  */
-define( [ 'festival.locale', 'festival.model', 'jquery', 'skrollr' ], function( locale, model, jQuery ) {
+define( [ 'festival.locale', 'festival.model', 'jquery', 'skrollr', 'bootstrap' ], function( locale, model, jQuery ) {
   console.log( 'wp-festival', 'loaded' );
 
   // All events, functionality should be added here
