@@ -1,10 +1,10 @@
 <?php
 /**
- * Carrington Builder
- *
- * @version 0.1.0
- * @author peshkov@UD
- * @namespace UsabilityDynamics
+ * Contains methods for customizing the theme customization screen.
+ * 
+ * @link http://codex.wordpress.org/Theme_Customization_API
+ * @since 0.1.0
+ * author peshkov@UD
  */
 namespace UsabilityDynamics\Festival {
 
