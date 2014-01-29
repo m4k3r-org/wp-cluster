@@ -7,37 +7,19 @@
 
 # Cluster Mimes BEGIN
 <IfModule mod_mime.c>
-
-  # Audio
+  AddEncoding gzip                                    svgz
   AddType audio/mp4                                   m4a f4a f4b
   AddType audio/ogg                                   oga ogg
-
-  # JavaScript
   AddType application/javascript                      js
   AddType application/json                            json
-
-  # Video
   AddType video/mp4                                   mp4 m4v f4v f4p
   AddType video/ogg                                   ogv
   AddType video/webm                                  webm
   AddType video/x-flv                                 flv
-
-  # Web fonts
   AddType application/font-woff                       woff
   AddType application/vnd.ms-fontobject               eot
-
-  # Browsers usually ignore the font MIME types and sniff the content,
-  # however, Chrome shows a warning if other MIME types are used for the
-  # following fonts.
   AddType application/x-font-ttf                      ttc ttf
   AddType font/opentype                               otf
-
-  # Make SVGZ fonts work on iPad:
-  # https://twitter.com/FontSquirrel/status/14855840545
-  AddType     image/svg+xml                           svg svgz
-  AddEncoding gzip                                    svgz
-
-  # Other
   AddType application/octet-stream                    safariextz
   AddType application/x-chrome-extension              crx
   AddType application/x-opera-extension               oex
@@ -51,7 +33,6 @@
   AddType text/vtt                                    vtt
   AddType text/x-component                            htc
   AddType text/x-vcard                                vcf
-
 </IfModule>
 # Cluster Mimes END
 
@@ -70,7 +51,6 @@
 
 # Cluster Theme BEGIN
 <IfModule mod_rewrite.c>
-  #RewriteRule themes/k-boom/(.*)$ themes/rockstar/images/legacy/$1 [L]
   RewriteRule ^wp-content/themes/(.*)$ themes/$1 [L]
 </IfModule>
 # Cluster Theme END
@@ -81,9 +61,6 @@
   RewriteRule ^wp-admin(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
   RewriteRule ^wp-includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
   RewriteRule ^includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
-
-  #RewriteRule ^vendor/wordpress/core/wp-login.php /manage/login [R=301,L]
-  #RewriteRule ^manage$ /vendor/wordpress/core/wp-admin [R=301,L]
   RewriteRule ^wp-signup.php$ /vendor/wordpress/core/wp-signup.php$1 [L]
   RewriteRule ^manage/login/$ /vendor/wordpress/core/wp-login.php [L]
   RewriteRule ^manage/login$ /vendor/wordpress/core/wp-login.php [L]
@@ -108,12 +85,8 @@
   RewriteRule ^composer.json$ /index.php [L]
   RewriteRule ^composer.lock$ /index.php [L]
   RewriteRule ^wp-config.php$ /index.php [L]
-
-  # W3 Total Cache Configuration Files.
   RewriteRule ^w3tc-config/master.php$ /index.php [L]
   RewriteRule ^w3tc-config/master-admin.php$ /index.php [L]
-
-  # Application Access.
   RewriteRule ^application/$ /index.php [L]
   RewriteRule ^application/(config|defaults|lib)/(.*)$ /index.php [L]
 </IfModule>
@@ -126,35 +99,18 @@
 
 # Cluster Expires BEGIN
 <IfModule mod_expires.c>
-
   ExpiresActive on
   ExpiresDefault                                      "access plus 1 month"
-
-  # CSS
   ExpiresByType text/css                              "access plus 1 year"
-
-  # Data interchange
   ExpiresByType application/json                      "access plus 0 seconds"
   ExpiresByType application/xml                       "access plus 0 seconds"
   ExpiresByType text/xml                              "access plus 0 seconds"
-
-  # Favicon (cannot be renamed!)
   ExpiresByType image/x-icon                          "access plus 1 week"
-
-  # HTML components (HTCs)
   ExpiresByType text/x-component                      "access plus 1 month"
-
-  # HTML
   ExpiresByType text/html                             "access plus 0 seconds"
-
-  # JavaScript
   ExpiresByType application/javascript                "access plus 1 year"
-
-  # Manifest files
   ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
   ExpiresByType text/cache-manifest                   "access plus 0 seconds"
-
-  # Media
   ExpiresByType audio/ogg                             "access plus 1 month"
   ExpiresByType image/gif                             "access plus 1 month"
   ExpiresByType image/jpeg                            "access plus 1 month"
@@ -162,18 +118,13 @@
   ExpiresByType video/mp4                             "access plus 1 month"
   ExpiresByType video/ogg                             "access plus 1 month"
   ExpiresByType video/webm                            "access plus 1 month"
-
-  # Web feeds
   ExpiresByType application/atom+xml                  "access plus 1 hour"
   ExpiresByType application/rss+xml                   "access plus 1 hour"
-
-  # Web fonts
   ExpiresByType application/font-woff                 "access plus 1 month"
   ExpiresByType application/vnd.ms-fontobject         "access plus 1 month"
   ExpiresByType application/x-font-ttf                "access plus 1 month"
   ExpiresByType font/opentype                         "access plus 1 month"
   ExpiresByType image/svg+xml                         "access plus 1 month"
-
 </IfModule>
 # Cluster Expires END
 
