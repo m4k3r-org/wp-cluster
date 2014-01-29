@@ -803,18 +803,18 @@
         //overlay click
         if( _this.FooBox.options.closeOnOverlayClick == true ) {
           _this.element.unbind( 'click.foobox' ).bind( 'click.foobox', function( e ) {
-              // the option is checked as well as it can be disabled during run time.
-              if( _this.FooBox.options.closeOnOverlayClick == true && $( e.target ).is( '.fbx-modal' ) ) {
-                _this.close();
-              }
-            } );
+            // the option is checked as well as it can be disabled during run time.
+            if( _this.FooBox.options.closeOnOverlayClick == true && $( e.target ).is( '.fbx-modal' ) ) {
+              _this.close();
+            }
+          } );
         }
         //bind action buttons
         _this.element.find( '.fbx-close' ).unbind( 'click.foobox' ).bind( 'click.foobox',function( e ) {
-            e.preventDefault();
-            _this.close();
-            return false;
-          } ).end().find( '.fbx-prev' ).unbind( 'click.foobox' ).bind( 'click.foobox',function( e ) {
+          e.preventDefault();
+          _this.close();
+          return false;
+        } ).end().find( '.fbx-prev' ).unbind( 'click.foobox' ).bind( 'click.foobox',function( e ) {
             e.preventDefault();
             _this.prev();
             return false;
@@ -879,7 +879,7 @@
 
       next.hide().css( 'opacity', '0' );
 
-      function handleError ( err ) {
+      function handleError( err ) {
         _this.loaderTimeout.stop();
         _this.element.find( '.fbx-loader' ).hide();
 
@@ -1000,7 +1000,7 @@
           iw = 100;
         }
 
-        function finish ( width, height ) {
+        function finish( width, height ) {
           _this.FooBox.raise( 'foobox.afterResize', { 'modal': _this.element, 'item': item } );
           if( $.isFunction( success ) ) {
             success( new FooBox.Size( width, height ) );
@@ -1357,9 +1357,9 @@
         if( (_this.items.array.length > 0 && !reinit) || (_this.element.is( _this.options.selector ) && !_this.element.is( _this.options.excludes ) && _this.items.add( _this.element )) ) {
           _this.element.unbind( 'click.item' ).bind( 'click.item', _this.items.clicked );
         } else {
-          _this.element.find( _this.options.selector ).not( _this.options.excludes ).unbind( 'click.item' ).filter( function() {
-              return _this.items.add( this );
-            } ).bind( 'click.item', _this.items.clicked );
+          _this.element.find( _this.options.selector ).not( _this.options.excludes ).unbind( 'click.item' ).filter(function() {
+            return _this.items.add( this );
+          } ).bind( 'click.item', _this.items.clicked );
         }
         _this.items.rel( _this.element );
       },
@@ -1372,9 +1372,9 @@
         var rel = element.attr( 'rel' ), len = typeof _this.options.rel == 'string' ? _this.options.rel.length : 0;
 
         if( rel && rel.length >= len && rel.substr( 0, len ) == _this.options.rel ) {
-          $( '[rel="' + rel + '"]' ).not( _this.options.excludes ).not( element ).unbind( 'click.item' ).filter( function() {
-              return _this.items.add( this );
-            } ).bind( 'click.item', _this.items.clicked );
+          $( '[rel="' + rel + '"]' ).not( _this.options.excludes ).not( element ).unbind( 'click.item' ).filter(function() {
+            return _this.items.add( this );
+          } ).bind( 'click.item', _this.items.clicked );
         }
       },
       /**
@@ -1863,14 +1863,14 @@
     this.update = function() {
       var item = _this.FooBox.items.current(), $caption = _this.FooBox.modal.element.find( '.fbx-caption' );
 
-      $caption.html( item.caption ).find( 'a[href^="#"]' ).filter( function() {
-          var identifier = $( this ).attr( 'href' ), target = $( identifier ), fbx = target.data( 'foobox_instance' );
-          if( target.length > 0 && fbx instanceof FooBox.Instance ) {
-            $( this ).data( 'hrefTarget', target.get( 0 ) );
-            return true;
-          }
-          return false;
-        } ).unbind( 'click.captions' ).bind( 'click.captions', function( e ) {
+      $caption.html( item.caption ).find( 'a[href^="#"]' ).filter(function() {
+        var identifier = $( this ).attr( 'href' ), target = $( identifier ), fbx = target.data( 'foobox_instance' );
+        if( target.length > 0 && fbx instanceof FooBox.Instance ) {
+          $( this ).data( 'hrefTarget', target.get( 0 ) );
+          return true;
+        }
+        return false;
+      } ).unbind( 'click.captions' ).bind( 'click.captions', function( e ) {
           e.preventDefault();
           var target = $( this ).data( 'hrefTarget' );
           var fbx = $( target ).data( 'foobox_instance' );
@@ -2953,11 +2953,11 @@
       _this.autostart = false;
       _this.running = true;
       _this.FooBox.modal.element.find( '.fbx-progress' ).css( 'width', _this.paused + '%' ).show().animate( { 'width': '100%' }, _this.remaining, 'linear', function() {
-          _this.paused = 0;
-          _this.remaining = _this.FooBox.options.slideshow.timeout;
-          _this.autostart = true;
-          _this.FooBox.modal.next( _this.FooBox.options.slideshow.imagesOnly === true ? 'image' : null );
-        } );
+        _this.paused = 0;
+        _this.remaining = _this.FooBox.options.slideshow.timeout;
+        _this.autostart = true;
+        _this.FooBox.modal.next( _this.FooBox.options.slideshow.imagesOnly === true ? 'image' : null );
+      } );
       _this.FooBox.modal.element.find( '.fbx-play' ).toggleClass( 'fbx-play fbx-pause' );
       _this.FooBox.raise( 'foobox.slideshowStart' );
     };

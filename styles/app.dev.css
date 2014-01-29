@@ -1,12 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Candal);
 
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
-/*--------------------------------------------------------------
-We import bootstrap.less in order to take advantage of its classes and mixins.
-AFTER THAT we import the variables.less which is Bootstrap variables.less
-that we copied and altered in order to override the original variables and make our custom bootstrap skin.
-This way we leave Bootstrap unharmed.
---------------------------------------------------------------*/
 /*! normalize.css v2.1.3 | MIT License | git.io/normalize */
 article,
 aside,
@@ -7420,82 +7414,79 @@ span.hr {
 /* ==============
  Home Header
 ============== */
-#poster {
-  background-color: #40403f;
-}
-#poster h1,
-#poster h2,
-#poster h3,
-#poster h4,
-#poster h5,
-#poster h6,
-#poster span,
-#poster div {
+.banner-poster h1,
+.banner-poster h2,
+.banner-poster h3,
+.banner-poster h4,
+.banner-poster h5,
+.banner-poster h6,
+.banner-poster span,
+.banner-poster div {
   text-transform: uppercase;
   font-weight: 700;
 }
-#poster h1 span.icon,
-#poster h2 span.icon,
-#poster h3 span.icon,
-#poster h4 span.icon,
-#poster h5 span.icon,
-#poster h6 span.icon {
+.banner-poster h1 span.icon,
+.banner-poster h2 span.icon,
+.banner-poster h3 span.icon,
+.banner-poster h4 span.icon,
+.banner-poster h5 span.icon,
+.banner-poster h6 span.icon {
   margin-right: 4px;
 }
-#poster .container {
+.banner-poster .container {
   padding: 110px 0;
 }
-#poster .container h1,
-#poster .container h2,
-#poster .container h3,
-#poster .container h4,
-#poster .container h5,
-#poster .container h6 {
+.banner-poster .container h1,
+.banner-poster .container h2,
+.banner-poster .container h3,
+.banner-poster .container h4,
+.banner-poster .container h5,
+.banner-poster .container h6 {
   text-align: center;
 }
-#poster .container h6 {
+.banner-poster .container h6 {
   font-size: 150%;
 }
-#poster .container .logo {
+.banner-poster .container .logo {
   text-align: center;
 }
-#poster .container .logo img {
+.banner-poster .container .logo img {
   display: inline-block;
 }
-#poster .container .event-time {
+.banner-poster .container .event-time {
   text-align: center;
 }
-#poster .container .event-time span {
+.banner-poster .container .event-time span {
   font-size: 400%;
   line-height: 50%;
   font-family: "Candal", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-#poster .container .event-place {
+.banner-poster .container .event-place {
   text-align: left;
 }
-#poster .container .event-place span {
+.banner-poster .container .event-place span {
   display: block;
   text-align: left;
 }
-#poster .container .event-place span.label {
+.banner-poster .container .event-place span.label {
   padding: 0 0 10px 0;
 }
-#poster .container .event-place span.value {
+.banner-poster .container .event-place span.value {
   text-transform: none;
 }
-#poster .container .right-header h6 {
+.banner-poster .container .right-header h6 {
   font-size: 125%;
   padding-top: 10px;
   margin-bottom: 40px;
 }
-#poster .container .right-header span.hr {
+.banner-poster .container .right-header span.hr {
   margin-top: 40px;
   margin-bottom: 40px;
 }
-#poster .container .action-slider {
+.banner-poster .container .action-slider {
   text-align: center;
 }
-#poster .container .action-slider .btn {
+.banner-poster .container .action-slider .btn {
   border-radius: 0;
   font-size: 225%;
   padding: 6px 40px 10px;
@@ -8087,9 +8078,6 @@ footer p {
   width: 12px;
   height: 12px;
 }
-#poster {
-  background: url("../images/temp/header-bg.jpg") center center repeat;
-}
 /* =Responsive: Large desktop and up
 -------------------------------------------------------------- */
 @media (min-width: 1200px) {
@@ -8119,13 +8107,10 @@ footer p {
   .head .bottom-line {
     display: none !important;
   }
-  #poster {
-    background: url("../images/mobile-poster-bg.jpg") center center repeat;
-  }
-  #poster .event-place {
+  .banner-poster .event-place {
     text-align: center !important;
   }
-  #poster .event-place span {
+  .banner-poster .event-place span {
     text-align: center !important;
   }
 }

@@ -64,9 +64,9 @@ namespace UsabilityDynamics {
     public function __construct() {
 
       // Configure Properties.
-      $this->version  = wp_get_theme()->get( 'Version' );
       $this->id       = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => ':' ));
       $this->domain   = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ));
+      $this->version  = wp_get_theme()->get( 'Version' );
 
       // Configure Theme.
       $this->initialize( array(
@@ -184,7 +184,6 @@ namespace UsabilityDynamics {
         'rows' => array()
       ));
 
-
       // Core Actions
       add_action( 'init', array( $this, 'init' ), 100 );
       add_action( 'after_setup_theme', array( $this, 'setup' ));
@@ -194,7 +193,17 @@ namespace UsabilityDynamics {
       add_action( 'widgets_init', array( $this, 'widgets_init' ), 100 );
       add_action( 'wp_head', array( $this, 'wp_head' ));
       add_action( 'wp_footer', array( $this, 'wp_footer' ));
+
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ));
+
+      // Setup the Theme Customizer settings and controls...
+      // add_action( 'customize_register' , array( 'MyTheme_Customize' , 'register' ) );
+
+      // Output custom CSS to live site
+      // add_action( 'wp_head' , array( 'MyTheme_Customize' , 'header_output' ) );
+
+      // Enqueue live preview javascript in Theme Customizer admin screen
+      // add_action( 'customize_preview_init' , array( 'MyTheme_Customize' , 'live_preview' ) );
 
       return $this;
 
@@ -273,15 +282,15 @@ namespace UsabilityDynamics {
     public function nav( $name = null, $location = null ) {
 
       return wp_nav_menu( apply_filters( $name, array(
-        'theme_location' => $location ? $location : $name,
-        'menu_class'     => implode( ' ', array_filter( array( 'festival-menu', 'nav', 'navbar-nav', $name, $location ) ) ),
+        'theme_location' => is_string( $location ) ? $location : $name,
+        'depth'          => is_numeric( $location ) ? $location : 2,
+        'menu_class'     => implode( ' ', array_filter( array( 'festival-menu', 'nav', 'navbar-nav', $name, is_string( $location ) ? $location : '' ) ) ),
         'fallback_cb'    => false,
         'container'      => false,
-        'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-        'depth'          => is_numeric( $location ) ? $location : 2,
+        'items_wrap'     => '<ul data-menu="%1$s" class="%2$s">%3$s</ul>',
         'walker'         => new \UsabilityDynamics\Theme\Nav_Menu,
-        'echo'           => false )
-      ));
+        'echo'           => false
+      )));
 
     }
     /**
@@ -366,13 +375,13 @@ namespace UsabilityDynamics {
       $this->sync_streams();
 
       // Register scripts
-      wp_register_script( $this->domain . '-require', get_template_directory_uri() . '/scripts/require.js', array(), $this->version, true );
+      // wp_register_script( $this->domain . '-require', get_template_directory_uri() . '/scripts/require.js', array(), $this->version, true );
 
       // Register styles
-      wp_register_style( $this->domain . '-app', defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? get_template_directory_uri() . '/styles/app.dev.css' : get_template_directory_uri() . '/styles/app.css', array(), $this->version, 'all' );
+      wp_register_style( 'app', get_template_directory_uri() . '/styles/app.css', array(), $this->version, 'all' );
 
       // Register Color schema
-      wp_register_style( $this->domain . '-color', get_template_directory_uri() . '/styles/' . $this->get( 'configuration.color_schema' ) . '.css', array( $this->domain . '-app' ), $this->version, 'all' );
+      // wp_register_style( $this->domain . '-color', get_template_directory_uri() . '/styles/' . $this->get( 'configuration.color_schema' ) . '.css', array( $this->domain . '-app' ), $this->version, 'all' );
 
       // Add custom editor styles
       add_editor_style( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'styles/editor-style.dev.css' : 'styles/editor-style.css' );
@@ -409,22 +418,22 @@ namespace UsabilityDynamics {
 
       // Enable Twitter
       if( class_exists( '\UsabilityDynamics\Festival\Sync_Twitter' ) ) {
-        $tw = new Sync_Twitter(
-          array(
-            'id' => 'twitter',
-            'interval' => false,
-            'post_type' => 'social',
-            'oauth' => array(
-              'oauth_access_token' => '101485804-shGXjN0D43uU7CtCBHaML5K8uycHqgvEMd5gHtrY',
-              'oauth_access_token_secret' => 'YcCOXWu1bidAv1APgRAd8ATNBl2UmTDXFkoGzicJny5aw',
-              'consumer_key' => 'yZUAnH7GkJGtCVDpjD5w',
-              'consumer_secret' => 'j8o75Fd5MUCtPYWCH9xV4X0AT8qPECcwdIpNl9sHCU',
-            ),
-            'request' => array(
-              'screen_name' => 'UMESouthPadre',
-            )
+
+        $tw = new Sync_Twitter(array(
+          'id' => 'twitter',
+          'interval' => false,
+          'post_type' => 'social',
+          'oauth' => array(
+            'oauth_access_token' => '101485804-shGXjN0D43uU7CtCBHaML5K8uycHqgvEMd5gHtrY',
+            'oauth_access_token_secret' => 'YcCOXWu1bidAv1APgRAd8ATNBl2UmTDXFkoGzicJny5aw',
+            'consumer_key' => 'yZUAnH7GkJGtCVDpjD5w',
+            'consumer_secret' => 'j8o75Fd5MUCtPYWCH9xV4X0AT8qPECcwdIpNl9sHCU',
+          ),
+          'request' => array(
+            'screen_name' => 'UMESouthPadre',
           )
-        );
+        ));
+
       }
 
     }
@@ -448,11 +457,11 @@ namespace UsabilityDynamics {
     public function wp_enqueue_scripts() {
 
       // Require will load app.js and other Require.js modules
-      wp_enqueue_script( $this->domain . '-require' );
+      // wp_enqueue_script( $this->domain . '-require' );
 
       // Compiled styles which include Bootstrap and custom styles.
-      wp_enqueue_style( $this->domain . '-app' );
-      wp_enqueue_style( $this->domain . '-color' );
+      wp_enqueue_style( 'app' );
+      // wp_enqueue_style( $this->domain . '-color' );
 
     }
 

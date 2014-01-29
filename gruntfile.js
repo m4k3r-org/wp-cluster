@@ -7,61 +7,12 @@
  */
 module.exports = function( grunt ) {
 
-  grunt.initConfig( {
+  grunt.initConfig({
 
-    // Load configuration about project
+    // LESS Compilation.
     pkg: grunt.file.readJSON( 'composer.json' ),
 
-    uglify: {
-      'production': {
-        options: {
-          mangle: false,
-          beautify: false
-        },
-        files: {
-          'scripts/app.js': [ 'scripts/app.dev.js' ],
-          'scripts/require.js': [ 'vendor/usabilitydynamics/lib-utility/scripts/require.js' ],
-          'scripts/utility/jquery.countdown.js': [ 'scripts/src/jquery.countdown.js' ],
-          'scripts/utility/skrollr.js': [ 'scripts/src/skrollr.js' ],
-          'scripts/utility/sticky.js': [ 'scripts/src/sticky.js' ]
-        }
-      }
-    },
-
-    requirejs: {
-      fooxbox: {
-        options: {
-          name: 'foobox',
-          paths: {
-            "foobox": "scripts/src/foobox.dev"
-          },
-          include: [ 'foobox' ],
-          out: 'scripts/utility/foobox.js',
-          skipModuleInsertion: true,
-          wrap: {
-            start: "define( function(require, exports, module) {",
-            end: "});"
-          }
-        }
-      }
-    },
-
-    // Documentation
-    yuidoc: {
-      compile: {
-        name: '<%= pkg.name %>',
-        description: '<%= pkg.description %>',
-        version: '<%= pkg.version %>',
-        url: '<%= pkg.homepage %>',
-        logo: 'http://media.usabilitydynamics.com/logo.png',
-        options: {
-          paths: './',
-          outdir: 'static/codex'
-        }
-      }
-    },
-
-    // Less Compilation
+    // LESS Compilation.
     less: {
       'app.css': {
         options: {
@@ -112,7 +63,54 @@ module.exports = function( grunt ) {
 
     },
 
-    // Watcher
+    // Run Mocha Tests.
+    mochacli: {
+      options: {
+        require: [ 'should' ],
+        reporter: 'list',
+        ui: 'exports'
+      },
+      all: [ 'test/*.js' ]
+    },
+
+    // Minify all JS Files.
+    uglify: {
+      production: {
+        options: {
+          preserveComments: false,
+          wrap: false
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'scripts/src',
+            src: [ '*.js' ],
+            dest: 'scripts'
+          }
+        ]
+      }
+    },
+
+    // Require JS Tasks.
+    requirejs: {
+      fooxbox: {
+        options: {
+          name: 'foobox',
+          paths: {
+            "foobox": "scripts/src/foobox.dev"
+          },
+          include: [ 'foobox' ],
+          out: 'scripts/utility/foobox.js',
+          skipModuleInsertion: true,
+          wrap: {
+            start: "define( function(require, exports, module) {",
+            end: "});"
+          }
+        }
+      }
+    },
+
+    // Monitor.
     watch: {
       options: {
         interval: 1000,
@@ -128,7 +126,7 @@ module.exports = function( grunt ) {
         files: [
           'gruntfile.js', 'scripts/src/*.js'
         ],
-        tasks: [ 'uglify', 'requirejs' ]
+        tasks: [ 'uglify' ]
       },
       docs: {
         files: [
@@ -138,6 +136,7 @@ module.exports = function( grunt ) {
       }
     },
 
+    // Markdown Generation.
     markdown: {
       all: {
         files: [
@@ -158,36 +157,57 @@ module.exports = function( grunt ) {
           }
         }
       }
+    },
+
+    // Remove Things.
+    clean: [
+      "vendor"
+    ],
+
+    // Documentation
+    yuidoc: {
+      compile: {
+        name: '<%= pkg.name %>',
+        description: '<%= pkg.description %>',
+        version: '<%= pkg.version %>',
+        url: '<%= pkg.homepage %>',
+        logo: 'http://media.usabilitydynamics.com/logo.png',
+        options: {
+          paths: './',
+          outdir: 'static/codex'
+        }
+      }
     }
 
-  } );
+  });
 
   // Load tasks
   grunt.loadNpmTasks( 'grunt-component' );
   grunt.loadNpmTasks( 'grunt-component-build' );
-  grunt.loadNpmTasks( 'grunt-markdown' );
   grunt.loadNpmTasks( 'grunt-requirejs' );
+  grunt.loadNpmTasks( 'grunt-markdown' );
+  grunt.loadNpmTasks( 'grunt-mocha-cli' );
   grunt.loadNpmTasks( 'grunt-spritefiles' );
   grunt.loadNpmTasks( 'grunt-contrib-symlink' );
   grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
   grunt.loadNpmTasks( 'grunt-contrib-uglify' );
   grunt.loadNpmTasks( 'grunt-contrib-watch' );
   grunt.loadNpmTasks( 'grunt-contrib-less' );
-  //grunt.loadNpmTasks( 'grunt-contrib-concat' );
-  //grunt.loadNpmTasks( 'grunt-contrib-clean' );
-  //grunt.loadNpmTasks( 'grunt-shell' );
+  grunt.loadNpmTasks( 'grunt-contrib-concat' );
+  grunt.loadNpmTasks( 'grunt-contrib-clean' );
+  grunt.loadNpmTasks( 'grunt-shell' );
 
   // Build Assets
-  grunt.registerTask( 'default', [ 'yuidoc', 'uglify', 'markdown', 'less', 'requirejs' ] );
+  grunt.registerTask( 'default', [ 'yuidoc', 'uglify', 'markdown', 'less' ] );
 
   // Install environment
-  grunt.registerTask( 'install', [ 'yuidoc', 'uglify', 'markdown', 'less', 'requirejs' ] );
+  grunt.registerTask( 'install', [ 'yuidoc', 'uglify', 'markdown', 'less' ] );
 
   // Update Environment
-  grunt.registerTask( 'update', [ 'yuidoc', 'uglify', 'markdown', 'less', 'requirejs' ] );
+  grunt.registerTask( 'update', [ 'yuidoc', 'uglify', 'markdown', 'less' ] );
 
   // Prepare distribution
-  grunt.registerTask( 'dist', [ 'yuidoc', 'uglify', 'markdown', 'less', 'requirejs' ] );
+  grunt.registerTask( 'dist', [ 'yuidoc', 'uglify', 'markdown', 'less' ] );
 
   // Update Documentation
   grunt.registerTask( 'doc', [ 'yuidoc', 'markdown' ] );

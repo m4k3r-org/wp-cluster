@@ -8,7 +8,6 @@
     "url": "http://UsabilityDynamics.com"
   },
   "license": "GPL-2.0",
-  "license_url": "http://www.gnu.org/licenses/gpl-2.0.html",
   "tags": [ "one-column", "two-column", "translation-ready", "responsive", "wordpress", "theme" ],
   "repositories": [
     {
@@ -24,6 +23,6 @@
     "UsabilityDynamics/wp-meta-box": "master"
   },
   "autoload": {
-    "classmap": [ "lib" ]
+    "classmap": [ "lib/*.php" ]
   }
 }
