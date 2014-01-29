@@ -82,8 +82,6 @@ namespace UsabilityDynamics {
       // Initialize Settings.
       $this->settings();
       
-      //echo "<pre>"; print_r( $this->get() ); echo "</pre>";die();
-      
       // Declare Public Scripts.
       $this->scripts(array(
         'app' => get_stylesheet_directory() . '/scripts/app.js',
@@ -219,6 +217,24 @@ namespace UsabilityDynamics {
         $this->_updated();
       }
 
+    }
+    
+    /**
+     * On settings init we also merge structure with global network settings
+     *
+     */
+    public function settings( $args = array(), $data = array() ) {
+      parent::settings( $args, $data );
+      
+      $file = WP_BASE_DIR . '/static/schemas/default.settings.json';
+      
+      if( file_exists( $file ) ) {
+        $settings = \UsabilityDynamics\Utility::l10n_localize( json_decode( file_get_contents( $file ), true ) );
+        if( !empty( $settings[ 'structure' ] ) ) {
+          $this->set( 'structure', $settings[ 'structure' ] );
+        }
+      }
+      
     }
 
     private function _updated( $type = '' ) {
