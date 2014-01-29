@@ -82,19 +82,6 @@ namespace UsabilityDynamics {
       // Initialize Settings.
       $this->settings();
       
-      // Declare Public Scripts.
-      $this->scripts(array(
-        'app' => get_stylesheet_directory() . '/scripts/app.js',
-        'app.admin' => get_stylesheet_directory() . '/scripts/app.admin.js'
-      ));
-
-      // Declare Public Styles.
-      $this->styles(array(
-        'app' => get_stylesheet_directory() . '/styles/app.css',
-        'app.admin' => get_stylesheet_directory() . '/styles/app.admin.css',
-        'content' => get_stylesheet_directory() . '/styles/content.css'
-      ));
-
       // Configure API Methods.
       $this->api(array(
         'search.AutoSuggest' => array(
@@ -184,12 +171,8 @@ namespace UsabilityDynamics {
         'id'      => 'festival.model',
         'cache'   => 'private, max-age: 0',
         'vary'    => 'user-agent, x-client-type',
-        'base'    => home_url( '/scripts' ),
-        'data'    => $this->get_model(),
-        'paths'   => array(
-          'app'       => home_url( '/scripts/app' ),
-          'app.admin' => home_url( '/scripts/app.admin' )
-        )
+        'base'    => home_url( '/assets/scripts' ),
+        'data'    => $this->get_model()
       ));
 
       // Register Theme Locale Model.
@@ -485,19 +468,10 @@ namespace UsabilityDynamics {
       // Sync 'Social Streams' data with social networks
       $this->sync_streams();
 
-      // Register scripts
-      //wp_register_script( 'udx', '//cdn.udx.io/udx.requires.js', array(), '1.0.0', true );
+      // Register Script and Styles.
+      wp_register_style( 'app', home_url( '/assets/styles/app.css' ), array(), $this->version, 'all' );
 
-      // wp_register_script( $this->domain . '-require', get_template_directory_uri() . '/scripts/require.js', array(), $this->version, true );
-
-      // Register styles
-      wp_register_style( 'app', get_template_directory_uri() . '/styles/app.css', array(), $this->version, 'all' );
-
-      // Register Color schema
-      // wp_register_style( $this->domain . '-color', get_template_directory_uri() . '/styles/' . $this->get( 'configuration.color_schema' ) . '.css', array( $this->domain . '-app' ), $this->version, 'all' );
-
-      // Add custom editor styles
-      add_editor_style( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'styles/editor-style.dev.css' : 'styles/editor-style.css' );
+      //add_editor_style( home_url( '/assets/editor-style.css' ) );
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
@@ -550,14 +524,7 @@ namespace UsabilityDynamics {
      */
     public function wp_enqueue_scripts() {
 
-      wp_enqueue_script( 'udx' );
-
-      // Require will load app.js and other Require.js modules
-      // wp_enqueue_script( $this->domain . '-require' );
-
-      // Compiled styles which include Bootstrap and custom styles.
       wp_enqueue_style( 'app' );
-      // wp_enqueue_style( $this->domain . '-color' );
 
     }
 
