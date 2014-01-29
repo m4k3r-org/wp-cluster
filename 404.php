@@ -19,14 +19,14 @@ get_template_part( 'templates/page/header', get_post_type() );
       <article class="article-404">
 
         <div class="alert alert-warning">
-          <?php _e( 'Sorry, but the page you were trying to view does not exist.', $festival->text_domain ); ?>
+          <?php _e( 'Sorry, but the page you were trying to view does not exist.', wp_festival( 'domain' ) ); ?>
         </div>
 
-        <p><?php _e( 'It looks like this was the result of either:', $festival->text_domain ); ?></p>
+        <p><?php _e( 'It looks like this was the result of either:', wp_festival( 'domain' ) ); ?></p>
 
         <ul>
-          <li><?php _e( 'a mistyped address', $festival->text_domain ); ?></li>
-          <li><?php _e( 'an out-of-date link', $festival->text_domain ); ?></li>
+          <li><?php _e( 'a mistyped address', wp_festival( 'domain' ) ); ?></li>
+          <li><?php _e( 'an out-of-date link', wp_festival( 'domain' ) ); ?></li>
         </ul>
 
       </article>

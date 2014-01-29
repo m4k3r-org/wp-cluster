@@ -18,17 +18,17 @@ namespace UsabilityDynamics\Festival {
         
         $this->args = array(
           'labels' => array(
-            'name' => __( 'Social Streams', $festival->text_domain ),
-            'all_items' => __( 'All Socials', $festival->text_domain ),
-            'singular_name' => __( 'Social', $festival->text_domain ),
-            'add_new' => __( 'Add Social', $festival->text_domain ),
-            'add_new_item' => __( 'Add New Social', $festival->text_domain ),
-            'edit_item' => __( 'Edit Social', $festival->text_domain ),
-            'new_item' => __( 'New Social', $festival->text_domain ),
-            'view_item' => __( 'View Social', $festival->text_domain ),
-            'search_items' => __( 'Search Socials', $festival->text_domain ),
-            'not_found' => __( 'No Records found', $festival->text_domain ),
-            'not_found_in_trash' => __( 'No Records found in Trash', $festival->text_domain ),
+            'name' => __( 'Social Streams', wp_festival( 'domain' ) ),
+            'all_items' => __( 'All Socials', wp_festival( 'domain' ) ),
+            'singular_name' => __( 'Social', wp_festival( 'domain' ) ),
+            'add_new' => __( 'Add Social', wp_festival( 'domain' ) ),
+            'add_new_item' => __( 'Add New Social', wp_festival( 'domain' ) ),
+            'edit_item' => __( 'Edit Social', wp_festival( 'domain' ) ),
+            'new_item' => __( 'New Social', wp_festival( 'domain' ) ),
+            'view_item' => __( 'View Social', wp_festival( 'domain' ) ),
+            'search_items' => __( 'Search Socials', wp_festival( 'domain' ) ),
+            'not_found' => __( 'No Records found', wp_festival( 'domain' ) ),
+            'not_found_in_trash' => __( 'No Records found in Trash', wp_festival( 'domain' ) ),
             'parent_item_colon' => ''
           ),
           'public' => true,
@@ -39,16 +39,16 @@ namespace UsabilityDynamics\Festival {
         
         $this->meta = array(
           array( 
-            'name' => __( 'Network', $festival->text_domain ),
+            'name' => __( 'Network', wp_festival( 'domain' ) ),
             'id' => 'network',
             'type' => 'select_advanced',
             'options' => array(
-              'facebook' => __( 'Facebook', $festival->text_domain ),
-              'instagram' => __( 'Instagram', $festival->text_domain ),
-              'twitter' => __( 'Twitter', $festival->text_domain ),
+              'facebook' => __( 'Facebook', wp_festival( 'domain' ) ),
+              'instagram' => __( 'Instagram', wp_festival( 'domain' ) ),
+              'twitter' => __( 'Twitter', wp_festival( 'domain' ) ),
             ),
             'multiple'    => false,
-            'placeholder' => __( 'Select an Item', $festival->text_domain ),
+            'placeholder' => __( 'Select an Item', wp_festival( 'domain' ) ),
             'metabox' => 'network_specific'
           )
         );

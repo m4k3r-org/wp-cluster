@@ -19,6 +19,7 @@
   <body <?php body_class( 'wp-festival' ); ?> style="background-image: url(<?php echo get_background_image(); ?>)" data-post-type="<?php get_post_type(); ?>">
 
     <?php get_template_part( 'templates/aside/banner', get_post_type() ); ?>
+
     <?php get_template_part( 'templates/nav/top', get_post_type() ); ?>
     
     <div class="container-wrap theme-showcase">

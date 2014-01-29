@@ -58,6 +58,17 @@ namespace UsabilityDynamics {
     /**
      * Class Initializer
      *
+     *    http://umesouthpadre.com/manage/admin-ajax.php?action=main
+     *    http://umesouthpadre.com/manage/admin-ajax.php?action=festival.model
+     *    http://umesouthpadre.com/manage/admin-ajax.php?action=main
+     *
+     *
+     * @example
+     *
+     *    // JavaScript
+     *    require( 'festival.model' )
+     *    require( 'festival.settings' )
+     *
      * @author Usability Dynamics
      * @since 0.1.0
      */
@@ -150,12 +161,26 @@ namespace UsabilityDynamics {
 
       // Declare Supported Theme Features.
       $this->supports( array(
+        'html5'                => array(),
+        'comment-list'         => array(),
+        'relative-urls'        => array(),
+        'rewrites'             => array(),
+        'bootstrap-grid'       => array(),
+        'bootstrap-top-navbar' => array(),
+        'bootstrap-gallery'    => array(),
+        'nice-search'          => array(),
+        'jquery-cdn'           => array(),
+        'automatic-feed-links' => array(),
+        'post-thumbnails'      => array(),
         'custom-header'        => array(),
         'custom-skins'         => array(),
         'custom-background'    => array(),
         'header-dropdowns'     => array(),
         'header-business-card' => array(),
-        'frontend-editor'      => array()
+        'frontend-editor'      => array(),
+        'saas.udx.io'          => array(),
+        'raas.udx.io'          => array(),
+        'cdn.udx.io'           => array()
       ));
 
       // Enables Customizer for Options.
@@ -184,6 +209,28 @@ namespace UsabilityDynamics {
         'rows' => array()
       ));
 
+      // Register Theme Settings Model.
+      $this->requires(array(
+        'id'      => 'festival.model',
+        'cache'   => 'private, max-age: 0',
+        'vary'    => 'user-agent, x-client-type',
+        'base'    => home_url( '/scripts' ),
+        'data'    => $this->get_model(),
+        'paths'   => array(
+          'app'       => home_url( '/scripts/app' ),
+          'app.admin' => home_url( '/scripts/app.admin' )
+        )
+      ));
+
+      // Register Theme Locale Model.
+      $this->requires(array(
+        'id'      => 'festival.locale',
+        'cache'   => 'public, max-age: 30000',
+        'vary'    => 'x-user',
+        'base'    => home_url(),
+        'data'    => $this->get_locale()
+      ));
+
       // Core Actions
       add_action( 'init', array( $this, 'init' ), 100 );
       add_action( 'after_setup_theme', array( $this, 'setup' ));
@@ -196,16 +243,64 @@ namespace UsabilityDynamics {
 
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ));
 
-      // Setup the Theme Customizer settings and controls...
-      // add_action( 'customize_register' , array( 'MyTheme_Customize' , 'register' ) );
+    }
 
-      // Output custom CSS to live site
-      // add_action( 'wp_head' , array( 'MyTheme_Customize' , 'header_output' ) );
+    private function _updated( $type = '' ) {
 
-      // Enqueue live preview javascript in Theme Customizer admin screen
-      // add_action( 'customize_preview_init' , array( 'MyTheme_Customize' , 'live_preview' ) );
+      // Recombile LESS.
+      $response = $this->raasRequest( 'build.compileLESS', array(
+        'variables' => array(),
+        'minify' => true,
+        'output' => '/assets/app.css',
+        'files' => array(
+          get_stylesheet_directory_uri() . '/styles/src/app.less',
+          get_stylesheet_directory_uri() . '/styles/src/carousel.less',
+          get_stylesheet_directory_uri() . '/styles/src/variables.less'
+        )
+      ));
 
-      return $this;
+      die( '<pre>' . print_r( $response, true ) . '</pre>' );
+
+    }
+
+    /**
+     * Initial Theme Setup
+     *
+     * @author Usability Dynamics
+     * @since 0.1.0
+     */
+    private function get_locale() {
+
+      // Include Translation File.
+      //$locale = include_once $this->get( '_computed.path.root' ) . '/l10n.php';
+
+      $locale = array();
+
+      // Noramlize HTML Strings.
+      foreach( (array) $locale as $key => $value ) {
+
+        if( !is_scalar( $value ) ) {
+          continue;
+        }
+
+        $locale[ $key ] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
+
+      }
+
+      return (array) apply_filters( 'festival:model:locale', $locale );
+
+    }
+
+    private function get_model() {
+
+      $_home_url = parse_url( home_url() );
+
+      return (array) apply_filters( 'festival:model:settings', array(
+        'ajax' => admin_url( 'admin-ajax.php' ),
+        'domain' => trim( $_home_url[ 'host' ] ? $_home_url[ 'host' ] : array_shift( explode( '/', $_home_url[ 'path' ], 2 ) ) ),
+        'permalinks' => get_option( 'permalink_structure' ) == '' ? false : true,
+        'settings' => $this->get(),
+      ));
 
     }
 
@@ -221,37 +316,6 @@ namespace UsabilityDynamics {
       if( is_dir( get_template_directory() . '/static/languages' ) ) {
         load_theme_textdomain( $this->domain, get_template_directory() . '/static/languages' );
       }
-
-      add_theme_support( 'html5' );
-
-      add_theme_support( 'comment-list' );
-
-      // Enable relative URLs
-      add_theme_support( 'root-relative-urls' );
-
-      // Enable URL rewrites
-      add_theme_support( 'rewrites' );
-
-      // Standard Bootstrap grid
-      add_theme_support( 'bootstrap-grid' );
-
-      // Enable Bootstrap's top navbar
-      add_theme_support( 'bootstrap-top-navbar' );
-
-      // Enable Bootstrap's thumbnails component on [gallery]
-      add_theme_support( 'bootstrap-gallery' );
-
-      // Enable /?s= to /search/ redirect
-      add_theme_support( 'nice-search' );
-
-      // Enable to load jQuery from the Google CDN
-      add_theme_support( 'jquery-cdn' );
-
-      // Add default posts and comments RSS feed links to <head>.
-      add_theme_support( 'automatic-feed-links' );
-
-      // This theme uses Featured Images (also known as post thumbnails) for per-post/per-page Custom Header images
-      add_theme_support( 'post-thumbnails' );
 
       // Register Navigation Menus
       register_nav_menu( 'primary', __( 'Primary Menu', $this->domain ));
@@ -375,6 +439,8 @@ namespace UsabilityDynamics {
       $this->sync_streams();
 
       // Register scripts
+      //wp_register_script( 'udx', '//cdn.udx.io/udx.requires.js', array(), '1.0.0', true );
+
       // wp_register_script( $this->domain . '-require', get_template_directory_uri() . '/scripts/require.js', array(), $this->version, true );
 
       // Register styles
@@ -455,6 +521,8 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function wp_enqueue_scripts() {
+
+      wp_enqueue_script( 'udx' );
 
       // Require will load app.js and other Require.js modules
       // wp_enqueue_script( $this->domain . '-require' );
@@ -692,6 +760,55 @@ namespace UsabilityDynamics {
     public function the_bloginfo_name() {
       $name = get_bloginfo( 'name', 'display' );
       echo $name;
+    }
+
+    /**
+     * Make RPC Request.
+     *
+     * @example
+     *
+     *      // Create Import Request.
+     *      $_response = self::raasRequest( 'build.compileLESS', array(
+     *        'asdf' => 'sadfsadfasdfsadf'
+     *      ));
+     *
+     * @param string $method
+     * @param array  $data
+     *
+     * @method raasRequest
+     * @since 5.0.0
+     *
+     * @return array
+     * @author potanin@UD
+     */
+    public function raasRequest( $method = '', $data = array() ) {
+
+      include_once( ABSPATH . WPINC . '/class-IXR.php' );
+      include_once( ABSPATH . WPINC . '/class-wp-http-ixr-client.php' );
+
+      $client = new \WP_HTTP_IXR_Client( 'raas.udx.io', '/rpc/v1', 80, 20 );
+
+      // Set User Agent.
+      $client->useragent = 'WordPress/3.7.1 WP-Property/3.6.1 WP-Festival/' . $this->version;
+
+      // Request Headers.
+      $client->headers = array(
+        'authorization' => 'Basic '. $this->get( 'raas.token' ) . ':' . $this->get( 'raas.session', defined( 'NONCE_KEY' ) ? NONCE_KEY : null ),
+        'x-client-token' => $this->get( 'raas.client', defined( 'AUTH_KEY' ) ? AUTH_KEY : null ),
+        'x-callback-token' => $this->get( 'raas.callback.token', md5( wp_get_current_user()->data->user_pass ) ),
+        'x-callback-url' => site_url( 'xmlrpc.php' )
+      );
+
+      // Execute Request.
+      $client->query( $method, $data );
+
+      if( $client->error ) {
+        return new \WP_Error( $client->error->code, $client->error->message );
+      }
+
+      // Return Message.
+      return isset( $client->message ) && isset( $client->message->params ) && is_array( $client->message->params ) ? $client->message->params[0] : array();
+
     }
 
   }

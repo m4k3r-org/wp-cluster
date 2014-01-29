@@ -16,17 +16,17 @@ namespace UsabilityDynamics\Festival {
         
         $this->args = array(
           'labels' => array(
-            'name' => __( 'Artists', $festival->text_domain ),
-            'all_items' => __( 'All Artists', $festival->text_domain ),
-            'singular_name' => __( 'Artist', $festival->text_domain ),
-            'add_new' => __( 'Add Artist', $festival->text_domain ),
-            'add_new_item' => __( 'Add New Artist', $festival->text_domain ),
-            'edit_item' => __( 'Edit Artists', $festival->text_domain ),
-            'new_item' => __( 'New Artist', $festival->text_domain ),
-            'view_item' => __( 'View Artist', $festival->text_domain ),
-            'search_items' => __( 'Search Artist', $festival->text_domain ),
-            'not_found' => __( 'No Artists found', $festival->text_domain ),
-            'not_found_in_trash' => __( 'No Artists found in Trash', $festival->text_domain ),
+            'name' => __( 'Artists', wp_festival( 'domain' ) ),
+            'all_items' => __( 'All Artists', wp_festival( 'domain' ) ),
+            'singular_name' => __( 'Artist', wp_festival( 'domain' ) ),
+            'add_new' => __( 'Add Artist', wp_festival( 'domain' ) ),
+            'add_new_item' => __( 'Add New Artist', wp_festival( 'domain' ) ),
+            'edit_item' => __( 'Edit Artists', wp_festival( 'domain' ) ),
+            'new_item' => __( 'New Artist', wp_festival( 'domain' ) ),
+            'view_item' => __( 'View Artist', wp_festival( 'domain' ) ),
+            'search_items' => __( 'Search Artist', wp_festival( 'domain' ) ),
+            'not_found' => __( 'No Artists found', wp_festival( 'domain' ) ),
+            'not_found_in_trash' => __( 'No Artists found in Trash', wp_festival( 'domain' ) ),
             'parent_item_colon' => ''
           ),
           'public' => true,
