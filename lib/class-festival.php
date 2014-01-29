@@ -82,19 +82,6 @@ namespace UsabilityDynamics {
       // Initialize Settings.
       $this->settings();
       
-      // Declare Public Scripts.
-      $this->scripts(array(
-        'app' => get_stylesheet_directory() . '/scripts/app.js',
-        'app.admin' => get_stylesheet_directory() . '/scripts/app.admin.js'
-      ));
-
-      // Declare Public Styles.
-      $this->styles(array(
-        'app' => get_stylesheet_directory() . '/styles/app.css',
-        'app.admin' => get_stylesheet_directory() . '/styles/app.admin.css',
-        'content' => get_stylesheet_directory() . '/styles/content.css'
-      ));
-
       // Configure API Methods.
       $this->api(array(
         'search.AutoSuggest' => array(
@@ -184,12 +171,8 @@ namespace UsabilityDynamics {
         'id'      => 'festival.model',
         'cache'   => 'private, max-age: 0',
         'vary'    => 'user-agent, x-client-type',
-        'base'    => home_url( '/scripts' ),
-        'data'    => $this->get_model(),
-        'paths'   => array(
-          'app'       => home_url( '/scripts/app' ),
-          'app.admin' => home_url( '/scripts/app.admin' )
-        )
+        'base'    => home_url( '/assets/scripts' ),
+        'data'    => $this->get_model()
       ));
 
       // Register Theme Locale Model.
@@ -213,12 +196,28 @@ namespace UsabilityDynamics {
 
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ));
 
+      add_filter( 'body_class', array( $this, 'body_class' ));
+
       if( isset( $_GET[ 'test' ] ) ) {
-        $this->_updated();
+        // $this->_updated();
       }
 
     }
-    
+
+    /**
+     * Add Body Classes.
+     *
+     *
+     * * external-referrer Added when visitor is new to the site.
+     * * internal-referrer Added when visitor opened current view after being referred.
+     *
+     * @param $class
+     * @return array
+     */
+    public function body_class( $class ) {
+      return array_merge( $class, array( is_external_referrer() ? 'external-referrer' : 'internal-referrer' ) );
+    }
+
     /**
      * On settings init we also merge structure with global network settings
      *
@@ -241,10 +240,11 @@ namespace UsabilityDynamics {
 
       // Combile LESS.
       $response = $this->raasRequest( 'build.compileLESS', array(
-        'title' => sprintf( __( 'Request from %s.', $this->domain ), get_bloginfo( 'name' ) ),
-        'minify' => true,
+        'variables' => array(
+          'brand-warning' =>'red',
+          'body-bg' =>'green'
+        ),
         'main' => 'app.less',
-        'output' => '/assets/app.css',
         'files' => array(
           get_stylesheet_directory_uri() . '/styles/src/app.less',
           get_stylesheet_directory_uri() . '/styles/src/bootstrap/mixins.less',
@@ -297,6 +297,15 @@ namespace UsabilityDynamics {
           get_stylesheet_directory_uri() . '/styles/src/variables.less'
         )
       ));
+
+      if( is_wp_error( $response ) ) {
+        wp_die( $response->get_error_message() );
+      }
+
+      // Have Encoded Data.
+      if( is_object( $response  ) && isset( $response->data ) ) {
+        die( base64_decode( $response->data ) );
+      }
 
       die( '<pre>' . print_r( $response, true ) . '</pre>' );
 
@@ -361,9 +370,6 @@ namespace UsabilityDynamics {
 
       //register_nav_menu( 'mobile', __( 'Mobile Menu', $this->domain ));
       register_nav_menu( 'footer', __( 'Footer Menu', $this->domain ));
-
-      // Enable Carrington Build / Layout Engine
-      //$this->layout_engine();
 
     }
 
@@ -475,19 +481,10 @@ namespace UsabilityDynamics {
       // Sync 'Social Streams' data with social networks
       $this->sync_streams();
 
-      // Register scripts
-      //wp_register_script( 'udx', '//cdn.udx.io/udx.requires.js', array(), '1.0.0', true );
+      // Register Script and Styles.
+      wp_register_style( 'app', home_url( '/assets/styles/app.css' ), array(), $this->version, 'all' );
 
-      // wp_register_script( $this->domain . '-require', get_template_directory_uri() . '/scripts/require.js', array(), $this->version, true );
-
-      // Register styles
-      wp_register_style( 'app', get_template_directory_uri() . '/styles/app.css', array(), $this->version, 'all' );
-
-      // Register Color schema
-      // wp_register_style( $this->domain . '-color', get_template_directory_uri() . '/styles/' . $this->get( 'configuration.color_schema' ) . '.css', array( $this->domain . '-app' ), $this->version, 'all' );
-
-      // Add custom editor styles
-      add_editor_style( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'styles/editor-style.dev.css' : 'styles/editor-style.css' );
+      //add_editor_style( home_url( '/assets/editor-style.css' ) );
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
@@ -540,14 +537,7 @@ namespace UsabilityDynamics {
      */
     public function wp_enqueue_scripts() {
 
-      wp_enqueue_script( 'udx' );
-
-      // Require will load app.js and other Require.js modules
-      // wp_enqueue_script( $this->domain . '-require' );
-
-      // Compiled styles which include Bootstrap and custom styles.
       wp_enqueue_style( 'app' );
-      // wp_enqueue_style( $this->domain . '-color' );
 
     }
 
@@ -801,12 +791,10 @@ namespace UsabilityDynamics {
      */
     public function raasRequest( $method = '', $data = array() ) {
 
-      echo 'making raasRequest request';
-
       include_once( ABSPATH . WPINC . '/class-IXR.php' );
       include_once( ABSPATH . WPINC . '/class-wp-http-ixr-client.php' );
 
-      $client = new \WP_HTTP_IXR_Client( 'raas.udx.io', '/rpc/v1', 80, 2000 );
+      $client = new \WP_HTTP_IXR_Client( 'raas.udx.io', '/rpc/v1', 80, 20000 );
 
       // Set User Agent.
       $client->useragent = 'WordPress/3.7.1 WP-Property/3.6.1 WP-Festival/' . $this->version;
@@ -818,7 +806,8 @@ namespace UsabilityDynamics {
         'x-client-name' => get_bloginfo( 'name' ),
         'x-client-token' => $this->get( 'raas.client', defined( 'AUTH_KEY' ) ? AUTH_KEY : null ),
         'x-callback-token' => $this->get( 'raas.callback.token', md5( wp_get_current_user()->data->user_pass ) ),
-        'x-callback-url' => site_url( 'xmlrpc.php' )
+        'x-callback-url' => site_url( 'xmlrpc.php' ),
+        'content-type' => 'text/xml; charset=utf-8'
       );
 
       // Execute Request.
@@ -829,7 +818,9 @@ namespace UsabilityDynamics {
       }
 
       // Return Message.
-      return isset( $client->message ) && isset( $client->message->params ) && is_array( $client->message->params ) ? $client->message->params[0] : array();
+      $_result = isset( $client->message ) && isset( $client->message->params ) && is_array( $client->message->params ) ? $client->message->params[0] : array();
+
+      return json_decode( json_encode( $_result ) );
 
     }
 
