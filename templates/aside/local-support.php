@@ -7,8 +7,6 @@
  * @since festival 0.1.0
  */
 
-global $festival;
-
 ?>
 
 <div class="row heading">

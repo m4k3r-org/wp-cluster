@@ -11,8 +11,6 @@
  * @since festival 0.1.0
  */
 
-global $festival;
-
 $cc = is_active_sidebar( 'right-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12';
  
 get_template_part( 'templates/page/header', get_post_type() ); 

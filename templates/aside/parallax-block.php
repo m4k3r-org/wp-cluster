@@ -7,8 +7,6 @@
  * @since wp-escalade 0.1.0
  */
 
-global $festival;
-
 ?>
 <div class="parallax-block">
   <div class="parallax-img" data-400="background-position: left 0px;" data-1700="background-position: left -500px;"></div>

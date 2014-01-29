@@ -7,7 +7,7 @@
  * @since wp-escalade 0.1.0
  */
 
-global $festival;
+$festival = wp_festival();
 
 // Be sure that sticky posts exist
 $post__in = get_option( 'sticky_posts' );

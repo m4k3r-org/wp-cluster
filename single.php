@@ -6,8 +6,6 @@
  * @module festival  
  * @since festival 0.1.0
  */
- 
-global $festival;
 
 $cc = is_active_sidebar( 'single-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12';
  

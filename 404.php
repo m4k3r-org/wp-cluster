@@ -7,8 +7,6 @@
  * @since festival 0.1.0
  */
  
-global $festival;
- 
 get_template_part( 'templates/page/header', get_post_type() ); 
 ?>
 <section class="container">

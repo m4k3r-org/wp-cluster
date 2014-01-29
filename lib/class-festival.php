@@ -450,9 +450,6 @@ namespace UsabilityDynamics {
         return false;
       });
 
-      // Load Template Methods.
-      include_once( __DIR__ . '/template.php' );
-
     }
 
     /**
@@ -525,7 +522,7 @@ namespace UsabilityDynamics {
       // Enable Twitter
       if( class_exists( '\UsabilityDynamics\Festival\Sync_Twitter' ) ) {
 
-        $tw = new Sync_Twitter(array(
+        $tw = new \UsabilityDynamics\Festival\Sync_Twitter(array(
           'id' => 'twitter',
           'interval' => false,
           'post_type' => 'social',

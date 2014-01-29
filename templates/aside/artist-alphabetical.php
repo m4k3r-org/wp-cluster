@@ -7,7 +7,7 @@
  * @since festival 0.1.0
  */
 
-global $festival;
+$festival = wp_festival();
 
 ?>
 
