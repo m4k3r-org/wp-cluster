@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "82a34ee0217c848f43d420c13a16fc5e",
+    "hash": "03075bb18113ea9baa503b0a9052643a",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -324,6 +324,61 @@
                 ]
             },
             "time": "2014-01-30 01:21:36"
+        },
+        {
+            "name": "usabilitydynamics/wp-menufication",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-menufication.git",
+                "reference": "f3a646793a801fdf9b19e4faa1810b25b6610aeb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/UsabilityDynamics/wp-menufication/zipball/f3a646793a801fdf9b19e4faa1810b25b6610aeb",
+                "reference": "f3a646793a801fdf9b19e4faa1810b25b6610aeb",
+                "shasum": ""
+            },
+            "type": "plugin",
+            "extra": {
+                "component": {
+                    "name": "usabilitydynamics/wp-menufication",
+                    "version": "1.0.0",
+                    "description": "Wordpress Menufication",
+                    "homepage": "http://github.com/UsabilityDynamics/wp-menufication",
+                    "dependencies": [
+
+    ],
+                    "scripts": [
+                        "./scripts"
+                    ],
+                    "templates": [
+                        "./templates"
+                    ],
+                    "styles": [
+                        "./styles"
+                    ],
+                    "files": [
+                        "./lib"
+                    ],
+                    "license": "MIT"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Wordpress Menufication",
+            "homepage": "http://github.com/UsabilityDynamics/wp-menufication",
+            "support": {
+                "issues": "http://github.com/UsabilityDynamics/wp-menufication/issues",
+                "source": "https://github.com/UsabilityDynamics/wp-menufication/tree/master"
+            },
+            "time": "2014-01-30 15:10:59"
         },
         {
             "name": "usabilitydynamics/wp-meta-box",

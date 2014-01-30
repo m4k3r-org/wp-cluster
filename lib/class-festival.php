@@ -201,6 +201,8 @@ namespace UsabilityDynamics {
       if( isset( $_GET[ 'test' ] ) ) {
         // $this->_updated();
       }
+      
+      \Menufication::getInstance();
 
     }
 
