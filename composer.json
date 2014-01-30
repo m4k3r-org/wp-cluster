@@ -13,6 +13,10 @@
     {
       "type": "composer",
       "url": "http://repository.usabilitydynamics.com"
+    },
+    {
+      "type": "vcs",
+      "url": "git@ud.beanstalkapp.com:/ud/wp-menufication.git"
     }
   ],
   "minimum-stability": "dev",
