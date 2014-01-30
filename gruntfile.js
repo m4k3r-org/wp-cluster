@@ -110,7 +110,7 @@ module.exports = function( grunt ) {
       },
       styles: {
         files: [
-          'gruntfile.js', 'styles/src/*.*'
+          'gruntfile.js', 'styles/src/*', 'styles/src/colors/*'
         ],
         tasks: [ 'less' ]
       },
