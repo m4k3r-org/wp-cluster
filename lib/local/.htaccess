@@ -44,14 +44,15 @@
 
 # Cluster Static and Media BEGIN
 <IfModule mod_rewrite.c>
-  
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
 
-  RewriteRule ^(.*).(html|htm)$ /static/storage/%{SERVER_NAME}/$1.html [L]
+  #RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  
+  RewriteRule ^$ /static/storage/%{SERVER_NAME}/index.html [L]
+  RewriteRule ^favicon.ico$ /static/storage/%{SERVER_NAME}/favicon.ico [L]
   RewriteRule ^media/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
   RewriteRule ^assets/(.*)$ /static/storage/%{SERVER_NAME}/assets/$1 [L]
-
+  
   RewriteRule ^system/files/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
   RewriteRule ^system/media/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
   RewriteRule ^files/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
@@ -84,7 +85,6 @@
   RewriteRule ^manage/login$ /vendor/wordpress/core/wp-login.php [L]
   RewriteRule ^manage/(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
   RewriteRule ^manage$ /vendor/wordpress/core/wp-admin [L]
-  
 </IfModule>
 # Cluster Management END
 
