@@ -331,12 +331,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:UsabilityDynamics/wp-menufication.git",
-                "reference": "f3a646793a801fdf9b19e4faa1810b25b6610aeb"
+                "reference": "19ca23ab73105c57e1b1ba3ac3e20160abe7cb46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UsabilityDynamics/wp-menufication/zipball/f3a646793a801fdf9b19e4faa1810b25b6610aeb",
-                "reference": "f3a646793a801fdf9b19e4faa1810b25b6610aeb",
+                "url": "https://api.github.com/repos/UsabilityDynamics/wp-menufication/zipball/19ca23ab73105c57e1b1ba3ac3e20160abe7cb46",
+                "reference": "19ca23ab73105c57e1b1ba3ac3e20160abe7cb46",
                 "shasum": ""
             },
             "type": "plugin",
@@ -378,7 +378,7 @@
                 "issues": "http://github.com/UsabilityDynamics/wp-menufication/issues",
                 "source": "https://github.com/UsabilityDynamics/wp-menufication/tree/master"
             },
-            "time": "2014-01-30 15:10:59"
+            "time": "2014-01-30 18:29:04"
         },
         {
             "name": "usabilitydynamics/wp-meta-box",

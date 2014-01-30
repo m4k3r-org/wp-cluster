@@ -202,7 +202,10 @@ namespace UsabilityDynamics {
         // $this->_updated();
       }
       
-      \Menufication::getInstance();
+      // Initializes Wordpress Menufication
+      if( class_exists( '\Menufication' ) ) {
+        \Menufication::getInstance();
+      }
 
     }
 
@@ -359,8 +362,7 @@ namespace UsabilityDynamics {
 
       // Register Navigation Menus
       register_nav_menu( 'primary', __( 'Primary Menu', $this->domain ));
-
-      //register_nav_menu( 'mobile', __( 'Mobile Menu', $this->domain ));
+      register_nav_menu( 'social', __( 'Social Links', $this->domain ));
       register_nav_menu( 'footer', __( 'Footer Menu', $this->domain ));
 
     }
