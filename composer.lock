@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3f61a2acc7788198ba294daf332731b7",
+    "hash": "82a34ee0217c848f43d420c13a16fc5e",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -61,6 +61,34 @@
             "time": "2012-01-03 00:33:17"
         },
         {
+            "name": "usabilitydynamics/lib-api",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-api",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-api/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "time": "2014-01-28 12:29:03"
+        },
+        {
             "name": "usabilitydynamics/lib-carrington",
             "version": "master",
             "source": {
@@ -80,7 +108,65 @@
                     "lib/classes"
                 ]
             },
-            "time": "2014-01-10 06:48:53"
+            "time": "2014-01-29 01:17:40"
+        },
+        {
+            "name": "usabilitydynamics/lib-model",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-model",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-model/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "*"
+            },
+            "type": "library",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "scripts/udx.model.js",
+                        "scripts/udx.model.validation.js"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-01-28 12:29:53"
+        },
+        {
+            "name": "usabilitydynamics/lib-requires",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-requires",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-requires/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-01-30 02:52:16"
         },
         {
             "name": "usabilitydynamics/lib-settings",
@@ -116,7 +202,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-01-18 04:35:07"
+            "time": "2014-01-28 22:16:02"
         },
         {
             "name": "usabilitydynamics/lib-ui",
@@ -154,7 +240,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-01-18 04:35:09"
+            "time": "2014-01-29 01:17:51"
         },
         {
             "name": "usabilitydynamics/lib-utility",
@@ -184,7 +270,60 @@
                     "lib"
                 ]
             },
-            "time": "2014-01-25 09:10:13"
+            "time": "2014-01-29 17:37:06"
+        },
+        {
+            "name": "usabilitydynamics/lib-wp-rpc",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-wp-rpc",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/lib-wp-rpc/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "component",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-01-28 12:33:04"
+        },
+        {
+            "name": "usabilitydynamics/lib-wp-theme",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-wp-theme",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-wp-theme/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-api": "master",
+                "usabilitydynamics/lib-model": "master",
+                "usabilitydynamics/lib-requires": "master",
+                "usabilitydynamics/lib-settings": "master",
+                "usabilitydynamics/lib-ui": "master",
+                "usabilitydynamics/lib-wp-rpc": "master",
+                "usabilitydynamics/wp-meta-box": "master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-01-30 01:21:36"
         },
         {
             "name": "usabilitydynamics/wp-meta-box",
@@ -210,7 +349,7 @@
                     "inc/meta-box.php"
                 ]
             },
-            "time": "2014-01-09 01:40:52"
+            "time": "2014-01-28 15:53:22"
         }
     ],
     "packages-dev": [
