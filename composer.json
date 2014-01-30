@@ -16,7 +16,7 @@
     },
     {
       "type": "vcs",
-      "url": "git@github.com:UsabilityDynamics/wp-menufication.git"
+      "url": "https://github.com/UsabilityDynamics/wp-menufication.git"
     }
   ],
   "minimum-stability": "dev",
