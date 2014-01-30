@@ -8,7 +8,7 @@
  */
 ?>
 <!-- Navigation bar starts -->
-<div class="navbar navbar-inverse navbar-top <?php echo ( is_home() || is_front_page() ) ? 'navbar-top-home' : 'navbar-fixed-top'; ?>" role="navigation">
+<div class="navbar navbar-inverse navbar-top navbar-top-home" role="navigation">
   <div class="container">
     <div class="social-wrap">
       <a class="btn btn-default" role="button" href="#" ><?php _e( 'Buy Tickets', wp_festival( 'domain' ) ); ?></a>

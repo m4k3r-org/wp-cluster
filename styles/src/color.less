@@ -63,8 +63,26 @@
 
       & > .active > a,
       & > .active > a:hover,
-      & > .active > a:focus {
+      & > .active > a:focus,
+      & > li > a:hover,
+      & > li > a:focus {
         background-color: @default-color-active;
+      }
+      
+      & > .open > a, 
+      & > .open > a:hover, 
+      & > .open > a:focus {
+        background-color: @default-color;
+      }
+      
+      .dropdown-menu {
+        background-color: @default-color-active;
+        border-top: 4px solid @default-color-dark;
+        
+        & > li > a:hover,
+        & > li > a:focus {
+          background-color: @default-color;
+        }
       }
 
     }
@@ -76,6 +94,11 @@
     }
 
     .social-wrap {
+    
+      ul > li > a:hover,
+      ul > li > a:focus {
+        background-color: @default-color-active;
+      }
 
       button.navbar-toggle {
         color: @navbar-default-color;
