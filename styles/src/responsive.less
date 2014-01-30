@@ -14,6 +14,59 @@
 -------------------------------------------------------------- */
 @media (min-width: @screen-md) and (max-width: @screen-md-max) {
   //------------------------------------------------------------
+  
+  .navbar {
+  
+    .sticky {
+      display: block;
+    }
+    
+    .no-sticky,
+    .navbar-brand {
+      display: none;
+    }
+
+    .social-wrap {
+
+      .social-collapse {
+        float:none;
+        clear: both;
+      }
+
+      ul {
+
+        li {
+          float: none;
+          padding-bottom: 2px;
+
+          &:first-child {
+            padding-top: 4px;
+          }
+
+        }
+
+      }
+
+      button.navbar-toggle {
+        float: right;
+        display: block;
+        border: 0;
+        width: 54px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 22px;
+        margin: 0;
+        padding: 0;
+        border-style: solid;
+        border-left-width: 2px;
+        border-right-width: 2px;
+        border-radius: 0;
+      }
+
+    }
+  
+  }
+  
   //------------------------------------------------------------
 }
 
@@ -21,6 +74,7 @@
 -------------------------------------------------------------- */
 @media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
   //------------------------------------------------------------
+  
   #countdown {
     .countdown_row {
       .countdown_section {
@@ -30,6 +84,71 @@
       }
     }
   }
+  
+  .navbar {
+  
+    nav > ul > li > a {
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+  
+    .sticky {
+      display: block;
+    }
+
+    .no-sticky,
+    .navbar-brand {
+      display: none;
+    }
+
+    .social-wrap {
+
+      a.btn {
+        display: none;
+      }
+      
+      .social-flex {
+        right: 0;
+      }
+    
+      .social-collapse {
+        float:none;
+        clear: both;
+      }
+
+      ul {
+
+        li {
+          float: none;
+          padding-bottom: 2px;
+
+          &:first-child {
+            padding-top: 4px;
+          }
+
+        }
+
+      }
+
+      button.navbar-toggle {
+        float: right;
+        display: block;
+        border: 0;
+        width: 54px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 22px;
+        margin: 0;
+        padding: 0;
+        border-style: solid;
+        border-left-width: 2px;
+        border-right-width: 2px;
+        border-radius: 0;
+      }
+
+    }
+  
+  }
 
   //------------------------------------------------------------
 }
@@ -38,6 +157,7 @@
 -------------------------------------------------------------- */
 @media only screen and (max-width: @screen-xs-max) {
   //------------------------------------------------------------
+  
   #bottom-headings {
     display: none;
   }
@@ -63,10 +183,22 @@
 
     }
   }
-
+  
+  .navbar-primary {
+    display: none;
+  }
+  
+  //------------------------------------------------------------
 }
 
 /* =Responsive: Portrait Phone
 -------------------------------------------------------------- */
 @media only screen and (max-width: @screen-xs) {
+  //------------------------------------------------------------
+
+  .navbar-primary {
+    display: none;
+  }
+  
+  //------------------------------------------------------------
 }
