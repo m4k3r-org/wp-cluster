@@ -12,55 +12,47 @@ module.exports = function( grunt ) {
     // LESS Compilation.
     pkg: grunt.file.readJSON( 'composer.json' ),
 
+    // Compress PNG Files.
+    tinypng: {
+      options: {
+        apiKey: "D3_kNVgKtPXTkfpx6X9SDZ5XTGch9vu_",
+        showProgress: true,
+        stopOnImageError: true
+      },
+      production: {
+        expand: true,
+        cwd: 'images/src',
+        src: [ '*.png' ],
+        dest: 'images',
+        ext: '.png'
+      }
+    },
+
+    // Generate Sprite.
+    sprite:{
+
+      all: {
+        src: 'images/src/*.png',
+        destImg: 'images/sprite.png',
+        destCSS: 'styles/src/sprites.less',
+        engine: 'canvas',
+        cssFormat: 'less'
+      }
+    },
+
     // LESS Compilation.
     less: {
-      'app.css': {
+      'production': {
         options: {
           yuicompress: true,
           relativeUrls: true
         },
         files: {
-          'styles/app.css': [ 'styles/src/app.less' ]
-        }
-      },
-      'app.dev.css': {
-        options: {
-          relativeUrls: true
-        },
-        files: {
-          'styles/app.dev.css': [ 'styles/src/app.less' ]
-        }
-      },
-      'editor-style.dev.css': {
-        options: {
-          yuicompress: false,
-          relativeUrls: true
-        },
-        files: {
-          'styles/editor-style.dev.css': [ 'styles/src/editor-style.less' ]
-        }
-      },
-      'editor-style.css': {
-        options: {
-          yuicompress: true,
-          relativeUrls: true
-        },
-        files: {
+          'styles/app.css': [ 'styles/src/app.less' ],
+          'styles/default.css': [ 'styles/src/colors/default.less' ],
           'styles/editor-style.css': [ 'styles/src/editor-style.less' ]
         }
-      },
-
-      // Color Schemas
-      'color-default': {
-        options: {
-          yuicompress: true,
-          relativeUrls: true
-        },
-        files: {
-          'styles/default.css': [ 'styles/src/colors/default.less' ]
-        }
       }
-
     },
 
     // Run Mocha Tests.
@@ -183,6 +175,8 @@ module.exports = function( grunt ) {
 
   // Load tasks
   grunt.loadNpmTasks( 'grunt-component' );
+  grunt.loadNpmTasks( 'grunt-tinypng' );
+  grunt.loadNpmTasks( 'grunt-spritesmith' );
   grunt.loadNpmTasks( 'grunt-component-build' );
   grunt.loadNpmTasks( 'grunt-requirejs' );
   grunt.loadNpmTasks( 'grunt-markdown' );

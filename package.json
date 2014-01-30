@@ -34,5 +34,9 @@
     "wordpress",
     "theme",
     "responsive"
-  ]
+  ],
+  "dependencies": {
+    "grunt-spritesmith": "~1.21.2",
+    "grunt-tinypng": "~0.5.1"
+  }
 }

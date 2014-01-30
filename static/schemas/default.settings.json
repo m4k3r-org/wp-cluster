@@ -109,6 +109,128 @@
   },
   "structure": {
     "types": {
+      "event": {
+        "data": {
+          "capability_type": "page",
+          "label": "Event",
+          "labels": {
+            "add_new": "New Event",
+            "add_new_item": "Add New Event",
+            "all_items": "All Events",
+            "edit_item": "Edit Event",
+            "menu_name": "Event",
+            "name": "Event",
+            "not_found": "No Events found",
+            "not_found_in_trash": "No Events in Trash",
+            "parent_item_colon": "Parent Event:",
+            "search_items": "Search Artists",
+            "singular_name": "Artist",
+            "update_item": "Update Artist",
+            "view_item": "View Artist"
+          },
+          "description": "Artist",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "hierarchical": false,
+          "menu_icon": false,
+          "menu_position": 5,
+          "public": false,
+          "publicly_queryable": false,
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title"
+          ],
+          "can_export": true
+        },
+        "taxonomies": [
+          "stage"
+        ],
+        "meta": {
+          "common": {
+            "fields": [
+              "location",
+              "website",
+              "genre"
+            ]
+          },
+          "images": {
+            "fields": [
+              "profile"
+            ]
+          }
+        }
+      },
+      "artist": {
+        "data": {
+          "capability_type": "page",
+          "label": "Artist",
+          "labels": {
+            "add_new": "New Artist",
+            "add_new_item": "Add New Artist",
+            "all_items": "All Artists",
+            "edit_item": "Edit Artist",
+            "menu_name": "Artist",
+            "name": "Artist",
+            "not_found": "No Artists found",
+            "not_found_in_trash": "No Artists in Trash",
+            "parent_item_colon": "Parent Artist:",
+            "search_items": "Search Artists",
+            "singular_name": "Artist",
+            "update_item": "Update Artist",
+            "view_item": "View Artist"
+          },
+          "description": "Artist",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "hierarchical": false,
+          "menu_icon": false,
+          "public": true,
+          "publicly_queryable": false,
+          "query_var": "_artist",
+          "rewrite": {
+            "feeds": false,
+            "pages": true,
+            "slug": "artist",
+            "with_front": true
+          },
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title",
+            "thumbnail"
+          ],
+          "can_export": true
+        },
+        "taxonomies": [
+          "stage"
+        ],
+        "meta": {
+          "common": {
+            "fields": [
+              "name",
+              "website",
+              "genre"
+            ]
+          },
+          "stuff": {
+            "fields": [
+              "starts",
+              "ends"
+            ]
+          },
+          "images": {
+            "fields": [
+              "profile",
+              "photos"
+            ]
+          }
+        }
+      },
       "social": {
         "data": {
           "capability_type": "page",
@@ -169,6 +291,57 @@
       }
     },
     "meta": {
+      "notes": {},
+      "genre": {
+        "name": "Genre",
+        "type": "select_advanced",
+        "options": {
+          "rock": "Rock",
+          "rap": "Rap",
+          "trance": "Trance"
+        },
+        "multiple": true,
+        "placeholder": "Select an Item"
+      },
+      "website": {
+        "name": "Website",
+        "type": "text",
+        "placeholder": "Select an Item",
+        "clone": true
+      },
+      "starts": {
+        "id": "_start",
+        "name": "Start",
+        "type": "datetime"
+      },
+      "ends": {
+        "id": "_end",
+        "name": "Ends",
+        "type": "datetime"
+      },
+      "profile": {
+        "name": "Profile",
+        "type": "image_advanced",
+        "multiple": false
+      },
+      "photos": {
+        "name": "Additional Photos",
+        "type": "plupload_image",
+        "multiple": false
+      },
+      "location": {
+        "id": "loc",
+        "name": "Location",
+        "type": "map",
+        "style": "width: 100%; height: 300px"
+
+      },
+      "twitter_link": {},
+      "youtube_link": {},
+      "soundcloud_link": {},
+      "mixcloud_link": {},
+      "instagram_link": {},
+      "beatport_link": {},
       "_ss_network": {
         "name": "Network",
         "type": "select_advanced",
@@ -199,6 +372,10 @@
         "name": "URL"
       }
     },
-    "taxonomies": {}
+    "taxonomies": {
+      "stage": {
+        "name": "Stage"
+      }
+    }
   }
 }

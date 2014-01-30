@@ -224,16 +224,6 @@ namespace UsabilityDynamics {
      */
     public function settings( $args = array(), $data = array() ) {
       parent::settings( $args, $data );
-      
-      $file = WP_BASE_DIR . '/static/schemas/default.settings.json';
-      
-      if( file_exists( $file ) ) {
-        $settings = \UsabilityDynamics\Utility::l10n_localize( json_decode( file_get_contents( $file ), true ) );
-        if( !empty( $settings[ 'structure' ] ) ) {
-          $this->set( 'structure', $settings[ 'structure' ] );
-        }
-      }
-      
     }
 
     private function _updated( $type = '' ) {

@@ -598,7 +598,7 @@
 		if(_isMobile) {
 			return _mobileOffset;
 		} else {
-			return window.pageYOffset || documentElement.scrollTop || body.scrollTop || 0;
+			return window.pageYOffset || documentElement.scrollTop || 0;
 		}
 	};
 
