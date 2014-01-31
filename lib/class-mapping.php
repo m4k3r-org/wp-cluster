@@ -391,25 +391,30 @@ namespace UsabilityDynamics\Cluster {
       public static function plugins_url( $url, $path, $plugin ) {
         global $wp_cluster;
 
-        $url = str_replace( array( $wp_cluster->cluster_domain, '/home/drop/', 'public_html/', 'www/'  ), array( $wp_cluster->domain, '', '' ), $url );
-        
-        $url = str_replace( '/modules/vendor', '/vendor', $url );
 
-        // Fix Vendor Module UTLs.
         if( strpos( $plugin, '/vendor' ) ) {
 
-          @$url = ( is_ssl() ? 'https://' : 'http://' ) . ( $wp_cluster->domain  . '' . end( explode( $wp_cluster->domain, $url ) ) );
+          // Strip filename and get just the path.
+          if( strpos( $plugin, '.php' ) ) {
+            $plugin = dirname( $plugin );
+          }
 
-          // Remove Base Directory Path complete.
-          // $url = str_replace( trailingslashit( WP_BASE_DIR ), '/', $url );
+          if( defined( 'WP_BASE_DIR' ) ) {
+            $_base = defined( 'WP_BASE_DIR' ) ? WP_BASE_DIR : ABSPATH;
+          }
 
-          // Replace Network URLs with Local URLs.
-          // $url = str_replace( $wp_cluster->network_domain, $wp_cluster->domain, $url );
+          $_annex = untrailingslashit( $plugin ? str_replace( $_base, '', $plugin ) : str_replace( $_base, '', $url ) );
 
-          // Replace plugin directory name "e.g. "modules" with nothing
-          // $url = str_replace( trailingslashit( basename( WP_PLUGIN_DIR ) ), '', $url );
+          // Not sure if should use site_url or home_url..
+          $url = site_url( $_annex . $path );
 
         }
+
+        //echo "<br />" .$plugin . ' - ' . $url . ' -> ' . $fixed_url;
+
+        // $url = str_replace( array( $wp_cluster->cluster_domain, '/home/drop/', 'public_html/', 'www/'  ), array( $wp_cluster->domain, '', '' ), $url );
+        
+        // $url = str_replace( '/modules/vendor', '/vendor', $url );
 
         return $url;
 
