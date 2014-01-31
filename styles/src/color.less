@@ -368,3 +368,44 @@ footer {
     }
   }
 }
+
+/* ==============
+ Menuficiation
+============== */
+
+#menufication-top, 
+#menufication-non-css3-top,
+#menufication-scroll-container {
+  background: @default-color;
+}
+
+#menufication-top #menufication-btn:before, 
+#menufication-non-css3-top #menufication-non-css3-btn:before {
+  border-bottom: 11px double @navbar-default-color;
+  border-top: 4px solid @navbar-default-color;
+}
+
+#menufication-nav li, #menufication-non-css3-nav li {
+  border-bottom: 1px solid @default-color-active;
+  
+  a {
+    color: @navbar-default-color;
+  }
+  
+}
+
+#menufication-nav {
+  
+  ul > li {
+    
+    & > ul {
+      
+      li:first-child {
+        border-top-color: @default-color-active;
+      }
+      
+    }
+  
+  }
+  
+}

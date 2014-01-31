@@ -1,10 +1,10 @@
-@menu-background-color: #222;
 
 .menufication-search-holder {
   display: none !important;
 }
 
-#menufication-nav, #menufication-nav * {
+#menufication-nav, 
+#menufication-nav * {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -27,7 +27,12 @@
   position: relative;
 }
 
-#menufication-nav h1, #menufication-non-css3-nav h1, #menufication-nav h2, #menufication-non-css3-nav h2, #menufication-nav h3, #menufication-non-css3-nav h3 {
+#menufication-nav h1, 
+#menufication-non-css3-nav h1, 
+#menufication-nav h2, 
+#menufication-non-css3-nav h2, 
+#menufication-nav h3, 
+#menufication-non-css3-nav h3 {
   margin: 0 !important;
   padding: 0 !important;
 }
@@ -44,14 +49,6 @@
   left: -1px;
   height: 52px;
   min-height: 50px;
-  background: #262626;
-  background: -moz-linear-gradient(top, #262626 0, #1c1c1c 50%, #262626 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #262626), color-stop(50%, #1c1c1c), color-stop(100%, #262626));
-  background: -webkit-linear-gradient(top, #262626 0, #1c1c1c 50%, #262626 100%);
-  background: -o-linear-gradient(top, #262626 0, #1c1c1c 50%, #262626 100%);
-  background: -ms-linear-gradient(top, #262626 0, #1c1c1c 50%, #262626 100%);
-  background: linear-gradient(to bottom, #262626 0, #1c1c1c 50%, #262626 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#262626', endColorstr='#262626', GradientType=0);
   box-shadow: 0 1px 4px rgba(0, 0, 0, .5);
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, .5);
   z-index: 10000;
@@ -135,8 +132,6 @@
 }
 
 #menufication-top #menufication-btn:before, #menufication-non-css3-top #menufication-non-css3-btn:before {
-  border-bottom: 11px double #C9C9C9;
-  border-top: 4px solid #C9C9C9;
   content: "";
   position: absolute;
   height: 3px;
@@ -231,7 +226,6 @@
   padding-bottom: 100%;
   width: 270px;
   z-index: 1;
-  background-color: @menu-background-color;
   padding-top: 0;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
@@ -282,6 +276,42 @@
   -ms-font-smoothing: antialiased !important;
   -o-font-smoothing: antialiased !important;
   font-smoothing: antialiased !important;
+  
+  ul > li {
+    
+    &.open {
+    
+      & > ul {
+        display: block;
+      }
+      
+    }
+    
+    & > ul {
+      display: none;
+      
+      li {
+        border-style: solid;
+        border-width: 1px;
+        
+        a {
+          padding-left: 30px;
+        }
+        
+      }
+      
+      li:first-child {
+        border-top-style: 1px;
+      }
+      
+      li:last-child {
+        border-bottom: 0;
+      }
+      
+    }
+  
+  }
+  
 }
 
 #menufication-nav img, #menufication-non-css3-nav img {
@@ -325,29 +355,24 @@
   margin-top: 30px;
 }
 
-#menufication-nav ul, #menufication-non-css3-nav ul, #menufication-nav li, #menufication-non-css3-nav li {
+#menufication-nav ul, 
+#menufication-non-css3-nav ul, 
+#menufication-nav li, 
+#menufication-non-css3-nav li {
   margin-left: 0;
-  padding-left: 15px !important;
   max-width: 110% !important;
+  padding-left: 0;
 }
 
 #menufication-nav li, #menufication-non-css3-nav li {
   width: 100%;
-  padding: 13px 0 13px 15px;
   list-style: none;
   position: relative;
-  border-bottom: 1px solid #111;
-  border-top: 1px solid #333;
   line-height: 1 !important;
+  text-transform: uppercase;
 }
 
-#menufication-nav li.menufication-active-class & > a, #menufication-non-css3-nav li.menufication-active-class & > a {
-  color: #00A3E0 !important;
-}
 
-#menufication-nav ul:first-child li, #menufication-non-css3-nav ul:first-child li {
-  color: #fff;
-}
 
 #menufication-nav li form input, #menufication-non-css3-nav li form input {
   border-radius: 2px;
@@ -401,7 +426,6 @@
 }
 
 #menufication-nav li a, #menufication-non-css3-nav li a {
-  color: #ccc;
   text-shadow: 0 1px 0 #000;
   text-decoration: none;
   -webkit-font-smoothing: antialiased !important;
@@ -415,7 +439,9 @@
   font-weight: 400 !important;
   font-size: 17px;
   font-weight: 700;
-  text-transform: capitalize;
+  text-transform: uppercase;
+  padding: 13px 0 13px 15px;
+  display: block;
 }
 
 #menufication-nav .menufication-child-menu, #menufication-non-css3-nav .menufication-non-css3-child-menu {
