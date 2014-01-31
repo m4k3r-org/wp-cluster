@@ -20,15 +20,11 @@
   <body <?php body_class( 'wp-festival' ); ?> style="background-image: url(<?php echo get_background_image(); ?>)" data-post-type="<?php get_post_type(); ?>" data-requires="app">
 
     <header class="header">
-      <div class="container">
-        <?php echo wp_festival()->aside( 'header' ); ?>
-      </div>
+      <div class="container"><?php echo wp_festival()->aside( 'header' ); ?></div>
     </header>
 
     <header class="banner-poster">
-      <div class="container">
-        <?php echo wp_festival()->aside( 'banner' ); ?>
-      </div>
+      <div class="container"><?php echo wp_festival()->aside( 'banner' ); ?></div>
     </header>
 
     <?php get_template_part( 'templates/nav/top', get_post_type() ); ?>

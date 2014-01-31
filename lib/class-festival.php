@@ -184,27 +184,27 @@ namespace UsabilityDynamics {
         'data'    => $this->get_locale()
       ));
 
+      // Disable Unused Features.
+      remove_theme_support( 'custom-header' );
+
       // Core Actions
       add_action( 'init', array( $this, 'init' ), 100 );
       add_action( 'after_setup_theme', array( $this, 'setup' ));
       add_action( 'template_redirect', array( $this, 'redirect' ), 100 );
       add_action( 'admin_init', array( $this, 'admin' ));
       add_action( 'admin_menu', array( $this, 'admin_menu' ));
-
       add_action( 'widgets_init', array( $this, 'widgets_init' ), 100 );
       add_action( 'wp_head', array( $this, 'wp_head' ));
       add_action( 'wp_footer', array( $this, 'wp_footer' ));
-
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ));
 
       add_filter( 'body_class', array( $this, 'body_class' ));
-      add_filter( 'cfct-build-enabled-post-types', function( $types ) {
 
+      // @todo Migrate logic into Carrington class.
+      add_filter( 'cfct-build-enabled-post-types', function( $types ) {
         $types[] = 'artist';
         $types[] = '_aside';
-        //die( '<pre>' . print_r( $types, true ) . '</pre>' );
         return $types;
-
       });
 
       if( isset( $_GET[ 'test' ] ) ) {
@@ -370,6 +370,7 @@ namespace UsabilityDynamics {
       }
 
       // Register Navigation Menus
+      register_nav_menu( 'mobile', __( 'Mobile Menu', $this->domain ));
       register_nav_menu( 'primary', __( 'Primary Menu', $this->domain ));
       register_nav_menu( 'social', __( 'Social Links', $this->domain ));
       register_nav_menu( 'footer', __( 'Footer Menu', $this->domain ));
@@ -441,11 +442,14 @@ namespace UsabilityDynamics {
 
       // die(json_encode( $custom_loop ));
 
-      while( $custom_loop->have_posts() ) {
-        $custom_loop->the_post();
-        $content = get_the_content( $args->more_link_text, $args->strip_teaser );
-        $content = apply_filters( 'the_content', $content );
-        $content = str_replace( ']]>', ']]&gt;', $content );
+
+      if( $custom_loop->have_posts() ) {
+        while( $custom_loop->have_posts() ) {
+          $custom_loop->the_post();
+          $content = get_the_content( $args->more_link_text, $args->strip_teaser );
+          $content = apply_filters( 'the_content', $content );
+          $content = str_replace( ']]>', ']]&gt;', $content );
+        }
       }
 
       // Return post.
@@ -453,7 +457,7 @@ namespace UsabilityDynamics {
 
       // Try to locale regular aside.
       if( !$content ) {
-        return get_template_part( 'templates/aside/' . $name, get_post_type() );
+        get_template_part( 'templates/aside/' . $name, get_post_type() );
       }
 
       return apply_filters( 'festival:aside', isset( $content ) ? '<div class="' . $args->class . '" data-aside="' . $name .'">' . $content . '</div>': null, $name );
@@ -507,6 +511,9 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function redirect() {
+
+      wp_deregister_script( 'cfct-build-js' );
+      wp_deregister_style( 'cfct-build-css' );
 
       // Disable WP Gallery styles
       add_filter( 'use_default_gallery_style', function () {
