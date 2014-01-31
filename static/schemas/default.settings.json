@@ -23,53 +23,150 @@
         "taxonomies": [],
         "meta": {}
       },
-      "performance": {
+      "PerformanceEvent": {
         "data": {
           "capability_type": "page",
-          "label": "Performance",
+          "label": "Performances",
           "labels": {
             "add_new": "New Performance",
-            "add_new_item": "Add New Performance",
+            "add_new_item": "Create New Performances",
             "all_items": "All Performances",
-            "edit_item": "Edit Performance",
+            "edit_item": "Edit Performances",
             "menu_name": "Performances",
-            "name": "Performance",
-            "not_found": "No performances found.",
+            "name": "Performances",
+            "not_found": "No days found.",
             "not_found_in_trash": "No Performances in Trash",
-            "parent_item_colon": "Part of:",
             "search_items": "Search Performances",
-            "singular_name": "Performance",
-            "update_item": "Update Performance",
-            "view_item": "View Performance"
+            "singular_name": "Performances",
+            "update_item": "Update Performances",
+            "view_item": "View Performances"
           },
           "description": "A performance of an artist.",
           "exclude_from_search": true,
           "has_archive": false,
           "hierarchical": false,
           "menu_icon": false,
-          "menu_position": 2,
+          "menu_position": 3,
           "public": false,
           "publicly_queryable": false,
           "show_in_admin_bar": false,
           "show_in_menu": true,
           "show_in_nav_menus": false,
           "show_ui": true,
-          "supports": [ "title" ],
+          "supports": [ "title", "editor", "revisions" ],
           "can_export": true
         },
-        "taxonomies": [ "stage" ],
+        "taxonomies": [],
         "meta": {
           "information": {
             "fields": [
-              "eventArtists",
-              "startDate",
-              "endDate",
-              "stage"
+              "relatedArtists",
+              "startDateTime",
+              "endDateTime"
             ]
           }
         }
       },
-      "artist": {
+      "DayEvent": {
+        "data": {
+          "capability_type": "page",
+          "label": "Days",
+          "labels": {
+            "add_new": "New Day",
+            "add_new_item": "Create New Day",
+            "all_items": "All Days",
+            "edit_item": "Edit Day",
+            "menu_name": "Days",
+            "name": "Days",
+            "not_found": "No days found.",
+            "not_found_in_trash": "No Days in Trash",
+            "search_items": "Search Day",
+            "singular_name": "Day",
+            "update_item": "Update Day",
+            "view_item": "View Day"
+          },
+          "description": "A performance of an artist.",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "hierarchical": false,
+          "menu_icon": false,
+          "menu_position": 3,
+          "public": false,
+          "publicly_queryable": false,
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [ "title", "editor", "revisions" ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {
+          "information": {
+            "fields": [
+              "eventDate"
+            ]
+          },
+          "location": {
+            "fields": [
+              "locationMap"
+            ]
+          }
+        }
+      },
+      "Event": {
+        "data": {
+          "capability_type": "page",
+          "label": "Event",
+          "labels": {
+            "add_new": "New Event",
+            "add_new_item": "Add New Event",
+            "all_items": "All Events",
+            "edit_item": "Edit Event",
+            "menu_name": "Events",
+            "name": "Events",
+            "not_found": "No Events found",
+            "not_found_in_trash": "No Events in Trash",
+            "parent_item_colon": "Parent Event:",
+            "search_items": "Search Artists",
+            "singular_name": "Artist",
+            "update_item": "Update Artist",
+            "view_item": "View Artist"
+          },
+          "description": "Artist",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "hierarchical": false,
+          "menu_icon": false,
+          "menu_position": 5,
+          "public": false,
+          "publicly_queryable": false,
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title"
+          ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {
+          "information": {
+            "fields": [
+              "startDateTime",
+              "endDateTime",
+              "relatedArtists"
+            ]
+          },
+          "location": {
+            "fields": [
+              "locationMap"
+            ]
+          }
+        }
+      },
+      "Artist": {
         "data": {
           "capability_type": "page",
           "label": "Artist",
@@ -118,8 +215,8 @@
         "meta": {
           "links": {
             "fields": [
-              "websiteLink",
-              "socialLinks"
+              "socialLinks",
+              "websiteLink"
             ]
           },
           "images": {
@@ -132,62 +229,22 @@
             ]
           }
         }
-      },
-      "event": {
-        "data": {
-          "capability_type": "page",
-          "label": "Event",
-          "labels": {
-            "add_new": "New Event",
-            "add_new_item": "Add New Event",
-            "all_items": "All Events",
-            "edit_item": "Edit Event",
-            "menu_name": "Events",
-            "name": "Event",
-            "not_found": "No Events found",
-            "not_found_in_trash": "No Events in Trash",
-            "parent_item_colon": "Parent Event:",
-            "search_items": "Search Artists",
-            "singular_name": "Artist",
-            "update_item": "Update Artist",
-            "view_item": "View Artist"
-          },
-          "description": "Artist",
-          "exclude_from_search": true,
-          "has_archive": false,
-          "hierarchical": false,
-          "menu_icon": false,
-          "menu_position": 5,
-          "public": false,
-          "publicly_queryable": false,
-          "show_in_admin_bar": false,
-          "show_in_menu": true,
-          "show_in_nav_menus": false,
-          "show_ui": true,
-          "supports": [
-            "title"
-          ],
-          "can_export": true
-        },
-        "taxonomies": [],
-        "meta": {
-          "common": {
-            "fields": [
-              "location",
-              "website",
-              "genre"
-            ]
-          },
-          "images": {
-            "fields": [
-              "profile"
-            ]
-          }
-        }
       }
     },
     "meta": {
-      "eventArtists": {
+      "relatedEvents": {
+        "name": "Related Events",
+        "type": "post",
+        "post_type": "event",
+        "field_type": "select_advanced",
+        "multiple": true,
+        "placeholder": "Select Events",
+        "query_args": {
+          "post_status": "publish",
+          "posts_per_page": -1
+        }
+      },
+      "relatedArtists": {
         "name": "Artists",
         "type": "post",
         "post_type": "artist",
@@ -223,19 +280,24 @@
         "type": "text"
       },
       "socialLinks": {
-        "name": "Social URL",
+        "name": "Social URL(s)",
         "description": "Recognizes Beartport, Facebook, Google, Twitter, Instagram, YouTube, SoundCloud, MixCloud",
         "clone": true,
         "type": "text"
       },
 
-      "startDate": {
-        "name": "Start Time",
+      "eventDate": {
+        "name": "Date",
+        "type": "date",
+        "desc": "Date of event."
+      },
+      "startDateTime": {
+        "name": "Starts",
         "type": "datetime",
         "desc": "Date and time this event begins."
       },
-      "endDate": {
-        "name": "End Time",
+      "endDateTime": {
+        "name": "Ends",
         "type": "datetime",
         "desc": "Date and time this event ends."
       },
@@ -279,7 +341,7 @@
 
       "locationMap": {
         "id": "locationMap",
-        "name": "Location Map",
+        "name": "Location",
         "type": "map",
         "style": "width: 100%; height: 300px"
       }
