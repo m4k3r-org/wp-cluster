@@ -13,6 +13,10 @@
     {
       "type": "composer",
       "url": "http://repository.usabilitydynamics.com"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/UsabilityDynamics/wp-menufication.git"
     }
   ],
   "minimum-stability": "dev",
@@ -20,7 +24,8 @@
     "UsabilityDynamics/lib-wp-theme": "master",
     "UsabilityDynamics/lib-settings": "master",
     "UsabilityDynamics/lib-carrington": "master",
-    "UsabilityDynamics/wp-meta-box": "master"
+    "UsabilityDynamics/wp-meta-box": "master",
+    "UsabilityDynamics/wp-menufication": "master"
   },
   "autoload": {
     "classmap": [ "lib/" ]

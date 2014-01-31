@@ -151,9 +151,15 @@
         "meta": {
           "common": {
             "fields": [
-              "location",
               "website",
-              "genre"
+              "genre",
+              "artist_assoc"
+            ]
+          },
+          "map": {
+            "fields": [
+              "address",
+              "location"
             ]
           },
           "images": {
@@ -301,6 +307,7 @@
       }
     },
     "meta": {
+<<<<<<< HEAD
       "artist_website_link": {
         "name": "Website URL",
         "type": "text"
@@ -324,6 +331,31 @@
       "artist_instagram_link": {
         "name": "Instagram URL",
         "type": "text"
+=======
+      "artist_assoc": {
+        "name": "Artists",
+        "type": "post",
+        "post_type": "artist",
+        "field_type": "select_advanced",
+        "multiple": true,
+        "placeholder": "Select Artists",
+        "query_args": {
+          "post_status": "publish",
+          "posts_per_page": -1
+        }
+      },
+      "notes": {},
+      "genre": {
+        "name": "Genre",
+        "type": "select_advanced",
+        "options": {
+          "rock": "Rock",
+          "rap": "Rap",
+          "trance": "Trance"
+        },
+        "multiple": true,
+        "placeholder": "Select an Item"
+>>>>>>> da11e7294caaec7d391abf20cfa22dad6902453a
       },
       "artist_youtube_link": {
         "name": "YouTube URL",
@@ -379,11 +411,22 @@
         "desc": "Upload additional images to be displayed in a gallery format.",
         "multiple": false
       },
+      "address": {
+        "id": "address",
+        "name": "Address",
+        "type": "text",
+        "std": "United States"
+      },
       "location": {
         "id": "loc",
         "name": "Location",
         "type": "map",
+<<<<<<< HEAD
         "style": "width: 100%; height: 300px"
+=======
+        "style": "width: 100%; height: 300px",
+        "address_field": "address"
+>>>>>>> da11e7294caaec7d391abf20cfa22dad6902453a
       },
       "_ss_network": {
         "name": "Network",

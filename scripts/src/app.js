@@ -16,6 +16,17 @@ define( [ 'festival.locale', 'festival.model', 'jquery', 'skrollr', 'bootstrap' 
   window.skrollr.init({
     forceHeight: false
   });
+  
+  // Sticky elements implementation
+  require( [ 'sticky' ], function(){
+    var st = 0;
+    if( jQuery( '#wpadminbar' ).length > 0 ) {
+      st = jQuery( '#wpadminbar' ).height();
+    }
+    jQuery(".navbar-top-home").sticky({
+      topSpacing:st
+    });
+  } );
 
 });
 
