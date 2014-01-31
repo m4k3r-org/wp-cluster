@@ -210,10 +210,10 @@ namespace UsabilityDynamics {
       if( isset( $_GET[ 'test' ] ) ) {
         // $this->_updated();
       }
-      
+
       // Initializes Wordpress Menufication
       if( class_exists( '\Menufication' ) ) {
-        \Menufication::getInstance();
+        /$this->menufication = \Menufication::getInstance();
       }
 
     }
