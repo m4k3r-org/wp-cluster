@@ -85,6 +85,7 @@ namespace UsabilityDynamics\Cluster {
         add_filter( 'user_admin_url', array( &$this, 'replace_network_url' ), 10, 2 );
         add_filter( 'home_url', array( &$this, 'replace_network_url' ), 10, 2 );
         add_filter( 'site_url', array( &$this, 'replace_network_url' ), 10, 2 );
+        add_filter( 'cfct-build-module-url', array( &$this, 'replace_network_url' ), 10, 3 );
 
         // Support Vendor paths. Disabled because references get_blogaddress_by_id() too early.
         add_filter( 'update_attached_file', array( &$this, 'update_attached_file' ), 50, 2 );
