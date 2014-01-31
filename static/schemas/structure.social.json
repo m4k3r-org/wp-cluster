@@ -1,0 +1,96 @@
+{
+  "structure": {
+    "types": {
+      "social": {
+        "data": {
+          "capability_type": "page",
+          "label": "Social Stream",
+          "labels": {
+            "add_new": "New Social",
+            "add_new_item": "Add New Social",
+            "all_items": "All Socials",
+            "edit_item": "Edit Social",
+            "menu_name": "Social Stream",
+            "name": "Social",
+            "not_found": "No socials found",
+            "not_found_in_trash": "No Socials in Trash",
+            "parent_item_colon": "Parent Social:",
+            "search_items": "Search social streams",
+            "singular_name": "Social",
+            "update_item": "Update Social",
+            "view_item": "View Social"
+          },
+          "description": "Social Stream",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "hierarchical": false,
+          "menu_icon": false,
+          "menu_position": 5,
+          "public": true,
+          "publicly_queryable": true,
+          "query_var": "social",
+          "rewrite": {
+            "feeds": false,
+            "pages": false,
+            "slug": "social",
+            "with_front": false
+          },
+          "show_in_admin_bar": true,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title",
+            "thumbnail"
+          ],
+          "can_export": false
+        },
+        "taxonomies": [],
+        "meta": {
+          "network_specific": {
+            "fields": [
+              "_ss_network",
+              "_ss_id",
+              "_ss_created_at",
+              "_ss_author",
+              "_ss_url",
+              "_ss_content"
+            ]
+          }
+        }
+      }
+    },
+    "meta": {
+      "_ss_network": {
+        "name": "Network",
+        "type": "select_advanced",
+        "options": {
+          "facebook": "Facebook",
+          "instagram": "Instagram",
+          "twitter": "Twitter"
+        },
+        "multiple": false,
+        "placeholder": "Select an Item"
+      },
+      "_ss_id": {
+        "name": "Stream ID",
+        "type": "hidden"
+      },
+      "_ss_content": {
+        "name": "Content",
+        "type": "textarea"
+      },
+      "_ss_created_at": {
+        "name": "Created At",
+        "type": "datetime"
+      },
+      "_ss_author": {
+        "name": "Author"
+      },
+      "_ss_url": {
+        "name": "URL"
+      }
+    },
+    "taxonomies": {}
+  }
+}
