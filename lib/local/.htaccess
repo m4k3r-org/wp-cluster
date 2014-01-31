@@ -47,13 +47,12 @@
 
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-
-  RewriteRule ^(.*).(html|htm)$ /static/storage/%{SERVER_NAME}/$1.html [L]
-  RewriteRule ^media/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
+  
+  # RewriteRule ^$ /static/storage/%{SERVER_NAME}/index.html [NC,QSA,L]
   RewriteRule ^assets/(.*)$ /static/storage/%{SERVER_NAME}/assets/$1 [L]
-  RewriteRule ^favicon.ico$ /static/storage/%{SERVER_NAME}/favicon.ico [L]
-  RewriteRule ^$ /static/storage/%{SERVER_NAME}/index.html [L]
-
+  RewriteRule ^media/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
+  #RewriteRule ^(.*)$ /static/storage/%{SERVER_NAME}/$1 [NC,QSA,L]
+  
   RewriteRule ^system/files/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
   RewriteRule ^system/media/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
   RewriteRule ^files/(.*)$ /static/storage/%{SERVER_NAME}/$1 [L]
