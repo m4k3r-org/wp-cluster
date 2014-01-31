@@ -202,7 +202,8 @@
           "show_ui": true,
           "supports": [
             "title",
-            "thumbnail"
+            "editor",
+            "revisions"
           ],
           "can_export": true
         },
@@ -210,23 +211,32 @@
           "stage"
         ],
         "meta": {
-          "common": {
+          "artist_links": {
             "fields": [
-              "name",
-              "website",
-              "genre"
+              "artist_website_link",
+              "artist_beatport_link",
+              "artist_facebook_link",
+              "artist_gplus_link",
+              "artist_twitter_link",
+              "artist_instagram_link",
+              "artist_youtube_link",
+              "artist_soundcloud_link",
+              "artist_mixcloud_link"
             ]
           },
-          "stuff": {
+          "artist_schedule": {
             "fields": [
-              "starts",
-              "ends"
+              "artist_performance_start",
+              "artist_performance_end"
             ]
           },
-          "images": {
+          "artist_images": {
             "fields": [
-              "profile",
-              "photos"
+              "artist_headshot_image",
+              "artist_portrait_image",
+              "artist_landscape_image",
+              "artist_logo_image",
+              "artist_gallery_images"
             ]
           }
         }
@@ -291,42 +301,82 @@
       }
     },
     "meta": {
-      "notes": {},
-      "genre": {
-        "name": "Genre",
-        "type": "select_advanced",
-        "options": {
-          "rock": "Rock",
-          "rap": "Rap",
-          "trance": "Trance"
-        },
-        "multiple": true,
-        "placeholder": "Select an Item"
+      "artist_website_link": {
+        "name": "Website URL",
+        "type": "text"
       },
-      "website": {
-        "name": "Website",
-        "type": "text",
-        "placeholder": "Select an Item",
-        "clone": true
+      "artist_beatport_link": {
+        "name": "Beatport URL",
+        "type": "text"
       },
-      "starts": {
+      "artist_facebook_link": {
+        "name": "Facebook URL",
+        "type": "text"
+      },
+      "artist_gplus_link": {
+        "name": "Google Plus URL",
+        "type": "text"
+      },
+      "artist_twitter_link": {
+        "name": "Twitter URL",
+        "type": "text"
+      },
+      "artist_instagram_link": {
+        "name": "Instagram URL",
+        "type": "text"
+      },
+      "artist_youtube_link": {
+        "name": "YouTube URL",
+        "type": "text"
+      },
+      "artist_soundcloud_link": {
+        "name": "SoundCloud URL",
+        "type": "text"
+      },
+      "artist_mixcloud_link": {
+        "name": "Mixcloud URL",
+        "type": "text"
+      },
+      "artist_performance_start": {
         "id": "_start",
-        "name": "Start",
-        "type": "datetime"
+        "name": "Performance Start",
+        "type": "datetime",
+        "desc": "What day and time does the artist begin their performance?"
       },
-      "ends": {
+      "artist_performance_end": {
         "id": "_end",
-        "name": "Ends",
-        "type": "datetime"
+        "name": "Performance End",
+        "type": "datetime",
+        "desc": "What day and time does the artist end their performance?"
       },
-      "profile": {
-        "name": "Profile",
+      "artist_headshot_image": {
+        "name": "Headshot Image",
         "type": "image_advanced",
+        "desc": "Upload a high resolution headshot image.",
         "multiple": false
       },
-      "photos": {
-        "name": "Additional Photos",
+      "artist_portrait_image": {
+        "name": "Portrait Image",
+        "type": "image_advanced",
+        "desc": "Upload a high resolution portrait image.",
+        "multiple": false
+      },
+      "artist_landscape_image": {
+        "name": "Landscape Image",
+        "type": "image_advanced",
+        "desc": "Upload a high resolution landscape image.",
+        "multiple": false
+      },
+      "artist_logo_image": {
+        "name": "Logo Image",
+        "type": "image_advanced",
+        "desc": "Upload a high resolution white logo atop of a transparent background.",
+        "multiple": false
+      },
+      "artist_gallery_images": {
+        "name": "Additional Images",
         "type": "plupload_image",
+        "desc": "Upload additional images to be displayed in a gallery format.",
         "multiple": false
       },
       "location": {
@@ -334,14 +384,7 @@
         "name": "Location",
         "type": "map",
         "style": "width: 100%; height: 300px"
-
       },
-      "twitter_link": {},
-      "youtube_link": {},
-      "soundcloud_link": {},
-      "mixcloud_link": {},
-      "instagram_link": {},
-      "beatport_link": {},
       "_ss_network": {
         "name": "Network",
         "type": "select_advanced",
