@@ -53,7 +53,7 @@ namespace UsabilityDynamics {
      * @property id
      * @var string
      */
-    public $carringon;
+    public $carrington;
 
     /**
      * Class Initializer
@@ -193,6 +193,7 @@ namespace UsabilityDynamics {
       // Disable Unused Features.
       remove_theme_support( 'custom-header' );
 
+
       // Core Actions
       add_action( 'init', array( $this, 'init' ), 100 );
       add_action( 'after_setup_theme', array( $this, 'setup' ) );
@@ -202,6 +203,7 @@ namespace UsabilityDynamics {
       add_action( 'widgets_init', array( $this, 'widgets_init' ), 100 );
       add_action( 'wp_head', array( $this, 'wp_head' ) );
       add_action( 'wp_footer', array( $this, 'wp_footer' ) );
+      add_action( 'widgets_init', array( $this, 'widgets' ) );
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
 
       add_filter( 'body_class', array( $this, 'body_class' ) );
@@ -549,12 +551,42 @@ namespace UsabilityDynamics {
     }
 
     /**
+     * Unregister Unsued Widgets.
+     *
+     */
+    public function widgets() {
+      unregister_widget( 'WP_Widget_Recent_Comments' );
+      unregister_widget( 'WP_Widget_RSS' );
+      unregister_widget( 'WP_Widget_Calendar' );
+      unregister_widget( 'WP_Widget_Tag_Cloud' );
+      unregister_widget( 'WP_Widget_Meta' );
+      unregister_widget( 'WP_Widget_Archives' );
+      unregister_widget( 'WP_Widget_Categories' );
+    }
+
+    /**
      * Primary Hook
      *
      * @author Usability Dynamics
      * @since 0.1.0
      */
     public function init() {
+
+      // Register Carrington Modules.
+      $this->carrington->registerModule( 'HTMLModule' );
+      $this->carrington->registerModule( 'EditorModule' );
+      $this->carrington->registerModule( 'VideoModule' );
+      $this->carrington->registerModule( 'SidebarModule' );
+      $this->carrington->registerModule( 'HeroModule' );
+      $this->carrington->registerModule( 'ImageModule' );
+      $this->carrington->registerModule( 'GalleryModule' );
+      $this->carrington->registerModule( 'LoopModule' );
+      $this->carrington->registerModule( 'CarouselModule' );
+      $this->carrington->registerModule( 'CalloutModule' );
+      $this->carrington->registerModule( 'EventHeroModule' );
+      $this->carrington->registerModule( 'ArtistListModule' );
+      $this->carrington->registerModule( 'EventHeroModule' );
+      $this->carrington->registerModule( 'EventLoopModule' );
 
       // Register Custom Post Types and set their taxonomies
       $this->structure( $this->get( 'structure' ) );

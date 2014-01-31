@@ -1,35 +1,4 @@
 <?php
-
-/**
- * Once upon a time there was a version of the Loop Module
- * that was a bit funny. This filter fixes the data structure
- * from that time period to work with the current data structure.
- *
- * If your data is affected by this once unfortunate version then
- * copy and paste this function, then uncomment it in your functions.php
- * file. DO NOT enable this filter here as it will possibly get commented
- * or removed in a future update.
- *
- * @param array  $data
- * @param object $module
- *
- * @return array
- */
-/*
-function the_cb_lemay_fix($data, $module) {
-	if (!empty($data[$module->gfn('taxonomy-1')])) {
-		$i = 1;
-		do {
-			$data[$module->gfn('tax_input')][$data[$module->gfn('taxonomy-'.$i)]] = $data[$module->gfn('tax_filter-'.$i)];
-			unset($data[$module->gfn('taxonomy-'.$i)], $data[$module->gfn('tax_filter-'.$i)]);
-			$i++;
-		} while (!empty($data[$module->gfn('taxonomy-'.$i)]));
-	}
-	return $data;
-}
-add_filter('cfct-migrate-loop-data', 'the_cb_lemay_fix', 10, 2);
-*/
-
 /**
  * Carrington Build Loop Module
  * Performs a loop based on several different filter criteria
@@ -41,8 +10,9 @@ add_filter('cfct-migrate-loop-data', 'the_cb_lemay_fix', 10, 2);
  * Don't forget to call ArtistListModule::init() in your constructor if you
  * derive from this class!
  */
-if( !class_exists( 'ArtistListModule' ) && class_exists( 'cfct_build_module' ) ) {
-  class ArtistListModule extends cfct_build_module {
+if( !class_exists( 'ArtistListModule' ) ) {
+
+  class ArtistListModule extends \UsabilityDynamics\Theme\Module {
     const POST_TYPES_FILTER     = 'cfct-module-loop-post-types';
     const TAXONOMY_TYPES_FILTER = 'cfct-module-loop-taxonomy-types';
 
@@ -64,7 +34,7 @@ if( !class_exists( 'ArtistListModule' ) && class_exists( 'cfct_build_module' ) )
     public function __construct() {
       $opts = array(
         'description' => __( 'Choose and display a set of posts (any post type).', 'carrington-build' ),
-        'icon'        => 'loop/icon.png'
+        'icon'        => plugins_url( '/icon.png', __DIR__ )
       );
       parent::__construct( 'cfct-module-loop', __( 'Artist List', 'carrington-build' ), $opts );
       $this->init();
@@ -880,8 +850,7 @@ if( !class_exists( 'ArtistListModule' ) && class_exists( 'cfct_build_module' ) )
      * @return array
      */
     protected function get_post_types( $type ) {
-      $type_opts = array(
-        //'publicly_queryable' => 1
+      $type_opts = array( //'publicly_queryable' => 1
       );
       if( !empty( $type ) ) {
         if( is_array( $type ) ) {
@@ -1388,5 +1357,4 @@ if( !class_exists( 'ArtistListModule' ) && class_exists( 'cfct_build_module' ) )
     }
   }
 
-  cfct_build_register_module( 'ArtistListModule' );
 }
