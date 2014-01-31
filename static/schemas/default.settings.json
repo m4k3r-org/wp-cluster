@@ -10,6 +10,19 @@
   },
   "structure": {
     "types": {
+      "_aside": {
+        "data": {
+          "capability_type": "page",
+          "label": "Aside",
+          "description": "Modular front-end asides (sections).",
+          "show_in_menu": false,
+          "show_ui": true,
+          "supports": [ "title", "editor", "revisions" ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {}
+      },
       "performance": {
         "data": {
           "capability_type": "page",

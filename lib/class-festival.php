@@ -189,6 +189,7 @@ namespace UsabilityDynamics {
       add_action( 'after_setup_theme', array( $this, 'setup' ));
       add_action( 'template_redirect', array( $this, 'redirect' ), 100 );
       add_action( 'admin_init', array( $this, 'admin' ));
+      add_action( 'admin_menu', array( $this, 'admin_menu' ));
 
       add_action( 'widgets_init', array( $this, 'widgets_init' ), 100 );
       add_action( 'wp_head', array( $this, 'wp_head' ));
@@ -197,6 +198,14 @@ namespace UsabilityDynamics {
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ));
 
       add_filter( 'body_class', array( $this, 'body_class' ));
+      add_filter( 'cfct-build-enabled-post-types', function( $types ) {
+
+        $types[] = 'artist';
+        $types[] = '_aside';
+        //die( '<pre>' . print_r( $types, true ) . '</pre>' );
+        return $types;
+
+      });
 
       if( isset( $_GET[ 'test' ] ) ) {
         // $this->_updated();
@@ -398,6 +407,60 @@ namespace UsabilityDynamics {
     }
 
     /**
+     * Get a Content Section.
+     *
+     * If section can not be found, will attempt to find template of same name in /templates directory.
+     *
+     * @example
+     *
+     *        echo wp_festival()->aside( 'header' );
+     *
+     *
+     * @param null $name
+     * @param array $args
+     * @return mixed|null
+     */
+    public function aside( $name = null, $args = array() ) {
+      global $post;
+
+      $args = (object) wp_parse_args( $args, $default = array(
+        'type' => '_aside',
+        'class' => 'wp-festival-aside',
+        'more_link_text' => null,
+        'strip_teaser' => null
+      ));
+
+      // Preserve Post.
+      $_post = $post;
+
+      // Using query_posts() will not work because we must not change the global query.
+      $custom_loop = new \WP_Query( array(
+        'name' => $name,
+        'post_type' => $args->type
+      ));
+
+      // die(json_encode( $custom_loop ));
+
+      while( $custom_loop->have_posts() ) {
+        $custom_loop->the_post();
+        $content = get_the_content( $args->more_link_text, $args->strip_teaser );
+        $content = apply_filters( 'the_content', $content );
+        $content = str_replace( ']]>', ']]&gt;', $content );
+      }
+
+      // Return post.
+      $post = $_post;
+
+      // Try to locale regular aside.
+      if( !$content ) {
+        return get_template_part( 'templates/aside/' . $name, get_post_type() );
+      }
+
+      return apply_filters( 'festival:aside', isset( $content ) ? '<div class="' . $args->class . '" data-aside="' . $name .'">' . $content . '</div>': null, $name );
+
+    }
+
+    /**
      * Register Sidebars
      *
      * @author Usability Dynamics
@@ -459,6 +522,25 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function admin() {
+    }
+
+    /**
+     * Add "Sections" link to Appearance menu.
+     *
+     * @todo Figure out a way to keep the Appearance menu open while editing a menu.
+     *
+     * @param $menu
+     */
+    public function admin_menu( $menu ) {
+      global $submenu;
+      global $menu;
+
+      $submenu[ 'themes.php' ][ 20 ] = array(
+        __( 'Asides' ),
+        'edit_theme_options',
+        'edit.php?post_type=_aside'
+      );
+
     }
 
     /**

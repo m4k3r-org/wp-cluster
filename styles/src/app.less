@@ -2,7 +2,6 @@
 //
 // @version 0.1.0
 // @author Usability Dynamics
-
 @import "bootstrap/bootstrap.less";
 @import "variables.less";
 @import "fonts.less";
@@ -12,6 +11,23 @@
 @import "carousel.less";
 @import "custom.less";
 @import "responsive.less";
-
 // Include Color schema.
 @import "colors/default.less";
+
+.cfct-block {
+
+  .cfct-build-module-edit-link {
+    position: absolute;
+    opacity: 0;
+    top: -20px;
+  }
+
+  &:hover {
+
+    .cfct-build-module-edit-link {
+      opacity: .7;
+    }
+
+  }
+
+}
