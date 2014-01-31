@@ -213,7 +213,7 @@ namespace UsabilityDynamics {
 
       // Initializes Wordpress Menufication
       if( class_exists( '\Menufication' ) ) {
-        /$this->menufication = \Menufication::getInstance();
+        $this->menufication = \Menufication::getInstance();
       }
 
     }
