@@ -308,18 +308,12 @@ namespace UsabilityDynamics\Cluster {
        */
       private function _fix_urls() {
 
-        if( defined( 'WP_VENEER_DOMAIN_MEDIA' ) && WP_VENEER_DOMAIN_MEDIA && !defined( 'BLOGUPLOADDIR' ) ) {
-          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADBLOGSDIR . '/' . Bootstrap::get_instance()->domain );
-        } else {
-          define( 'BLOGUPLOADDIR', WP_BASE_DIR . '/' . UPLOADBLOGSDIR . '/' . Bootstrap::get_instance()->site_id );
-        }
+        // Add handling for /manage
+        //add_filter( 'network_site_url', array( get_class(), 'network_site_url' ) );
+        //add_filter( 'network_admin_url', array( get_class(), 'network_site_url' ) );
 
         // Add handling for /manage
-        add_filter( 'network_site_url', array( get_class(), 'network_site_url' ) );
-        add_filter( 'network_admin_url', array( get_class(), 'network_site_url' ) );
-
-        // Add handling for /manage
-        add_filter( 'admin_url', array( get_class(), 'admin_url' ) );
+        //add_filter( 'admin_url', array( get_class(), 'admin_url' ) );
 
       }
 
