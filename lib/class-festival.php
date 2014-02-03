@@ -376,6 +376,9 @@ namespace UsabilityDynamics {
       register_nav_menu( 'social', __( 'Social Links', $this->domain ) );
       register_nav_menu( 'footer', __( 'Footer Menu', $this->domain ) );
       register_nav_menu( 'mobile', __( 'Mobile Menu', $this->domain ) );
+      
+      // Add custom header functionality
+      add_custom_image_header( '', create_function('',''));
 
     }
 

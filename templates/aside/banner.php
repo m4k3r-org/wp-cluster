@@ -7,7 +7,7 @@
  * @since wp-escalade 0.1.0
  */
 ?>
-<header class="banner-poster">
+<header class="banner-poster home-banner">
   <div class="container">
     <div class="row">
 

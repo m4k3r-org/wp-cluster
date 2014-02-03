@@ -10,33 +10,55 @@
 .banner-poster {
 
   h1, h2, h3, h4, h5, h6 {
-    color: @navbar-default-color;
+    color: @font-default-color;
   }
 
   .value {
-    color: @navbar-default-color;
+    color: @font-default-color;
   }
 
   .event-place .label,
   .event-time span {
-    color: @countdown_n;
+    color: @high-color;
   }
 
   #countdown .countdown_section {
 
     span {
-      color: @countdown_n;
+      color: @high-color;
     }
 
     .countdown_label {
-      color: @countdown_l;
+      color: @font-high-color;
     }
 
   }
 
   .btn {
     background-color: @default-color;
-    color: @navbar-default-color;
+    color: @font-default-color;
+  }
+  
+  .inner-banner {
+  
+    h3 {
+      color: @default-color;
+    }
+    
+    .days {
+
+      .day {
+        background-color: @default-color;
+        color: @font-default-color;
+        font-size: 120%;
+      }
+
+    }
+    
+    .value {
+      color: @default-color;
+    }
+    
   }
 
 }
@@ -52,13 +74,13 @@
     border-bottom: 4px solid @default-color-active;
 
     .navbar-brand {
-      color: @navbar-default-color;
+      color: @font-default-color;
     }
 
     .navbar-nav {
 
       a {
-        color: @navbar-default-color;
+        color: @font-default-color;
       }
 
       & > .active > a,
@@ -88,9 +110,9 @@
     }
 
     .btn {
-      background-color: @countdown_n;
-      color: @navbar-default-color;
-      border-color: @countdown_n;
+      background-color: @high-color;
+      color: @font-default-color;
+      border-color: @high-color;
     }
 
     .social-wrap {
@@ -101,7 +123,7 @@
       }
 
       button.navbar-toggle {
-        color: @navbar-default-color;
+        color: @font-default-color;
         border-color: @default-color-active;
 
         &:hover, &:focus {
@@ -113,7 +135,7 @@
         background-color: @default-color-active;
 
         a {
-          color: @navbar-default-color;
+          color: @font-default-color;
           background-color: @default-color;
         }
 
@@ -381,15 +403,15 @@ footer {
 
 #menufication-top #menufication-btn:before, 
 #menufication-non-css3-top #menufication-non-css3-btn:before {
-  border-bottom: 11px double @navbar-default-color;
-  border-top: 4px solid @navbar-default-color;
+  border-bottom: 11px double @font-default-color;
+  border-top: 4px solid @font-default-color;
 }
 
 #menufication-nav li, #menufication-non-css3-nav li {
   border-bottom: 1px solid @default-color-active;
   
   a {
-    color: @navbar-default-color;
+    color: @font-default-color;
   }
   
 }
