@@ -11,32 +11,34 @@
  * @since festival 0.1.0
  */
 
-$cc = is_active_sidebar( 'right-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12';
- 
-get_template_part( 'templates/page/header', get_post_type() ); 
+get_template_part( 'templates/page/header', get_post_type() );
 ?>
 <section class="container inner-wrapper entry-<?php echo get_post_type(); ?>">
   <div class="row">
 
-    <div class="<?php echo $cc; ?> clearfix">
-
-      <header class="article-header">
-        <h1 class="article-title"><?php single_cat_title(); ?></h1>
-      </header>
-
-      <?php if( !have_posts() ) : ?>
+    <div class="<?php echo is_active_sidebar( 'right-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?> clearfix">
+    
+      <div class="content-wrapper">
       
-        <div class="alert alert-warning">
-          <?php _e( 'Sorry, no results were found.', wp_festival( 'domain' ) ); ?>
-        </div>
-      
-      <?php else : ?>
+        <header class="article-header">
+          <h1 class="article-title"><?php single_cat_title(); ?></h1>
+        </header>
 
-        <?php while( have_posts() ) : the_post(); ?>
-          <?php get_template_part( 'templates/article/listing', get_post_type() ); ?>
-        <?php endwhile; ?>
-      
-      <?php endif; ?>
+        <?php if( !have_posts() ) : ?>
+        
+          <div class="alert alert-warning">
+            <?php _e( 'Sorry, no results were found.', wp_festival( 'domain' ) ); ?>
+          </div>
+        
+        <?php else : ?>
+
+          <?php while( have_posts() ) : the_post(); ?>
+            <?php get_template_part( 'templates/article/listing', get_post_type() ); ?>
+          <?php endwhile; ?>
+        
+        <?php endif; ?>
+        
+      </div>
 
     </div>
 

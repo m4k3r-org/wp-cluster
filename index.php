@@ -18,20 +18,28 @@
 
     <div class="<?php echo is_active_sidebar( 'right-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?> clearfix">
 
-      <?php if( !have_posts() ) : ?>
-        <?php get_template_part( 'templates/aside/alert', get_post_type() ); ?>
-      <?php else : ?>
+      <div class="content-wrapper">
+    
+        <?php if( !have_posts() ) : ?>
+          <?php get_template_part( 'templates/aside/alert', get_post_type() ); ?>
+        <?php else : ?>
 
-        <?php while( have_posts() ) : the_post(); ?>
-          <?php get_template_part( 'templates/article/listing', get_post_type() ); ?>
-        <?php endwhile; ?>
+          <?php while( have_posts() ) : the_post(); ?>
+            <?php get_template_part( 'templates/article/listing', get_post_type() ); ?>
+          <?php endwhile; ?>
+        
+        <?php endif; ?>
       
-      <?php endif; ?>
+      </div>
 
     </div>
 
     <?php if( is_active_sidebar( 'right-sidebar' ) ) : ?>
-      <div class="col-md-3 sidebar"><?php dynamic_sidebar('right-sidebar'); ?></div>
+      <div class="col-md-3 sidebar">
+        <div class="sidebar">
+          <?php dynamic_sidebar('right-sidebar'); ?>
+        </div>
+      </div>
     <?php endif; ?>
 
   </div>

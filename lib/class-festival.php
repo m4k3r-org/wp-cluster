@@ -737,9 +737,9 @@ namespace UsabilityDynamics {
      * Returns post image's url with required size.
      *
      * Examples:
-     * 1) $festival->get_image_link_by_post_id( get_the_ID()); // Returns Full image
-     * 2) $festival->get_image_link_by_post_id( get_the_ID(), array( 'size' => 'medium' )); // Returns image with predefined size
-     * 3) $festival->get_image_link_by_post_id( get_the_ID(), array( 'width' => '430', 'height' => '125' )); // Returns image with custom size
+     * 1) wp_festival()->get_image_link_by_post_id( get_the_ID()); // Returns Full image
+     * 2) wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'size' => 'medium' )); // Returns image with predefined size
+     * 3) wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '430', 'height' => '125' )); // Returns image with custom size
      *
      * @param int          $post_id
      * @param array|string $args

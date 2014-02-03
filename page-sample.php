@@ -19,13 +19,11 @@ get_template_part( 'templates/page/header', get_post_type() );
   <div class="row">
 
     <div class="col-md-12 col-sm-12">
-      
-      <!-- SAMPLE -->
-      
-      SAMPLE
-      
-      <!-- /SAMPLE -->
-      
+      <div class="content-wrapper">
+        <!-- SAMPLE -->
+        SAMPLE
+        <!-- /SAMPLE -->
+      </div>
     </div>
 
   </div>
