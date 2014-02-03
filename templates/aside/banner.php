@@ -1,6 +1,6 @@
 <?php
 /**
- * Header on Home Page
+ * Banner on Home Page
  *
  * @author Usability Dynamics
  * @module wp-escalade  

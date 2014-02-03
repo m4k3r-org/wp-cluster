@@ -1,6 +1,6 @@
 <?php
 /**
- * The Header Aside on Home page
+ * The Header Aside on inner pages
  *
  * @author Usability Dynamics
  * @module festival  

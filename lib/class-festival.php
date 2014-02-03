@@ -417,7 +417,7 @@ namespace UsabilityDynamics {
      *
      * @example
      *
-     *        echo wp_festival()->aside( 'header' );
+     *        wp_festival()->aside( 'header' );
      *
      *
      * @param null  $name
@@ -432,7 +432,8 @@ namespace UsabilityDynamics {
         'type'           => '_aside',
         'class'          => 'wp-festival-aside',
         'more_link_text' => null,
-        'strip_teaser'   => null
+        'strip_teaser'   => null,
+        'return'         => false,
       ) );
 
       // Preserve Post.
@@ -460,11 +461,19 @@ namespace UsabilityDynamics {
 
       // Try to locale regular aside.
       if( !$content ) {
+        ob_start();
         get_template_part( 'templates/aside/' . $name, get_post_type() );
+        $content = ob_get_clean();
       }
 
-      return apply_filters( 'festival:aside', isset( $content ) ? '<div class="' . $args->class . '" data-aside="' . $name . '">' . $content . '</div>' : null, $name );
+      $content = apply_filters( 'festival:aside', isset( $content ) ? '<div class="' . $args->class . '" data-aside="' . $name . '">' . $content . '</div>' : null, $name );
 
+      if( $args->return ) {
+        return $content;
+      } else {
+        echo $content;
+      }
+      
     }
 
     /**

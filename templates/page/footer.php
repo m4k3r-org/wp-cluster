@@ -14,7 +14,7 @@
     <footer>
 
       <section class="container">
-        <?php echo wp_festival()->aside( 'footer' ); ?>
+        <?php wp_festival()->aside( 'footer' ); ?>
       </section>
 
     </footer>
