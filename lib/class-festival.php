@@ -759,7 +759,7 @@ namespace UsabilityDynamics {
         // Optionals:
         'post_type'        => false, // Different post types can have different default images
         'default'          => true, // Use default image if images doesn't exist or not.
-        'default_filetype' => 'jpg', // Filetype of default image. May be used in theme childs implementations
+        'default_file'     => ( get_template_directory() . '/images/src/no-image.jpg' ), // Filename
       ) );
 
       if( has_post_thumbnail( $post_id ) ) {
@@ -772,8 +772,8 @@ namespace UsabilityDynamics {
           $wp_upload_dir = wp_upload_dir();
           $dir           = $wp_upload_dir[ 'basedir' ] . '/no_image/' . md5( $this->domain ) . '';
           $url           = $wp_upload_dir[ 'baseurl' ] . '/no_image/' . md5( $this->domain ) . '';
-          $path          = $dir . '/' . $this->get( 'configuration.color_schema' ) . ( !empty( $post_type ) ? "-{$post_type}" : "" ) . '.' . $args->default_filetype;
-          $default_path  = get_template_directory() . '/images/no_image/' . basename( $path );
+          $path          = $dir . '/' . basename( $args->default_file );
+          $default_path  = $args->default_file;
           $guid          = $url . '/' . basename( $path );
 
           if( !is_dir( $dir ) ) {
@@ -783,6 +783,8 @@ namespace UsabilityDynamics {
           // If attachment for default image doesn't exist
           if( !$attachment_id = \UsabilityDynamics\Utility::get_image_id_by_guid( $guid ) ) {
             // Determine if image exists. Check image by post_type at first if post_type is passed.\
+            
+            
             if( !file_exists( $default_path ) ) {
               return false;
             }
@@ -819,8 +821,8 @@ namespace UsabilityDynamics {
         }
       }
 
-      if( !empty( $width ) && !empty( $height ) ) {
-        $_attachment = \UsabilityDynamics\Utility::get_image_link_with_custom_size( $attachment_id, $width, $height );
+      if( !empty( $args->width ) && !empty( $args->height ) ) {
+        $_attachment = \UsabilityDynamics\Utility::get_image_link_with_custom_size( $attachment_id, $args->width, $args->height );
       } else {
         if( $args->size == 'full' ) {
           $_attachment          = wp_get_attachment_image_src( $attachment_id, $args->size );

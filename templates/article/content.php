@@ -9,6 +9,13 @@
 ?>
 <article <?php post_class(); ?> data-type="<?php get_post_type(); ?>">
 
+  <?php $img = wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '1140', 'height' => '350' ) ); ?>
+  <?php if( !empty( $img ) ) : ?>
+    <section class="article-image">
+      <img class="img-responsive" src="<?php echo $img; ?>" alt="" />
+    </section>
+  <?php endif; ?>
+
   <header class="article-header">
 		<h1 class="article-title" data-type="post_title"><?php the_title(); ?></h1>
 	</header>
