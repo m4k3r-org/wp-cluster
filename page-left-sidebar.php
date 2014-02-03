@@ -13,9 +13,7 @@
  * @module festival  
  * @since festival 0.1.0
  */
- 
-$cc = is_active_sidebar( 'left-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12';
- 
+
 get_template_part( 'templates/page/header', get_post_type() ); 
 ?>
 <section class="container inner-wrapper">
@@ -29,10 +27,12 @@ get_template_part( 'templates/page/header', get_post_type() );
       </div>
     <?php endif; ?>
   
-    <div class="<?php echo $cc; ?>">
-      <?php while( have_posts() ) : the_post(); ?>
-        <?php get_template_part( 'templates/article/content', get_post_type() ); ?>
-      <?php endwhile; ?>
+    <div class="<?php echo is_active_sidebar( 'left-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?>">
+      <div class="content-wrapper">
+        <?php while( have_posts() ) : the_post(); ?>
+          <?php get_template_part( 'templates/article/content', get_post_type() ); ?>
+        <?php endwhile; ?>
+      </div>
     </div>
 
   </div>

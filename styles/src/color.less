@@ -160,7 +160,12 @@
   border-color: @content-border-color;
   
   a {
-    color: @default-color;
+    color: @content-font-color;
+    
+    &:hover {
+      color: @default-color;
+      text-decoration: none;
+    }
   }
   
   h1, h2, h3, h4, h4, h6 {
