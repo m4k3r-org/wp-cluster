@@ -45,26 +45,24 @@
 # Cluster Static and Media BEGIN
 <IfModule mod_rewrite.c>
 
+  # Rewrite assets or media, if they don't exist
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  
-  RewriteRule ^assets/(.*)$ /static/storage/%{SERVER_NAME}/assets/$1 [L]
-  RewriteRule ^media/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
+  RewriteRule ^(assets|media)/(.*)$ /static/storage/%{SERVER_NAME}/$1/$2 [L]
 
-  # Look to rewrite for the root specifically to index.html if it exists
-  RewriteCond %{HTTP_HOST} (.*)
-  RewriteCond %{DOCUMENT_ROOT}/../storage/%1/static/index.html -f
-  RewriteRule ^$ /static/storage/%1/static/index.html [NC,QSA,L]
-
-  # Rewrite static assets that exist in the storage directory
-  RewriteCond %{HTTP_HOST} (.*)
-  RewriteCond %{DOCUMENT_ROOT}/../storage/%1/static%{REQUEST_URI} -f
-  RewriteRule ^(.*)$ /static/storage/%1/static/$1 [NC,QSA,L]
-
+  # Rewrite other media URLs
   RewriteRule ^system/files/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
   RewriteRule ^system/media/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
   RewriteRule ^files/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
   RewriteRule ^uploads/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
+
+  # Look to rewrite for the root specifically to index.html if it exists
+  RewriteCond %{DOCUMENT_ROOT}/static/storage/%{SERVER_NAME}/static/index\.html -f
+  RewriteRule ^$ /static/storage/%{SERVER_NAME}/static/index.html [NC,QSA,L]
+
+  # Rewrite static assets that exist in the storage directory
+  RewriteCond %{DOCUMENT_ROOT}/static/storage/%{SERVER_NAME}/static%{REQUEST_URI} -f
+  RewriteRule ^(.*)$ /static/storage/%{SERVER_NAME}/static%{REQUEST_URI} [NC,QSA,L]
 
 </IfModule>
 # Cluster Static and Media END
