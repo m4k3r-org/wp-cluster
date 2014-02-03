@@ -171,7 +171,7 @@ namespace UsabilityDynamics {
           '_aside'
         )
       ) );
-
+      
       // Register Theme Settings Model.
       $this->requires( array(
         'id'    => 'festival.model',
@@ -573,21 +573,23 @@ namespace UsabilityDynamics {
     public function init() {
 
       // Register Carrington Modules.
-      $this->carrington->registerModule( 'HTMLModule' );
-      $this->carrington->registerModule( 'EditorModule' );
-      $this->carrington->registerModule( 'VideoModule' );
-      $this->carrington->registerModule( 'SidebarModule' );
-      $this->carrington->registerModule( 'HeroModule' );
-      $this->carrington->registerModule( 'ImageModule' );
-      $this->carrington->registerModule( 'GalleryModule' );
-      $this->carrington->registerModule( 'LoopModule' );
-      $this->carrington->registerModule( 'CarouselModule' );
-      $this->carrington->registerModule( 'CalloutModule' );
-      $this->carrington->registerModule( 'EventHeroModule' );
-      $this->carrington->registerModule( 'ArtistListModule' );
-      $this->carrington->registerModule( 'EventHeroModule' );
-      $this->carrington->registerModule( 'EventLoopModule' );
-
+      if( is_object( $this->carrington ) ) { 
+        $this->carrington->registerModule( 'HTMLModule' );
+        $this->carrington->registerModule( 'EditorModule' );
+        $this->carrington->registerModule( 'VideoModule' );
+        $this->carrington->registerModule( 'SidebarModule' );
+        $this->carrington->registerModule( 'HeroModule' );
+        $this->carrington->registerModule( 'ImageModule' );
+        $this->carrington->registerModule( 'GalleryModule' );
+        $this->carrington->registerModule( 'LoopModule' );
+        $this->carrington->registerModule( 'CarouselModule' );
+        $this->carrington->registerModule( 'CalloutModule' );
+        $this->carrington->registerModule( 'EventHeroModule' );
+        $this->carrington->registerModule( 'ArtistListModule' );
+        $this->carrington->registerModule( 'EventHeroModule' );
+        $this->carrington->registerModule( 'EventLoopModule' );
+      }
+      
       // Register Custom Post Types and set their taxonomies
       $this->structure( $this->get( 'structure' ) );
 
