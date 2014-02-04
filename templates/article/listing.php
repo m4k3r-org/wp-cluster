@@ -14,7 +14,7 @@
     <h2 class="entry-title"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
   </header>
   <section class="entry-excerpt"><?php the_excerpt(); ?></section>
-  <footer class="entry-meta">
-    <span class="entry-date"><?php the_time( 'M <p>j</p>' ) ?></span>
-  </footer>
+  <section class="footer entry-meta">
+    <span class="entry-date"><?php the_time( 'F j' ); ?></span>
+  </section>
 </article>

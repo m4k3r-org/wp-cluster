@@ -33,6 +33,7 @@ get_template_part( 'templates/page/header', get_post_type() );
         <?php else : ?>
 
           <?php while( have_posts() ) : the_post(); ?>
+            <hr/>
             <?php get_template_part( 'templates/article/listing', get_post_type() ); ?>
           <?php endwhile; ?>
         
