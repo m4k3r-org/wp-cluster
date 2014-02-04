@@ -755,22 +755,13 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function get_image_link_by_post_id( $post_id, $args = array() ) {
-      global $post; // $wpp_query;
-
-      $_image = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ? $post_id : $post->ID ) );
-
-      return $_image[0] ? $_image[0] : 'http://placehold.it/350x150';
-
+      
       $args = (object) wp_parse_args( $args, array(
-        'size'             => 'full', // Get image by predefined image_size. If width and height are set - it's ignored.
+        'size'             => 'large', // Get image by predefined image_size. If width and height are set - it's ignored.
         'width'            => '', // Custom size
         'height'           => '', // Custom size
-
         // Optionals:
-        'post_type'        => false, // Different post types can have different default images
         'default'          => true, // Use default image if images doesn't exist or not.
-        'default_file'     => ( get_template_directory() . '/images/src/no-image.jpg' ), // Filename
-
       ));
 
       if( has_post_thumbnail( $post_id ) ) {
@@ -779,52 +770,19 @@ namespace UsabilityDynamics {
 
         // Use default image if image for post doesn't exist
         if( $args->default ) {
-
-          $wp_upload_dir = wp_upload_dir();
-          $dir           = $wp_upload_dir[ 'basedir' ] . '/no_image/' . md5( $this->domain ) . '';
-          $url           = $wp_upload_dir[ 'baseurl' ] . '/no_image/' . md5( $this->domain ) . '';
-          $path          = $dir . '/' . basename( $args->default_file );
-          $default_path  = $args->default_file;
-          $guid          = $url . '/' . basename( $path );
-
-          if( !is_dir( $dir ) ) {
-            wp_mkdir_p( $dir );
+        
+          $url = false;
+        
+          if( !empty( $args->width ) && !empty( $args->height ) ) {
+            $url = 'http://placehold.it/' . $args->width . 'x' . $args->height;
+          } else {
+            $sizes = \UsabilityDynamics\Utility::all_image_sizes();
+            if( key_exists( $args->size, $sizes ) ) {
+              $url = 'http://placehold.it/' . $sizes[ $args->size ][ 'width' ] . 'x' . $sizes[ $args->size ][ 'height' ];
+            }
           }
-
-          // If attachment for default image doesn't exist
-          if( !$attachment_id = \UsabilityDynamics\Utility::get_image_id_by_guid( $guid ) ) {
-            // Determine if image exists. Check image by post_type at first if post_type is passed.\
-
-            if( !file_exists( $default_path ) ) {
-              return false;
-            }
-            if( !file_exists( $path ) ) {
-              copy( $default_path, $path );
-            }
-
-            $wp_filetype = wp_check_filetype( basename( $path ), null );
-
-            $attachment = array(
-              'guid'           => $guid,
-              'post_mime_type' => $wp_filetype[ 'type' ],
-              'post_title'     => __( 'No Image', $this->domain ),
-              'post_content'   => '',
-              'post_status'    => 'inherit'
-            );
-
-            if( !$attachment_id = wp_insert_attachment( $attachment, $path ) ) {
-              return false;
-            }
-
-            // image.php file must be included at first
-            // for the function wp_generate_attachment_metadata() to work
-            require_once( ABSPATH . 'wp-admin/includes/image.php' );
-
-            $attachment_data = wp_generate_attachment_metadata( $attachment_id, $path );
-
-            wp_update_attachment_metadata( $attachment_id, $attachment_data );
-
-          }
+          
+          return $url;
 
         } else {
           return false;
