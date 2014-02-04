@@ -698,7 +698,7 @@ namespace UsabilityDynamics {
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
-
+      
     }
 
     /**

@@ -173,7 +173,7 @@
     color: @content-title-color;
   }
   
-  p, span, div, li, ol {
+  p, span, div, li, ol, section {
     color: @content-font-color;
   }
   
@@ -182,6 +182,10 @@
   }
   
   
+}
+
+.wp-caption {
+  border-color: @content-border-color;
 }
 
 
@@ -466,6 +470,18 @@ footer {
       
     }
   
+  }
+  
+}
+
+/* ==============
+ Shortcodes
+============== */
+
+.gallery {
+  
+  .gallery-item {
+    border-color: @content-border-color;
   }
   
 }
