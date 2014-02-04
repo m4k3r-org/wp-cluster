@@ -122,6 +122,10 @@ namespace UsabilityDynamics {
           'comment-form',
           'search-form'
         ),
+        'custom-background'  => array(
+          'default-color'          => '',
+          'default-image'          => ''
+        ),
         'post-thumbnails'       => array(
           'event',
           'artist',

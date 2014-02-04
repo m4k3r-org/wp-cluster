@@ -49,6 +49,7 @@ module.exports = function( grunt ) {
         },
         files: {
           'styles/app.css': [ 'styles/src/app.less' ],
+          'styles/site.css': [ 'styles/src/site.less' ],
           'styles/default.css': [ 'styles/src/colors/default.less' ],
           'styles/editor-style.css': [ 'styles/src/editor-style.less' ]
         }

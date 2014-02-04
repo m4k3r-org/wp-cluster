@@ -10,23 +10,23 @@
  *      require( 'festival.model' ).ajax
  *
  */
-define( [ 'festival.locale', 'festival.model', 'jquery', 'skrollr', 'bootstrap' ], function( locale, model, jQuery ) {
-  console.log( 'wp-festival', 'loaded', require( 'festival.model' ).domain );
+define( [ 'site.locale', 'site.model', 'jquery', 'skrollr', 'bootstrap' ], function( locale, model, jQuery ) {
+  console.log( 'app', 'loaded', require( 'festival.model' ).domain );
 
-  window.skrollr.init({
+  window.skrollr.init( {
     forceHeight: false
   });
-  
+
   // Sticky elements implementation
-  require( [ 'sticky' ], function(){
+  require( [ 'sticky' ], function() {
     var st = 0;
     if( jQuery( '#wpadminbar' ).length > 0 ) {
       st = jQuery( '#wpadminbar' ).height();
     }
-    jQuery(".navbar-top-home").sticky({
-      topSpacing:st
+    jQuery( ".navbar-top-home" ).sticky( {
+      topSpacing: st
     });
-  } );
+  });
 
 });
 

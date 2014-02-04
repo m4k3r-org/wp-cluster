@@ -17,25 +17,17 @@
     <?php wp_head(); ?>
   </head>
   
-  <body <?php body_class(); ?> style="background-image: url(<?php echo get_background_image(); ?>)" data-post-type="<?php get_post_type(); ?>" data-requires="app">
+  <body <?php body_class(); ?> style="background-image: url(<?php echo get_background_image(); ?>)" data-post-type="<?php get_post_type(); ?>" data-requires="site">
 
     <header class="header">
       <div class="container">
-        <?php if( is_home() || is_front_page() ) : ?>
           <?php wp_festival()->aside( 'header' ); ?>
-        <?php else: ?>
-          <?php wp_festival()->aside( 'inner-header' ); ?>
-        <?php endif; ?>
       </div>
     </header>
 
     <header class="banner-poster">
       <div class="container">
-        <?php if( is_home() || is_front_page() ) : ?>
-          <?php wp_festival()->aside( 'banner' ); ?>
-        <?php else: ?>
-          <?php wp_festival()->aside( 'inner-banner' ); ?>
-        <?php endif; ?>
+        <?php wp_festival()->aside( 'banner' ); ?>
       </div>
     </header>
 
