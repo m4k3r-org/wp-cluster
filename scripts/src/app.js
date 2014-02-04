@@ -20,13 +20,16 @@ define( [ 'site.locale', 'site.model', 'jquery', 'skrollr', 'bootstrap' ], funct
   // Sticky elements implementation
   require( [ 'sticky' ], function() {
     var st = 0;
+
     if( jQuery( '#wpadminbar' ).length > 0 ) {
       st = jQuery( '#wpadminbar' ).height();
     }
+
     jQuery( ".navbar-top-home" ).sticky( {
       topSpacing: st
     });
   });
+
 
 });
 

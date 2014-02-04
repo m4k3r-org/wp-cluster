@@ -79,6 +79,11 @@ namespace UsabilityDynamics {
       $this->domain  = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ));
       $this->version = wp_get_theme()->get( 'Version' );
 
+      // Make theme available for translation
+      if( is_dir( get_template_directory() . '/static/languages' ) ) {
+        load_theme_textdomain( $this->domain, get_template_directory() . '/static/languages' );
+      }
+
       // Initialize Settings.
       $this->settings();
 
@@ -196,9 +201,25 @@ namespace UsabilityDynamics {
         'data'  => $this->get_locale()
       ));
 
+
+      // Register Navigation Menus
+      $this->menus(array(
+        'primary' => array(
+          'name' => __( 'Primary', $this->domain )
+        ),
+        'social' => array(
+          'name' => __( 'Secondary', $this->domain )
+        ),
+        'footer' => array(
+          'name' => __( 'Footer', $this->domain )
+        ),
+        'mobile' => array(
+          'name' => __( 'Mobile', $this->domain )
+        )
+      ));
+
       // Core Actions
       add_action( 'init', array( $this, 'init' ), 100 );
-      add_action( 'after_setup_theme', array( $this, 'setup' ));
       add_action( 'template_redirect', array( $this, 'redirect' ), 100 );
       add_action( 'admin_init', array( $this, 'admin' ));
       add_action( 'admin_menu', array( $this, 'admin_menu' ));
@@ -363,27 +384,6 @@ namespace UsabilityDynamics {
         'permalinks' => get_option( 'permalink_structure' ) == '' ? false : true,
         'settings'   => $this->get(),
       ));
-
-    }
-
-    /**
-     * Initial Theme Setup
-     *
-     * @author Usability Dynamics
-     * @since 0.1.0
-     */
-    public function setup() {
-
-      // Make theme available for translation
-      if( is_dir( get_template_directory() . '/static/languages' ) ) {
-        load_theme_textdomain( $this->domain, get_template_directory() . '/static/languages' );
-      }
-
-      // Register Navigation Menus
-      register_nav_menu( 'primary', __( 'Primary Menu', $this->domain ));
-      register_nav_menu( 'social', __( 'Social Links', $this->domain ));
-      register_nav_menu( 'footer', __( 'Footer Menu', $this->domain ));
-      register_nav_menu( 'mobile', __( 'Mobile Menu', $this->domain ));
 
     }
 
@@ -755,16 +755,22 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function get_image_link_by_post_id( $post_id, $args = array() ) {
-      global $wpp_query;
+      global $post; // $wpp_query;
+
+      $_image = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ? $post_id : $post->ID ) );
+
+      return $_image[0] ? $_image[0] : 'http://placehold.it/350x150';
 
       $args = (object) wp_parse_args( $args, array(
         'size'             => 'full', // Get image by predefined image_size. If width and height are set - it's ignored.
         'width'            => '', // Custom size
         'height'           => '', // Custom size
+
         // Optionals:
         'post_type'        => false, // Different post types can have different default images
         'default'          => true, // Use default image if images doesn't exist or not.
         'default_file'     => ( get_template_directory() . '/images/src/no-image.jpg' ), // Filename
+
       ));
 
       if( has_post_thumbnail( $post_id ) ) {
@@ -788,7 +794,6 @@ namespace UsabilityDynamics {
           // If attachment for default image doesn't exist
           if( !$attachment_id = \UsabilityDynamics\Utility::get_image_id_by_guid( $guid ) ) {
             // Determine if image exists. Check image by post_type at first if post_type is passed.\
-
 
             if( !file_exists( $default_path ) ) {
               return false;
