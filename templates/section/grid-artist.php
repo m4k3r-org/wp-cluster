@@ -12,7 +12,7 @@
 
 <section class="container inner-wrapper entry-<?php echo get_post_type(); ?>">
   <div class="row">
-    <div col-md-12 clearfix">
+    <div class="col-md-12 clearfix">
       <?php if( !have_posts() ) : ?>
         <?php get_template_part( 'templates/article/listing-artist', $wp_query->data[ 'artist-type' ] ); ?>
       <?php else : ?>
