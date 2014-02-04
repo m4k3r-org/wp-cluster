@@ -13,6 +13,7 @@
 @import "custom.less";
 @import "menufication.less";
 @import "editor-style.less";
+@import "modules.less";
 
 // Include Color schema.
 @import "colors/default.less";
@@ -20,6 +21,14 @@
 // Responsive styles must be added in the end
 @import "responsive.less";
 
+article.cfct-can-haz-build {
+
+  section.article-image,
+  header.article-header {
+    display: none;
+  }
+
+}
 .cfct-block {
 
   .cfct-build-module-edit-link {

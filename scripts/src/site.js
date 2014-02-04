@@ -15,5 +15,7 @@ define( 'site', function() {
 
   require.loadStyle( '/assets/styles/site.css' );
 
+  require( [ 'app' ] );
+
 });
 

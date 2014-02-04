@@ -4,14 +4,14 @@
  * @example
  *
  *      // Some Locale String.
- *      require( 'festival.locale' ).someWord
+ *      require( 'site.locale' ).someWord
  *
  *      // AJAX URL.
- *      require( 'festival.model' ).ajax
+ *      require( 'site.model' ).ajax
  *
  */
 define( [ 'site.locale', 'site.model', 'jquery', 'skrollr', 'bootstrap' ], function( locale, model, jQuery ) {
-  console.log( 'app', 'loaded', require( 'festival.model' ).domain );
+  console.log( 'app', 'loaded', require( 'site.model' ).domain );
 
   window.skrollr.init( {
     forceHeight: false
