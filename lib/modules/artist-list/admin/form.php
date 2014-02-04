@@ -43,10 +43,10 @@
 <!-- display options -->
 <fieldset id="artists-list-display-options" class="cfct-form-section">
   <legend><?php _e( 'Display Options', 'wp-festival' ) ?></legend>
-  <label for="artist-type"><?php _e( 'Artist Type' ); ?></label>
-  <select name="artist-type" id="artist-type">
+  <label for="artist_type"><?php _e( 'Artist Type' ); ?></label>
+  <select name="artist_type" id="artist_type">
     <?php foreach( $artist_types as $key => $type ):
-      $selected = isset( $data[ 'artist-type' ] ) && $data[ 'artist-type' ] == $key ? 'selected="selected"' : ''; ?>
+      $selected = isset( $data[ 'artist_type' ] ) && $data[ 'artist_type' ] == $key ? 'selected="selected"' : ''; ?>
       <option value="<?php echo $key; ?>" <?php echo $selected; ?>><?php echo $type; ?></option>
     <?php endforeach; ?>
   </select>
