@@ -259,6 +259,7 @@ namespace UsabilityDynamics\Cluster {
         $this->_mapping   = new Mapping();
         $this->_api       = new API();
         $this->_theme     = new Theme();
+        $this->_log       = new Log();
 
         // Enable CDN Media.
         //$this->_media = new Media( $this->get( 'media' ) );
