@@ -1,6 +1,6 @@
 // Application Styles
 //
-// @version 0.1.0
+// @version 0.2.0
 // @author Usability Dynamics
 @import "bootstrap/bootstrap.less";
 @import "variables.less";
@@ -12,7 +12,6 @@
 @import "carousel.less";
 @import "custom.less";
 @import "menufication.less";
-
 @import "editor-style.less";
 
 // Include Color schema.
@@ -37,4 +36,35 @@
 
   }
 
+}
+
+.udx-state-indicator {
+  position: absolute;
+  top: -999em;
+  left: -999em;
+}
+
+.udx-state-indicator:before {
+  content: 'desktop';
+}
+
+/* small desktop */
+@media all and (max-width: 1200px) {
+  .udx-state-indicator:before {
+    content: 'small-desktop';
+  }
+}
+
+/* tablet */
+@media all and (max-width: 1024px) {
+  .udx-state-indicator:before {
+    content: 'tablet';
+  }
+}
+
+/* mobile phone */
+@media all and (max-width: 768px) {
+  .udx-state-indicator:before {
+    content: 'mobile';
+  }
 }
