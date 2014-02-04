@@ -14,66 +14,10 @@
 @import "menufication.less";
 @import "editor-style.less";
 @import "modules.less";
+@import "shortcodes.less";
 
 // Include Color schema.
 @import "colors/default.less";
 
 // Responsive styles must be added in the end
 @import "responsive.less";
-
-article.cfct-can-haz-build {
-
-  section.article-image,
-  header.article-header {
-    display: none;
-  }
-
-}
-.cfct-block {
-
-  .cfct-build-module-edit-link {
-    position: absolute;
-    opacity: 0;
-    top: -20px;
-  }
-
-  &:hover {
-
-    .cfct-build-module-edit-link {
-      opacity: .7;
-    }
-
-  }
-
-}
-
-.udx-state-indicator {
-  position: absolute;
-  top: -999em;
-  left: -999em;
-}
-
-.udx-state-indicator:before {
-  content: 'desktop';
-}
-
-/* small desktop */
-@media all and (max-width: 1200px) {
-  .udx-state-indicator:before {
-    content: 'small-desktop';
-  }
-}
-
-/* tablet */
-@media all and (max-width: 1024px) {
-  .udx-state-indicator:before {
-    content: 'tablet';
-  }
-}
-
-/* mobile phone */
-@media all and (max-width: 768px) {
-  .udx-state-indicator:before {
-    content: 'mobile';
-  }
-}
