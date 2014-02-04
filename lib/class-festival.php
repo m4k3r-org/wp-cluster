@@ -669,16 +669,7 @@ namespace UsabilityDynamics {
 
       // Register Carrington Modules.
       if( is_object( $this->carrington ) ) {
-        $this->carrington->registerModule( 'HTMLModule' );
-        $this->carrington->registerModule( 'EditorModule' );
         $this->carrington->registerModule( 'VideoModule' );
-        $this->carrington->registerModule( 'SidebarModule' );
-        $this->carrington->registerModule( 'HeroModule' );
-        $this->carrington->registerModule( 'ImageModule' );
-        $this->carrington->registerModule( 'GalleryModule' );
-        $this->carrington->registerModule( 'LoopModule' );
-        $this->carrington->registerModule( 'CarouselModule' );
-        $this->carrington->registerModule( 'CalloutModule' );
         $this->carrington->registerModule( 'EventHeroModule' );
         $this->carrington->registerModule( 'ArtistListModule' );
         $this->carrington->registerModule( 'EventHeroModule' );
