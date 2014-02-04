@@ -552,7 +552,7 @@ namespace UsabilityDynamics {
         $content = ob_get_clean();
       }
 
-      $content = apply_filters( 'festival:aside', isset( $content ) ? '<div class="' . $args->class . '" data-aside="' . $name . '">' . $content . '</div>' : null, $name );
+      $content = apply_filters( 'festival:aside', isset( $content ) ? '<aside class="' . $args->class . ' aside-' . $name . '" data-aside="' . $name . '">' . $content . '</aside>' : null, $name );
 
       if( $args->return ) {
         return $content;
@@ -747,9 +747,8 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function wp_enqueue_scripts() {
-
+      wp_enqueue_style( 'site' );
       wp_enqueue_style( 'app' );
-
     }
 
     /**

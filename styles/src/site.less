@@ -16,64 +16,117 @@ div.navbar {
   margin-bottom: 0;
 }
 
-.wp-aside {
+aside.aside-banner {
 
   .element-event-logo {
+    margin-bottom: 1.5em;
 
     h1.logo-placeholder a {
-      visibility: hidden;
+      color: transparent;
       height: 250px;
+      display: block;
     }
 
   }
 
   .element-event-meta {
+    text-align: center;
 
     .event-date {
-
+      color: #472b76;
+      font-size: 55px;
+      font-family: 'Montserrat';
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 0;
+      line-height: 1em;
     }
 
     .event-city {
+      color: #FFF;
+      font-size: 35px;
+      font-family: 'Montserrat';
+      text-align: center;
+      font-weight: 300;
+    }
 
+    hr {
+      height: 1px;
+      background: transparent;
+      width: 70%;
+      margin: 1em auto 2em auto;
+      line-height: 1px;
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     a.btn-primary {
-
+      background-color: #c91ea3;
+      padding: 0.5em 2em;
+      border-radius: 0;
+      font-size: 2em;
+      margin-bottom: 0.5em;
     }
 
     a.ticket-information {
-
+      color: #FFF;
+      font-weight: 100;
     }
 
   }
+
   .element-sponsors {
+
+    ul {
+      list-style: none;
+
+      li {
+        display: inline;
+      }
+
+      li a {
+        color: transparent;
+      }
+
+    }
 
   }
 
   .element-event-days {
+    margin-bottom: 1em;
 
     .day {
-      padding: 10px;
+      padding: 0.1em 0em;
       text-align: center;
-      font-weight: 700;
+      font-weight: 100;
       text-transform: uppercase;
       -webkit-border-radius: 2px;
       -moz-border-radius: 2px;
       border-radius: 2px;
+      background-color: rgba(121, 64, 220, 0.60);
+      font-size: 24px;
+      color: #FFF;
     }
 
   }
 
   .element-event-location {
+    padding: 0.1em 0em;
+    text-align: center;
+    font-weight: 100;
+    text-transform: uppercase;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background-color: rgba(121, 64, 220, 0.60);
+    font-size: 1em;
+    color: #FFF;
 
-    .label {
-      padding: 20px 0 4px;
-    }
-
-    .value {
-      text-transform: none;
-      padding: 0;
-      font-size: 90%;
+    address {
+      margin-bottom: 20px;
+      font-weight: 100;
+      line-height: 1.428571429;
+      font-style: normal;
+      font-size: 1em;
     }
 
   }
@@ -82,6 +135,21 @@ div.navbar {
 
     #trailer-video {
       border: 0.8em solid rgba(63, 122, 232, 0.09);
+    }
+  }
+
+  .element-countdown {
+    margin-bottom: 1em;
+    height: 145px;
+
+    .countdown_section {
+      color: #7940dc;
+
+      .countdown_amount {
+        line-height: 1em;
+        color: #000;
+      }
+
     }
   }
 
