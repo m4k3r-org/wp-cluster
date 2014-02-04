@@ -294,7 +294,7 @@ namespace UsabilityDynamics\Cluster {
       private function _interfaces() {
 
         // Render Toolbar.
-        add_action( 'wp_before_admin_bar_render', array( &$this, 'toolbar' ), 10 );
+        //add_action( 'wp_before_admin_bar_render', array( &$this, 'toolbar' ), 10 );
 
       }
 
