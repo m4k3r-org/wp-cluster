@@ -17,7 +17,7 @@
     <?php wp_head(); ?>
   </head>
   
-  <body <?php body_class( 'wp-festival' ); ?> style="background-image: url(<?php echo get_background_image(); ?>)" data-post-type="<?php get_post_type(); ?>" data-requires="app">
+  <body <?php body_class(); ?> style="background-image: url(<?php echo get_background_image(); ?>)" data-post-type="<?php get_post_type(); ?>" data-requires="app">
 
     <header class="header">
       <div class="container">

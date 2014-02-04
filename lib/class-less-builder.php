@@ -13,9 +13,7 @@ namespace UsabilityDynamics\Festival {
     class Less_Builder {
     
       public function __construct() {
-        
-        
-        
+
       }
       
     }

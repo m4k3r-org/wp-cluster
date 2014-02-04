@@ -1,7 +1,16 @@
-Festival
------
-
 Festival Theme for the Drop Network
+
+Body Classes
+------------
+* home
+* page
+* page-template
+* logged-in
+* admin-bar
+* internal-referrer
+* debug-bar-maximized
+* customize-support
+* menufication-is-logged-in
 
 To Do
 -----

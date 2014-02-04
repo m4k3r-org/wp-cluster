@@ -29,7 +29,7 @@ namespace UsabilityDynamics\Festival {
      * @since 0.1.0
      */
     public function __construct() {
-      
+
       if( !class_exists( '\UsabilityDynamics\Festival' ) ) {
         wp_die( '<h1>Fatal Error</h1><p>Festival Theme not found.</p>' );
       }
@@ -39,7 +39,7 @@ namespace UsabilityDynamics\Festival {
 
       // Load all helper files from functions directory.
       \UsabilityDynamics\Utility::load_files( get_template_directory() . '/functions' );
-      
+
     }
 
     /**

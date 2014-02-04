@@ -75,15 +75,15 @@ namespace UsabilityDynamics {
     public function __construct() {
 
       // Configure Properties.
-      $this->id      = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => ':' ) );
-      $this->domain  = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ) );
+      $this->id      = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => ':' ));
+      $this->domain  = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ));
       $this->version = wp_get_theme()->get( 'Version' );
 
       // Initialize Settings.
       $this->settings();
 
       // Configure API Methods.
-      $this->api( array(
+      $this->api(array(
         'search.AutoSuggest'   => array(
           'key' => 'search_auto_suggest'
         ),
@@ -92,53 +92,54 @@ namespace UsabilityDynamics {
         ),
         'search.Elastic'       => array(),
         'search.DynamicFilter' => array()
-      ) );
+      ));
 
       // Configure Image Sizes.
       $this->media( array(
         'post-thumbnail' => array(
-          'description' => '',
-          'width'       => 120,
-          'height'      => 90,
+          'description' => __( 'Standard Thumbnail.' ),
+          'width'       => 230,
+          'height'      => 130,
           'crop'        => true
         ),
         'gallery'        => array(
-          'description' => '',
-          'width'       => 200,
-          'height'      => 999,
+          'description' => __( 'Gallery Image Thumbnail.' ),
+          'width'       => 300,
+          'height'      => 170,
           'crop'        => false
-        ),
-        'sidebar_thumb'  => array(
-          'description' => '',
-          'width'       => 120,
-          'height'      => 100,
-          'crop'        => true
         )
-      ) );
+      ));
 
       // Declare Supported Theme Features.
       $this->supports( array(
-        'html5'                => array(),
-        'comment-list'         => array(),
-        'relative-urls'        => array(),
-        'rewrites'             => array(),
-        'bootstrap-grid'       => array(),
-        'bootstrap-top-navbar' => array(),
-        'bootstrap-gallery'    => array(),
-        'nice-search'          => array(),
-        'jquery-cdn'           => array(),
-        'automatic-feed-links' => array(),
-        'post-thumbnails'      => array(),
-        'custom-header'        => array(),
-        'custom-skins'         => array(),
-        'custom-background'    => array(),
-        'header-dropdowns'     => array(),
-        'header-business-card' => array(),
-        'frontend-editor'      => array(),
-        'saas.udx.io'          => array(),
-        'raas.udx.io'          => array(),
-        'cdn.udx.io'           => array()
-      ) );
+        'asides'                => array(
+          'header',
+          'banner',
+          'footer'
+        ),
+        'html5'                 => array(
+          'comment-list',
+          'comment-form',
+          'search-form'
+        ),
+        'post-thumbnails'       => array(
+          'event',
+          'artist',
+          'page',
+          'post'
+        ),
+        'saas.udx.io'           => array(
+          'cloudSearch',
+          'cloudIdentity'
+        ),
+        'raas.udx.io'           => array(
+          'build.compileLESS',
+          'build.compileScripts'
+        ),
+        'cdn.udx.io'            => array(
+          'jquery'
+        )
+      ));
 
       // Enables Customizer for Options.
       $this->customizer( array(
@@ -148,14 +149,14 @@ namespace UsabilityDynamics {
           'title_tagline'
         ),
         'enable'  => array(),
-      ) );
+      ));
 
       // Add Management UI.
       $this->manage( array(
-        'id'       => 'hddp_manage',
+        'id'       => 'fesival_manage',
         'title'    => __( 'Manage', $this->domain ),
         'template' => dirname( __DIR__ ) . '/templates/admin.manage.php'
-      ) );
+      ));
 
       // Enable Carrington Build.
       $this->carrington( array(
@@ -165,53 +166,46 @@ namespace UsabilityDynamics {
         'module_directories' => array(
           __DIR__ . '/modules'
         ),
-        'rows'               => array(),
         'post_types'         => array(
+          'page',
+          'post',
           'artist',
           '_aside'
         )
       ));
-      
+
       // Register Theme Settings Model.
       $this->requires( array(
-        'id'    => 'festival.model',
+        'id'    => 'site.model',
         'cache' => 'private, max-age: 0',
         'vary'  => 'user-agent, x-client-type',
         'base'  => home_url( '/assets/scripts' ),
         'data'  => $this->get_model()
-      ) );
+      ));
 
       // Register Theme Locale Model.
       $this->requires( array(
-        'id'    => 'festival.locale',
+        'id'    => 'site.locale',
         'cache' => 'public, max-age: 30000',
         'vary'  => 'x-user',
         'base'  => home_url(),
         'data'  => $this->get_locale()
-      ) );
-
-      // Disable Unused Features.
-      remove_theme_support( 'custom-header' );
-
+      ));
 
       // Core Actions
       add_action( 'init', array( $this, 'init' ), 100 );
-      add_action( 'after_setup_theme', array( $this, 'setup' ) );
+      add_action( 'after_setup_theme', array( $this, 'setup' ));
       add_action( 'template_redirect', array( $this, 'redirect' ), 100 );
-      add_action( 'admin_init', array( $this, 'admin' ) );
-      add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+      add_action( 'admin_init', array( $this, 'admin' ));
+      add_action( 'admin_menu', array( $this, 'admin_menu' ));
       add_action( 'widgets_init', array( $this, 'widgets_init' ), 100 );
-      add_action( 'wp_head', array( $this, 'wp_head' ) );
-      add_action( 'wp_footer', array( $this, 'wp_footer' ) );
-      add_action( 'widgets_init', array( $this, 'widgets' ) );
-      add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
+      add_action( 'wp_head', array( $this, 'wp_head' ));
+      add_action( 'wp_footer', array( $this, 'wp_footer' ));
+      add_action( 'widgets_init', array( $this, 'widgets' ));
+      add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ));
+      add_filter( 'body_class', array( $this, 'body_class' ));
 
-      add_filter( 'body_class', array( $this, 'body_class' ) );
-
-      if( isset( $_GET[ 'test' ] ) ) {
-        // $this->_updated();
-      }
-
+      //die( '<pre>' . print_r( $_wp_theme_features, true ) . '</pre>' );
       // Initializes Wordpress Menufication
       if( class_exists( '\Menufication' ) ) {
         $this->menufication = \Menufication::getInstance();
@@ -231,7 +225,7 @@ namespace UsabilityDynamics {
      * @return array
      */
     public function body_class( $class ) {
-      return array_merge( $class, array( is_external_referrer() ? 'external-referrer' : 'internal-referrer' ) );
+      return array_merge( $class, array( is_external_referrer() ? 'external-referrer' : 'internal-referrer' ));
     }
 
     /**
@@ -242,7 +236,12 @@ namespace UsabilityDynamics {
       parent::settings( $args, $data );
     }
 
-    private function _updated( $type = '' ) {
+    /**
+     * Compile Site-Specific Assets.
+     *
+     * @param string $type
+     */
+    private function compile_site( $type = '' ) {
 
       // Combile LESS.
       $response = $this->raasRequest( 'build.compileLESS', array(
@@ -302,15 +301,15 @@ namespace UsabilityDynamics {
           get_stylesheet_directory_uri() . '/styles/src/style.less',
           get_stylesheet_directory_uri() . '/styles/src/variables.less'
         )
-      ) );
+      ));
 
       if( is_wp_error( $response ) ) {
-        wp_die( $response->get_error_message() );
+        wp_die( $response->get_error_message());
       }
 
       // Have Encoded Data.
       if( is_object( $response ) && isset( $response->data ) ) {
-        die( base64_decode( $response->data ) );
+        die( base64_decode( $response->data ));
       }
 
       die( '<pre>' . print_r( $response, true ) . '</pre>' );
@@ -318,7 +317,7 @@ namespace UsabilityDynamics {
     }
 
     /**
-     * Initial Theme Setup
+     * Get Site / Theme Locale
      *
      * @author Usability Dynamics
      * @since 0.1.0
@@ -345,16 +344,21 @@ namespace UsabilityDynamics {
 
     }
 
+    /**
+     * Get Site Model.
+     *
+     * @return array
+     */
     private function get_model() {
 
-      $_home_url = parse_url( home_url() );
+      $_home_url = parse_url( home_url());
 
       return (array) apply_filters( 'festival:model:settings', array(
         'ajax'       => admin_url( 'admin-ajax.php' ),
         'domain'     => trim( $_home_url[ 'host' ] ? $_home_url[ 'host' ] : array_shift( explode( '/', $_home_url[ 'path' ], 2 ) ) ),
         'permalinks' => get_option( 'permalink_structure' ) == '' ? false : true,
         'settings'   => $this->get(),
-      ) );
+      ));
 
     }
 
@@ -372,13 +376,10 @@ namespace UsabilityDynamics {
       }
 
       // Register Navigation Menus
-      register_nav_menu( 'primary', __( 'Primary Menu', $this->domain ) );
-      register_nav_menu( 'social', __( 'Social Links', $this->domain ) );
-      register_nav_menu( 'footer', __( 'Footer Menu', $this->domain ) );
-      register_nav_menu( 'mobile', __( 'Mobile Menu', $this->domain ) );
-      
-      // Add custom header functionality
-      add_custom_image_header( '', create_function('',''));
+      register_nav_menu( 'primary', __( 'Primary Menu', $this->domain ));
+      register_nav_menu( 'social', __( 'Social Links', $this->domain ));
+      register_nav_menu( 'footer', __( 'Footer Menu', $this->domain ));
+      register_nav_menu( 'mobile', __( 'Mobile Menu', $this->domain ));
 
     }
 
@@ -409,7 +410,7 @@ namespace UsabilityDynamics {
         'items_wrap'     => '<ul data-menu="%1$s" class="%2$s">%3$s</ul>',
         'walker'         => new \UsabilityDynamics\Theme\Nav_Menu,
         'echo'           => false
-      ) ) );
+      ) ));
 
     }
 
@@ -433,11 +434,11 @@ namespace UsabilityDynamics {
 
       $args = (object) wp_parse_args( $args, $default = array(
         'type'           => '_aside',
-        'class'          => 'wp-festival-aside',
+        'class'          => 'wp-aside',
         'more_link_text' => null,
         'strip_teaser'   => null,
         'return'         => false,
-      ) );
+      ));
 
       // Preserve Post.
       $_post = $post;
@@ -446,7 +447,7 @@ namespace UsabilityDynamics {
       $custom_loop = new \WP_Query( array(
         'name'      => $name,
         'post_type' => $args->type
-      ) );
+      ));
 
       // die(json_encode( $custom_loop ));
 
@@ -465,7 +466,7 @@ namespace UsabilityDynamics {
       // Try to locale regular aside.
       if( !$content ) {
         ob_start();
-        get_template_part( 'templates/aside/' . $name, get_post_type() );
+        get_template_part( 'templates/aside/' . $name, get_post_type());
         $content = ob_get_clean();
       }
 
@@ -476,7 +477,7 @@ namespace UsabilityDynamics {
       } else {
         echo $content;
       }
-      
+
     }
 
     /**
@@ -495,7 +496,7 @@ namespace UsabilityDynamics {
         'after_widget'  => '</div></section>',
         'before_title'  => '<h3 class="widget-title">',
         'after_title'   => '</h3>',
-      ) );
+      ));
 
       register_sidebar( array(
         'name'          => __( 'Left Sidebar' ),
@@ -505,7 +506,7 @@ namespace UsabilityDynamics {
         'after_widget'  => '</div></section>',
         'before_title'  => '<h3 class="widget-title">',
         'after_title'   => '</h3>',
-      ) );
+      ));
 
       register_sidebar( array(
         'name'          => __( 'Single Page Sidebar' ),
@@ -515,7 +516,7 @@ namespace UsabilityDynamics {
         'after_widget'  => '</div></section>',
         'before_title'  => '<h3 class="widget-title">',
         'after_title'   => '</h3>',
-      ) );
+      ));
 
     }
 
@@ -585,7 +586,7 @@ namespace UsabilityDynamics {
     public function init() {
 
       // Register Carrington Modules.
-      if( is_object( $this->carrington ) ) { 
+      if( is_object( $this->carrington ) ) {
         $this->carrington->registerModule( 'HTMLModule' );
         $this->carrington->registerModule( 'EditorModule' );
         $this->carrington->registerModule( 'VideoModule' );
@@ -601,9 +602,9 @@ namespace UsabilityDynamics {
         $this->carrington->registerModule( 'EventHeroModule' );
         $this->carrington->registerModule( 'EventLoopModule' );
       }
-      
+
       // Register Custom Post Types and set their taxonomies
-      $this->structure( $this->get( 'structure' ) );
+      $this->structure( $this->get( 'structure' ));
 
       // Sync 'Social Streams' data with social networks
       $this->sync_streams();
@@ -611,7 +612,7 @@ namespace UsabilityDynamics {
       // Register Script and Styles.
       wp_register_style( 'app', home_url( '/assets/styles/app.css' ), array(), $this->version, 'all' );
 
-      //add_editor_style( home_url( '/assets/editor-style.css' ) );
+      //add_editor_style( home_url( '/assets/editor-style.css' ));
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
@@ -640,7 +641,7 @@ namespace UsabilityDynamics {
           'request'   => array(
             'screen_name' => 'UMESouthPadre',
           )
-        ) );
+        ));
 
       }
 
@@ -711,7 +712,7 @@ namespace UsabilityDynamics {
       $template = apply_filters( 'template_include', $template );
 
       if( $basename ) {
-        $template = str_replace( '.php', '', basename( $template ) );
+        $template = str_replace( '.php', '', basename( $template ));
       }
 
       return $template;
@@ -760,7 +761,7 @@ namespace UsabilityDynamics {
         'post_type'        => false, // Different post types can have different default images
         'default'          => true, // Use default image if images doesn't exist or not.
         'default_file'     => ( get_template_directory() . '/images/src/no-image.jpg' ), // Filename
-      ) );
+      ));
 
       if( has_post_thumbnail( $post_id ) ) {
         $attachment_id = get_post_thumbnail_id( $post_id );
@@ -783,8 +784,8 @@ namespace UsabilityDynamics {
           // If attachment for default image doesn't exist
           if( !$attachment_id = \UsabilityDynamics\Utility::get_image_id_by_guid( $guid ) ) {
             // Determine if image exists. Check image by post_type at first if post_type is passed.\
-            
-            
+
+
             if( !file_exists( $default_path ) ) {
               return false;
             }
@@ -956,7 +957,7 @@ namespace UsabilityDynamics {
       // Return Message.
       $_result = isset( $client->message ) && isset( $client->message->params ) && is_array( $client->message->params ) ? $client->message->params[ 0 ] : array();
 
-      return json_decode( json_encode( $_result ) );
+      return json_decode( json_encode( $_result ));
 
     }
 
