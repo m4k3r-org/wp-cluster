@@ -170,7 +170,7 @@ namespace UsabilityDynamics {
           'artist',
           '_aside'
         )
-      ) );
+      ));
       
       // Register Theme Settings Model.
       $this->requires( array(
