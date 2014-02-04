@@ -752,7 +752,7 @@ namespace UsabilityDynamics {
     public function get_image_link_by_post_id( $post_id, $args = array() ) {
       global $wpp_query;
 
-      $args = (object) wp_parse_args( $args, $default = array(
+      $args = (object) wp_parse_args( $args, array(
         'size'             => 'full', // Get image by predefined image_size. If width and height are set - it's ignored.
         'width'            => '', // Custom size
         'height'           => '', // Custom size
@@ -767,7 +767,7 @@ namespace UsabilityDynamics {
       } else {
 
         // Use default image if image for post doesn't exist
-        if( $default ) {
+        if( $args->default ) {
 
           $wp_upload_dir = wp_upload_dir();
           $dir           = $wp_upload_dir[ 'basedir' ] . '/no_image/' . md5( $this->domain ) . '';

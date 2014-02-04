@@ -9,7 +9,7 @@
 ?>
 <article <?php post_class(); ?> data-type="<?php get_post_type(); ?>">
 
-  <?php $img = wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '1140', 'height' => '350' ) ); ?>
+  <?php $img = wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '1140', 'height' => '350', 'default' => false ) ); ?>
   <?php if( !empty( $img ) ) : ?>
     <section class="article-image">
       <img class="img-responsive" src="<?php echo $img; ?>" alt="" />
