@@ -100,7 +100,7 @@ namespace UsabilityDynamics {
       ));
 
       // Configure Image Sizes.
-      $this->media( array(
+      $this->media(array(
         'post-thumbnail' => array(
           'description' => __( 'Standard Thumbnail.' ),
           'width'       => 230,
@@ -109,14 +109,22 @@ namespace UsabilityDynamics {
         ),
         'gallery'        => array(
           'description' => __( 'Gallery Image Thumbnail.' ),
+          'post_types'  => array( 'page', 'artist' ),
           'width'       => 300,
           'height'      => 170,
           'crop'        => false
+        ),
+        'tablet'        => array(
+          'description' => __( 'Tablet Maximum Resolution.' ),
+          'post_types'  => array( '_aside' ),
+          'width'       => 670,
+          'height'      => 999,
+          'crop'        => true
         )
       ));
 
       // Declare Supported Theme Features.
-      $this->supports( array(
+      $this->supports(array(
         'asides'                => array(
           'header',
           'banner',
@@ -127,7 +135,13 @@ namespace UsabilityDynamics {
           'comment-form',
           'search-form'
         ),
-        'custom-background'  => array(
+        'attachment:audio'      => array(
+          'enabled' => true
+        ),
+        'attachment:video'      => array(
+          'enabled' => true
+        ),
+        'custom-background'     => array(
           'default-color'          => '',
           'default-image'          => ''
         ),
@@ -151,7 +165,7 @@ namespace UsabilityDynamics {
       ));
 
       // Enables Customizer for Options.
-      $this->customizer( array(
+      $this->customizer(array(
         'disable' => array(
           'static_front_page',
           'nav',
@@ -161,14 +175,14 @@ namespace UsabilityDynamics {
       ));
 
       // Add Management UI.
-      $this->manage( array(
+      $this->manage(array(
         'id'       => 'fesival_manage',
         'title'    => __( 'Manage', $this->domain ),
         'template' => dirname( __DIR__ ) . '/templates/admin.manage.php'
       ));
 
       // Enable Carrington Build.
-      $this->carrington( array(
+      $this->carrington(array(
         'bootstrap'          => true,
         'templates'          => true,
         'styles'             => array(),
@@ -184,7 +198,7 @@ namespace UsabilityDynamics {
       ));
 
       // Register Theme Settings Model.
-      $this->requires( array(
+      $this->requires(array(
         'id'    => 'site.model',
         'cache' => 'private, max-age: 0',
         'vary'  => 'user-agent, x-client-type',
@@ -193,14 +207,13 @@ namespace UsabilityDynamics {
       ));
 
       // Register Theme Locale Model.
-      $this->requires( array(
+      $this->requires(array(
         'id'    => 'site.locale',
         'cache' => 'public, max-age: 30000',
         'vary'  => 'x-user',
         'base'  => home_url(),
         'data'  => $this->get_locale()
       ));
-
 
       // Register Navigation Menus
       $this->menus(array(
@@ -229,12 +242,77 @@ namespace UsabilityDynamics {
       add_action( 'widgets_init', array( $this, 'widgets' ));
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ));
       add_filter( 'body_class', array( $this, 'body_class' ));
+      add_filter( 'intermediate_image_sizes_advanced', array( $this, 'image_sizes' ));
 
-      //die( '<pre>' . print_r( $_wp_theme_features, true ) . '</pre>' );
       // Initializes Wordpress Menufication
       if( class_exists( '\Menufication' ) ) {
         $this->menufication = \Menufication::getInstance();
       }
+
+    }
+
+    /**
+     * Return Post Type Image Sizes
+     *
+     * @todo Take thumbnail, large and medium into account.
+     *
+     * @filter intermediate_image_sizes_advanced
+     * @param $_sizes
+     * @return array
+     */
+    public function image_sizes( $_sizes ) {
+      global $_wp_additional_image_sizes;
+
+      $_available_sizes = $_wp_additional_image_sizes;
+
+      $_available_sizes[ 'thumbnail' ] = array(
+        'width' => get_option( "thumbnail_size_w" ),
+        'height' => get_option( "thumbnail_size_h" ),
+        'crop' => get_option( "thumbnail_crop" )
+      );
+
+      $_available_sizes[ 'large' ] = array(
+        'width' => get_option( "large_size_w" ),
+        'height' => get_option( "large_size_h" ),
+        'crop' => get_option( "large_crop" )
+      );
+
+      $_available_sizes[ 'medium' ] = array(
+        'width' => get_option( "medium_size_w" ),
+        'height' => get_option( "medium_size_h" ),
+        'crop' => get_option( "medium_crop" )
+      );
+
+      // Upload attachment Unassociated with post.
+      if( !isset( $_POST[ 'action' ] ) && $_POST[ 'post_id' ] == 0 ) {
+        return $_sizes;
+      }
+
+      // Uploading image to post.
+      if( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] === 'upload-attachment' && $_POST[ 'post_id' ] ) {
+
+        $_allowed = array();
+
+        foreach( (array) $_available_sizes as $size => $settings ) {
+
+          // Post type sizes not configured, allow by deafult.
+          if( !isset( $settings[ 'post_types' ] ) ) {
+            $_allowed[ $size ] = $settings;
+          }
+
+          // Size Allowed.
+          if( isset( $settings[ 'post_types' ] ) && in_array( $_post_type, (array) $settings[ 'post_type' ] ) ) {
+            $_allowed[ $size ] = $settings;
+          }
+
+        }
+
+        // Return Image Sizes for Post Type.
+        return $_allowed;
+
+      }
+
+      return $_sizes;
 
     }
 
