@@ -692,6 +692,7 @@ namespace UsabilityDynamics {
       $this->sync_streams();
 
       // Register Script and Styles.
+      wp_register_style( 'site', home_url( '/assets/styles/site.css' ), array(), $this->version, 'all' );
       wp_register_style( 'app', home_url( '/assets/styles/app.css' ), array(), $this->version, 'all' );
 
       //add_editor_style( home_url( '/assets/editor-style.css' ));
