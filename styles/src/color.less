@@ -1,3 +1,4 @@
+
 // Application Colour schema
 //
 // @version 0.1.0
@@ -139,6 +140,15 @@
  CONTENT
 ============== */
 
+.container-wrap,
+.sidebar .widget {
+  
+  p, span, div, li, ol, section, header, footer, blockquote {
+    color: @content-font-color;
+  }
+  
+}
+
 .content-wrapper,
 .sidebar .widget {
   background-color: @default-body-bg;
@@ -159,10 +169,6 @@
   
   h1, h2, h3, h4, h4, h6 {
     color: @content-title-color;
-  }
-  
-  p, span, div, li, ol, section {
-    color: @content-font-color;
   }
   
   blockquote {
@@ -472,4 +478,22 @@ footer {
     border-color: @content-border-color;
   }
   
+}
+
+/* ==============
+ Modules
+============== */
+
+// Artist-List
+
+.cfct-module {
+
+  .artists-list {
+    
+    .hr {
+      background-color: @hr-color;
+    }
+    
+  }
+
 }
