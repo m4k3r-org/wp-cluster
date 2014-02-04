@@ -1,16 +1,18 @@
 <?php global $wp_query; extract( $wp_query->data ); ?>
 
 <div class="artists-list <?php echo $artist_type; ?>">
-  <?php if( isset( $title ) && $title ): ?>
-    <h2 class="title"><?php echo $title; ?></h2>
-    <div class="hr"></div>
-  <?php endif; ?>
-  <?php if( isset( $tagline ) && $tagline ): ?>
-    <span class="tagline"><?php echo $tagline; ?></span>
-  <?php endif; ?>
-  <?php if( isset( $description ) && $description ): ?>
-    <p class="description"><?php echo $description; ?></p>
-  <?php endif; ?>
+  <header class="container">
+    <?php if( isset( $title ) && $title ): ?>
+      <h2 class="title"><?php echo $title; ?></h2>
+      <div class="hr"></div>
+    <?php endif; ?>
+    <?php if( isset( $tagline ) && $tagline ): ?>
+      <span class="tagline"><?php echo $tagline; ?></span>
+    <?php endif; ?>
+    <?php if( isset( $description ) && $description ): ?>
+      <p class="description"><?php echo $description; ?></p>
+    <?php endif; ?>
+  </header>
 
   <section class="container inner-wrapper entry-<?php echo get_post_type(); ?>">
     <div class="row">
