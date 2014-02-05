@@ -29,6 +29,11 @@
     
     }
     
+    .cfct-mod-title,
+    .widget-title {
+      margin-top: 0;
+    }
+    
     .module {
       border-width: 0;
     }
@@ -51,6 +56,38 @@
 
 }
 
+.cfct-mod-image,
+.cfct-mod-content {
+
+  &:after {
+    content: ".";
+    text-indent: 9999px;
+    height: 1px;
+    line-height: 1px;
+    margin-top: -1px;
+    display: block;
+    clear: both;
+  }
+
+}
+
+.cfct-image-left {
+  float: left;
+  margin-right: 20px;
+}
+
+.cfct-image-right {
+  float: right;
+  margin-left: 20px;
+}
+
+/* ==============
+ Module: Hero
+============== */
+
+.cfct-module-hero-wrap {
+  padding: 20px;
+}
 
 /* ==============
  Module: Sidebar
@@ -65,8 +102,10 @@
   .module {
     margin-bottom: 0;
     
-    &:last-child:after {
-      content: none;
+    &:last-child {
+      &:after {
+        content: none;
+      }
     }
     
     &:after {

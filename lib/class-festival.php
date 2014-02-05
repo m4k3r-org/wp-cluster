@@ -183,7 +183,7 @@ namespace UsabilityDynamics {
         // Register new settings to the WP database...
         $wp_customize->add_setting( 'content_bg_color', //Give it a SERIALIZED name (so all theme settings can live under one db record)
           array(
-            'default'    => '#f2f2f2', //Default setting/value to save
+            'default'    => '#fcfcf9', //Default setting/value to save
             'type'       => 'option', //Is this an 'option' or a 'theme_mod'?
             'capability' => 'edit_theme_options', //Optional. Special permissions for accessing this setting.
             'transport'  => 'postMessage', //What triggers a refresh of the setting? 'refresh' or 'postMessage' (instant)?
