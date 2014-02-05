@@ -3,13 +3,11 @@
 // @version 0.1.0
 // @author Usability Dynamics
 
-.content-wrapper,
-.sidebar section.widget {
+.content-wrapper article,
+.sidebar section.widget,
+.cfct-block {
   border-style: solid;
   border-width: 2px;
-  //-webkit-box-shadow: 1px 1px 6px 0px rgba(50, 50, 50, 0.35);
-  //-moz-box-shadow:    1px 1px 6px 0px rgba(50, 50, 50, 0.35);
-  //box-shadow:         1px 1px 6px 0px rgba(50, 50, 50, 0.35);
   padding: 15px;
 }
 
@@ -31,40 +29,37 @@
 
 }
 
-.sidebar {
-
-  section.widget {
-    margin-bottom: 20px;
+section.widget,
+.cfct-module  {
+  margin-bottom: 20px;
+  
+  .widget-title {
+    margin-top: 0;
+    text-transform: uppercase;
+    font-size: 125%;
+  }
+  
+  ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 1em;
+    text-indent: -1em;
     
-    .widget-title {
-      margin-top: 0;
-      text-transform: uppercase;
-      font-size: 125%;
-    }
-    
-    ul {
-      list-style: none;
-      margin-left: 0;
-      padding-left: 1em;
-      text-indent: -1em;
+    li {
+      margin: 10px 0;
       
-      li {
-        margin: 10px 0;
-        
-        a {
-          text-transform: uppercase;
-          padding-left: 6px;
-        }
-        
-        &:before {
-          content: "\0AB";
-        }
-        
+      a {
+        text-transform: uppercase;
+        padding-left: 6px;
+      }
+      
+      &:before {
+        content: "\0AB";
       }
       
     }
     
   }
-
+  
 }
 

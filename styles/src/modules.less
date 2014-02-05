@@ -1,4 +1,27 @@
 // Common Styles.
+
+.content-wrapper article {
+  
+  // Don't show border for artcile content when CB is used
+  &.cfct-can-haz-build {
+    border: 0;
+    background: none;
+    padding: 0;
+    border-width: 0;
+    
+    .cfct-module-border,
+    .cfct-module {
+      margin-bottom: 30px;
+    }
+    
+  }
+
+}
+
+.cfct-image-left {
+  margin-right: 20px;
+}
+
 .cfct-mod-content {
 
 }
