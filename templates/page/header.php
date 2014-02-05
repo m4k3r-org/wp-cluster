@@ -33,5 +33,5 @@
 
     <?php get_template_part( 'templates/nav/top', get_post_type() ); ?>
     
-    <div class="container-wrap">
+    <div class="container-wrap" style="background-color:<?php echo get_option( 'content_bg_color', '#f2f2f2' ); ?>">
     

@@ -1,6 +1,12 @@
-// Common Styles.
+/* ==============
+ Carington Builder: Common Styles.
+============== */
 
-.content-container article {
+.cfct-build-module-edit-link {
+  display:none;
+}
+
+.container-wrap .content-container article {
   
   // Don't show border for artcile content when CB is used
   &.cfct-can-haz-build {
@@ -9,11 +15,36 @@
     padding: 0;
     border-width: 0;
     
-    // Disable borders on child modules to prevent extra borders
-    .module {
-      .module {
+    .module-container {
+      border-width: 2px;
+      border-style: solid;
+    }
+    
+    .cfct-block-sidebar {
+    
+      .module-container {
+        background: none;
         border-width: 0;
       }
+    
+    }
+    
+    .module {
+      border-width: 0;
+    }
+    
+    .cfct-block-sidebar {
+    
+      .module {
+        border-width: 2px;
+        
+        // Disable borders on child modules to prevent extra borders
+        .module {
+          border-width: 0;
+        }
+        
+      }
+    
     }
     
   }
