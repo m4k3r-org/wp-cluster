@@ -88,7 +88,7 @@ namespace UsabilityDynamics {
       $this->settings();
 
       // Configure API Methods.
-      $this->api(array(
+      $this->api( array(
         'search.AutoSuggest'   => array(
           'key' => 'search_auto_suggest'
         ),
@@ -100,7 +100,7 @@ namespace UsabilityDynamics {
       ));
 
       // Configure Image Sizes.
-      $this->media(array(
+      $this->media( array(
         'post-thumbnail' => array(
           'description' => __( 'Standard Thumbnail.' ),
           'width'       => 230,
@@ -114,7 +114,7 @@ namespace UsabilityDynamics {
           'height'      => 170,
           'crop'        => false
         ),
-        'tablet'        => array(
+        'tablet'         => array(
           'description' => __( 'Tablet Maximum Resolution.' ),
           'post_types'  => array( '_aside' ),
           'width'       => 670,
@@ -124,48 +124,51 @@ namespace UsabilityDynamics {
       ));
 
       // Declare Supported Theme Features.
-      $this->supports(array(
-        'asides'                => array(
+      $this->supports( array(
+        'admin-bar'         => array(
+          'callback' => '__return_false'
+        ),
+        'asides'            => array(
           'header',
           'banner',
           'footer'
         ),
-        'html5'                 => array(
+        'html5'             => array(
           'comment-list',
           'comment-form',
           'search-form'
         ),
-        'attachment:audio'      => array(
+        'attachment:audio'  => array(
           'enabled' => true
         ),
-        'attachment:video'      => array(
+        'attachment:video'  => array(
           'enabled' => true
         ),
-        'custom-background'     => array(
-          'default-color'          => '',
-          'default-image'          => ''
+        'custom-background' => array(
+          'default-color' => '',
+          'default-image' => ''
         ),
-        'post-thumbnails'       => array(
+        'post-thumbnails'   => array(
           'event',
           'artist',
           'page',
           'post'
         ),
-        'saas.udx.io'           => array(
+        'saas.udx.io'       => array(
           'cloudSearch',
           'cloudIdentity'
         ),
-        'raas.udx.io'           => array(
+        'raas.udx.io'       => array(
           'build.compileLESS',
           'build.compileScripts'
         ),
-        'cdn.udx.io'            => array(
+        'cdn.udx.io'        => array(
           'jquery'
         )
       ));
 
       // Enables Customizer for Options.
-      $this->customizer(array(
+      $this->customizer( array(
         'disable' => array(
           'static_front_page',
           'nav',
@@ -175,14 +178,14 @@ namespace UsabilityDynamics {
       ));
 
       // Add Management UI.
-      $this->manage(array(
+      $this->manage( array(
         'id'       => 'fesival_manage',
         'title'    => __( 'Manage', $this->domain ),
         'template' => dirname( __DIR__ ) . '/templates/admin.manage.php'
       ));
 
       // Enable Carrington Build.
-      $this->carrington(array(
+      $this->carrington( array(
         'bootstrap'          => true,
         'templates'          => true,
         'styles'             => array(),
@@ -198,7 +201,7 @@ namespace UsabilityDynamics {
       ));
 
       // Register Theme Settings Model.
-      $this->requires(array(
+      $this->requires( array(
         'id'    => 'site.model',
         'cache' => 'private, max-age: 0',
         'vary'  => 'user-agent, x-client-type',
@@ -207,26 +210,26 @@ namespace UsabilityDynamics {
       ));
 
       // Register Theme Locale Model.
-      $this->requires(array(
+      $this->requires( array(
         'id'    => 'site.locale',
         'cache' => 'public, max-age: 30000',
         'vary'  => 'x-user',
-        'base'  => home_url(),
+        'base'  => home_url( '/assets/scripts' ),
         'data'  => $this->get_locale()
       ));
 
       // Register Navigation Menus
-      $this->menus(array(
+      $this->menus( array(
         'primary' => array(
           'name' => __( 'Primary', $this->domain )
         ),
-        'social' => array(
+        'social'  => array(
           'name' => __( 'Secondary', $this->domain )
         ),
-        'footer' => array(
+        'footer'  => array(
           'name' => __( 'Footer', $this->domain )
         ),
-        'mobile' => array(
+        'mobile'  => array(
           'name' => __( 'Mobile', $this->domain )
         )
       ));
@@ -257,7 +260,9 @@ namespace UsabilityDynamics {
      * @todo Take thumbnail, large and medium into account.
      *
      * @filter intermediate_image_sizes_advanced
+     *
      * @param $_sizes
+     *
      * @return array
      */
     public function image_sizes( $_sizes ) {
@@ -266,21 +271,21 @@ namespace UsabilityDynamics {
       $_available_sizes = $_wp_additional_image_sizes;
 
       $_available_sizes[ 'thumbnail' ] = array(
-        'width' => get_option( "thumbnail_size_w" ),
+        'width'  => get_option( "thumbnail_size_w" ),
         'height' => get_option( "thumbnail_size_h" ),
-        'crop' => get_option( "thumbnail_crop" )
+        'crop'   => get_option( "thumbnail_crop" )
       );
 
       $_available_sizes[ 'large' ] = array(
-        'width' => get_option( "large_size_w" ),
+        'width'  => get_option( "large_size_w" ),
         'height' => get_option( "large_size_h" ),
-        'crop' => get_option( "large_crop" )
+        'crop'   => get_option( "large_crop" )
       );
 
       $_available_sizes[ 'medium' ] = array(
-        'width' => get_option( "medium_size_w" ),
+        'width'  => get_option( "medium_size_w" ),
         'height' => get_option( "medium_size_h" ),
-        'crop' => get_option( "medium_crop" )
+        'crop'   => get_option( "medium_crop" )
       );
 
       // Upload attachment Unassociated with post.
@@ -690,7 +695,7 @@ namespace UsabilityDynamics {
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
-      
+
     }
 
     /**
@@ -824,13 +829,13 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function get_image_link_by_post_id( $post_id, $args = array() ) {
-      
+
       $args = (object) wp_parse_args( $args, array(
-        'size'             => 'large', // Get image by predefined image_size. If width and height are set - it's ignored.
-        'width'            => '', // Custom size
-        'height'           => '', // Custom size
+        'size'    => 'large', // Get image by predefined image_size. If width and height are set - it's ignored.
+        'width'   => '', // Custom size
+        'height'  => '', // Custom size
         // Optionals:
-        'default'          => true, // Use default image if images doesn't exist or not.
+        'default' => true, // Use default image if images doesn't exist or not.
       ));
 
       if( has_post_thumbnail( $post_id ) ) {
@@ -839,9 +844,9 @@ namespace UsabilityDynamics {
 
         // Use default image if image for post doesn't exist
         if( $args->default ) {
-        
+
           $url = false;
-        
+
           if( !empty( $args->width ) && !empty( $args->height ) ) {
             $url = 'http://placehold.it/' . $args->width . 'x' . $args->height;
           } else {
@@ -850,7 +855,7 @@ namespace UsabilityDynamics {
               $url = 'http://placehold.it/' . $sizes[ $args->size ][ 'width' ] . 'x' . $sizes[ $args->size ][ 'height' ];
             }
           }
-          
+
           return $url;
 
         } else {
