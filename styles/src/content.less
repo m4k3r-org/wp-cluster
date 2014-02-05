@@ -4,13 +4,17 @@
 // @author Usability Dynamics
 
 
-.content-container {
+.inner-wrapper {
 
   .content-container article,
   .module-container .module {
     border-style: solid;
     border-width: 2px;
     padding: 15px;
+  }
+  
+  .column {
+    margin-bottom: 20px;
   }
 
   .article-title {
@@ -39,25 +43,73 @@
     ul {
       list-style: none;
       margin-left: 0;
-      padding-left: 1em;
-      text-indent: -1em;
+      padding-left: 0;
+      text-indent: 0;
+      position: relative;
 
       li {
         margin: 10px 0;
 
+        & > ul {
+          position: static;
+          
+          & > li {
+            padding-left: 10px;
+          }
+          
+        }
+
         a {
           text-transform: uppercase;
-          padding-left: 6px;
+          padding-left: 20px;
+          display: block;
+          
+          &:before {
+            content: "\0AB";
+            position: absolute;
+            left: 0;
+          }
+          
         }
-
-        &:before {
-          content: "\0AB";
-        }
-
+        
       }
 
     }
 
+  }
+  
+  .column {
+  
+    &:first-child {
+    
+      ul {
+      
+        li {
+          
+          a {
+            position: relative;
+            display: block;
+            padding-right: 20px;
+            padding-left: 0;
+            
+            &:before {
+              content: none;
+            }
+            
+            &:after {
+              content: "\0BB";
+              position: absolute;
+              right: 0;
+            }
+            
+          }
+        
+        }
+      
+      }
+    
+    }
+  
   }
 
 }

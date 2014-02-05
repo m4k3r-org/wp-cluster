@@ -26,7 +26,7 @@ define( [ 'site.locale', 'site.model', 'jquery', 'skrollr', 'bootstrap' ], funct
     }
 
     jQuery( ".navbar-top-home" ).sticky( {
-      topSpacing: st
+      //topSpacing: st
     });
 
   });
