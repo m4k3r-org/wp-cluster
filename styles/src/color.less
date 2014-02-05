@@ -141,24 +141,23 @@
 ============== */
 
 .container-wrap,
-.sidebar .widget {
-  
+.content-container .module {
   p, span, div, li, ol, section, header, footer, blockquote {
     color: @content-font-color;
   }
   
 }
 
-.content-wrapper article,
-.sidebar .widget {
+.container-wrap .content-container article,
+.container-wrap .module-container .module {
   background-color: @default-body-bg;
+  //background-color: transparent;
 }
 
-.content-wrapper article,
-.sidebar section.widget,
-.cfct-block {
+.container-wrap .content-container article,
+.container-wrap .module-container .module {
   border-color: @content-border-color;
-  
+
   a {
     color: @content-font-color;
     

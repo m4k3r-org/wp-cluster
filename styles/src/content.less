@@ -3,15 +3,15 @@
 // @version 0.1.0
 // @author Usability Dynamics
 
-.content-wrapper article,
-.sidebar section.widget,
-.cfct-block {
-  border-style: solid;
-  border-width: 2px;
-  padding: 15px;
-}
 
-.content-wrapper {
+.content-container {
+
+  .content-container article,
+  .module-container .module {
+    border-style: solid;
+    border-width: 2px;
+    padding: 15px;
+  }
 
   .article-title {
     margin-top: 0;
@@ -27,39 +27,39 @@
     
   }
 
+  .module {
+    margin-bottom: 20px;
+
+    .module-title {
+      margin-top: 0;
+      text-transform: uppercase;
+      font-size: 125%;
+    }
+
+    ul {
+      list-style: none;
+      margin-left: 0;
+      padding-left: 1em;
+      text-indent: -1em;
+
+      li {
+        margin: 10px 0;
+
+        a {
+          text-transform: uppercase;
+          padding-left: 6px;
+        }
+
+        &:before {
+          content: "\0AB";
+        }
+
+      }
+
+    }
+
+  }
+
 }
 
-section.widget,
-.cfct-module  {
-  margin-bottom: 20px;
-  
-  .widget-title {
-    margin-top: 0;
-    text-transform: uppercase;
-    font-size: 125%;
-  }
-  
-  ul {
-    list-style: none;
-    margin-left: 0;
-    padding-left: 1em;
-    text-indent: -1em;
-    
-    li {
-      margin: 10px 0;
-      
-      a {
-        text-transform: uppercase;
-        padding-left: 6px;
-      }
-      
-      &:before {
-        content: "\0AB";
-      }
-      
-    }
-    
-  }
-  
-}
 

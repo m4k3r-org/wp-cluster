@@ -17,7 +17,7 @@ get_template_part( 'templates/page/header', get_post_type() );
 <section class="container inner-wrapper no-sidebar">
   <div class="row">
     <div class="col-md-12">
-      <div class="content-wrapper">
+      <div class="content-container">
         <?php while( have_posts() ) : the_post(); ?>
           <?php get_template_part( 'templates/article/content', get_post_type() ); ?>
         <?php endwhile; ?>

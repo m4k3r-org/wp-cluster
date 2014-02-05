@@ -12,7 +12,7 @@ get_template_part( 'templates/page/header', get_post_type() );
 <section class="container">
   <div class="row">
 
-    <div class="col-md-12">
+    <div class="column col-md-12">
 
       <article class="article-404">
 

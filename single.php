@@ -3,18 +3,16 @@
  * The Template for displaying all single posts.
  *
  * @author Usability Dynamics
- * @module festival  
+ * @module festival
  * @since festival 0.1.0
  */
 
-$cc = is_active_sidebar( 'single-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12';
- 
-get_template_part( 'templates/page/header', get_post_type() ); 
+get_template_part( 'templates/page/header', get_post_type() );
 ?>
 <section class="container inner-wrapper">
   <div class="row">
 
-    <div class="<?php echo $cc; ?>">
+    <div class="column <?php is_active_sidebar( 'single-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?>">
 
       <?php while( have_posts() ) : the_post(); ?>
         <?php get_template_part( 'templates/article/content', get_post_type() ); ?>
@@ -24,12 +22,10 @@ get_template_part( 'templates/page/header', get_post_type() );
 
     </div>
 
-    <?php if( is_active_sidebar( 'single-sidebar' ) ) : ?>
-      <div class="col-md-3">
-        <div class="sidebar">
-          <?php dynamic_sidebar('single-sidebar'); ?>
-        </div>     
-      </div>
+    <?php if (is_active_sidebar( 'single-sidebar' )) : ?>
+    <div class="column col-md-3">
+      <section class="module-container"><?php dynamic_sidebar( 'single-sidebar' ); ?></section>
+    </div>
     <?php endif; ?>
 
   </div>

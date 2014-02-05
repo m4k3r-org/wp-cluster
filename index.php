@@ -16,9 +16,9 @@
 <section class="container inner-wrapper entry-<?php echo get_post_type(); ?>">
   <div class="row">
 
-    <div class="<?php echo is_active_sidebar( 'right-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?> clearfix">
+    <div class="column <?php echo is_active_sidebar( 'right-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?>">
 
-      <div class="content-wrapper">
+      <section class="content-container">
     
         <?php if( !have_posts() ) : ?>
           <?php get_template_part( 'templates/aside/alert', get_post_type() ); ?>
@@ -30,15 +30,13 @@
         
         <?php endif; ?>
       
-      </div>
+      </section>
 
     </div>
 
     <?php if( is_active_sidebar( 'right-sidebar' ) ) : ?>
-      <div class="col-md-3 sidebar">
-        <div class="sidebar">
-          <?php dynamic_sidebar('right-sidebar'); ?>
-        </div>
+      <div class="column col-md-3">
+        <section class="content-container"><?php dynamic_sidebar('right-sidebar'); ?></section>
       </div>
     <?php endif; ?>
 

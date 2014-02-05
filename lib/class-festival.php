@@ -516,7 +516,7 @@ namespace UsabilityDynamics {
 
       $args = (object) wp_parse_args( $args, $default = array(
         'type'           => '_aside',
-        'class'          => 'wp-aside',
+        'class'          => 'modular-aside',
         'more_link_text' => null,
         'strip_teaser'   => null,
         'return'         => false,
@@ -574,9 +574,9 @@ namespace UsabilityDynamics {
         'name'          => __( 'Right Sidebar' ),
         'description'   => __( 'Default Sideber. Shown on pages with specific template and blog pages.' ),
         'id'            => 'right-sidebar',
-        'before_widget' => '<section class="widget %1$s %2$s"><div class="widget-inner">',
-        'after_widget'  => '</div></section>',
-        'before_title'  => '<h3 class="widget-title">',
+        'before_widget' => '<div class="module widget %1$s %2$s"><div class="module-inner">',
+        'after_widget'  => '</div></div>',
+        'before_title'  => '<h3 class="module-title">',
         'after_title'   => '</h3>',
       ));
 
@@ -584,9 +584,9 @@ namespace UsabilityDynamics {
         'name'          => __( 'Left Sidebar' ),
         'description'   => __( 'Shown on Pages with specific template.' ),
         'id'            => 'left-sidebar',
-        'before_widget' => '<section class="widget %1$s %2$s"><div class="widget-inner">',
-        'after_widget'  => '</div></section>',
-        'before_title'  => '<h3 class="widget-title">',
+        'before_widget' => '<div class="module widget %1$s %2$s"><div class="module-inner">',
+        'after_widget'  => '</div></div>',
+        'before_title'  => '<h3 class="module-title">',
         'after_title'   => '</h3>',
       ));
 
@@ -594,9 +594,9 @@ namespace UsabilityDynamics {
         'name'          => __( 'Single Page Sidebar' ),
         'description'   => __( 'Shown on all Single Pages.' ),
         'id'            => 'single-sidebar',
-        'before_widget' => '<section class="widget %1$s %2$s"><div class="widget-inner">',
-        'after_widget'  => '</div></section>',
-        'before_title'  => '<h3 class="widget-title">',
+        'before_widget' => '<div class="module widget %1$s %2$s"><div class="module-inner">',
+        'after_widget'  => '</div></div>',
+        'before_title'  => '<h3 class="module-title">',
         'after_title'   => '</h3>',
       ));
 

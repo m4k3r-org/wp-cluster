@@ -7,7 +7,7 @@
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  *
  * @author Usability Dynamics
- * @module festival  
+ * @module festival
  * @since festival 0.1.0
  */
 
@@ -16,38 +16,36 @@ get_template_part( 'templates/page/header', get_post_type() );
 <section class="container inner-wrapper entry-<?php echo get_post_type(); ?>">
   <div class="row">
 
-    <div class="<?php echo is_active_sidebar( 'right-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?> clearfix">
+    <div class="column <?php echo is_active_sidebar( 'right-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?>">
     
-      <div class="content-wrapper">
+      <section class="content-container">
       
         <header class="article-header">
           <h1 class="article-title"><?php single_cat_title(); ?></h1>
         </header>
 
         <?php if( !have_posts() ) : ?>
-        
+
           <div class="alert alert-warning">
             <?php _e( 'Sorry, no results were found.', wp_festival( 'domain' ) ); ?>
           </div>
-        
+
         <?php else : ?>
 
           <?php while( have_posts() ) : the_post(); ?>
             <hr/>
             <?php get_template_part( 'templates/article/listing', get_post_type() ); ?>
           <?php endwhile; ?>
-        
+
         <?php endif; ?>
         
-      </div>
+      </section>
 
     </div>
 
     <?php if( is_active_sidebar( 'right-sidebar' ) ) : ?>
-      <div class="col-md-3">
-        <div class="sidebar">
-          <?php dynamic_sidebar('right-sidebar'); ?>
-        </div>     
+      <div class="column col-md-3">
+        <section class="sidebar"><?php dynamic_sidebar( 'right-sidebar' ); ?></section>
       </div>
     <?php endif; ?>
 

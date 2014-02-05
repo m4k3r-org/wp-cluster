@@ -33,5 +33,5 @@
 
     <?php get_template_part( 'templates/nav/top', get_post_type() ); ?>
     
-    <div class="container-wrap theme-showcase">
+    <div class="container-wrap">
     

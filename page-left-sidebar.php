@@ -20,19 +20,17 @@ get_template_part( 'templates/page/header', get_post_type() );
   <div class="row">
 
     <?php if( is_active_sidebar( 'left-sidebar' ) ) : ?>
-      <div class="col-md-3">
-        <div class="sidebar">
-          <?php dynamic_sidebar('left-sidebar'); ?>
-        </div>     
+      <div class="column col-md-3">
+        <section class="module-container"><?php dynamic_sidebar('left-sidebar'); ?></section>
       </div>
     <?php endif; ?>
   
-    <div class="<?php echo is_active_sidebar( 'left-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?>">
-      <div class="content-wrapper">
+    <div class="column <?php echo is_active_sidebar( 'left-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?>">
+      <section class="content-container">
         <?php while( have_posts() ) : the_post(); ?>
           <?php get_template_part( 'templates/article/content', get_post_type() ); ?>
         <?php endwhile; ?>
-      </div>
+      </section>
     </div>
 
   </div>

@@ -10,7 +10,7 @@
  * @since festival 0.1.0
  */
 ?>
-    </div> <!-- /container-wrap -->
+    </div><!-- /container-wrap -->
     <footer>
 
       <section class="container">
