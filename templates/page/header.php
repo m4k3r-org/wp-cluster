@@ -21,10 +21,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
   <meta name="HandheldFriendly" content="True"/>
   <meta name="MobileOptimized" content="360"/>
-  <link rel="apple-touch-icon" href="<?php echo content_url( '/assets/apple-touch-icon-72x72.png', 'relative' ); ?>"/>
-  <link rel="apple-touch-icon" href="<?php echo content_url( '/assets/apple-touch-icon-72x72.png', 'relative' ); ?>" sizes="72x72"/>
-  <link rel="apple-touch-icon" href="<?php echo content_url( '/assets/apple-touch-icon-114x114.png', 'relative' ); ?>" sizes="114x114"/>
-  <link rel="apple-touch-startup-image" href="<?php echo content_url( '/assets/apple-touch-icon-72x72.png', 'relative' ); ?>"/>
+  <link rel="apple-touch-icon" href="<?php echo content_url( '/assets/apple-touch-icon-72x72.png' ); ?>"/>
+  <link rel="apple-touch-icon" href="<?php echo content_url( '/assets/apple-touch-icon-72x72.png' ); ?>"    sizes="72x72"/>
+  <link rel="apple-touch-icon" href="<?php echo content_url( '/assets/apple-touch-icon-114x114.png' ); ?>"  sizes="114x114"/>
+  <link rel="apple-touch-startup-image" href="<?php echo content_url( '/assets/apple-touch-icon-72x72.png' ); ?>"/>
   <?php wp_head(); ?>
 </head>
 
@@ -34,7 +34,7 @@
     <div class="container"><?php wp_festival()->aside( 'header' ); ?></div>
   </header>
 
-  <header id="banner" class="banner-poster" role="banner">
+  <header id="banner" class="banner-poster" role="banner" data-requires="banner.poster">
     <div class="container"><?php wp_festival()->aside( 'banner' ); ?></div>
   </header>
 
