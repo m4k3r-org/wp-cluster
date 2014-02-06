@@ -30,7 +30,7 @@
 
   <body <?php body_class(); ?> data-requires="site">
 
-    <section class="container inner-wrapper entry-<?php echo get_post_type(); ?>">
+    <section class="inner-wrapper entry-<?php echo get_post_type(); ?>">
       <div class="row">
         <section class="content-container">
         <?php while( have_posts() ) : the_post(); ?>

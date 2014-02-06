@@ -7,6 +7,15 @@ body {
   overflow-x: hidden;
 }
 
+.container {
+
+  .container {
+    padding: 0;
+    width: auto;
+  }
+
+}
+
 span.hr {
   display:block;
   height: 1px;
@@ -359,129 +368,6 @@ footer {
 
 }
 
-/* ==============
- The Artist
-============== */
-
-.the-artist {
-  .heading {
-    span {
-      &.hr {
-        height: 2px;
-        margin: 15px auto;
-        width: 40px;
-      }
-    }
-  }
-  .artist-previews {
-    .artist-preview {
-      .date {
-        height: 60px;
-        text-transform: uppercase;
-        font-size: 140%;
-        font-weight: bold;
-        .hr {
-          height: 2px;
-          margin-top: 10px;
-          margin-bottom: 20px;
-          margin-left: 0;
-          width: 40px;
-        }
-      }
-      .image {
-        .caption {
-          padding: 12px;
-        }
-      }
-    }
-  }
-}
-
-/* ==============
- Artist Alphabetical
-============== */
-
-.artist-alphabetical {
-  background: url("@{img-url}/temp/header-bg.jpg") repeat;
-  padding-bottom: 60px;
-
-  .heading {
-    margin-bottom: 40px;
-    h3 {
-      margin-top: 45px;
-    }
-    .hr {
-      height: 2px;
-      margin: 20px auto;
-      width: 40px;
-    }
-  }
-
-  .artist-alpha {
-    a {
-      text-decoration: none;
-      .image {
-        margin-bottom: 40px;
-        .caption {
-          padding: 12px;
-          position: relative;
-          .pin {
-            display: none;
-            position: absolute;
-            top: -5px;
-            left: 49%;
-            width: 8px;
-            height: 5px;
-            background: url("@{img-url}/pin.png") center center no-repeat;
-          }
-        }
-      }
-      &:hover {
-        .image {
-          .caption {
-            .pin {
-              display: block;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-/* ==============
- Local Support Artist
-============== */
-
-.local-support-artist {
-
-  .heading {
-    span {
-      &.hr {
-        height: 2px;
-        margin: 15px auto;
-        width: 40px;
-      }
-    }
-    margin-bottom: 30px;
-  }
-
-  ul {
-    padding: 0;
-    display: block;
-    margin: 0 auto 20px;
-    li {
-      padding-left: 30px;
-      padding-right: 30px;
-      border-right: 2px solid;
-      display: inline-block;
-      &:last-child {
-        border-right: none;
-      }
-    }
-  }
-
-}
 
 /* ==============
  Bottom Content

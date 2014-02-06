@@ -50,6 +50,13 @@
       <option value="<?php echo $key; ?>" <?php echo $selected; ?>><?php echo $type; ?></option>
     <?php endforeach; ?>
   </select>
+  <label for="artist_columns"><?php _e( 'Artist Columns' ); ?></label>
+  <select name="artist_columns" id="artist_columns">
+    <?php foreach( $artist_columns as $columns ):
+      $selected = isset( $data[ 'artist_columns' ] ) && $data[ 'artist_columns' ] == $columns ? 'selected="selected"' : ''; ?>
+      <option value="<?php echo $columns; ?>" <?php echo $selected; ?>><?php echo $columns; ?></option>
+    <?php endforeach; ?>
+  </select>
 </fieldset>
 
 <!-- artists -->

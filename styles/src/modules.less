@@ -15,6 +15,10 @@
     padding: 0;
     border-width: 0;
     
+    .article-header {
+      display:none;
+    }
+    
     .module-container {
       border-width: 2px;
       border-style: solid;
@@ -126,31 +130,126 @@
  Artists List
 ============== */
 
-.cfct-module .artists-list {
-    
-  h2,
-  span.tagline,
-  p.description {
-    text-align: center;
-    display: block;
+/* ==============
+ The Artist
+============== */
+
+.artists-list {
+
+  span {
+    &.hr {
+      height: 2px;
+      margin: 15px auto;
+      width: 40px;
+    }
   }
   
-  h2 {
-    font-size: 200%;
-    margin: 0 0 10px;
+  .artist-previews {
+    .artist-preview {
+      .date {
+        height: 60px;
+        text-transform: uppercase;
+        font-size: 140%;
+        font-weight: bold;
+        .hr {
+          height: 2px;
+          margin-top: 10px;
+          margin-bottom: 20px;
+          margin-left: 0;
+          width: 40px;
+        }
+      }
+      .image {
+        .caption {
+          padding: 12px;
+        }
+      }
+    }
   }
-  
-  span.tagline,
-  p.description {
-    margin: 10px 0;
+}
+
+/* ==============
+ Artist Alphabetical
+============== */
+
+.artist-alphabetical {
+  background: url("@{img-url}/temp/header-bg.jpg") repeat;
+  padding-bottom: 60px;
+
+  .heading {
+    margin-bottom: 40px;
+    h3 {
+      margin-top: 45px;
+    }
+    .hr {
+      height: 2px;
+      margin: 20px auto;
+      width: 40px;
+    }
   }
-  
-  .hr {
-    height: 3px;
-    line-height: 3px;
-    width: 30px;
+
+  .artist-alpha {
+    a {
+      text-decoration: none;
+      .image {
+        margin-bottom: 40px;
+        .caption {
+          padding: 12px;
+          position: relative;
+          .pin {
+            display: none;
+            position: absolute;
+            top: -5px;
+            left: 49%;
+            width: 8px;
+            height: 5px;
+            background: url("@{img-url}/pin.png") center center no-repeat;
+          }
+        }
+      }
+      &:hover {
+        .image {
+          .caption {
+            .pin {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ==============
+ Local Support Artist
+============== */
+
+.local-support-artist {
+
+  .heading {
+    span {
+      &.hr {
+        height: 2px;
+        margin: 15px auto;
+        width: 40px;
+      }
+    }
+    margin-bottom: 30px;
+  }
+
+  ul {
     padding: 0;
-    margin: 6px auto;
+    display: block;
+    margin: 0 auto 20px;
+    li {
+      padding-left: 30px;
+      padding-right: 30px;
+      border-right: 2px solid;
+      display: inline-block;
+      &:last-child {
+        border-right: none;
+      }
+    }
   }
 
 }

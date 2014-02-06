@@ -141,6 +141,7 @@ if( !class_exists( 'ArtistListModule' ) ){
         'blist' => __( 'B-List', 'wp-festival' ),
         'local' => __( 'Local Talent', 'wp-festival' )
       );
+      $artist_columns = array( '1', '2', '3', '4', '5', '6', '8', '10', '12' );
       /** Now get and return the template */
       ob_start();
       require_once( __DIR__ . '/admin/form.php' );
