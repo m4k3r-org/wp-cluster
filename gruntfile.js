@@ -105,6 +105,7 @@ module.exports = function( grunt ) {
           include: [
             'modules/html.picture',
             'modules/html.video',
+            'modules/banner.poster',
             'app.bootstrap'
           ],
           out: "scripts/app.bootstrap.js"

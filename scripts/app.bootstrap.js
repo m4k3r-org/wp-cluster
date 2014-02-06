@@ -20,6 +20,16 @@ define( 'html.video', ['require','exports','module'],function( exports, module )
 
 
 /**
+ * HTML Video Element
+ *
+ */
+define( 'banner.poster', ['require','exports','module'],function( exports, module ) {
+  console.log( 'banner.poster', 'loaded' );
+
+});
+
+
+/**
  * Application Bootstrap
  *
  * Loads initial non-blocking JavaScript.
