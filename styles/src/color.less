@@ -248,30 +248,25 @@ footer {
  The Artist
 ============== */
 
-.the-artist {
+.artists-list {
   color: @the-artist-color;
-  .heading {
-    span {
-      &.hr {
-        background: @default-color;
-      }
+
+  span {
+    &.hr {
+      background: @default-color;
     }
   }
-  .artist-previews {
-    .artist-preview {
-      .date {
-        .month, .day {
-          color: @default-color;
-        }
-        .hr {
-          background: @default-color;
-        }
+  
+  .artist-preview {
+    .date {
+      .month, .day {
+        color: @default-color;
       }
-      .image {
-        .caption {
-          color: @artist-preview-caption;
-          background: @artist-preview-caption-bg;
-        }
+    }
+    .image {
+      .caption {
+        color: @artist-preview-caption;
+        background: @artist-preview-caption-bg;
       }
     }
   }

@@ -36,10 +36,10 @@ $class = isset( $classes_map[ $artist_columns ] ) ? $classes_map[ $artist_column
     </div>
   </header>
 
-  <section class="container inner-wrapper entry-<?php echo get_post_type(); ?>">
+  <section class="the-list">
     <div class="row">
       <div class="col-md-12 clearfix">
-        <? $counter = 0; ?>
+        <?php $counter = 0; ?>
         <?php if( have_posts() ) : ?>
           <?php while( have_posts() ) : the_post(); ?>
             <?php if ( !( $counter % $artist_columns ) ) : ?>
@@ -47,7 +47,7 @@ $class = isset( $classes_map[ $artist_columns ] ) ? $classes_map[ $artist_column
             <?php endif; ?>
             <?php $counter++; ?>
             <div class="<?php echo $class; ?>">
-              <?php get_template_part( 'templates/article/listing-artist', $wp_query->data[ 'artist-type' ] ); ?>
+              <?php get_template_part( 'templates/article/listing-artist', $artist_type ); ?>
             </div>
             <?php if ( !( $counter % $artist_columns ) ) : ?>
               </div>
