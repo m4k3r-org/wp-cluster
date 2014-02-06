@@ -149,13 +149,14 @@
 }
 
 .container-wrap .content-container article,
-.container-wrap .module-container .module {
-  background-color: @default-body-bg;
-  //background-color: transparent;
+.container-wrap .module-container .module,
+.container-wrap .cfct-can-haz-build .module-container {
+  background-color: @content-bg;
 }
 
 .container-wrap .content-container article,
-.container-wrap .module-container .module {
+.container-wrap .module-container .module,
+.container-wrap .cfct-can-haz-build .module-container {
   border-color: @content-border-color;
 
   a {
@@ -227,7 +228,7 @@
 ============== */
 
 footer {
-  background-color: @footer-background;
+  background-color: @header-bg-color;
 
   span, div, p, a, a:hover {
     color: @footer-color;
@@ -481,7 +482,7 @@ footer {
 }
 
 /* ==============
- Modules
+ CB Modules
 ============== */
 
 // Artist-List
@@ -496,4 +497,16 @@ footer {
     
   }
 
+}
+
+.cfct-sidebar {
+  
+  .module {
+
+    &:after {
+      background-color: @content-border-color;
+    }
+    
+  }
+  
 }

@@ -1,6 +1,12 @@
-// Common Styles.
+/* ==============
+ Carington Builder: Common Styles.
+============== */
 
-.content-container article {
+.cfct-build-module-edit-link {
+  display:none;
+}
+
+.container-wrap .content-container article {
   
   // Don't show border for artcile content when CB is used
   &.cfct-can-haz-build {
@@ -9,169 +15,103 @@
     padding: 0;
     border-width: 0;
     
-    .cfct-module-border,
-    .cfct-module {
-      margin-bottom: 30px;
+    .module-container {
+      border-width: 2px;
+      border-style: solid;
+    }
+    
+    .cfct-block-sidebar {
+    
+      .module-container {
+        background: none;
+        border-width: 0;
+      }
+    
+    }
+    
+    .module {
+      border-width: 0;
+    }
+    
+    .cfct-block-sidebar {
+    
+      .module {
+        border-width: 2px;
+        
+        // Disable borders on child modules to prevent extra borders
+        .module {
+          border-width: 0;
+        }
+        
+      }
+    
     }
     
   }
 
 }
 
-.cfct-image-left {
-  margin-right: 20px;
-}
 
-.cfct-mod-content {
+/* ==============
+ Module: Sidebar
+============== */
 
-}
-
-.cfct-mod-title {}
-
-// Module Hero.
-.cfct-module cfct-module-hero {
-
-  .cfct-module-hero-image {
-    background-size: cover;
-
-    .cfct-module-hero-wrap {
-
-      .cfct-mod-title {
-
-      }
-
-      .cfct-mod-content {
-
-      }
-
+// Fix paddings and margins for sidebar
+.cfct-sidebar {
+  padding: 0;
+  margin-left: -15px;
+  margin-right: -15px;
+  
+  .module {
+    margin-bottom: 0;
+    
+    &:last-child:after {
+      content: none;
     }
-
-  }
-
-}
-
-// Rich Text Module
-.cfct-rich-text {
-
-  .cfct-mod-content {
-
-
-  }
-
-}
-
-// Callout Module.
-.cfct-callout {
-  overflow: auto;
-
-  .cfct-mod-title {
-
-  }
-
-  h1.cfct-mod-title {
-
-  }
-
-  h2.cfct-mod-title {
-
-  }
-
-  h3.cfct-mod-title {
-
-  }
-
-  .cfct-mod-image {
-    border: 1px solid #dadada;
-    padding: 0.5em;
-    float: left;
-
-    &.cfct-image-left {
-
+    
+    &:after {
+      content: ".";
+      text-indent: 9999px;
+      margin: 25px auto 0;
+      height: 1px;
+      line-height: 1px;
+      width: 100%;
+      display: block;
     }
-
-    &.cfct-image-center {
-
-    }
-
-    &.cfct-image-right {
-
-    }
-
+    
   }
-
-  .cfct-mod-content {
-
-    p {
-
-    }
-
-  }
-}
-
-// Gallery Module
-.cfct-module-gallery {
-
-}
-
-article.cfct-can-haz-build {
-
-  section.article-image,
-  header.article-header {
-    display: none;
-  }
-
-}
-.column {
-
-  .cfct-build-module-edit-link {
-    position: absolute;
-    opacity: 0;
-    bottom: -20px;
-  }
-
-  &:hover {
-
-    .cfct-build-module-edit-link {
-      opacity: .7;
-    }
-
-  }
-
+  
 }
 
 /* ==============
  Artists List
 ============== */
 
-.cfct-module {
-
-  .artists-list {
+.cfct-module .artists-list {
     
-    h2,
-    span.tagline,
-    p.description {
-      text-align: center;
-      display: block;
-    }
-    
-    h2 {
-      font-size: 200%;
-      margin: 0 0 10px;
-    }
-    
-    span.tagline,
-    p.description {
-      margin: 10px 0;
-    }
-    
-    .hr {
-      height: 3px;
-      line-height: 3px;
-      width: 30px;
-      padding: 0;
-      margin: 6px auto;
-    }
-    
+  h2,
+  span.tagline,
+  p.description {
+    text-align: center;
+    display: block;
+  }
+  
+  h2 {
+    font-size: 200%;
+    margin: 0 0 10px;
+  }
+  
+  span.tagline,
+  p.description {
+    margin: 10px 0;
+  }
+  
+  .hr {
+    height: 3px;
+    line-height: 3px;
+    width: 30px;
+    padding: 0;
+    margin: 6px auto;
   }
 
 }

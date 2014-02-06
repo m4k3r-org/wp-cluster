@@ -34,6 +34,7 @@
     <div class="container"><?php wp_festival()->aside( 'header' ); ?></div>
   </header>
 
+<<<<<<< HEAD
   <header id="banner" class="banner-poster" role="banner">
     <div class="container"><?php wp_festival()->aside( 'banner' ); ?></div>
   </header>
@@ -42,3 +43,9 @@
 
   <div id="wrapper" class="container-wrap" role="wrapper">
   
+=======
+    <?php get_template_part( 'templates/nav/top', get_post_type() ); ?>
+    
+    <div class="container-wrap" style="background-color:<?php echo get_option( 'content_bg_color', '#f2f2f2' ); ?>">
+    
+>>>>>>> 52fff0cad9d9d9bae83d3211650b7b9c268ec97d

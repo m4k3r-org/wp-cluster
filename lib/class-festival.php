@@ -177,6 +177,34 @@ namespace UsabilityDynamics {
         ),
         'enable'  => array(),
       ));
+      
+      // @temp
+      add_action( 'customize_register', function( $wp_customize ) {
+        
+        // Register new settings to the WP database...
+        $wp_customize->add_setting( 'content_bg_color', //Give it a SERIALIZED name (so all theme settings can live under one db record)
+          array(
+            'default'    => '#f2f2f2', //Default setting/value to save
+            'type'       => 'option', //Is this an 'option' or a 'theme_mod'?
+            'capability' => 'edit_theme_options', //Optional. Special permissions for accessing this setting.
+            'transport'  => 'postMessage', //What triggers a refresh of the setting? 'refresh' or 'postMessage' (instant)?
+          )
+        );
+
+        // Define the control itself (which links a setting to a section and renders the HTML controls)...
+        $wp_customize->add_control( new \WP_Customize_Color_Control( //Instantiate the color control class
+          $wp_customize, //Pass the $wp_customize object (required)
+          'content_bg_color', //Set a unique ID for the control
+          array(
+            'label'    => __( 'Content Background Color', $this->domain ), //Admin-visible name of the control
+            'section'  => 'colors', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
+            'settings' => 'content_bg_color', //Which setting to load and manipulate (serialized is okay)
+            'priority' => 10, //Determines the order this control appears in for the specified section
+          )
+        ) );
+        
+      });
+
 
       // Add Management UI.
       $this->manage( array(
