@@ -264,8 +264,11 @@ namespace UsabilityDynamics {
         'primary' => array(
           'name' => __( 'Primary', $this->domain )
         ),
-        'social'  => array(
+        'secondary'  => array(
           'name' => __( 'Secondary', $this->domain )
+        ),
+        'social'  => array(
+          'name' => __( 'Social', $this->domain )
         ),
         'footer'  => array(
           'name' => __( 'Footer', $this->domain )
@@ -506,25 +509,25 @@ namespace UsabilityDynamics {
       $_home_url = parse_url( home_url());
 
       return (array) apply_filters( 'festival:model:settings', array(
-        'settings'    => array(
-          'permalinks'  => get_option( 'permalink_structure' ) == '' ? false : true,
+        'settings' => array(
+          'permalinks' => get_option( 'permalink_structure' ) == '' ? false : true,
         ),
-        'geo'    => array(
-          'latitude' => '',
-          'longitude' => '',
-          'city' => '',
-          'state' => '',
-          'country' => ''
+        'geo'      => array(
+          'latitude'  => null,
+          'longitude' => null,
+          'city'      => null,
+          'state'     => null,
+          'country'   => null
         ),
-        'user'    => array(
-          'id'  => '',
-          'login'  => ''
+        'user'     => array(
+          'id'    => '',
+          'login' => ''
         ),
-        'url'        => array(
-          'domain'      => trim( $_home_url[ 'host' ] ? $_home_url[ 'host' ] : array_shift( explode( '/', $_home_url[ 'path' ], 2 ) ) ),
-          'ajax'        => admin_url( 'admin-ajax.php' ),
-          'home'      => admin_url( 'admin-ajax.php' ),
-          'assets'      => admin_url( 'admin-ajax.php' ),
+        'url'      => array(
+          'domain' => trim( $_home_url[ 'host' ] ? $_home_url[ 'host' ] : array_shift( explode( '/', $_home_url[ 'path' ], 2 ) ) ),
+          'ajax'   => admin_url( 'admin-ajax.php' ),
+          'home'   => admin_url( 'admin-ajax.php' ),
+          'assets' => admin_url( 'admin-ajax.php' ),
         )
       ));
 
@@ -554,7 +557,7 @@ namespace UsabilityDynamics {
         'menu_class'     => implode( ' ', array_filter( array( 'festival-menu', 'nav', 'navbar-nav', $name, is_string( $location ) ? $location : '' ) ) ),
         'fallback_cb'    => false,
         'container'      => false,
-        'items_wrap'     => '<ul data-menu="%1$s" class="%2$s">%3$s</ul>',
+        'items_wrap'     => '<ul data-menu-name="%1$s" class="%2$s">%3$s</ul>',
         'walker'         => new \UsabilityDynamics\Theme\Nav_Menu,
         'echo'           => false
       ) ));
@@ -766,6 +769,7 @@ namespace UsabilityDynamics {
     /**
      * Sync 'Social Streams' data with social networks
      *
+     * @todo Vallues should be stored using Settings.
      */
     private function sync_streams() {
 
