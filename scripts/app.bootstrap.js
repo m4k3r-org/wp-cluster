@@ -20,22 +20,17 @@ define( 'html.video', ['require','exports','module'],function( exports, module )
 
 
 /**
- * Application Loader
+ * Application Bootstrap
  *
- * @example
- *
- *      // Some Locale String.
- *      require( 'festival.locale' ).someWord
- *
- *      // AJAX URL.
- *      require( 'festival.model' ).ajax
+ * Loads initial non-blocking JavaScript.
  *
  */
-require( [ 'html.picture', 'html.video' ], function Bootstrap() {
-  console.log( 'application bootstrapped' );
+define( 'app.bootstrap', [ 'html.picture', 'html.video' ], function Bootstrap() {
+  console.log( 'app.bootstrap' );
 
   require.loadStyle( '/assets/styles/app.main.css' );
 
+  // Load Main Application
   require( [ 'app.main' ] );
 
 });

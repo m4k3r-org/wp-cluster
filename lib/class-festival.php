@@ -201,6 +201,13 @@ namespace UsabilityDynamics {
         )
       ));
 
+      // Register Theme Bootstrap Scripts.
+      $this->requires( array(
+        'id'    => 'app.bootstrap',
+        'path'  => home_url( '/assets/scripts/app.bootstrap.js' ),
+        'base'  => home_url( '/assets/scripts' )
+      ));
+
       // Register Theme Settings Model.
       $this->requires( array(
         'id'    => 'site.model',
@@ -707,14 +714,16 @@ namespace UsabilityDynamics {
       // Sync 'Social Streams' data with social networks
       $this->sync_streams();
 
-      // Register Script and Styles.
+      // Register Scripts. (for reference only, not enqueued);
       wp_register_style( 'app.bootstrap', home_url( '/assets/styles/app.bootstrap.css' ), array(), $this->version, 'all' );
-      wp_register_script( 'app.bootstrap', home_url( '/assets/scripts/app.bootstrap.js' ), array(), $this->version, false );
-
-      wp_register_style( 'app.main', home_url( '/assets/styles/app.main.css' ), array(), $this->version, 'all' );
       wp_register_script( 'app.main', home_url( '/assets/scripts/app.main.js' ), array(), $this->version, false );
 
-      //add_editor_style( home_url( '/assets/editor-style.css' ));
+      // Register Styles.
+      wp_register_script( 'app.bootstrap', home_url( '/assets/scripts/app.bootstrap.js' ), array(), $this->version, true );
+      wp_register_style( 'app.main', home_url( '/assets/styles/app.main.css' ), array(), $this->version, 'all' );
+
+      // Register Editor Style.
+      add_editor_style( home_url( '/assets/editor-style.css' ));
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
@@ -767,7 +776,7 @@ namespace UsabilityDynamics {
      */
     public function wp_enqueue_scripts() {
       wp_enqueue_style( 'app.bootstrap' );
-      wp_enqueue_script( 'app.bootstrap' );
+      //wp_enqueue_script( 'app.bootstrap' );
     }
 
     /**
