@@ -610,7 +610,7 @@ namespace UsabilityDynamics {
       $post = $_post;
 
       // Try to locale regular aside.
-      if( !$content ) {
+      if( !isset( $content ) || !$content ) {
         ob_start();
         get_template_part( 'templates/aside/' . $name, get_post_type());
         $content = ob_get_clean();

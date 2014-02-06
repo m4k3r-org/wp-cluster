@@ -13,7 +13,7 @@ if( !class_exists( 'EventHeroModule' ) ) {
         'description' => __( 'Event Hero', 'carrington-build' ),
         'icon'        => plugins_url( '/icon.png', __DIR__ )
       );
-      parent::__construct( 'cfct-module-carousel', __( 'Carousel', 'carrington-build' ), $opts );
+      parent::__construct( 'cfct-module-carousel', __( 'Event Hero', 'carrington-build' ), $opts );
       add_filter( 'wp_ajax_cfct_carousel_post_search', array( $this, '_handle_carousel_request' ) );
 
       //wp_register_script( 'jquery-cycle', $this->get_url() . 'js/jquery.cycle.js', array( 'jquery' ), '1.0' );
@@ -40,16 +40,6 @@ if( !class_exists( 'EventHeroModule' ) ) {
       ) );
     }
 
-// Display
-
-    /**
-     * contains capacity to have pre-defined links & image urls,
-     * though that functionality is not exposed in the admin
-     *
-     * @param string $data
-     *
-     * @return void
-     */
     public function display( $data ) {
       $image_size = $data[ $this->get_field_name( 'image_size-size' ) ];
 
@@ -124,8 +114,6 @@ if( !class_exists( 'EventHeroModule' ) ) {
 
       return $this->load_view( $data, compact( 'items', 'control_layout_order', 'image_size', 'car_opts', 'js_init' ) );
     }
-
-// Admin
 
     public function text( $data ) {
       return 'Carousel';
@@ -290,7 +278,7 @@ if( !class_exists( 'EventHeroModule' ) ) {
 					padding: 5px;
 				}
 				.carousel-list li:hover {
-					background: #fff url(' . $this->get_url() . 'img/carousel-drag.gif) 100% 50% no-repeat;
+					background: #fff url(data:image/gif;base64,R0lGODlhFAAIAJEDAKGhoaKiov///////yH5BAEAAAMALAAAAAAUAAgAAAIbhIOAMe0vopyv2otXUBvhNoXCR5bKkRikSH0FADs=) 100% 50% no-repeat;
 					cursor: move;
 				}
 				.carousel-list li.carousel-item-edit:hover {
@@ -333,7 +321,7 @@ if( !class_exists( 'EventHeroModule' ) ) {
 					height: 45px;
 				}
 				.carousel-item-img {
-					background: #D2CFCF url(' . $this->get_url() . 'img/carousel-none-icon.png) center center no-repeat;
+				  background-image: #D2CFCF url(data:image/png;base64,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) center center no-repeat;
 					display: inline-block;
 					margin-right: 10px;
 					width: 150px;
@@ -654,8 +642,6 @@ if( !class_exists( 'EventHeroModule' ) ) {
       return $html;
     }
 
-// Search Request
-
     public function _handle_carousel_request() {
       if( !empty( $_POST[ 'carousel_action' ] ) ) {
         switch( $_POST[ 'carousel_action' ] ) {
@@ -733,8 +719,6 @@ if( !class_exists( 'EventHeroModule' ) ) {
       return !in_array( $var, array( 'attachment', 'revision', 'nav_menu_item' ) );
     }
 
-// Content Move Helpers
-
     public function get_referenced_ids( $data ) {
       $references = array();
       if( !empty( $data[ $this->gfn( 'posts' ) ] ) ) {
@@ -771,4 +755,3 @@ if( !class_exists( 'EventHeroModule' ) ) {
 
   cfct_build_register_module( 'EventHeroModule' );
 }
-?>
