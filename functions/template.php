@@ -49,3 +49,21 @@ if( !function_exists( 'is_external_referrer' ) ) {
     return strpos( wp_get_referer(), home_url() ) === 0 ? true : false;
   }
 }
+
+if( !function_exists( 'render_picture' ) ) {
+
+  /**
+   * Render HTML5 Picture Element
+   *
+   * @example
+   *
+   *      render_picture( $attachment_id, array() );
+   *
+   * @param $attchment_id
+   * @param $args
+   * @return bool
+   */
+  function render_picture( $attchment_id, $args = array() ) {
+    return '<picture></picture>';
+  }
+}
