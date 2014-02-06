@@ -270,6 +270,16 @@ footer {
       }
     }
   }
+  
+  a {
+    &:hover {
+      .image {
+        .caption {
+          background: @default-color;
+        }
+      }
+    }
+  }
 }
 
 /* ==============
@@ -286,23 +296,6 @@ footer {
     }
     .hr {
       background: @default-color;
-    }
-  }
-  .artist-alpha {
-    a {
-      .image {
-        .caption {
-          color: @artist-preview-caption;
-          background: @artist-preview-caption-bg;
-        }
-      }
-      &:hover {
-        .image {
-          .caption {
-            background: @default-color;
-          }
-        }
-      }
     }
   }
 }

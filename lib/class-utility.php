@@ -14,10 +14,44 @@ namespace UsabilityDynamics\Festival {
    * @author Usability Dynamics
    */
   class Utility extends \UsabilityDynamics\Utility {
-
-    static public function get_post_data() {
     
+    /**
+     * Returns expanded data of post
+     *
+     * @author peshkov@UD
+     */
+    static public function get_post_data( $id ) {
+      global $wpdb;
+    
+      $post = wp_festival()->get_post( $id );
       
+      if( $post ) {
+      
+        switch( $post[ 'post_type' ] ) {
+      
+          case 'artist':
+            $perfomances = $wpdb->get_col( "
+              SELECT post_id 
+                FROM {$wpdb->prefix}postmeta 
+                WHERE meta_key = 'relatedArtists' 
+                  AND meta_value = '{$id}'
+            " );
+            $post[ 'perfomances' ] = array();
+            if( !empty( $perfomances ) ) {
+              foreach( $perfomances as $perfomance_id ) {
+                $perfomance = wp_festival()->get_post( $perfomance_id );
+                if( $perfomance ) {
+                  array_push( $post[ 'perfomances' ], $perfomance );
+                }
+              }
+            }
+            break;
+        
+        }
+      
+      }
+      
+      return $post;
     
     }
     
@@ -77,6 +111,57 @@ namespace UsabilityDynamics\Festival {
     }
     
     /**
+     * Returns image's url of passed post ID 
+     *
+     * @see self::get_image_link_by_id()
+     * @uses get_image_link_by_id()
+     * @author peshkov@UD
+     */
+    static public function get_image_link_by_post_id( $id, $args = array() ) {
+      $args = wp_parse_args( $args, array(
+        'type' => 'post',
+      ));
+      return self::get_image_link_by_id( $id, $args );
+    }
+    
+    /**
+     * Returns image's url of passed attachment ID 
+     *
+     * @see self::get_image_link_by_id()
+     * @uses get_image_link_by_id()
+     * @author peshkov@UD
+     */
+    static public function get_image_link_by_attachment_id( $id, $args = array() ) {
+      $args = wp_parse_args( $args, array(
+        'type' => 'attachment',
+      ));
+      return self::get_image_link_by_id( $id, $args );
+    }
+    
+    /**
+     * Get dummy image if needed
+     *
+     * @author peshkov@UD
+     */
+    static public function get_no_image_link( $args = array() ) {
+      $args = (object) wp_parse_args( $args, array(
+        'size'    => 'large', // Get image by predefined image_size. If width and height are set - it's ignored.
+        'width'   => '', // Custom size
+        'height'  => '', // Custom size
+      ));
+      $url = false;
+      if( !empty( $args->width ) && !empty( $args->height ) ) {
+        $url = 'http://placehold.it/' . $args->width . 'x' . $args->height;
+      } else {
+        $sizes = \UsabilityDynamics\Utility::all_image_sizes();
+        if( key_exists( $args->size, $sizes ) ) {
+          $url = 'http://placehold.it/' . $sizes[ $args->size ][ 'width' ] . 'x' . $sizes[ $args->size ][ 'height' ];
+        }
+      }
+      return $url;
+    }
+    
+    /**
      * Returns post image's url with required size.
      *
      * Examples:
@@ -84,7 +169,7 @@ namespace UsabilityDynamics\Festival {
      * 2) wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'size' => 'medium' )); // Returns image with predefined size
      * 3) wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '430', 'height' => '125' )); // Returns image with custom size
      *
-     * @param int          $post_id
+     * @param int          $id
      * @param array|string $args
      *
      * @global array       $wpp_query
@@ -92,39 +177,30 @@ namespace UsabilityDynamics\Festival {
      * @author Usability Dynamics
      * @since 0.1.0
      */
-    static public function get_image_link_by_post_id( $post_id, $args = array() ) {
+    static public function get_image_link_by_id( $id, $args = array() ) {
 
       $args = (object) wp_parse_args( $args, array(
-        'size'    => 'large', // Get image by predefined image_size. If width and height are set - it's ignored.
+        'size'    => 'full', // Get image by predefined image_size. If width and height are set - it's ignored.
         'width'   => '', // Custom size
         'height'  => '', // Custom size
+        'type'    => 'post', // Post or Attachment. Available values: 'post', 'attachment'
         // Optionals:
         'default' => true, // Use default image if images doesn't exist or not.
       ));
 
-      if( has_post_thumbnail( $post_id ) ) {
-        $attachment_id = get_post_thumbnail_id( $post_id );
-      } else {
-
-        // Use default image if image for post doesn't exist
-        if( $args->default ) {
-
-          $url = false;
-
-          if( !empty( $args->width ) && !empty( $args->height ) ) {
-            $url = 'http://placehold.it/' . $args->width . 'x' . $args->height;
-          } else {
-            $sizes = \UsabilityDynamics\Utility::all_image_sizes();
-            if( key_exists( $args->size, $sizes ) ) {
-              $url = 'http://placehold.it/' . $sizes[ $args->size ][ 'width' ] . 'x' . $sizes[ $args->size ][ 'height' ];
-            }
-          }
-
-          return $url;
-
+      if( $args->type == 'post' ) {
+        if( has_post_thumbnail( $id ) ) {
+          $attachment_id = get_post_thumbnail_id( $id );
         } else {
-          return false;
+          // Use default image if image for post doesn't exist
+          if( $args->default ) {
+            return self::get_no_image_link( (array)$args );
+          } else {
+            return false;
+          }
         }
+      } else {
+        $attachment_id = $id;
       }
 
       if( !empty( $args->width ) && !empty( $args->height ) ) {
