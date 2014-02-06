@@ -38,7 +38,7 @@
 
 # Cluster Format BEGIN
 <IfModule mod_mime.c>
-  AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
+  AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml .html .htm
 </IfModule>
 # Cluster Format END
 
