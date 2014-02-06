@@ -10,7 +10,7 @@
  *      require( 'site.model' ).ajax
  *
  */
-define( [ 'site.locale', 'site.model', 'jquery', 'skrollr', 'bootstrap' ], function( locale, model, jQuery ) {
+define( [ 'site.locale', 'site.model', 'jquery', 'skrollr', 'twitter.bootstrap' ], function( locale, model, jQuery ) {
   console.log( 'app', 'loaded', require( 'site.model' ).domain );
 
   window.skrollr.init( {

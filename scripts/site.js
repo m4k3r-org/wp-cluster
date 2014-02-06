@@ -1,1 +1,0 @@
-define("site",function(){console.log("site","loaded"),require.loadStyle("/assets/styles/site.css"),require(["app"])});
