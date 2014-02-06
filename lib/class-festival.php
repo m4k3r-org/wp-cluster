@@ -146,7 +146,8 @@ namespace UsabilityDynamics {
         ),
         'custom-background' => array(
           'default-color' => '',
-          'default-image' => ''
+          'default-image' => '',
+          'wp-head-callback' => '__return_false'
         ),
         'post-thumbnails'   => array(
           'event',
@@ -228,6 +229,13 @@ namespace UsabilityDynamics {
         )
       ));
 
+      // Register Theme Bootstrap Scripts.
+      $this->requires( array(
+        'id'    => 'app.bootstrap',
+        'path'  => home_url( '/assets/scripts/app.bootstrap.js' ),
+        'base'  => home_url( '/assets/scripts' )
+      ));
+
       // Register Theme Settings Model.
       $this->requires( array(
         'id'    => 'site.model',
@@ -271,9 +279,9 @@ namespace UsabilityDynamics {
       add_action( 'wp_head', array( $this, 'wp_head' ));
       add_action( 'wp_footer', array( $this, 'wp_footer' ));
       add_action( 'widgets_init', array( $this, 'widgets' ));
-      add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ));
       add_filter( 'body_class', array( $this, 'body_class' ));
       add_filter( 'intermediate_image_sizes_advanced', array( $this, 'image_sizes' ));
+      add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 600 );
 
       // Initializes Wordpress Menufication
       if( class_exists( '\Menufication' ) ) {
@@ -483,6 +491,9 @@ namespace UsabilityDynamics {
     /**
      * Get Site Model.
      *
+     * See http://www.dancingastronaut.com/ (DancingAstronaut_AppState)
+     * See http://www.livenation.com/geo.js
+     *
      * @return array
      */
     private function get_model() {
@@ -490,10 +501,26 @@ namespace UsabilityDynamics {
       $_home_url = parse_url( home_url());
 
       return (array) apply_filters( 'festival:model:settings', array(
-        'ajax'       => admin_url( 'admin-ajax.php' ),
-        'domain'     => trim( $_home_url[ 'host' ] ? $_home_url[ 'host' ] : array_shift( explode( '/', $_home_url[ 'path' ], 2 ) ) ),
-        'permalinks' => get_option( 'permalink_structure' ) == '' ? false : true,
-        'settings'   => $this->get(),
+        'settings'    => array(
+          'permalinks'  => get_option( 'permalink_structure' ) == '' ? false : true,
+        ),
+        'geo'    => array(
+          'latitude' => '',
+          'longitude' => '',
+          'city' => '',
+          'state' => '',
+          'country' => ''
+        ),
+        'user'    => array(
+          'id'  => '',
+          'login'  => ''
+        ),
+        'url'        => array(
+          'domain'      => trim( $_home_url[ 'host' ] ? $_home_url[ 'host' ] : array_shift( explode( '/', $_home_url[ 'path' ], 2 ) ) ),
+          'ajax'        => admin_url( 'admin-ajax.php' ),
+          'home'      => admin_url( 'admin-ajax.php' ),
+          'assets'      => admin_url( 'admin-ajax.php' ),
+        )
       ));
 
     }
@@ -715,11 +742,16 @@ namespace UsabilityDynamics {
       // Sync 'Social Streams' data with social networks
       $this->sync_streams();
 
-      // Register Script and Styles.
-      wp_register_style( 'site', home_url( '/assets/styles/site.css' ), array(), $this->version, 'all' );
-      wp_register_style( 'app', home_url( '/assets/styles/app.css' ), array(), $this->version, 'all' );
+      // Register Scripts. (for reference only, not enqueued);
+      wp_register_style( 'app.bootstrap', home_url( '/assets/styles/app.bootstrap.css' ), array(), $this->version, 'all' );
+      wp_register_script( 'app.main', home_url( '/assets/scripts/app.main.js' ), array(), $this->version, false );
 
-      //add_editor_style( home_url( '/assets/editor-style.css' ));
+      // Register Styles.
+      wp_register_script( 'app.bootstrap', home_url( '/assets/scripts/app.bootstrap.js' ), array(), $this->version, true );
+      wp_register_style( 'app.main', home_url( '/assets/styles/app.main.css' ), array(), $this->version, 'all' );
+
+      // Register Editor Style.
+      add_editor_style( home_url( '/assets/editor-style.css' ));
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
@@ -771,8 +803,8 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function wp_enqueue_scripts() {
-      wp_enqueue_style( 'site' );
-      wp_enqueue_style( 'app' );
+      wp_enqueue_style( 'app.bootstrap' );
+      //wp_enqueue_script( 'app.bootstrap' );
     }
 
     /**

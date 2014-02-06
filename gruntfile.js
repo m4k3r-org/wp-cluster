@@ -48,8 +48,8 @@ module.exports = function( grunt ) {
           relativeUrls: true
         },
         files: {
-          'styles/app.css': [ 'styles/src/app.less' ],
-          'styles/site.css': [ 'styles/src/site.less' ],
+          'styles/app.main.css': [ 'styles/src/app.main.less' ],
+          'styles/app.bootstrap.css': [ 'styles/src/app.bootstrap.less' ],
           'styles/default.css': [ 'styles/src/colors/default.less' ],
           'styles/editor-style.css': [ 'styles/src/editor-style.less' ]
         }
@@ -86,7 +86,31 @@ module.exports = function( grunt ) {
 
     // Require JS Tasks.
     requirejs: {
-      fooxbox: {
+      main: {
+        options: {
+          baseUrl: "scripts/src",
+          skipModuleInsertion: true, // important to avoid "app.main" being created
+          locale: "en-us",
+          optimize: 'none', // uglify|none
+          uglify: {
+            toplevel: true,
+            ascii_only: true,
+            beautify: true,
+            max_line_length: 1000,
+            defines: {
+              DEBUG: ['name', 'false']
+            },
+            no_mangle: true
+          },
+          include: [
+            'modules/html.picture',
+            'modules/html.video',
+            'app.bootstrap'
+          ],
+          out: "scripts/app.bootstrap.js"
+        }
+      },
+      foobox: {
         options: {
           name: 'foobox',
           paths: {
@@ -117,9 +141,11 @@ module.exports = function( grunt ) {
       },
       scripts: {
         files: [
-          'gruntfile.js', 'scripts/src/*.js'
+          'gruntfile.js',
+          'scripts/src/*.js',
+          'scripts/src/modules/*.js'
         ],
-        tasks: [ 'uglify' ]
+        tasks: [ 'uglify', 'requirejs:main' ]
       },
       docs: {
         files: [
@@ -193,16 +219,16 @@ module.exports = function( grunt ) {
   grunt.loadNpmTasks( 'grunt-shell' );
 
   // Build Assets
-  grunt.registerTask( 'default', [ 'yuidoc', 'uglify', 'markdown', 'less' ] );
+  grunt.registerTask( 'default', [ 'yuidoc', 'uglify', 'requirejs:main', 'markdown', 'less' ] );
 
   // Install environment
-  grunt.registerTask( 'install', [ 'yuidoc', 'uglify', 'markdown', 'less' ] );
+  grunt.registerTask( 'install', [ 'yuidoc', 'uglify', 'requirejs:main', 'markdown', 'less' ] );
 
   // Update Environment
-  grunt.registerTask( 'update', [ 'yuidoc', 'uglify', 'markdown', 'less' ] );
+  grunt.registerTask( 'update', [ 'yuidoc', 'uglify', 'requirejs:main', 'markdown', 'less' ] );
 
   // Prepare distribution
-  grunt.registerTask( 'dist', [ 'yuidoc', 'uglify', 'markdown', 'less' ] );
+  grunt.registerTask( 'dist', [ 'yuidoc', 'uglify', 'requirejs:main', 'markdown', 'less' ] );
 
   // Update Documentation
   grunt.registerTask( 'doc', [ 'yuidoc', 'markdown' ] );
