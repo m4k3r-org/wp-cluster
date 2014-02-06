@@ -62,13 +62,13 @@
   
   # Look for files without an HTML extension
   # TEMP Should fix in another method
-  RewriteCond %{REQUEST_URI} ^[^\.]*$
-  RewriteCond %{DOCUMENT_ROOT}/static/storage/%{SERVER_NAME}/static%{REQUEST_URI} -f
-  RewriteRule ^(.*)$ /static/storage/%{SERVER_NAME}/static%{REQUEST_URI}.html [T=text/html,NC,QSA,L]
+  # RewriteCond %{REQUEST_URI} ^[^\.]*$
+  # RewriteCond %{DOCUMENT_ROOT}/static/storage/%{SERVER_NAME}/static%{REQUEST_URI} -f
+  # RewriteRule ^(.*)$ /static/storage/%{SERVER_NAME}/static%{REQUEST_URI}.html [T=text/html,NC,QSA,L]
 
   # Rewrite static assets that exist in the storage directory
-  RewriteCond %{DOCUMENT_ROOT}/static/storage/%{SERVER_NAME}/static%{REQUEST_URI} -f
-  RewriteRule ^(.*)$ /static/storage/%{SERVER_NAME}/static%{REQUEST_URI} [NC,QSA,L]
+  RewriteCond %{DOCUMENT_ROOT}/static/storage/%{SERVER_NAME}/static%{REQUEST_URI}.html -f
+  RewriteRule ^(.*)$ /static/storage/%{SERVER_NAME}/static%{REQUEST_URI}.html [NC,QSA,L]
 
 </IfModule>
 # Cluster Static and Media END
