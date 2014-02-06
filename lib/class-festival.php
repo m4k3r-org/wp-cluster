@@ -238,25 +238,26 @@ namespace UsabilityDynamics {
           'base'  => home_url( '/assets/scripts' )
         ));
 
-        // Register Theme Settings Model.
-        $this->requires( array(
-          'id'    => 'site.model',
-          'cache' => 'private, max-age: 0',
-          'vary'  => 'user-agent, x-client-type',
-          'base'  => home_url( '/assets/scripts' ),
-          'data'  => $this->get_model()
-        ));
-
-        // Register Theme Locale Model.
-        $this->requires( array(
-          'id'    => 'site.locale',
-          'cache' => 'public, max-age: 30000',
-          'vary'  => 'x-user',
-          'base'  => home_url( '/assets/scripts' ),
-          'data'  => $this->get_locale()
-        ));
-      
       }
+
+      // Register Theme Settings Model.
+      $this->requires( array(
+        'id'    => 'site.model',
+        'cache' => 'private, max-age: 0',
+        'vary'  => 'user-agent, x-client-type',
+        'base'  => home_url( '/assets/scripts' ),
+        'data'  => $this->get_model()
+      ));
+
+      // Register Theme Locale Model.
+      $this->requires( array(
+        'id'    => 'site.locale',
+        'cache' => 'public, max-age: 30000',
+        'vary'  => 'x-user',
+        'base'  => home_url( '/assets/scripts' ),
+        'data'  => $this->get_locale()
+      ));
+      
 
       // Register Navigation Menus
       $this->menus( array(
