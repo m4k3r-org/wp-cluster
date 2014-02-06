@@ -248,8 +248,15 @@ footer {
  The Artist
 ============== */
 
-.artists-list {
+.container-wrap .artists-list {
   color: @the-artist-color;
+  
+  // Artist Alphabetical ( B-List )
+  &.blist {
+    h3, p {
+      color: @font-default-color;
+    }
+  }
 
   span {
     &.hr {
@@ -278,24 +285,6 @@ footer {
           background: @default-color;
         }
       }
-    }
-  }
-}
-
-/* ==============
- Artist Alphabetical
-============== */
-
-.artist-alphabetical {
-  .heading {
-    h3 {
-      color: @artist-alpha-heading;
-      span {
-        color: @default-color;
-      }
-    }
-    .hr {
-      background: @default-color;
     }
   }
 }

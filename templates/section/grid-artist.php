@@ -24,7 +24,7 @@ $offset = isset( $classes_map[ $artist_columns ] ) ? $classes_map[ $artist_colum
 
   <div class="container">
 
-    <header class="row heading">
+    <header class="row">
       <div class="col-md-12 col-sm-12 text-center">
         <?php if( isset( $title ) && $title ): ?>
           <h3><?php echo $title; ?></h3>
