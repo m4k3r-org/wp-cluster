@@ -131,7 +131,7 @@
 ============== */
 
 /* ==============
- The Artist
+ Module: Artists List
 ============== */
 
 .container-wrap .cfct-can-haz-build .artists-list article {
@@ -145,6 +145,27 @@
       height: 2px;
       margin: 15px auto;
       width: 40px;
+    }
+  }
+  
+  // Artist Alphabetical ( B-List )
+  &.blist {
+    // @todo: temp. Background must be set in module settings
+    background: url("@{img-url}/temp/header-bg.jpg") repeat;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    margin-left: -15px;
+    margin-right: -15px;
+    
+    .row-artists {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    
+    article {
+      background: none;
+      padding: 0;
+      margin-bottom: 30px;
     }
   }
   
@@ -169,59 +190,10 @@
       }
     }
   }
+  
 }
 
-/* ==============
- Artist Alphabetical
-============== */
 
-.artist-alphabetical {
-  background: url("@{img-url}/temp/header-bg.jpg") repeat;
-  padding-bottom: 60px;
-
-  .heading {
-    margin-bottom: 40px;
-    h3 {
-      margin-top: 45px;
-    }
-    .hr {
-      height: 2px;
-      margin: 20px auto;
-      width: 40px;
-    }
-  }
-
-  .artist-alpha {
-    a {
-      text-decoration: none;
-      .image {
-        margin-bottom: 40px;
-        .caption {
-          padding: 12px;
-          position: relative;
-          .pin {
-            display: none;
-            position: absolute;
-            top: -5px;
-            left: 49%;
-            width: 8px;
-            height: 5px;
-            background: url("@{img-url}/pin.png") center center no-repeat;
-          }
-        }
-      }
-      &:hover {
-        .image {
-          .caption {
-            .pin {
-              display: block;
-            }
-          }
-        }
-      }
-    }
-  }
-}
 
 /* ==============
  Local Support Artist

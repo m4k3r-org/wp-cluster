@@ -45,7 +45,7 @@ if( !$src ) {
   </div>
   <a href="<?php the_permalink(); ?>">
     <div class="image">
-      <img class="img-responsive" src="<?php echo $src; ?>" alt="" />
+      <img class="img-responsive" src="<?php echo $src; ?>" alt="<?php the_title(); ?>" />
       <div class="caption"><?php the_title(); ?></div>
     </div>
   </a>
