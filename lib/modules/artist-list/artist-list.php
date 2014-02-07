@@ -107,7 +107,7 @@ if( !class_exists( 'ArtistListModule' ) ){
       $wp_query->data = $data;
       /** Get our template */
       ob_start();
-      get_template_part( 'templates/section/grid', 'artist' );
+      get_template_part( 'templates/section/grid-artist', ( !empty( $data[ 'layout_type' ] ) ? $data[ 'layout_type' ] : 'columns_1' ) );
       /** Restore our wp_query */
       $wp_query = $_wp_query;
       /** Return our string */
@@ -191,6 +191,16 @@ if( !class_exists( 'ArtistListModule' ) ){
         'headshotImage' => __( 'Headshot', wp_festival( 'domain' ) ),
         'portraitImage' => __( 'Portrait', wp_festival( 'domain' ) ),
         'logoImage'     => __( 'Logo', wp_festival( 'domain' ) ),
+      );
+      $layout_types = array(
+        'columns_1' =>  __( '1 Column', wp_festival( 'domain' ) ),
+        'columns_2' =>  __( '2 Columns', wp_festival( 'domain' ) ),
+        'columns_3' =>  __( '3 Columns', wp_festival( 'domain' ) ),
+      );
+      $layout_columns = array(
+        1 =>  __( '1 Column', wp_festival( 'domain' ) ),
+        2 =>  __( '2 Column', wp_festival( 'domain' ) ),
+        3 =>  __( '3 Column', wp_festival( 'domain' ) ),
       );
       /** Now get and return the template */
       ob_start();

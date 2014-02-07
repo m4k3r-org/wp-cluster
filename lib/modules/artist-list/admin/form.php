@@ -15,11 +15,28 @@
     top: 6px;
     left: 6px;
   }
-  fieldset#artists-list-artists ul li input[type=text]{
+  fieldset#artists-list-artists ul li select,
+  fieldset#artists-list-artists ul li input[type=text],
+  fieldset#artists-list-artists ul li span.order,
+  fieldset#artists-list-artists ul li span.column {
     display: inline;
-    width: 35px;
     float: right;
+    width: 50px;
+    text-align: right;
   }
+  fieldset#artists-list-artists ul li input[type=text] {
+    width: 35px;
+    margin-left: 15px;
+    margin-right: 4px;
+  }
+  fieldset#artists-list-artists ul li select{
+    width: 38px;
+    margin-left: 12px;
+  }
+  fieldset#artists-list-artists ul li.header {
+    padding: 4px;
+  }
+  
 </style>
 
 <!-- basic info -->
@@ -43,18 +60,11 @@
 <!-- display options -->
 <fieldset id="artists-list-display-options" class="cfct-form-section">
   <legend><?php _e( 'Display Options', 'wp-festival' ) ?></legend>
-  <label for="artist_type"><?php _e( 'Artist Type' ); ?></label>
+  <label for="artist_type"><?php _e( 'Template' ); ?></label>
   <select name="artist_type" id="artist_type">
     <?php foreach( $artist_types as $key => $type ):
       $selected = isset( $data[ 'artist_type' ] ) && $data[ 'artist_type' ] == $key ? 'selected="selected"' : ''; ?>
       <option value="<?php echo $key; ?>" <?php echo $selected; ?>><?php echo $type; ?></option>
-    <?php endforeach; ?>
-  </select>
-  <label for="artist_columns"><?php _e( 'Number of Columns' ); ?></label>
-  <select name="artist_columns" id="artist_columns">
-    <?php foreach( $artist_columns as $columns ):
-      $selected = isset( $data[ 'artist_columns' ] ) && $data[ 'artist_columns' ] == $columns ? 'selected="selected"' : ''; ?>
-      <option value="<?php echo $columns; ?>" <?php echo $selected; ?>><?php echo $columns; ?></option>
     <?php endforeach; ?>
   </select>
   <label for="artist_image"><?php _e( 'Artist Image' ); ?></label>
@@ -64,6 +74,47 @@
       <option value="<?php echo $k; ?>" <?php echo $selected; ?>><?php echo $v; ?></option>
     <?php endforeach; ?>
   </select>
+  <label for="artist_columns"><?php _e( 'Number of Images per Row' ); ?></label>
+  <select name="artist_columns" id="artist_columns">
+    <?php foreach( $artist_columns as $columns ):
+      $selected = isset( $data[ 'artist_columns' ] ) && $data[ 'artist_columns' ] == $columns ? 'selected="selected"' : ''; ?>
+      <option value="<?php echo $columns; ?>" <?php echo $selected; ?>><?php echo $columns; ?></option>
+    <?php endforeach; ?>
+  </select>
+</fieldset>
+
+<!-- layout options -->
+<fieldset id="artists-list-display-options" class="cfct-form-section">
+  <legend><?php _e( 'Layout Options', 'wp-festival' ) ?></legend>
+  <ul>
+    <li>
+      <label for="layout_type"><?php _e( 'Layout Type' ); ?></label>
+      <select name="layout_type" id="layout_type">
+        <?php foreach( $layout_types as $key => $type ):
+          $selected = isset( $data[ 'layout_type' ] ) && $data[ 'layout_type' ] == $key ? 'selected="selected"' : ''; ?>
+          <option value="<?php echo $key; ?>" <?php echo $selected; ?>><?php echo $type; ?></option>
+        <?php endforeach; ?>
+      </select>
+    </li>
+    <li>
+      <label for="column_title_1"><?php _e( 'First Column Title', 'wp-festival' ); ?></label>
+      <span class="cfct-input">
+        <input type="text" name="column_title_1" id="column_title_1" value="<?php echo esc_attr( isset( $data[ 'column_title_1' ] ) ? $data[ 'column_title_1' ] : '' ); ?>" />
+      </span>
+    </li>
+    <li>
+      <label for="column_title_2"><?php _e( 'Second Column Title', 'wp-festival' ); ?></label>
+      <span class="cfct-input">
+        <input type="text" name="column_title_2" id="column_title_2" value="<?php echo esc_attr( isset( $data[ 'column_title_2' ] ) ? $data[ 'column_title_2' ] : '' ); ?>" />
+      </span>
+    </li>
+    <li>
+      <label for="column_title_3"><?php _e( 'Third Column Title', 'wp-festival' ); ?></label>
+      <span class="cfct-input">
+        <input type="text" name="column_title_3" id="column_title_3" value="<?php echo esc_attr( isset( $data[ 'column_title_3' ] ) ? $data[ 'column_title_3' ] : '' ); ?>" />
+      </span>
+    </li>
+  </ul>
 </fieldset>
 
 <!-- artists -->
@@ -71,6 +122,11 @@
   <legend><?php _e( 'Selected Artists', 'wp-festival' ); ?></legend>
   <div class="div-wrapper clearfix">
     <ul>
+      <li class="alt header">
+        <span class="order"><?php _e( 'Order', wp_festival( 'domain' ) ); ?></span>
+        <span class="column"><?php _e( 'Column', wp_festival( 'domain' ) ); ?></span>
+        <div style="clear:both;"></div>
+      </li>
       <?php foreach( $artists as $artist ):
         $alt = !isset( $alt ) ? '' : ( $alt === '' ? 'alt' : '' );
         $checked = isset( $data[ 'artists' ] ) && is_array( $data[ 'artists' ] ) && in_array( $artist[ 'ID' ], $data[ 'artists' ] ) ? 'checked="checked"' : ''; ?>
@@ -78,6 +134,12 @@
           <input type="checkbox" name="artists[]" id="artist-<?php echo $artist[ 'ID' ]; ?>" class="post-type-select" value="<?php echo $artist[ 'ID' ]; ?>" <?php echo $checked; ?> />
           <label for="artist-<?php echo $artist[ 'ID' ]; ?>"><?php echo $artist[ 'post_title' ]; ?></label>
           <input type="text" id="sorting-<?php echo $artist[ 'ID' ]; ?>" name="sorting[<?php echo $artist[ 'ID' ]; ?>]" value="<?php echo esc_attr( isset( $data[ 'sorting' ] ) && is_array( $data[ 'sorting' ] ) && isset( $data[ 'sorting' ][ $artist[ 'ID' ] ] ) ? $data[ 'sorting' ][ $artist[ 'ID' ] ] : '' ); ?>" />
+          <select name="col_position[<?php echo $artist[ 'ID' ]; ?>]">
+            <?php foreach( $layout_columns as $k => $v ) : ?>
+              <?php $selected = ( isset( $data[ 'col_position' ][ $artist[ 'ID' ] ] ) && $data[ 'col_position' ][ $artist[ 'ID' ] ] == $k ) ? 'selected="selected"' : ''; ?>
+              <option value="<?php echo $k; ?>" <?php echo $selected; ?>><?php echo $v ?></option>
+            <?php endforeach; ?>
+          </select>
           <div style="clear:both;"></div>
         </li>
       <?php endforeach; ?>

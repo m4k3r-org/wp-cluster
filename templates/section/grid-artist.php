@@ -27,6 +27,14 @@ $url = !empty( $featured_image ) ? wp_festival()->get_image_link_by_attachment_i
     </header>
 
     <section class="the-list">
+      <?php if ( !empty ( $column_title_1 ) ) : ?>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h3><?php echo $column_title_1; ?></h3>
+            <span class="hr"></span>
+          </div>
+        </div>
+      <?php endif; ?>
       <div class="row">
         <div class="col-md-12 clearfix">
           <?php $counter = 0; ?>
