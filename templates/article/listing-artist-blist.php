@@ -4,11 +4,11 @@
  * Template: B-List
  * Description: Alphabetical List
  */
- 
+
 global $wp_query;
 
-extract( $wp_query->data );
-
+extract( $wp_query->data ); 
+ 
 // Try to get Image
 $src = wp_festival()->get_artist_image_link( get_the_ID(), array(
   'type' => $artist_image,

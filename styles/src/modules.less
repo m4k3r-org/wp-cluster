@@ -139,6 +139,13 @@
 }
 
 .artists-list {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 
   span {
     &.hr {
@@ -149,9 +156,9 @@
   }
   
   // Artist Alphabetical ( B-List )
+  &.alist,
   &.blist {
     // @todo: temp. Background must be set in module settings
-    background: url("@{img-url}/temp/header-bg.jpg") repeat;
     padding-top: 15px;
     padding-bottom: 20px;
     margin-left: -15px;

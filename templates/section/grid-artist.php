@@ -4,8 +4,10 @@ global $wp_query;
 
 extract( $wp_query->data );
 
+$url = !empty( $featured_image ) ? wp_festival()->get_image_link_by_attachment_id( $featured_image, array( 'default' => false ) ) : false;
+
 ?>
-<div class="artists-list <?php echo $artist_type; ?>">
+<div class="artists-list <?php echo $artist_type; ?>" style="<?php echo $url ? "background-image: url( {$url} );" : ''; ?>" >
 
   <div class="container">
 

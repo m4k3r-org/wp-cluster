@@ -84,3 +84,39 @@
     </ul>
   </div>
 </fieldset>
+
+<fieldset class="cfct-form-section">
+  <legend><?php _e( 'Background Image', 'wp-festival' ); ?></legend>
+  <?php
+  // tabs
+  $image_selector_tabs = array(
+    $this->id_base.'-post-image-wrap' => __('Post Images', 'carrington-build'),
+    $this->id_base.'-global-image-wrap' => __('All Images', 'carrington-build')
+  );
+
+  // set active tab
+  $active_tab = $this->id_base.'-post-image-wrap';
+  if (!empty($data[$this->get_field_name('global_image')])) {
+    $active_tab = $this->id_base.'-global-image-wrap';
+  }
+  ?>
+  <!-- image selector tabs -->
+  <div id="<?php echo $this->id_base; ?>-image-selectors">
+    <!-- tabs -->
+    <?php echo $this->cfct_module_tabs($this->id_base.'-image-selector-tabs', $image_selector_tabs, $active_tab); ?>
+    <!-- /tabs -->
+    <div class="cfct-module-tab-contents">
+      <!-- select an image from this post -->
+      <div id="<?php echo $this->id_base; ?>-post-image-wrap" <?php echo ( empty( $active_tab ) || $active_tab == $this->id_base.'-post-image-wrap' ? ' class="active"' : '' ); ?>>
+        <?php echo $this->post_image_selector($data); ?>
+      </div>
+      <!-- / select an image from this post -->
+      <!-- select an image from media gallery -->
+      <div id="<?php echo $this->id_base; ?>-global-image-wrap" <?php echo ( $active_tab == $this->id_base.'-global-image-wrap' ? ' class="active"' : '' ); ?>>
+        <?php echo $this->global_image_selector($data); ?>
+      </div>
+      <!-- /select an image from media gallery -->
+    </div>
+  </div>
+  <!-- / image selector tabs -->
+</fieldset>
