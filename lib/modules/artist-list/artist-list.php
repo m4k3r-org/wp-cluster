@@ -150,11 +150,19 @@ if( !class_exists( 'ArtistListModule' ) ){
       $artists = $wpdb->get_results( $query, ARRAY_A );
       /** Ok, setup our artist types */
       $artist_types = array(
-        'alist' => __( 'A-List', 'wp-festival' ),
-        'blist' => __( 'B-List', 'wp-festival' ),
-        'local' => __( 'Local Talent', 'wp-festival' )
+        'alist' => __( 'A-List', wp_festival( 'domain' ) ),
+        'blist' => __( 'B-List', wp_festival( 'domain' ) ),
+        'local' => __( 'Local Talent', wp_festival( 'domain' ) )
       );
+      /** Amount of columns per line */
       $artist_columns = array( '1', '2', '3', '4', '5', '6', '8', '10', '12' );
+      /** Which image should be shown */
+      $artist_images = array(
+        'featured'      => __( 'Featured', wp_festival( 'domain' ) ),
+        'headshotImage' => __( 'Headshot', wp_festival( 'domain' ) ),
+        'portraitImage' => __( 'Portrait', wp_festival( 'domain' ) ),
+        'logoImage'     => __( 'Logo', wp_festival( 'domain' ) ),
+      );
       /** Now get and return the template */
       ob_start();
       require_once( __DIR__ . '/admin/form.php' );

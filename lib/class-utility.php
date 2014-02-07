@@ -111,6 +111,84 @@ namespace UsabilityDynamics\Festival {
     }
     
     /**
+     * Returns date of related Perfomance for passed Artist
+     *
+     * @author peshkov@UD
+     */
+    static public function get_artist_perfomance_date( $id ) {
+      $date = false;
+      $post = self::get_post_data( $id );
+      
+      // Try to find date
+      if( !empty( $post[ 'perfomances' ] ) ) {
+        foreach( $post[ 'perfomances' ] as $perfomance ) {
+          if( !empty( $perfomance[ 'startDateTime' ] ) && ( time() < strtotime( $perfomance[ 'startDateTime' ] ) ) ) {
+            $date = strtotime( $perfomance[ 'startDateTime' ] );
+            break;
+          }
+        }
+      }
+      
+      return $date;
+      
+    }
+    
+    /**
+     * Returns image's url of specific Artist image ( 'featured', 'headshotImage', 'portraitImage', 'logoImage' )
+     * If image is not found, try to return featured image
+     *
+     * @author peshkov@UD
+     */
+    static public function get_artist_image_link( $id, $args ) {
+      $args = wp_parse_args( $args, array(
+        'type' => 'featured', // Available values: 'featured', 'headshotImage', 'portraitImage', 'logoImage'
+        'size' => 'full',
+        'width' => '',
+        'height' => '',
+        'default' => true,
+      ));
+      
+      $src = false;
+      
+      switch( $args[ 'type' ]  ) {
+      
+        case NULL:
+        case 'featured':
+          $src = self::get_image_link_by_post_id( $id, array(
+            'size' => $args[ 'size' ],
+            'width' => $args[ 'width' ],
+            'height' => $args[ 'height' ],
+            'default' => $args[ 'default' ],
+          ) );
+          break;
+          
+        default:
+          $v = get_post_meta( $id, $args[ 'type' ], true );
+          if( !empty( $v ) ) {
+            $src = wp_festival()->get_image_link_by_attachment_id( $v, array(
+              'size' => $args[ 'size' ],
+              'width' => $args[ 'width' ],
+              'height' => $args[ 'height' ],
+            ) );
+          }
+          if( empty( $src ) ) {
+            $src = self::get_image_link_by_post_id( $id, array(
+              'size' => $args[ 'size' ],
+              'width' => $args[ 'width' ],
+              'height' => $args[ 'height' ],
+              'default' => $args[ 'default' ],
+            ) );
+          }
+          
+          break;
+      
+      }
+      
+      return $src;
+      
+    }
+    
+    /**
      * Returns image's url of passed post ID 
      *
      * @see self::get_image_link_by_id()
