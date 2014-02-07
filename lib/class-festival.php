@@ -229,6 +229,7 @@ namespace UsabilityDynamics {
         )
       ));
 
+      // @todo Make sure its isn't the login screen either - or add login styles.
       // Register Theme Bootstrap Scripts.
       if( !is_admin() ) {
       
