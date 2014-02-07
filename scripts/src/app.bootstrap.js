@@ -14,5 +14,4 @@ define( 'app.bootstrap', [ 'html.picture', 'html.video' ], function Bootstrap() 
   require( [ 'app.main' ] );
 
 
-
 });
