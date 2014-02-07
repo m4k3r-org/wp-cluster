@@ -62,6 +62,19 @@ if( !class_exists( 'ArtistListModule' ) ){
         'post_type' => 'artist',
         'orderby' => 'post__in'
       ) );
+      /** Add map for classes and images based on columns amount */
+      $mapping = array(
+        1   => array( 'col-md-4', 'col-md-offset-4', '487', '368' ), // array( 'column_class', 'first_column_class', 'image_width', 'image_height' )
+        2   => array( 'col-md-4', 'col-md-offset-2', '487', '368' ),
+        3   => array( 'col-md-4', 'col-md-offset-0', '487', '368' ),
+        4   => array( 'col-md-3', 'col-md-offset-0', '517', '616' ),
+        5   => array( 'col-md-2', 'col-md-offset-0', '224', '267' ),
+        6   => array( 'col-md-2', 'col-md-offset-0', '224', '267' ),
+        8   => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+        10  => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+        12  => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+      );
+      $data[ 'map' ] = isset( $mapping[ $data[ 'artist_columns' ] ] ) ? $mapping[ $data[ 'artist_columns' ] ] : $mapping[4];
       $wp_query->data = $data;
       /** Get our template */
       ob_start();

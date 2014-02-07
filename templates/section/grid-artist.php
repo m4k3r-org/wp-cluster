@@ -2,22 +2,7 @@
 
 global $wp_query; 
 
-extract( $wp_query->data ); 
-
-$classes_map = array(
-  1   => array( 'col-md-4', 'col-md-offset-4' ),
-  2   => array( 'col-md-3', 'col-md-offset-3' ),
-  3   => array( 'col-md-4', '' ),
-  4   => array( 'col-md-3', '' ),
-  5   => array( 'col-md-2', '' ),
-  6   => array( 'col-md-2', '' ),
-  8   => array( 'col-md-1', '' ),
-  10  => array( 'col-md-1', '' ),
-  12  => array( 'col-md-1', '' ),
-);
-
-$class = isset( $classes_map[ $artist_columns ] ) ? $classes_map[ $artist_columns ][0] : '';
-$offset = isset( $classes_map[ $artist_columns ] ) ? $classes_map[ $artist_columns ][1] : '';;
+extract( $wp_query->data );
 
 ?>
 <div class="artists-list <?php echo $artist_type; ?>">
@@ -48,7 +33,7 @@ $offset = isset( $classes_map[ $artist_columns ] ) ? $classes_map[ $artist_colum
               <?php if ( !( $counter % $artist_columns ) ) : ?>
                 <div class="row"><div class="row-artists clearfix">
               <?php endif; ?>
-              <div class="<?php echo $class; ?> <?php echo !( $counter % $artist_columns ) ? $offset : ''; ?>">
+              <div class="<?php echo $map[0]; ?> <?php echo !( $counter % $artist_columns ) ? $map[1] : ''; ?>">
                 <?php get_template_part( 'templates/article/listing-artist', $artist_type ); ?>
               </div>
               <?php $counter++; ?>

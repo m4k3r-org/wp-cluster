@@ -4,14 +4,18 @@
  * Template: B-List
  * Description: Alphabetical List
  */
+ 
+global $wp_query;
+
+extract( $wp_query->data );
 
 $data = wp_festival()->get_post_data( get_the_ID() );
 
 // Try to get Image
 $src = false;
 $img_opts = array( 
-  'width' => '224', 
-  'height' => '267' 
+  'width' => $map[ 2 ], 
+  'height' => $map[ 3 ],
 );
 if( !empty( $data[ 'portraitImage' ] ) ) {
   $src = wp_festival()->get_image_link_by_attachment_id( $data[ 'portraitImage' ], $img_opts );
