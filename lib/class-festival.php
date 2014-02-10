@@ -334,7 +334,7 @@ namespace UsabilityDynamics {
       );
 
       // Upload attachment Unassociated with post.
-      if( !isset( $_POST[ 'action' ] ) && $_POST[ 'post_id' ] == 0 ) {
+      if( !isset( $_POST[ 'action' ] ) && isset( $_POST[ 'post_id' ] ) && $_POST[ 'post_id' ] == 0 ) {
         return $_sizes;
       }
 
