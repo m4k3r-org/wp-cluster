@@ -6,22 +6,27 @@ extract( $wp_query->data );
 
 $url = !empty( $featured_image ) ? wp_festival()->get_image_link_by_attachment_id( $featured_image, array( 'default' => false ) ) : false;
 
+$bimage = $url ? "background-image: url( {$url} );" : "";
+$bcolor = !empty( $background_color ) ? "background-color: {$background_color} !important;" : "";
+$fcolor = !empty( $font_color ) ? "color: {$font_color} !important;" : "";
+$bfcolor = !empty( $font_color ) ? "border-color: {$font_color} !important;" : "";
+
 ?>
-<div class="artists-list <?php echo $artist_type; ?>" style="<?php echo $url ? "background-image: url( {$url} );" : ''; ?>" >
+<div class="artists-list <?php echo $artist_type; ?>" style="<?php echo $bimage; ?><?php echo $bcolor; ?>" >
 
   <div class="container">
 
     <header class="row">
       <div class="col-md-12 col-sm-12 text-center">
         <?php if( isset( $title ) && $title ): ?>
-          <h3><?php echo $title; ?></h3>
+          <h3 style="<?php echo $fcolor; ?>"><?php echo $title; ?></h3>
           <span class="hr"></span>
         <?php endif; ?>
         <?php if( isset( $tagline ) && $tagline ): ?>
-          <p class="tagline"><?php echo $tagline; ?></p>
+          <p class="tagline" style="<?php echo $fcolor; ?>"><?php echo $tagline; ?></p>
         <?php endif; ?>
         <?php if( isset( $description ) && $description ): ?>
-          <p class="description"><?php echo $description; ?></p>
+          <p class="description" style="<?php echo $fcolor; ?>"><?php echo $description; ?></p>
         <?php endif; ?>
       </div>
     </header>
@@ -33,7 +38,7 @@ $url = !empty( $featured_image ) ? wp_festival()->get_image_link_by_attachment_i
           <?php if ( !empty ( $column_title_1 ) ) : ?>
             <div class="row">
               <div class="col-md-12 text-center">
-                <h3><?php echo $column_title_1; ?></h3>
+                <h3 style="<?php echo $fcolor; ?>"><?php echo $column_title_1; ?></h3>
                 <span class="hr"></span>
               </div>
             </div>
@@ -64,7 +69,7 @@ $url = !empty( $featured_image ) ? wp_festival()->get_image_link_by_attachment_i
           <?php if ( !empty ( $column_title_2 ) ) : ?>
             <div class="row">
               <div class="col-md-12 text-center">
-                <h3><?php echo $column_title_2; ?></h3>
+                <h3 style="<?php echo $fcolor; ?>"><?php echo $column_title_2; ?></h3>
                 <span class="hr"></span>
               </div>
             </div>
