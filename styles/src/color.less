@@ -170,6 +170,11 @@
   
   h1, h2, h3, h4, h4, h6 {
     color: @content-title-color;
+    
+    & a, & span {
+      color: @content-title-color;
+    }
+    
   }
   
   blockquote {
@@ -487,6 +492,10 @@ footer {
 /* ==============
  CB Modules
 ============== */
+
+.cfct-mod-image {
+  border-color: @image-border-color;
+}
 
 // Artist-List
 

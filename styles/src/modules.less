@@ -6,6 +6,24 @@
   display:none;
 }
 
+.cfct-mod-image {
+  border-width: 1px;
+  border-style: solid;
+  padding: 0.5em;
+  float: left;
+
+  &.cfct-image-left {
+    float: left;
+    margin-right: 20px;
+  }
+
+  &.cfct-image-right {
+    float: right;
+    margin-left: 20px;
+  }
+
+}
+
 .container-wrap .content-container article {
   
   // Don't show border for artcile content when CB is used
@@ -60,31 +78,6 @@
 
 }
 
-.cfct-mod-image,
-.cfct-mod-content {
-
-  &:after {
-    content: ".";
-    text-indent: 9999px;
-    height: 1px;
-    line-height: 1px;
-    margin-top: -1px;
-    display: block;
-    clear: both;
-  }
-
-}
-
-.cfct-image-left {
-  float: left;
-  margin-right: 20px;
-}
-
-.cfct-image-right {
-  float: right;
-  margin-left: 20px;
-}
-
 /* ==============
  Module: Hero
 ============== */
@@ -125,10 +118,6 @@
   }
   
 }
-
-/* ==============
- Artists List
-============== */
 
 /* ==============
  Module: Artists List
@@ -256,4 +245,41 @@
     }
   }
   
+}
+
+/* ==============
+ Module: Callout
+============== */
+
+// Callout Module.
+.container-wrap .content-container article.cfct-can-haz-build .cfct-module-callout {
+  overflow: hidden;
+  
+  .cfct-mod-image,
+  .cfct-mod-content {
+
+    &:after {
+      content: ".";
+      text-indent: 9999px;
+      height: 1px;
+      line-height: 1px;
+      margin-top: -1px;
+      display: block;
+      clear: both;
+    }
+
+  }
+
+  .cfct-mod-title {
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .cfct-mod-content {
+
+    p {
+      margin-bottom: 10px;
+    }
+
+  }
 }
