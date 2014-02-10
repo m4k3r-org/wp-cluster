@@ -93,17 +93,44 @@ if( !class_exists( 'ArtistListModule' ) ){
       ) );
       /** Add map for classes and images based on columns amount */
       $mapping = array(
-        1   => array( 'col-md-4', 'col-md-offset-4', '487', '368' ), // array( 'column_class', 'first_column_class', 'image_width', 'image_height' )
-        2   => array( 'col-md-4', 'col-md-offset-2', '487', '368' ),
-        3   => array( 'col-md-4', 'col-md-offset-0', '487', '368' ),
-        4   => array( 'col-md-3', 'col-md-offset-0', '517', '616' ),
-        5   => array( 'col-md-2', 'col-md-offset-0', '224', '267' ),
-        6   => array( 'col-md-2', 'col-md-offset-0', '224', '267' ),
-        8   => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
-        10  => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
-        12  => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+        // One Column Layout
+        'columns_1' => array(
+          1   => array( 'col-md-4', 'col-md-offset-4', '487', '368' ), // array( 'column_class', 'first_column_class', 'image_width', 'image_height' )
+          2   => array( 'col-md-4', 'col-md-offset-2', '487', '368' ),
+          3   => array( 'col-md-4', 'col-md-offset-0', '487', '368' ),
+          4   => array( 'col-md-3', 'col-md-offset-0', '517', '616' ),
+          5   => array( 'col-md-2', 'col-md-offset-0', '224', '267' ),
+          6   => array( 'col-md-2', 'col-md-offset-0', '224', '267' ),
+          8   => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+          10  => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+          12  => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+        ),
+        // Two Columns Layout
+        'columns_2' => array(
+          1   => array( 'col-md-10', 'col-md-offset-1', '517', '616' ),
+          2   => array( 'col-md-6', 'col-md-offset-0', '517', '616' ),
+          3   => array( 'col-md-4', 'col-md-offset-0', '517', '616' ),
+          4   => array( 'col-md-3', 'col-md-offset-0', '517', '616' ),
+          5   => array( 'col-md-2', 'col-md-offset-0', '224', '267' ),
+          6   => array( 'col-md-2', 'col-md-offset-0', '224', '267' ),
+          8   => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+          10  => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+          12  => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+        ),
+        // Three Columns Layout
+        'columns_3' => array(
+          1   => array( 'col-md-10', 'col-md-offset-1', '500', '400' ),
+          2   => array( 'col-md-6', 'col-md-offset-0', '500', '400' ),
+          3   => array( 'col-md-4', 'col-md-offset-0', '500', '400' ),
+          4   => array( 'col-md-3', 'col-md-offset-0', '500', '400' ),
+          5   => array( 'col-md-2', 'col-md-offset-0', '224', '267' ),
+          6   => array( 'col-md-2', 'col-md-offset-0', '224', '267' ),
+          8   => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+          10  => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+          12  => array( 'col-md-1', 'col-md-offset-0', '224', '267' ),
+        ),
       );
-      $data[ 'map' ] = isset( $mapping[ $data[ 'artist_columns' ] ] ) ? $mapping[ $data[ 'artist_columns' ] ] : $mapping[4];
+      $data[ 'map' ] = isset( $mapping[ $data[ 'layout_type' ] ][ $data[ 'artist_columns' ] ] ) ? $mapping[ $data[ 'layout_type' ] ][ $data[ 'artist_columns' ] ] : $mapping[4];
       $wp_query->data = $data;
       /** Get our template */
       ob_start();
@@ -174,14 +201,20 @@ if( !class_exists( 'ArtistListModule' ) ){
      */
     public function admin_form( $data ){
       global $wpdb;
+      /** Add Colorpicker */
+      wp_enqueue_script('wp-color-picker');
+      wp_enqueue_style( 'wp-color-picker' );
+      /** Add DatePicker */
+      //wp_enqueue_script('jquery-ui-datepicker');
+      //wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
       /** Ok, I'm going to get all the artists now */
       $query = "SELECT * FROM {$wpdb->posts} WHERE post_type = 'artist' AND post_status = 'publish' ORDER BY post_title ASC";
       $artists = $wpdb->get_results( $query, ARRAY_A );
       /** Ok, setup our artist types */
       $artist_types = array(
-        'alist' => __( 'A-List', wp_festival( 'domain' ) ),
-        'blist' => __( 'B-List', wp_festival( 'domain' ) ),
-        'local' => __( 'Local Talent', wp_festival( 'domain' ) )
+        'ablist' => __( 'AB-List', wp_festival( 'domain' ) ),
+        'local' => __( 'Local Talent', wp_festival( 'domain' ) ),
+        'splash' => __( 'Splash', wp_festival( 'domain' ) ),
       );
       /** Amount of columns per line */
       $artist_columns = array( '1', '2', '3', '4', '5', '6', '8', '10', '12' );
@@ -198,9 +231,9 @@ if( !class_exists( 'ArtistListModule' ) ){
         'columns_3' =>  __( '3 Columns', wp_festival( 'domain' ) ),
       );
       $layout_columns = array(
-        1 =>  __( '1 Column', wp_festival( 'domain' ) ),
-        2 =>  __( '2 Column', wp_festival( 'domain' ) ),
-        3 =>  __( '3 Column', wp_festival( 'domain' ) ),
+        1 =>  '1',
+        2 =>  '2',
+        3 =>  '3',
       );
       /** Now get and return the template */
       ob_start();

@@ -18,7 +18,8 @@
   fieldset#artists-list-artists ul li select,
   fieldset#artists-list-artists ul li input[type=text],
   fieldset#artists-list-artists ul li span.order,
-  fieldset#artists-list-artists ul li span.column {
+  fieldset#artists-list-artists ul li span.column,
+  fieldset#artists-list-artists ul li span.custom_date  {
     display: inline;
     float: right;
     width: 50px;
@@ -36,7 +37,19 @@
   fieldset#artists-list-artists ul li.header {
     padding: 4px;
   }
+  .colorpicker_wrapper label {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    line-height: 22px;
+    width: 125px;
+  }
   
+  fieldset#artists-list-artists ul li input.datepicker,
+  fieldset#artists-list-artists ul li span.custom_date  {
+    width: 100px;
+    text-align: left;
+  }
 </style>
 
 <!-- basic info -->
@@ -60,27 +73,47 @@
 <!-- display options -->
 <fieldset id="artists-list-display-options" class="cfct-form-section">
   <legend><?php _e( 'Display Options', 'wp-festival' ) ?></legend>
-  <label for="artist_type"><?php _e( 'Template' ); ?></label>
-  <select name="artist_type" id="artist_type">
-    <?php foreach( $artist_types as $key => $type ):
-      $selected = isset( $data[ 'artist_type' ] ) && $data[ 'artist_type' ] == $key ? 'selected="selected"' : ''; ?>
-      <option value="<?php echo $key; ?>" <?php echo $selected; ?>><?php echo $type; ?></option>
-    <?php endforeach; ?>
-  </select>
-  <label for="artist_image"><?php _e( 'Artist Image' ); ?></label>
-  <select name="artist_image" id="artist_image">
-    <?php foreach( $artist_images as $k => $v ):
-      $selected = isset( $data[ 'artist_image' ] ) && $data[ 'artist_image' ] == $k ? 'selected="selected"' : ''; ?>
-      <option value="<?php echo $k; ?>" <?php echo $selected; ?>><?php echo $v; ?></option>
-    <?php endforeach; ?>
-  </select>
-  <label for="artist_columns"><?php _e( 'Number of Images per Row' ); ?></label>
-  <select name="artist_columns" id="artist_columns">
-    <?php foreach( $artist_columns as $columns ):
-      $selected = isset( $data[ 'artist_columns' ] ) && $data[ 'artist_columns' ] == $columns ? 'selected="selected"' : ''; ?>
-      <option value="<?php echo $columns; ?>" <?php echo $selected; ?>><?php echo $columns; ?></option>
-    <?php endforeach; ?>
-  </select>
+  <ul>
+    <li>
+      <label for="artist_type"><?php _e( 'Template', wp_festival( 'domain' ) ); ?></label>
+      <select name="artist_type" id="artist_type">
+        <?php foreach( $artist_types as $key => $type ):
+          $selected = isset( $data[ 'artist_type' ] ) && $data[ 'artist_type' ] == $key ? 'selected="selected"' : ''; ?>
+          <option value="<?php echo $key; ?>" <?php echo $selected; ?>><?php echo $type; ?></option>
+        <?php endforeach; ?>
+      </select>
+    </li>
+    <li>
+      <label for="artist_image"><?php _e( 'Artist Image', wp_festival( 'domain' ) ); ?></label>
+      <select name="artist_image" id="artist_image">
+        <?php foreach( $artist_images as $k => $v ):
+          $selected = isset( $data[ 'artist_image' ] ) && $data[ 'artist_image' ] == $k ? 'selected="selected"' : ''; ?>
+          <option value="<?php echo $k; ?>" <?php echo $selected; ?>><?php echo $v; ?></option>
+        <?php endforeach; ?>
+      </select>
+    </li>
+    <li>
+      <label for="artist_columns"><?php _e( 'Number of Images per Row', wp_festival( 'domain' ) ); ?></label>
+      <select name="artist_columns" id="artist_columns">
+        <?php foreach( $artist_columns as $columns ):
+          $selected = isset( $data[ 'artist_columns' ] ) && $data[ 'artist_columns' ] == $columns ? 'selected="selected"' : ''; ?>
+          <option value="<?php echo $columns; ?>" <?php echo $selected; ?>><?php echo $columns; ?></option>
+        <?php endforeach; ?>
+      </select>
+    </li>
+    <li>
+      <label for="enable_links">
+        <input type="checkbox" id="enable_links" name="enable_links" value="true" <?php echo isset( $data[ 'enable_links' ] ) && $data[ 'enable_links' ] == 'true' ? 'checked="checked"' : '' ?> />
+        <?php _e( 'Enable Links', wp_festival( 'domain' ) ); ?>
+      </label>
+    </li>
+    <li>
+      <label for="enable_dates">
+        <input type="checkbox" id="enable_dates" name="enable_dates" value="true" <?php echo isset( $data[ 'enable_dates' ] ) && $data[ 'enable_dates' ] == 'true' ? 'checked="checked"' : '' ?> />
+        <?php _e( 'Enable Perfomance Date', wp_festival( 'domain' ) ); ?>
+      </label>
+    </li>
+  </ul>
 </fieldset>
 
 <!-- layout options -->
@@ -88,7 +121,7 @@
   <legend><?php _e( 'Layout Options', 'wp-festival' ) ?></legend>
   <ul>
     <li>
-      <label for="layout_type"><?php _e( 'Layout Type' ); ?></label>
+      <label for="layout_type"><?php _e( 'Layout' ); ?></label>
       <select name="layout_type" id="layout_type">
         <?php foreach( $layout_types as $key => $type ):
           $selected = isset( $data[ 'layout_type' ] ) && $data[ 'layout_type' ] == $key ? 'selected="selected"' : ''; ?>
@@ -125,6 +158,7 @@
       <li class="alt header">
         <span class="order"><?php _e( 'Order', wp_festival( 'domain' ) ); ?></span>
         <span class="column"><?php _e( 'Column', wp_festival( 'domain' ) ); ?></span>
+        <span class="custom_date"><?php _e( 'Custom Date', wp_festival( 'domain' ) ); ?></span>
         <div style="clear:both;"></div>
       </li>
       <?php foreach( $artists as $artist ):
@@ -140,6 +174,7 @@
               <option value="<?php echo $k; ?>" <?php echo $selected; ?>><?php echo $v ?></option>
             <?php endforeach; ?>
           </select>
+          <input type="text" name="custom_date[<?php echo $artist[ 'ID' ]; ?>]" class="datepicker" value="<?php echo esc_attr( isset( $data[ 'sorting' ][ $artist[ 'ID' ] ] ) ? $data[ 'sorting' ][ $artist[ 'ID' ] ] : '' ); ?>" />
           <div style="clear:both;"></div>
         </li>
       <?php endforeach; ?>
@@ -148,37 +183,54 @@
 </fieldset>
 
 <fieldset class="cfct-form-section">
-  <legend><?php _e( 'Background Image', 'wp-festival' ); ?></legend>
-  <?php
-  // tabs
-  $image_selector_tabs = array(
-    $this->id_base.'-post-image-wrap' => __('Post Images', 'carrington-build'),
-    $this->id_base.'-global-image-wrap' => __('All Images', 'carrington-build')
-  );
+  <legend><?php _e( 'Styles', 'wp-festival' ); ?></legend>
+  <ul>
+    <li class="colorpicker_wrapper">
+      <label for="background_color"><?php _e( 'Background Color', 'wp-festival' ); ?></label>
+      <input type="text" class="colorpicker" name="background_color" id="background_color" value="<?php echo esc_attr( isset( $data[ 'background_color' ] ) ? $data[ 'background_color' ] : '' ); ?>" />
+    </li>
+    <li class="colorpicker_wrapper">
+      <label for="font_color"><?php _e( 'Font Color', 'wp-festival' ); ?></label>
+      <input type="text" class="colorpicker" name="font_color" id="background_color" value="<?php echo esc_attr( isset( $data[ 'font_color' ] ) ? $data[ 'font_color' ] : '' ); ?>" />
+    </li>
+    <li>
+      <label><?php _e( 'Background Image:', 'wp-festival' ); ?></label>
+      <?php
+      // tabs
+      $image_selector_tabs = array(
+        $this->id_base.'-post-image-wrap' => __('Post Images', 'carrington-build'),
+        $this->id_base.'-global-image-wrap' => __('All Images', 'carrington-build')
+      );
 
-  // set active tab
-  $active_tab = $this->id_base.'-post-image-wrap';
-  if (!empty($data[$this->get_field_name('global_image')])) {
-    $active_tab = $this->id_base.'-global-image-wrap';
-  }
-  ?>
-  <!-- image selector tabs -->
-  <div id="<?php echo $this->id_base; ?>-image-selectors">
-    <!-- tabs -->
-    <?php echo $this->cfct_module_tabs($this->id_base.'-image-selector-tabs', $image_selector_tabs, $active_tab); ?>
-    <!-- /tabs -->
-    <div class="cfct-module-tab-contents">
-      <!-- select an image from this post -->
-      <div id="<?php echo $this->id_base; ?>-post-image-wrap" <?php echo ( empty( $active_tab ) || $active_tab == $this->id_base.'-post-image-wrap' ? ' class="active"' : '' ); ?>>
-        <?php echo $this->post_image_selector($data); ?>
+      // set active tab
+      $active_tab = $this->id_base.'-post-image-wrap';
+      if (!empty($data[$this->get_field_name('global_image')])) {
+        $active_tab = $this->id_base.'-global-image-wrap';
+      }
+      ?>
+      <!-- image selector tabs -->
+      <div id="<?php echo $this->id_base; ?>-image-selectors">
+        <!-- tabs -->
+        <?php echo $this->cfct_module_tabs($this->id_base.'-image-selector-tabs', $image_selector_tabs, $active_tab); ?>
+        <!-- /tabs -->
+        <div class="cfct-module-tab-contents">
+          <!-- select an image from this post -->
+          <div id="<?php echo $this->id_base; ?>-post-image-wrap" <?php echo ( empty( $active_tab ) || $active_tab == $this->id_base.'-post-image-wrap' ? ' class="active"' : '' ); ?>>
+            <?php echo $this->post_image_selector($data); ?>
+          </div>
+          <!-- / select an image from this post -->
+          <!-- select an image from media gallery -->
+          <div id="<?php echo $this->id_base; ?>-global-image-wrap" <?php echo ( $active_tab == $this->id_base.'-global-image-wrap' ? ' class="active"' : '' ); ?>>
+            <?php echo $this->global_image_selector($data); ?>
+          </div>
+          <!-- /select an image from media gallery -->
+        </div>
       </div>
-      <!-- / select an image from this post -->
-      <!-- select an image from media gallery -->
-      <div id="<?php echo $this->id_base; ?>-global-image-wrap" <?php echo ( $active_tab == $this->id_base.'-global-image-wrap' ? ' class="active"' : '' ); ?>>
-        <?php echo $this->global_image_selector($data); ?>
-      </div>
-      <!-- /select an image from media gallery -->
-    </div>
-  </div>
-  <!-- / image selector tabs -->
+      <!-- / image selector tabs -->
+    </li>
+  </ul>
 </fieldset>
+<script type="text/javascript">
+  if( typeof jQuery.fn.wpColorPicker == 'function' ) { jQuery( '.colorpicker' ).wpColorPicker(); }
+  if( typeof jQuery.fn.datepicker == 'function' ) { jQuery( '.datepicker' ).datepicker( { dateFormat : 'dd-mm-yy' } ); }
+</script>

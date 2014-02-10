@@ -146,6 +146,21 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  padding-top: 15px;
+  padding-bottom: 20px;
+  margin-left: -15px;
+  margin-right: -15px;
+  
+  .row-artists {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  
+  article {
+    background: none;
+    padding: 0;
+    margin-bottom: 30px;
+  }
 
   span {
     &.hr {
@@ -159,28 +174,12 @@
     width: 100%;
   }
   
-  // Artist Alphabetical ( B-List )
-  &.alist,
-  &.blist {
-    padding-top: 15px;
-    padding-bottom: 20px;
-    margin-left: -15px;
-    margin-right: -15px;
-    
-    .row-artists {
-      padding-left: 30px;
-      padding-right: 30px;
-    }
-    
-    article {
-      background: none;
-      padding: 0;
-      margin-bottom: 30px;
-    }
-  }
-  
   // Local Artists
   &.local {
+  
+    article {
+      margin-bottom: 0px;
+    }
   
     .row-artists { 
       text-align: center;
@@ -216,6 +215,20 @@
     article {
       text-align: center;
       padding: 0;
+    }
+  
+  }
+  
+  // Splash Artists List
+  &.splash {
+  
+    .row-artists {
+      padding: 0;
+    }
+    
+    article {
+      padding: 0;
+      margin: 0 0 15px 0; 
     }
   
   }
