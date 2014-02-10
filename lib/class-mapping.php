@@ -119,7 +119,7 @@ namespace UsabilityDynamics\Cluster {
         self::$self_admin_url    = self_admin_url();
         self::$user_admin_url    = user_admin_url();
 
-        // die( json_encode( $this->_debug() ) );
+        die( json_encode( $this->_debug() ) );
 
       }
 
@@ -131,6 +131,7 @@ namespace UsabilityDynamics\Cluster {
       private function _debug() {
 
         return array(
+          //'wp_logout_url' => wp_logout_url(),
           'wp_login_url' => wp_login_url(),
           'get_home_url' => get_home_url(),
           'get_site_url' => get_site_url(),
