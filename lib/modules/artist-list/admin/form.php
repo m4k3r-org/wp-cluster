@@ -174,7 +174,7 @@
               <option value="<?php echo $k; ?>" <?php echo $selected; ?>><?php echo $v ?></option>
             <?php endforeach; ?>
           </select>
-          <input type="text" name="custom_date[<?php echo $artist[ 'ID' ]; ?>]" class="datepicker" value="<?php echo esc_attr( isset( $data[ 'sorting' ][ $artist[ 'ID' ] ] ) ? $data[ 'sorting' ][ $artist[ 'ID' ] ] : '' ); ?>" />
+          <input type="text" name="custom_date[<?php echo $artist[ 'ID' ]; ?>]" class="datepicker" value="<?php echo esc_attr( isset( $data[ 'custom_date' ][ $artist[ 'ID' ] ] ) ? $data[ 'custom_date' ][ $artist[ 'ID' ] ] : '' ); ?>" />
           <div style="clear:both;"></div>
         </li>
       <?php endforeach; ?>
