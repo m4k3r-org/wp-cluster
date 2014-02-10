@@ -428,6 +428,12 @@ namespace UsabilityDynamics\Cluster {
        * @method admin_menu
        */
       public function admin_menu() {
+        global $submenu;
+        
+        // die( '<pre>' . print_r( $submenu, true ) . '</pre>' );
+
+        remove_submenu_page( 'index.php', 'my-sites.php' );
+        remove_submenu_page( 'index.php', 'my-networks' );
 
         // Add Site Administration (Settings -> Cluster).
         add_submenu_page( 'options-general.php', __( 'Cluster', self::$text_domain ), __( 'Cluster', self::$text_domain ), 'manage_network', 'cluster', function() {
