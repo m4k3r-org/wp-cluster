@@ -415,24 +415,7 @@ namespace UsabilityDynamics {
         ),
         'compute.QuickAccessTables' => array(
           'key' => 'update_qa_all_tables',
-          'callback' => function() {
-            set_time_limit( 0 );
-
-            foreach( (array) $hddp[ 'dynamic_filter_post_types' ] as $post_type ) {
-              if( is_wp_error( Flawless_F::update_qa_table( $post_type, array( 'update'     => $post_type,
-                                                                               'attributes' => self::_get_qa_attributes( $post_type ) )
-                )
-              )
-              ) {
-                $hddp[ 'runtime' ][ 'notices' ][ 'error' ][ ] = 'Could not create QA table for ' . $post_type . ' Post Type.';
-              } else {
-                Flawless_F::log( 'Succesfully created QA table for ' . $post_type . ' Post Type.' );
-              }
-            }
-
-            wp_die( 'done updating' );
-
-          }
+          'callback' => function() {}
         ),
         'compute.Coordinates' => array(
           'key' => 'update_lat_long',
@@ -444,9 +427,9 @@ namespace UsabilityDynamics {
             }
 
             if( count( $updated ) > 0 ) {
-              Flawless_F::log( 'Successfully updated addresses for (' . count( $updated ) . ') event(s).' );
+              self::log( 'Successfully updated addresses for (' . count( $updated ) . ') event(s).' );
             } else {
-              Flawless_F::log( 'Attempted to do a bulk address update for all events, but no events were updated.' );
+              self::log( 'Attempted to do a bulk address update for all events, but no events were updated.' );
             }
 
 
@@ -475,22 +458,22 @@ namespace UsabilityDynamics {
 
             }
 
-            Flawless_F::log( 'Batch Cloud API update complete, pushed ' . count( $result ) . ' batches of 50 items in ' . \UD_Functions::timer_stop( 'synchronize_with_cloud' ) . ' seconds.' );
+            self::log( 'Batch Cloud API update complete, pushed ' . count( $result ) . ' batches of 50 items in ' . \UD_Functions::timer_stop( 'synchronize_with_cloud' ) . ' seconds.' );
 
           }
         ),
         'flush.Logs' => array(
           'key' => 'clear_event_log',
           'callback' => function() {
-            Flawless_F::delete_log();
-            Flawless_F::log( 'Event log cleared by ' . $current_user->data->display_name . '.' );
+            //Flawless_F::delete_log();
+            self::log( 'Event log cleared by ' . $current_user->data->display_name . '.' );
           }
         ),
         'flush.Settings' => array(
           'key' => 'delete_hddp_options',
           'callback' => function() {
             delete_option( 'hddp_options' );
-            Flawless_F::log( 'HDDP-Theme options deleted by ' . $current_user->data->display_name . '.' );
+            self::log( 'HDDP-Theme options deleted by ' . $current_user->data->display_name . '.' );
           }
         )
       ));
@@ -1203,7 +1186,7 @@ namespace UsabilityDynamics {
         }
 
         if( $args[ 'add_log_entries' ] ) {
-          \Flawless_F::log( '<a href="' . get_edit_post_link( $post_id ) . '">' . $post->post_title . '</a> geo-located, formatted address: ' . $geo_located->formatted_address );
+          Utility::log( '<a href="' . get_edit_post_link( $post_id ) . '">' . $post->post_title . '</a> geo-located, formatted address: ' . $geo_located->formatted_address );
         }
 
         return true;
@@ -1211,13 +1194,13 @@ namespace UsabilityDynamics {
       } elseif( !empty( $formatted_address ) ) {
 
         if( $args[ 'add_log_entries' ] ) {
-          \Flawless_F::log( 'Could not geo-locate <a href="' . get_edit_post_link( $post_id ) . '">' . $post->post_title . '</a> after update.' );
+          Utility::log( 'Could not geo-locate <a href="' . get_edit_post_link( $post_id ) . '">' . $post->post_title . '</a> after update.' );
         }
 
       } else {
 
         if( $args[ 'add_log_entries' ] ) {
-          \Flawless_F::log( 'Warning. Could not get physical address for <a href="' . get_edit_post_link( $post_id ) . '">' . $post->post_title . '</a> from venue.' );
+          Utility::log( 'Warning. Could not get physical address for <a href="' . get_edit_post_link( $post_id ) . '">' . $post->post_title . '</a> from venue.' );
         }
 
       }
@@ -1281,7 +1264,7 @@ namespace UsabilityDynamics {
 
       /** Now loop through our different things, and split by comma */
       foreach( $attributes as $key => &$att ) {
-        $att = \Flawless_F::split_shortcode_att( $att );
+        $att = Utility::split_shortcode_att( $att );
         /** Check the att for the default value */
         if( in_array( 'default_value', array_keys( $att ) ) ) {
           /** We know we have a default value */
@@ -1646,20 +1629,20 @@ namespace UsabilityDynamics {
       switch( $post->post_type ) {
 
         case 'hdp_video' :
-          $return[ ] = \Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-          $return[ ] = \Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
 
           break;
 
         case 'hdp_photo_gallery' :
-          $return[ ] = \Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-          $return[ ] = \Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
 
           break;
 
         case 'hdp_event' :
-          $return[ ] = \Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-          $return[ ] = \Flawless_F::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
 
           break;
       }

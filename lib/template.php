@@ -1035,6 +1035,10 @@ if ( !function_exists( 'flawless_block_class' ) ) {
 
     $classes[] = $custom_class;
 
+    if( !isset( $flawless[ 'current_view' ] ) ) {
+      return '';
+    }
+
     //** Added classes to body */
     foreach ( ( array ) $flawless[ 'current_view' ][ 'block_classes' ] as $class ) {
       $classes[] = $class;
@@ -1161,7 +1165,7 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
     global $wp_query, $post, $flawless;
 
     $args = wp_parse_args( $args, array(
-      'hide_breadcrumbs' => get_post_meta( $post->ID, 'hide_breadcrumbs', true ) == 'true' || $flawless[ 'hide_breadcrumbs' ] ? true : false,
+      'hide_breadcrumbs' => get_post_meta( $post->ID, 'hide_breadcrumbs', true ) == 'true' || ( isset( $flawless[ 'hide_breadcrumbs' ] ) && $flawless[ 'hide_breadcrumbs' ] ) ? true : false,
       'return' => false,
       'home_label' => __( 'Home' ),
       'home_link' => home_url(),

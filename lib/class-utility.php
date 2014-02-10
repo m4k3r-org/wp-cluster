@@ -20,6 +20,8 @@ namespace UsabilityDynamics\Disco {
      */
     class Utility extends \UsabilityDynamics\Utility {
 
+      public static function log() {}
+
       /**
        * Clean up and escape classes. Remove empties, run through esc_attr,
        * get rid of junk whitespace.

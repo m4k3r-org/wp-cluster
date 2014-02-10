@@ -48,11 +48,7 @@
           <li class="hdp_results_item" id="df_id_<?php echo $post[ 'ID' ]; ?>">
             <ul class="df_result_data">
               <li attribute_key="raw_html">
-                <ul> <?php
-                  $count++;
-                  get_template_part( 'loop', $type );
-                  ?>
-                </ul>
+                <ul> <?php get_template_part( 'loop', $type ); ?></ul>
               </li>
             </ul>
           </li> <?php

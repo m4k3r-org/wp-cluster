@@ -27,7 +27,7 @@
     return;
   }
 
-  if( $flawless[ 'post_types' ][ $post->post_type ][ 'show_post_meta' ] == 'true' ) {
+  if( isset( $flawless ) && $flawless[ 'post_types' ][ $post->post_type ][ 'show_post_meta' ] == 'true' ) {
 
     if( get_the_category_list()) {
       $meta_html[] = '<li class="posted-ago"><i class="icon-dd icon-time-ago"></i>' . sprintf( __( '%1s ago', 'flawless'), human_time_diff( get_the_time('U') ) ) . '</li>';
