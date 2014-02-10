@@ -32,7 +32,7 @@ namespace UsabilityDynamics\Festival {
           case 'artist':
             $perfomances = $wpdb->get_col( "
               SELECT post_id 
-                FROM {$wpdb->prefix}postmeta 
+                FROM {$wpdb->postmeta} 
                 WHERE meta_key = 'relatedArtists' 
                   AND meta_value = '{$id}'
             " );
