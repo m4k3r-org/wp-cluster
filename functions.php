@@ -934,7 +934,7 @@ if( !function_exists( 'flawless_comment' ) ) {
    *
    * @todo Needs major revision, ported from Denali.
    * @for Template Methods
-   * @method flawless_block_class
+   * @method wp_disco()->block_class
    * @since WP-Disco 1.0.0
    */
   function flawless_comment( $comment, $args, $depth ) {

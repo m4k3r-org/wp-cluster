@@ -14,11 +14,11 @@
 
 <?php get_template_part( 'templates/aside/attention', 'home' ); ?>
 
-<div class="<?php flawless_wrapper_class(); ?>">
+<div class="<?php wp_disco()->wrapper_class( ); ?>">
 
   <?php wp_disco()->widget_area( 'left_sidebar' ); ?>
 
-  <div class="<?php flawless_block_class( 'main cfct-block' ); ?>">
+  <div class="<?php wp_disco()->block_class( 'main cfct-block' ); ?>">
     <?php get_template_part( 'templates/article/loop', 'home' ); ?>
     <?php get_template_part( 'templates/article/content', 'home-bottom' ); ?>
   </div>

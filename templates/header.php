@@ -29,7 +29,7 @@ if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
     <div class="general_header_wrapper">
       <div class="header container clearfix" data-container-type="header">
 
-        <?php get_template_part( 'templates/aside/logo', get_post_type() ); ?>
+        <?php get_template_part( 'templates/header/logo', get_post_type() ); ?>
 
         <?php get_template_part( 'templates/nav/header', get_post_type() ); ?>
 

@@ -805,6 +805,12 @@ namespace UsabilityDynamics {
       /* Transdomain */
       define( 'HDDP', $this->domain );
 
+      // Register Carrington Modules.
+      if( is_object( $this->carrington ) ) {
+        // $this->carrington->registerModule( 'VideoModule' );
+        // $this->carrington->registerModule( 'EventHeroModule' );
+      }
+
       // Declare Public Scripts.
       $this->scripts(array(
         'app.admin'             => array( 'url' => content_url( '/assets/scripts/app.admin.js' ), 'deps' => array( 'app.require' ) ),
@@ -850,7 +856,7 @@ namespace UsabilityDynamics {
         if( class_exists( 'HDP_Latest_Posts_Widget' ) ) {
           register_widget( 'HDP_Latest_Posts_Widget' );
         }
-      } );
+      });
 
       add_action( 'edit_term', function ( $term_id, $something, $taxonomy ) {
         self::update_event_location( get_post_for_extended_term( $term_id, $taxonomy )->ID );
@@ -863,7 +869,7 @@ namespace UsabilityDynamics {
         cfct_build_deregister_module( 'cfct_module_pullquote' );
         cfct_build_deregister_module( 'cfct_module_loop_subpages' );
         cfct_build_deregister_module( 'cfct_module_plain_text' );
-      } );
+      });
 
       add_filter( 'elasticsearch_indexer_build_document', function ( $doc, $post ) {
         $doc[ 'event_date_time' ] = date( 'c', strtotime( get_post_meta( $post->ID, 'hdp_event_date', 1 ) . ' ' . get_post_meta( $post->ID, 'hdp_event_time', 1 ) ));
@@ -930,11 +936,11 @@ namespace UsabilityDynamics {
       // Enqueue Admin Scripts & Styles.
       add_action( 'admin_enqueue_scripts', function () {
         wp_enqueue_script( 'app.admin' );
-      } );
+      });
 
       add_filter( 'the_category', function ( $c ) {
         return self::_backtrace_function( 'wp_popular_terms_checklist' ) ? '<span class="do_inline_hierarchial_taxonomy_stuff do_not_esc_html">' . $c . '</span>' : $c;
-      } );
+      });
 
       add_filter( 'esc_html', function ( $s, $u = '' ) {
         return strpos( $s, 'do_not_esc_html' ) ? $u : $s;
@@ -948,11 +954,11 @@ namespace UsabilityDynamics {
         $header = flawless_breadcrumbs( array( 'hide_breadcrumbs' => false, 'wrapper_class' => 'breadcrumbs container', 'hide_on_home' => false, 'return' => true ));
         $share  = hdp_share_button( false, true );
         echo $share . $header;
-      } );
+      });
 
       add_filter( 'cfct-module-carousel-control-layout-order', function ( $order ) {
         return is_home() || is_front_page() ? array() : $order;
-      } );
+      });
 
       add_filter( 'gform_shortcode_form', function ( $form ) {
         return preg_replace( '%(<select.*?>.+?<\/select>)%', '<div class="select-styled">$1</div>', $form );
@@ -985,14 +991,14 @@ namespace UsabilityDynamics {
         }
 
         return $link;
-      } );
+      });
 
       // Remove URL from Comments Form.
       add_filter( 'comment_form_default_fields', function ( $fields ) {
         unset( $fields[ 'url' ] );
 
         return $fields;
-      } );
+      });
 
       // Filter to replace the [caption] shortcode text with HTML5 compliant code.
       add_filter( 'img_caption_shortcode', function ( $val, $attr, $content = null ) {
@@ -1038,11 +1044,11 @@ namespace UsabilityDynamics {
 
         add_filter( 'body_class', function ( $classes ) {
           return array_merge( $classes, array( 'single_event_page' ));
-        } );
+        });
 
         return $template = locate_template( (array) $hddp[ 'page_template' ] );
 
-      } );
+      });
 
       $this->dynamic_filter_shortcode_handler();
 
@@ -1085,7 +1091,7 @@ namespace UsabilityDynamics {
           echo '<ul class="flawless_post_type_options wp-tab-panel"><li>' . implode( '</li><li>', $html ) . '</li></ul>';
         }
 
-      } );
+      });
 
       // Add Address column to Venues taxonomy overview.
       add_filter( 'manage_edit-hdp_venue_columns', function ( $columns ) {
@@ -1181,7 +1187,7 @@ namespace UsabilityDynamics {
           echo '<div class="fade updated"><p>' . $notice . '</p></div>';
         }
 
-      } );
+      });
 
     }
 
@@ -1316,7 +1322,7 @@ namespace UsabilityDynamics {
       if( isset( $post ) && strpos( $post->post_content, '[dynamic_filter' ) !== false ) {
         add_action( 'flawless::sidebar_top', function () {
           echo '<div class="cfct-module single-widget-area"><div id="df_sidebar_filters" class="df_sidebar_filters flawless_widget theme_widget widget  widget_text clearfix"></div></div>';
-        } );
+        });
       }
 
     }
@@ -1945,6 +1951,10 @@ namespace UsabilityDynamics {
       //flawless_widget_area( $name );
     }
 
+    static public function block_class( $name = null ) {
+
+    }
+
     /**
      * Legacy Flawless Method Support
      *
@@ -1979,6 +1989,10 @@ namespace UsabilityDynamics {
      */
     static public function widget_area( $name = null ) {
       flawless_widget_area( $name );
+    }
+
+    static public function thumbnail( $name = null ) {
+
     }
 
   }

@@ -27,7 +27,7 @@ $side_meta[ ] = '<li class="permalink"><a href="' . get_permalink() . '"><i clas
 
 <?php get_template_part( 'templates/aside/attention', 'post' ); ?>
 
-<div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>">
+<div class="<?php wp_disco()->wrapper_class(  'tabbed-content' ); ?>">
 
   <div class="cfct-block sidebar-left span4 first">
       <div class="cfct-module" style="padding: 0; margin: 0;">
@@ -47,21 +47,21 @@ $side_meta[ ] = '<li class="permalink"><a href="' . get_permalink() . '"><i clas
   </div>
 
 
-  <div class="<?php flawless_block_class( 'main cfct-block span8' ); ?>">
+  <div class="<?php wp_disco()->block_class( 'main cfct-block span8' ); ?>">
     <?php if( have_posts() ) : while( have_posts() ) : the_post(); ?>
-      <div id="post-<?php the_ID(); ?>" class="<?php flawless_module_class(); ?>">
+      <div id="post-<?php the_ID(); ?>" class="<?php wp_disco()->module_class(); ?>">
 
       <?php do_action( 'flawless_ui::above_header' ); ?>
 
         <div id="section_event_details" class="inner">
 
-        <?php get_template_part( 'entry-meta', 'header' ); ?>
+        <?php get_template_part( 'templates/article/entry-meta', 'header' ); ?>
 
-          <?php flawless_thumbnail( array( 'size' => 'hd_large' ) ); ?>
+          <?php wp_disco()->thumbnail(  array( 'size' => 'hd_large' ) ); ?>
 
           <header class="entry-title-wrapper">
-          <?php flawless_breadcrumbs(); ?>
-          <?php flawless_page_title(); ?>
+          <?php wp_disco()->breadcrumbs(); ?>
+          <?php wp_disco()->page_title(); ?>
         </header>
 
         <div class="entry-content clearfix">
@@ -73,14 +73,14 @@ $side_meta[ ] = '<li class="permalink"><a href="' . get_permalink() . '"><i clas
       <div id="section_comments" class="inner">
 
         <header class="entry-title-wrapper">
-          <?php flawless_breadcrumbs(); ?>
-          <?php flawless_page_title(); ?>
+          <?php wp_disco()->breadcrumbs(); ?>
+          <?php wp_disco()->page_title(); ?>
         </header>
 
         <?php comments_template(); ?>
       </div>
 
-        <?php get_template_part( 'entry-meta', 'footer' ); ?>
+        <?php get_template_part( 'templates/article/entry-meta', 'footer' ); ?>
 
     </div>
     <?php endwhile; endif; ?>

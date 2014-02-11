@@ -40,7 +40,7 @@ switch( $event[ 'post_type' ] ) {
 
 <?php get_template_part( 'templates/aside/attention', 'post' ); ?>
 
-<div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>">
+<div class="<?php wp_disco()->wrapper_class(  'tabbed-content' ); ?>">
 
   <div class="cfct-block sidebar-left span4 first">
     <div class="cfct-module" style="padding: 0; margin: 0;">
@@ -66,7 +66,8 @@ switch( $event[ 'post_type' ] ) {
 
     <ul class="dd_side_panel_actions">
       <?php $time = strtotime( date( 'Y-m-d', current_time( 'timestamp' ) ) . ' 00:00:01 +3 hour' );
-      if( $event[ 'meta' ][ 'hdp_purchase_url' ] && strtotime( $event[ 'meta' ][ 'hdp_event_date' ] . ' ' . $event[ 'meta' ][ 'hdp_event_time' ] ) > $time ) { ?>
+      if( $event[ 'meta' ][ 'hdp_purchase_url' ] && strtotime( $event[ 'meta' ][ 'hdp_event_date' ] . ' ' . $event[ 'meta' ][ 'hdp_event_time' ] ) > $time ) {
+        ?>
         <li class=""><a class="btn btn-blue" href="<?php echo $event[ 'meta' ][ 'hdp_purchase_url' ]; ?>" <?php if ($event[ 'meta' ][ 'disable_cross_domain_tracking' ] !== 'true') { ?>onclick="_gaq.push(['_link', '<?php echo $event[ 'meta' ][ 'hdp_purchase_url' ]; ?>']); return false;"<?php } ?>>Buy Tickets</a></li>
       <?php } ?>
 
@@ -89,16 +90,17 @@ switch( $event[ 'post_type' ] ) {
     </div>
   </div>
 
-  <div class="<?php flawless_block_class( 'main cfct-block span8' ); ?>">
+  <div class="<?php wp_disco()->block_class( 'main cfct-block span8' ); ?>">
 
-    <div id="post-<?php the_ID(); ?>" class="<?php flawless_module_class( '' ); ?>">
+    <div id="post-<?php the_ID(); ?>" class="<?php wp_disco()->module_class( '' ); ?>">
 
-      <header class="entry-title-wrapper">
-          <?php flawless_breadcrumbs(); ?>
-        <?php flawless_page_title(); ?>
-        <p class="event_tagline"><?php echo $event[ 'post_excerpt' ]; ?>
-          <span class="event_credit"><?php echo $event[ 'attributes' ][ 'print_credit' ]; ?></span></p>
-      </header>
+    <header class="entry-title-wrapper">
+      <?php wp_disco()->breadcrumbs(); ?>
+      <?php wp_disco()->page_title(); ?>
+      <p class="event_tagline"><?php echo $event[ 'post_excerpt' ]; ?>
+        <span class="event_credit"><?php echo $event[ 'attributes' ][ 'print_credit' ]; ?></span>
+      </p>
+    </header>
 
       <hr class="dotted"/>
 
@@ -168,7 +170,7 @@ switch( $event[ 'post_type' ] ) {
   </div>
 
 
-  <?php flawless_widget_area( 'right_sidebar' ); ?>
+  <?php wp_disco()->widget_area( 'right_sidebar' ); ?>
 
 </div>
 

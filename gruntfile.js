@@ -33,6 +33,8 @@ module.exports = function build( grunt ) {
           relativeUrls: true
         },
         files: {
+          'styles/app.content.dev.css': [ 'styles/src/app.content.less' ],
+          'styles/app.editor.dev.css': [ 'styles/src/app.editor.less' ],
           'styles/app.bootstrap.dev.css': [ 'styles/src/app.bootstrap.less' ],
           'styles/app.main.dev.css': [ 'styles/src/app.main.less' ],
           'styles/app.admin.dev.css': [ 'styles/src/app.admin.less' ]
@@ -44,6 +46,8 @@ module.exports = function build( grunt ) {
           relativeUrls: true
         },
         files: {
+          'styles/app.content.css': [ 'styles/src/app.content.less' ],
+          'styles/app.editor.css': [ 'styles/src/app.editor.less' ],
           'styles/app.bootstrap.css': [ 'styles/src/app.bootstrap.less' ],
           'styles/app.main.css': [ 'styles/src/app.main.less' ],
           'styles/app.admin.css': [ 'styles/src/app.admin.less' ]

@@ -14,17 +14,17 @@
 
 <?php get_template_part( 'templates/aside/attention', 'archive' ); ?>
 
-  <div class="<?php flawless_wrapper_class(); ?>">
+  <div class="<?php wp_disco()->wrapper_class( ); ?>">
 
-  <?php flawless_widget_area( 'left_sidebar' ); ?>
+  <?php wp_disco()->widget_area( 'left_sidebar' ); ?>
 
-    <div class="<?php flawless_block_class( 'main cfct-block' ); ?>">
-    <div class="<?php flawless_module_class( 'archive-hentry' ); ?>">
+    <div class="<?php wp_disco()->block_class( 'main cfct-block' ); ?>">
+    <div class="<?php wp_disco()->module_class( 'archive-hentry' ); ?>">
 
       <?php do_action( 'flawless_ui::above_header' ); ?>
 
       <header class="entry-title-wrapper">
-        <?php flawless_breadcrumbs(); ?>
+        <?php wp_disco()->breadcrumbs(); ?>
         <?php
         /**
          * Commented out regarding ticket.
@@ -47,12 +47,12 @@
       <?php get_template_part( 'templates/article/loop', 'blog' ); ?>
       </div>
 
-    </div> <?php /* .archive-hentry */ ?>
+    </div>
 
-  </div> <?php /* .main.cfct-block */ ?>
+  </div>
 
-    <?php flawless_widget_area( 'right_sidebar' ); ?>
+  <?php wp_disco()->widget_area( 'right_sidebar' ); ?>
 
-</div> <!-- #content -->
+</div>
 
 <?php get_template_part( 'templates/footer', 'archive' ); ?>

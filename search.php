@@ -22,16 +22,16 @@
 
 <?php get_template_part( 'templates/aside/attention', 'search' ); ?>
 
-<div class="<?php flawless_wrapper_class(); ?>">
+<div class="<?php wp_disco()->wrapper_class( ); ?>">
 
-  <?php flawless_widget_area( 'left_sidebar' ); ?>
+  <?php wp_disco()->widget_area( 'left_sidebar' ); ?>
 
-  <div class="<?php flawless_block_class( 'main cfct-block' ); ?>">
-    <div class="<?php flawless_module_class(); ?>">
+  <div class="<?php wp_disco()->block_class( 'main cfct-block' ); ?>">
+    <div class="<?php wp_disco()->module_class(); ?>">
 
       <header class="entry-title-wrapper">
-        <?php flawless_breadcrumbs(); ?>
-        <?php flawless_page_title(); ?>
+        <?php wp_disco()->breadcrumbs(); ?>
+        <?php wp_disco()->page_title(); ?>
       </header>
 
       <?php get_template_part( 'templates/article/loop', 'blog' ); ?>
@@ -40,7 +40,7 @@
 
   </div>
 
-  <?php flawless_widget_area( 'right_sidebar' ); ?>
+  <?php wp_disco()->widget_area( 'right_sidebar' ); ?>
 
 </div>
 

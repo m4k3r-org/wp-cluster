@@ -66,7 +66,7 @@ foreach( $post_types as $t ) {
 
 <?php get_template_part( 'attention', 'taxonomy' ); ?>
 
-  <div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>">
+  <div class="<?php wp_disco()->wrapper_class(  'tabbed-content' ); ?>">
 
   <div class="cfct-block sidebar-left span4 first visible-desktop">
     <div class="cfct-module" style="padding: 0; margin: 0;">
@@ -99,14 +99,14 @@ foreach( $post_types as $t ) {
     </div>
   </div>
 
-  <div class="<?php flawless_block_class( 'main cfct-block span8' ); ?>">
+  <div class="<?php wp_disco()->block_class( 'main cfct-block span8' ); ?>">
 
-    <div class="<?php flawless_module_class( 'taxonomy-archive' ); ?>">
+    <div class="<?php wp_disco()->module_class( 'taxonomy-archive' ); ?>">
 
       <div id="section_event_details">
 
         <header class="entry-title-wrapper">
-          <?php flawless_breadcrumbs(); ?>
+          <?php wp_disco()->breadcrumbs(); ?>
           <h1 class="entry-title"><?php echo $term->name; ?></h1>
         </header>
 

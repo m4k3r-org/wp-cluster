@@ -41,7 +41,7 @@
 <div class="entry-content entry-summary clearfix">
 
   <?php if( $post->show_thumbnail && $post->post_type == 'post' ) { ?>
-    <?php flawless_thumbnail( array( 'size' => 'hd_large' )); ?>
+    <?php wp_disco()->thumbnail(  array( 'size' => 'hd_large' )); ?>
   <?php } ?>
 
   <?php if ( $post->show_post_content_type == 'post_content' ) {
