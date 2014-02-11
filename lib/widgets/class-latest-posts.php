@@ -137,7 +137,7 @@ namespace UsabilityDynamics\Disco\Widget {
 
         $html[ ] = '</ul></div>';
 
-        $html[ ] = '<script type="text/javascript">jQuery(document).ready(function(){ if( typeof jQuery.fn.flexslider == "function" ) { jQuery("#' . $widget_id . ' .hdp_lp_slides_container").css( "visibility", "hidden" ).flexslider({controlsContainer: "#' . $widget_id . ' .controls_container",animation: "slide", animationSpeed: 500, prevText: "", nextText: "", start: function( slider ) { slider.flexAnimate( 1 ); setTimeout( function() { slider.css( "visibility", "visible" ); }, 500 ); }}); } } );</script>';
+        //$html[ ] = '<script type="text/javascript">jQuery(document).ready(function(){ if( typeof jQuery.fn.flexslider == "function" ) { jQuery("#' . $widget_id . ' .hdp_lp_slides_container").css( "visibility", "hidden" ).flexslider({controlsContainer: "#' . $widget_id . ' .controls_container",animation: "slide", animationSpeed: 500, prevText: "", nextText: "", start: function( slider ) { slider.flexAnimate( 1 ); setTimeout( function() { slider.css( "visibility", "visible" ); }, 500 ); }}); } } );</script>';
 
         $html[ ] = $after_widget;
 

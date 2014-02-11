@@ -20,7 +20,6 @@ if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 </head>
 <body <?php body_class(); ?>>
 
-
 <header class="frame" data-container-type="header">
   <?php get_template_part( 'templates/nav/toolbar', get_post_type() ); ?>
   <?php get_template_part( 'templates/aside/header', get_post_type() ); ?>

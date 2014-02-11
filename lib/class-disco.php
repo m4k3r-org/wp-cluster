@@ -1626,7 +1626,7 @@ namespace UsabilityDynamics {
 
       $data[ 'anchor' ] = $data[ 'anchors' ][ $data[ 'show_as' ] ];
 
-      wp_enqueue_script( 'hddp_shortcode', get_stylesheet_directory_uri() . '/scripts/hddp.gallery.js', array( 'jquery', 'jquery-flexslider' ), '', true );
+      //wp_enqueue_script( 'hddp_shortcode', get_stylesheet_directory_uri() . '/scripts/hddp.gallery.js', array( 'jquery', 'jquery-flexslider' ), '', true );
 
       /** Buffer output */
       ob_start();

@@ -22,4 +22,4 @@
 
 </section>
 
-<?php get_template_part( 'templates/header', 'index' ); ?>
+<?php get_template_part( 'templates/footer', 'index' ); ?>

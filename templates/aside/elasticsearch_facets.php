@@ -25,11 +25,7 @@
   </div>
 
   <script type="text/javascript">
-    jQuery(document).ready(function(){
-      jQuery('[name^="date_range"]').datepicker({
-        dateFormat: 'yy-mm-dd'
-      });
-    });
+    // jQuery(document).ready(function(){ jQuery('[name^="date_range"]').datepicker({ dateFormat: 'yy-mm-dd' }); });
   </script>
 
   <div class="clearfix"></div>
