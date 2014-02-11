@@ -581,25 +581,6 @@ namespace UsabilityDynamics {
     }
 
     /**
-     * Add "Sections" link to Appearance menu.
-     *
-     * @todo Figure out a way to keep the Appearance menu open while editing a menu.
-     *
-     * @param $menu
-     */
-    public function admin_menu( $menu ) {
-      global $submenu;
-      global $menu;
-
-      $submenu[ 'themes.php' ][ 20 ] = array(
-        __( 'Asides' ),
-        'edit_theme_options',
-        'edit.php?post_type=_aside'
-      );
-
-    }
-
-    /**
      * Primary Hook
      *
      * @author Usability Dynamics
