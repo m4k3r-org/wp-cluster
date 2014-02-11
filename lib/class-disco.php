@@ -285,11 +285,6 @@ namespace UsabilityDynamics {
       $this->domain  = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ));
       $this->version = wp_get_theme()->get( 'Version' );
 
-      // Make theme available for translation
-      if( is_dir( get_template_directory() . '/static/languages' ) ) {
-        load_theme_textdomain( $this->domain, get_template_directory() . '/static/languages' );
-      }
-
       // Configure Theme.
       $this->initialize(array(
         'key'     => 'disco',
@@ -600,6 +595,13 @@ namespace UsabilityDynamics {
         )
       ));
 
+      // Add Management UI.
+      $this->manage( array(
+        'id'       => 'disco_manage',
+        'title'    => __( 'Manage', $this->domain ),
+        'template' => dirname( __DIR__ ) . '/templates/admin.manage.php'
+      ));
+
       // Enables Customizer for Options.
       $this->customizer( array(
         'background-color' => array(),
@@ -638,30 +640,51 @@ namespace UsabilityDynamics {
         'data'  => $this->get_model()
       ));
 
+      // Register Navigation Menus
+      $this->menus( array(
+        'primary' => array(
+          'name' => __( 'Primary', $this->domain )
+        ),
+        'secondary'  => array(
+          'name' => __( 'Secondary', $this->domain )
+        ),
+        'social'  => array(
+          'name' => __( 'Social', $this->domain )
+        ),
+        'footer'  => array(
+          'name' => __( 'Footer', $this->domain )
+        ),
+        'mobile'  => array(
+          'name' => __( 'Mobile', $this->domain )
+        )
+      ));
+
       // Core Actions
       add_action( 'init', array( $this, 'init' ), 100 );
       add_action( 'template_redirect', array( $this, 'redirect' ), 100 );
       add_action( 'admin_init', array( $this, 'admin' ));
-      add_action( 'wp_footer', array( $this, 'wp_footer' ));
       add_action( 'widgets_init', array( $this, 'widgets' ));
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 600 );
+
+      // Initializes Wordpress Menufication
+      if( class_exists( '\Menufication' ) ) {
+        $this->menufication = \Menufication::getInstance();
+      }
 
       return $wp_disco = $this;
 
     }
 
+    /**
+     * Enqueue Frontend Scripts
+     *
+     * @author Usability Dynamics
+     * @since 0.1.0
+     */
     public function wp_enqueue_scripts() {
-
       wp_enqueue_style( 'app.bootstrap' );
       wp_enqueue_script( 'app.bootstrap' );
-      wp_enqueue_script( 'jquery-new-ud-elasticsearch' );
-      wp_enqueue_script( 'jquery-ui-datepicker' );
-      wp_enqueue_script( 'jquery-ui-tabs' );
-      wp_enqueue_script( 'google-maps' );
-
     }
-
-    public function wp_footer() {}
 
     public function widgets() {
 

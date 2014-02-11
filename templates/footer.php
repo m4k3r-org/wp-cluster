@@ -58,7 +58,7 @@ if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
           <div class="cfct-module">
             <?php wp_nav_menu( array( 'theme_location' => 'bottom_of_page_menu', 'menu_class' => 'footer-nav flawless-menu', 'fallback_cb' => 'flawless_list_pages' ) ); ?>
             <div class="footer_copyright">Copyright 1993-<?php echo date( 'Y' ); ?> SFX-Disco Operating LLC</div>
-            <div class="footer_copyright">v2.0.3</div>
+            <div class="footer_copyright">v<?php echo wp_disco()->version; ?></div>
           </div>
         </div>
 
