@@ -1,3 +1,6 @@
+### To Do
+* Add 404 page handler that uses a custom WP page with a specified page template.
+
 ### Methods
 * wp_disco()->aside()
 * wp_disco()->nav()

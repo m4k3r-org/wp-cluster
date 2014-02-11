@@ -1,29 +1,28 @@
+@import "vendor/bootstrap/bootstrap.less";
+// @import "variables";
+// @import "fonts";
+// @import "glyphicons";
+// @import "style";
+// @import "content";
+// @import "countdown";
+// @import "carousel";
+// @import "custom";
+// @import "menufication";
+// @import "editor-style";
+// @import "modules";
+// @import "shortcodes";
 // Core.
-@import "carrington.less";
 @import "flawless.base.less";
 @import "flawless.skin.less";
 @import "flawless.global.less";
 @import "app.content.less";
 // jQuery Modules.
-@import "vendor/twitter.bootstrap.less";
 @import "vendor/jquery.jqtransform.less";
 @import "vendor/jquery.simplyscroll.less";
 @import "vendor/flexslider.less";
 @import "vendor/select2.less";
 @import "http://fonts.googleapis.com/css?family=Droid+Sans";
-
-.flawless_toggable_debug {
-  height: 10em;
-  -webkit-transition: all .5s ease;
-  -moz-transition: all .5s ease;
-  transition: all .5s ease;
-}
-
-.flawless_toggable_debug:hover {
-  opacity: 1;
-  height: 30em;
-  overflow-y: scroll;
-}
+@import "utility.less";
 
 /**
  *  CSS for Screen Only
@@ -207,11 +206,6 @@
 
   .icon-permalink {
     background-position: -242px -5px;
-  }
-
-  .super_wrapper {
-    max-width: none;
-    padding: 0;
   }
 
   .background_header_image {
@@ -2431,35 +2425,35 @@
   }
 
   .footer .social .t {
-    background: transparent url('/assets/images/social_logos/t.png');
+    // background: transparent url('/assets/images/social_logos/t.png');
   }
 
   .footer .social .t:hover {
-    background: transparent url('/assets/images/social_logos/t_hover.png');
+    // background: transparent url('/assets/images/social_logos/t_hover.png');
   }
 
   .footer .social .f {
-    background: transparent url('/assets/images/social_logos/f.png');
+    // background: transparent url('/assets/images/social_logos/f.png');
   }
 
   .footer .social .f:hover {
-    background: transparent url('/assets/images/social_logos/f_hover.png');
+    // background: transparent url('/assets/images/social_logos/f_hover.png');
   }
 
   .footer .social .y {
-    background: transparent url('/assets/images/social_logos/y.png');
+    // background: transparent url('/assets/images/social_logos/y.png');
   }
 
   .footer .social .y:hover {
-    background: transparent url('/assets/images/social_logos/y_hover.png');
+    // background: transparent url('/assets/images/social_logos/y_hover.png');
   }
 
   .footer .social .g {
-    background: transparent url('/assets/images/social_logos/i.png');
+    // background: transparent url('/assets/images/social_logos/i.png');
   }
 
   .footer .social .g:hover {
-    background: transparent url('/assets/images/social_logos/i_hover.png');
+    // background: transparent url('/assets/images/social_logos/i_hover.png');
   }
 
   .footer .footer_events_count .count {
@@ -2629,16 +2623,6 @@
     padding-top: 0px;
   }
 
-  /*  #filter_wrapper,
-    #filter_wrapper *,
-    #dynamic_filter[dynamic_filter="hdp_photo_gallery"],
-    #dynamic_filter[dynamic_filter="hdp_photo_gallery"] *,
-    #dynamic_filter[dynamic_filter="hdp_video"] {
-      display: none !important;
-      visibility: hidden !important;
-      position: static !important;
-    }*/
-  /** Change the header bread crumb */
   div.breadcrumbs {
     height: auto;
     line-height: 1.4em;

@@ -6,7 +6,7 @@
 ?>
 
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-<div id="post-<?php the_ID(); ?>" class="<?php wp_disco()->module_class( 'loop-listing cfct-module' ); ?>">
+<div id="post-<?php the_ID(); ?>" class="<?php wp_disco()->module_class( 'loop-listing module' ); ?>">
   <div class="post_listing_inner">
     <?php wp_disco()->page_title( array( 'link' => true, 'before' => '<h2 class="entry-title">', 'after' => '</h2>' ) ); ?>
     <?php get_template_part( 'templates/article/entry-meta-header', get_post_format() ); ?>
@@ -20,7 +20,7 @@
 <?php if (  $wp_query->max_num_pages > 1 ) : ?>
   <div class="row-fluid navigation">
     <div class="span6">
-        <span class="cfct-module nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'flawless' ) ); ?></span>
+        <span class="module nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'flawless' ) ); ?></span>
     </div>
     <div class="span6">
       <span class="cfct-module nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'flawless' ) ); ?></span>

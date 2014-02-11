@@ -17,40 +17,43 @@
 
 <?php get_template_part( 'templates/header', 'page' ); ?>
 
-<?php get_template_part( 'templates/aside/attention', 'page' ); ?>
+<section id="body-content" class="frame">
 
-<div class="<?php wp_disco()->wrapper_class( ); ?>">
+  <?php get_template_part( 'templates/aside/attention', 'page' ); ?>
 
   <?php wp_disco()->widget_area( 'left_sidebar' ); ?>
 
-  <div class="<?php wp_disco()->block_class( 'main cfct-block' ); ?>">
+  <section class="">
+
     <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-    <div id="post-<?php the_ID(); ?>" class="<?php wp_disco()->module_class(); ?>">
-    
-      <?php do_action( 'flawless_ui::above_header' ); ?>
 
-      <header class="entry-title-wrapper">
-        <?php wp_disco()->breadcrumbs(); ?>
-        <?php wp_disco()->page_title(); ?>
-      </header>
+      <article id="post-<?php the_ID(); ?>" class="<?php wp_disco()->module_class(); ?>" data-object-id="<?php the_ID(); ?>">
 
-      <?php get_template_part( 'templates/article/entry-meta', 'header' ); ?>
+        <header class="entry-title-wrapper">
+          <?php wp_disco()->page_title(); ?>
+        </header>
 
-      <div class="entry-content clearfix">
-      <?php the_content( 'More Info' ); ?>
-      </div>
+        <aside class="breadcrumbs">
+          <?php wp_disco()->breadcrumbs(); ?>
+        </aside>
 
-      <?php get_template_part( 'templates/article/comments', get_post_type() ); ?>
-      <?php get_template_part( 'templates/article/entry-meta', 'footer' ); ?>
+        <?php get_template_part( 'templates/article/entry-meta', 'header' ); ?>
 
-    </div><!-- flawless_module_class() -->
+        <div class="entry-content clearfix">
+          <?php the_content( 'More Info' ); ?>
+        </div>
+
+        <?php get_template_part( 'templates/article/comments', get_post_type() ); ?>
+        <?php get_template_part( 'templates/article/entry-meta', 'footer' ); ?>
+
+      </article>
 
     <?php endwhile; endif; ?>
 
-  </div>
+  </section>
 
   <?php wp_disco()->widget_area( 'right_sidebar' ); ?>
 
-</div>
+</section>
 
 <?php get_template_part( 'templates/footer', get_post_type() ); ?>

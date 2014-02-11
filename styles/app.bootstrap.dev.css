@@ -67,12 +67,6 @@
     left: 0px;
     z-index: -1;
   }
-  .super_wrapper,
-  .general_header_wrapper,
-  .flawless_dynamic_area {
-    position: relative;
-  }
-  /*====[General Resets & Fixes]=============================*/
   ul.nav.tabs li {
     position: absolute;
     left: -10000px;

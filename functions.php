@@ -1069,7 +1069,7 @@ if( !function_exists( 'flawless_block_class' ) ) {
 
 if( !function_exists( 'flawless_module_class' ) ) {
   /**
-   * Builds classes for the .hentry.cfct-module based on conditional elements.
+   * Builds classes for the .hentry.module based on conditional elements.
    *
    * Called in templates intead of post_class(). On CB pages, the cfct-move is removed by flawless_carrington::module_class()
    *
@@ -1087,7 +1087,7 @@ if( !function_exists( 'flawless_module_class' ) ) {
     $classes = get_post_class( '', $post->ID );
 
     $classes[ ] = $custom_class;
-    $classes[ ] = 'cfct-module';
+    $classes[ ] = 'module';
 
     $classes = apply_filters( 'flawless::module_class', $classes );
 
@@ -1166,7 +1166,7 @@ if( !function_exists( 'flawless_element' ) ) {
 
     $classes = explode( ' ', $classes );
 
-    $classes[ ] = 'cfct-module';
+    $classes[ ] = 'module';
     $classes[ ] = 'flawless_module';
 
     $classes = implode( ' ', $classes );

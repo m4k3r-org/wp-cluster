@@ -6,7 +6,7 @@
 ?>
 
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-<div id="post-<?php the_ID(); ?>" class="<?php wp_disco()->module_class( 'loop-listing cfct-module' ); ?>">
+<div id="post-<?php the_ID(); ?>" class="<?php wp_disco()->module_class( 'loop-listing module' ); ?>">
   <div class="post_listing_inner">
     <?php wp_disco()->page_title( array( 'link' => true, 'before' => '<h2 class="entry-title">', 'after' => '</h2>' ) ); ?>
     <?php get_template_part( 'templates/article/entry-meta-header', get_post_format() ); ?>
