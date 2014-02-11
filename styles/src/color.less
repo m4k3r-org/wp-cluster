@@ -582,3 +582,38 @@ article.author {
   }
   
 }
+
+/* ============================
+  COMMENTS
+============================ */
+
+article.comments {
+
+  .title {
+    border-color: darken( @content-border-color, 10% );
+    background-color: @content-border-color;
+  }
+  
+  .comments-list {
+  
+    ul {
+    
+      li {
+        border-color: @content-border-color;
+        
+        img.avatar {
+          border-color: darken( @content-border-color, 20% );
+        }
+        
+        .comment-author .fn,
+        .reply a {
+          color: @default-color;
+        }
+        
+      }
+    
+    }
+  
+  }
+
+}
