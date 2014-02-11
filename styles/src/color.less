@@ -442,7 +442,7 @@ footer {
   Single Post content
 ============================ */
 
-.inner-wrapper.single {
+.container-wrap .inner-wrapper.single {
 
   header {
     .article-title {
@@ -450,14 +450,42 @@ footer {
     }
   }
   
-  blockquote {
-    border-color: @default-color-active;
-    &, p {
-      color: @default-color;
+  article {
+  
+    blockquote {
+      border-color: @default-color-active;
+      &, p {
+        color: @default-color;
+      }
     }
+  
+  }
+  
+  
+
+}
+
+/* ============================
+  Author
+============================ */
+
+article.author {
+
+  .author-wrapper {
+    border-color: @content-border-color;
+  }
+  
+  img.avatar {
+    border-color: @default-color;
+  }
+  
+  .display-name {
+    color: @content-title-color;
   }
 
 }
+
+
 
 /* ==============
  Menuficiation
