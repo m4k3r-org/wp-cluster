@@ -84,7 +84,10 @@ namespace UsabilityDynamics {
         load_theme_textdomain( $this->domain, get_template_directory() . '/static/languages' );
       }
 
+
       // Initialize Settings.
+      $this->initialize();
+
       $this->settings();
 
       // Configure API Methods.
@@ -527,103 +530,6 @@ namespace UsabilityDynamics {
           'assets' => admin_url( 'admin-ajax.php' ),
         )
       ));
-
-    }
-
-    /**
-     * Display Nav Menu.
-     *
-     * @example
-     *
-     *      // Show Primary Navigation with depth of 2
-     *      wp_festival()->nav( 'primary', 2 );
-     *
-     *      // Show My Menu in footer location.
-     *      wp_festival()->nav( 'my-menu', 'footer' );
-     *
-     * @param $name {String|Integer|Null}
-     * @param $location {String|Integer|Null}
-     *
-     * @return bool|mixed|string|void
-     */
-    public function nav( $name = null, $location = null ) {
-
-      return wp_nav_menu( apply_filters( $name, array(
-        'theme_location' => is_string( $location ) ? $location : $name,
-        'depth'          => is_numeric( $location ) ? $location : 2,
-        'menu_class'     => implode( ' ', array_filter( array( 'festival-menu', 'nav', 'navbar-nav', $name, is_string( $location ) ? $location : '' ) ) ),
-        'fallback_cb'    => false,
-        'container'      => false,
-        'items_wrap'     => '<ul data-menu-name="%1$s" class="%2$s">%3$s</ul>',
-        'walker'         => new \UsabilityDynamics\Theme\Nav_Menu,
-        'echo'           => false
-      ) ));
-
-    }
-
-    /**
-     * Get a Content Section.
-     *
-     * If section can not be found, will attempt to find template of same name in /templates directory.
-     *
-     * @example
-     *
-     *        wp_festival()->aside( 'header' );
-     *
-     *
-     * @param null  $name
-     * @param array $args
-     *
-     * @return mixed|null
-     */
-    public function aside( $name = null, $args = array() ) {
-      global $post;
-
-      $args = (object) wp_parse_args( $args, $default = array(
-        'type'           => '_aside',
-        'class'          => 'modular-aside',
-        'more_link_text' => null,
-        'strip_teaser'   => null,
-        'return'         => false,
-      ));
-
-      // Preserve Post.
-      $_post = $post;
-
-      // Using query_posts() will not work because we must not change the global query.
-      $custom_loop = new \WP_Query( array(
-        'name'      => $name,
-        'post_type' => $args->type
-      ));
-
-      // die(json_encode( $custom_loop ));
-
-      if( $custom_loop->have_posts() ) {
-        while( $custom_loop->have_posts() ) {
-          $custom_loop->the_post();
-          $content = get_the_content( $args->more_link_text, $args->strip_teaser );
-          $content = apply_filters( 'the_content', $content );
-          $content = str_replace( ']]>', ']]&gt;', $content );
-        }
-      }
-
-      // Return post.
-      $post = $_post;
-
-      // Try to locale regular aside.
-      if( !isset( $content ) || !$content ) {
-        ob_start();
-        get_template_part( 'templates/aside/' . $name, get_post_type());
-        $content = ob_get_clean();
-      }
-
-      $content = apply_filters( 'festival:aside', isset( $content ) ? '<aside class="' . $args->class . ' aside-' . $name . '" data-aside="' . $name . '">' . $content . '</aside>' : null, $name );
-
-      if( $args->return ) {
-        return $content;
-      } else {
-        echo $content;
-      }
 
     }
 
