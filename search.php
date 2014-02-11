@@ -18,7 +18,7 @@
 
 ?>
 
-<?php get_header( 'search' ) ?>
+<?php get_template_part( 'templates/header', 'search' ) ?>
 
 <?php get_template_part( 'attention', 'search' ); ?>
 
@@ -44,4 +44,4 @@
 
 </div>
 
-<?php get_footer(); ?>
+<?php get_template_part( 'templates/footer', 'search' ) ?>

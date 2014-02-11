@@ -292,28 +292,6 @@ namespace UsabilityDynamics {
         'version' => $this->version
       ));
 
-      // Declare Public Scripts.
-      $this->scripts(array(
-        'app' => get_stylesheet_directory() . '/scripts/app.js',
-        'app.admin' => get_stylesheet_directory() . '/scripts/app.admin.js',
-        'jquery.elasticsearch' => get_stylesheet_directory() . '/scripts/jquery.new.ud.elasticsearch.js',
-        'jquery.fitvids' => get_stylesheet_directory() . '/scripts/jquery.fitvids.js',
-        'jquery.cookie' => get_stylesheet_directory() . '/scripts/jquery.cookie.js',
-        'jquery.flexslider' => get_stylesheet_directory() . '/scripts/jquery.flexslider.js',
-        'jquery.jqtransform' => get_stylesheet_directory() . '/scripts/jquery.jqtransform.js',
-        'jquery.simplyscroll' => get_stylesheet_directory() . '/scripts/jquery.simplyscroll.js'
-      ));
-
-      // Declare Public Styles.
-      $this->styles(array(
-        'app' => get_stylesheet_directory() . '/styles/app.css',
-        'app.admin' => get_stylesheet_directory() . '/styles/app.admin.css',
-        'content' => get_stylesheet_directory() . '/styles/content.css',
-        'bootstrap' => get_stylesheet_directory() . '/styles/bootstrap.css',
-        'jquery.jqtransform' => get_stylesheet_directory() . '/styles/jqtransform.css',
-        'jquery.simplyscroll' => get_stylesheet_directory() . '/styles/simplyscroll.css'
-      ));
-
       // Declare Public Models.
       $this->models(array(
         'theme'  => array(),
@@ -556,14 +534,14 @@ namespace UsabilityDynamics {
           'charset' => get_bloginfo( 'charset' )
         ),
         array(
-          'tag' => 'meta',
-          'name' => 'description',
-          'content' => ''
-        ),
-        array(
           'tag' => 'link',
           'rel' => 'shortcut icon',
           'href' => home_url( '/images/favicon.png' )
+        ),
+        array(
+          'tag' => 'link',
+          'rel' => 'api',
+          'href' => admin_url( 'admin-ajax.php' )
         ),
         array(
           'tag' => 'link',
@@ -574,12 +552,6 @@ namespace UsabilityDynamics {
           'tag' => 'link',
           'rel' => 'profile',
           'href' => 'http://gmpg.org/xfn/11'
-        ),
-        array(
-          'tag' => 'script',
-          'type' => 'application/javascript',
-          'data-main' => '/scripts/app',
-          'href' => 'cdn.udx.io/udx.requires.js'
         ),
         array(
           'tag' => 'link',
@@ -615,7 +587,31 @@ namespace UsabilityDynamics {
       /* Transdomain */
       define( 'HDDP', $this->domain );
 
-      load_theme_textdomain( $this->domain, get_stylesheet_directory() . '/languages' );
+      // Declare Public Scripts.
+      $this->scripts(array(
+        'app.boostrap' => get_stylesheet_directory() . '/scripts/app.boostrap.js',
+        'app.main' => get_stylesheet_directory() . '/scripts/app.main.js',
+        'app.admin' => get_stylesheet_directory() . '/scripts/app.admin.js',
+        'jquery.elasticsearch' => get_stylesheet_directory() . '/scripts/jquery.new.ud.elasticsearch.js',
+        'jquery.fitvids' => get_stylesheet_directory() . '/scripts/jquery.fitvids.js',
+        'jquery.cookie' => get_stylesheet_directory() . '/scripts/jquery.cookie.js',
+        'jquery.flexslider' => get_stylesheet_directory() . '/scripts/jquery.flexslider.js',
+        'jquery.jqtransform' => get_stylesheet_directory() . '/scripts/jquery.jqtransform.js',
+        'jquery.simplyscroll' => get_stylesheet_directory() . '/scripts/jquery.simplyscroll.js'
+      ));
+
+      // Declare Public Styles.
+      $this->styles(array(
+        'app.bootstrap' => get_stylesheet_directory() . '/styles/app.bootstrap.css',
+        'app.main' => get_stylesheet_directory() . '/styles/app.main.css',
+        'app.admin' => get_stylesheet_directory() . '/styles/app.admin.css',
+        'content' => get_stylesheet_directory() . '/styles/content.css',
+        'bootstrap' => get_stylesheet_directory() . '/styles/bootstrap.css',
+        'jquery.jqtransform' => get_stylesheet_directory() . '/styles/jqtransform.css',
+        'jquery.simplyscroll' => get_stylesheet_directory() . '/styles/simplyscroll.css'
+      ));
+
+      load_theme_textdomain( $this->domain, false, get_stylesheet_directory() . '/languages' );
 
       // Register Standard Scripts.
       wp_register_script( 'jquery-ud-form_helper', get_stylesheet_directory_uri() . '/scripts/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1.3', true );
@@ -714,7 +710,8 @@ namespace UsabilityDynamics {
 
       // Enqueue Frontend Scripts & Styles.
       add_action( 'wp_enqueue_scripts', function () {
-        wp_enqueue_script( 'app' );
+        wp_enqueue_style( 'app.bootstrap' );
+        wp_enqueue_script( 'app.bootstrap' );
         wp_enqueue_script( 'jquery-new-ud-elasticsearch' );
         wp_enqueue_script( 'jquery-ui-datepicker' );
         wp_enqueue_script( 'jquery-ui-tabs' );

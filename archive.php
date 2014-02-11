@@ -16,7 +16,7 @@ if( !function_exists( 'get_header' ) ) {
 
 ?>
 
-<?php get_template_part( 'templates/page/header', 'archive' ); ?>
+<?php get_template_part( 'templates/header', 'archive' ); ?>
 
 <?php get_template_part( 'attention', 'archive' ); ?>
 

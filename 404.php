@@ -16,7 +16,7 @@
 
 ?>
 
-<?php get_template_part( 'templates/page/header', '404' ); ?>
+<?php get_template_part( 'templates/header', '404' ); ?>
 
 <?php get_template_part( 'attention', '404' ); ?>
 
@@ -62,4 +62,4 @@
 
 </div>
 
-<?php get_template_part( 'templates/page/header', '404' ); ?>
+<?php get_template_part( 'templates/footer', '404' ); ?>

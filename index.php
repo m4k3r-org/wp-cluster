@@ -10,7 +10,7 @@
  */
 ?>
 
-<?php get_header() ?>
+<?php get_template_part( 'templates/header' ); ?>
 
 <?php get_template_part( 'attention', 'home' ); ?>
 
@@ -27,4 +27,4 @@
 
 </div>
 
-<?php get_footer() ?>
+<?php get_template_part( 'templates/footer' ); ?>

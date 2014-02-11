@@ -62,7 +62,7 @@
   }
 ?>
 
-<?php get_header( 'taxonomy' ) ?>
+<?php get_template_part( 'templates/header', 'taxonomy' ) ?>
 
 <?php get_template_part('attention', 'taxonomy'); ?>
 

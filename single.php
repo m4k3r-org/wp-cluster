@@ -12,7 +12,7 @@
 
 <?php get_header(); ?>
 
-<?php get_template_part( 'templates/page/header', get_post_type() ); ?>
+<?php get_template_part( 'templates/header', get_post_type() ); ?>
 
 <?php get_template_part( 'attention', 'post' ); ?>
 

@@ -168,4 +168,4 @@ switch( $event[ 'post_type' ] ) {
 </div>
 
 <?php if( $event[ 'json' ] ) { echo '<script type="text/javascript">var hdp_current_event = jQuery.parseJSON( ' . json_encode( json_encode( $event[ 'json' ] ) ) . ' ); </script>'; } ?>
-<?php get_footer() ?>
+<?php get_template_part( 'templates/footer'  ); ?>
