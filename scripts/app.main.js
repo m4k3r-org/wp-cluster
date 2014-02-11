@@ -1,1 +1,1 @@
-require(["/models/locale","/models/settings"],function(){return void console.log("app","loaded")});
+require(["/assets/models/locale","/assets/models/settings"],function(){return void console.log("app","loaded")});

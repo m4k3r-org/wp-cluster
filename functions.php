@@ -275,12 +275,12 @@ if( !function_exists( 'hdp_share_button' ) ) {
         <ul>
           <li><a href="http://www.facebook.com/sharer.php?u=<?php the_permalink(); ?>" target="_blank">Share on Facebook</a></li>
           <li><a href="http://twitter.com/home/?status=<?php the_title(); ?>%20<?php the_permalink(); ?>" target="_blank">Share on Twitter</a></li>
-          <li><a href="https://plusone.google.com/_/+1/confirm?hl=en&url=<?php the_permalink(); ?>" target="_blank">Share on Google+</a></li>
+          <li><a href="https://plusone.google.com/_/+1/confirm?hl=en&amp;url=<?php the_permalink(); ?>" target="_blank">Share on Google+</a></li>
         </ul>
       </div>
     </div>
 
-    <script type="text/javascript" language="javascript">
+    <script type="text/javascript">
       if( typeof jQuery == 'function' ) {
         jQuery( document ).ready( function() {
 
