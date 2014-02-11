@@ -814,26 +814,6 @@ namespace UsabilityDynamics {
     }
 
     /**
-     * Display Nav Menu.
-     *
-     * @todo Add a way to configure depth from setings.
-     *
-     * @temporary
-     */
-    public function nav( $name, $location ) {
-
-      $_class = array( 'flawless-menu', $name, $location );
-
-      $_menu = wp_nav_menu( apply_filters( $name, array(
-          'theme_location' => $location,
-          'menu_class'     => implode( ' ', $_class ),
-          'fallback_cb'    => false,
-          'echo'           => false )
-      ));
-
-    }
-
-    /**
      * Force our custom template to load for Event post types
      *
      * @method redirect

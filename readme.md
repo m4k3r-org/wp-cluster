@@ -1,4 +1,6 @@
 ### Methods
+* wp_disco()->aside()
+* wp_disco()->nav()
 * wp_disco()->get_events_count()
 * wp_disco()->widget_area()
 * wp_disco()->breadcrumbs()
