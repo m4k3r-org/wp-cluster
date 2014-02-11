@@ -40,8 +40,7 @@
       <?php the_content( 'More Info' ); ?>
       </div>
 
-      <?php comments_template(); ?>
-
+      <?php get_template_part( 'templates/article/comments', get_post_type() ); ?>
       <?php get_template_part( 'templates/article/entry-meta', 'footer' ); ?>
 
     </div><!-- flawless_module_class() -->

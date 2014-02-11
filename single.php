@@ -32,9 +32,9 @@
         <?php get_template_part( 'templates/article/entry-meta', 'header' ); ?>
 
         <div class="entry-content clearfix">
-      <?php the_content( 'More Info' ); ?>
-      <?php comments_template(); ?>
-      </div>
+        <?php the_content( 'More Info' ); ?>
+        <?php get_template_part( 'templates/article/comments', get_post_type() ); ?>
+        </div>
 
         <?php get_template_part( 'templates/article/entry-meta', 'footer' ); ?>
 

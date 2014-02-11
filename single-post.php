@@ -77,7 +77,7 @@ $side_meta[ ] = '<li class="permalink"><a href="' . get_permalink() . '"><i clas
           <?php wp_disco()->page_title(); ?>
         </header>
 
-        <?php comments_template(); ?>
+        <?php get_template_part( 'templates/article/comments', get_post_type() ); ?>
       </div>
 
         <?php get_template_part( 'templates/article/entry-meta', 'footer' ); ?>

@@ -155,8 +155,8 @@ switch( $event[ 'post_type' ] ) {
 
       <?php if( post_type_supports( $event[ 'post_type' ], 'comments' ) && $event[ 'comment_status' ] == 'open' ) { ?>
         <div id="section_comments" class="inner">
-        <?php comments_template(); ?>
-      </div>
+          <?php get_template_part( 'templates/article/comments', get_post_type() ); ?>
+        </div>
       <?php } ?>
 
       <?php if( $event[ 'geo_located' ] ) { ?>

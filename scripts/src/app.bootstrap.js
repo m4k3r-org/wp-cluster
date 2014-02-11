@@ -9,6 +9,6 @@
 require( [ '/assets/models/locale', '/assets/models/settings' ], function( locale, settings ) {
   console.log( 'app.bootstrap', 'loaded' );
 
-  return;
+  require.loadStyle( '/assets/styles/app.main.css' );
 
 });
