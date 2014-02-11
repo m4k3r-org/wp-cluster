@@ -39,7 +39,7 @@ switch( $event[ 'post_type' ] ) {
 
 <?php get_template_part( 'templates/header', 'post' ); ?>
 
-<?php get_template_part( 'attention', 'post' ); ?>
+<?php get_template_part( 'templates/aside/attention', 'post' ); ?>
 
 <div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>">
 

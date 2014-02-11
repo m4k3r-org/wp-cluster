@@ -1,5 +1,10 @@
 ### Methods
 * wp_disco()->get_events_count()
+* wp_disco()->widget_area()
+* wp_disco()->breadcrumbs()
+* wp_disco()->page_title()
+* wp_disco()->module_class()
+* wp_disco()->wrapper_class()
 
 
 ### Legacy Code

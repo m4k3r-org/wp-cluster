@@ -28,6 +28,7 @@ if( !function_exists( 'wp_disco' ) ) {
    */
   function wp_disco( $key = false ) {
     global $wp_disco;
+
     return $key ? $wp_disco->get( $key ) : $wp_disco;
   }
 }
@@ -423,7 +424,7 @@ if( !function_exists( '_elastic_label' ) ) {
   }
 }
 
-if ( !function_exists( 'flawless_comment_form' ) ) {
+if( !function_exists( 'flawless_comment_form' ) ) {
 
   /**
    * Outputs a complete commenting form for use within a template.
@@ -444,47 +445,48 @@ if ( !function_exists( 'flawless_comment_form' ) ) {
   function flawless_comment_form( $args = array(), $post_id = null ) {
     global $id;
 
-    if ( null === $post_id )
+    if( null === $post_id )
       $post_id = $id;
     else
       $id = $post_id;
 
-    if ( !comments_open() ) {
+    if( !comments_open() ) {
       do_action( 'comment_form_comments_closed' );
+
       return;
     }
 
-    $commenter = wp_get_current_commenter();
-    $user = wp_get_current_user();
+    $commenter     = wp_get_current_commenter();
+    $user          = wp_get_current_user();
     $user_identity = !empty( $user->ID ) ? $user->display_name : '';
 
     $req = get_option( 'require_name_email' );
 
     $aria_req = ( $req ? " aria-required='true'" : '' );
-    $fields = array(
+    $fields   = array(
       'author' => '<p class="comment-form-author">' . '<label for="author">' . __( 'Name' ) . '</label> ' . ( $req ? '<span class="required">*</span>' : '' ) .
         '<input id="author" placeholder="Your Name" name="author" type="text" value="' . esc_attr( $commenter[ 'comment_author' ] ) . '" size="30"' . $aria_req . ' /></p>',
-      'email' => '<p class="comment-form-email"><label for="email">' . __( 'Email' ) . '</label> ' . ( $req ? '<span class="required">*</span>' : '' ) .
+      'email'  => '<p class="comment-form-email"><label for="email">' . __( 'Email' ) . '</label> ' . ( $req ? '<span class="required">*</span>' : '' ) .
         '<input id="email" placeholder="Your Email Address" name="email" type="text" value="' . esc_attr( $commenter[ 'comment_author_email' ] ) . '" size="30"' . $aria_req . ' /></p>',
-      'url' => '<p class="comment-form-url"><label for="url">' . __( 'Website' ) . '</label>' .
+      'url'    => '<p class="comment-form-url"><label for="url">' . __( 'Website' ) . '</label>' .
         '<input id="url" placeholder="Website (optional)" name="url" type="text" value="' . esc_attr( $commenter[ 'comment_author_url' ] ) . '" size="30" /></p>',
     );
 
     //$required_text = sprintf( ' ' . __( 'Required fields are marked %s' ), '<span class="required">*</span>' );
 
     $defaults = array(
-      'fields' => apply_filters( 'comment_form_default_fields', $fields ),
-      'comment_field' => '<p class="comment-form-comment"><label for="comment">' . _x( 'Comment', 'noun' ) . '</label><textarea id="comment" placeholder="Your comment goes here." name="comment" cols="45" rows="8" aria-required="true"></textarea></p>',
-      'must_log_in' => '<p class="must-log-in">' . sprintf( __( 'You must be <a href="%s">logged in</a> to post a comment.' ), wp_login_url( apply_filters( 'the_permalink', get_permalink( $post_id ) ) ) ) . '</p>',
-      'logged_in_as' => '<p class="logged-in-as">' . sprintf( __( 'Logged in as <a href="%1$s">%2$s</a>. <a href="%3$s" title="Log out of this account">Log out?</a>' ), admin_url( 'profile.php' ), $user_identity, wp_logout_url( apply_filters( 'the_permalink', get_permalink( $post_id ) ) ) ) . '</p>',
+      'fields'               => apply_filters( 'comment_form_default_fields', $fields ),
+      'comment_field'        => '<p class="comment-form-comment"><label for="comment">' . _x( 'Comment', 'noun' ) . '</label><textarea id="comment" placeholder="Your comment goes here." name="comment" cols="45" rows="8" aria-required="true"></textarea></p>',
+      'must_log_in'          => '<p class="must-log-in">' . sprintf( __( 'You must be <a href="%s">logged in</a> to post a comment.' ), wp_login_url( apply_filters( 'the_permalink', get_permalink( $post_id ) ) ) ) . '</p>',
+      'logged_in_as'         => '<p class="logged-in-as">' . sprintf( __( 'Logged in as <a href="%1$s">%2$s</a>. <a href="%3$s" title="Log out of this account">Log out?</a>' ), admin_url( 'profile.php' ), $user_identity, wp_logout_url( apply_filters( 'the_permalink', get_permalink( $post_id ) ) ) ) . '</p>',
       'comment_notes_before' => '<p class="comment-notes">' . __( 'Your email address will not be published.' ) . ( $req ? $required_text : '' ) . '</p>',
-      'comment_notes_after' => '<p class="form-allowed-tags">' . sprintf( __( 'You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes: %s' ), ' <code>' . allowed_tags() . '</code>' ) . '</p>',
-      'id_form' => 'flawless_comment_form',
-      'id_submit' => 'submit',
-      'title_reply' => __( 'Leave a Reply' ),
-      'title_reply_to' => __( 'Leave a Reply to %s' ),
-      'cancel_reply_link' => __( 'Cancel reply' ),
-      'label_submit' => __( 'Post Comment' ),
+      'comment_notes_after'  => '<p class="form-allowed-tags">' . sprintf( __( 'You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes: %s' ), ' <code>' . allowed_tags() . '</code>' ) . '</p>',
+      'id_form'              => 'flawless_comment_form',
+      'id_submit'            => 'submit',
+      'title_reply'          => __( 'Leave a Reply' ),
+      'title_reply_to'       => __( 'Leave a Reply to %s' ),
+      'cancel_reply_link'    => __( 'Cancel reply' ),
+      'label_submit'         => __( 'Post Comment' ),
     );
 
     $args = wp_parse_args( $args, apply_filters( 'comment_form_defaults', $defaults ) ); ?>
@@ -494,21 +496,21 @@ if ( !function_exists( 'flawless_comment_form' ) ) {
       <h3 class="reply-title"><?php comment_form_title( $args[ 'title_reply' ], $args[ 'title_reply_to' ] ); ?>
         <small><?php cancel_comment_reply_link( $args[ 'cancel_reply_link' ] ); ?></small>
       </h3>
-      <?php if ( get_option( 'comment_registration' ) && !is_user_logged_in() ) : ?>
+      <?php if( get_option( 'comment_registration' ) && !is_user_logged_in() ) : ?>
         <?php echo $args[ 'must_log_in' ]; ?>
         <?php do_action( 'comment_form_must_log_in_after' ); ?>
       <?php else : ?>
         <form class="flawless_comment_form" action="<?php echo site_url( '/wp-comments-post.php' ); ?>" method="post"
           id="<?php echo esc_attr( $args[ 'id_form' ] ); ?>">
           <?php do_action( 'comment_form_top' ); ?>
-          <?php if ( is_user_logged_in() ) : ?>
+          <?php if( is_user_logged_in() ) : ?>
             <?php echo apply_filters( 'comment_form_logged_in', $args[ 'logged_in_as' ], $commenter, $user_identity ); ?>
             <?php do_action( 'comment_form_logged_in_after', $commenter, $user_identity ); ?>
           <?php else : ?>
             <?php echo $args[ 'comment_notes_before' ]; ?>
             <?php
             do_action( 'comment_form_before_fields' );
-            foreach ( ( array ) $args[ 'fields' ] as $name => $field ) {
+            foreach( ( array ) $args[ 'fields' ] as $name => $field ) {
               echo apply_filters( "comment_form_field_{$name}", $field ) . "\n";
             }
             do_action( 'comment_form_after_fields' );
@@ -530,7 +532,7 @@ if ( !function_exists( 'flawless_comment_form' ) ) {
   }
 }
 
-if ( !function_exists( 'get_term_attachment_image' ) ) {
+if( !function_exists( 'get_term_attachment_image' ) ) {
   /**
    * Generate page title to be displayed in a template.
    *
@@ -538,7 +540,7 @@ if ( !function_exists( 'get_term_attachment_image' ) ) {
    */
   function get_term_attachment_image( $term_id = '', $size = 'thumbnail', $icon = false, $attr = '' ) {
 
-    if ( !$term_id && ( is_tax() || is_tag() || is_category() ) ) {
+    if( !$term_id && ( is_tax() || is_tag() || is_category() ) ) {
       $term_id = get_queried_object()->term_id;
     }
 
@@ -546,7 +548,7 @@ if ( !function_exists( 'get_term_attachment_image' ) ) {
   }
 }
 
-if ( !function_exists( 'flawless_page_title' ) ) {
+if( !function_exists( 'flawless_page_title' ) ) {
   /**
    * Generate page title to be displayed in a template.
    *
@@ -563,71 +565,71 @@ if ( !function_exists( 'flawless_page_title' ) ) {
 
     $args = wp_parse_args( $args, array(
       'before' => '<h1 class="entry-title">',
-      'after' => '</h1>',
-      'link' => false
+      'after'  => '</h1>',
+      'link'   => false
     ) );
 
     //** Hide page title if the current title is for the main post (to exclude items in loop) */
-    if ( get_queried_object()->ID == $post->ID && hide_page_title( get_queried_object()->ID ) ) {
+    if( get_queried_object()->ID == $post->ID && hide_page_title( get_queried_object()->ID ) ) {
       return;
     }
 
-    $m = get_query_var( 'm' );
-    $year = get_query_var( 'year' );
+    $m        = get_query_var( 'm' );
+    $year     = get_query_var( 'year' );
     $monthnum = get_query_var( 'monthnum' );
-    $day = get_query_var( 'day' );
-    $search = get_query_var( 's' );
+    $day      = get_query_var( 'day' );
+    $search   = get_query_var( 's' );
 
     $t_sep = '%WP_TITILE_SEP%'; // Temporary separator, for accurate flipping, if necessary
 
     // If there is a post
-    if ( !$args[ 'title' ] && $post->post_title ) {
+    if( !$args[ 'title' ] && $post->post_title ) {
       $args[ 'title' ] = $post->post_title;
     }
 
     // If there's a category or tag
-    if ( !$args[ 'title' ] && ( is_category() || is_tag() ) ) {
+    if( !$args[ 'title' ] && ( is_category() || is_tag() ) ) {
       $args[ 'title' ] = single_term_title( '', false );
     }
 
     // If there's a taxonomy
-    if ( !$args[ 'title' ] && is_tax() ) {
-      $term = get_queried_object();
-      $tax = get_taxonomy( $term->taxonomy );
+    if( !$args[ 'title' ] && is_tax() ) {
+      $term            = get_queried_object();
+      $tax             = get_taxonomy( $term->taxonomy );
       $args[ 'title' ] = single_term_title( $tax->labels->name . $t_sep, false );
     }
 
     // If there's an author
-    if ( !$args[ 'title' ] && is_author() ) {
-      $author = get_queried_object();
+    if( !$args[ 'title' ] && is_author() ) {
+      $author          = get_queried_object();
       $args[ 'title' ] = $author->display_name;
     }
 
     // If there's a post type archive
-    if ( !$args[ 'title' ] && is_post_type_archive() )
+    if( !$args[ 'title' ] && is_post_type_archive() )
       $args[ 'title' ] = post_type_archive_title( '', false );
 
     // If there's a month
-    if ( !$args[ 'title' ] && ( is_archive() && !empty( $m ) ) ) {
-      $my_year = substr( $m, 0, 4 );
-      $my_month = $wp_locale->get_month( substr( $m, 4, 2 ) );
-      $my_day = intval( substr( $m, 6, 2 ) );
+    if( !$args[ 'title' ] && ( is_archive() && !empty( $m ) ) ) {
+      $my_year         = substr( $m, 0, 4 );
+      $my_month        = $wp_locale->get_month( substr( $m, 4, 2 ) );
+      $my_day          = intval( substr( $m, 6, 2 ) );
       $args[ 'title' ] = $my_year . ( $my_month ? $t_sep . $my_month : '' ) . ( $my_day ? $t_sep . $my_day : '' );
     }
 
     // If there's a year
-    if ( !$args[ 'title' ] && ( is_archive() && !empty( $year ) ) ) {
+    if( !$args[ 'title' ] && ( is_archive() && !empty( $year ) ) ) {
       $args[ 'title' ] = $year;
-      if ( !empty( $monthnum ) )
+      if( !empty( $monthnum ) )
         $args[ 'title' ] .= $t_sep . $wp_locale->get_month( $monthnum );
-      if ( !empty( $day ) )
+      if( !empty( $day ) )
         $args[ 'title' ] .= $t_sep . zeroise( $day, 2 );
     }
 
     // If it's a search
-    if ( !$args[ 'title' ] && is_search() ) {
+    if( !$args[ 'title' ] && is_search() ) {
 
-      if ( trim( get_search_query() ) == '' ) {
+      if( trim( get_search_query() ) == '' ) {
         $args[ 'title' ] = __( 'Showing All Results', 'flawless' );
       } else {
         $args[ 'title' ] = sprintf( __( 'Search: %s', 'flawless' ), '<span>' . get_search_query() . '</span>' );
@@ -635,24 +637,24 @@ if ( !function_exists( 'flawless_page_title' ) ) {
 
     }
 
-    if ( !$args[ 'title' ] && is_404() ) {
+    if( !$args[ 'title' ] && is_404() ) {
       $args[ 'title' ] = __( 'Page not found' );
     }
 
-    if ( $args[ 'link' ] ) {
+    if( $args[ 'link' ] ) {
       $args[ 'title' ] = '<a href="' . apply_filters( 'the_permalink', get_permalink() ) . '"  alt="' . $args[ 'title' ] . '" rel="bookmark">' . $args[ 'title' ] . '</a>';
     }
 
     $args[ 'title' ] = $args[ 'before' ] . $args[ 'title' ] . $args[ 'after' ];
 
     $args[ 'title' ] = apply_filters( 'flawless::page_title', $args[ 'title' ], array(
-      'title' => $args[ 'title' ],
-      'before' => $before,
-      'after' => $after,
+      'title'    => $args[ 'title' ],
+      'before'   => $before,
+      'after'    => $after,
       'position' => 'entry-title'
     ) );
 
-    if ( $args[ 'return' ] ) {
+    if( $args[ 'return' ] ) {
       return $args[ 'title' ];
     }
 
@@ -662,7 +664,7 @@ if ( !function_exists( 'flawless_page_title' ) ) {
 
 }
 
-if ( !function_exists( 'flawless_set_color_scheme' ) ) {
+if( !function_exists( 'flawless_set_color_scheme' ) ) {
   /**
    * Set current skin, very basic for now.
    *
@@ -675,7 +677,7 @@ if ( !function_exists( 'flawless_set_color_scheme' ) ) {
   }
 }
 
-if ( !function_exists( 'get_post_for_extended_term' ) ) {
+if( !function_exists( 'get_post_for_extended_term' ) ) {
   /**
    * {}
    *
@@ -684,41 +686,41 @@ if ( !function_exists( 'get_post_for_extended_term' ) ) {
   function get_post_for_extended_term( $term_id = false, $taxonomy = false ) {
     global $wpdb;
 
-    if ( !$term_id ) {
+    if( !$term_id ) {
       return false;
     }
 
-    if ( is_object( $term_id ) ) {
-      $term_id = $term_id->term_id;
+    if( is_object( $term_id ) ) {
+      $term_id  = $term_id->term_id;
       $taxonomy = $taxonomy ? $taxonomy : $term_id->taxonomy;
     }
 
     //** Try to get taxonomy -if this term only has one relationship, it's a good guess */
-    if ( !$taxonomy ) {
+    if( !$taxonomy ) {
       $taxonomy = $wpdb->get_col( "SELECT taxonomy FROM {$wpdb->term_taxonomy} WHERE term_id = {$term_id}" );
 
-      if ( count( $taxonomy ) > 1 ) {
+      if( count( $taxonomy ) > 1 ) {
         return false;
       } else {
         $taxonomy = $taxonomy[ 0 ];
       }
     }
 
-    if ( !is_numeric( $term_id ) || empty( $taxonomy ) ) {
+    if( !is_numeric( $term_id ) || empty( $taxonomy ) ) {
       return false;
     }
 
     $post_id = $wpdb->get_var( "SELECT post_id FROM {$wpdb->postmeta} pm LEFT JOIN {$wpdb->posts} p ON pm.post_id = p.ID WHERE meta_key = 'extended_term_id' AND meta_value = '{$term_id}' AND post_type = '_tp_{$taxonomy}' " );
 
-    if ( !$post_id ) {
+    if( !$post_id ) {
       return false;
     }
 
-    if ( $post_id ) {
+    if( $post_id ) {
       $post = get_post( $post_id );
     }
 
-    if ( !$post ) {
+    if( !$post ) {
       return false;
     }
 
@@ -727,7 +729,7 @@ if ( !function_exists( 'get_post_for_extended_term' ) ) {
   }
 }
 
-if ( !function_exists( 'flawless_render_in_footer' ) ) {
+if( !function_exists( 'flawless_render_in_footer' ) ) {
   /**
    * {}
    *
@@ -735,18 +737,18 @@ if ( !function_exists( 'flawless_render_in_footer' ) ) {
    */
   function flawless_render_in_footer( $content, $args = array() ) {
     global $flawless;
-    $flawless[ 'runtime' ][ 'footer_scripts' ][] = $content;
+    $flawless[ 'runtime' ][ 'footer_scripts' ][ ] = $content;
   }
 }
 
-if ( !function_exists( 'add_term_meta' ) ) {
+if( !function_exists( 'add_term_meta' ) ) {
   /**
    * Add meta data field to a term.
    *
    */
   function add_term_meta( $term_id, $meta_key, $meta_value, $unique = false ) {
 
-    if ( current_theme_supports( 'extended-taxonomies' ) ) {
+    if( current_theme_supports( 'extended-taxonomies' ) ) {
       return add_post_meta( get_post_for_extended_term( $term_id )->ID, $meta_key, $meta_value, $unique );
     }
 
@@ -754,7 +756,7 @@ if ( !function_exists( 'add_term_meta' ) ) {
   }
 }
 
-if ( !function_exists( 'delete_term_meta' ) ) {
+if( !function_exists( 'delete_term_meta' ) ) {
   /**
    * Remove metadata matching criteria from a term.
    *
@@ -762,7 +764,7 @@ if ( !function_exists( 'delete_term_meta' ) ) {
    */
   function delete_term_meta( $term_id, $meta_key, $meta_value = '' ) {
 
-    if ( current_theme_supports( 'extended-taxonomies' ) ) {
+    if( current_theme_supports( 'extended-taxonomies' ) ) {
       return delete_post_meta( get_post_for_extended_term( $term_id )->ID, $meta_key, $meta_value );
     }
 
@@ -770,14 +772,14 @@ if ( !function_exists( 'delete_term_meta' ) ) {
   }
 }
 
-if ( !function_exists( 'get_term_meta' ) ) {
+if( !function_exists( 'get_term_meta' ) ) {
   /**
    * Retrieve term meta field for a term.
    *
    */
   function get_term_meta( $term_id, $key, $single = false ) {
 
-    if ( current_theme_supports( 'extended-taxonomies' ) ) {
+    if( current_theme_supports( 'extended-taxonomies' ) ) {
       return get_post_meta( get_post_for_extended_term( $term_id )->ID, $key, $single );
     }
 
@@ -785,14 +787,14 @@ if ( !function_exists( 'get_term_meta' ) ) {
   }
 }
 
-if ( !function_exists( 'update_term_meta' ) ) {
+if( !function_exists( 'update_term_meta' ) ) {
   /**
    * Update term meta field based on term ID.
    *
    */
   function update_term_meta( $term_id, $meta_key, $meta_value, $prev_value = '' ) {
 
-    if ( current_theme_supports( 'extended-taxonomies' ) ) {
+    if( current_theme_supports( 'extended-taxonomies' ) ) {
       return update_post_meta( get_post_for_extended_term( $term_id )->ID, $meta_key, $meta_value, $prev_value );
     }
 
@@ -800,7 +802,7 @@ if ( !function_exists( 'update_term_meta' ) ) {
   }
 }
 
-if ( !function_exists( 'is_mobile' ) ) {
+if( !function_exists( 'is_mobile' ) ) {
   /**
    * Test if the current browser runs on a mobile device ( smart phone, tablet, etc. )
    *
@@ -809,12 +811,12 @@ if ( !function_exists( 'is_mobile' ) ) {
   function is_mobile() {
     static $is_mobile;
 
-    if ( isset( $is_mobile ) )
+    if( isset( $is_mobile ) )
       return $is_mobile;
 
-    if ( empty( $_SERVER[ 'HTTP_USER_AGENT' ] ) ) {
+    if( empty( $_SERVER[ 'HTTP_USER_AGENT' ] ) ) {
       $is_mobile = false;
-    } elseif ( strpos( $_SERVER[ 'HTTP_USER_AGENT' ], 'Mobile' ) !== false // many mobile devices ( all iPhone, iPad, etc. )
+    } elseif( strpos( $_SERVER[ 'HTTP_USER_AGENT' ], 'Mobile' ) !== false // many mobile devices ( all iPhone, iPad, etc. )
       || strpos( $_SERVER[ 'HTTP_USER_AGENT' ], 'Android' ) !== false
       || strpos( $_SERVER[ 'HTTP_USER_AGENT' ], 'BlackBerry' ) !== false
       || strpos( $_SERVER[ 'HTTP_USER_AGENT' ], 'Opera Mini' ) !== false
@@ -828,7 +830,7 @@ if ( !function_exists( 'is_mobile' ) ) {
   }
 }
 
-if ( !function_exists( 'flawless_image_link' ) ) {
+if( !function_exists( 'flawless_image_link' ) ) {
   /**
    * Get imare src, resizing the image if needed.
    *
@@ -836,27 +838,28 @@ if ( !function_exists( 'flawless_image_link' ) ) {
    */
   function flawless_image_link( $attachment_id = false, $size = false, $args = array() ) {
 
-    if ( !$size || !$attachment_id ) {
+    if( !$size || !$attachment_id ) {
       return false;
     }
 
     $image_sizes = \UsabilityDynamics\Flawless\Utility::all_image_sizes();
 
     $args = wp_parse_args( $args, array(
-      'return' => 'string',
+      'return'   => 'string',
       'cache_id' => sanitize_title( $attachment_id . $size ),
-      'default' => ''
+      'default'  => ''
     ) );
 
-    if ( $return = wp_cache_get( $args[ 'cache_id' ], 'flawless_image_link' ) ) {
+    if( $return = wp_cache_get( $args[ 'cache_id' ], 'flawless_image_link' ) ) {
       return $return;
     }
 
     $attachment_image_src = ( array ) wp_get_attachment_image_src( $attachment_id, $size );
 
-    if ( empty( $image_sizes ) || ( is_array( $attachment_id ) && $attachment_id[ 1 ] == $image_sizes[ $size ][ 'width' ] ) ) {
+    if( empty( $image_sizes ) || ( is_array( $attachment_id ) && $attachment_id[ 1 ] == $image_sizes[ $size ][ 'width' ] ) ) {
       $return = $attachment_image_src[ 0 ];
       wp_cache_set( $args[ 'cache_id' ], $return, 'flawless_image_link' );
+
       return $return;
     }
 
@@ -864,9 +867,9 @@ if ( !function_exists( 'flawless_image_link' ) ) {
     $metadata = wp_get_attachment_metadata( $attachment_id );
 
     // If we have metadata, we need to check it before continuing
-    if ( $metadata ) {
+    if( $metadata ) {
       /** Check to see if the original file exists */
-      if ( isset( $metadata[ 'sizes' ] ) && isset( $metadata[ 'sizes' ][ $size ] ) && isset( $metadata[ 'sizes' ][ $size ][ 'file' ] ) ) {
+      if( isset( $metadata[ 'sizes' ] ) && isset( $metadata[ 'sizes' ][ $size ] ) && isset( $metadata[ 'sizes' ][ $size ][ 'file' ] ) ) {
         /** Get the upload directory */
         $upload_dir = wp_upload_dir();
         /** Determine the file's directory */
@@ -875,9 +878,10 @@ if ( !function_exists( 'flawless_image_link' ) ) {
         $file_dir = implode( '/', $file_dir );
         /** Build the file path */
         $resized_file = $upload_dir[ 'basedir' ] . '/' . $file_dir . '/' . $metadata[ 'sizes' ][ $size ][ 'file' ];
-        if ( file_exists( $resized_file ) ) {
+        if( file_exists( $resized_file ) ) {
           $file_url = $upload_dir[ 'baseurl' ] . '/' . $file_dir . '/' . $metadata[ 'sizes' ][ $size ][ 'file' ];
           wp_cache_set( $args[ 'cache_id' ], $file_url, 'flawless_image_link' );
+
           return $file_url;
         }
       }
@@ -889,21 +893,21 @@ if ( !function_exists( 'flawless_image_link' ) ) {
       return '';
     }
 
-    $wp_get_image_editor = wp_get_image_editor( get_attached_file( $attachment_id, true ), array(
-      //$image_sizes[ $size ][ 'width' ],
+    $wp_get_image_editor = wp_get_image_editor( get_attached_file( $attachment_id, true ), array(//$image_sizes[ $size ][ 'width' ],
       //$image_sizes[ $size ][ 'height' ],
       //$image_sizes[ $size ][ 'crop' ] )
-    ));
+    ) );
 
-    if ( is_wp_error( $wp_get_image_editor ) || !file_exists( $wp_get_image_editor ) ) {
+    if( is_wp_error( $wp_get_image_editor ) || !file_exists( $wp_get_image_editor ) ) {
 
-      if ( $attachment_image_src[ 0 ] ) {
+      if( $attachment_image_src[ 0 ] ) {
         $return = $args[ 'default' ] ? $args[ 'default' ] : $attachment_image_src[ 0 ];
       } else {
         $return = $args[ 'default' ];
       }
 
       wp_cache_set( $args[ 'cache_id' ], $return, 'flawless_image_link' );
+
       return $return;
     }
 
@@ -922,7 +926,7 @@ if ( !function_exists( 'flawless_image_link' ) ) {
   }
 }
 
-if ( !function_exists( 'flawless_comment' ) ) {
+if( !function_exists( 'flawless_comment' ) ) {
   /**
    * Handles comments
    *
@@ -935,11 +939,12 @@ if ( !function_exists( 'flawless_comment' ) ) {
    */
   function flawless_comment( $comment, $args, $depth ) {
     $GLOBALS[ 'comment' ] = $comment;
-    switch ( $comment->comment_type ) :
+    switch( $comment->comment_type ) :
       case '' :
         ?>
         <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>" data-comment_id="<?php comment_ID(); ?>">
         <?php echo get_avatar( $comment, 80 ); ?>
+
 
         <div id="comment-<?php comment_ID(); ?>" class="comment-content">
           <div class="comment-author vcard">
@@ -958,12 +963,12 @@ if ( !function_exists( 'flawless_comment' ) ) {
           </span><!-- .comment-meta .commentmetadata -->
           </div>
           <!-- .comment-author .vcard -->
-        <?php if ( $comment->comment_approved == '0' ) : ?>
-          <em><?php _e( 'Your comment is awaiting moderation.', 'flawless' ); ?></em>
-          <br/>
-        <?php endif; ?>
+          <?php if( $comment->comment_approved == '0' ) : ?>
+            <em><?php _e( 'Your comment is awaiting moderation.', 'flawless' ); ?></em>
+            <br/>
+          <?php endif; ?>
 
-        <div class="comment-body"><?php comment_text(); ?></div>
+          <div class="comment-body"><?php comment_text(); ?></div>
         </div><!-- #comment-##  -->
 
         <?php
@@ -979,7 +984,7 @@ if ( !function_exists( 'flawless_comment' ) ) {
   }
 }
 
-if ( !function_exists( 'is_posts_page' ) ) {
+if( !function_exists( 'is_posts_page' ) ) {
   /**
    * Conditional tag to determine if current page is selected to be the primary posts page
    *
@@ -990,11 +995,12 @@ if ( !function_exists( 'is_posts_page' ) ) {
    */
   function is_posts_page() {
     global $wp_query;
+
     return $wp_query->is_posts_page ? true : false;
   }
 }
 
-if ( !function_exists( 'flawless_wrapper_class' ) ) {
+if( !function_exists( 'flawless_wrapper_class' ) ) {
   /**
    * Builds classes for the wrapper element based on conditional elements.
    *
@@ -1008,15 +1014,15 @@ if ( !function_exists( 'flawless_wrapper_class' ) ) {
   function flawless_wrapper_class( $custom_class = '' ) {
     global $wp_query, $flawless;
 
-    $classes = array( $custom_class );
-    $classes[] = 'container';
-    $classes[] = 'content_wrapper';
-    $classes[] = 'row-fluid';
+    $classes    = array( $custom_class );
+    $classes[ ] = 'container';
+    $classes[ ] = 'content_wrapper';
+    $classes[ ] = 'row-fluid';
 
     //** Prevent classes from being blanked out */
     $maybe_classes = apply_filters( 'flawless::wrapper_class', $classes );
 
-    if ( !empty( $maybe_classes ) ) {
+    if( !empty( $maybe_classes ) ) {
       $classes = $maybe_classes;
     }
 
@@ -1033,7 +1039,7 @@ if ( !function_exists( 'flawless_wrapper_class' ) ) {
   }
 }
 
-if ( !function_exists( 'flawless_block_class' ) ) {
+if( !function_exists( 'flawless_block_class' ) ) {
   /**
    * Builds classes for the .main.cfct-block based on conditional elements.
    *
@@ -1045,22 +1051,22 @@ if ( !function_exists( 'flawless_block_class' ) ) {
   function flawless_block_class( $custom_class = '' ) {
     global $flawless;
 
-    $classes[] = $custom_class;
+    $classes[ ] = $custom_class;
 
     if( !isset( $flawless[ 'current_view' ] ) ) {
       return '';
     }
 
     //** Added classes to body */
-    foreach ( ( array ) $flawless[ 'current_view' ][ 'block_classes' ] as $class ) {
-      $classes[] = $class;
+    foreach( ( array ) $flawless[ 'current_view' ][ 'block_classes' ] as $class ) {
+      $classes[ ] = $class;
     }
 
     echo implode( ' ', ( array ) $classes );
   }
 }
 
-if ( !function_exists( 'flawless_module_class' ) ) {
+if( !function_exists( 'flawless_module_class' ) ) {
   /**
    * Builds classes for the .hentry.cfct-module based on conditional elements.
    *
@@ -1075,8 +1081,8 @@ if ( !function_exists( 'flawless_module_class' ) ) {
     //** Load Post Classes if this is a post */
     $classes = get_post_class( '', $post->ID );
 
-    $classes[] = $custom_class;
-    $classes[] = 'cfct-module';
+    $classes[ ] = $custom_class;
+    $classes[ ] = 'cfct-module';
 
     $classes = apply_filters( 'flawless::module_class', $classes );
 
@@ -1085,7 +1091,7 @@ if ( !function_exists( 'flawless_module_class' ) ) {
   }
 }
 
-if ( !function_exists( 'hide_page_title' ) ) {
+if( !function_exists( 'hide_page_title' ) ) {
   /**
    * Conditional tag to determine if current page is selected to be the primary posts page
    *
@@ -1095,11 +1101,11 @@ if ( !function_exists( 'hide_page_title' ) ) {
   function hide_page_title( $post_id = false ) {
     global $post;
 
-    if ( is_home() ) {
+    if( is_home() ) {
       return true;
     }
 
-    if ( !$post_id ) {
+    if( !$post_id ) {
       $post_id = $post->ID;
     }
 
@@ -1108,7 +1114,7 @@ if ( !function_exists( 'hide_page_title' ) ) {
   }
 }
 
-if ( !function_exists( 'flawless_footer_copyright' ) ) {
+if( !function_exists( 'flawless_footer_copyright' ) ) {
   /**
    * Displays the Copyright info the footer.
    *
@@ -1119,12 +1125,16 @@ if ( !function_exists( 'flawless_footer_copyright' ) ) {
    */
   function flawless_footer_copyright() {
     global $flawless;
-    echo do_shortcode( nl2br( $flawless[ 'footer' ][ 'copyright' ] ) );
+
+    if( isset( $flawless[ 'footer' ] ) ) {
+      echo do_shortcode( nl2br( $flawless[ 'footer' ][ 'copyright' ] ) );
+    }
+
   }
 
 }
 
-if ( !function_exists( 'flawless_element' ) ) {
+if( !function_exists( 'flawless_element' ) ) {
   /**
    * Generates unique <div> attributes for a draggable element
    *
@@ -1135,14 +1145,14 @@ if ( !function_exists( 'flawless_element' ) ) {
     $template_part = false;
 
     //** Figure out where this got called from */
-    foreach ( ( array ) debug_backtrace() as $item ) {
+    foreach( ( array ) debug_backtrace() as $item ) {
 
-      if ( $item[ 'function' ] == 'get_header' ) {
+      if( $item[ 'function' ] == 'get_header' ) {
         $template_part = 'header';
         break;
       }
 
-      if ( $item[ 'function' ] == 'get_footer' ) {
+      if( $item[ 'function' ] == 'get_footer' ) {
         $template_part = 'footer';
         break;
       }
@@ -1151,8 +1161,8 @@ if ( !function_exists( 'flawless_element' ) ) {
 
     $classes = explode( ' ', $classes );
 
-    $classes[] = 'cfct-module';
-    $classes[] = 'flawless_module';
+    $classes[ ] = 'cfct-module';
+    $classes[ ] = 'flawless_module';
 
     $classes = implode( ' ', $classes );
 
@@ -1165,7 +1175,7 @@ if ( !function_exists( 'flawless_element' ) ) {
 
 }
 
-if ( !function_exists( 'flawless_breadcrumbs' ) ) {
+if( !function_exists( 'flawless_breadcrumbs' ) ) {
   /**
    * Prints out breadcrumbs
    *
@@ -1178,203 +1188,203 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
 
     $args = wp_parse_args( $args, array(
       'hide_breadcrumbs' => get_post_meta( $post->ID, 'hide_breadcrumbs', true ) == 'true' || ( isset( $flawless[ 'hide_breadcrumbs' ] ) && $flawless[ 'hide_breadcrumbs' ] ) ? true : false,
-      'return' => false,
-      'home_label' => __( 'Home' ),
-      'home_link' => home_url(),
-      'wrapper_class' => 'breadcrumbs',
-      'divider' => ' <span class="divider">&raquo;</span> ',
-      'hide_on_home' => true
+      'return'           => false,
+      'home_label'       => __( 'Home' ),
+      'home_link'        => home_url(),
+      'wrapper_class'    => 'breadcrumbs',
+      'divider'          => ' <span class="divider">&raquo;</span> ',
+      'hide_on_home'     => true
     ) );
 
-    if ( $args[ 'hide_breadcrumbs' ] ) {
+    if( $args[ 'hide_breadcrumbs' ] ) {
       return;
     }
 
     $before = '<span class="current">';
-    $after = '</span>';
+    $after  = '</span>';
 
-    if ( $args[ 'hide_on_home' ] && ( is_home() || is_front_page() ) ) {
+    if( $args[ 'hide_on_home' ] && ( is_home() || is_front_page() ) ) {
       return;
     }
 
-    $html[] = '<a class="home_link" href="' . $args[ 'home_link' ] . '">' . $args[ 'home_label' ] . '</a> ' . $delimiter . ' ';
+    $html[ ] = '<a class="home_link" href="' . $args[ 'home_link' ] . '">' . $args[ 'home_label' ] . '</a> ' . $delimiter . ' ';
 
-    if ( is_home() || is_front_page() ) {
+    if( is_home() || is_front_page() ) {
 
-    } elseif ( is_category() ) {
+    } elseif( is_category() ) {
 
-      $cat_obj = $wp_query->get_queried_object();
-      $thisCat = $cat_obj->term_id;
-      $thisCat = get_category( $thisCat );
+      $cat_obj   = $wp_query->get_queried_object();
+      $thisCat   = $cat_obj->term_id;
+      $thisCat   = get_category( $thisCat );
       $parentCat = get_category( $thisCat->parent );
-      if ( $thisCat->parent != 0 ) $html[] = ( get_category_parents( $parentCat, TRUE, ' ' . $delimiter . ' ' ) );
-      $html[] = $before . single_cat_title( '', false ) . $after;
+      if( $thisCat->parent != 0 ) $html[ ] = ( get_category_parents( $parentCat, TRUE, ' ' . $delimiter . ' ' ) );
+      $html[ ] = $before . single_cat_title( '', false ) . $after;
 
-    } elseif ( is_day() ) {
-      $html[] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
-      $html[] = '<a href="' . get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) . '">' . get_the_time( 'F' ) . '</a> ' . $delimiter . ' ';
-      $html[] = $before . get_the_time( 'd' ) . $after;
+    } elseif( is_day() ) {
+      $html[ ] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
+      $html[ ] = '<a href="' . get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) . '">' . get_the_time( 'F' ) . '</a> ' . $delimiter . ' ';
+      $html[ ] = $before . get_the_time( 'd' ) . $after;
 
-    } elseif ( is_month() ) {
-      $html[] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
-      $html[] = $before . get_the_time( 'F' ) . $after;
+    } elseif( is_month() ) {
+      $html[ ] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
+      $html[ ] = $before . get_the_time( 'F' ) . $after;
 
-    } elseif ( is_year() ) {
-      $html[] = $before . get_the_time( 'Y' ) . $after;
+    } elseif( is_year() ) {
+      $html[ ] = $before . get_the_time( 'Y' ) . $after;
 
-    } elseif ( is_single() && !is_attachment() ) {
+    } elseif( is_single() && !is_attachment() ) {
 
-      if ( get_post_type() != 'post' ) {
+      if( get_post_type() != 'post' ) {
         $post_type = get_post_type_object( get_post_type() );
-        $slug = $post_type->rewrite;
+        $slug      = $post_type->rewrite;
 
         //** Check if this content type has a custom Root page */
-        if ( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] ) {
+        if( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] ) {
           $content_type_home = get_permalink( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] );
         } else {
           $content_type_home = \UsabilityDynamics\Flawless\Utility::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
         }
 
         /** Fix 'Pages' */
-        if ( $post->post_type == 'page' ) {
-          if ( $anc = get_post_ancestors( $post ) ) {
-            $anc = wp_get_single_post( $anc[ 0 ] );
+        if( $post->post_type == 'page' ) {
+          if( $anc = get_post_ancestors( $post ) ) {
+            $anc               = wp_get_single_post( $anc[ 0 ] );
             $content_type_home = get_permalink( $anc->ID );
           }
         }
 
-        if ( $anc ) {
+        if( $anc ) {
           $args[ 'title' ] = $anc->post_title;
         } else {
           $args[ 'title' ] = $post_type->labels->name;
         }
 
         $html[ 'content_type_home' ] = '<a href="' . $content_type_home . '">' . $args[ 'title' ] . '</a>';
-        $html[ 'this_page' ] = $before . get_the_title() . $after;
+        $html[ 'this_page' ]         = $before . get_the_title() . $after;
 
       } else {
         $cat = get_the_category();
         $cat = $cat[ 0 ];
 
-        if ( $cat ) {
-          $html[] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
+        if( $cat ) {
+          $html[ ] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
         }
 
-        $html[] = $before . get_the_title() . $after;
+        $html[ ] = $before . get_the_title() . $after;
       }
 
-    } elseif ( !is_single() && !is_page() && get_post_type() != 'post' && !is_404() && !is_search() ) {
+    } elseif( !is_single() && !is_page() && get_post_type() != 'post' && !is_404() && !is_search() ) {
 
-      $taxonomy = get_taxonomy( $wp_query->query_vars[ 'taxonomy' ] );
+      $taxonomy  = get_taxonomy( $wp_query->query_vars[ 'taxonomy' ] );
       $post_type = get_post_type_object( get_post_type() );
 
       //** Check if this content type has a custom Root page */
-      if ( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] ) {
+      if( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] ) {
         $content_type_home = get_permalink( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] );
       } else {
         $content_type_home = \UsabilityDynamics\Flawless\Utility::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
       }
 
       /** Fix 'Pages' */
-      if ( $post->post_type == 'page' ) {
-        if ( $anc = get_post_ancestors( $post ) ) {
-          $anc = wp_get_single_post( $anc[ 0 ] );
+      if( $post->post_type == 'page' ) {
+        if( $anc = get_post_ancestors( $post ) ) {
+          $anc               = wp_get_single_post( $anc[ 0 ] );
           $content_type_home = get_permalink( $anc->ID );
         }
       }
 
-      if ( $anc ) {
+      if( $anc ) {
         $args[ 'title' ] = $anc->post_title;
       } else {
         $args[ 'title' ] = $post_type->labels->name;
       }
 
-      switch ( true ) {
+      switch( true ) {
 
         case is_tag():
           $html[ 'content_type_home' ] = '<a href="' . $content_type_home . '">' . $args[ 'title' ] . '</a>';
-          $html[] = $before . get_queried_object() > name . $after;
+          $html[ ]                     = $before . get_queried_object() > name . $after;
           break;
 
         case is_tax():
           $html[ 'content_type_home' ] = '<a href="' . $content_type_home . '">' . $args[ 'title' ] . '</a>';
-          $html[] = $before . get_queried_object()->name . $after;
+          $html[ ]                     = $before . get_queried_object()->name . $after;
           break;
 
         default:
-          $html[] = $before . $post_type->labels->name . $after;
+          $html[ ] = $before . $post_type->labels->name . $after;
           break;
 
       }
 
-    } elseif ( is_attachment() ) {
+    } elseif( is_attachment() ) {
       $parent = get_post( $post->post_parent );
-      $cat = get_the_category( $parent->ID );
-      $cat = $cat[ 0 ];
+      $cat    = get_the_category( $parent->ID );
+      $cat    = $cat[ 0 ];
 
       //** Must check a category was found */
-      if ( $cat && !is_wp_error( $cat ) ) {
-        $html[] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
+      if( $cat && !is_wp_error( $cat ) ) {
+        $html[ ] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
       }
 
-      $html[] = '<a href="' . get_permalink( $parent ) . '">' . $parent->post_title . '</a> ' . $delimiter . ' ';
-      $html[] = $before . get_the_title() . $after;
+      $html[ ] = '<a href="' . get_permalink( $parent ) . '">' . $parent->post_title . '</a> ' . $delimiter . ' ';
+      $html[ ] = $before . get_the_title() . $after;
 
-    } elseif ( is_page() && !$post->post_parent ) {
-      $html[] = $before . get_the_title() . $after;
+    } elseif( is_page() && !$post->post_parent ) {
+      $html[ ] = $before . get_the_title() . $after;
 
-    } elseif ( is_page() && $post->post_parent ) {
-      $parent_id = $post->post_parent;
+    } elseif( is_page() && $post->post_parent ) {
+      $parent_id   = $post->post_parent;
       $breadcrumbs = array();
-      while ( $parent_id ) {
-        $page = get_page( $parent_id );
-        $breadcrumbs[] = '<a href="' . get_permalink( $page->ID ) . '">' . get_the_title( $page->ID ) . '</a>';
-        $parent_id = $page->post_parent;
+      while( $parent_id ) {
+        $page           = get_page( $parent_id );
+        $breadcrumbs[ ] = '<a href="' . get_permalink( $page->ID ) . '">' . get_the_title( $page->ID ) . '</a>';
+        $parent_id      = $page->post_parent;
       }
       $breadcrumbs = array_reverse( $breadcrumbs );
-      foreach ( $breadcrumbs as $crumb ) $html[] = $crumb . ' ' . $delimiter . ' ';
-      $html[] = $before . get_the_title() . $after;
+      foreach( $breadcrumbs as $crumb ) $html[ ] = $crumb . ' ' . $delimiter . ' ';
+      $html[ ] = $before . get_the_title() . $after;
 
-    } elseif ( is_search() ) {
+    } elseif( is_search() ) {
 
-      $html[] = $before . 'Search results for "' . get_search_query() . '"' . $after;
+      $html[ ] = $before . 'Search results for "' . get_search_query() . '"' . $after;
 
-    } elseif ( is_tag() ) {
+    } elseif( is_tag() ) {
 
-      $html[] = $before . 'Posts tagged "' . single_tag_title( '', false ) . '"' . $after;
+      $html[ ] = $before . 'Posts tagged "' . single_tag_title( '', false ) . '"' . $after;
 
-    } elseif ( is_author() ) {
+    } elseif( is_author() ) {
       global $author;
       $userdata = get_userdata( $author );
-      $html[] = $before . 'Content by ' . $userdata->display_name . $after;
+      $html[ ]  = $before . 'Content by ' . $userdata->display_name . $after;
 
-    } elseif ( is_404() ) {
-      $html[] = $before . '404 Error' . $after;
-    } elseif ( is_tax() ) {
+    } elseif( is_404() ) {
+      $html[ ] = $before . '404 Error' . $after;
+    } elseif( is_tax() ) {
 
       $taxonomy = get_taxonomy( $wp_query->query_vars[ 'taxonomy' ] );
 
-      $html[] = '<a href="' . $args[ 'home_link' ] . '/' . $taxonomy->rewrite[ 'slug' ] . '">' . $taxonomy->labels->name . '</a> ';
-      $html[] = $before . $wp_query->get_queried_object()->name . $after;
+      $html[ ] = '<a href="' . $args[ 'home_link' ] . '/' . $taxonomy->rewrite[ 'slug' ] . '">' . $taxonomy->labels->name . '</a> ';
+      $html[ ] = $before . $wp_query->get_queried_object()->name . $after;
 
     } else {
 
       //$html[] = "<pre>";print_r( $wp_query );$html[] = "</pre>";
     }
 
-    if ( get_query_var( 'paged' ) ) {
-      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[] = ' ( ';
-      $page[] = __( 'Page' ) . ' ' . get_query_var( 'paged' );
-      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[] = ' )';
+    if( get_query_var( 'paged' ) ) {
+      if( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[ ] = ' ( ';
+      $page[ ] = __( 'Page' ) . ' ' . get_query_var( 'paged' );
+      if( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[ ] = ' )';
 
-      $html[] = implode( '', ( array ) $page );
+      $html[ ] = implode( '', ( array ) $page );
     }
 
     $html = apply_filters( 'flawless::breadcrumb_trail', $html );
 
     $final_html = '<div class="' . $args[ 'wrapper_class' ] . '">' . implode( apply_filters( 'flawless_bcreadcrumbs::delimiter', $args[ 'divider' ] ), $html ) . '</div>';
 
-    if ( $args[ 'return' ] ) {
+    if( $args[ 'return' ] ) {
       return $final_html;
     }
 
@@ -1383,7 +1393,7 @@ if ( !function_exists( 'flawless_breadcrumbs' ) ) {
   }
 }
 
-if ( !function_exists( 'flawless_widget_area' ) ) {
+if( !function_exists( 'flawless_widget_area' ) ) {
   /**
    * Checks and renders sidebar template.
    * It's just modified get_sidebar() function.
@@ -1402,22 +1412,22 @@ if ( !function_exists( 'flawless_widget_area' ) ) {
     $templates = array();
 
     // Check in theme "templates" directory
-    if ( isset( $name ) ) {
-      $templates[] = "sidebar-{$name}.php";
-      $templates[] = "templates/sidebar-{$name}.php";
+    if( isset( $name ) ) {
+      $templates[ ] = "sidebar-{$name}.php";
+      $templates[ ] = "templates/sidebar-{$name}.php";
     }
 
-    $templates[] = 'sidebar.php';
-    $templates[] = 'templates/sidebar.php';
+    $templates[ ] = 'sidebar.php';
+    $templates[ ] = 'templates/sidebar.php';
 
     /** Backward compat code will be removed in a future WP release */
-    if ( '' == locate_template( $templates, true, false ) ) {
+    if( '' == locate_template( $templates, true, false ) ) {
       load_template( ABSPATH . WPINC . '/theme-compat/sidebar.php', false );
     }
   }
 }
 
-if ( !function_exists( 'flawless_thumbnail' ) ) {
+if( !function_exists( 'flawless_thumbnail' ) ) {
   /**
    * Displays a thumbail with wrapper, if applicable
    *
@@ -1428,34 +1438,34 @@ if ( !function_exists( 'flawless_thumbnail' ) ) {
   function flawless_thumbnail( $args = array() ) {
     $args = wp_parse_args( $args, $defaults = array(
       'wrapper_class' => 'entry-thumbnail',
-      'size' => array( 100, 100 ),
-      'return' => false,
-      'link' => true
+      'size'          => array( 100, 100 ),
+      'return'        => false,
+      'link'          => true
     ) );
 
     $thumbnail = get_the_post_thumbnail( NULL, $args[ 'size' ] );
 
-    if ( !$thumbnail ) {
+    if( !$thumbnail ) {
       return;
     }
 
-    $html[] = '<div class="' . $args[ 'wrapper_class' ] . '">';
+    $html[ ] = '<div class="' . $args[ 'wrapper_class' ] . '">';
 
-    if ( $args[ 'link' ] ) {
-      $html[] = '<a href="' . get_permalink() . '" alt="' . get_the_title() . '">';
+    if( $args[ 'link' ] ) {
+      $html[ ] = '<a href="' . get_permalink() . '" alt="' . get_the_title() . '">';
     }
 
-    $html[] = $thumbnail;
+    $html[ ] = $thumbnail;
 
-    if ( $args[ 'link' ] ) {
-      $html[] = '</a>';
+    if( $args[ 'link' ] ) {
+      $html[ ] = '</a>';
     }
 
-    $html[] = '</div>';
+    $html[ ] = '</div>';
 
     $html = implode( '', ( array ) $html );
 
-    if ( $args[ 'return' ] ) {
+    if( $args[ 'return' ] ) {
       return $html;
     }
 
@@ -1465,7 +1475,7 @@ if ( !function_exists( 'flawless_thumbnail' ) ) {
 
 }
 
-if ( !function_exists( 'flawless_word_trim' ) ) {
+if( !function_exists( 'flawless_word_trim' ) ) {
   /**
    * Truncate a string, stop at preceding word.
    *
@@ -1473,13 +1483,13 @@ if ( !function_exists( 'flawless_word_trim' ) ) {
    */
   function flawless_word_trim( $string, $count, $ellipsis = false ) {
 
-    if ( strlen( $string ) < $count ) {
+    if( strlen( $string ) < $count ) {
       return $string;
     }
 
     $truncated = preg_replace( '/\s+?( \S+ )?$/', '', substr( $string, 0, $ellipsis ? $count + 3 : $count ) );
 
-    if ( strlen( $string ) > strlen( $truncated ) && $ellipsis ) {
+    if( strlen( $string ) > strlen( $truncated ) && $ellipsis ) {
       $truncated .= '...';
     }
 
@@ -1488,7 +1498,7 @@ if ( !function_exists( 'flawless_word_trim' ) ) {
   }
 }
 
-if ( !function_exists( 'flawless_add_notice' ) ) {
+if( !function_exists( 'flawless_add_notice' ) ) {
   /**
    * Add a notice to the queue. Must be called before flawless::primary_notice_container which is typically called in header.php
    *
@@ -1500,10 +1510,10 @@ if ( !function_exists( 'flawless_add_notice' ) ) {
 
     $flawless[ 'runtime' ][ 'this_notice' ] = array(
       'content' => $notice,
-      'args' => $args
+      'args'    => $args
     );
 
-    if ( did_action( 'flawless::render::primary_notice_container' ) ) {
+    if( did_action( 'flawless::render::primary_notice_container' ) ) {
       _doing_it_wrong( __FUNCTION__, sprintf( __( 'Notices should be added before %1s hook in header.php.', 'flawless' ), 'flawless::content_container_top' ), '3.4' );
     }
 
@@ -1512,19 +1522,19 @@ if ( !function_exists( 'flawless_add_notice' ) ) {
 
       $args = wp_parse_args( $flawless[ 'runtime' ][ 'this_notice' ][ 'args' ], $args );
 
-      switch ( $args[ 'type' ] ) {
+      switch( $args[ 'type' ] ) {
 
         case 'error':
-          $notices[] = '<div class="alert alert-success"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
+          $notices[ ] = '<div class="alert alert-success"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
           break;
 
         case 'success':
-          $notices[] = '<div class="alert alert-success"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
+          $notices[ ] = '<div class="alert alert-success"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
           break;
 
         case 'info':
         default:
-          $notices[] = '<div class="alert alert-info"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
+          $notices[ ] = '<div class="alert alert-info"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $flawless[ 'runtime' ][ 'this_notice' ][ 'content' ] . '</div>';
           break;
       }
 
@@ -1535,7 +1545,7 @@ if ( !function_exists( 'flawless_add_notice' ) ) {
 
 }
 
-if ( !function_exists( 'flawless_primary_notice_container' ) ) {
+if( !function_exists( 'flawless_primary_notice_container' ) ) {
   /**
    * Render any notices.
    *
@@ -1547,7 +1557,7 @@ if ( !function_exists( 'flawless_primary_notice_container' ) ) {
 
     $notices = array_filter( ( array ) apply_filters( 'flawless::primary_notice_container', array( $notice ) ) );
 
-    if ( !is_array( $notices ) || empty( $notices ) ) {
+    if( !is_array( $notices ) || empty( $notices ) ) {
       return;
     }
 

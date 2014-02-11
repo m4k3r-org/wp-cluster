@@ -17,7 +17,7 @@
 
 <?php get_template_part( 'templates/header', 'page' ); ?>
 
-<?php get_template_part( 'attention', 'page' ); ?>
+<?php get_template_part( 'templates/aside/attention', 'page' ); ?>
 
 <div class="<?php flawless_wrapper_class(); ?>">
 
@@ -54,4 +54,4 @@
 
 </div>
 
-<?php get_footer(); ?>
+<?php get_template_part( 'templates/footer', get_post_type() ); ?>

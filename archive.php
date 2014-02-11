@@ -8,17 +8,11 @@
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
  * @package Flawless
  */
-
-//** Bail out if page is being loaded directly and flawless_theme does not exist */
-if( !function_exists( 'get_header' ) ) {
-  die();
-}
-
 ?>
 
 <?php get_template_part( 'templates/header', 'archive' ); ?>
 
-<?php get_template_part( 'attention', 'archive' ); ?>
+<?php get_template_part( 'templates/aside/attention', 'archive' ); ?>
 
   <div class="<?php flawless_wrapper_class(); ?>">
 
@@ -50,7 +44,7 @@ if( !function_exists( 'get_header' ) ) {
       </header>
 
       <div class="loop loop-blog post-listing clearfix">
-      <?php get_template_part( 'loop', 'blog' ); ?>
+      <?php get_template_part( 'templates/article/loop', 'blog' ); ?>
       </div>
 
     </div> <?php /* .archive-hentry */ ?>
@@ -61,4 +55,4 @@ if( !function_exists( 'get_header' ) ) {
 
 </div> <!-- #content -->
 
-<?php get_template_part( 'templates/page/footer', 'archive' ); ?>
+<?php get_template_part( 'templates/footer', 'archive' ); ?>

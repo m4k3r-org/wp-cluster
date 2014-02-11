@@ -284,7 +284,7 @@ namespace UsabilityDynamics\Theme {
 
           $all_results[ ] = array( 'id'       => $id, 'df_attribute_class' => join( ' ', get_post_class( $class, $id ) ),
                                    'template' => 'loop-' . $args[ 'post_type' ],
-                                   'raw_html' => '<ul>' . \Flawless_F::get_template_part( 'loop', $args[ 'post_type' ] ), '</ul>', );
+                                   'raw_html' => '<ul>' . \Flawless_F::get_template_part( 'templates/article/loop', $args[ 'post_type' ] ), '</ul>', );
         }
 
         $response = array( 'query'         => false, //$query,

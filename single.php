@@ -14,7 +14,7 @@
 
 <?php get_template_part( 'templates/header', get_post_type() ); ?>
 
-<?php get_template_part( 'attention', 'post' ); ?>
+<?php get_template_part( 'templates/aside/attention', get_post_type()  ); ?>
 
 <div class="<?php flawless_wrapper_class(); ?>">
 

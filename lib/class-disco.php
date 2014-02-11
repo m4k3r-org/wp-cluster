@@ -1724,6 +1724,9 @@ namespace UsabilityDynamics {
 
     }
 
+    static public function widget_area( $name = null ) {
+      flawless_widget_area( $name );
+    }
   }
 
 }

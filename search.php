@@ -20,7 +20,7 @@
 
 <?php get_template_part( 'templates/header', 'search' ) ?>
 
-<?php get_template_part( 'attention', 'search' ); ?>
+<?php get_template_part( 'templates/aside/attention', 'search' ); ?>
 
 <div class="<?php flawless_wrapper_class(); ?>">
 
@@ -34,7 +34,7 @@
         <?php flawless_page_title(); ?>
       </header>
 
-      <?php get_template_part( 'loop', 'blog' ); ?>
+      <?php get_template_part( 'templates/article/loop', 'blog' ); ?>
 
     </div><!-- flawless_module_class() -->
 
