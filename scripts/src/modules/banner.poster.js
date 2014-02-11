@@ -7,7 +7,7 @@ define( 'banner.poster', [ 'udx.storage' ], function( Storage ) {
 
   var storage = Storage.create( 'app.state' );
 
-  console.dir( storage );
+  //console.dir( storage );
 
   var state = {
     purchasedTicket: storage.getItem( 'purchasedTicket' ) || false,

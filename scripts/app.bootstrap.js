@@ -20,6 +20,9 @@ define( 'html.video', [],function() {
   var trailer = document.getElementById( 'trailer-video' );
   var banner = document.getElementById( 'banner' );
 
+  if( !trailer ) {
+    return;
+  }
 
   trailer.addEventListener( 'click', function PLAY() {
     console.log( 'clicked!' );
@@ -126,7 +129,7 @@ define( 'banner.poster', [ 'udx.storage' ], function( Storage ) {
 
   var storage = Storage.create( 'app.state' );
 
-  console.dir( storage );
+  //console.dir( storage );
 
   var state = {
     purchasedTicket: storage.getItem( 'purchasedTicket' ) || false,

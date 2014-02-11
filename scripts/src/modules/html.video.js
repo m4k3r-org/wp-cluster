@@ -9,6 +9,9 @@ define( 'html.video', function() {
   var trailer = document.getElementById( 'trailer-video' );
   var banner = document.getElementById( 'banner' );
 
+  if( !trailer ) {
+    return;
+  }
 
   trailer.addEventListener( 'click', function PLAY() {
     console.log( 'clicked!' );

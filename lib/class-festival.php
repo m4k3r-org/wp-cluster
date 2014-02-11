@@ -205,7 +205,6 @@ namespace UsabilityDynamics {
         
       });
 
-
       // Add Management UI.
       $this->manage( array(
         'id'       => 'fesival_manage',
@@ -305,9 +304,7 @@ namespace UsabilityDynamics {
      * @todo Take thumbnail, large and medium into account.
      *
      * @filter intermediate_image_sizes_advanced
-     *
      * @param $_sizes
-     *
      * @return array
      */
     public function image_sizes( $_sizes ) {
@@ -368,7 +365,6 @@ namespace UsabilityDynamics {
 
     /**
      * Add Body Classes.
-     *
      *
      * * external-referrer Added when visitor is new to the site.
      * * internal-referrer Added when visitor opened current view after being referred.
