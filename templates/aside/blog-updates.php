@@ -11,7 +11,7 @@ $festival = wp_festival();
 
 // Ignore News category.
 $idObj = get_category_by_slug( 'news' ); 
-$id = $idObj->term_id;
+$id = isset( $idObj->term_id ) ? $idObj->term_id : null;
 
 $the_query = new WP_Query( array(
   'post_type' => array( 'post' ),
