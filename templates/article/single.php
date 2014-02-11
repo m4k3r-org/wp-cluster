@@ -1,4 +1,4 @@
-<article class="<?php wp_disco()->module_class(); ?>" data-object-id="<?php the_ID(); ?>">
+<article <?php post_class(); ?> data-object-id="<?php the_ID(); ?>" data-type="<?php get_post_type(); ?>">
 
     <header class="entry-title-wrapper">
       <?php wp_disco()->page_title(); ?>

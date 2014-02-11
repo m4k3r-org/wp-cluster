@@ -32,7 +32,7 @@ if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 </footer>
 <?php } ?>
 
-<footer class="frame footer bottom-of-page clearfix">
+<footer class="frame">
 
   <div class="inner_footer container row-fluid" data-container-type="footer">
 

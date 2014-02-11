@@ -7,7 +7,7 @@
  * @since  0.1.0
  */
  ?>
-<article <?php post_class(); ?> data-type="<?php get_post_type(); ?>">
+<article <?php post_class(); ?> data-object-id="<?php the_ID(); ?>" data-type="<?php get_post_type(); ?>">
 
   <header class="article-header">
 		<h1 class="article-title" data-type="post_title"><?php the_title(); ?></h1>

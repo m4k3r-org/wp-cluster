@@ -948,7 +948,7 @@ namespace UsabilityDynamics {
       });
 
       add_filter( 'the_category', function ( $c ) {
-        return self::_backtrace_function( 'wp_popular_terms_checklist' ) ? '<span class="do_inline_hierarchial_taxonomy_stuff do_not_esc_html">' . $c . '</span>' : $c;
+        //return self::_backtrace_function( 'wp_popular_terms_checklist' ) ? '<span class="do_inline_hierarchial_taxonomy_stuff do_not_esc_html">' . $c . '</span>' : $c;
       });
 
       add_filter( 'esc_html', function ( $s, $u = '' ) {

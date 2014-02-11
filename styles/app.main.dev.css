@@ -6329,10 +6329,6 @@ td.visible-print {
     font-size: 15px;
     line-height: 1.5em;
   }
-  .general_header_wrapper {
-    border-bottom: 3px solid #0088cc;
-    margin-bottom: 10px;
-  }
   .status_container {
     border-bottom: 1px dashed #D0D0D0;
     color: #8F8F8F;
@@ -6356,10 +6352,6 @@ td.visible-print {
   }
   .row-fluid {
     overflow: hidden;
-  }
-  div[class*="span"].cfct-block {
-    padding-bottom: 999999px;
-    margin-bottom: -999999px;
   }
   div[class*="span"] > .cfct-module {
     margin-left: 10px;
@@ -7512,8 +7504,7 @@ td.visible-print {
     padding-top: 0px;
   }
   /* Hide header completely on large screens when Mobile Navbar is enabled */
-  body.have-navbar .general_header_wrapper,
-  body.have-mobile-navbar .general_header_wrapper {
+  body.have-navbar .general_header_wrapper {
     display: none;
   }
   /* Hide header completely on large screens when Mobile Navbar is enabled */
@@ -11484,9 +11475,6 @@ disabled look for already selected choices in the results dropdown
     padding-top: 0px;
   }
   div.header {
-    display: none;
-  }
-  .general_header_wrapper {
     display: none;
   }
   /* Hide header completely on large screens when Mobile Navbar is enabled */

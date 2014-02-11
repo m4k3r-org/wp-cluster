@@ -20,28 +20,9 @@ if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 </head>
 <body <?php body_class(); ?>>
 
-<header class="frame">
-  <?php get_template_part( 'templates/nav/toolbar' ); ?>
 
+<header class="frame" data-container-type="header">
+  <?php get_template_part( 'templates/nav/toolbar', get_post_type() ); ?>
+  <?php get_template_part( 'templates/aside/header', get_post_type() ); ?>
   <?php get_template_part( 'templates/aside/banner', get_post_type() ); ?>
-
-  <div class="general_header_wrapper">
-    <div class="header container clearfix" data-container-type="header">
-
-      <?php get_template_part( 'templates/header/logo', get_post_type() ); ?>
-
-      <?php get_template_part( 'templates/nav/header', get_post_type() ); ?>
-
-      <?php do_action( 'flawless::header_bottom' ); ?>
-
-    </div>
-  </div>
-
-  <div class="content_container clearfix">
-
-    <?php get_template_part( 'templates/aside/notice', get_post_type() ); ?>
-
-    <?php get_template_part( 'templates/nav/sub-menu', get_post_type() ); ?>
-
-    <?php do_action( 'flawless::content_container_top' ); ?>
 </header>
