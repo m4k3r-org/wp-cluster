@@ -280,23 +280,24 @@ namespace UsabilityDynamics {
     public function __construct() {
       global $wp_disco;
 
-      $this->id      = 'hddp';
-      $this->version = '1.0.2';
+      // Configure Properties.
+      $this->id      = Utility::create_slug( __NAMESPACE__ . ' hddp', array( 'separator' => ':' ));
+      $this->domain  = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ));
+      $this->version = wp_get_theme()->get( 'Version' );
+
+      // Make theme available for translation
+      if( is_dir( get_template_directory() . '/static/languages' ) ) {
+        load_theme_textdomain( $this->domain, get_template_directory() . '/static/languages' );
+      }
 
       // Configure Theme.
-      $this->initialize( array(
-        'minify'    => true,
-        'obfuscate' => true
-      ));
-
-      // Initialize Settings.
-      $this->settings( array(
-        'key'     => 'hddp_options',
+      $this->initialize(array(
+        'key'     => 'disco',
         'version' => $this->version
       ));
 
       // Configure Post Types and Meta.
-      $this->structure( array(
+      $this->structure(array(
         'artist'            => array(
           'type' => 'post'
         ),
@@ -378,7 +379,7 @@ namespace UsabilityDynamics {
       ));
 
       // Configure API Methods.
-      $this->api( array(
+      $this->api(array(
         'search.AutoSuggest'        => array(
           'key' => 'search_auto_suggest'
         ),
@@ -453,7 +454,7 @@ namespace UsabilityDynamics {
       ));
 
       // Configure Image Sizes.
-      $this->media( array(
+      $this->media(array(
         'post-thumbnail'     => array(
           'description' => '',
           'width'       => 120,
@@ -472,11 +473,19 @@ namespace UsabilityDynamics {
           'height'      => 130,
           'crop'        => true
         ),
-        'gallery'            => array(
-          'description' => '',
+        'gallery'        => array(
+          'description' => __( 'Gallery Image Thumbnail.' ),
+          'post_types'  => array( 'page', 'artist' ),
           'width'       => 200,
           'height'      => 999,
           'crop'        => false
+        ),
+        'tablet'         => array(
+          'description' => __( 'Tablet Maximum Resolution.' ),
+          'post_types'  => array( '_aside' ),
+          'width'       => 670,
+          'height'      => 999,
+          'crop'        => true
         ),
         'sidebar_poster'     => array(
           'description' => 'Fit for maximum sidebar width, unlimited height',
@@ -504,13 +513,48 @@ namespace UsabilityDynamics {
       ));
 
       // Declare Supported Theme Features.
-      $this->supports( array(
-        'custom-header'        => array(),
-        'custom-skins'         => array(),
-        'custom-background'    => array(),
-        'header-dropdowns'     => array(),
-        'header-business-card' => array(),
-        'frontend-editor'      => array()
+      $this->supports(array(
+        'admin-bar'         => array(
+          'callback' => '__return_false'
+        ),
+        'asides'            => array(
+          'header',
+          'banner',
+          'footer'
+        ),
+        'html5'             => array(
+          'comment-list',
+          'comment-form',
+          'search-form'
+        ),
+        'attachment:audio'  => array(
+          'enabled' => true
+        ),
+        'attachment:video'  => array(
+          'enabled' => true
+        ),
+        'custom-background' => array(
+          'default-color' => '',
+          'default-image' => '',
+          'wp-head-callback' => '__return_false'
+        ),
+        'post-thumbnails'   => array(
+          'event',
+          'artist',
+          'page',
+          'post'
+        ),
+        'saas.udx.io'       => array(
+          'cloudSearch',
+          'cloudIdentity'
+        ),
+        'raas.udx.io'       => array(
+          'build.compileLESS',
+          'build.compileScripts'
+        ),
+        'cdn.udx.io'        => array(
+          'jquery'
+        )
       ));
 
       // Head Tags.
@@ -562,10 +606,137 @@ namespace UsabilityDynamics {
         'header-banner'    => array()
       ));
 
-      // Handle Theme Version Changes.
-      $this->upgrade();
+      // Enable Carrington Build.
+      $this->carrington( array(
+        'bootstrap'          => true,
+        'templates'          => true,
+        'styles'             => array(),
+        'module_directories' => array(
+          __DIR__ . '/modules'
+        ),
+        'post_types'         => array(
+          'page',
+          'post',
+          'artist',
+          '_aside'
+        )
+      ));
+
+      // Register Theme Bootstrap Scripts.
+      $this->requires( array(
+        'id'    => 'app.bootstrap',
+        'path'  => home_url( '/assets/scripts/app.bootstrap.js' ),
+        'base'  => home_url( '/assets/scripts' )
+      ));
+
+      // Register Theme Settings Model.
+      $this->requires( array(
+        'id'    => 'site.model',
+        'cache' => 'private, max-age: 0',
+        'vary'  => 'user-agent, x-client-type',
+        'base'  => home_url( '/assets/scripts' ),
+        'data'  => $this->get_model()
+      ));
+
+      // Core Actions
+      add_action( 'init', array( $this, 'init' ), 100 );
+      add_action( 'template_redirect', array( $this, 'redirect' ), 100 );
+      add_action( 'admin_init', array( $this, 'admin' ));
+      add_action( 'wp_footer', array( $this, 'wp_footer' ));
+      add_action( 'widgets_init', array( $this, 'widgets' ));
+      add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 600 );
 
       return $wp_disco = $this;
+
+    }
+
+    public function wp_enqueue_scripts() {
+
+      wp_enqueue_style( 'app.bootstrap' );
+      wp_enqueue_script( 'app.bootstrap' );
+      wp_enqueue_script( 'jquery-new-ud-elasticsearch' );
+      wp_enqueue_script( 'jquery-ui-datepicker' );
+      wp_enqueue_script( 'jquery-ui-tabs' );
+      wp_enqueue_script( 'google-maps' );
+
+    }
+
+    public function wp_footer() {}
+
+    public function widgets() {
+
+      unregister_widget( 'WP_Widget_Recent_Comments' );
+      unregister_widget( 'WP_Widget_RSS' );
+      unregister_widget( 'WP_Widget_Calendar' );
+      unregister_widget( 'WP_Widget_Tag_Cloud' );
+      unregister_widget( 'WP_Widget_Meta' );
+      unregister_widget( 'WP_Widget_Archives' );
+      unregister_widget( 'WP_Widget_Categories' );
+
+    }
+
+    /**
+     * Get Site / Theme Locale
+     *
+     * @author Usability Dynamics
+     * @since 0.1.0
+     */
+    private function get_locale() {
+
+      // Include Translation File.
+      //$locale = include_once $this->get( '_computed.path.root' ) . '/l10n.php';
+
+      $locale = array();
+
+      // Noramlize HTML Strings.
+      foreach( (array) $locale as $key => $value ) {
+
+        if( !is_scalar( $value ) ) {
+          continue;
+        }
+
+        $locale[ $key ] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
+
+      }
+
+      return (array) apply_filters( 'disco:model:locale', $locale );
+
+    }
+
+    /**
+     * Get Site Model.
+     *
+     * See http://www.dancingastronaut.com/ (DancingAstronaut_AppState)
+     * See http://www.livenation.com/geo.js
+     *
+     * @return array
+     */
+    private function get_model() {
+
+      $_home_url = parse_url( home_url());
+
+      return (array) apply_filters( 'disco:model:settings', array(
+        'settings' => array(
+          'permalinks' => get_option( 'permalink_structure' ) == '' ? false : true,
+        ),
+        'geo'      => array(
+          'latitude'  => null,
+          'longitude' => null,
+          'city'      => null,
+          'state'     => null,
+          'country'   => null
+        ),
+        'user'     => array(
+          'id'    => '',
+          'login' => ''
+        ),
+        'url'      => array(
+          'domain' => trim( $_home_url[ 'host' ] ? $_home_url[ 'host' ] : array_shift( explode( '/', $_home_url[ 'path' ], 2 ) ) ),
+          'ajax'   => admin_url( 'admin-ajax.php' ),
+          'home'   => admin_url( 'admin-ajax.php' ),
+          'assets' => admin_url( 'admin-ajax.php' ),
+        )
+      ));
 
     }
 
@@ -585,30 +756,28 @@ namespace UsabilityDynamics {
       define( 'HDDP', $this->domain );
 
       // Declare Public Scripts.
-      $this->scripts( array(
-        'app.boostrap'         => get_stylesheet_directory() . '/scripts/app.boostrap.js',
-        'app.main'             => get_stylesheet_directory() . '/scripts/app.main.js',
-        'app.admin'            => get_stylesheet_directory() . '/scripts/app.admin.js',
-        'jquery.elasticsearch' => get_stylesheet_directory() . '/scripts/jquery.new.ud.elasticsearch.js',
-        'jquery.fitvids'       => get_stylesheet_directory() . '/scripts/jquery.fitvids.js',
-        'jquery.cookie'        => get_stylesheet_directory() . '/scripts/jquery.cookie.js',
-        'jquery.flexslider'    => get_stylesheet_directory() . '/scripts/jquery.flexslider.js',
-        'jquery.jqtransform'   => get_stylesheet_directory() . '/scripts/jquery.jqtransform.js',
-        'jquery.simplyscroll'  => get_stylesheet_directory() . '/scripts/jquery.simplyscroll.js'
-      ));
+      $this->scripts(array(
+        'app.bootstrap'        => home_url( '/assets/scripts/app.bootstrap.js' ),
+        'app.main'             => home_url( '/assets/scripts/app.main.js' ),
+        'app.admin'            => home_url( '/assets/scripts/app.admin.js' ),
+        'jquery.elasticsearch' => home_url( '/assets/scripts/jquery.new.ud.elasticsearch.js' ),
+        'jquery.fitvids'       => home_url( '/assets/scripts/jquery.fitvids.js' ),
+        'jquery.cookie'        => home_url( '/assets/scripts/jquery.cookie.js' ),
+        'jquery.flexslider'    => home_url( '/assets/scripts/jquery.flexslider.js' ),
+        'jquery.jqtransform'   => home_url( '/assets/scripts/jquery.jqtransform.js' ),
+        'jquery.simplyscroll'  => home_url( '/assets/scripts/jquery.simplyscroll.js' )
+      ) );
 
       // Declare Public Styles.
-      $this->styles( array(
-        'app.bootstrap'       => get_stylesheet_directory() . '/styles/app.bootstrap.css',
-        'app.main'            => get_stylesheet_directory() . '/styles/app.main.css',
-        'app.admin'           => get_stylesheet_directory() . '/styles/app.admin.css',
-        'content'             => get_stylesheet_directory() . '/styles/content.css',
-        'bootstrap'           => get_stylesheet_directory() . '/styles/bootstrap.css',
-        'jquery.jqtransform'  => get_stylesheet_directory() . '/styles/jqtransform.css',
-        'jquery.simplyscroll' => get_stylesheet_directory() . '/styles/simplyscroll.css'
+      $this->styles(array(
+        'app.bootstrap'       => home_url( '/assets/styles/app.bootstrap.css' ),
+        'app.main'            => home_url( '/assets/styles/app.main.css' ),
+        'app.admin'           => home_url( '/assets/styles/app.admin.css' ),
+        'content'             => home_url( '/assets/styles/content.css' ),
+        'bootstrap'           => home_url( '/assets/styles/bootstrap.css' ),
+        'jquery.jqtransform'  => home_url( '/assets/styles/jqtransform.css' ),
+        'jquery.simplyscroll' => home_url( '/assets/styles/simplyscroll.css' )
       ));
-
-      load_theme_textdomain( $this->domain, false, get_stylesheet_directory() . '/static/languages' );
 
       // Register Standard Scripts.
       wp_register_script( 'jquery-ud-form_helper', get_stylesheet_directory_uri() . '/scripts/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1.3', true );
@@ -705,24 +874,9 @@ namespace UsabilityDynamics {
       // Saving and deleting posts from QA table
       add_action( 'save_post', array( 'UsabilityDynamics\Disco', 'save_post' ), 1, 2 );
 
-      // Enqueue Frontend Scripts & Styles.
-      add_action( 'wp_enqueue_scripts', function () {
-        wp_enqueue_style( 'app.bootstrap' );
-        wp_enqueue_script( 'app.bootstrap' );
-        wp_enqueue_script( 'jquery-new-ud-elasticsearch' );
-        wp_enqueue_script( 'jquery-ui-datepicker' );
-        wp_enqueue_script( 'jquery-ui-tabs' );
-        wp_enqueue_script( 'google-maps' );
-      } );
-
       // Enqueue Admin Scripts & Styles.
       add_action( 'admin_enqueue_scripts', function () {
         wp_enqueue_script( 'app.admin' );
-      } );
-
-      // Admin Footer Scripts.
-      add_action( 'admin_menu', function () {
-        global $hddp;
       } );
 
       add_filter( 'the_category', function ( $c ) {
@@ -1084,7 +1238,7 @@ namespace UsabilityDynamics {
     /**
      * Handle addition of shortcode and listener
      *
-     * @action redirect)
+     * @action redirect
      * @author potanin@UD
      */
     public function dynamic_filter_shortcode_handler() {
