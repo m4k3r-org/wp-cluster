@@ -10,8 +10,8 @@
  *      require( 'site.model' ).ajax
  *
  */
-define( [ 'site.locale', 'site.model', 'jquery', 'skrollr', 'twitter.bootstrap' ], function( locale, model, jQuery ) {
-  console.log( 'app', 'loaded', require( 'site.model' ).domain );
+require( [ '/assets/models/locale', '/assets/models/settings', 'jquery', 'skrollr', 'twitter.bootstrap' ], function( _locale, _settings, jQuery ) {
+  console.debug( 'app.main', 'loaded', _locale.domain );
 
   window.skrollr.init( {
     forceHeight: false

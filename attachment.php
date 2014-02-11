@@ -11,7 +11,7 @@
  */
 ?>
 
-<?php get_template_part( 'templates/page/header', get_post_type() ); ?>
+<?php get_template_part( 'templates/header', get_post_type() ); ?>
 
 <section class="container inner-wrapper entry-<?php echo get_post_type(); ?>">
   <div class="row">
@@ -43,4 +43,4 @@
   </div>
 </section>
 
-<?php get_template_part( 'templates/page/footer', get_post_type() ); ?>
+<?php get_template_part( 'templates/footer', get_post_type() ); ?>

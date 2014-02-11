@@ -12,7 +12,7 @@
  * @module festival  
  * @since festival 0.1.0
  */
-get_template_part( 'templates/page/header', get_post_type() ); 
+get_template_part( 'templates/header', get_post_type() );
 ?>
 <section class="container inner-wrapper no-sidebar">
   <div class="row">
@@ -25,4 +25,4 @@ get_template_part( 'templates/page/header', get_post_type() );
     </div>
   </div>
 </section>
-<?php get_template_part( 'templates/page/footer', get_post_type() ); ?>
+<?php get_template_part( 'templates/footer', get_post_type() ); ?>

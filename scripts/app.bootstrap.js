@@ -150,14 +150,23 @@ define( 'banner.poster', [ 'udx.storage' ], function( Storage ) {
  * Loads initial non-blocking JavaScript.
  *
  */
-define( 'app.bootstrap', [ 'html.picture', 'html.video' ], function Bootstrap() {
-  console.log( 'app.bootstrap' );
+require( [ 'html.picture', 'html.video' ], function Bootstrap() {
+  console.debug( 'app.bootstrap' );
 
-  require.loadStyle( '/assets/styles/app.main.css' );
+  require.config({
+    paths: {
+      scrollr: '/assets/scripts/scrollr',
+      countdown: '/assets/scripts/countdown',
+      sticky: '/assets/scripts/sticky'
+    }
+  });
+
   require.loadStyle( '//cdn.udx.io/vendor/animate.css' );
 
+  //require.loadStyle( '/assets/styles/app.main.css' );
+
   // Load Main Application
-  require( [ 'app.main' ] );
+  //require( [ '/assets/scripts/app.main.js' ] );
 
 
 });

@@ -172,9 +172,24 @@ namespace UsabilityDynamics {
       // Head Tags.
       $this->head( array(
         array(
-          'tag'        => 'meta',
-          'http-equip' => 'X-UA-Compatible',
-          'content'    => 'IE=edge'
+          'tag'     => 'meta',
+          'name'    => 'apple-mobile-web-app-status-bar-style',
+          'content' => 'black'
+        ),
+        array(
+          'tag'     => 'meta',
+          'name'    => 'apple-mobile-web-app-capable',
+          'content' => 'yes'
+        ),
+        array(
+          'tag'     => 'meta',
+          'name'    => 'HandheldFriendly',
+          'content' => 'True'
+        ),
+        array(
+          'tag'     => 'meta',
+          'name'    => 'MobileOptimized',
+          'content' => '360'
         ),
         array(
           'tag'     => 'meta',
@@ -182,8 +197,30 @@ namespace UsabilityDynamics {
           'content' => 'width=device-width, initial-scale=1.0'
         ),
         array(
-          'tag'     => 'meta',
-          'charset' => get_bloginfo( 'charset' )
+          'tag'     => 'link',
+          'rel'     => 'apple-touch-icon',
+          'href'    => content_url( '/assets/apple-touch-icon-72x72.png' )
+        ),
+        array(
+          'tag'     => 'link',
+          'rel'     => 'apple-touch-startup-image',
+          'href'    => content_url( '/assets/apple-touch-icon-72x72.png' )
+        ),
+        array(
+          'tag'     => 'link',
+          'rel'     => 'apple-touch-icon',
+          'href'    => content_url( '/assets/apple-touch-icon-72x72.png' ),
+          'sizes'   => '72x72'
+        ),
+        array(
+          'tag'     => 'link',
+          'rel'     => 'apple-touch-icon',
+          'href'    => content_url( '/assets/apple-touch-icon-114x114.png' ),
+          'sizes'   => '="114x114'
+        ),
+        array(
+          'tag'     => 'link',
+          'href'    => content_url( '/assets/apple-touch-icon-72x72.png' )
         ),
         array(
           'tag'  => 'link',
@@ -245,30 +282,6 @@ namespace UsabilityDynamics {
         )
       ));
 
-      $this->requires(array(
-        'id'    => 'app.bootstrap',
-        'path'  => home_url( '/assets/scripts/app.bootstrap.js' ),
-        'base'  => home_url( '/assets/scripts' )
-      ));
-
-      // Register Theme Settings Model.
-      $this->requires( array(
-        'id'    => 'site.model',
-        'cache' => 'private, max-age: 0',
-        'vary'  => 'user-agent, x-client-type',
-        'base'  => home_url( '/assets/scripts' ),
-        'data'  => $this->get_model()
-      ));
-
-      // Register Theme Locale Model.
-      $this->requires( array(
-        'id'    => 'site.locale',
-        'cache' => 'public, max-age: 30000',
-        'vary'  => 'x-user',
-        'base'  => home_url( '/assets/scripts' ),
-        'data'  => $this->get_locale()
-      ));
-
       // Register Navigation Menus
       $this->menus( array(
         'primary' => array(
@@ -297,6 +310,9 @@ namespace UsabilityDynamics {
       add_action( 'customize_register', array( $this, 'customize_register' ), 600 );
       add_action( 'wp_head', array( $this, 'wp_head' ));
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 600 );
+
+      add_filter( 'udx:theme:public:model:locale', array( $this, 'locale_model' ) );
+      add_filter( 'udx:theme:public:model:settings', array( $this, 'settings_model' ) );
 
       // Initializes Wordpress Menufication
       if( class_exists( '\Menufication' ) ) {
@@ -430,12 +446,15 @@ namespace UsabilityDynamics {
      * @author Usability Dynamics
      * @since 0.1.0
      */
-    private function get_locale() {
+    public function locale_model() {
 
       // Include Translation File.
       //$locale = include_once $this->get( '_computed.path.root' ) . '/l10n.php';
 
-      $locale = array();
+      $locale = array(
+        'domain' => __( 'Domain' ),
+        'settings' => __( 'Settings' )
+      );
 
       // Noramlize HTML Strings.
       foreach( (array) $locale as $key => $value ) {
@@ -460,7 +479,7 @@ namespace UsabilityDynamics {
      *
      * @return array
      */
-    private function get_model() {
+    public function settings_model() {
 
       $_home_url = parse_url( home_url());
 
@@ -597,19 +616,36 @@ namespace UsabilityDynamics {
         $this->carrington->registerModule( 'EventLoopModule' );
       }
 
+      // Declare Public Scripts.
+      $this->scripts(array(
+        'app.admin'             => array( 'url' => content_url( '/assets/scripts/app.admin.js' ), 'deps' => array( 'app.require' ) ),
+        'app.bootstrap'         => array( 'url' => content_url( '/assets/scripts/app.bootstrap.js' ), 'deps' => array( 'app.require' ) ),
+        'app.main'              => array( 'url' => content_url( '/assets/scripts/app.main.js' ), 'deps' => array( 'app.require', 'app.bootstrap' ) ),
+        'jquery.elasticsearch'  => content_url( '/assets/scripts/jquery.new.ud.elasticsearch.js' ),
+        'jquery.fitvids'        => content_url( '/assets/scripts/jquery.fitvids.js' ),
+        'jquery.cookie'         => content_url( '/assets/scripts/jquery.cookie.js' ),
+        'jquery.flexslider'     => content_url( '/assets/scripts/jquery.flexslider.js' ),
+        'jquery.jqtransform'    => content_url( '/assets/scripts/jquery.jqtransform.js' ),
+        'jquery.simplyscroll'   => content_url( '/assets/scripts/jquery.simplyscroll.js' )
+      ));
+
+      // Declare Public Styles.
+      $this->styles(array(
+        'app.admin'             => content_url( '/assets/styles/app.admin.css' ),
+        'app.bootstrap'         => content_url( '/assets/styles/app.bootstrap.css' ),
+        'app.main'              => array( 'url' => content_url( '/assets/styles/app.main.css' ), 'deps' => array( 'app.bootstrap' ) ),
+        'app.editor'            => content_url( '/assets/styles/app.editor.css' ),
+        'content'               => content_url( '/assets/styles/content.css' ),
+        'bootstrap'             => content_url( '/assets/styles/bootstrap.css' ),
+        'jquery.jqtransform'    => content_url( '/assets/styles/jqtransform.css' ),
+        'jquery.simplyscroll'   => content_url( '/assets/styles/simplyscroll.css' )
+      ));
+
       // Sync 'Social Streams' data with social networks
       $this->sync_streams();
 
-      // Register Scripts. (for reference only, not enqueued);
-      wp_register_style( 'app.bootstrap', home_url( '/assets/styles/app.bootstrap.css' ), array(), $this->version, 'all' );
-      wp_register_script( 'app.main', home_url( '/assets/scripts/app.main.js' ), array(), $this->version, false );
-
-      // Register Styles.
-      wp_register_script( 'app.bootstrap', home_url( '/assets/scripts/app.bootstrap.js' ), array(), $this->version, true );
-      wp_register_style( 'app.main', home_url( '/assets/styles/app.main.css' ), array(), $this->version, 'all' );
-
       // Register Editor Style.
-      add_editor_style( home_url( '/assets/editor-style.css' ));
+      add_editor_style( home_url( '/assets/styles/app.editor.css' ) );
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
@@ -652,8 +688,8 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function wp_enqueue_scripts() {
-      wp_enqueue_style( 'app.bootstrap' );
-      //wp_enqueue_script( 'app.bootstrap' );
+      wp_enqueue_style( 'app.main' );
+      wp_enqueue_script( 'app.main' );
     }
 
     /**

@@ -16,15 +16,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" <?php language_attributes(); ?>> <!--<![endif]-->
 <head>
   <title><?php wp_title( '|', true, 'right' ); ?></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-  <meta name="HandheldFriendly" content="True"/>
-  <meta name="MobileOptimized" content="360"/>
-  <link rel="apple-touch-icon" href="<?php echo content_url( '/assets/apple-touch-icon-72x72.png' ); ?>"/>
-  <link rel="apple-touch-icon" href="<?php echo content_url( '/assets/apple-touch-icon-72x72.png' ); ?>"    sizes="72x72"/>
-  <link rel="apple-touch-icon" href="<?php echo content_url( '/assets/apple-touch-icon-114x114.png' ); ?>"  sizes="114x114"/>
-  <link rel="apple-touch-startup-image" href="<?php echo content_url( '/assets/apple-touch-icon-72x72.png' ); ?>"/>
   <?php wp_head(); ?>
 </head>
 
