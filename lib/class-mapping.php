@@ -131,7 +131,6 @@ namespace UsabilityDynamics\Cluster {
       private function _debug() {
 
         return array(
-          //'wp_logout_url' => wp_logout_url(),
           'wp_login_url' => wp_login_url(),
           'get_home_url' => get_home_url(),
           'get_site_url' => get_site_url(),
