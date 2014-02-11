@@ -79,16 +79,14 @@ namespace UsabilityDynamics {
       $this->domain  = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => '-' ));
       $this->version = wp_get_theme()->get( 'Version' );
 
-      // Make theme available for translation
-      if( is_dir( get_template_directory() . '/static/languages' ) ) {
-        load_theme_textdomain( $this->domain, get_template_directory() . '/static/languages' );
-      }
-
       // Initialize Settings.
       $this->initialize(array(
-        'key'     => 'festival',
-        'version' => $this->version
+        'key'       => 'festival',
+        'version'   => $this->version
       ));
+
+      // Register Custom Post Types and set their taxonomies
+      $this->structure( $this->get( 'structure' ) );
 
       // Configure API Methods.
       $this->api( array(
@@ -171,6 +169,56 @@ namespace UsabilityDynamics {
         )
       ));
 
+      // Head Tags.
+      $this->head( array(
+        array(
+          'tag'        => 'meta',
+          'http-equip' => 'X-UA-Compatible',
+          'content'    => 'IE=edge'
+        ),
+        array(
+          'tag'     => 'meta',
+          'name'    => 'viewport',
+          'content' => 'width=device-width, initial-scale=1.0'
+        ),
+        array(
+          'tag'     => 'meta',
+          'charset' => get_bloginfo( 'charset' )
+        ),
+        array(
+          'tag'  => 'link',
+          'rel'  => 'shortcut icon',
+          'href' => home_url( '/images/favicon.png' )
+        ),
+        array(
+          'tag'  => 'link',
+          'rel'  => 'api',
+          'href' => admin_url( 'admin-ajax.php' )
+        ),
+        array(
+          'tag'  => 'link',
+          'rel'  => 'pingback',
+          'href' => get_bloginfo( 'pingback_url' )
+        ),
+        array(
+          'tag'  => 'link',
+          'rel'  => 'profile',
+          'href' => 'http://gmpg.org/xfn/11'
+        ),
+        array(
+          'tag'  => 'link',
+          'rel'  => 'pingback',
+          'href' => get_bloginfo( 'pingback_url' )
+        )
+      ));
+
+      // Add Management UI.
+      $this->manage( array(
+        'id'       => 'fesival_manage',
+        'title'    => __( 'Manage', $this->domain ),
+        'template' => dirname( __DIR__ ) . '/templates/admin.manage.php'
+      ));
+
       // Enables Customizer for Options.
       $this->customizer( array(
         'disable' => array(
@@ -179,13 +227,6 @@ namespace UsabilityDynamics {
           'title_tagline'
         ),
         'enable'  => array(),
-      ));
-
-      // Add Management UI.
-      $this->manage( array(
-        'id'       => 'fesival_manage',
-        'title'    => __( 'Manage', $this->domain ),
-        'template' => dirname( __DIR__ ) . '/templates/admin.manage.php'
       ));
 
       // Enable Carrington Build.
@@ -204,17 +245,11 @@ namespace UsabilityDynamics {
         )
       ));
 
-      // @todo Make sure its isn't the login screen either - or add login styles.
-      // Register Theme Bootstrap Scripts.
-      if( !is_admin() ) {
-      
-        $this->requires( array(
-          'id'    => 'app.bootstrap',
-          'path'  => home_url( '/assets/scripts/app.bootstrap.js' ),
-          'base'  => home_url( '/assets/scripts' )
-        ));
-
-      }
+      $this->requires(array(
+        'id'    => 'app.bootstrap',
+        'path'  => home_url( '/assets/scripts/app.bootstrap.js' ),
+        'base'  => home_url( '/assets/scripts' )
+      ));
 
       // Register Theme Settings Model.
       $this->requires( array(
@@ -233,7 +268,7 @@ namespace UsabilityDynamics {
         'base'  => home_url( '/assets/scripts' ),
         'data'  => $this->get_locale()
       ));
-      
+
       // Register Navigation Menus
       $this->menus( array(
         'primary' => array(
@@ -261,7 +296,6 @@ namespace UsabilityDynamics {
       add_action( 'widgets_init', array( $this, 'widgets' ), 100 );
       add_action( 'customize_register', array( $this, 'customize_register' ), 600 );
       add_action( 'wp_head', array( $this, 'wp_head' ));
-      add_action( 'wp_footer', array( $this, 'wp_footer' ));
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 600 );
 
       // Initializes Wordpress Menufication
@@ -271,6 +305,11 @@ namespace UsabilityDynamics {
 
     }
 
+    /**
+     * Theme Customizer.
+     *
+     * @param $wp_customize
+     */
     public function customize_register( $wp_customize ) {
 
       // Register new settings to the WP database...
@@ -310,7 +349,7 @@ namespace UsabilityDynamics {
      *
      * @param string $type
      */
-    private function compile_site( $type = '' ) {
+    private function build_site( $type = '' ) {
 
       // Combile LESS.
       $response = $this->raasRequest( 'build.compileLESS', array(
@@ -558,9 +597,6 @@ namespace UsabilityDynamics {
         $this->carrington->registerModule( 'EventLoopModule' );
       }
 
-      // Register Custom Post Types and set their taxonomies
-      $this->structure( $this->get( 'structure' ) );
-
       // Sync 'Social Streams' data with social networks
       $this->sync_streams();
 
@@ -606,16 +642,6 @@ namespace UsabilityDynamics {
         ));
 
       }
-
-    }
-
-    /**
-     * Frontend Footer
-     *
-     * @author Usability Dynamics
-     * @since 0.1.0
-     */
-    public function wp_footer() {
 
     }
 
@@ -768,7 +794,7 @@ namespace UsabilityDynamics {
     /**
      * Determine if called method is stored in Utility class.
      * Allows to call \UsabilityDynamics\Festival\Utility methods directly.
-     * 
+     *
      * @author peshkov@UD
      */
     public function __call( $name , $arguments ) {
@@ -777,7 +803,7 @@ namespace UsabilityDynamics {
       }
       return call_user_func_array( array( '\UsabilityDynamics\Festival\Utility', $name ), $arguments );
     }
-    
+
   }
 
 }
