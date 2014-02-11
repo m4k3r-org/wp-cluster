@@ -611,7 +611,7 @@ namespace UsabilityDynamics {
         'jquery.simplyscroll' => get_stylesheet_directory() . '/styles/simplyscroll.css'
       ));
 
-      load_theme_textdomain( $this->domain, false, get_stylesheet_directory() . '/languages' );
+      load_theme_textdomain( $this->domain, false, get_stylesheet_directory() . '/static/languages' );
 
       // Register Standard Scripts.
       wp_register_script( 'jquery-ud-form_helper', get_stylesheet_directory_uri() . '/scripts/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1.3', true );
@@ -1542,7 +1542,7 @@ namespace UsabilityDynamics {
       /** Buffer output */
       ob_start();
 
-      include dirname( __DIR__ ) . '/templates/custom_loop.php';
+      include dirname( __DIR__ ) . '/templates/aside/custom_loop.php';
 
       if( $do_shortcode === true ) echo do_shortcode( $shortcode );
 

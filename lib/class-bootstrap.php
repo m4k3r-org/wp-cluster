@@ -39,7 +39,6 @@ namespace UsabilityDynamics\Disco {
 
         // Disco Libraries.
         include_once( untrailingslashit( __DIR__ ) . '/widgets.php' );
-        include_once( untrailingslashit( __DIR__ ) . '/template.php' );
 
         if( !class_exists( 'UsabilityDynamics\Disco' ) ) {
           wp_die( '<h1>Fatal Error</h1><p>Disco Theme not found.</p>' );
