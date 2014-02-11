@@ -4,7 +4,8 @@
 * wp_disco()->breadcrumbs()
 * wp_disco()->page_title()
 * wp_disco()->module_class()
-* wp_disco()->wrapper_class()
+* wp_disco()->wrapper_class() - Used to be flawless_wrapper_class();
+* wp_disco()->block_class() - Used to be flawless_block_class();
 * wp_disco()->get_template_part()
 * wp_disco()->get_current_sidebars()
 * wp_disco()->widget_area_tabs()

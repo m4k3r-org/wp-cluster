@@ -16,6 +16,7 @@ namespace UsabilityDynamics {
      * Theme ID.
      *
      * @param $id
+     *
      * @var string
      */
     public $id;
@@ -24,6 +25,7 @@ namespace UsabilityDynamics {
      * Theme Version.
      *
      * @param $version
+     *
      * @var string
      */
     public $version;
@@ -32,6 +34,7 @@ namespace UsabilityDynamics {
      * Theme Text Domain.
      *
      * @param $domain
+     *
      * @var string
      */
     public $domain = 'wp-disco';
@@ -277,39 +280,39 @@ namespace UsabilityDynamics {
     public function __construct() {
       global $wp_disco;
 
-      $this->id = 'hddp';
+      $this->id      = 'hddp';
       $this->version = '1.0.0';
 
       // Configure Theme.
-      $this->initialize(array(
+      $this->initialize( array(
         'minify'    => true,
         'obfuscate' => true
-      ));
+      ) );
 
       // Initialize Settings.
-      $this->settings(array(
-        'key' => 'hddp_options',
+      $this->settings( array(
+        'key'     => 'hddp_options',
         'version' => $this->version
-      ));
+      ) );
 
       // Declare Public Models.
-      $this->models(array(
+      $this->models( array(
         'theme'  => array(),
         'locale' => array()
-      ));
+      ) );
 
       // Configure Post Types and Meta.
-      $this->structure(array(
-        'artist' => array(
+      $this->structure( array(
+        'artist'            => array(
           'type' => 'post'
         ),
-        'venue' => array(
+        'venue'             => array(
           'type' => 'post'
         ),
-        'location' => array(
+        'location'          => array(
           'type' => 'post'
         ),
-        'hdp_event' => array(
+        'hdp_event'         => array(
           'type'       => 'post',
           'attributes' => array(
             'post_title',
@@ -336,7 +339,7 @@ namespace UsabilityDynamics {
             'hdp_date_range'
           )
         ),
-        'hdp_video' => array(
+        'hdp_video'         => array(
           'type'       => 'post',
           'attributes' => array(
             'post_title',
@@ -358,7 +361,7 @@ namespace UsabilityDynamics {
           )
         ),
         'hdp_photo_gallery' => array(
-          'type' => 'post',
+          'type'       => 'post',
           'attributes' => array(
             'post_title',
             'post_name',
@@ -378,192 +381,192 @@ namespace UsabilityDynamics {
             'hdp_state'
           )
         )
-      ));
+      ) );
 
       // Configure API Methods.
-      $this->api(array(
-        'search.AutoSuggest' => array(
+      $this->api( array(
+        'search.AutoSuggest'        => array(
           'key' => 'search_auto_suggest'
         ),
-        'search.ElasticSearch' => array(
+        'search.ElasticSearch'      => array(
           'key' => 'search_elastic_search'
         ),
-        'search.ElasticFilter' => array(
+        'search.ElasticFilter'      => array(
           'key' => 'search_elastic_filter'
         ),
         'compute.QuickAccessTables' => array(
-          'key' => 'update_qa_all_tables',
-          'callback' => function() {}
-        ),
-        'compute.Coordinates' => array(
-          'key' => 'update_lat_long',
-          'callback' => function() {
-            $updated = array();
-
-            foreach( self::_get_event_posts() as $post_id ) {
-              $updated[ ] = self::update_event_location( $post_id, array( 'add_log_entries' => false ) );
-            }
-
-            if( count( $updated ) > 0 ) {
-              self::log( 'Successfully updated addresses for (' . count( $updated ) . ') event(s).' );
-            } else {
-              self::log( 'Attempted to do a bulk address update for all events, but no events were updated.' );
-            }
-
-
+          'key'      => 'update_qa_all_tables',
+          'callback' => function () {
             }
         ),
-        'cloud.Synchronize' => array(
-          'key' => 'synchronize_with_cloud',
-          'callback' => function() {
-            \UD_Functions::timer_start( 'synchronize_with_cloud' );
+        'compute.Coordinates'       => array(
+          'key'      => 'update_lat_long',
+          'callback' => function () {
+              $updated = array();
 
-            foreach( (array) $hddp[ 'dynamic_filter_post_types' ] as $post_type ) {
+              foreach( self::_get_event_posts() as $post_id ) {
+                $updated[ ] = self::update_event_location( $post_id, array( 'add_log_entries' => false ) );
+              }
 
-              set_time_limit( 0 );
-
-              $batch = array();
-
-              if( $_GET[ 'start' ] && $_GET[ 'limit' ] ) {
-                $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC LIMIT {$_GET['start']}, {$_GET['limit']};";
+              if( count( $updated ) > 0 ) {
+                self::log( 'Successfully updated addresses for (' . count( $updated ) . ') event(s).' );
               } else {
-                $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC;";
-              }
-
-              foreach( $wpdb->get_col( $query ) as $post_id ) {
-                $result[] = UD_Cloud::index( get_event( $post_id ) );
+                self::log( 'Attempted to do a bulk address update for all events, but no events were updated.' );
               }
 
             }
-
-            self::log( 'Batch Cloud API update complete, pushed ' . count( $result ) . ' batches of 50 items in ' . \UD_Functions::timer_stop( 'synchronize_with_cloud' ) . ' seconds.' );
-
-          }
         ),
-        'flush.Logs' => array(
-          'key' => 'clear_event_log',
-          'callback' => function() {
-            self::log( 'Event log cleared by ' . $current_user->data->display_name . '.' );
-          }
+        'cloud.Synchronize'         => array(
+          'key'      => 'synchronize_with_cloud',
+          'callback' => function () {
+              \UD_Functions::timer_start( 'synchronize_with_cloud' );
+
+              foreach( (array) $hddp[ 'dynamic_filter_post_types' ] as $post_type ) {
+
+                set_time_limit( 0 );
+
+                $batch = array();
+
+                if( $_GET[ 'start' ] && $_GET[ 'limit' ] ) {
+                  $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC LIMIT {$_GET['start']}, {$_GET['limit']};";
+                } else {
+                  $query = "SELECT ID FROM {$wpdb->posts} WHERE post_type = '$post_type' ORDER BY post_date DESC;";
+                }
+
+                foreach( $wpdb->get_col( $query ) as $post_id ) {
+                  $result[ ] = UD_Cloud::index( get_event( $post_id ) );
+                }
+
+              }
+
+              self::log( 'Batch Cloud API update complete, pushed ' . count( $result ) . ' batches of 50 items in ' . \UD_Functions::timer_stop( 'synchronize_with_cloud' ) . ' seconds.' );
+
+            }
         ),
-        'flush.Settings' => array(
-          'key' => 'delete_hddp_options',
-          'callback' => function() {
-            delete_option( 'hddp_options' );
-            self::log( 'HDDP-Theme options deleted by ' . $current_user->data->display_name . '.' );
-          }
+        'flush.Logs'                => array(
+          'key'      => 'clear_event_log',
+          'callback' => function () {
+              self::log( 'Event log cleared by ' . $current_user->data->display_name . '.' );
+            }
+        ),
+        'flush.Settings'            => array(
+          'key'      => 'delete_hddp_options',
+          'callback' => function () {
+              delete_option( 'hddp_options' );
+              self::log( 'HDDP-Theme options deleted by ' . $current_user->data->display_name . '.' );
+            }
         )
-      ));
+      ) );
 
       // Configure Image Sizes.
-      $this->media(array(
-        'post-thumbnail' => array(
+      $this->media( array(
+        'post-thumbnail'     => array(
           'description' => '',
-          'width' => 120,
-          'height' => 90,
-          'crop' => true
+          'width'       => 120,
+          'height'      => 90,
+          'crop'        => true
         ),
-        'hd_large' => array(
+        'hd_large'           => array(
           'description' => '',
-          'width' => 890,
-          'height' => 500,
-          'crop' => true
+          'width'       => 890,
+          'height'      => 500,
+          'crop'        => true
         ),
-        'hd_small' => array(
+        'hd_small'           => array(
           'description' => '',
-          'width' => 230,
-          'height' => 130,
-          'crop' => true
+          'width'       => 230,
+          'height'      => 130,
+          'crop'        => true
         ),
-        'gallery' => array(
+        'gallery'            => array(
           'description' => '',
-          'width' => 200,
-          'height' => 999,
-          'crop' => false
+          'width'       => 200,
+          'height'      => 999,
+          'crop'        => false
         ),
-        'sidebar_poster' => array(
+        'sidebar_poster'     => array(
           'description' => 'Fit for maximum sidebar width, unlimited height',
-          'width' => 310,
-          'height' => 999,
-          'crop' => false
+          'width'       => 310,
+          'height'      => 999,
+          'crop'        => false
         ),
-        'tiny_thumbnail' => array(
+        'tiny_thumbnail'     => array(
           'description' => '',
-          'width' => 180,
-          'height' => 80
+          'width'       => 180,
+          'height'      => 80
         ),
         'events_flyer_thumb' => array(
           'description' => 'Fit for events filter flyer width, unlimited height',
-          'width' => 140,
-          'height' => 999,
-          'crop' => false
+          'width'       => 140,
+          'height'      => 999,
+          'crop'        => false
         ),
-        'sidebar_thumb'  => array(
+        'sidebar_thumb'      => array(
           'description' => '',
-          'width' => 120,
-          'height' => 100,
-          'crop' => true
+          'width'       => 120,
+          'height'      => 100,
+          'crop'        => true
         ),
-      ));
+      ) );
 
       // Declare Supported Theme Features.
-      $this->supports(array(
+      $this->supports( array(
         'custom-header'        => array(),
         'custom-skins'         => array(),
         'custom-background'    => array(),
         'header-dropdowns'     => array(),
         'header-business-card' => array(),
         'frontend-editor'      => array()
-      ));
+      ) );
 
       // Head Tags.
-      $this->head(array(
+      $this->head( array(
         array(
-          'tag' => 'meta',
+          'tag'        => 'meta',
           'http-equip' => 'X-UA-Compatible',
-          'content' => 'IE=edge'
+          'content'    => 'IE=edge'
         ),
         array(
-          'tag' => 'meta',
-          'name' => 'viewport',
+          'tag'     => 'meta',
+          'name'    => 'viewport',
           'content' => 'width=device-width, initial-scale=1.0'
         ),
         array(
-          'tag' => 'meta',
+          'tag'     => 'meta',
           'charset' => get_bloginfo( 'charset' )
         ),
         array(
-          'tag' => 'link',
-          'rel' => 'shortcut icon',
+          'tag'  => 'link',
+          'rel'  => 'shortcut icon',
           'href' => home_url( '/images/favicon.png' )
         ),
         array(
-          'tag' => 'link',
-          'rel' => 'api',
+          'tag'  => 'link',
+          'rel'  => 'api',
           'href' => admin_url( 'admin-ajax.php' )
         ),
         array(
-          'tag' => 'link',
-          'rel' => 'pingback',
+          'tag'  => 'link',
+          'rel'  => 'pingback',
           'href' => get_bloginfo( 'pingback_url' )
         ),
         array(
-          'tag' => 'link',
-          'rel' => 'profile',
+          'tag'  => 'link',
+          'rel'  => 'profile',
           'href' => 'http://gmpg.org/xfn/11'
         ),
         array(
-          'tag' => 'link',
-          'rel' => 'pingback',
+          'tag'  => 'link',
+          'rel'  => 'pingback',
           'href' => get_bloginfo( 'pingback_url' )
         )
-      ));
+      ) );
 
       // Enables Customizer for Options.
-      $this->customizer(array(
+      $this->customizer( array(
         'background-color' => array(),
         'header-banner'    => array()
-      ));
+      ) );
 
       // Handle Theme Version Changes.
       $this->upgrade();
@@ -588,28 +591,28 @@ namespace UsabilityDynamics {
       define( 'HDDP', $this->domain );
 
       // Declare Public Scripts.
-      $this->scripts(array(
-        'app.boostrap' => get_stylesheet_directory() . '/scripts/app.boostrap.js',
-        'app.main' => get_stylesheet_directory() . '/scripts/app.main.js',
-        'app.admin' => get_stylesheet_directory() . '/scripts/app.admin.js',
+      $this->scripts( array(
+        'app.boostrap'         => get_stylesheet_directory() . '/scripts/app.boostrap.js',
+        'app.main'             => get_stylesheet_directory() . '/scripts/app.main.js',
+        'app.admin'            => get_stylesheet_directory() . '/scripts/app.admin.js',
         'jquery.elasticsearch' => get_stylesheet_directory() . '/scripts/jquery.new.ud.elasticsearch.js',
-        'jquery.fitvids' => get_stylesheet_directory() . '/scripts/jquery.fitvids.js',
-        'jquery.cookie' => get_stylesheet_directory() . '/scripts/jquery.cookie.js',
-        'jquery.flexslider' => get_stylesheet_directory() . '/scripts/jquery.flexslider.js',
-        'jquery.jqtransform' => get_stylesheet_directory() . '/scripts/jquery.jqtransform.js',
-        'jquery.simplyscroll' => get_stylesheet_directory() . '/scripts/jquery.simplyscroll.js'
-      ));
+        'jquery.fitvids'       => get_stylesheet_directory() . '/scripts/jquery.fitvids.js',
+        'jquery.cookie'        => get_stylesheet_directory() . '/scripts/jquery.cookie.js',
+        'jquery.flexslider'    => get_stylesheet_directory() . '/scripts/jquery.flexslider.js',
+        'jquery.jqtransform'   => get_stylesheet_directory() . '/scripts/jquery.jqtransform.js',
+        'jquery.simplyscroll'  => get_stylesheet_directory() . '/scripts/jquery.simplyscroll.js'
+      ) );
 
       // Declare Public Styles.
-      $this->styles(array(
-        'app.bootstrap' => get_stylesheet_directory() . '/styles/app.bootstrap.css',
-        'app.main' => get_stylesheet_directory() . '/styles/app.main.css',
-        'app.admin' => get_stylesheet_directory() . '/styles/app.admin.css',
-        'content' => get_stylesheet_directory() . '/styles/content.css',
-        'bootstrap' => get_stylesheet_directory() . '/styles/bootstrap.css',
-        'jquery.jqtransform' => get_stylesheet_directory() . '/styles/jqtransform.css',
+      $this->styles( array(
+        'app.bootstrap'       => get_stylesheet_directory() . '/styles/app.bootstrap.css',
+        'app.main'            => get_stylesheet_directory() . '/styles/app.main.css',
+        'app.admin'           => get_stylesheet_directory() . '/styles/app.admin.css',
+        'content'             => get_stylesheet_directory() . '/styles/content.css',
+        'bootstrap'           => get_stylesheet_directory() . '/styles/bootstrap.css',
+        'jquery.jqtransform'  => get_stylesheet_directory() . '/styles/jqtransform.css',
         'jquery.simplyscroll' => get_stylesheet_directory() . '/styles/simplyscroll.css'
-      ));
+      ) );
 
       load_theme_textdomain( $this->domain, false, get_stylesheet_directory() . '/static/languages' );
 
@@ -716,12 +719,12 @@ namespace UsabilityDynamics {
         wp_enqueue_script( 'jquery-ui-datepicker' );
         wp_enqueue_script( 'jquery-ui-tabs' );
         wp_enqueue_script( 'google-maps' );
-      });
+      } );
 
       // Enqueue Admin Scripts & Styles.
       add_action( 'admin_enqueue_scripts', function () {
         wp_enqueue_script( 'app.admin' );
-      });
+      } );
 
       // Admin Footer Scripts.
       add_action( 'admin_menu', function () {
@@ -736,11 +739,11 @@ namespace UsabilityDynamics {
         return strpos( $s, 'do_not_esc_html' ) ? $u : $s;
       }, 10, 2 );
 
-      add_action( 'flawless::extended_term_form_fields', function( $tag, $post ) {
+      add_action( 'flawless::extended_term_form_fields', function ( $tag, $post ) {
         include dirname( __DIR__ ) . '/templates/admin.extended_term_form_fields.php';
       }, 10, 2 );
 
-      add_action( 'flawless::header_bottom', function() {
+      add_action( 'flawless::header_bottom', function () {
         $header = flawless_breadcrumbs( array( 'hide_breadcrumbs' => false, 'wrapper_class' => 'breadcrumbs container', 'hide_on_home' => false, 'return' => true ) );
         $share  = hdp_share_button( false, true );
         echo $share . $header;
@@ -791,7 +794,7 @@ namespace UsabilityDynamics {
       } );
 
       // Filter to replace the [caption] shortcode text with HTML5 compliant code.
-      add_filter( 'img_caption_shortcode', function( $val, $attr, $content = null ) {
+      add_filter( 'img_caption_shortcode', function ( $val, $attr, $content = null ) {
 
         $args = extract( shortcode_atts( array(
           'id'      => '',
@@ -828,11 +831,11 @@ namespace UsabilityDynamics {
       $_class = array( 'flawless-menu', $name, $location );
 
       $_menu = wp_nav_menu( apply_filters( $name, array(
-        'theme_location' => $location,
-        'menu_class' => implode( ' ', $_class ),
-        'fallback_cb' => false,
-        'echo' => false )
-      ));
+          'theme_location' => $location,
+          'menu_class'     => implode( ' ', $_class ),
+          'fallback_cb'    => false,
+          'echo'           => false )
+      ) );
 
     }
 
@@ -874,7 +877,7 @@ namespace UsabilityDynamics {
       global $wpdb, $hddp, $current_user;
 
       // Adds options to Publish metabox.
-      add_action( 'post_submitbox_misc_actions', function() {
+      add_action( 'post_submitbox_misc_actions', function () {
         global $post, $hddp;
 
         /* Check if this Post Type is Event Related */
@@ -901,7 +904,7 @@ namespace UsabilityDynamics {
           echo '<ul class="flawless_post_type_options wp-tab-panel"><li>' . implode( '</li><li>', $html ) . '</li></ul>';
         }
 
-      });
+      } );
 
       // Add Address column to Venues taxonomy overview.
       add_filter( 'manage_edit-hdp_venue_columns', function ( $columns ) {
@@ -913,7 +916,7 @@ namespace UsabilityDynamics {
       );
 
       // Venue Column Content.
-      add_filter( 'manage_hdp_venue_custom_column', function( $null, $column, $term_id ) {
+      add_filter( 'manage_hdp_venue_custom_column', function ( $null, $column, $term_id ) {
 
         if( $column != 'formatted_address' ) {
           return;
@@ -938,14 +941,14 @@ namespace UsabilityDynamics {
       );
 
       // Event Column Content.
-      add_filter( 'manage_hdp_event_posts_custom_column', function( $column, $post_id ) {
+      add_filter( 'manage_hdp_event_posts_custom_column', function ( $column, $post_id ) {
         $event = get_event( $post_id );
 
         switch( $column ) {
 
           case 'post_excerpt':
             echo $event[ 'post_excerpt' ] ? $event[ 'post_excerpt' ] : ' - ';
-          break;
+            break;
 
           case 'formatted_address':
 
@@ -962,7 +965,7 @@ namespace UsabilityDynamics {
 
             echo implode( '<br />', (array) $_items );
 
-          break;
+            break;
 
           case 'hdp_event_date':
             $hdp_event_date = strtotime( get_post_meta( $post_id, 'hdp_event_date', true ) );
@@ -980,13 +983,13 @@ namespace UsabilityDynamics {
               echo implode( '<br />', (array) $print_date );
             }
 
-          break;
+            break;
 
         }
 
       }, 10, 2 );
 
-      add_action( 'all_admin_notices', function() {
+      add_action( 'all_admin_notices', function () {
         global $hddp;
 
         foreach( (array) $hddp[ 'runtime' ][ 'notices' ][ 'error' ] as $notice ) {
@@ -997,7 +1000,7 @@ namespace UsabilityDynamics {
           echo '<div class="fade updated"><p>' . $notice . '</p></div>';
         }
 
-      });
+      } );
 
     }
 
@@ -1007,6 +1010,7 @@ namespace UsabilityDynamics {
      */
     static public function _get_event_posts( $args = array() ) {
       global $wpdb, $hddp;
+
       return $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type IN ( '" . implode( "','", array_keys( array( self::$_types ) ) ) . "' ) AND post_status = 'publish' " );
     }
 
@@ -1724,34 +1728,74 @@ namespace UsabilityDynamics {
 
     }
 
+    /**
+     * Legacy Flawless Method Support
+     *
+     * @param null $name
+     */
     static public function breadcrumbs( $name = null ) {
       //flawless_widget_area( $name );
     }
 
+    /**
+     * Legacy Flawless Method Support
+     *
+     * @param null $name
+     */
     static public function page_title( $name = null ) {
       //flawless_widget_area( $name );
     }
 
+    /**
+     * Legacy Flawless Method Support
+     *
+     * @param null $name
+     */
     static public function module_class( $name = null ) {
       //flawless_widget_area( $name );
     }
 
+    /**
+     * Legacy Flawless Method Support
+     *
+     * @param null $name
+     */
     static public function wrapper_class( $name = null ) {
       //flawless_widget_area( $name );
     }
 
+    /**
+     * Legacy Flawless Method Support
+     *
+     * @param null $name
+     */
     static public function get_template_part( $name = null ) {
       //flawless_widget_area( $name );
     }
 
+    /**
+     * Legacy Flawless Method Support
+     *
+     * @param null $name
+     */
     static public function get_current_sidebars( $name = null ) {
       //flawless_widget_area( $name );
     }
 
+    /**
+     * Legacy Flawless Method Support
+     *
+     * @param null $name
+     */
     static public function widget_area_tabs( $name = null ) {
       //flawless_widget_area( $name );
     }
 
+    /**
+     * Legacy Flawless Method Support
+     *
+     * @param null $name
+     */
     static public function widget_area( $name = null ) {
       flawless_widget_area( $name );
     }
