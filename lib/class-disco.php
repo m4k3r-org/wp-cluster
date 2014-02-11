@@ -818,7 +818,6 @@ namespace UsabilityDynamics {
       if( is_object( $this->carrington ) ) {
         $this->carrington->registerModule( 'ShortcodeModule' );
         $this->carrington->registerModule( 'HeadingModule' );
-        $this->carrington->registerModule( 'cfct_module_heading' );
       }
 
       // Declare Public Scripts.
