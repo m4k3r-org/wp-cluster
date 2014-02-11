@@ -1,3 +1,14 @@
+<?php
+/**
+ * Theme Footer
+ *
+ */
+
+if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+  return;
+}
+
+?>
 <?php if( is_front_page() ) { ?>
   <div class="bottom container sponsors cfct-row c6-123456">
       <div class="inner_bottom clearfix cfct-block c6-123456">

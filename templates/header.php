@@ -1,3 +1,14 @@
+<?php
+/**
+ * Theme Header
+ *
+ */
+
+if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+  return;
+}
+
+?>
 <!DOCTYPE html>
 <!--[if IE 7]> <html class="msie-v7" <?php language_attributes(); ?> <![endif]-->
 <!--[if IE 8]> <html class="msie-v8" <?php language_attributes(); ?> <![endif]-->
