@@ -735,6 +735,10 @@ namespace UsabilityDynamics\Flawless {
 
       $response = array();
 
+      if( !isset( $flawless[ 'current_view' ][ 'widget_areas' ][ $widget_area_type ] ) ) {
+        return;
+      }
+
       foreach ( (array) $flawless[ 'current_view' ][ 'widget_areas' ][ $widget_area_type ] as $sidebar_id ) {
 
         $response[ ] = array(
