@@ -84,11 +84,11 @@ namespace UsabilityDynamics {
         load_theme_textdomain( $this->domain, get_template_directory() . '/static/languages' );
       }
 
-
       // Initialize Settings.
-      $this->initialize();
-
-      $this->settings();
+      $this->initialize(array(
+        'key'     => 'festival',
+        'version' => $this->version
+      ));
 
       // Configure API Methods.
       $this->api( array(
@@ -180,33 +180,6 @@ namespace UsabilityDynamics {
         ),
         'enable'  => array(),
       ));
-      
-      // @temp
-      add_action( 'customize_register', function( $wp_customize ) {
-        
-        // Register new settings to the WP database...
-        $wp_customize->add_setting( 'content_bg_color', //Give it a SERIALIZED name (so all theme settings can live under one db record)
-          array(
-            'default'    => '#fcfcf9', //Default setting/value to save
-            'type'       => 'option', //Is this an 'option' or a 'theme_mod'?
-            'capability' => 'edit_theme_options', //Optional. Special permissions for accessing this setting.
-            'transport'  => 'postMessage', //What triggers a refresh of the setting? 'refresh' or 'postMessage' (instant)?
-          )
-        );
-
-        // Define the control itself (which links a setting to a section and renders the HTML controls)...
-        $wp_customize->add_control( new \WP_Customize_Color_Control( //Instantiate the color control class
-          $wp_customize, //Pass the $wp_customize object (required)
-          'content_bg_color', //Set a unique ID for the control
-          array(
-            'label'    => __( 'Content Background Color', $this->domain ), //Admin-visible name of the control
-            'section'  => 'colors', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
-            'settings' => 'content_bg_color', //Which setting to load and manipulate (serialized is okay)
-            'priority' => 10, //Determines the order this control appears in for the specified section
-          )
-        ) );
-        
-      });
 
       // Add Management UI.
       $this->manage( array(
@@ -261,7 +234,6 @@ namespace UsabilityDynamics {
         'data'  => $this->get_locale()
       ));
       
-
       // Register Navigation Menus
       $this->menus( array(
         'primary' => array(
@@ -285,13 +257,11 @@ namespace UsabilityDynamics {
       add_action( 'init', array( $this, 'init' ), 100 );
       add_action( 'template_redirect', array( $this, 'redirect' ), 100 );
       add_action( 'admin_init', array( $this, 'admin' ));
-      add_action( 'admin_menu', array( $this, 'admin_menu' ));
-      add_action( 'widgets_init', array( $this, 'widgets_init' ), 100 );
+      add_action( 'get_model', array( $this, 'admin_menu' ));
+      add_action( 'widgets_init', array( $this, 'widgets' ), 100 );
+      add_action( 'customize_register', array( $this, 'customize_register' ), 600 );
       add_action( 'wp_head', array( $this, 'wp_head' ));
       add_action( 'wp_footer', array( $this, 'wp_footer' ));
-      add_action( 'widgets_init', array( $this, 'widgets' ));
-      add_filter( 'body_class', array( $this, 'body_class' ));
-      add_filter( 'intermediate_image_sizes_advanced', array( $this, 'image_sizes' ));
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 600 );
 
       // Initializes Wordpress Menufication
@@ -301,83 +271,30 @@ namespace UsabilityDynamics {
 
     }
 
-    /**
-     * Return Post Type Image Sizes
-     *
-     * @todo Take thumbnail, large and medium into account.
-     *
-     * @filter intermediate_image_sizes_advanced
-     * @param $_sizes
-     * @return array
-     */
-    public function image_sizes( $_sizes ) {
-      global $_wp_additional_image_sizes;
+    public function customize_register( $wp_customize ) {
 
-      $_available_sizes = $_wp_additional_image_sizes;
-
-      $_available_sizes[ 'thumbnail' ] = array(
-        'width'  => get_option( "thumbnail_size_w" ),
-        'height' => get_option( "thumbnail_size_h" ),
-        'crop'   => get_option( "thumbnail_crop" )
+      // Register new settings to the WP database...
+      $wp_customize->add_setting( 'content_bg_color', //Give it a SERIALIZED name (so all theme settings can live under one db record)
+        array(
+          'default'    => '#fcfcf9', //Default setting/value to save
+          'type'       => 'option', //Is this an 'option' or a 'theme_mod'?
+          'capability' => 'edit_theme_options', //Optional. Special permissions for accessing this setting.
+          'transport'  => 'postMessage', //What triggers a refresh of the setting? 'refresh' or 'postMessage' (instant)?
+        )
       );
 
-      $_available_sizes[ 'large' ] = array(
-        'width'  => get_option( "large_size_w" ),
-        'height' => get_option( "large_size_h" ),
-        'crop'   => get_option( "large_crop" )
-      );
+      // Define the control itself (which links a setting to a section and renders the HTML controls)...
+      $wp_customize->add_control( new \WP_Customize_Color_Control( //Instantiate the color control class
+        $wp_customize, //Pass the $wp_customize object (required)
+        'content_bg_color', //Set a unique ID for the control
+        array(
+          'label'    => __( 'Content Background Color', $this->domain ), //Admin-visible name of the control
+          'section'  => 'colors', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
+          'settings' => 'content_bg_color', //Which setting to load and manipulate (serialized is okay)
+          'priority' => 10, //Determines the order this control appears in for the specified section
+        )
+      ) );
 
-      $_available_sizes[ 'medium' ] = array(
-        'width'  => get_option( "medium_size_w" ),
-        'height' => get_option( "medium_size_h" ),
-        'crop'   => get_option( "medium_crop" )
-      );
-
-      // Upload attachment Unassociated with post.
-      if( !isset( $_POST[ 'action' ] ) && isset( $_POST[ 'post_id' ] ) && $_POST[ 'post_id' ] == 0 ) {
-        return $_sizes;
-      }
-
-      // Uploading image to post.
-      if( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] === 'upload-attachment' && $_POST[ 'post_id' ] ) {
-
-        $_allowed = array();
-
-        foreach( (array) $_available_sizes as $size => $settings ) {
-
-          // Post type sizes not configured, allow by deafult.
-          if( !isset( $settings[ 'post_types' ] ) ) {
-            $_allowed[ $size ] = $settings;
-          }
-
-          // Size Allowed.
-          if( isset( $settings[ 'post_types' ] ) && in_array( $_post_type, (array) $settings[ 'post_type' ] ) ) {
-            $_allowed[ $size ] = $settings;
-          }
-
-        }
-
-        // Return Image Sizes for Post Type.
-        return $_allowed;
-
-      }
-
-      return $_sizes;
-
-    }
-
-    /**
-     * Add Body Classes.
-     *
-     * * external-referrer Added when visitor is new to the site.
-     * * internal-referrer Added when visitor opened current view after being referred.
-     *
-     * @param $class
-     *
-     * @return array
-     */
-    public function body_class( $class ) {
-      return array_merge( $class, array( is_external_referrer() ? 'external-referrer' : 'internal-referrer' ));
     }
 
     /**
@@ -539,7 +456,7 @@ namespace UsabilityDynamics {
      * @author Usability Dynamics
      * @since 0.1.0
      */
-    public function widgets_init() {
+    public function widgets() {
 
       register_sidebar( array(
         'name'          => __( 'Right Sidebar' ),
@@ -570,6 +487,14 @@ namespace UsabilityDynamics {
         'before_title'  => '<h3 class="module-title">',
         'after_title'   => '</h3>',
       ));
+
+      unregister_widget( 'WP_Widget_Recent_Comments' );
+      unregister_widget( 'WP_Widget_RSS' );
+      unregister_widget( 'WP_Widget_Calendar' );
+      unregister_widget( 'WP_Widget_Tag_Cloud' );
+      unregister_widget( 'WP_Widget_Meta' );
+      unregister_widget( 'WP_Widget_Archives' );
+      unregister_widget( 'WP_Widget_Categories' );
 
     }
 
@@ -617,20 +542,6 @@ namespace UsabilityDynamics {
     }
 
     /**
-     * Unregister Unsued Widgets.
-     *
-     */
-    public function widgets() {
-      unregister_widget( 'WP_Widget_Recent_Comments' );
-      unregister_widget( 'WP_Widget_RSS' );
-      unregister_widget( 'WP_Widget_Calendar' );
-      unregister_widget( 'WP_Widget_Tag_Cloud' );
-      unregister_widget( 'WP_Widget_Meta' );
-      unregister_widget( 'WP_Widget_Archives' );
-      unregister_widget( 'WP_Widget_Categories' );
-    }
-
-    /**
      * Primary Hook
      *
      * @author Usability Dynamics
@@ -648,7 +559,7 @@ namespace UsabilityDynamics {
       }
 
       // Register Custom Post Types and set their taxonomies
-      $this->structure( $this->get( 'structure' ));
+      $this->structure( $this->get( 'structure' ) );
 
       // Sync 'Social Streams' data with social networks
       $this->sync_streams();
