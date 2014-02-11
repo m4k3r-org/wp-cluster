@@ -15,8 +15,8 @@
  * - show_post_content
  * - show_meta_footer
  *
- * @package Flawless
- * @since Flawless 0.6.0
+ * @package WP-Disco
+ * @since WP-Disco 1.0.0
  */
 
   if( !isset( $post->show_meta_footer ) ) {

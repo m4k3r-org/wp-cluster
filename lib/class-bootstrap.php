@@ -56,7 +56,6 @@ namespace UsabilityDynamics\Disco {
 
       /**
        * Primary Loader.
-       * Scripts and styles are registered here so they overwriten Flawless scripts if needed.
        *
        * @author potanin@UD
        */

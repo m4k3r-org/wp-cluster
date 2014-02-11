@@ -4,7 +4,7 @@
  *
  * @version 0.5.0
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @package Flawless
+ * @package WP-Disco
  */
 global $flawless;
 

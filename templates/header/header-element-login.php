@@ -4,8 +4,8 @@
  *
  * This can be overridden in child themes using get_template_part()
  *
- * @package Flawless
- * @since Flawless 3.0
+ * @package WP-Disco
+ * @since WP-Disco 1.0.0
  *
  */
 

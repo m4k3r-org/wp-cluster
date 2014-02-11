@@ -842,7 +842,7 @@ if( !function_exists( 'flawless_image_link' ) ) {
       return false;
     }
 
-    $image_sizes = \UsabilityDynamics\Flawless\Utility::all_image_sizes();
+    $image_sizes = \UsabilityDynamics\Utility::all_image_sizes();
 
     $args = wp_parse_args( $args, array(
       'return'   => 'string',
@@ -893,7 +893,7 @@ if( !function_exists( 'flawless_image_link' ) ) {
       return '';
     }
 
-    $wp_get_image_editor = wp_get_image_editor( get_attached_file( $attachment_id, true ), array(//$image_sizes[ $size ][ 'width' ],
+    $wp_get_image_editor = wp_get_image_editor( get_attached_file( $attachment_id, true ), array( //$image_sizes[ $size ][ 'width' ],
       //$image_sizes[ $size ][ 'height' ],
       //$image_sizes[ $size ][ 'crop' ] )
     ) );
@@ -935,7 +935,7 @@ if( !function_exists( 'flawless_comment' ) ) {
    * @todo Needs major revision, ported from Denali.
    * @for Template Methods
    * @method flawless_block_class
-   * @since Flawless 0.2.3
+   * @since WP-Disco 1.0.0
    */
   function flawless_comment( $comment, $args, $depth ) {
     $GLOBALS[ 'comment' ] = $comment;
@@ -944,6 +944,7 @@ if( !function_exists( 'flawless_comment' ) ) {
         ?>
         <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>" data-comment_id="<?php comment_ID(); ?>">
         <?php echo get_avatar( $comment, 80 ); ?>
+
 
 
         <div id="comment-<?php comment_ID(); ?>" class="comment-content">
@@ -991,7 +992,7 @@ if( !function_exists( 'is_posts_page' ) ) {
    * @for Template Methods
    * @method flawless_block_class
    * @author potanin@UD
-   * @since Flawless 0.2.3
+   * @since WP-Disco 1.0.0
    */
   function is_posts_page() {
     global $wp_query;
@@ -1009,7 +1010,7 @@ if( !function_exists( 'flawless_wrapper_class' ) ) {
    * @for Template Methods
    * @method flawless_block_class
    * @author potanin@UD
-   * @since Flawless 0.2.3
+   * @since WP-Disco 1.0.0
    */
   function flawless_wrapper_class( $custom_class = '' ) {
     global $wp_query, $flawless;
@@ -1045,7 +1046,7 @@ if( !function_exists( 'flawless_block_class' ) ) {
    *
    * @for Template Methods
    * @method flawless_block_class
-   * @since Flawless 0.5.0
+   * @since WP-Disco 1.0.0
    * @author willis@UD
    */
   function flawless_block_class( $custom_class = '' ) {
@@ -1072,7 +1073,7 @@ if( !function_exists( 'flawless_module_class' ) ) {
    *
    * Called in templates intead of post_class(). On CB pages, the cfct-move is removed by flawless_carrington::module_class()
    *
-   * @since Flawless 0.5.0
+   * @since WP-Disco 1.0.0
    * @author potanin@UD
    */
   function flawless_module_class( $custom_class = '' ) {
@@ -1095,7 +1096,7 @@ if( !function_exists( 'hide_page_title' ) ) {
   /**
    * Conditional tag to determine if current page is selected to be the primary posts page
    *
-   * @since Flawless 0.2.3
+   * @since WP-Disco 1.0.0
    * @author potanin@UD
    */
   function hide_page_title( $post_id = false ) {
@@ -1120,7 +1121,7 @@ if( !function_exists( 'flawless_footer_copyright' ) ) {
    *
    * Avoid applying the_content filter since Carrington will take it over.
    *
-   * @since Flawless 0.2.3
+   * @since WP-Disco 1.0.0
    * @author potanin@UD
    */
   function flawless_footer_copyright() {
@@ -1242,7 +1243,7 @@ if( !function_exists( 'flawless_breadcrumbs' ) ) {
         if( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] ) {
           $content_type_home = get_permalink( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] );
         } else {
-          $content_type_home = \UsabilityDynamics\Flawless\Utility::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
+          $content_type_home = filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
         }
 
         /** Fix 'Pages' */
@@ -1282,7 +1283,7 @@ if( !function_exists( 'flawless_breadcrumbs' ) ) {
       if( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] ) {
         $content_type_home = get_permalink( $flawless[ 'post_types' ][ get_post_type() ][ 'root_page' ] );
       } else {
-        $content_type_home = \UsabilityDynamics\Flawless\Utility::filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
+        $content_type_home = filter_post_link( $args[ 'home_link' ] . '/' . $slug[ 'slug' ] . '/', $post );
       }
 
       /** Fix 'Pages' */
@@ -1398,8 +1399,6 @@ if( !function_exists( 'flawless_widget_area' ) ) {
    * Checks and renders sidebar template.
    * It's just modified get_sidebar() function.
    *
-   * Note: use this function instead of default get_sidebar() or dynamic_sidebar()
-   * in Flawless theme.
    *
    * @todo Needs to check if the requested widget are has active widgets, and if not, should not return.
    * @see get_sidebar()
@@ -1566,3 +1565,35 @@ if( !function_exists( 'flawless_primary_notice_container' ) ) {
   }
 }
 
+if( !function_exists( 'filter_post_link' ) ) {
+
+  /**
+   * Filters a post permalink to replace the tag placeholder with the first
+   * used term from the taxonomy in question.
+   *
+   * @source http://www.viper007bond.com/2011/10/07/code-snippet-helper-class-to-add-custom-taxonomy-to-post-permalinks/
+   * @since WP-Disco 1.0.0
+   */
+  function filter_post_link( $permalink, $post ) {
+    global $flawless;
+
+    foreach( (array) $flawless[ 'taxonomies' ] as $taxonomy => $data ) {
+
+      if( false === strpos( $permalink, $data[ 'rewrite_tag' ] ) ) {
+        continue;
+      }
+
+      $terms = get_the_terms( $post->ID, $taxonomy );
+      if( empty( $terms ) ) {
+        $permalink = str_replace( $data[ 'rewrite_tag' ], $taxonomy, $permalink );
+      } else {
+        $first_term = array_shift( $terms );
+        $permalink  = str_replace( $data[ 'rewrite_tag' ], $first_term->slug, $permalink );
+      }
+
+    }
+
+    return $permalink;
+
+  }
+}

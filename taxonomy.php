@@ -3,7 +3,7 @@
  * Template for custom taxonomies, categories will use archive.php
  *
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @package Flawless
+ * @package WP-Disco
  */
 
 //** Bail out if page is being loaded directly and flawless_theme does not exist */

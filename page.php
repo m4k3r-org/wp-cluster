@@ -5,7 +5,7 @@
  *
  * @version 0.60.0
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @package Flawless
+ * @package WP-Disco
 */
 
   //** Bail out if page is being loaded directly and flawless_theme does not exist */

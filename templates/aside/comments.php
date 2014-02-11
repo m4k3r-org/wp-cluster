@@ -2,8 +2,8 @@
 /**
  * Renders Comments List and / or form.
  *
- * @package Flawless
- * @since Flawless 0.6.0
+ * @package WP-Disco
+ * @since WP-Disco 1.0.0
  */
 
 //** Check if this post type support comments */

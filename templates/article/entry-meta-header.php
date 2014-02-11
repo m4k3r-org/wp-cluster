@@ -15,7 +15,7 @@
  * - show_post_excerpt
  * - show_post_content
  *
- * @package Flawless
- * @since Flawless 0.6.0
+ * @package WP-Disco
+ * @since WP-Disco 1.0.0
  */
 

@@ -2,7 +2,7 @@
   <ul class="df_result_data">
     <li class="df_list_item">
       <ul>
-        <?php echo Flawless_F::get_template_part( 'templates/article/loop', 'hdp_event' ); ?>
+        <?php echo wp_disco()->get_template_part( 'templates/article/loop', 'hdp_event' ); ?>
       </ul>
     </li>
   </ul>

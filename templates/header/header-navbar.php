@@ -6,8 +6,8 @@
  *
  *
  *
- * @package Flawless
- * @since Flawless 0.3.3
+ * @package WP-Disco
+ * @since WP-Disco 1.0.0
  *
  */
 

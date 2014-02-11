@@ -4,7 +4,7 @@
  *
  *
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @package Flawless
+ * @package WP-Disco
  */
 
 if( get_comments_number() ) {

@@ -556,7 +556,7 @@ class flawless_theme_ui {
    * Post Type and Taxonomy UI
    *
    * @author potanin@UD
-   * @since Flawless 0.5.0
+   * @since WP-Disco 1.0.0
    */
   function options_ui_post_types( $flawless ) {
     global $wp_post_types, $_wp_post_type_features; ?>
@@ -868,7 +868,7 @@ class flawless_theme_ui {
    * Design Related Options
    *
    * @author potanin@UD
-   * @since Flawless 0.5.0
+   * @since WP-Disco 1.0.0
    */
   function options_ui_design( $flawless ) {
 
@@ -952,7 +952,7 @@ class flawless_theme_ui {
    * Advanced Options Page
    *
    * @todo 'Reset Flexible Layout' should be inserted via Editor API
-   * @since Flawless 0.2.3
+   * @since WP-Disco 1.0.0
    */
   function options_ui_advanced( $flawless ) {
     ?>
@@ -1097,7 +1097,7 @@ class flawless_theme_ui {
    * Renders Skin Selection
    *
    * @todo 'Reset Flexible Layout' should be inserted via Editor API
-   * @since Flawless 0.5.0
+   * @since WP-Disco 1.0.0
    */
   function skin_selection( $args = false ) {
     global $flawless;
@@ -1138,7 +1138,7 @@ class flawless_theme_ui {
    * Render widget area item
    *
    * @todo 'Reset Flexible Layout' should be inserted via Editor API
-   * @since Flawless 0.2.3
+   * @since WP-Disco 1.0.0
    */
   function flawless_widget_item( $args = false ) {
     global $flawless;

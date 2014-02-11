@@ -297,14 +297,6 @@
     {
       "entry": "P: Theme settings loaded.",
       "memory_usage": "34.88 MB"
-    },
-    {
-      "entry": "P: Executed: flawless_my_account_module::init();",
-      "memory_usage": "37.34 MB"
-    },
-    {
-      "entry": "P: Executed: \UsabilityDynamics\Flawless\Utility::init();",
-      "memory_usage": "37.75 MB"
     }
   ],
   "have_static_home": true,

@@ -443,7 +443,6 @@ namespace UsabilityDynamics {
         'flush.Logs' => array(
           'key' => 'clear_event_log',
           'callback' => function() {
-            //Flawless_F::delete_log();
             self::log( 'Event log cleared by ' . $current_user->data->display_name . '.' );
           }
         ),
@@ -575,7 +574,8 @@ namespace UsabilityDynamics {
 
     /**
      * Primary Loader.
-     * Scripts and styles are registered here so they overwriten Flawless scripts if needed.
+     *
+     * Scripts and styles are registered here so they overwriten scripts if needed.
      *
      * @author potanin@UD
      */
@@ -1724,9 +1724,38 @@ namespace UsabilityDynamics {
 
     }
 
+    static public function breadcrumbs( $name = null ) {
+      //flawless_widget_area( $name );
+    }
+
+    static public function page_title( $name = null ) {
+      //flawless_widget_area( $name );
+    }
+
+    static public function module_class( $name = null ) {
+      //flawless_widget_area( $name );
+    }
+
+    static public function wrapper_class( $name = null ) {
+      //flawless_widget_area( $name );
+    }
+
+    static public function get_template_part( $name = null ) {
+      //flawless_widget_area( $name );
+    }
+
+    static public function get_current_sidebars( $name = null ) {
+      //flawless_widget_area( $name );
+    }
+
+    static public function widget_area_tabs( $name = null ) {
+      //flawless_widget_area( $name );
+    }
+
     static public function widget_area( $name = null ) {
       flawless_widget_area( $name );
     }
+
   }
 
 }

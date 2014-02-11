@@ -37,9 +37,6 @@
         woo_loop_before();
       }
 
-      /** Lets go ahead and build our table if we don't have it */
-      //Flawless_F::update_qa_table( $type );
-
       //echo $query_array[ $type ];
       $res = $wpdb->get_results( $query_array[ $type ] );
       $total = $wpdb->get_col( "SELECT FOUND_ROWS();" );

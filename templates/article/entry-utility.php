@@ -2,8 +2,8 @@
 /**
  * Displays Entry Meta on single pages.
  *
- * @package Flawless
- * @since Flawless 3.0 
+ * @package WP-Disco
+ * @since WP-Disco 1.0.0
  *
  */ 
  

@@ -5,13 +5,13 @@
  * @todo have $widget_area_type and $sidebars be determined in get_current_sidebars() and then loaded into global variable for simple use here.
  * @version 3.0.0
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @package Flawless
+ * @package WP-Disco
 */
 
   //** Figure out which sidebar this is */
-  $widget_area_type = \UsabilityDynamics\Flawless\Utility::backtrace_sidebar_type();
+  $widget_area_type = UsabilityDynamics\Utility::backtrace_sidebar_type();
 
-  $sidebars = \UsabilityDynamics\Flawless\Views::get_current_sidebars( $widget_area_type );
+  $sidebars = wp_disco()->get_current_sidebars( $widget_area_type );
 
   if( !$sidebars ) {
     return;

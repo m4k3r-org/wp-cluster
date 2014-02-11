@@ -5,8 +5,7 @@
  *
  * @version 0.10
  * @author Insidedesign
- * @subpackage Flawless
- * @package Flawless
+ * @package WP-Disco
  */
 
 $event = get_event();
