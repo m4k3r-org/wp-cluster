@@ -15,7 +15,8 @@ if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
         <div class="alpha"></div>
         <div class="cfct-module">
           <ul id="sponsors_scroller" data-requires="udx.ui.simply-scroll">
-            <li style="width: 165px;"><a href="http://www.suncitymusicfestival.com"><img src="<?php bloginfo( 'stylesheet_directory' ); ?>/img/sponsor_logos/scmf.png"/></a></li>
+            <li style="width: 165px;"><a href="http://www.suncitymusicfestival.com"><img src="<?php echo home_url( '/assets/images/scmf.png' ); ?>"/></a></li>
+
             <li style="width: 158px;"><a href="http://www.meltdowndallas.com"><img src="<?php bloginfo( 'stylesheet_directory' ); ?>/img/sponsor_logos/meltdown.png"/></a></li>
             <li><a href="http://smftampa.com"><img src="<?php bloginfo( 'stylesheet_directory' ); ?>/img/sponsor_logos/smf.png"/></a></li>
             <li><a href="http://alivemusicfestival.com"><img src="<?php bloginfo( 'stylesheet_directory' ); ?>/img/sponsor_logos/alive_music_festival.png"/></a></li>

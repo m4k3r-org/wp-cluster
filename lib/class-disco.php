@@ -281,7 +281,7 @@ namespace UsabilityDynamics {
       global $wp_disco;
 
       $this->id      = 'hddp';
-      $this->version = '1.0.1';
+      $this->version = '1.0.2';
 
       // Configure Theme.
       $this->initialize( array(
