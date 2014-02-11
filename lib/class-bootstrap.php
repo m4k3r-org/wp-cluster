@@ -38,7 +38,7 @@ namespace UsabilityDynamics\Festival {
       $this->theme = new \UsabilityDynamics\Festival;
 
       // Load all helper files from functions directory.
-      \UsabilityDynamics\Utility::load_files( get_template_directory() . '/functions' );
+      // \UsabilityDynamics\Utility::load_files( get_template_directory() . '/functions' );
 
     }
 
