@@ -6,7 +6,8 @@
 .inner-wrapper {
 
   .content-container article,
-  .module-container .module {
+  .module-container .module,
+  &.single .content-container {
     border-style: solid;
     border-width: 2px;
     padding: 15px;
@@ -131,8 +132,17 @@
 /* ============================
   SINGLE POST CONTENT
 ============================ */
+//.container-wrap .content-container article
+.inner-wrapper.single {
 
-.inner-wrapper article.post {
+  .content-container {
+    
+    article {
+      border-width: 0;
+      background: none;
+    }
+    
+  }
 
   header {
     
@@ -165,6 +175,8 @@
     }
     
   }
+  
+  
 
 }
 

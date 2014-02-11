@@ -9,7 +9,7 @@
 
 get_template_part( 'templates/header', get_post_type() );
 ?>
-<section class="container inner-wrapper">
+<section class="container inner-wrapper single">
   <div class="row">
 
     <div class="column <?php echo is_active_sidebar( 'single-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?>">
@@ -17,7 +17,7 @@ get_template_part( 'templates/header', get_post_type() );
         <?php while( have_posts() ) : the_post(); ?>
           <?php get_template_part( 'templates/article/content', get_post_type() ); ?>
         <?php endwhile; ?>
-        <?php comments_template( '/templates/aside/comments.php' ); ?>
+        <?php comments_template( '/templates/article/comments.php' ); ?>
       </section>
     </div>
 
