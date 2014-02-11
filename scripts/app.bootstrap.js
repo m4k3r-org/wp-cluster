@@ -1,0 +1,1 @@
+require(["/models/locale","/models/settings"],function(){console.log("app.bootstrap","loaded")});

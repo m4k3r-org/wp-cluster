@@ -6,7 +6,7 @@
  *
  * jshint bitwise:true, curly:true, eqeqeq:true,  browser:true, jquery:true, indent: 2, global  $:false, jQuery:false, moment:false
  */
-define( 'app', [ '/models/locale', '/models/settings' ], function( locale, settings ) {
+require( [ '/models/locale', '/models/settings' ], function( locale, settings ) {
   console.log( 'app', 'loaded' );
 
   return;

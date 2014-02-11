@@ -281,25 +281,19 @@ namespace UsabilityDynamics {
       global $wp_disco;
 
       $this->id      = 'hddp';
-      $this->version = '1.0.0';
+      $this->version = '1.0.1';
 
       // Configure Theme.
       $this->initialize( array(
         'minify'    => true,
         'obfuscate' => true
-      ) );
+      ));
 
       // Initialize Settings.
       $this->settings( array(
         'key'     => 'hddp_options',
         'version' => $this->version
-      ) );
-
-      // Declare Public Models.
-      $this->models( array(
-        'theme'  => array(),
-        'locale' => array()
-      ) );
+      ));
 
       // Configure Post Types and Meta.
       $this->structure( array(
@@ -381,7 +375,7 @@ namespace UsabilityDynamics {
             'hdp_state'
           )
         )
-      ) );
+      ));
 
       // Configure API Methods.
       $this->api( array(
@@ -405,7 +399,7 @@ namespace UsabilityDynamics {
               $updated = array();
 
               foreach( self::_get_event_posts() as $post_id ) {
-                $updated[ ] = self::update_event_location( $post_id, array( 'add_log_entries' => false ) );
+                $updated[ ] = self::update_event_location( $post_id, array( 'add_log_entries' => false ));
               }
 
               if( count( $updated ) > 0 ) {
@@ -434,7 +428,7 @@ namespace UsabilityDynamics {
                 }
 
                 foreach( $wpdb->get_col( $query ) as $post_id ) {
-                  $result[ ] = UD_Cloud::index( get_event( $post_id ) );
+                  $result[ ] = UD_Cloud::index( get_event( $post_id ));
                 }
 
               }
@@ -456,7 +450,7 @@ namespace UsabilityDynamics {
               self::log( 'HDDP-Theme options deleted by ' . $current_user->data->display_name . '.' );
             }
         )
-      ) );
+      ));
 
       // Configure Image Sizes.
       $this->media( array(
@@ -507,7 +501,7 @@ namespace UsabilityDynamics {
           'height'      => 100,
           'crop'        => true
         ),
-      ) );
+      ));
 
       // Declare Supported Theme Features.
       $this->supports( array(
@@ -517,7 +511,7 @@ namespace UsabilityDynamics {
         'header-dropdowns'     => array(),
         'header-business-card' => array(),
         'frontend-editor'      => array()
-      ) );
+      ));
 
       // Head Tags.
       $this->head( array(
@@ -560,13 +554,13 @@ namespace UsabilityDynamics {
           'rel'  => 'pingback',
           'href' => get_bloginfo( 'pingback_url' )
         )
-      ) );
+      ));
 
       // Enables Customizer for Options.
       $this->customizer( array(
         'background-color' => array(),
         'header-banner'    => array()
-      ) );
+      ));
 
       // Handle Theme Version Changes.
       $this->upgrade();
@@ -601,7 +595,7 @@ namespace UsabilityDynamics {
         'jquery.flexslider'    => get_stylesheet_directory() . '/scripts/jquery.flexslider.js',
         'jquery.jqtransform'   => get_stylesheet_directory() . '/scripts/jquery.jqtransform.js',
         'jquery.simplyscroll'  => get_stylesheet_directory() . '/scripts/jquery.simplyscroll.js'
-      ) );
+      ));
 
       // Declare Public Styles.
       $this->styles( array(
@@ -612,7 +606,7 @@ namespace UsabilityDynamics {
         'bootstrap'           => get_stylesheet_directory() . '/styles/bootstrap.css',
         'jquery.jqtransform'  => get_stylesheet_directory() . '/styles/jqtransform.css',
         'jquery.simplyscroll' => get_stylesheet_directory() . '/styles/simplyscroll.css'
-      ) );
+      ));
 
       load_theme_textdomain( $this->domain, false, get_stylesheet_directory() . '/static/languages' );
 
@@ -650,7 +644,7 @@ namespace UsabilityDynamics {
       } );
 
       add_filter( 'elasticsearch_indexer_build_document', function ( $doc, $post ) {
-        $doc[ 'event_date_time' ] = date( 'c', strtotime( get_post_meta( $post->ID, 'hdp_event_date', 1 ) . ' ' . get_post_meta( $post->ID, 'hdp_event_time', 1 ) ) );
+        $doc[ 'event_date_time' ] = date( 'c', strtotime( get_post_meta( $post->ID, 'hdp_event_date', 1 ) . ' ' . get_post_meta( $post->ID, 'hdp_event_time', 1 ) ));
         $lat                      = get_post_meta( $post->ID, 'latitude', 1 );
         $lon                      = get_post_meta( $post->ID, 'longitude', 1 );
         $doc[ 'location' ]        = array(
@@ -706,7 +700,7 @@ namespace UsabilityDynamics {
         'page_template'             => array( 'template-all-events.php' ),
         'event_related_post_types'  => array( 'hdp_event', 'hdp_video', 'hdp_photo_gallery' ),
         'dynamic_filter_post_types' => array( 'hdp_photo_gallery', 'hdp_event', 'hdp_video' )
-      ), get_option( 'hddp_options' ) );
+      ), get_option( 'hddp_options' ));
 
       // Saving and deleting posts from QA table
       add_action( 'save_post', array( 'UsabilityDynamics\Disco', 'save_post' ), 1, 2 );
@@ -744,7 +738,7 @@ namespace UsabilityDynamics {
       }, 10, 2 );
 
       add_action( 'flawless::header_bottom', function () {
-        $header = flawless_breadcrumbs( array( 'hide_breadcrumbs' => false, 'wrapper_class' => 'breadcrumbs container', 'hide_on_home' => false, 'return' => true ) );
+        $header = flawless_breadcrumbs( array( 'hide_breadcrumbs' => false, 'wrapper_class' => 'breadcrumbs container', 'hide_on_home' => false, 'return' => true ));
         $share  = hdp_share_button( false, true );
         echo $share . $header;
       } );
@@ -771,7 +765,7 @@ namespace UsabilityDynamics {
           $pagination = wp_pagenavi( array(
             'query' => $query,
             'echo'  => false
-          ) );
+          ));
         }
 
         return $html . $pagination;
@@ -801,7 +795,7 @@ namespace UsabilityDynamics {
           'align'   => '',
           'width'   => '',
           'caption' => ''
-        ), $attr ) );
+        ), $attr ));
 
         if( 1 > (int) $width || empty( $caption ) ) {
           return $val;
@@ -835,7 +829,7 @@ namespace UsabilityDynamics {
           'menu_class'     => implode( ' ', $_class ),
           'fallback_cb'    => false,
           'echo'           => false )
-      ) );
+      ));
 
     }
 
@@ -856,14 +850,14 @@ namespace UsabilityDynamics {
         }
 
         add_filter( 'body_class', function ( $classes ) {
-          return array_merge( $classes, array( 'single_event_page' ) );
+          return array_merge( $classes, array( 'single_event_page' ));
         } );
 
         return $template = locate_template( (array) $hddp[ 'page_template' ] );
 
       } );
 
-      self::dynamic_filter_shortcode_handler();
+      $this->dynamic_filter_shortcode_handler();
 
     }
 
@@ -968,8 +962,8 @@ namespace UsabilityDynamics {
             break;
 
           case 'hdp_event_date':
-            $hdp_event_date = strtotime( get_post_meta( $post_id, 'hdp_event_date', true ) );
-            $hdp_event_time = strtotime( get_post_meta( $post_id, 'hdp_event_time', true ) );
+            $hdp_event_date = strtotime( get_post_meta( $post_id, 'hdp_event_date', true ));
+            $hdp_event_time = strtotime( get_post_meta( $post_id, 'hdp_event_time', true ));
 
             if( $hdp_event_date ) {
               $print_date[ ] = date( get_option( 'date_format' ), $hdp_event_date );
@@ -1067,17 +1061,17 @@ namespace UsabilityDynamics {
 
           case 'post_title':
             if( $_REQUEST[ 'do_not_generate_post_title' ] != 'true' ) {
-              $wpdb->update( $wpdb->posts, array( 'post_title' => self::get_post_title( $post->ID ) ), array( 'ID' => $post_id ) );
+              $wpdb->update( $wpdb->posts, array( 'post_title' => self::get_post_title( $post->ID ) ), array( 'ID' => $post_id ));
             }
             break;
 
           case 'post_excerpt':
-            $wpdb->update( $wpdb->posts, array( 'post_excerpt' => self::get_post_excerpt( $post->ID ) ), array( 'ID' => $post_id ) );
+            $wpdb->update( $wpdb->posts, array( 'post_excerpt' => self::get_post_excerpt( $post->ID ) ), array( 'ID' => $post_id ));
             break;
 
           case 'post_name':
             if( $_REQUEST[ 'do_not_generate_post_name' ] != 'true' ) {
-              $wpdb->update( $wpdb->posts, array( 'post_name' => self::get_post_name( $post->ID ) ), array( 'ID' => $post_id ) );
+              $wpdb->update( $wpdb->posts, array( 'post_name' => self::get_post_name( $post->ID ) ), array( 'ID' => $post_id ));
             }
             break;
 
@@ -1113,7 +1107,7 @@ namespace UsabilityDynamics {
      * @action redirect)
      * @author potanin@UD
      */
-    static public function dynamic_filter_shortcode_handler() {
+    public function dynamic_filter_shortcode_handler() {
       global $post;
 
       // Disable Elastic shortcodes since unused. - potanin@UD
@@ -1123,13 +1117,13 @@ namespace UsabilityDynamics {
       // add_shortcode('elastic_popup_filter', array(get_class(), 'shortcode_elastic_popup_filter'));
 
       /* Add Shortcode */
-      add_shortcode( 'dynamic_filter', array( get_class(), '_shortcode_dynamic_filter' ) );
-      add_shortcode( 'hdp_custom_loop', array( get_class(), '_shortcode_loop' ) );
-      add_shortcode( 'hddp_gallery', array( get_class(), '_shortcode_gallery' ) );
+      add_shortcode( 'dynamic_filter', array( get_class(), '_shortcode_dynamic_filter' ));
+      add_shortcode( 'hdp_custom_loop', array( get_class(), '_shortcode_loop' ));
+      add_shortcode( 'hddp_gallery', array( $this, '_shortcode_gallery' ));
 
       //** New Elastic Search Shortcodes */
-      add_shortcode( 'elasticsearch_results', array( get_class(), 'elasticsearch_results' ) );
-      add_shortcode( 'elasticsearch_facets', array( get_class(), 'elasticsearch_facets' ) );
+      add_shortcode( 'elasticsearch_results', array( get_class(), 'elasticsearch_results' ));
+      add_shortcode( 'elasticsearch_facets', array( get_class(), 'elasticsearch_facets' ));
 
       /* Detect shortcode usage in this post - and add Sidebar */
       if( isset( $post ) && strpos( $post->post_content, '[dynamic_filter' ) !== false ) {
@@ -1157,7 +1151,7 @@ namespace UsabilityDynamics {
         return false;
       }
 
-      $args = wp_parse_args( $args, array( 'add_log_entries' => true ) );
+      $args = wp_parse_args( $args, array( 'add_log_entries' => true ));
 
       /* Set coordinates for event */
       $post = get_post( $post_id );
@@ -1229,7 +1223,7 @@ namespace UsabilityDynamics {
 
       $response = array( 'all_results' => array(), 'total_results' => 0, 'current_filters' => array(), 'error' => $err, );
 
-      die( json_encode( $response ) );
+      die( json_encode( $response ));
     }
 
     /**
@@ -1363,7 +1357,7 @@ namespace UsabilityDynamics {
         'ids'     => '', // Optional. List of media item IDs.
         'show_as' => 'gallery', // Optional. Default is 'gallery'. Values: 'gallery', 'list'
         'orderby' => false, // Optional. Allows custom (random) sorting. Values: 'rand', 'ID', 'title', 'name', 'date', 'modified'
-      ) );
+      ));
 
       $_post = ( is_object( $post ) && $post->ID == $data[ 'post_id' ] ) ? $post : get_post( $data[ 'post_id' ], ARRAY_A );
 
@@ -1372,7 +1366,7 @@ namespace UsabilityDynamics {
         return $content;
       }
 
-      $ids = explode( ',', trim( $data[ 'ids' ] ) );
+      $ids = explode( ',', trim( $data[ 'ids' ] ));
       foreach( $ids as $k => $id ) {
         $ids[ $k ] = trim( $id );
         if( empty( $ids[ $k ] ) || !is_numeric( $ids[ $k ] ) ) {
@@ -1430,12 +1424,12 @@ namespace UsabilityDynamics {
 
       $data[ 'anchor' ] = $data[ 'anchors' ][ $data[ 'show_as' ] ];
 
-      wp_enqueue_script( 'hddp_shortcode', get_stylesheet_directory_uri() . '/scripts/hddp.gallery.js', array( 'jquery', 'jquery-flexslider' ), HDDP_Version, true );
+      wp_enqueue_script( 'hddp_shortcode', get_stylesheet_directory_uri() . '/scripts/hddp.gallery.js', array( 'jquery', 'jquery-flexslider' ), '', true );
 
       /** Buffer output */
       ob_start();
 
-      include dirname( __DIR__ ) . '/templates/gallery.php';
+      include dirname( __DIR__ ) . '/templates/aside/gallery.php';
 
       /** Get the content */
       $content = ob_get_clean();
@@ -1600,7 +1594,7 @@ namespace UsabilityDynamics {
         return $post->post_title;
       }
 
-      $return = html_entity_decode( implode( ' ', (array) $return ) );
+      $return = html_entity_decode( implode( ' ', (array) $return ));
 
       return $return;
 
@@ -1621,7 +1615,7 @@ namespace UsabilityDynamics {
         return;
       }
 
-      $hdp_event_date = strtotime( get_post_meta( $post->ID, 'hdp_event_date', true ) );
+      $hdp_event_date = strtotime( get_post_meta( $post->ID, 'hdp_event_date', true ));
 
       if( $hdp_event_date ) {
         $return[ ] = date( 'Y-md', $hdp_event_date );
@@ -1630,20 +1624,20 @@ namespace UsabilityDynamics {
       switch( $post->post_type ) {
 
         case 'hdp_video' :
-          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
 
           break;
 
         case 'hdp_photo_gallery' :
-          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
 
           break;
 
         case 'hdp_event' :
-          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
-          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ) );
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_city', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
+          $return[ ] = Utility::create_slug( implode( ', ', (array) wp_get_object_terms( $post->ID, 'hdp_venue', array( 'fields' => 'names' ) ) ), array( 'separator' => '' ));
 
           break;
       }
@@ -1705,8 +1699,8 @@ namespace UsabilityDynamics {
 
       $return = array_filter( (array) $return );
 
-      $hdp_event_date = strtotime( get_post_meta( $event_id, 'hdp_event_date', true ) );
-      $hdp_event_time = strtotime( get_post_meta( $event_id, 'hdp_event_time', true ) );
+      $hdp_event_date = strtotime( get_post_meta( $event_id, 'hdp_event_date', true ));
+      $hdp_event_time = strtotime( get_post_meta( $event_id, 'hdp_event_time', true ));
 
       if( !empty( $return ) && $event[ 'attributes' ][ 'hdp_event_date' ] ) {
         $return[ ] = 'on ' . $event[ 'attributes' ][ 'hdp_event_date' ];

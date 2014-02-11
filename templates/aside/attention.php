@@ -14,7 +14,7 @@
  *
  */
 
-if( get_post_meta( $post->ID, 'hide_header', true ) == 'true' || !current_theme_supports( 'inner_page_slideshow_area' ) ) {
+if( isset( $post->ID ) && get_post_meta( $post->ID, 'hide_header', true ) == 'true' || !current_theme_supports( 'inner_page_slideshow_area' ) ) {
   return;
 }
 

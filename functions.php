@@ -570,7 +570,7 @@ if( !function_exists( 'flawless_page_title' ) ) {
     ) );
 
     //** Hide page title if the current title is for the main post (to exclude items in loop) */
-    if( get_queried_object()->ID == $post->ID && hide_page_title( get_queried_object()->ID ) ) {
+    if( ( isset( $post ) && isset( $post->ID ) ) && ( isset( get_queried_object()->ID ) && get_queried_object()->ID == $post->ID && hide_page_title( get_queried_object()->ID ) ) ) {
       return;
     }
 
@@ -583,7 +583,7 @@ if( !function_exists( 'flawless_page_title' ) ) {
     $t_sep = '%WP_TITILE_SEP%'; // Temporary separator, for accurate flipping, if necessary
 
     // If there is a post
-    if( !$args[ 'title' ] && $post->post_title ) {
+    if( ( !isset( $args[ 'title' ] ) || !$args[ 'title' ] ) && isset( $post->post_title ) && $post->post_title ) {
       $args[ 'title' ] = $post->post_title;
     }
 
@@ -649,12 +649,12 @@ if( !function_exists( 'flawless_page_title' ) ) {
 
     $args[ 'title' ] = apply_filters( 'flawless::page_title', $args[ 'title' ], array(
       'title'    => $args[ 'title' ],
-      'before'   => $before,
-      'after'    => $after,
+      'before'   => $args[ 'before' ],
+      'after'    => $args[ 'after' ],
       'position' => 'entry-title'
     ) );
 
-    if( $args[ 'return' ] ) {
+    if( isset( $args[ 'return' ] ) && $args[ 'return' ] ) {
       return $args[ 'title' ];
     }
 
@@ -1079,6 +1079,10 @@ if( !function_exists( 'flawless_module_class' ) ) {
   function flawless_module_class( $custom_class = '' ) {
     global $flawless, $wp_query, $post;
 
+    if( !isset( $post ) || !isset( $post->ID ) ) {
+      return '';
+    }
+
     //** Load Post Classes if this is a post */
     $classes = get_post_class( '', $post->ID );
 
@@ -1188,13 +1192,14 @@ if( !function_exists( 'flawless_breadcrumbs' ) ) {
     global $wp_query, $post, $flawless;
 
     $args = wp_parse_args( $args, array(
-      'hide_breadcrumbs' => get_post_meta( $post->ID, 'hide_breadcrumbs', true ) == 'true' || ( isset( $flawless[ 'hide_breadcrumbs' ] ) && $flawless[ 'hide_breadcrumbs' ] ) ? true : false,
-      'return'           => false,
-      'home_label'       => __( 'Home' ),
-      'home_link'        => home_url(),
-      'wrapper_class'    => 'breadcrumbs',
-      'divider'          => ' <span class="divider">&raquo;</span> ',
-      'hide_on_home'     => true
+      'hide_breadcrumbs'  => ( isset( $post->ID ) && get_post_meta( $post->ID, 'hide_breadcrumbs', true ) == 'true' ) || ( isset( $flawless[ 'hide_breadcrumbs' ] ) && $flawless[ 'hide_breadcrumbs' ] ) ? true : false,
+      'return'            => false,
+      'home_label'        => __( 'Home' ),
+      'home_link'         => home_url(),
+      'wrapper_class'     => 'breadcrumbs',
+      'divider'           => ' <span class="divider">&raquo;</span> ',
+      'hide_on_home'      => true,
+      'delimiter'         => ''
     ) );
 
     if( $args[ 'hide_breadcrumbs' ] ) {
@@ -1208,7 +1213,7 @@ if( !function_exists( 'flawless_breadcrumbs' ) ) {
       return;
     }
 
-    $html[ ] = '<a class="home_link" href="' . $args[ 'home_link' ] . '">' . $args[ 'home_label' ] . '</a> ' . $delimiter . ' ';
+    $html[ ] = '<a class="home_link" href="' . $args[ 'home_link' ] . '">' . $args[ 'home_label' ] . '</a> ' . $args[ 'delimiter' ] . ' ';
 
     if( is_home() || is_front_page() ) {
 
@@ -1218,16 +1223,16 @@ if( !function_exists( 'flawless_breadcrumbs' ) ) {
       $thisCat   = $cat_obj->term_id;
       $thisCat   = get_category( $thisCat );
       $parentCat = get_category( $thisCat->parent );
-      if( $thisCat->parent != 0 ) $html[ ] = ( get_category_parents( $parentCat, TRUE, ' ' . $delimiter . ' ' ) );
+      if( $thisCat->parent != 0 ) $html[ ] = ( get_category_parents( $parentCat, TRUE, ' ' . $args[ 'delimiter' ] . ' ' ) );
       $html[ ] = $before . single_cat_title( '', false ) . $after;
 
     } elseif( is_day() ) {
-      $html[ ] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
-      $html[ ] = '<a href="' . get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) . '">' . get_the_time( 'F' ) . '</a> ' . $delimiter . ' ';
+      $html[ ] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $args[ 'delimiter' ] . ' ';
+      $html[ ] = '<a href="' . get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) . '">' . get_the_time( 'F' ) . '</a> ' . $args[ 'delimiter' ] . ' ';
       $html[ ] = $before . get_the_time( 'd' ) . $after;
 
     } elseif( is_month() ) {
-      $html[ ] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
+      $html[ ] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $args[ 'delimiter' ] . ' ';
       $html[ ] = $before . get_the_time( 'F' ) . $after;
 
     } elseif( is_year() ) {
@@ -1268,7 +1273,7 @@ if( !function_exists( 'flawless_breadcrumbs' ) ) {
         $cat = $cat[ 0 ];
 
         if( $cat ) {
-          $html[ ] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
+          $html[ ] = get_category_parents( $cat, TRUE, ' ' . $args[ 'delimiter' ] . ' ' );
         }
 
         $html[ ] = $before . get_the_title() . $after;
@@ -1325,10 +1330,10 @@ if( !function_exists( 'flawless_breadcrumbs' ) ) {
 
       //** Must check a category was found */
       if( $cat && !is_wp_error( $cat ) ) {
-        $html[ ] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
+        $html[ ] = get_category_parents( $cat, TRUE, ' ' . $args[ 'delimiter' ] . ' ' );
       }
 
-      $html[ ] = '<a href="' . get_permalink( $parent ) . '">' . $parent->post_title . '</a> ' . $delimiter . ' ';
+      $html[ ] = '<a href="' . get_permalink( $parent ) . '">' . $parent->post_title . '</a> ' . $args[ 'delimiter' ] . ' ';
       $html[ ] = $before . get_the_title() . $after;
 
     } elseif( is_page() && !$post->post_parent ) {
@@ -1343,7 +1348,7 @@ if( !function_exists( 'flawless_breadcrumbs' ) ) {
         $parent_id      = $page->post_parent;
       }
       $breadcrumbs = array_reverse( $breadcrumbs );
-      foreach( $breadcrumbs as $crumb ) $html[ ] = $crumb . ' ' . $delimiter . ' ';
+      foreach( $breadcrumbs as $crumb ) $html[ ] = $crumb . ' ' . $args[ 'delimiter' ] . ' ';
       $html[ ] = $before . get_the_title() . $after;
 
     } elseif( is_search() ) {
