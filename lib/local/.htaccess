@@ -89,6 +89,7 @@
 # Cluster Management BEGIN
 <IfModule mod_rewrite.c>
   RewriteRule ^xmlrpc.php$ /vendor/wordpress/core/xmlrpc.php [L]
+  RewriteRule ^wp-comments-post.php$ /vendor/wordpress/core/wp-comments-post.php [L]
   RewriteRule ^wp-admin(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
   RewriteRule ^wp-includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
   RewriteRule ^includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
