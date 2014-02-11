@@ -38,10 +38,10 @@ namespace UsabilityDynamics\Disco {
         include_once( untrailingslashit( __DIR__ ) . '/legacy/shortcodes.php' );
 
         // Disco Libraries.
-        include_once( untrailingslashit( __DIR__ ) . '/widgets.php' );
+        include_once( untrailingslashit( __DIR__ ) . '/widgets/class-latest-posts.php' );
 
         if( !class_exists( 'UsabilityDynamics\Disco' ) ) {
-          wp_die( '<h1>Fatal Error</h1><p>Disco Theme not found.</p>' );
+          wp_die( '<h1>Fatal Error</h1><p>Disco theme not found.</p>' );
         }
 
         // Instantaite Disco.

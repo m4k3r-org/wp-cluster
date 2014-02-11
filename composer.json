@@ -28,7 +28,8 @@
     "classmap": [
       "lib/class-bootstrap.php",
       "lib/class-utility.php",
-      "lib/class-disco.php"
+      "lib/class-disco.php",
+      "lib/widgets/class-latest-posts.php"
     ]
   }
 }

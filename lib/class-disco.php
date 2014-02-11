@@ -711,7 +711,16 @@ namespace UsabilityDynamics {
       wp_enqueue_script( 'app.bootstrap' );
     }
 
+    /**
+     * Register Widgets
+     *
+     */
     public function widgets() {
+
+      // Register Disco Widgets.
+      if( class_exists( '\UsabilityDynamics\Disco\Widget\Latest_Posts' ) ) {
+        register_widget( '\UsabilityDynamics\Disco\Widget\Latest_Posts' );
+      }
 
       unregister_widget( 'WP_Widget_Recent_Comments' );
       unregister_widget( 'WP_Widget_RSS' );
@@ -807,8 +816,9 @@ namespace UsabilityDynamics {
 
       // Register Carrington Modules.
       if( is_object( $this->carrington ) ) {
-        // $this->carrington->registerModule( 'VideoModule' );
-        // $this->carrington->registerModule( 'EventHeroModule' );
+        $this->carrington->registerModule( 'ShortcodeModule' );
+        $this->carrington->registerModule( 'HeadingModule' );
+        $this->carrington->registerModule( 'cfct_module_heading' );
       }
 
       // Declare Public Scripts.
