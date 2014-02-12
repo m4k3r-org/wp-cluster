@@ -1,0 +1,356 @@
+{
+  "configuration": {
+    "color_schema": "default",
+    "custom_colors": {},
+    "social_stream": {
+      "instagram": {},
+      "facebook": {},
+      "twitter": {}
+    }
+  },
+  "structure": {
+    "types": {
+      "_aside": {
+        "data": {
+          "capability_type": "page",
+          "label": "Aside",
+          "description": "Modular front-end asides (sections).",
+          "show_in_menu": false,
+          "show_ui": true,
+          "supports": [ "title", "editor", "revisions" ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {}
+      },
+      "PerformanceEvent": {
+        "data": {
+          "capability_type": "page",
+          "label": "Performances",
+          "labels": {
+            "add_new": "New Performance",
+            "add_new_item": "Create New Performances",
+            "all_items": "All Performances",
+            "edit_item": "Edit Performances",
+            "menu_name": "Performances",
+            "name": "Performances",
+            "not_found": "No days found.",
+            "not_found_in_trash": "No Performances in Trash",
+            "search_items": "Search Performances",
+            "singular_name": "Performances",
+            "update_item": "Update Performances",
+            "view_item": "View Performances"
+          },
+          "description": "A performance of an artist.",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "hierarchical": false,
+          "menu_icon": false,
+          "menu_position": 3,
+          "public": false,
+          "publicly_queryable": false,
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [ "title", "editor", "revisions" ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {
+          "information": {
+            "fields": [
+              "relatedArtists",
+              "startDateTime",
+              "endDateTime"
+            ]
+          }
+        }
+      },
+      "DayEvent": {
+        "data": {
+          "capability_type": "page",
+          "label": "Days",
+          "labels": {
+            "add_new": "New Day",
+            "add_new_item": "Create New Day",
+            "all_items": "All Days",
+            "edit_item": "Edit Day",
+            "menu_name": "Days",
+            "name": "Days",
+            "not_found": "No days found.",
+            "not_found_in_trash": "No Days in Trash",
+            "search_items": "Search Day",
+            "singular_name": "Day",
+            "update_item": "Update Day",
+            "view_item": "View Day"
+          },
+          "description": "A performance of an artist.",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "hierarchical": false,
+          "menu_icon": false,
+          "menu_position": 3,
+          "public": false,
+          "publicly_queryable": false,
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [ "title", "editor", "revisions" ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {
+          "information": {
+            "fields": [
+              "eventDate"
+            ]
+          },
+          "location": {
+            "fields": [
+              "locationMap"
+            ]
+          }
+        }
+      },
+      "Event": {
+        "data": {
+          "capability_type": "page",
+          "label": "Event",
+          "labels": {
+            "add_new": "New Event",
+            "add_new_item": "Add New Event",
+            "all_items": "All Events",
+            "edit_item": "Edit Event",
+            "menu_name": "Events",
+            "name": "Events",
+            "not_found": "No Events found",
+            "not_found_in_trash": "No Events in Trash",
+            "parent_item_colon": "Parent Event:",
+            "search_items": "Search Artists",
+            "singular_name": "Artist",
+            "update_item": "Update Artist",
+            "view_item": "View Artist"
+          },
+          "description": "Artist",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "hierarchical": false,
+          "menu_icon": false,
+          "menu_position": 5,
+          "public": false,
+          "publicly_queryable": false,
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title"
+          ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {
+          "information": {
+            "fields": [
+              "startDateTime",
+              "endDateTime",
+              "relatedArtists"
+            ]
+          },
+          "location": {
+            "fields": [
+              "locationMap"
+            ]
+          }
+        }
+      },
+      "Artist": {
+        "data": {
+          "capability_type": "page",
+          "label": "Artist",
+          "labels": {
+            "add_new": "New Artist",
+            "add_new_item": "Add New Artist",
+            "all_items": "All Artists",
+            "edit_item": "Edit Artist",
+            "menu_name": "Artists",
+            "name": "Artist",
+            "not_found": "No Artists found",
+            "not_found_in_trash": "No Artists in Trash",
+            "parent_item_colon": "Parent Artist:",
+            "search_items": "Search Artists",
+            "singular_name": "Artist",
+            "update_item": "Update Artist",
+            "view_item": "View Artist"
+          },
+          "description": "Artist",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "menu_position": 2,
+          "hierarchical": false,
+          "menu_icon": false,
+          "public": true,
+          "publicly_queryable": false,
+          "query_var": "_artist",
+          "rewrite": {
+            "feeds": false,
+            "pages": true,
+            "slug": "artist",
+            "with_front": true
+          },
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title",
+            "editor",
+            "revisions"
+          ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {
+          "links": {
+            "fields": [
+              "socialLinks",
+              "websiteLink"
+            ]
+          },
+          "images": {
+            "fields": [
+              "headshotImage",
+              "portraitImage",
+              "landscapeImage",
+              "logoImage",
+              "galleryImages"
+            ]
+          }
+        }
+      }
+    },
+    "meta": {
+      "relatedEvents": {
+        "name": "Related Events",
+        "type": "post",
+        "post_type": "event",
+        "field_type": "select_advanced",
+        "multiple": true,
+        "placeholder": "Select Events",
+        "query_args": {
+          "post_status": "publish",
+          "posts_per_page": -1
+        }
+      },
+      "relatedArtists": {
+        "name": "Artists",
+        "type": "post",
+        "post_type": "artist",
+        "field_type": "select_advanced",
+        "multiple": true,
+        "placeholder": "Select Artists",
+        "query_args": {
+          "post_status": "publish",
+          "posts_per_page": -1
+        }
+      },
+      "stage": {
+        "name": "Stage",
+        "type": "taxonomy",
+        "options": {
+          "taxonomy": "stage",
+          "type": "select",
+          "args": {}
+        }
+      },
+      "artistGenre": {
+        "name": "Genre",
+        "type": "taxonomy",
+        "options": {
+          "taxonomy": "artistGenre",
+          "type": "checkbox_list",
+          "args": {}
+        }
+      },
+
+      "websiteLink": {
+        "name": "Website URL",
+        "type": "text"
+      },
+      "socialLinks": {
+        "name": "Social URL(s)",
+        "description": "Recognizes Beartport, Facebook, Google, Twitter, Instagram, YouTube, SoundCloud, MixCloud",
+        "clone": true,
+        "type": "text"
+      },
+
+      "eventDate": {
+        "name": "Date",
+        "type": "date",
+        "desc": "Date of event."
+      },
+      "startDateTime": {
+        "name": "Starts",
+        "type": "datetime",
+        "desc": "Date and time this event begins."
+      },
+      "endDateTime": {
+        "name": "Ends",
+        "type": "datetime",
+        "desc": "Date and time this event ends."
+      },
+      "duration": {
+        "id": "duration",
+        "name": "Duration",
+        "type": "text",
+        "desc": "Duration of event."
+      },
+
+      "headshotImage": {
+        "name": "Headshot",
+        "type": "image_advanced",
+        "desc": "Upload a high resolution headshot image.",
+        "multiple": false
+      },
+      "portraitImage": {
+        "name": "Portrait Image",
+        "type": "image_advanced",
+        "desc": "Upload a high resolution portrait image.",
+        "multiple": false
+      },
+      "landscapeImage": {
+        "name": "Landscape Image",
+        "type": "image_advanced",
+        "desc": "Upload a high resolution landscape image.",
+        "multiple": false
+      },
+      "logoImage": {
+        "name": "Logo Image",
+        "type": "image_advanced",
+        "desc": "Upload a high resolution white logo atop of a transparent background.",
+        "multiple": false
+      },
+      "galleryImages": {
+        "name": "Additional Images",
+        "type": "plupload_image",
+        "desc": "Upload additional images to be displayed in a gallery format.",
+        "multiple": false
+      },
+
+      "locationMap": {
+        "id": "locationMap",
+        "name": "Location",
+        "type": "map",
+        "style": "width: 100%; height: 300px"
+      }
+
+    },
+    "taxonomies": {
+      "stage": {
+        "name": "Stage"
+      }
+    }
+  }
+}
