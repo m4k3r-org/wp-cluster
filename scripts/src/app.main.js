@@ -17,7 +17,6 @@ require( [ '/assets/models/locale/', '/assets/models/settings/', 'jquery', 'skro
     forceHeight: false
   });
 
-
   // Sticky elements implementation
   require( [ 'sticky' ], function() {
     var st = 0;
