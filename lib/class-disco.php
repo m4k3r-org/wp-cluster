@@ -265,6 +265,12 @@ namespace UsabilityDynamics {
     static public $hdp_posts_per_page = 15;
 
     /**
+     *
+     * @var type
+     */
+    private $search;
+
+    /**
      * Initialize Drop Theme.
      *
      *
@@ -616,6 +622,8 @@ namespace UsabilityDynamics {
       if( class_exists( '\Menufication' ) ) {
         $this->menufication = \Menufication::getInstance();
       }
+
+      $this->search = new Disco\Search();
 
       return $wp_disco = $this;
 
