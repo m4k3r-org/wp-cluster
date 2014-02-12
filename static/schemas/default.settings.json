@@ -17,102 +17,15 @@
           "description": "Modular front-end asides (sections).",
           "show_in_menu": false,
           "show_ui": true,
-          "supports": [ "title", "editor", "revisions" ],
+          "supports": [
+            "title",
+            "editor",
+            "revisions"
+          ],
           "can_export": true
         },
         "taxonomies": [],
         "meta": {}
-      },
-      "PerformanceEvent": {
-        "data": {
-          "capability_type": "page",
-          "label": "Performances",
-          "labels": {
-            "add_new": "New Performance",
-            "add_new_item": "Create New Performances",
-            "all_items": "All Performances",
-            "edit_item": "Edit Performances",
-            "menu_name": "Performances",
-            "name": "Performances",
-            "not_found": "No days found.",
-            "not_found_in_trash": "No Performances in Trash",
-            "search_items": "Search Performances",
-            "singular_name": "Performances",
-            "update_item": "Update Performances",
-            "view_item": "View Performances"
-          },
-          "description": "A performance of an artist.",
-          "exclude_from_search": true,
-          "has_archive": false,
-          "hierarchical": false,
-          "menu_icon": false,
-          "menu_position": 3,
-          "public": false,
-          "publicly_queryable": false,
-          "show_in_admin_bar": false,
-          "show_in_menu": true,
-          "show_in_nav_menus": false,
-          "show_ui": true,
-          "supports": [ "title", "editor", "revisions" ],
-          "can_export": true
-        },
-        "taxonomies": [],
-        "meta": {
-          "information": {
-            "fields": [
-              "relatedArtists",
-              "startDateTime",
-              "endDateTime"
-            ]
-          }
-        }
-      },
-      "DayEvent": {
-        "data": {
-          "capability_type": "page",
-          "label": "Days",
-          "labels": {
-            "add_new": "New Day",
-            "add_new_item": "Create New Day",
-            "all_items": "All Days",
-            "edit_item": "Edit Day",
-            "menu_name": "Days",
-            "name": "Days",
-            "not_found": "No days found.",
-            "not_found_in_trash": "No Days in Trash",
-            "search_items": "Search Day",
-            "singular_name": "Day",
-            "update_item": "Update Day",
-            "view_item": "View Day"
-          },
-          "description": "A performance of an artist.",
-          "exclude_from_search": true,
-          "has_archive": false,
-          "hierarchical": false,
-          "menu_icon": false,
-          "menu_position": 3,
-          "public": false,
-          "publicly_queryable": false,
-          "show_in_admin_bar": false,
-          "show_in_menu": true,
-          "show_in_nav_menus": false,
-          "show_ui": true,
-          "supports": [ "title", "editor", "revisions" ],
-          "can_export": true
-        },
-        "taxonomies": [],
-        "meta": {
-          "information": {
-            "fields": [
-              "eventDate"
-            ]
-          },
-          "location": {
-            "fields": [
-              "locationMap"
-            ]
-          }
-        }
       },
       "Event": {
         "data": {
@@ -146,7 +59,10 @@
           "show_in_nav_menus": false,
           "show_ui": true,
           "supports": [
-            "title"
+            "title",
+            "editor",
+            "excerpt",
+            "thumbnail"
           ],
           "can_export": true
         },
@@ -154,14 +70,17 @@
         "meta": {
           "information": {
             "fields": [
-              "startDateTime",
-              "endDateTime",
+              "alternateName",
+              "doorTime",
+              "sameAs",
+              "startDate",
+              "endDate",
               "relatedArtists"
             ]
           },
           "location": {
             "fields": [
-              "locationMap"
+              "location"
             ]
           }
         }
@@ -274,29 +193,42 @@
           "args": {}
         }
       },
-
       "websiteLink": {
         "name": "Website URL",
         "type": "text"
       },
+      "alternateName": {
+        "name": "Alias",
+        "type": "text",
+        "desc": "Alternative Event title"
+      },
+      "sameAs": {
+        "name": "Reference URL",
+        "type": "text",
+        "desc": "URL of a reference Web page that unambiguously indicates the item's \nidentity. E.g. the URL of the item's Wikipedia page, Freebase page, or \nofficial website."
+      },
       "socialLinks": {
         "name": "Social URL(s)",
-        "description": "Recognizes Beartport, Facebook, Google, Twitter, Instagram, YouTube, SoundCloud, MixCloud",
+        "desc": "Recognizes Beartport, Facebook, Google, Twitter, Instagram, YouTube, SoundCloud, MixCloud",
         "clone": true,
         "type": "text"
       },
-
       "eventDate": {
         "name": "Date",
         "type": "date",
         "desc": "Date of event."
       },
-      "startDateTime": {
+      "startDate": {
         "name": "Starts",
         "type": "datetime",
         "desc": "Date and time this event begins."
       },
-      "endDateTime": {
+      "doorTime": {
+        "name": "Door Time",
+        "type": "time",
+        "desc": "The time admission will commence."
+      },
+      "endDate": {
         "name": "Ends",
         "type": "datetime",
         "desc": "Date and time this event ends."
@@ -307,7 +239,6 @@
         "type": "text",
         "desc": "Duration of event."
       },
-
       "headshotImage": {
         "name": "Headshot",
         "type": "image_advanced",
@@ -337,15 +268,13 @@
         "type": "plupload_image",
         "desc": "Upload additional images to be displayed in a gallery format.",
         "multiple": false
-      },
-
-      "locationMap": {
+      }, 
+      "location": {
         "id": "locationMap",
         "name": "Location",
         "type": "map",
         "style": "width: 100%; height: 300px"
       }
-
     },
     "taxonomies": {
       "stage": {
