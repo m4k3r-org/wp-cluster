@@ -10,19 +10,6 @@
   },
   "structure": {
     "types": {
-      "_aside": {
-        "data": {
-          "capability_type": "page",
-          "label": "Aside",
-          "description": "Modular front-end asides (sections).",
-          "show_in_menu": false,
-          "show_ui": true,
-          "supports": [ "title", "editor", "revisions" ],
-          "can_export": true
-        },
-        "taxonomies": [],
-        "meta": {}
-      },
       "PerformanceEvent": {
         "data": {
           "capability_type": "page",
@@ -343,6 +330,15 @@
         "id": "locationMap",
         "name": "Location",
         "type": "map",
+        "style": "width: 100%; height: 300px"
+      },
+      "__asideLocation": {
+        "id": "asideLocation",
+        "name": "Aside Location",
+        "type": "select",
+        "options": [
+          { "label": "adsf", "value": "asdf" }
+        ],
         "style": "width: 100%; height: 300px"
       }
 

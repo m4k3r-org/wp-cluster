@@ -135,6 +135,8 @@ namespace UsabilityDynamics {
           'footer'
         ),
         'html5'             => array(
+          'main',
+          'nav',
           'comment-list',
           'comment-form',
           'search-form'
@@ -298,6 +300,78 @@ namespace UsabilityDynamics {
         ),
         'mobile'  => array(
           'name' => __( 'Mobile', $this->domain )
+        )
+      ));
+
+      // Define Dynamic Aside Sections.
+      $this->sections( array(
+        'header' => array(
+          'title'       => __( 'Header', $this->domain ),
+          'description' => __( 'Header Section', $this->domain ),
+          'options'     => array(
+            'type' => 'swiper'
+          )
+        ),
+        'header-banner' => array(
+          'title'       => __( 'Header Banner', $this->domain ),
+          'description' => __( 'Babber located directly below the header section.', $this->domain ),
+          'options'     => array(
+            'type' => 'swiper'
+          )
+        ),
+        'left-sidebar' => array(
+          'title'       => __( 'Left Sidebar', $this->domain ),
+          'description' => __( 'Shown on Pages with specific template.' ),
+          'sidebar' => true,
+          'options' => array(
+            'id'      => 'left-sidebar-section',
+            'class'   => 'left-sidebar-section col-md-3 section',
+            'before'  => '<div class="module widget %1$s %2$s"><div class="module-inner">',
+            'after'   => '</div></div>',
+          )
+        ),
+        'right-sidebar' => array(
+          'title'       => __( 'Right Sidebar', $this->domain ),
+          'description' => __( 'Right widget area.', $this->domain ),
+          'sidebar' => true,
+          'options'     => array(
+            'id'      => 'right-sidebar-section',
+            'class'   => 'right-sidebar-section col-md-3 col-md-push-6 section',
+            'before'  => '<div class="module widget %1$s %2$s"><div class="module-inner">',
+            'after'   => '</div></div>'
+          )
+        ),
+        'single-sidebar' => array(
+          'title'       => __( 'Single Page Sidebar', $this->domain ),
+          'description' => __( 'Shown on all Single Pages.', $this->domain ),
+          'sidebar' => true,
+          'options'     => array(
+            'id'      => 'single-sidebar-section',
+            'class'   => 'single-sidebar-section col-md-3 col-md-push-6 ',
+            'before'  => '<div class="module widget %1$s %2$s"><div class="module-inner">',
+            'after'   => '</div></div>'
+          )
+        ),
+        'above-content'  => array(
+          'title'       => __( 'Above Content' ),
+          'description' => __( 'Above content but below header.' ),
+          'options'     => array(
+            'type' => 'swiper'
+          )
+        ),
+        'below-content'  => array(
+          'title'       => __( 'Below Content' ),
+          'description' => __( 'Below content but above header.' ),
+          'options'     => array(
+            'type' => 'swiper'
+          )
+        ),
+        'footer' => array(
+          'title' => __( 'Footer' ),
+          'description' => __( 'Footer Section.' ),
+          'options'     => array(
+            'type' => 'swiper'
+          )
         )
       ));
 
@@ -515,37 +589,6 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function widgets() {
-
-      register_sidebar( array(
-        'name'          => __( 'Right Sidebar' ),
-        'description'   => __( 'Default Sideber. Shown on pages with specific template and blog pages.' ),
-        'id'            => 'right-sidebar',
-        'before_widget' => '<div class="module widget %1$s %2$s"><div class="module-inner">',
-        'after_widget'  => '</div></div>',
-        'before_title'  => '<h3 class="module-title">',
-        'after_title'   => '</h3>',
-      ));
-
-      register_sidebar( array(
-        'name'          => __( 'Left Sidebar' ),
-        'description'   => __( 'Shown on Pages with specific template.' ),
-        'id'            => 'left-sidebar',
-        'before_widget' => '<div class="module widget %1$s %2$s"><div class="module-inner">',
-        'after_widget'  => '</div></div>',
-        'before_title'  => '<h3 class="module-title">',
-        'after_title'   => '</h3>',
-      ));
-
-      register_sidebar( array(
-        'name'          => __( 'Single Page Sidebar' ),
-        'description'   => __( 'Shown on all Single Pages.' ),
-        'id'            => 'single-sidebar',
-        'before_widget' => '<div class="module widget %1$s %2$s"><div class="module-inner">',
-        'after_widget'  => '</div></div>',
-        'before_title'  => '<h3 class="module-title">',
-        'after_title'   => '</h3>',
-      ));
-
       unregister_widget( 'WP_Widget_Recent_Comments' );
       unregister_widget( 'WP_Widget_RSS' );
       unregister_widget( 'WP_Widget_Calendar' );
@@ -553,7 +596,6 @@ namespace UsabilityDynamics {
       unregister_widget( 'WP_Widget_Meta' );
       unregister_widget( 'WP_Widget_Archives' );
       unregister_widget( 'WP_Widget_Categories' );
-
     }
 
     /**
@@ -680,6 +722,14 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function wp_head() {
+
+      echo '<title>' .  wp_title( '|', false, 'right' ) . '</title>';
+
+      // These styles need to be migrated.
+      echo '<style type="text/css">';
+      echo 'main { background: ' . get_option( 'content_bg_color', '#f2f2f2' ) . '; }';
+      echo 'body { background: ' . get_background_image() . '; }';
+      echo '</style>';
 
     }
 

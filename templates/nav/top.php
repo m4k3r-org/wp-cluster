@@ -7,12 +7,11 @@
  * @since wp-escalade 0.1.0
  */
 ?>
-<!-- Navigation bar starts -->
-<nav class="navbar navbar-inverse navbar-top navbar-top-home navbar-primary" role="navigation">
+<nav class="navbar navbar-inverse navbar-top" role="navigation">
   <div class="container">
 
     <div class="social-wrap">
-      <a class="btn btn-default" role="button" href="#" ><?php _e( 'Buy Tickets', wp_festival( 'domain' ) ); ?></a>
+      <a class="btn btn-default" role="button" href="#"><?php _e( 'Buy Tickets', wp_festival( 'domain' ) ); ?></a>
       <div class="no-sticky social-flex">
         <?php get_template_part( 'templates/aside/social', get_post_type() ); ?>
       </div>
@@ -40,4 +39,3 @@
 
   </div>
 </nav>
-<!-- Navigation bar ends -->

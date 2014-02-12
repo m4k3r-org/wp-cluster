@@ -14,21 +14,14 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" <?php language_attributes(); ?>> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" <?php language_attributes(); ?>> <!--<![endif]-->
-<head>
-  <title><?php wp_title( '|', true, 'right' ); ?></title>
-  <?php wp_head(); ?>
-</head>
+<head><?php wp_head(); ?></head>
 
-<body <?php body_class(); ?> style="background-image: url(<?php echo get_background_image(); ?>)" data-post-type="<?php get_post_type(); ?>">
+<body <?php body_class(); ?>>
 
   <header id="header" class="header">
-    <div class="container"><?php wp_festival()->aside( 'header' ); ?></div>
+    <?php wp_festival()->section( 'header' ); ?>
+    <?php wp_festival()->section( 'header-banner' ); ?>
+    <?php get_template_part( 'templates/nav/top', get_post_type() ); ?>
   </header>
 
-  <header id="banner" class="banner-poster" role="banner" data-requires="banner.poster">
-    <div class="container"><?php wp_festival()->aside( 'banner' ); ?></div>
-  </header>
 
-  <?php get_template_part( 'templates/nav/top', get_post_type() ); ?>
-
-  <div id="wrapper" class="container-wrap" style="background-color:<?php echo get_option( 'content_bg_color', '#f2f2f2' ); ?>" role="wrapper">

@@ -2,26 +2,18 @@
 /**
  * The template for displaying Comments.
  *
- * The area of the page that contains both current comments
- * and the comment form. The actual display of comments is
- * handled by a callback to twentytwelve_comment() which is
- * located in the functions.php file.
+ * The comments.php file is expected to be located in root of theme.
  *
  * @author Usability Dynamics
- * @module wp-escalade  
- * @since wp-escalade 0.1.0
+ * @module festival
+ * @since festival 0.1.0
  */
-/*
- * If the current post is protected by a password and
- * the visitor has not yet entered the password we will
- * return early without loading the comments.
- */
-if ( post_password_required() )
-  return;
-
 ?>
+<?php if( comments_open() && shortcode_exists( 'fbcomments' ) ) echo do_shortcode( '[fbcomments scheme=dark]' ); ?>
+
+
 <?php if( comments_open( get_the_ID() ) ) : ?>
-  <?php if ( have_comments() ) : ?>
+  <?php if( have_comments() ) : ?>
     <!-- Comment section -->
     <div id="comments" class="comments" id="comments">
       <div class="title"><h5><?php comments_number( 'No Comments', 'One Comment', '% Comments' ); ?></h5></div>
