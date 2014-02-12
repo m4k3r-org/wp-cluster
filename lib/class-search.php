@@ -49,6 +49,34 @@ namespace UsabilityDynamics\Disco {
        */
       static public function manage_search_server() {
 
+        $errors = array();
+
+        if (!empty($_POST) && !empty($_POST['configuration'])) {
+          foreach ($_POST['configuration'] as $option_key => $option_value) {
+            wp_disco()->set($option_key, $option_value);
+          }
+
+          $client = new \UsabilityDynamics\Veneer\Search(
+            array(
+              'url' => wp_disco()->get('search.server')
+            )
+          );
+
+          try {
+
+            $server_status = $client->getStatus()->getResponse()->getData();
+
+          } catch ( \Elastica\Exception\ClientException $e ) {
+            $errors[] = $e->getMessage();
+          }
+
+        }
+
+        echo '<pre>';
+        print_r( $errors );
+        echo '</pre>';
+
+        require_once TEMPLATEPATH.'/templates/admin/manage_search_server.php';
       }
 
       /**
@@ -59,7 +87,7 @@ namespace UsabilityDynamics\Disco {
       }
 
       /**
-       * 
+       *
        */
       static public function manage_search_index() {
 
