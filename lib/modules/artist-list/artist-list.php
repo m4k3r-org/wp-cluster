@@ -205,8 +205,8 @@ if( !class_exists( 'ArtistListModule' ) ){
       wp_enqueue_script('wp-color-picker');
       wp_enqueue_style( 'wp-color-picker' );
       /** Add DatePicker */
-      //wp_enqueue_script('jquery-ui-datepicker');
-      //wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+      wp_enqueue_script('jquery-ui-datepicker');
+      wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
       /** Ok, I'm going to get all the artists now */
       $query = "SELECT * FROM {$wpdb->posts} WHERE post_type = 'artist' AND post_status = 'publish' ORDER BY post_title ASC";
       $artists = $wpdb->get_results( $query, ARRAY_A );
