@@ -17,7 +17,11 @@
           "description": "Modular front-end asides (sections).",
           "show_in_menu": false,
           "show_ui": true,
-          "supports": [ "title", "editor", "revisions" ],
+          "supports": [
+            "title",
+            "editor",
+            "revisions"
+          ],
           "can_export": true
         },
         "taxonomies": [],
@@ -53,7 +57,11 @@
           "show_in_menu": true,
           "show_in_nav_menus": false,
           "show_ui": true,
-          "supports": [ "title", "editor", "revisions" ],
+          "supports": [
+            "title",
+            "editor",
+            "revisions"
+          ],
           "can_export": true
         },
         "taxonomies": [],
@@ -97,7 +105,11 @@
           "show_in_menu": true,
           "show_in_nav_menus": false,
           "show_ui": true,
-          "supports": [ "title", "editor", "revisions" ],
+          "supports": [
+            "title",
+            "editor",
+            "revisions"
+          ],
           "can_export": true
         },
         "taxonomies": [],
@@ -156,11 +168,13 @@
             "fields": [
               "startDateTime",
               "endDateTime",
-              "relatedArtists"
+              "relatedArtists",
+              "ticketLink"
             ]
           },
           "location": {
             "fields": [
+              "locationAddress",
               "locationMap"
             ]
           }
@@ -274,7 +288,6 @@
           "args": {}
         }
       },
-
       "websiteLink": {
         "name": "Website URL",
         "type": "text"
@@ -285,7 +298,6 @@
         "clone": true,
         "type": "text"
       },
-
       "eventDate": {
         "name": "Date",
         "type": "date",
@@ -307,7 +319,6 @@
         "type": "text",
         "desc": "Duration of event."
       },
-
       "headshotImage": {
         "name": "Headshot",
         "type": "image_advanced",
@@ -338,14 +349,23 @@
         "desc": "Upload additional images to be displayed in a gallery format.",
         "multiple": false
       },
-
+      "locationAddress": {
+        "id": "locationAddress",
+        "name": "Address"
+      },
       "locationMap": {
         "id": "locationMap",
-        "name": "Location",
+        "name": "Map",
         "type": "map",
-        "style": "width: 100%; height: 300px"
+        "style": "width: 100%; height: 300px",
+        "address_field": "locationAddress"
+      },
+      "ticketLink": {
+        "id": "ticketLink",
+        "name": "Tickets URL",
+        "type": "url",
+        "desc": "Purchase Tickets URL"
       }
-
     },
     "taxonomies": {
       "stage": {

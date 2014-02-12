@@ -147,31 +147,20 @@ if( !class_exists( 'EventHeroModule' ) ){
 				});
         
         var ' . $js_base . '_insert_selected_item = function(_insert) {
+          $("#car-item-search").addClass( "hidden" );
 					$("#car-items ol").append(_insert).find(".no-items").hide().end();
-					$("a.carousel-post-item-ident", _insert).trigger("click");
+					$("a.event-post-item-ident", _insert).trigger("click");
 					$("body").trigger("click");
 					$("#car-item-search #car-search-term").val("");
 				};
-        
-        // set up post edit
-				$("#car-items li.carousel-post-item .carousel-post-item-ident, #car-items li.carousel-post-item .carousel-item-img").live("click", function() {
-					$(this).closest(".carousel-post-item").addClass("carousel-item-edit");
-					return false;
-				});
-								
-				// set up post done edit
-				$("#car-items li.carousel-post-item .carousel-edit-done").live("click", function() {
-					$(this).closest(".carousel-post-item").removeClass("carousel-item-edit");
-					return false;
-				});
 								
 				// set up post remove
-				$("#car-items li.carousel-post-item .carousel-edit-remove a").live("click", function() {
+				$("#car-items li.event-post-item .event-edit-remove a").live("click", function() {
 					if (confirm("Do you really want to remove this item?")) {
-						$(this).closest(".carousel-post-item").remove();
+						$(this).closest(".event-post-item").remove();
 						_parent = $("#car-items ol");
-						if (_parent.children().length == 1) {
-							$(".no-items", _parent).show();
+						if (_parent.children().length <= 1) {
+							$("#car-item-search").removeClass( "hidden" );
 						}
 					}
 					return false;
@@ -262,7 +251,14 @@ if( !class_exists( 'EventHeroModule' ) ){
      * @return string HTML
      */
     protected function get_event_admin_item( $postdata ) {
+    
+      $post = wp_festival()->get_post_data( $postdata[ 'id' ] );
+      
+      
       ob_start();
+      
+      //echo "<pre>"; print_r( $post ); echo "</pre>";
+      
       require_once( __DIR__ . '/admin/item.php' );
       return ob_get_clean();
     }
@@ -330,7 +326,6 @@ if( !class_exists( 'EventHeroModule' ) ){
 				if ($id) {
 					$references[$field] = array(
 						'type' => 'post_type',
-						'type_name' => 'attachment',
 						'value' => $id
 					);
 				}
@@ -339,10 +334,9 @@ if( !class_exists( 'EventHeroModule' ) ){
       if( !empty( $data[ $this->gfn( 'posts' ) ] ) ) {
         $references[ 'posts' ] = array();
         foreach( $data[ $this->gfn( 'posts' ) ] as $post_id => $post_info ) {
-          $post                              = get_post( $post_id );
+          $post = get_post( $post_id );
           $references[ 'posts' ][ $post_id ] = array(
             'type'      => 'post_type',
-            'type_name' => $post->post_type,
             'value'     => $post_info[ 'id' ]
           );
         }
