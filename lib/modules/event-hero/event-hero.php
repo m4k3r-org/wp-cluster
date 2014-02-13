@@ -1,497 +1,120 @@
 <?php
+/**
+ * Carrington Build Event Hero Module
+ *
+ * 
+ * There's a base class that outputs full loop content, but 2 class
+ * extensions which extend it, but change it to "excerpts" or "titles"
+ * Don't forget to call EventHeroModule::init() in your constructor if you
+ * derive from this class!
+ */
+if( !class_exists( 'EventHeroModule' ) ){
 
-if( !class_exists( 'EventHeroModule' ) ) {
   class EventHeroModule extends \UsabilityDynamics\Theme\Module {
-    protected $context_excludes = array(
-      'multi-module'
-    );
-
-    protected $js_base = 'cfct_car';
-
-    public function __construct() {
+  
+    protected $content_support = array(
+			'title',
+			'content',
+			'url',
+			'images'
+		);
+  
+    public function __construct(){
       $opts = array(
-        'description' => __( 'Event Hero', 'carrington-build' ),
-        'icon'        => plugins_url( '/icon.png', __DIR__ )
+        'description' => __( 'Choose Event to display as Hero widget.', 'wp-festival' ),
+        'icon' => plugins_url( '/icon.png', __DIR__ )
       );
-      parent::__construct( 'cfct-module-carousel', __( 'Event Hero', 'carrington-build' ), $opts );
-      add_filter( 'wp_ajax_cfct_carousel_post_search', array( $this, '_handle_carousel_request' ) );
-
-      //wp_register_script( 'jquery-cycle', $this->get_url() . 'js/jquery.cycle.js', array( 'jquery' ), '1.0' );
-
-      if( !is_admin() ) {
-        //wp_enqueue_script( 'jquery-cycle' );
-      }
-
-      // this is but a small subset of what the JS can do
-      // but this is the "good" stuff, the rest is weird or fluffy
-      $this->transitions = apply_filters( 'cfct-carousel-transitions-options', array(
-        'none'       => 'No transition effect',
-        'fade'       => 'Fade between images',
-        'scrollHorz' => 'Scroll images left or right, per position',
-        'scrollVert' => 'Scroll images up or down, per position',
-        'cover'      => 'Slide new image in on top',
-        'uncover'    => 'Slide old image off of top'
-      ) );
-
-      $this->nav_positions = apply_filters( 'cfct-carousel-nav-positions', array(
-        'before'  => 'Before Carousel',
-        'after'   => 'After Carousel',
-        'overlay' => 'Inside Overlay'
-      ) );
+      parent::__construct( 'cfct-module', __( 'Event Hero', wp_festival( 'domain' ) ), $opts );
+      
+      //
+      add_filter('wp_ajax_cfct_event_post_search', array( $this, '_handle_request' ) );
     }
-
-    public function display( $data ) {
-      $image_size = $data[ $this->get_field_name( 'image_size-size' ) ];
-
-      // walk items to make sure they're all valid
-      $items = array();
-      foreach( $data[ $this->get_field_name( 'posts' ) ] as $item ) {
-        if( empty( $item[ 'link' ] ) ) {
-          $item[ 'link' ] = get_permalink( $item[ 'id' ] );
-        }
-
-        if( empty( $item[ 'img_src' ] ) ) {
-          $_img    = $_img_id = null;
-          $_img_id = get_post_meta( $item[ 'id' ], '_thumbnail_id', true );
-          if( !empty( $_img_id ) && $_img = wp_get_attachment_image_src( $_img_id, $image_size, false ) ) {
-            $item[ 'img_src' ] = $_img;
-          }
-        }
-
-        // last chance for an image
-        if( !empty( $item[ 'img_src' ] ) ) {
-          $items[ ] = $item;
-        }
-      }
-
-      $control_layout_order = apply_filters( $this->id_base . '-control-layout-order', array(
-          'title',
-          'description',
-          'call-to-action',
-          'pagination'
-        ) );
-
-      // carousel defaults
-      $car_opts = array(
-        'link_images'  => !empty( $data[ $this->get_field_name( 'link_images' ) ] ) ? true : false,
-        'height'       => intval( $data[ $this->get_field_name( 'height' ) ] ),
-        'nav_pos'      => esc_attr( $data[ $this->get_field_name( 'nav_pos' ) ] ),
-        'nav_element'  => apply_filters( 'cfct-carousel-nav-element', '<div class="car-pagination"><ol></ol></div>' ),
-        'nav_selector' => apply_filters( 'cfct-carousel-nav-selector', '#carousel-' . $data[ 'module_id' ] . ' .car-pagination ol', '#carousel-' . $data[ 'module_id' ] )
-      );
-
-      // Make sure you quote string values - this distinguishes them from object literals
-      $js_opts = apply_filters( 'cfct-carousel-js-options', array(
-        'fx'                 => '"' . esc_attr( $data[ $this->get_field_name( 'transition' ) ] ) . '"',
-        'speed'              => abs( intval( $data[ $this->get_field_name( 'transition_duration' ) ] ) ),
-        'timeout'            => abs( intval( $data[ $this->get_field_name( 'auto_scroll' ) ] ) ),
-        'pager'              => '"' . $car_opts[ 'nav_selector' ] . '"',
-        'activePagerClass'   => '"active"',
-        // Pause when hovering over nav
-        'pauseOnPagerHover'  => 'true',
-        // Pause when hovering over slider
-        'pause'              => 'true',
-        'prev'               => '$(\'<a class="cfct-carousel-prev">' . __( 'Prev', 'carrington-build' ) . '</a>\').insertBefore("' . $car_opts[ 'nav_selector' ] . '")',
-        'next'               => '$(\'<a class="cfct-carousel-next">' . __( 'Next', 'carrington-build' ) . '</a>\').insertAfter("' . $car_opts[ 'nav_selector' ] . '")',
-        // Callback for changing pane content
-        'before'             => 'cfctCarousel.PagerClick',
-        'pagerAnchorBuilder' => 'cfctCarousel.PagerAnchorBuilder'
-      ), $car_opts );
-
-      // Don't use json_encode because it quotes object literals, turning them into strings.
-      $jobj = array();
-      foreach( $js_opts as $key => $value ) {
-        $jobj[ ] = $key . ':' . $value;
-      }
-      $jobj = '{' . implode( ',', $jobj ) . ' }';
-
-      $js_init = apply_filters( 'cfct-carousel-js-init', '
-			<script type="text/javascript">
-				jQuery(function($) {
-					$("#carousel-' . $data[ 'module_id' ] . ' .car-content ul").cycle(' . $jobj . ');
-				});
-			</script>', $data[ 'module_id' ], $car_opts, $js_opts );
-
-      return $this->load_view( $data, compact( 'items', 'control_layout_order', 'image_size', 'car_opts', 'js_init' ) );
+    
+    /**
+     * Don't contribute to the post_content stored in the database
+     * @return null
+     */
+    public function text( $data ){
+      return null;
     }
-
-    public function text( $data ) {
-      return 'Carousel';
-    }
-
-    public function admin_form( $data ) {
-      $size_select_args = array(
-        'field_name'    => 'image_size',
-        'selected_size' => ( !empty( $data[ $this->get_field_name( 'image_size-size' ) ] ) ? $data[ $this->get_field_name( 'image_size-size' ) ] : 'large' )
-      );
-
-      $tabs = array(
-        'car-items'    => 'Items',
-        'car-settings' => 'Settings'
-      );
-
-      $transition_duration = !empty( $data[ $this->get_field_name( 'transition_duration' ) ] ) ? $data[ $this->get_field_name( 'transition_duration' ) ] : 300;
-      $auto_scroll         = !empty( $data[ $this->get_field_name( 'auto_scroll' ) ] ) ? $data[ $this->get_field_name( 'auto_scroll' ) ] : 0;
-      $carousel_height     = !empty( $data[ $this->get_field_name( 'height' ) ] ) ? $data[ $this->get_field_name( 'height' ) ] : '';
-      $nav_pos             = !empty( $data[ $this->get_field_name( 'nav_pos' ) ] ) ? $data[ $this->get_field_name( 'nav_pos' ) ] : 'after';
-
-      $html = $this->cfct_module_tabs( 'cfct-car-tabs', $tabs, 'car-items' ) . '
-				<div id="cfct-car-tab-containers" class="cfct-module-tab-contents">
-					<div id="car-settings" class="cfct-lbl-pos-left">
-						<div class="cfct-elm-block">
-							' . $this->_image_selector_size_select( $size_select_args ) . '
-						</div>
-						<div class="cfct-elm-block has-checkbox mar-bottom-double">
-							<input type="checkbox" class="elm-checkbox" id="' . $this->get_field_id( 'link_images' ) . '" name="' . $this->get_field_name( 'link_images' ) . '" value="1" ' . checked( '1', isset( $data[ $this->get_field_name( 'link_images' ) ] ) ? $data[ $this->get_field_name( 'link_images' ) ] : '', false ) . ' />
-							<label for="' . $this->get_field_id( 'link_images' ) . '" class="lbl-checkbox">' . __( 'Link images', 'carrington-buld' ) . '</label>
-						</div>
-						<div class="cfct-elm-block elm-width-100">
-							<label for="' . $this->get_field_id( 'height' ) . '" class="lbl-text">' . __( 'Carousel Height', 'carrington-build' ) . '</label>
-							<input type="text" name="' . $this->get_field_name( 'height' ) . '" id="' . $this->get_field_id( 'height' ) . '" value="' . $carousel_height . '" class="elm-text"/>
-							<span class="elm-help">pixels <em>(leave blank to set height based on tallest image)</em></span>
-						</div>
-						<div class="cfct-elm-block mar-bottom-double">
-							<label class="lbl-select" for="' . $this->get_field_id( 'nav_pos' ) . '">' . __( 'Navigation position', 'carrington-build' ) . '</label>
-							<select id="' . $this->get_field_id( 'nav_pos' ) . '" name="' . $this->get_field_name( 'nav_pos' ) . '" class="elm-select">';
-      foreach( $this->nav_positions as $nav_pos_name => $nav_pos_title ) {
-        $html .= '
-								<option value="' . $nav_pos_name . '"' . selected( $nav_pos_name, $nav_pos, false ) . '>' . $nav_pos_title . '</option>';
-      }
-      $html .= '
-							</select>
-						</div>
-						<div class="cfct-elm-block">
-							<label  class="lbl-select" for="' . $this->get_field_id( 'transition' ) . '">' . __( 'Transition', 'carrington-build' ) . '</label>
-							<select id="' . $this->get_field_id( 'transition' ) . '" name="' . $this->get_field_name( 'transition' ) . '" class="elm-select">';
-      foreach( $this->transitions as $transition_name => $transition_title ) {
-        $html .= '
-								<option value="' . $transition_name . '"' . selected( $transition_name, isset( $data[ $this->get_field_name( 'transition' ) ] ) ? $data[ $this->get_field_name( 'transition' ) ] : '', false ) . '>' . $transition_title . '</option>';
-      }
-
-      $html .= '
-							</select>
-						</div>
-						<div class="cfct-elm-block elm-width-100">
-							<label class="lbl-text" for="' . $this->get_field_name( 'transition_duration' ) . '">' . __( 'Transition duration', 'carrington-build' ) . '</label>
-							<input type="text" name="' . $this->get_field_name( 'transition_duration' ) . '" id="' . $this->get_field_id( 'transition_duration' ) . '" value="' . intval( $transition_duration ) . '" class="elm-text" />
-							<span class="elm-help">' . __( 'milliseconds', 'carrington-build' ) . '</span>
-						</div>
-						<div class="cfct-elm-block elm-width-100">
-							<label class="lbl-text" for="' . $this->get_field_name( 'auto_scroll' ) . '">' . __( 'Auto-scroll every', 'carrington-build' ) . '</label>
-							<input type="text" name="' . $this->get_field_name( 'auto_scroll' ) . '" id="' . $this->get_field_id( 'auto_scroll' ) . '" value="' . intval( $auto_scroll ) . '" class="elm-text" />
-							<span class="elm-help">' . __( 'milliseconds <i>(set to 0 to turn off auto-scroll)</i>', 'carrington-build' ) . '</span>
-						</div>
-					</div>
-					
-					<div id="car-items" class="active">
-						<div id="car-item-search" class="car-item-search-container">
-							<label for="car-search-term">' . __( 'Search to add item:', 'carrington-build' ) . '</label>
-							<input type="text" name="car-search-term" id="car-search-term" value="" />
-							<span class="elm-help elm-align-bottom">' . __( 'Only items with a featured image are available.', 'carrington-build' ) . '</span>
-						</div>
-						<div class="car-items-wrapper">
-							<ol class="carousel-list">';
-      if( isset( $data[ $this->get_field_name( 'posts' ) ] ) && count( $data[ $this->get_field_name( 'posts' ) ] ) ) {
-        foreach( $data[ $this->get_field_name( 'posts' ) ] as $item ) {
-          $html .= $this->get_carousel_admin_item( $item );
-        }
-      } else {
-        $html .= '
-								<li class="no-items">' . __( 'No items in carousel', 'carrington-build' ) . '</li>';
-      }
-      $html .= '
-							</ol>
-						</div>
-					</div>
-				</div>';
-
-      return $html;
-    }
-
-    public function update( $new, $old ) {
-      return $new;
-    }
-
-    public function css() {
-      return preg_replace( '/^(\t){4}/m', '', '
-				.' . $this->id_base . ' {
-					border: 1px solid #ccc;
-					margin: 1em 0;
-					padding: 1em;
-				}
-				.' . $this->id_base . ' div.car-content ul,
-				.' . $this->id_base . ' div.car-content ul li {
-					margin: 0;
-					padding: 0;
-				}
-				.' . $this->id_base . ' .car-header,
-				.' . $this->id_base . ' .car-description,
-				.' . $this->id_base . ' .car-cta,
-				.' . $this->id_base . ' .car-pagination {
-					margin: 12px 0;
-				}
-				.' . $this->id_base . ' .car-header h2.car-title {
-					margin: 0;
-				}
-				.' . $this->id_base . ' div.car-pagination ol {
-					width: 100%;
-					margin: 0;
-					padding: 0;
-					text-align: center;
-				}
-				.' . $this->id_base . ' .car-pagination ol li {
-					display: inline;
-					margin: 0 5px;
-					padding: 0;
-				}
-				.' . $this->id_base . ' .car-pagination ol li.active a {
-					color: #000;
-					font-weight: bold;
-				}
-			' );
-    }
-
-    public function admin_css() {
-      return preg_replace( '/^(\t){4}/m', '', '
-				.carousel-sortable-placeholder {
-					height: 18px;
-					background-color: gray;
-					border: 1px solid white;
-					border-width: 1px 0
-				}
-				
-				/* Carousel List */
-				.carousel-list {
-					background-color: #eee;
-					border: 1px solid #aaa;
-					-moz-border-radius: 5px; /* FF1+ */
-					-webkit-border-radius: 5px; /* Saf3+, Chrome */
-					border-radius: 5px; /* Standard. IE9 */
-					padding: 0;
-					margin: 0;
-				}
-				.carousel-list li {
-					border-bottom: 1px solid #aaa;
-					list-style-type: none;
-					margin: 0;
-					min-height: 45px;
-					padding: 5px;
-				}
-				.carousel-list li:hover {
-					background: #fff url(data:image/gif;base64,R0lGODlhFAAIAJEDAKGhoaKiov///////yH5BAEAAAMALAAAAAAUAAgAAAIbhIOAMe0vopyv2otXUBvhNoXCR5bKkRikSH0FADs=) 100% 50% no-repeat;
-					cursor: move;
-				}
-				.carousel-list li.carousel-item-edit:hover {
-					background: none;
-				}
-				.carousel-list li:first-child {
-					-moz-border-radius-topleft: 4px; /* FF1+ */
-					-webkit-border-top-left-radius: 4px; /* Saf3+, Chrome */
-					border-top-left-radius: 4px; /* Standard. IE9 */
-					-moz-border-radius-topright: 4px; /* FF1+ */
-					-webkit-border-top-right-radius: 4px; /* Saf3+, Chrome */
-					border-top-right-radius: 4px; /* Standard. IE9 */
-				}
-				.carousel-list li:last-child {
-					border-bottom: 0;
-					-moz-border-radius-bottomleft: 4px; /* FF1+ */
-					-webkit-border-bottom-left-radius: 4px; /* Saf3+, Chrome */
-					border-bottom-left-radius: 4px; /* Standard. IE9 */
-					-moz-border-radius-bottomright: 4px; /* FF1+ */
-					-webkit-border-bottom-right-radius: 4px; /* Saf3+, Chrome */
-					border-bottom-right-radius: 4px; /* Standard. IE9 */
-				}
-				.carousel-list li.no-items {
-					line-height: 45px;
-				}
-				
-				/* clearfix */
-				.carousel-list li:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-
-				/* Floating */
-				.carousel-item-img,
-				.carousel-item-title,
-				.carousel-edit-form {
-					float: left;
-				}
-
-				/* Setting heights */
-				.carousel-item-img,
-				.carousel-item-title {
-					height: 45px;
-				}
-				.carousel-item-img {
-				  background-image: #D2CFCF url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABcJJREFUeNrsnF+IVUUcx+earrG5VJZZSWWrEZpB/x76g+lKUCEEkWVm2UOx5UMQUi899NKDUA9hL8bSQ//WUil6CEKQVWv7RwT9UyMry8ottdra3dhdqdvvx/ktXY4z955z2Id25vOBL8vOOXfO2bMfZubOnbm1er3uACabaTwCQCxALEAsAMQCxALEAkAsQCxALADEAsQCxAJALEAsQCwAxALEAsQCQCxALEAsAMQCxALEAkAsQCxALADEAsQCxAJALEAsQCwAxALEAsQCQCxALEAsAMQCxALEAkAsQCxALADEAsQCxAJALEAsQCwAxALEAsQCaM702P/Anp6eKi87VXK+5ALJWfbzJMnfku8lR+znIckfZSvv7u5GrMTokiyTXC+5TtLW5NxxybuStyV7JLt4fIiV50rJo5KbrLUqQpuJ2GWt1g7Jk5KPeZyMsU6RPCXZLVldQipf13mH1aP1zUKsdLlQsk3yyCSKMMvq22b10xUmxjWS5ySLW5ynA/TPJL9KfrKB/BmSKyTzm7zuZsmbkvsl7yNWGizUN4tNpBqSbLFW50vJoGTM3hHWJDMlp0sWSO6RrLLfa7l6Ftt1bpV8TVcYN+2SZyRLAsdVpmslD0r6JIclf5lUSl0yKhmQ9EsesLreC9S3xK7Xjlhxs9G6qTwqz8M2gP+iZJ2dktktusWNiBUvyyXrPeUjknWSTRXq1KmGNySLWpy33q6PWBGOJXWeakauXLu4DZLXKkr1iuTMAufOsOtPR6y40Nn0pZ7yrTbArtL6vSSZ6zn2reRDT/lSuw/EioiVko5c2Z+SxytK+qpknufYz5J7JbdLfs8d67D7QKxImGPdVp6XJd9U6P62B1qqY5K77N3iD5LeQEs3B7HiQFuW/JzVP9aVlZWqNyCGtlQ6n9X4QXSvTU80ckmgpUOsKchF7sRVCgdcuUnL5dbCneM5NmAt1R7PWOtgrkzvYyFixYHvH/m5jbGKtlQ6cXpuoPu72/mXzOiKh0885RcjVhzMDrQy4wWl2hLo/o66bEVDX+C1YzbWynMaYsXBTE/ZaMHu70XJ2Z5j+lHPatd6cd9owfuJjhQm7MY8Za2WyWhLtTXQUh1p0v3laS94P7RYU5DfPGVzm7QcEzPqPql0+cyaglK1BQb7g4gVB765qsucf7VolwvPqA/YlEJfwetq/Zd6yr9CrDg44Bmo6+rOzlzZMhuoh2bU17ps6XFROm2qo5Fxl8jarBTE+lGyL1dWM1EaW6rtgYH6MTu37C6ctZ7nu8/uB7Ei4GhACv3Hn+eybV6hGfVfXPa5X1/Ja+o+xHWe8l12P4gVCW+5bMlxI7qcWCc+nw8Msg/bQH13hes94RnDDdl9OMSKB5Wj31N+tfPPzJeZUshzX66bnaC/oqSI9T/muMs2kx4vcK5OKdxZUSrdOLHJ81zLXB+xpmCrtbnFOfslt1SU6iHJCy7bBJtnc0qtVWpiKY+5bCt8iBFLGXRJjk6o6m6cDs/xHXZdh1jxMmIty97A8atctpXrdZd9VqiD+pPdf3sGp9nvutJhheRZyQfWdfrYa9cbSU2sFDes6oSpfo+Q7oT27a5pt7GSRmftP7Vxl049zLN3k5fblEKrbrXbrucQKw20VVppY58bm5y3wFIW7f50y9fBRJ9v0l8Kov/02yRPS4Ynqc5hq29VylKlLtbEmGuDjZd0snSoYj1D9voVVt9w4s+VL14zPnLZwr0bXLb/byLNno9udtVv83vHspPHiFghdlp0+bB+B+l8F/4O0u9c9h2kgzy2E6nV63WeAjDGAsQCxAJALEAsQCwAxALEAsQCQCxALEAsAMQCxALEAkAsQCxALADEAsQCxAJALEAsQCwAxALEAsQCQCxALEAsAMQCxALEAkAsQCxALADEAsQCxAJALEAsQCwAxALEAsQCQCxALEAsAMQCxALEAkAsQCxALADEAsSCKPhXgAEATQXveoebobAAAAAASUVORK5CYII=) center center no-repeat;
-					display: inline-block;
-					margin-right: 10px;
-					width: 150px;
-				}
-				.carousel-item-title {
-					font-size: 15px;
-					line-height: 42px;
-				}
-
-				/* Show/hide elements for editing */
-				.carousel-item-edit .carousel-item-title {
-					display: none;
-				}
-				.carousel-item-edit .carousel-item-img {
-					height: 150px;
-					background-position: 0px 0px !important;
-				}
-				.carousel-edit-form {
-					display: none;
-				}
-				.carousel-item-edit .carousel-edit-form {
-					display: block;
-				}
-
-				/* Edit mode */
-				.carousel-edit-form {
-					padding: 5px 0;
-					width: 475px;
-				}
-				.carousel-edit-form label {
-					display: none;
-				}
-				.carousel-edit-form input.text,
-				.carousel-edit-form textarea {
-					width: 90%;	
-				}
-				.carousel-edit-form input.text {
-					font-size: 13px;
-					margin-bottom: 8px;
-				}
-				.carousel-edit-form textarea {
-					font-size: 11px;
-					height: 80px;
-				}
-				.carousel-edit-done {
-					margin-top: 7px;
-				}
-				.carousel-edit-remove {
-					line-height: 1px;
-					margin: 0 0 0 10px;
-				}			
-				
-				/* Carousel Live Search */
-				#car-items {
-					min-height: 400px;
-				}
-				.cfct-popup-content #car-item-search {
-					margin-bottom: 10px;
-					position: relative;
-				}
-				.cfct-popup-content #car-item-search label {
-					float: left;
-					font-size: 13px;
-					font-weight: bold;
-					line-height: 23px;
-					width: 165px;
-				}
-				.cfct-popup-content #car-item-search .elm-align-bottom {
-					padding-left: 165px;
-				}
-				.cfct-module-form .cfct-popup-content #car-item-search #car-search-term {
-					/**
-					 * @workaround absolute positioning fix
-					 * IE doesn\'t position absolute elements beneath inline-block els
-					 * instead, it overlays them on top of elements.
-					 * Basically, this caused the type-ahead search to sit on top
-					 * of the input. A simple display: block fixes it.
-					 * @affected ie7
-					 */
-					display: block;
-					margin: 0;
-					width: 500px; 
-				}
-				.cfct-popup-content #car-item-search .otypeahead-target {
-					background: white;
-					border: 1px solid #ccc;
-					-moz-border-radius-bottomleft: 5px; /* FF1+ */
-					-moz-border-radius-bottomright: 5px; /* FF1+ */
-					-webkit-border-bottom-left-radius: 5px; /* Saf3+, Chrome */
-					-webkit-border-bottom-right-radius: 5px; /* Saf3+, Chrome */
-					border-bottom-left-radius: 5px; /* Standard. IE9 */
-					border-bottom-right-radius: 5px; /* Standard. IE9 */
-					border-width: 0 1px 1px 1px;
-					display: none;
-					left: 0;
-					margin-top: 0;
-					margin-left: 165px;
-					padding: 0;
-					position: absolute;
-					width: 498px;
-					z-index: 99;
-				}
-				.cfct-popup-content #car-item-search .otypeahead-target ul,
-				.cfct-popup-content #car-item-search .otypeahead-target li,
-				.cfct-popup-content #car-item-search .otypeahead-target li a {
-					margin: 0;
-					padding: 0;
-				}
-				.cfct-popup-content #car-item-search .otypeahead-target li a {
-					color: #454545;
-					text-decoration: none;
-					display: block;
-					/*width: 738px;*/
-					padding: 5px;
-				}
-				.cfct-popup-content #car-item-search .otypeahead-target li a:hover,
-				.cfct-popup-content #car-item-search .otypeahead-target li.otypeahead-current a {
-					color: #333;
-					background-color: #eee;
-				}
-				.cfct-popup-content #car-item-search .otypeahead-target li .carousel-item-title,
-				.cfct-popup-content #car-item-search .otypeahead-target li.no-items-found {
-					float: none;
-					font-size: 12px;
-					height: 15px;
-					line-height: 15px;
-				}
-				.cfct-popup-content #car-item-search .otypeahead-target li:last-child a {
-					-moz-border-radius-bottomleft: 5px; /* FF1+ */
-					-moz-border-radius-bottomright: 5px; /* FF1+ */
-					-webkit-border-bottom-left-radius: 5px; /* Saf3+, Chrome */
-					-webkit-border-bottom-right-radius: 5px; /* Saf3+, Chrome */
-					border-bottom-left-radius: 5px; /* Standard. IE9 */
-					border-bottom-right-radius: 5px; /* Standard. IE9 */
-				}
-				.cfct-popup-content #car-item-search .otypeahead-target li.no-items-found,
-				.cfct-popup-content #car-item-search .otypeahead-target li .otypeahead-loading {
-					padding: 5px;
-				}
-				.cfct-popup-content #car-item-search .otypeahead-target .cfct-module-carousel-loading {
-					padding: 5px;
-					font-size: .9em;
-					color: gray;
-					-moz-border-radius-bottomleft: 5px; /* FF1+ */
-					-moz-border-radius-bottomright: 5px; /* FF1+ */
-					-webkit-border-bottom-left-radius: 5px; /* Saf3+, Chrome */
-					-webkit-border-bottom-right-radius: 5px; /* Saf3+, Chrome */
-					border-bottom-left-radius: 5px; /* Standard. IE9 */
-					border-bottom-right-radius: 5px; /* Standard. IE9 */
-				}
-				.cfct-popup-content #car-item-search .otypeahead-target li .carousel-item-img {
-					display: none;
-				}
-			' );
-    }
+    
+    /**
+		 * Modify the data before it is saved, or not
+		 *
+		 * @param array $new_data 
+		 * @param array $old_data 
+		 * @return array
+		 */
+		public function update( $new_data, $old_data ) {
+			// keep the image search field value from being saved
+			unset( $new_data[ $this->get_field_name('global_image-image-search') ] );
+			
+			// normalize the selected image value in to a 'featured_image' value for easy output
+			if ( !empty( $new_data[ $this->get_field_name('post_image') ] ) ) {
+				$new_data[ 'featured_image' ] = $new_data[ $this->get_field_name('post_image') ];
+			}
+			elseif (!empty($new_data[$this->get_field_name('global_image')])) {
+				$new_data[ 'featured_image' ] = $new_data[ $this->get_field_name('global_image') ];
+			}
+			return $new_data;
+		}
 
     /**
-     * Admin JS functionality for type-ahead-search
+     * Display the module
      *
-     * @uses o-type-ahead.js
-     * @return string
+     * @param array $data - saved module data
+     * @param array $args - previously set up arguments from a child class
+     *
+     * @return string HTML
      */
+    public function display( $data ){
+      global $wp_query;
+      /** Backup wp_query */
+      $_wp_query = $wp_query;
+      /** Now run our query */
+      $wp_query = new WP_Query( array(
+        'ID' => false,
+      ) );
+      $wp_query->data = $data;
+      /** Get our template */
+      ob_start();
+      get_template_part( 'templates/article/listing-event', 'hero' );
+      /** Restore our wp_query */
+      $wp_query = $_wp_query;
+      /** Return our string */
+      return ob_get_clean();
+    }
+
+    # Admin Form
+
+    /**
+     * Output the Admin Form
+     *
+     * @param array $data - saved module data
+     *
+     * @return string HTML
+     */
+    public function admin_form( $data ){
+      global $wpdb;
+      /** Add Colorpicker */
+      wp_enqueue_script('wp-color-picker');
+      wp_enqueue_style( 'wp-color-picker' );
+      /** Add DatePicker */
+      //wp_enqueue_script('jquery-ui-datepicker');
+      //wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+      /** Now get and return the template */
+      ob_start();
+      require_once( __DIR__ . '/admin/form.php' );
+      return ob_get_clean();
+    }
+    
     public function admin_js() {
-      $js_base = str_replace( '-', '_', $this->id_base );
-      $js      = preg_replace( '/^(\t){4}/m', '', '
-			
-				cfct_builder.addModuleLoadCallback("' . $this->id_base . '", function() {
-					' . $this->cfct_module_tabs_js() . '
-					var cfct_car_link_search_results = function(target) {
-						$(target).unbind().bind("otypeahead-select", function() {
+			$js = '
+				cfct_builder.addModuleLoadCallback("'.$this->id_base.'", function() {
+					'.$this->cfct_module_tabs_js().'
+          
+          var cfct_event_link_search_results = function(target) {
+            $(target).unbind().bind("otypeahead-select", function() {
 							var _insert = $(this).find("li.otypeahead-current").clone().removeClass("otypeahead-current");
 							' . $js_base . '_insert_selected_item(_insert);
 						}).find(".car-search-elements a").click(function() {
@@ -499,113 +122,127 @@ if( !class_exists( 'EventHeroModule' ) ) {
 							' . $js_base . '_insert_selected_item(_insert);
 							return false;
 						});
-					};
-					// set up search
+          };
+          
+          // set up search
 					$("#car-item-search #car-search-term").oTypeAhead({
 						searchParams: {
-							action: "cfct_carousel_post_search",
-							carousel_action: "do_search"
+							action: "cfct_event_post_search",
+							method: "do_search"
 						},
-						url:cfct_builder.opts.ajax_url,
-						loading: "<div class=\"' . $this->id_base . '-loading\">' . __( 'Loading...', 'carrington-build' ) . '<\/div>",
+						url: cfct_builder.opts.ajax_url,
+						loading: "<div class=\"' . $this->id_base . '-loading\">' . __( 'Loading...', wp_festival( 'domain' ) ) . '<\/div>",
 						form: ".car-item-search-container",
 						disableForm: false,
-						resultsCallback: cfct_car_link_search_results
+						resultsCallback: cfct_event_link_search_results
 					});
-									
-					// init sortabled
-					$("#car-items ol").sortable({
-						items: "li",
-						axis: "y",
-						opacity: 0.6,
-						containment: "parent",
-						placeholder: "carousel-sortable-placeholder"
-					});
-					$(".car-search-pagination a").live("click", function() {
-								var page_str_idx = this.href.indexOf("car_search_page=");
-								var target_page = 1;
-								$("#car-item-search div.otypeahead-target").html("<div class=\"' . $this->id_base . '-loading\">' . __( 'Loading...', 'carrington-build' ) . '<\/div>").slideDown("fast");
-								if (page_str_idx != -1) {
-									target_page = this.href.substr(page_str_idx + 16);
-								}
-								$.ajax({
-									type: "POST",
-									url: cfct_builder.opts.ajax_url,
-									data: {
-										action: "cfct_carousel_post_search",
-										carousel_action: "do_search",
-										car_search_page: target_page,
-										"car-search-term": $("#car-search-term").val()
-									},
-									success: function(data){
-										$("#car-item-search div.otypeahead-target").html(data.html).show();
-										cfct_car_link_search_results($("#car-item-search div.otypeahead-target"));
-									},
-									dataType: "json"
-								});
-								return false;
-							});
+          
 				});
-
-			
-				var ' . $js_base . '_insert_selected_item = function(_insert) {
-					$("#car-items ol").append(_insert).find(".no-items").hide().end().sortable("refresh");
-					$("a.carousel-post-item-ident", _insert).trigger("click");
+				
+				cfct_builder.addModuleSaveCallback("'.$this->id_base.'", function() {
+					// find the non-active image selector and clear his value
+					$("#'.$this->id_base.'-image-selectors .cfct-module-tab-contents>div:not(.active)").find("input:hidden").val("");
+          $("#car-item-search .otypeahead-target").children().remove();
+					return true;
+				});
+        
+        var ' . $js_base . '_insert_selected_item = function(_insert) {
+          $("#car-item-search").addClass( "hidden" );
+					$("#car-items ol").append(_insert).find(".no-items").hide().end();
+					$("a.event-post-item-ident", _insert).trigger("click");
 					$("body").trigger("click");
 					$("#car-item-search #car-search-term").val("");
 				};
-			
-				cfct_builder.addModuleSaveCallback("' . $this->id_base . '", function() {
-					$("#car-item-search .otypeahead-target").children().remove();
-				});
-			
-				// set up post edit
-				$("#car-items li.carousel-post-item .carousel-post-item-ident, #car-items li.carousel-post-item .carousel-item-img").live("click", function() {
-					$(this).closest(".carousel-post-item").addClass("carousel-item-edit");
-					return false;
-				});
-								
-				// set up post done edit
-				$("#car-items li.carousel-post-item .carousel-edit-done").live("click", function() {
-					$(this).closest(".carousel-post-item").removeClass("carousel-item-edit");
-					return false;
-				});
 								
 				// set up post remove
-				$("#car-items li.carousel-post-item .carousel-edit-remove a").live("click", function() {
+				$("#car-items li.event-post-item .event-edit-remove a").live("click", function() {
 					if (confirm("Do you really want to remove this item?")) {
-						$(this).closest(".carousel-post-item").remove();
+						$(this).closest(".event-post-item").remove();
 						_parent = $("#car-items ol");
-						if (_parent.children().length == 1) {
-							$(".no-items", _parent).show();
+						if (_parent.children().length <= 1) {
+							$("#car-item-search").removeClass( "hidden" );
 						}
 					}
 					return false;
 				});
-				' );
-
-      return $js;
-    }
-
-    public function js() {
-      return '
-				/**
-				 * Carousel Callbacks
-				 */
-				cfctCarousel = {};
-				cfctCarousel.PagerClick = function(i, el) {
-					var _this = $(el);
-					var _overlay = _this.parents(".carousel").find(".car-overlay");
-					$(".car-header .car-title", _overlay).html($(".car-entry-title", _this).html());
-					$(".car-description", _overlay).html( $(".car-entry-description", _this).html());
-					$(".car-cta a", _overlay).attr("href", $(".car-entry-cta a", _this).attr("href"));
-				};
-				cfctCarousel.PagerAnchorBuilder = function(i, el) {
-					return "<li><a href=\"#\">" + (i+1) + "</a></li>";
-				};
 			';
-    }
+			$js .= $this->global_image_selector_js('global_image', array('direction' => 'horizontal'));
+			return $js;
+		}
+    
+    public function _handle_request() {
+			if (!empty( $_POST[ 'method' ] ) ) {
+				switch( $_POST[ 'method' ] ) {
+					case 'do_search':
+						$this->_do_search();
+						break;
+				}
+				exit;
+			}
+		}
+    
+    protected function _do_search() {
+			$posts_per_page = 8;
+			$page = isset( $_POST['car_search_page'] ) ? absint( $_POST['car_search_page'] ) : 1;
+			
+			// ONLY PULLS POSTS THAT HAVE A FEATURED IMAGE
+			$s = new WP_Query(array(
+				's' => $_POST[ 'car-search-term' ],
+				'post_type' => 'event',
+				'posts_per_page' => $posts_per_page,
+				'paged' => $page,
+			));
+			
+			$ids = array();
+			$ret = array(
+				'html' => '',
+				'key' => isset( $_POST['key'] ) ? $_POST['key'] : ''
+			);
+			
+			
+			$html = '';
+			if ( $s->have_posts() ) {
+				$html = '<ul class="car-search-elements">';
+				while ($s->have_posts()) {
+					$s->the_post();
+					$post_id = get_the_id();
+					if (in_array($post_id, $ids)) {
+						continue;
+					}
+					$ids[] = $post_id;
+					remove_filter( 'the_content', 'wptexturize' );
+					$postdata = array(
+						'id' => get_the_id(),
+						'title' => get_the_title(),
+						'link' => get_permalink(),
+						'content' => get_the_excerpt()
+					);
+					add_filter( 'the_content', 'wptexturize' );
+					$html .= $this->get_event_admin_item( $postdata );
+				}
+				$html .= '</ul>';
+				if ($s->found_posts > $posts_per_page) {
+					$paginate_args = array(
+						'base' => '#%_%',
+						'format' => '?car_search_page=%#%',
+						'total' => $s->max_num_pages,
+						'current' => $page,
+						);
+					$paginate_html = paginate_links($paginate_args);
+					$html .= '<span class="car-search-pagination">'.$paginate_html.'</span>';
+				}
+			}
+			$ret['html'] .= $html;
 
+			if (empty($ret['html'])) {
+				$ret['html'] = '<ul><li class="no-items-found">No items found for search: "'.esc_html($_POST['car-search-term']).'"</li></ul>';
+			}
+						
+			header('content-type: application/javascript');
+			echo json_encode($ret);
+			exit;
+		}
+    
     /**
      * Formats the data for admin editing
      *
@@ -613,130 +250,111 @@ if( !class_exists( 'EventHeroModule' ) ) {
      *
      * @return string HTML
      */
-    protected function get_carousel_admin_item( $postdata ) {
-      $img    = array();
-      $img_id = get_post_meta( $postdata[ 'id' ], '_thumbnail_id', true );
-      if( !empty( $img_id ) ) {
-        $imgdata   = wp_get_attachment_image_src( $img_id, 'thumbnail', false );
-        $img_style = ' style="background: url(' . $imgdata[ 0 ] . ') 0 -52px"';
-      } else {
-        $img_style = null;
-      }
-
-      $html = '
-				<li class="carousel-post-item">
-					<div class="carousel-item-img"' . $img_style . '></div>
-					<a class="carousel-post-item-ident carousel-item-title" href="#carousel-post-' . intval( $postdata[ 'id' ] ) . '">' . esc_html( $postdata[ 'title' ] ) . '</a>
-					<div class="carousel-edit-form">
-						<input type="hidden" name="' . $this->get_field_name( 'posts' ) . '[' . $postdata[ 'id' ] . '][id]" value="' . intval( $postdata[ 'id' ] ) . '" />
-						<label>Title</label>
-						<input type="text" class="text" name="' . $this->get_field_name( 'posts' ) . '[' . $postdata[ 'id' ] . '][title]" value="' . esc_attr( $postdata[ 'title' ] ) . '" />
-						<label>Description</label>
-						<textarea name="' . $this->get_field_name( 'posts' ) . '[' . $postdata[ 'id' ] . '][content]">' . esc_textarea( $postdata[ 'content' ] ) . '</textarea>
-						<input type="button" name="done" class="button carousel-edit-done" value="Done" />
-						<span class="carousel-edit-remove trash"><a href="#remove" class="lnk-remove">remove</a></span>
-					</div>
-				</li>
-				';
-
-      return $html;
+    protected function get_event_admin_item( $postdata ) {
+    
+      $post = wp_festival()->get_post_data( $postdata[ 'id' ] );
+      
+      
+      ob_start();
+      
+      //echo "<pre>"; print_r( $post ); echo "</pre>";
+      
+      require_once( __DIR__ . '/admin/item.php' );
+      return ob_get_clean();
     }
+    
+    function post_image_selector($data = false) {
+			if (isset($_POST['args'])) {
+				$ajax_args = cfcf_json_decode(stripslashes($_POST['args']), true);
+			}
+			else {
+				$ajax_args = null;
+			}
 
-    public function _handle_carousel_request() {
-      if( !empty( $_POST[ 'carousel_action' ] ) ) {
-        switch( $_POST[ 'carousel_action' ] ) {
-          case 'do_search':
-            $this->_carousel_do_search();
-            break;
-        }
-        exit;
-      }
-    }
+			$selected = 0;
+			if (!empty($data[$this->get_field_id('post_image')])) {
+				$selected = $data[$this->get_field_id('post_image')];
+			}
 
-    protected function _carousel_do_search() {
-      $posts_per_page = 8;
-      $page           = isset( $_POST[ 'car_search_page' ] ) ? absint( $_POST[ 'car_search_page' ] ) : 1;
+			$selected_size = null;
+			if (!empty($data[$this->get_field_name('post_image').'-size'])) {
+				$selected_size = $data[$this->get_field_name('post_image').'-size'];
+			}
 
-      // ONLY PULLS POSTS THAT HAVE A FEATURED IMAGE
-      $s = new WP_Query( array(
-        's'              => $_POST[ 'car-search-term' ],
-        'post_type'      => apply_filters( 'cfct-carousel-search-in', array_filter( get_post_types( array( 'public' => 1 ) ), array( $this, 'filter_post_types' ) ) ),
-        'posts_per_page' => $posts_per_page,
-        'paged'          => $page,
-        'meta_key'       => '_thumbnail_id'
-      ) );
+			$args = array(
+				'field_name' => 'post_image',
+				'selected_image' => $selected,
+				'selected_size' => $selected_size,
+				'post_id' => isset($ajax_args['post_id']) ? $ajax_args['post_id'] : null,
+				'select_no_image' => true,
+				'suppress_size_selector' => true
+			);
 
-      $ids = array();
-      $ret = array(
-        'html' => '',
-        'key'  => isset( $_POST[ 'key' ] ) ? $_POST[ 'key' ] : ''
-      );
+			return $this->image_selector('post', $args);
+		}
+		
+		function global_image_selector($data = false) {		
+			$selected = 0;
+			if (!empty($data[$this->get_field_id('global_image')])) {
+				$selected = $data[$this->get_field_id('global_image')];
+			}
 
-      $html = '';
-      if( $s->have_posts() ) {
-        $html = '<ul class="car-search-elements">';
-        while( $s->have_posts() ) {
-          $s->the_post();
-          $post_id = get_the_id();
-          if( in_array( $post_id, $ids ) ) {
-            continue;
-          }
-          $ids[ ] = $post_id;
-          remove_filter( 'the_content', 'wptexturize' );
-          $postdata = array(
-            'id'      => get_the_id(),
-            'title'   => get_the_title(),
-            'link'    => get_permalink(),
-            'content' => get_the_excerpt()
-          );
-          add_filter( 'the_content', 'wptexturize' );
-          $html .= $this->get_carousel_admin_item( $postdata );
-        }
-        $html .= '</ul>';
-        if( $s->found_posts > $posts_per_page ) {
-          $paginate_args = array(
-            'base'    => '#%_%',
-            'format'  => '?car_search_page=%#%',
-            'total'   => $s->max_num_pages,
-            'current' => $page,
-          );
-          $paginate_html = paginate_links( $paginate_args );
-          $html .= '<span class="car-search-pagination">' . $paginate_html . '</span>';
-        }
-      }
-      $ret[ 'html' ] .= $html;
+			$selected_size = null;
+			if (!empty($data[$this->get_field_name('global_image').'-size'])) {
+				$selected_size = $data[$this->get_field_name('global_image').'-size'];
+			}
 
-      if( empty( $ret[ 'html' ] ) ) {
-        $ret[ 'html' ] = '<ul><li class="no-items-found">No items found for search: "' . esc_html( $_POST[ 'car-search-term' ] ) . '"</li></ul>';
-      }
+			$args = array(
+				'field_name' => 'global_image',
+				'selected_image' => $selected,
+				'selected_size' => $selected_size,
+				'suppress_size_selector' => true
+			);
 
-      header( 'content-type: application/javascript' );
-      echo json_encode( $ret );
-      exit;
-    }
+			return $this->image_selector('global', $args);
+		}
+    
+    // Content Move Helpers
 
-    protected function filter_post_types( $var ) {
-      return !in_array( $var, array( 'attachment', 'revision', 'nav_menu_item' ) );
-    }
+		protected $reference_fields = array( 'global_image', 'post_image', 'featured_image' );
 
-    public function get_referenced_ids( $data ) {
-      $references = array();
+		public function get_referenced_ids($data) {
+			$references = array();
+			
+      foreach ($this->reference_fields as $field) {
+				$id = $this->get_data($field, $data);
+				if ($id) {
+					$references[$field] = array(
+						'type' => 'post_type',
+						'value' => $id
+					);
+				}
+			}
+      
       if( !empty( $data[ $this->gfn( 'posts' ) ] ) ) {
         $references[ 'posts' ] = array();
         foreach( $data[ $this->gfn( 'posts' ) ] as $post_id => $post_info ) {
-          $post                              = get_post( $post_id );
+          $post = get_post( $post_id );
           $references[ 'posts' ][ $post_id ] = array(
             'type'      => 'post_type',
-            'type_name' => $post->post_type,
             'value'     => $post_info[ 'id' ]
           );
         }
       }
 
-      return $references;
-    }
+			return $references;
+		}
 
-    public function merge_referenced_ids( $data, $reference_data ) {
+		public function merge_referenced_ids($data, $reference_data) {
+    
+			if (!empty($reference_data) && !empty($data)) {
+				foreach ($this->reference_fields as $field) {
+					if (isset($data[$this->gfn($field)]) && isset($reference_data[$field])) {
+						$data[$this->gfn($field)] = $reference_data[$field]['value'];
+					}
+				}
+			}
+      
       if( !empty( $reference_data[ 'posts' ] ) && !empty( $data ) ) {
         foreach( $reference_data[ 'posts' ] as $key => $r_data ) {
           // Data here is stored with the post_id in the data as well as being the array key,
@@ -749,9 +367,8 @@ if( !class_exists( 'EventHeroModule' ) ) {
         }
       }
 
-      return $data;
-    }
+			return $data;
+		}
+    
   }
-
-  cfct_build_register_module( 'EventHeroModule' );
 }

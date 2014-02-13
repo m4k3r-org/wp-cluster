@@ -191,7 +191,7 @@
     </li>
     <li class="colorpicker_wrapper">
       <label for="font_color"><?php _e( 'Font Color', 'wp-festival' ); ?></label>
-      <input type="text" class="colorpicker" name="font_color" id="background_color" value="<?php echo esc_attr( isset( $data[ 'font_color' ] ) ? $data[ 'font_color' ] : '' ); ?>" />
+      <input type="text" class="colorpicker" name="font_color" id="font_color" value="<?php echo esc_attr( isset( $data[ 'font_color' ] ) ? $data[ 'font_color' ] : '' ); ?>" />
     </li>
     <li>
       <label><?php _e( 'Background Image:', 'wp-festival' ); ?></label>
