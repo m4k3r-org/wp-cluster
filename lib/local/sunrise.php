@@ -19,10 +19,11 @@ if( !count( $wpdb->get_col( "SHOW TABLES" ) ) ) {
 $_host = str_replace( '.loc', '.com', $_SERVER[ 'HTTP_HOST' ] );
 
 // Strip Known Subdomains
-$_host = str_replace( 'www.', '', $_host  );
-$_host = str_replace( 'static.', '', $_host  );
-$_host = str_replace( 'media.', '', $_host  );
-$_host = str_replace( 'api.', '', $_host  );
+$_host = str_replace( 'www.', '', $_host );
+$_host = str_replace( 'static.', '', $_host );
+$_host = str_replace( 'assets.', '', $_host );
+$_host = str_replace( 'media.', '', $_host );
+$_host = str_replace( 'api.', '', $_host );
 
 if( ( $nowww = preg_replace( '|^www\.|', '', $_host ) ) != $_host )
   $where = $wpdb->prepare( 'domain IN (%s,%s)', $_host, $nowww );
@@ -32,7 +33,7 @@ else
 $domain_mapping_id = $wpdb->get_var( "SELECT blog_id FROM {$wpdb->blogs} WHERE {$where} ORDER BY CHAR_LENGTH(domain) DESC LIMIT 1" );
 
 if( !$domain_mapping_id ) {
-  wp_die( '<h1>Network Error</h1><p>The domain you requested (' .  $_host . ') is not available on network.</p>' );
+  wp_die( '<h1>Network Error</h1><p>The domain you requested (' . $_host . ') is not available on network.</p>' );
 }
 
 if( $domain_mapping_id ) {
@@ -43,11 +44,25 @@ if( $domain_mapping_id ) {
   $site_id              = $current_blog->site_id;
 
   // Add cookie with subdomain support
-  define( 'COOKIE_DOMAIN', '.' . $_host );
-  define( 'DOMAIN_CURRENT_SITE', $current_blog->domain );
-  define( 'SITE_ID_CURRENT_SITE', $site_id );
-  define( 'BLOG_ID_CURRENT_SITE', $blog_id );
-  define( 'PATH_CURRENT_SITE', $current_blog->path );
+  if( !defined( 'COOKIE_DOMAIN' ) ) {
+    define( 'COOKIE_DOMAIN', '.' . $_host );
+  }
+
+  if( !defined( 'DOMAIN_CURRENT_SITE' ) ) {
+    define( 'DOMAIN_CURRENT_SITE', $current_blog->domain );
+  }
+
+  if( !defined( 'SITE_ID_CURRENT_SITE' ) ) {
+    define( 'SITE_ID_CURRENT_SITE', $site_id );
+  }
+
+  if( !defined( 'BLOG_ID_CURRENT_SITE' ) ) {
+    define( 'BLOG_ID_CURRENT_SITE', $blog_id );
+  }
+
+  if( !defined( 'PATH_CURRENT_SITE' ) ) {
+    define( 'PATH_CURRENT_SITE', $current_blog->path );
+  }
 
   $current_site          = $wpdb->get_row( "SELECT * from {$wpdb->site} WHERE id = '{$current_blog->site_id}' LIMIT 0,1" );
   $current_site->blog_id = $wpdb->get_var( "SELECT blog_id FROM {$wpdb->blogs} WHERE domain='{$current_site->domain}' AND path='{$current_site->path}'" );
