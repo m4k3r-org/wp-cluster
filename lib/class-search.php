@@ -32,6 +32,18 @@ namespace UsabilityDynamics\Disco {
 
       /**
        *
+       * @return \UsabilityDynamics\Veneer\Search
+       */
+      static public function get_client() {
+        return new \UsabilityDynamics\Veneer\Search(
+          array(
+            'url' => wp_disco()->get('search.server')
+          )
+        );
+      }
+
+      /**
+       *
        */
       public function action_messages() {
         if ( !empty( self::$errors ) ) {
@@ -50,7 +62,7 @@ namespace UsabilityDynamics\Disco {
             <div class="updated settings-error" id="setting-error-settings_updated">
               <p><strong><?php echo $success; ?></strong></p>
             </div>
-            <?php 
+            <?php
           }
         }
       }
@@ -69,6 +81,18 @@ namespace UsabilityDynamics\Disco {
        *
        */
       static public function manage_search() {
+        $search_settings = wp_disco()->get('search');
+
+        $client = self::get_client();
+
+        try {
+          $cluster_health = $client->getCluster()->getHealth()->getData();
+          $cluster_info = $client->getStatus()->getServerStatus();
+          $current_index = $client->getIndex( $search_settings['index'] )->getStats()->getData();
+        } catch ( \Elastica\Exception\ClientException $ex ) {
+          self::$errors[] = $ex->getMessage();
+        }
+
         require_once TEMPLATEPATH.'/templates/admin/manage_search.php';
       }
 
@@ -77,16 +101,19 @@ namespace UsabilityDynamics\Disco {
        */
       static public function manage_search_server() {
 
-        if (!empty($_POST) && !empty($_POST['configuration'])) {
+        if ( !empty( $_POST ) && !empty( $_POST['configuration'] ) ) {
+
+          $filtered = array_filter( $_POST['configuration'] );
+          if ( empty( $filtered ) ) {
+            wp_disco()->set('search', false);
+            wp_disco()->settings->commit();
+          }
+
           foreach ($_POST['configuration'] as $option_key => $option_value) {
             wp_disco()->set($option_key, $option_value);
           }
 
-          $client = new \UsabilityDynamics\Veneer\Search(
-            array(
-              'url' => wp_disco()->get('search.server')
-            )
-          );
+          $client = self::get_client();
 
           try {
             $server_status = $client->getStatus()->getResponse()->getData();
@@ -126,6 +153,14 @@ namespace UsabilityDynamics\Disco {
        */
       static public function manage_search_mapping() {
 
+        try {
+          $client = self::get_client();
+          $mapping = $client->getIndex( wp_disco()->get('search.index') )->getMapping();
+        } catch ( \Elastica\Exception\ClientException $ex ) {
+          self::$errors[] = $ex->getMessage();
+        }
+
+        require_once TEMPLATEPATH.'/templates/admin/manage_search_mapping.php';
       }
 
       /**
@@ -133,6 +168,9 @@ namespace UsabilityDynamics\Disco {
        */
       static public function manage_search_index() {
 
+        $structure = wp_disco()->get('structure');
+
+        require_once TEMPLATEPATH.'/templates/admin/manage_search_index.php';
       }
 
     }

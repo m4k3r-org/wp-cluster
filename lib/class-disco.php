@@ -874,6 +874,7 @@ namespace UsabilityDynamics {
       // Enqueue Admin Scripts & Styles.
       add_action( 'admin_enqueue_scripts', function () {
         wp_enqueue_script( 'app.admin' );
+        wp_enqueue_style( 'app.admin' );
       });
 
       add_filter( 'the_category', function ( $c ) {
