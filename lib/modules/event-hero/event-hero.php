@@ -99,9 +99,6 @@ if( !class_exists( 'EventHeroModule' ) ){
       /** Add Colorpicker */
       wp_enqueue_script('wp-color-picker');
       wp_enqueue_style( 'wp-color-picker' );
-      /** Add DatePicker */
-      //wp_enqueue_script('jquery-ui-datepicker');
-      //wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
       /** Now get and return the template */
       ob_start();
       require_once( __DIR__ . '/admin/form.php' );
@@ -213,9 +210,8 @@ if( !class_exists( 'EventHeroModule' ) ){
 					remove_filter( 'the_content', 'wptexturize' );
 					$postdata = array(
 						'id' => get_the_id(),
-						'title' => get_the_title(),
-						'link' => get_permalink(),
-						'content' => get_the_excerpt()
+						'post_title' => get_the_title(),
+						'post_excerpt' => get_the_excerpt()
 					);
 					add_filter( 'the_content', 'wptexturize' );
 					$html .= $this->get_event_admin_item( $postdata );
@@ -251,14 +247,11 @@ if( !class_exists( 'EventHeroModule' ) ){
      * @return string HTML
      */
     protected function get_event_admin_item( $postdata ) {
-    
       $post = wp_festival()->get_post_data( $postdata[ 'id' ] );
-      
+      $postdata = wp_festival()->extend( $post, $postdata );
       
       ob_start();
-      
-      //echo "<pre>"; print_r( $post ); echo "</pre>";
-      
+      //echo "<pre>"; print_r( $postdata ); echo "</pre>";
       require_once( __DIR__ . '/admin/item.php' );
       return ob_get_clean();
     }
@@ -337,7 +330,7 @@ if( !class_exists( 'EventHeroModule' ) ){
           $post = get_post( $post_id );
           $references[ 'posts' ][ $post_id ] = array(
             'type'      => 'post_type',
-            'value'     => $post_info[ 'id' ]
+            'value'     => $post_info[ 'ID' ]
           );
         }
       }

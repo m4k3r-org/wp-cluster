@@ -46,7 +46,7 @@ namespace UsabilityDynamics\Festival {
               }
             }
             break;
-        
+            
         }
       
       }
