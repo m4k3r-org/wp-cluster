@@ -221,10 +221,6 @@ namespace UsabilityDynamics {
           'sizes'   => '="114x114'
         ),
         array(
-          'tag'     => 'link',
-          'href'    => content_url( '/assets/apple-touch-icon-72x72.png' )
-        ),
-        array(
           'tag'  => 'link',
           'rel'  => 'shortcut icon',
           'href' => home_url( '/images/favicon.png' )
@@ -233,11 +229,6 @@ namespace UsabilityDynamics {
           'tag'  => 'link',
           'rel'  => 'api',
           'href' => admin_url( 'admin-ajax.php' )
-        ),
-        array(
-          'tag'  => 'link',
-          'rel'  => 'pingback',
-          'href' => get_bloginfo( 'pingback_url' )
         ),
         array(
           'tag'  => 'link',
