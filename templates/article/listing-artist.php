@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Module: Artist-List
  * Template: B-List

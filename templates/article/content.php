@@ -26,7 +26,9 @@
   <?php endif; ?>
 
   <section class="article-content" data-type="content">
+    <div class="container">
 		<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', wp_festival( 'domain' ) ) ); ?>
+    </div>
   </section>
 
 </article>

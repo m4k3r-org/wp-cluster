@@ -10,23 +10,6 @@
   },
   "structure": {
     "types": {
-      "_aside": {
-        "data": {
-          "capability_type": "page",
-          "label": "Aside",
-          "description": "Modular front-end asides (sections).",
-          "show_in_menu": false,
-          "show_ui": true,
-          "supports": [
-            "title",
-            "editor",
-            "revisions"
-          ],
-          "can_export": true
-        },
-        "taxonomies": [],
-        "meta": {}
-      },
       "PerformanceEvent": {
         "data": {
           "capability_type": "page",
@@ -57,11 +40,7 @@
           "show_in_menu": true,
           "show_in_nav_menus": false,
           "show_ui": true,
-          "supports": [
-            "title",
-            "editor",
-            "revisions"
-          ],
+          "supports": [ "title", "editor", "revisions" ],
           "can_export": true
         },
         "taxonomies": [],
@@ -105,11 +84,7 @@
           "show_in_menu": true,
           "show_in_nav_menus": false,
           "show_ui": true,
-          "supports": [
-            "title",
-            "editor",
-            "revisions"
-          ],
+          "supports": [ "title", "editor", "revisions" ],
           "can_export": true
         },
         "taxonomies": [],
@@ -168,13 +143,11 @@
             "fields": [
               "startDateTime",
               "endDateTime",
-              "relatedArtists",
-              "ticketLink"
+              "relatedArtists"
             ]
           },
           "location": {
             "fields": [
-              "locationAddress",
               "locationMap"
             ]
           }
@@ -288,6 +261,7 @@
           "args": {}
         }
       },
+
       "websiteLink": {
         "name": "Website URL",
         "type": "text"
@@ -298,6 +272,7 @@
         "clone": true,
         "type": "text"
       },
+
       "eventDate": {
         "name": "Date",
         "type": "date",
@@ -319,6 +294,7 @@
         "type": "text",
         "desc": "Duration of event."
       },
+
       "headshotImage": {
         "name": "Headshot",
         "type": "image_advanced",
@@ -349,22 +325,11 @@
         "desc": "Upload additional images to be displayed in a gallery format.",
         "multiple": false
       },
-      "locationAddress": {
-        "id": "locationAddress",
-        "name": "Address"
-      },
       "locationMap": {
         "id": "locationMap",
-        "name": "Map",
+        "name": "Location",
         "type": "map",
-        "style": "width: 100%; height: 300px",
-        "address_field": "locationAddress"
-      },
-      "ticketLink": {
-        "id": "ticketLink",
-        "name": "Tickets URL",
-        "type": "url",
-        "desc": "Purchase Tickets URL"
+        "style": "width: 100%; height: 300px"
       }
     },
     "taxonomies": {

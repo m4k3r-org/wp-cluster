@@ -1,5 +1,23 @@
 Festival Theme for the Drop Network
 
+
+Methods
+-------
+
+* wp_festival()->section() - Group of dynamic/static asides.
+* wp_festival()->aside() - Single dynamic aside.
+* wp_festival()->nav() - Navigation wrappper.
+* wp_festival()->widget_area() - Widget area wrapper.
+
+
+Sections
+
+* header
+* banner
+* above-content
+* below-content
+* footer
+
 Body Classes
 ------------
 * home

@@ -10,14 +10,8 @@
  * @since festival 0.1.0
  */
 ?>
-    </div><!-- /container-wrap -->
-    <footer>
-
-      <section class="container">
-        <?php wp_festival()->aside( 'footer' ); ?>
-      </section>
-
-    </footer>
+  <footer class="footer">
+    <?php wp_festival()->section( 'footer' ); ?>
     <?php wp_footer(); ?>
-  </body>
+  </footer>
 </html>

@@ -20,7 +20,7 @@
 		<h1 class="article-title" data-type="post_title"><?php the_title(); ?></h1>
 	</header>
 
-  <section class="article-content" data-type="content">
+  <section class="article-content" data-type="content" class="container">
 		<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', wp_festival( 'domain' ) ) ); ?>
   </section>
 

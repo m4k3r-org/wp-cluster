@@ -15,7 +15,7 @@ require( [ 'html.picture', 'html.video' ], function Bootstrap() {
     }
   });
 
-  require.loadStyle( '//cdn.udx.io/vendor/animate.css' );
+  // require.loadStyle( '//cdn.udx.io/vendor/animate.css' );
 
   //require.loadStyle( '/assets/styles/app.main.css' );
 

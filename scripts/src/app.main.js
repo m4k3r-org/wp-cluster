@@ -10,13 +10,12 @@
  *      require( 'site.model' ).ajax
  *
  */
-require( [ '/assets/models/locale', '/assets/models/settings', 'jquery', 'skrollr', 'twitter.bootstrap' ], function( _locale, _settings, jQuery ) {
+require( [ '/assets/models/locale/', '/assets/models/settings/', 'jquery', 'skrollr', 'twitter.bootstrap' ], function( _locale, _settings, jQuery ) {
   console.debug( 'app.main', 'loaded', _locale.domain );
 
   window.skrollr.init( {
     forceHeight: false
   });
-
 
   // Sticky elements implementation
   require( [ 'sticky' ], function() {

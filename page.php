@@ -9,20 +9,19 @@
  * different template.
  *
  * @author Usability Dynamics
- * @module festival  
+ * @module festival
  * @since festival 0.1.0
  */
-get_template_part( 'templates/header', get_post_type() );
 ?>
-<section class="container inner-wrapper no-sidebar">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="content-container">
-        <?php while( have_posts() ) : the_post(); ?>
-          <?php get_template_part( 'templates/article/content', get_post_type() ); ?>
-        <?php endwhile; ?>
-      </div>
-    </div>
-  </div>
-</section>
-<?php get_template_part( 'templates/footer', get_post_type() ); ?>
+
+<?php get_template_part( 'templates/header' ); ?>
+
+<main id="main" class="main" role="main">
+  <?php wp_festival()->section( 'above-content' ); ?>
+
+  <?php get_template_part( 'templates/main' ); ?>
+
+  <?php wp_festival()->section( 'below-content' ); ?>
+</main>
+
+<?php get_template_part( 'templates/footer' ); ?>
