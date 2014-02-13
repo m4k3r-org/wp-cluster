@@ -325,23 +325,12 @@
         "desc": "Upload additional images to be displayed in a gallery format.",
         "multiple": false
       },
-
       "locationMap": {
         "id": "locationMap",
         "name": "Location",
         "type": "map",
         "style": "width: 100%; height: 300px"
-      },
-      "__asideLocation": {
-        "id": "asideLocation",
-        "name": "Aside Location",
-        "type": "select",
-        "options": [
-          { "label": "adsf", "value": "asdf" }
-        ],
-        "style": "width: 100%; height: 300px"
       }
-
     },
     "taxonomies": {
       "stage": {
