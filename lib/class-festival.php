@@ -316,7 +316,8 @@ namespace UsabilityDynamics {
           'title'       => __( 'Header Banner', $this->domain ),
           'description' => __( 'Babber located directly below the header section.', $this->domain ),
           'options'     => array(
-            'type' => 'swiper'
+            'type' => 'swiper',
+            'requires' => 'swiper'
           )
         ),
         'left-sidebar' => array(

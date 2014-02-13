@@ -442,7 +442,7 @@ main .artists-list {
   Single Post content
 ============================ */
 
-.inner-wrapper.single {
+.container-wrap .inner-wrapper.single {
 
   header {
     .article-title {
@@ -450,14 +450,42 @@ main .artists-list {
     }
   }
   
-  blockquote {
-    border-color: @default-color-active;
-    &, p {
-      color: @default-color;
+  article {
+  
+    blockquote {
+      border-color: @default-color-active;
+      &, p {
+        color: @default-color;
+      }
     }
+  
+  }
+  
+  
+
+}
+
+/* ============================
+  Author
+============================ */
+
+article.author {
+
+  .author-wrapper {
+    border-color: @content-border-color;
+  }
+  
+  img.avatar {
+    border-color: @default-color;
+  }
+  
+  .display-name {
+    color: @content-title-color;
   }
 
 }
+
+
 
 /* ==============
  Menuficiation
@@ -553,4 +581,39 @@ main .artists-list {
     color: @font-default-color !important;
   }
   
+}
+
+/* ============================
+  COMMENTS
+============================ */
+
+article.comments {
+
+  .title {
+    border-color: darken( @content-border-color, 10% );
+    background-color: @content-border-color;
+  }
+  
+  .comments-list {
+  
+    ul {
+    
+      li {
+        border-color: @content-border-color;
+        
+        img.avatar {
+          border-color: darken( @content-border-color, 20% );
+        }
+        
+        .comment-author .fn,
+        .reply a {
+          color: @default-color;
+        }
+        
+      }
+    
+    }
+  
+  }
+
 }
