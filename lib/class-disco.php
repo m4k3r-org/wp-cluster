@@ -268,7 +268,7 @@ namespace UsabilityDynamics {
      *
      * @var type
      */
-    private $search;
+    public $search;
 
     /**
      * Initialize Drop Theme.

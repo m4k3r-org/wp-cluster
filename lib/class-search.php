@@ -20,11 +20,39 @@ namespace UsabilityDynamics\Disco {
      */
     class Search {
 
+      static $errors = array();
+      static $success = array();
+
       /**
        *
        */
       public function __construct() {
         add_action( 'admin_menu', array( __CLASS__, 'add_pages' ) );
+      }
+
+      /**
+       *
+       */
+      public function action_messages() {
+        if ( !empty( self::$errors ) ) {
+          foreach( self::$errors as $error ) {
+            ?>
+            <div class="error settings-error" id="setting-error-settings_updated">
+              <p><strong><?php echo $error; ?></strong></p>
+            </div>
+            <?php
+          }
+        }
+
+        if ( !empty( self::$success ) ) {
+          foreach( self::$success as $success ) {
+            ?>
+            <div class="updated settings-error" id="setting-error-settings_updated">
+              <p><strong><?php echo $success; ?></strong></p>
+            </div>
+            <?php 
+          }
+        }
       }
 
       /**
@@ -49,8 +77,6 @@ namespace UsabilityDynamics\Disco {
        */
       static public function manage_search_server() {
 
-        $errors = array();
-
         if (!empty($_POST) && !empty($_POST['configuration'])) {
           foreach ($_POST['configuration'] as $option_key => $option_value) {
             wp_disco()->set($option_key, $option_value);
@@ -63,18 +89,34 @@ namespace UsabilityDynamics\Disco {
           );
 
           try {
-
             $server_status = $client->getStatus()->getResponse()->getData();
 
+            if ( !empty( $server_status['ok'] ) && $server_status['ok'] === true ) {
+              $_index = trim( wp_disco()->get('search.index') );
+
+              if ( !empty( $_index ) ) {
+                if ( $client->getIndex( $_index )->exists() ) {
+
+                  if ( wp_disco()->settings->commit() ) {
+                    self::$success[] = __('Server settings has been validated and saved.', DOMAIN_CURRENT_SITE);
+                  }
+
+                } else {
+                  self::$errors['server_index'] = sprintf(__('Index "%s" does not exist on ElasticSearch server with address %s', DOMAIN_CURRENT_SITE), wp_disco()->get('search.index'), wp_disco()->get('search.server'));
+                }
+              } else {
+                self::$errors['server_index'] = __('Please specify Search Index', DOMAIN_CURRENT_SITE);
+              }
+
+            } else {
+              self::$errors['server_address'] = __('Search server returned bad Status. Check ElasticSearch installation on your server or change address.', DOMAIN_CURRENT_SITE);
+            }
+
           } catch ( \Elastica\Exception\ClientException $e ) {
-            $errors[] = $e->getMessage();
+            self::$errors['server_address'] = $e->getMessage();
           }
 
         }
-
-        echo '<pre>';
-        print_r( $errors );
-        echo '</pre>';
 
         require_once TEMPLATEPATH.'/templates/admin/manage_search_server.php';
       }
