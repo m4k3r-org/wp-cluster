@@ -16,7 +16,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" <?php language_attributes(); ?>> <!--<![endif]-->
 <head><?php wp_head(); ?></head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class(); ?> data-requires="udx.wp.spa" data-options="api: 'manage/admin-ajax.php', debug: false">
 
   <header id="header" class="header">
     <?php wp_festival()->section( 'header' ); ?>

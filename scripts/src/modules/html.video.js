@@ -13,6 +13,8 @@ define( 'html.video', function() {
     return;
   }
 
+  return;
+
   trailer.addEventListener( 'click', function PLAY() {
     console.log( 'clicked!' );
 

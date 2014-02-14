@@ -13,7 +13,16 @@
         <div class="row">
           <?php wp_festival()->section( 'left-sidebar' ); ?>
           <?php wp_festival()->section( 'right-sidebar' ); ?>
-          <?php get_template_part( 'templates/article/content' ); ?>
+
+          <?php if( !have_posts() ) : ?>
+          <?php endif; ?>
+
+          <?php while( have_posts() ) : the_post(); ?>
+            <?php get_template_part( 'templates/article/content', get_post_type() ); ?>
+            <?php get_template_part( 'templates/article/author', get_post_type() ); ?>
+            <?php comments_template(); ?>
+          <?php endwhile; ?>
+
       </div>
     </div>
   </div>

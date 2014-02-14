@@ -221,6 +221,10 @@ namespace UsabilityDynamics {
           'sizes'   => '="114x114'
         ),
         array(
+          'tag'     => 'link',
+          'href'    => content_url( '/assets/apple-touch-icon-72x72.png' )
+        ),
+        array(
           'tag'  => 'link',
           'rel'  => 'shortcut icon',
           'href' => home_url( '/images/favicon.png' )
@@ -229,6 +233,11 @@ namespace UsabilityDynamics {
           'tag'  => 'link',
           'rel'  => 'api',
           'href' => admin_url( 'admin-ajax.php' )
+        ),
+        array(
+          'tag'  => 'link',
+          'rel'  => 'pingback',
+          'href' => get_bloginfo( 'pingback_url' )
         ),
         array(
           'tag'  => 'link',
@@ -308,7 +317,7 @@ namespace UsabilityDynamics {
           'description' => __( 'Babber located directly below the header section.', $this->domain ),
           'options'     => array(
             'type' => 'swiper',
-            'requires' => 'swiper'
+            'requires' => 'udx.ui.swiper'
           )
         ),
         'left-sidebar' => array(
@@ -328,18 +337,7 @@ namespace UsabilityDynamics {
           'sidebar' => true,
           'options'     => array(
             'id'      => 'right-sidebar-section',
-            'class'   => 'right-sidebar-section col-md-3 col-md-push-6 section',
-            'before'  => '<div class="module widget %1$s %2$s"><div class="module-inner">',
-            'after'   => '</div></div>'
-          )
-        ),
-        'single-sidebar' => array(
-          'title'       => __( 'Single Page Sidebar', $this->domain ),
-          'description' => __( 'Shown on all Single Pages.', $this->domain ),
-          'sidebar' => true,
-          'options'     => array(
-            'id'      => 'single-sidebar-section',
-            'class'   => 'single-sidebar-section col-md-3 col-md-push-6 ',
+            'class'   => 'right-sidebar-section col-md-3 section',
             'before'  => '<div class="module widget %1$s %2$s"><div class="module-inner">',
             'after'   => '</div></div>'
           )
@@ -366,6 +364,9 @@ namespace UsabilityDynamics {
           )
         )
       ));
+
+      // Set Pluggable Module Directory.
+      $this->modules( __DIR__ . '/modules' );
 
       // Core Actions
       add_action( 'init', array( $this, 'init' ), 100 );
@@ -703,8 +704,13 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function wp_enqueue_scripts() {
+
+      //wp_deregister_script( 'jquery' );
+      wp_deregister_script( 'devicepx' );
+
       wp_enqueue_style( 'app.main' );
       wp_enqueue_script( 'app.main' );
+
     }
 
     /**

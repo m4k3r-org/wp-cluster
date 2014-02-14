@@ -12,6 +12,7 @@
 ?>
   <footer class="footer">
     <?php wp_festival()->section( 'footer' ); ?>
-    <?php wp_footer(); ?>
   </footer>
+  <?php wp_footer(); ?>
+  </body>
 </html>
