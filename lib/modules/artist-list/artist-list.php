@@ -131,6 +131,8 @@ if( !class_exists( 'ArtistListModule' ) ){
         ),
       );
       $data[ 'map' ] = isset( $mapping[ $data[ 'layout_type' ] ][ $data[ 'artist_columns' ] ] ) ? $mapping[ $data[ 'layout_type' ] ][ $data[ 'artist_columns' ] ] : $mapping[4];
+      $data[ 'image_width' ] = $data[ 'map' ][ 2 ];
+      $data[ 'image_height' ] = $data[ 'map' ][ 3 ];
       $wp_query->data = $data;
       /** Get our template */
       ob_start();

@@ -8,7 +8,15 @@
 
 global $wp_query;
 
-extract( $wp_query->data );
+extract( $data = wp_festival()->extend( array(
+  'enable_links' => false,
+  'enable_dates' => false,
+  'custom_date' => false,
+  'font_color' => false,
+  'logo_image' => false,
+  'image_width' => false,
+  'image_height' => false,
+), $wp_query->data ) );
 
 $enable_links = ( isset( $enable_links ) && $enable_links == 'true' ) ? true : false;
 $enable_dates = ( isset( $enable_dates ) && $enable_dates == 'true' ) ? true : false;
@@ -26,8 +34,8 @@ $fcolor = !empty( $font_color ) ? "color: {$font_color} !important;" : "";
 // Try to get Image
 $src = wp_festival()->get_artist_image_link( get_the_ID(), array(
   'type'   => $artist_image,
-  'width'  => $map[ 2 ],
-  'height' => $map[ 3 ],
+  'width'  => $image_width,
+  'height' => $image_height,
 ) );
 
 ?>

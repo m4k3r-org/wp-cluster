@@ -11,8 +11,8 @@
     <div class="col-md-12">
       <div class="container">
         <div class="row">
-          <?php wp_festival()->section( 'left-sidebar' ); ?>
-          <?php wp_festival()->section( 'right-sidebar' ); ?>
+          <?php //wp_festival()->section( 'left-sidebar' ); ?>
+          <?php //wp_festival()->section( 'right-sidebar' ); ?>
 
           <?php if( !have_posts() ) : ?>
           <?php endif; ?>

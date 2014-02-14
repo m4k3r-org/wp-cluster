@@ -72,10 +72,23 @@ if( !class_exists( 'EventHeroModule' ) ){
       /** Backup wp_query */
       $_wp_query = $wp_query;
       /** Now run our query */
+      if( !isset( $data[ $this->get_field_name( 'posts' ) ] ) ) {
+        return false;
+      }
+      reset( $data[ $this->get_field_name( 'posts' ) ] );
+      $event_id = key( $data[ $this->get_field_name( 'posts' ) ] );
+      /** Get event */
       $wp_query = new WP_Query( array(
-        'ID' => false,
+        'post__in' => array( $event_id ),
+        'post_type' => 'event'
       ) );
-      $wp_query->data = $data;
+      /** Set templates data */
+      $wp_query->data = array(
+        'postdata' => array_shift( $data[ $this->get_field_name( 'posts' ) ] ),
+        'background_image' => $data[ 'featured_image' ],
+        'background_color' => $data[ 'background_color' ],
+        'font_color' => $data[ 'font_color' ],
+      );
       /** Get our template */
       ob_start();
       get_template_part( 'templates/article/listing-event', 'hero' );
