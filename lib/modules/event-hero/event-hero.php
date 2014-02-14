@@ -94,15 +94,15 @@ if( !class_exists( 'EventHeroModule' ) ){
       ) );
       /** Add map for classes and images based on columns amount */
       $mapping = array(
-        1   => array( 'col-md-2', 'col-md-offset-5', '250', '250' ), // array( 'column_class', 'first_column_class', 'image_width', 'image_height' )
-        2   => array( 'col-md-2', 'col-md-offset-4', '250', '250' ),
-        3   => array( 'col-md-2', 'col-md-offset-3', '250', '250' ),
-        4   => array( 'col-md-2', 'col-md-offset-2', '250', '250' ),
-        5   => array( 'col-md-2', 'col-md-offset-1', '250', '250' ),
-        6   => array( 'col-md-2', 'col-md-offset-0', '250', '250' ),
-        8   => array( 'col-md-1', 'col-md-offset-2', '250', '250' ),
-        10  => array( 'col-md-1', 'col-md-offset-1', '250', '250' ),
-        12  => array( 'col-md-1', 'col-md-offset-0', '250', '250' ),
+        1   => array( 'col-md-2', 'col-md-offset-5', '250', '220' ), // array( 'column_class', 'first_column_class', 'image_width', 'image_height' )
+        2   => array( 'col-md-2', 'col-md-offset-4', '250', '220' ),
+        3   => array( 'col-md-2', 'col-md-offset-3', '250', '220' ),
+        4   => array( 'col-md-2', 'col-md-offset-2', '250', '220' ),
+        5   => array( 'col-md-2', 'col-md-offset-1', '250', '220' ),
+        6   => array( 'col-md-2', 'col-md-offset-0', '250', '220' ),
+        8   => array( 'col-md-1', 'col-md-offset-2', '250', '220' ),
+        10  => array( 'col-md-1', 'col-md-offset-1', '250', '220' ),
+        12  => array( 'col-md-1', 'col-md-offset-0', '250', '220' ),
       );
       /** Set templates data */
       $map = isset( $mapping[ $data[ 'artist_columns' ] ] ) ? $mapping[ $data[ 'artist_columns' ] ] : $mapping[4];
@@ -112,6 +112,8 @@ if( !class_exists( 'EventHeroModule' ) ){
         'background_image' => $data[ 'background_image' ],
         'background_color' => $data[ 'background_color' ],
         'font_color' => $data[ 'font_color' ],
+        'title_color' => $data[ 'title_color' ],
+        'desc_color' => $data[ 'desc_color' ],
         'enable_links' => $data[ 'enable_links' ],
         'artist_image_type' => $data[ 'artist_image_type' ],
         'artist_columns' => $data[ 'artist_columns' ],

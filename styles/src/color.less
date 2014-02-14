@@ -4,6 +4,10 @@
 // @version 0.1.0
 // @author Usability Dynamics
 
+.h-color {
+  color: @default-color !important;
+}
+
 /* ==============
  Home Header
 ============== */
@@ -605,6 +609,33 @@ article.comments {
     
     }
   
+  }
+
+}
+
+/* ============================
+  EVENT HERO MODULE
+============================ */
+
+.event-hero {
+
+  .btn {
+    background-color: @high-color;
+    color: @font-default-color !important;
+    border-color: @high-color;
+  }
+  
+  a, &:hover {
+    .caption {
+      background: @default-color;
+    }
+  }
+  
+  .image {
+    .caption {
+      color: @artist-preview-caption;
+      background: @artist-preview-caption-bg;
+    }
   }
 
 }

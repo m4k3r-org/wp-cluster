@@ -93,7 +93,15 @@
         <input type="text" class="colorpicker" name="background_color" id="<?php echo $this->get_field_name('background_color'); ?>" value="<?php echo esc_attr( isset( $data[ 'background_color' ] ) ? $data[ 'background_color' ] : '' ); ?>" />
       </li>
       <li class="option">
-        <label for="<?php echo $this->get_field_name('font_color'); ?>"><?php _e( 'Font Color', 'wp-festival' ); ?></label>
+        <label for="<?php echo $this->get_field_name('title_color'); ?>"><?php _e( 'Title Font Color', 'wp-festival' ); ?></label>
+        <input type="text" class="colorpicker" name="title_color" id="<?php echo $this->get_field_name('title_color'); ?>" value="<?php echo esc_attr( isset( $data[ 'title_color' ] ) ? $data[ 'title_color' ] : '' ); ?>" />
+      </li>
+      <li class="option">
+        <label for="<?php echo $this->get_field_name('desc_color'); ?>"><?php _e( 'Description Font Color', 'wp-festival' ); ?></label>
+        <input type="text" class="colorpicker" name="desc_color" id="<?php echo $this->get_field_name('desc_color'); ?>" value="<?php echo esc_attr( isset( $data[ 'desc_color' ] ) ? $data[ 'desc_color' ] : '' ); ?>" />
+      </li>
+      <li class="option">
+        <label for="<?php echo $this->get_field_name('title_color'); ?>"><?php _e( 'Font Color', 'wp-festival' ); ?></label>
         <input type="text" class="colorpicker" name="font_color" id="<?php echo $this->get_field_name('font_color'); ?>" value="<?php echo esc_attr( isset( $data[ 'font_color' ] ) ? $data[ 'font_color' ] : '' ); ?>" />
       </li>
       <li>
