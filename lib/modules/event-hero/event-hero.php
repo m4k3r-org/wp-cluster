@@ -48,14 +48,24 @@ if( !class_exists( 'EventHeroModule' ) ){
 		public function update( $new_data, $old_data ) {
 			// keep the image search field value from being saved
 			unset( $new_data[ $this->get_field_name('global_image-image-search') ] );
+      unset( $new_data[ $this->get_field_name('logo_global_image-image-search') ] );
 			
-			// normalize the selected image value in to a 'featured_image' value for easy output
+			// normalize the selected image value in to a 'background_image' value for easy output
 			if ( !empty( $new_data[ $this->get_field_name('post_image') ] ) ) {
-				$new_data[ 'featured_image' ] = $new_data[ $this->get_field_name('post_image') ];
+				$new_data[ 'background_image' ] = $new_data[ $this->get_field_name('post_image') ];
 			}
 			elseif (!empty($new_data[$this->get_field_name('global_image')])) {
-				$new_data[ 'featured_image' ] = $new_data[ $this->get_field_name('global_image') ];
+				$new_data[ 'background_image' ] = $new_data[ $this->get_field_name('global_image') ];
 			}
+      
+      // normalize the selected image value in to a 'featured_image' value for easy output
+			if ( !empty( $new_data[ $this->get_field_name('logo_post_image') ] ) ) {
+				$new_data[ 'logo_image' ] = $new_data[ $this->get_field_name('logo_post_image') ];
+			}
+			elseif (!empty($new_data[$this->get_field_name('logo_global_image')])) {
+				$new_data[ 'logo_image' ] = $new_data[ $this->get_field_name('logo_global_image') ];
+			}
+      
 			return $new_data;
 		}
 
@@ -97,11 +107,11 @@ if( !class_exists( 'EventHeroModule' ) ){
       /** Set templates data */
       $map = isset( $mapping[ $data[ 'artist_columns' ] ] ) ? $mapping[ $data[ 'artist_columns' ] ] : $mapping[4];
       $_data = array(
-        'postdata' => array_shift( $data[ $this->get_field_name( 'posts' ) ] ),
-        'background_image' => $data[ 'featured_image' ],
+        'postdata' => ( array_shift( $data[ $this->get_field_name( 'posts' ) ] ) ),
+        'logo_image' => $data[ 'logo_image' ],
+        'background_image' => $data[ 'background_image' ],
         'background_color' => $data[ 'background_color' ],
         'font_color' => $data[ 'font_color' ],
-        'logo_image' => false,
         'enable_links' => $data[ 'enable_links' ],
         'artist_image_type' => $data[ 'artist_image_type' ],
         'artist_columns' => $data[ 'artist_columns' ],
@@ -208,6 +218,7 @@ if( !class_exists( 'EventHeroModule' ) ){
 				});
 			';
 			$js .= $this->global_image_selector_js('global_image', array('direction' => 'horizontal'));
+      $js .= $this->global_image_selector_js('logo_global_image', array('direction' => 'horizontal'));
 			return $js;
 		}
     
@@ -226,7 +237,6 @@ if( !class_exists( 'EventHeroModule' ) ){
 			$posts_per_page = 8;
 			$page = isset( $_POST['car_search_page'] ) ? absint( $_POST['car_search_page'] ) : 1;
 			
-			// ONLY PULLS POSTS THAT HAVE A FEATURED IMAGE
 			$s = new WP_Query(array(
 				's' => $_POST[ 'car-search-term' ],
 				'post_type' => 'event',
@@ -300,26 +310,27 @@ if( !class_exists( 'EventHeroModule' ) ){
       return ob_get_clean();
     }
     
-    function post_image_selector($data = false) {
-			if (isset($_POST['args'])) {
+    function post_image_selector( $data = false, $prefix = '' ) {
+			$name = !empty( $prefix ) ? $prefix . '_post_image' : 'post_image';
+      if (isset($_POST['args'])) {
 				$ajax_args = cfcf_json_decode(stripslashes($_POST['args']), true);
 			}
 			else {
 				$ajax_args = null;
 			}
-
+      
 			$selected = 0;
-			if (!empty($data[$this->get_field_id('post_image')])) {
-				$selected = $data[$this->get_field_id('post_image')];
+			if (!empty($data[$this->get_field_id( $name )])) {
+				$selected = $data[$this->get_field_id( $name )];
 			}
 
 			$selected_size = null;
-			if (!empty($data[$this->get_field_name('post_image').'-size'])) {
-				$selected_size = $data[$this->get_field_name('post_image').'-size'];
+			if (!empty($data[$this->get_field_name( $name ).'-size'])) {
+				$selected_size = $data[$this->get_field_name( $name ).'-size'];
 			}
 
 			$args = array(
-				'field_name' => 'post_image',
+				'field_name' => $name,
 				'selected_image' => $selected,
 				'selected_size' => $selected_size,
 				'post_id' => isset($ajax_args['post_id']) ? $ajax_args['post_id'] : null,
@@ -330,19 +341,20 @@ if( !class_exists( 'EventHeroModule' ) ){
 			return $this->image_selector('post', $args);
 		}
 		
-		function global_image_selector($data = false) {		
+		function global_image_selector( $data = false, $prefix = '' ) {		
+      $name = !empty( $prefix ) ? $prefix . '_global_image' : 'global_image';
 			$selected = 0;
-			if (!empty($data[$this->get_field_id('global_image')])) {
-				$selected = $data[$this->get_field_id('global_image')];
+			if (!empty($data[$this->get_field_id( $name )])) {
+				$selected = $data[$this->get_field_id( $name )];
 			}
 
 			$selected_size = null;
-			if (!empty($data[$this->get_field_name('global_image').'-size'])) {
-				$selected_size = $data[$this->get_field_name('global_image').'-size'];
+			if (!empty($data[$this->get_field_name( $name ).'-size'])) {
+				$selected_size = $data[$this->get_field_name( $name ).'-size'];
 			}
 
 			$args = array(
-				'field_name' => 'global_image',
+				'field_name' => $name,
 				'selected_image' => $selected,
 				'selected_size' => $selected_size,
 				'suppress_size_selector' => true
@@ -353,7 +365,7 @@ if( !class_exists( 'EventHeroModule' ) ){
     
     // Content Move Helpers
 
-		protected $reference_fields = array( 'global_image', 'post_image', 'featured_image' );
+		protected $reference_fields = array( 'global_image', 'post_image', 'background_image' );
 
 		public function get_referenced_ids($data) {
 			$references = array();

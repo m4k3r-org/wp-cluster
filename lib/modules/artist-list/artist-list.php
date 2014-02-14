@@ -272,26 +272,27 @@ if( !class_exists( 'ArtistListModule' ) ){
 			return $js;
 		}
     
-    function post_image_selector($data = false) {
-			if (isset($_POST['args'])) {
+    function post_image_selector( $data = false, $prefix = '' ) {
+			$name = !empty( $prefix ) ? $prefix . '_post_image' : 'post_image';
+      if (isset($_POST['args'])) {
 				$ajax_args = cfcf_json_decode(stripslashes($_POST['args']), true);
 			}
 			else {
 				$ajax_args = null;
 			}
-
+      
 			$selected = 0;
-			if (!empty($data[$this->get_field_id('post_image')])) {
-				$selected = $data[$this->get_field_id('post_image')];
+			if (!empty($data[$this->get_field_id( $name )])) {
+				$selected = $data[$this->get_field_id( $name )];
 			}
 
 			$selected_size = null;
-			if (!empty($data[$this->get_field_name('post_image').'-size'])) {
-				$selected_size = $data[$this->get_field_name('post_image').'-size'];
+			if (!empty($data[$this->get_field_name( $name ).'-size'])) {
+				$selected_size = $data[$this->get_field_name( $name ).'-size'];
 			}
 
 			$args = array(
-				'field_name' => 'post_image',
+				'field_name' => $name,
 				'selected_image' => $selected,
 				'selected_size' => $selected_size,
 				'post_id' => isset($ajax_args['post_id']) ? $ajax_args['post_id'] : null,
@@ -302,19 +303,20 @@ if( !class_exists( 'ArtistListModule' ) ){
 			return $this->image_selector('post', $args);
 		}
 		
-		function global_image_selector($data = false) {		
+		function global_image_selector( $data = false, $prefix = '' ) {		
+      $name = !empty( $prefix ) ? $prefix . '_global_image' : 'global_image';
 			$selected = 0;
-			if (!empty($data[$this->get_field_id('global_image')])) {
-				$selected = $data[$this->get_field_id('global_image')];
+			if (!empty($data[$this->get_field_id( $name )])) {
+				$selected = $data[$this->get_field_id( $name )];
 			}
 
 			$selected_size = null;
-			if (!empty($data[$this->get_field_name('global_image').'-size'])) {
-				$selected_size = $data[$this->get_field_name('global_image').'-size'];
+			if (!empty($data[$this->get_field_name( $name ).'-size'])) {
+				$selected_size = $data[$this->get_field_name( $name ).'-size'];
 			}
 
 			$args = array(
-				'field_name' => 'global_image',
+				'field_name' => $name,
 				'selected_image' => $selected,
 				'selected_size' => $selected_size,
 				'suppress_size_selector' => true

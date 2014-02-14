@@ -25,6 +25,8 @@ extract( $data = wp_festival()->extend( array(
   'class_offset' => 'col-md-offset-0',
 ), $wp_query->data ) );
 
+echo "<pre>"; print_r( $data ); echo "</pre>";
+
 $bgi_url = !empty( $background_image ) ? wp_festival()->get_image_link_by_attachment_id( $background_image, array( 'default' => false ) ) : false;
 $logo_url = !empty( $logo_image ) ? wp_festival()->get_image_link_by_attachment_id( $logo_image, array( 'default' => false ) ) : false;
 
@@ -76,7 +78,6 @@ $fcolor = !empty( $font_color ) ? "color: {$font_color} !important;" : "";
                 <div class="artists clearfix">
                   <?php $counter = 0; ?>
                   <?php foreach( $post[ 'enabledArtists' ] as $artist_id ) : $artist = wp_festival()->get_post_data( $artist_id ); ?>
-                    <?php //echo "<pre>"; print_r( $artist ); echo "</pre>"; ?>
                     <?php if ( !( $counter % $artist_columns ) ) : ?>
                       <div class="row clearfix">
                     <?php endif; ?>
