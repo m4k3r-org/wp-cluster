@@ -21,7 +21,8 @@ extract( $data = wp_festival()->extend( array(
   'artist_image_width' => '',
   'artist_image_height' => '',
   'artist_columns' => 3,
-  'map' => array( 'col-md-4', 'col-md-offset-0' ),
+  'class_col' => 'col-md-4',
+  'class_offset' => 'col-md-offset-0',
 ), $wp_query->data ) );
 
 $bgi_url = !empty( $background_image ) ? wp_festival()->get_image_link_by_attachment_id( $background_image, array( 'default' => false ) ) : false;
@@ -40,7 +41,6 @@ $fcolor = !empty( $font_color ) ? "color: {$font_color} !important;" : "";
           <?php while( have_posts() ) : the_post(); ?>
             <?php $post = wp_festival()->get_post_data( get_the_ID() ); ?> 
             <?php $post = wp_festival()->extend( $post, $postdata ); ?>
-            <?php //echo "<pre>"; print_r( $post ); echo "</pre>"; ?>
             <section class="event-hero-block">
               <h1><?php echo $post[ 'post_title' ]; ?></h1>
               <?php if( $logo_url ) : ?>
@@ -67,15 +67,20 @@ $fcolor = !empty( $font_color ) ? "color: {$font_color} !important;" : "";
                   </div>
                 </div>
               </div>
-              <div class="content"><?php echo $post[ 'post_excerpt' ]; ?></div>
+              <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                  <div class="content"><?php echo $post[ 'post_excerpt' ]; ?></div>
+                </div>
+              </div>
               <?php if( !empty( $post[ 'enabledArtists' ] ) ) : ?>
                 <div class="artists clearfix">
                   <?php $counter = 0; ?>
-                  <?php foreach( $post[ 'enabledArtists' ] as $artist_id ) : $artist = wp_festival()->get_post_data(); ?>
+                  <?php foreach( $post[ 'enabledArtists' ] as $artist_id ) : $artist = wp_festival()->get_post_data( $artist_id ); ?>
+                    <?php //echo "<pre>"; print_r( $artist ); echo "</pre>"; ?>
                     <?php if ( !( $counter % $artist_columns ) ) : ?>
                       <div class="row clearfix">
                     <?php endif; ?>
-                    <div class="<?php echo $map[0]; ?> <?php echo !( $counter % $artist_columns ) ? $map[1] : ''; ?>">
+                    <div class="<?php echo $class_col; ?> <?php echo !( $counter % $artist_columns ) ? $class_offset : ''; ?>">
                       <article class="artist-preview">
                         <?php if ( $enable_links ) : ?>
                           <a href="<?php  ?>">

@@ -1,11 +1,25 @@
 <!-- Do our inline CSS here -->
 <style type="text/css">
-  .colorpicker_wrapper label {
+  .option label {
     display: block;
     float: left;
     margin-right: 10px;
     line-height: 22px;
-    width: 125px;
+    width: 150px;
+  }
+  
+  .option {
+    display: block;
+    min-height: 22px;
+  }
+  
+  .option:after {
+    content: " ";
+    clear: both;
+    line-indent: 9999px;
+    line-height: 1px;
+    font-size: 1px;
+    margin-top: -1px;
   }
   
   .event-hero-form .car-search-elements .event-edit-form,
@@ -48,13 +62,37 @@
   </fieldset>
 
   <fieldset class="cfct-form-section">
-    <legend><?php _e( 'Styles', 'wp-festival' ); ?></legend>
+    <legend><?php _e( 'Style & Display Options', 'wp-festival' ); ?></legend>
     <ul>
-      <li class="colorpicker_wrapper">
+      <li class="option">
+        <label>
+          <input type="checkbox" class="" name="enable_links" value="true" <?php echo ( isset( $data[ 'enable_links' ] ) && $data[ 'enable_links' ] == 'true' ) ? 'checked="checked"' : ''; ?> />
+          <?php _e( 'Enable Artists Links', 'wp-festival' ); ?>
+        </label>
+      </li>
+      <li class="option">
+        <label for="<?php echo $this->get_field_name( 'artist_image_type' ); ?>"><?php _e( 'Artist Image', wp_festival( 'domain' ) ); ?></label>
+        <select name="artist_image_type" id="<?php echo $this->get_field_name( 'artist_image_type' ); ?>">
+          <?php foreach( $artist_images as $k => $v ):
+            $selected = isset( $data[ 'artist_image_type' ] ) && $data[ 'artist_image_type' ] == $k ? 'selected="selected"' : ''; ?>
+            <option value="<?php echo $k; ?>" <?php echo $selected; ?>><?php echo $v; ?></option>
+          <?php endforeach; ?>
+        </select>
+      </li>
+      <li class="option">
+        <label for="<?php echo $this->get_field_name( 'artist_columns' ); ?>"><?php _e( 'Image Columns per Row', wp_festival( 'domain' ) ); ?></label>
+        <select name="artist_columns" id="<?php echo $this->get_field_name( 'artist_columns' ); ?>">
+          <?php foreach( $artist_columns as $columns ):
+            $selected = isset( $data[ 'artist_columns' ] ) && $data[ 'artist_columns' ] == $columns ? 'selected="selected"' : ''; ?>
+            <option value="<?php echo $columns; ?>" <?php echo $selected; ?>><?php echo $columns; ?></option>
+          <?php endforeach; ?>
+        </select>
+      </li>
+      <li class="option">
         <label for="<?php echo $this->get_field_name('background_color'); ?>"><?php _e( 'Background Color', 'wp-festival' ); ?></label>
         <input type="text" class="colorpicker" name="background_color" id="<?php echo $this->get_field_name('background_color'); ?>" value="<?php echo esc_attr( isset( $data[ 'background_color' ] ) ? $data[ 'background_color' ] : '' ); ?>" />
       </li>
-      <li class="colorpicker_wrapper">
+      <li class="option">
         <label for="<?php echo $this->get_field_name('font_color'); ?>"><?php _e( 'Font Color', 'wp-festival' ); ?></label>
         <input type="text" class="colorpicker" name="font_color" id="<?php echo $this->get_field_name('font_color'); ?>" value="<?php echo esc_attr( isset( $data[ 'font_color' ] ) ? $data[ 'font_color' ] : '' ); ?>" />
       </li>

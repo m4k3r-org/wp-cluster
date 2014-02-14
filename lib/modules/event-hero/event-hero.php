@@ -82,13 +82,35 @@ if( !class_exists( 'EventHeroModule' ) ){
         'post__in' => array( $event_id ),
         'post_type' => 'event'
       ) );
+      /** Add map for classes and images based on columns amount */
+      $mapping = array(
+        1   => array( 'col-md-2', 'col-md-offset-5', '250', '250' ), // array( 'column_class', 'first_column_class', 'image_width', 'image_height' )
+        2   => array( 'col-md-2', 'col-md-offset-4', '250', '250' ),
+        3   => array( 'col-md-2', 'col-md-offset-3', '250', '250' ),
+        4   => array( 'col-md-2', 'col-md-offset-2', '250', '250' ),
+        5   => array( 'col-md-2', 'col-md-offset-1', '250', '250' ),
+        6   => array( 'col-md-2', 'col-md-offset-0', '250', '250' ),
+        8   => array( 'col-md-1', 'col-md-offset-2', '250', '250' ),
+        10  => array( 'col-md-1', 'col-md-offset-1', '250', '250' ),
+        12  => array( 'col-md-1', 'col-md-offset-0', '250', '250' ),
+      );
       /** Set templates data */
-      $wp_query->data = array(
+      $map = isset( $mapping[ $data[ 'artist_columns' ] ] ) ? $mapping[ $data[ 'artist_columns' ] ] : $mapping[4];
+      $_data = array(
         'postdata' => array_shift( $data[ $this->get_field_name( 'posts' ) ] ),
         'background_image' => $data[ 'featured_image' ],
         'background_color' => $data[ 'background_color' ],
         'font_color' => $data[ 'font_color' ],
+        'logo_image' => false,
+        'enable_links' => $data[ 'enable_links' ],
+        'artist_image_type' => $data[ 'artist_image_type' ],
+        'artist_columns' => $data[ 'artist_columns' ],
+        'class_col' => $map[ 0 ],
+        'class_offset' => $map[ 1 ],
+        'artist_image_width' => $map[ 2 ],
+        'artist_image_height' => $map[ 3 ],
       );
+      $wp_query->data = $_data;
       /** Get our template */
       ob_start();
       get_template_part( 'templates/article/listing-event', 'hero' );
@@ -112,6 +134,15 @@ if( !class_exists( 'EventHeroModule' ) ){
       /** Add Colorpicker */
       wp_enqueue_script('wp-color-picker');
       wp_enqueue_style( 'wp-color-picker' );
+      /** Amount of columns per line */
+      $artist_columns = array( '1', '2', '3', '4', '5', '6', '8', '10', '12' );
+      /** Which image should be shown */
+      $artist_images = array(
+        'featured'      => __( 'Featured', wp_festival( 'domain' ) ),
+        'headshotImage' => __( 'Headshot', wp_festival( 'domain' ) ),
+        'portraitImage' => __( 'Portrait', wp_festival( 'domain' ) ),
+        'logoImage'     => __( 'Logo', wp_festival( 'domain' ) ),
+      );
       /** Now get and return the template */
       ob_start();
       require_once( __DIR__ . '/admin/form.php' );
