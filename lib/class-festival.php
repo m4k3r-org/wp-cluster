@@ -376,7 +376,6 @@ namespace UsabilityDynamics {
       add_action( 'widgets_init', array( $this, 'widgets' ), 100 );
       add_action( 'customize_register', array( $this, 'customize_register' ), 600 );
       add_action( 'wp_head', array( $this, 'wp_head' ));
-      add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 600 );
 
       add_filter( 'udx:theme:public:model:locale', array( $this, 'locale_model' ) );
       add_filter( 'udx:theme:public:model:settings', array( $this, 'settings_model' ) );
@@ -665,6 +664,8 @@ namespace UsabilityDynamics {
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
+
+      add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 600 );
 
     }
 
