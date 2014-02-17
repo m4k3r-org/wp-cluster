@@ -8,7 +8,7 @@
  */
 
 ?>
-<div class="parallax-block">
+<div class="parallax-block" data-requires="udx.ui.scrollr">
   <div class="parallax-img" data-400="background-position: left 0px;" data-1700="background-position: left -500px;"></div>
   <div class="container">
     <div class="row">
