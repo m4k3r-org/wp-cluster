@@ -9,7 +9,7 @@
 
 ?>
 <div class="parallax-block" data-requires="udx.ui.scrollr">
-  <div class="parallax-img" data-400="background-position: left 0px;" data-1700="background-position: left -500px;"></div>
+  <div class="parallax-img" data-bottom="background-position: left 0px;" data-top-bottom="background-position: left -400px;"></div>
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-4">
