@@ -16,9 +16,7 @@
 <main id="main" class="main" role="main">
   <?php wp_festival()->section( 'above-content' ); ?>
 
-  <?php //get_template_part( 'templates/main' ); ?>
-  
-  <div data-requires="udx.wp.posts" data-query="post_type=post&posts_per_page=10" data-infinite="true"></div>
+  <?php get_template_part( 'templates/main' ); ?>
 
   <?php wp_festival()->section( 'below-content' ); ?>
 </main>
