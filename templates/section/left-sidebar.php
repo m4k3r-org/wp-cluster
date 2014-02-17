@@ -1,5 +1,0 @@
-<?php
-/**
- *
- */?>
-left-sidebar
