@@ -308,17 +308,10 @@ namespace UsabilityDynamics {
         'header' => array(
           'title'       => __( 'Header', $this->domain ),
           'description' => __( 'Header Section', $this->domain ),
-          'options'     => array(
-            'type' => 'swiper'
-          )
         ),
         'header-banner' => array(
           'title'       => __( 'Header Banner', $this->domain ),
-          'description' => __( 'Babber located directly below the header section.', $this->domain ),
-          'options'     => array(
-            'type' => 'swiper',
-            'requires' => 'udx.ui.swiper'
-          )
+          'description' => __( 'Babber located directly below the header section.', $this->domain )
         ),
         'left-sidebar' => array(
           'title'       => __( 'Left Sidebar', $this->domain ),
