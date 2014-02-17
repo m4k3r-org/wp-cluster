@@ -136,7 +136,7 @@ if( !class_exists( 'ArtistListModule' ) ){
       $wp_query->data = $data;
       /** Get our template */
       ob_start();
-      get_template_part( 'templates/section/grid-artist', ( !empty( $data[ 'layout_type' ] ) ? $data[ 'layout_type' ] : 'columns_1' ) );
+      get_template_part( 'templates/aside/grid-artist', ( !empty( $data[ 'layout_type' ] ) ? $data[ 'layout_type' ] : 'columns_1' ) );
       /** Restore our wp_query */
       $wp_query = $_wp_query;
       /** Return our string */

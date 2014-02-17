@@ -153,25 +153,39 @@ main,
 }
 
 main .content-container article,
-.inner-wrapper.single .content-container,
+main.single .container-inner,
 main .module-container .module,
 main .cfct-build .module-container {
   background-color: @content-bg;
 }
 
 main .content-container article,
-.inner-wrapper.single .content-container,
+main.single .container-inner,
 main .module-container .module,
 main .cfct-build .module-container {
   border-color: @content-border-color;
-
+  
   a {
-    color: @content-font-color;
+    color: @default-color;
     
     &:hover {
-      color: @default-color;
+      color: @default-color-active;
       text-decoration: none;
     }
+  }
+  
+  .cfct-sidebar {
+  
+    a {
+      color: @content-font-color;
+      
+      &:hover {
+        color: @default-color-active;
+        text-decoration: none;
+      }
+      
+    }
+  
   }
   
   h1, h2, h3, h4, h4, h6 {
@@ -446,23 +460,19 @@ main .artists-list {
   Single Post content
 ============================ */
 
-.container-wrap .inner-wrapper.single {
+main.single .container-inner {
 
   header {
     .article-title {
       color: @default-color;
     }
-  }
+  }  
   
-  article {
-  
-    blockquote {
-      border-color: @default-color-active;
-      &, p {
-        color: @default-color;
-      }
+  blockquote {
+    border-color: @default-color-active;
+    &, p {
+      color: @default-color;
     }
-  
   }
   
   

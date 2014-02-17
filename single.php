@@ -9,25 +9,11 @@
 
 get_template_part( 'templates/header', get_post_type() );
 ?>
-<section class="container inner-wrapper single">
-  <div class="row">
+<main id="main" class="main single " role="main">
+  <?php wp_festival()->section( 'above-content' ); ?>
 
-    <div class="column <?php echo is_active_sidebar( 'single-sidebar' ) ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12'; ?>">
-      <section class="content-container">
-        <?php while( have_posts() ) : the_post(); ?>
-          <?php get_template_part( 'templates/article/content', get_post_type() ); ?>
-        <?php endwhile; ?>
-        <?php get_template_part( 'templates/article/author', get_post_type() ); ?>
-        <?php comments_template(); ?>
-      </section>
-    </div>
+  <?php get_template_part( 'templates/main' ); ?>
 
-    <?php if( is_active_sidebar( 'single-sidebar' ) ) : ?>
-      <div class="column col-md-3">
-        <section class="module-container"><?php dynamic_sidebar('single-sidebar'); ?></section>
-      </div>
-    <?php endif; ?>
-
-  </div>
-</section>
+  <?php wp_festival()->section( 'below-content' ); ?>
+</main>
 <?php get_template_part( 'templates/footer', get_post_type() ); ?>

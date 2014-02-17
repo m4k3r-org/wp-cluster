@@ -3,11 +3,11 @@
 // @version 0.1.0
 // @author Usability Dynamics
 
-.main {
+main {
 
   .content-container article,
   .module-container .module,
-  &.single .content-container {
+  &.single .container-inner {
     border-style: solid;
     border-width: 2px;
     padding: 15px;
@@ -159,7 +159,7 @@ main .article-content .cfct-build {
   FULL WIDTH PAGE EXCEPTIONS
 ============================ */
 
-main .inner-wrapper.full-width {
+main.full-width {
   
   .content-container article,
   .module-container .module,
@@ -174,7 +174,7 @@ main .inner-wrapper.full-width {
   SINGLE POST CONTENT
 ============================ */
 //main .content-container article
-.inner-wrapper.single {
+main.single {
 
   .content-container {
     
@@ -367,6 +367,7 @@ article.comments {
           text-transform: uppercase;
           display: inline-block;
           padding: 0 0 0 20px;
+          position: relative;
           
           &:after {
             content: "\e6fa";
