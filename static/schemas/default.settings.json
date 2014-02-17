@@ -268,7 +268,7 @@
         "type": "plupload_image",
         "desc": "Upload additional images to be displayed in a gallery format.",
         "multiple": false
-      }, 
+      },
       "location": {
         "id": "locationMap",
         "name": "Location",
