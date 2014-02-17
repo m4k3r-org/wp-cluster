@@ -218,7 +218,7 @@ namespace UsabilityDynamics {
           'tag'     => 'link',
           'rel'     => 'apple-touch-icon',
           'href'    => content_url( '/assets/apple-touch-icon-114x114.png' ),
-          'sizes'   => '="114x114'
+          'sizes'   => '114x114'
         ),
         array(
           'tag'     => 'link',
