@@ -12,10 +12,11 @@
       <div class="container">
         <div class="row">
         
-            <?php //wp_festival()->section( 'left-sidebar' ); ?>
+            <?php wp_festival()->section( 'left-sidebar' ); ?>
+            <?php wp_festival()->section( 'right-sidebar' ); ?>
             
             <?php if( have_posts() ) : ?>
-              <div class="col-md-12">
+              <div <?php echo post_class(); ?>>
                 <section class="container-inner">
                 <?php while( have_posts() ) : the_post(); ?>
                   <?php get_template_part( 'templates/article/content', get_post_type() ); ?>
@@ -25,8 +26,6 @@
                 <section>
               </div>
             <?php endif; ?>
-            
-            <?php //wp_festival()->section( 'right-sidebar' ); ?>
             
           </div>
       </div>
