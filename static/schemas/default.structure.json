@@ -57,7 +57,7 @@
           ],
           "can_export": true
         },
-        "taxonomies": [],
+        "taxonomies": ["eventStatus", "eventTypicalAgeRange", "eventType"],
         "meta": {
           "information": {
             "fields": [
@@ -66,7 +66,9 @@
               "sameAs",
               "startDate",
               "endDate",
-              "relatedArtists"
+              "duration",
+              "relatedArtists",
+              "relatedTours"
             ]
           },
           "location": {
@@ -139,16 +141,63 @@
             ]
           }
         }
+      },
+      "Tour": {
+        "data": {
+          "capability_type": "page",
+          "label": "Tour",
+          "labels": {
+            "add_new": "New Tour",
+            "add_new_item": "Add New Tour",
+            "all_items": "All Tours",
+            "edit_item": "Edit Tour",
+            "menu_name": "Tours",
+            "name": "Tour",
+            "not_found": "No Tours found",
+            "not_found_in_trash": "No Tours in Trash",
+            "parent_item_colon": "Parent Tour:",
+            "search_items": "Search Tours",
+            "singular_name": "Tour",
+            "update_item": "Update Tour",
+            "view_item": "View Tour"
+          },
+          "description": "Tour",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "menu_position": 2,
+          "hierarchical": false,
+          "menu_icon": false,
+          "public": true,
+          "publicly_queryable": false,
+          "query_var": "_tour",
+          "rewrite": {
+            "feeds": false,
+            "pages": true,
+            "slug": "tour",
+            "with_front": true
+          },
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title",
+            "editor"
+          ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {}
       }
     },
     "meta": {
-      "relatedEvents": {
-        "name": "Related Events",
+      "relatedTours": {
+        "name": "Related Tours",
         "type": "post",
-        "post_type": "event",
+        "post_type": "tour",
         "field_type": "select_advanced",
         "multiple": true,
-        "placeholder": "Select Events",
+        "placeholder": "Select Tours",
         "query_args": {
           "post_status": "publish",
           "posts_per_page": -1
@@ -161,27 +210,10 @@
         "field_type": "select_advanced",
         "multiple": true,
         "placeholder": "Select Artists",
+        "desc": "List of existing Artists",
         "query_args": {
           "post_status": "publish",
           "posts_per_page": -1
-        }
-      },
-      "stage": {
-        "name": "Stage",
-        "type": "taxonomy",
-        "options": {
-          "taxonomy": "stage",
-          "type": "select",
-          "args": {}
-        }
-      },
-      "artistGenre": {
-        "name": "Genre",
-        "type": "taxonomy",
-        "options": {
-          "taxonomy": "artistGenre",
-          "type": "checkbox_list",
-          "args": {}
         }
       },
       "websiteLink": {
@@ -228,7 +260,7 @@
         "id": "duration",
         "name": "Duration",
         "type": "text",
-        "desc": "Duration of event."
+        "desc": "Duration of event. Hour(s)."
       },
       "headshotImage": {
         "name": "Headshot",
@@ -268,8 +300,16 @@
       }
     },
     "taxonomies": {
-      "stage": {
-        "name": "Stage"
+      "eventStatus": {
+        "label": "Status",
+        "hierarchical": true
+      },
+      "eventTypicalAgeRange": {
+        "label": "Age Range",
+        "hierarchical": true
+      },
+      "eventType": {
+        "label": "Type"
       }
     }
   }
