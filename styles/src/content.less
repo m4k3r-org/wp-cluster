@@ -3,7 +3,7 @@
 // @version 0.1.0
 // @author Usability Dynamics
 
-.inner-wrapper {
+.main {
 
   .content-container article,
   .module-container .module,
@@ -110,6 +110,47 @@
     
     }
   
+  }
+
+}
+
+/* ============================
+  CARRINGTON BUILDER EXCEPTIONS
+============================ */
+
+main .article-content .cfct-build {
+
+  .module-container {
+    border-width: 2px;
+    border-style: solid;
+  }
+
+  .module {
+    border-width: 0;
+  }
+    
+  .cfct-block-sidebar {
+  
+    .module-container {
+      background: none;
+      border-width: 0;
+    }
+  
+    .module {
+      border-width: 2px;
+      
+      // Disable borders on child modules to prevent extra borders
+      .module {
+        border-width: 0;
+      }
+      
+    }
+  
+  }
+  
+  .cfct-mod-title,
+  .widget-title {
+    margin-top: 0;
   }
 
 }

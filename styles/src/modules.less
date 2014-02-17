@@ -32,59 +32,7 @@ footer {
 
 }
 
-main .content-container article {
-  
-  // Don't show border for artcile content when CB is used
-  &.cfct-can-haz-build {
-    border: 0;
-    background: none;
-    padding: 0;
-    border-width: 0;
-    
-    .article-header {
-      display:none;
-    }
-    
-    .module-container {
-      border-width: 2px;
-      border-style: solid;
-    }
-    
-    .cfct-block-sidebar {
-    
-      .module-container {
-        background: none;
-        border-width: 0;
-      }
-    
-    }
-    
-    .cfct-mod-title,
-    .widget-title {
-      margin-top: 0;
-    }
-    
-    .module {
-      border-width: 0;
-    }
-    
-    .cfct-block-sidebar {
-    
-      .module {
-        border-width: 2px;
-        
-        // Disable borders on child modules to prevent extra borders
-        .module {
-          border-width: 0;
-        }
-        
-      }
-    
-    }
-    
-  }
 
-}
 
 /* ==============
  Module: Hero
@@ -157,6 +105,7 @@ main .content-container article {
   
   .module {
     margin-bottom: 0;
+    border-width: 0 !important;
     
     &:last-child {
       &:after {
@@ -166,7 +115,7 @@ main .content-container article {
     
     &:after {
       content: ".";
-      //text-indent: 9999px;
+      text-indent: 9999px;
       margin: 25px auto 0;
       height: 1px;
       line-height: 1px;
@@ -310,7 +259,7 @@ main .cfct-can-haz-build .artists-list article {
 ============== */
 
 // Callout Module.
-main .content-container article.cfct-can-haz-build .cfct-module-callout {
+main .cfct-module-callout {
   overflow: hidden;
   
   .cfct-mod-image,
@@ -318,7 +267,7 @@ main .content-container article.cfct-can-haz-build .cfct-module-callout {
 
     &:after {
       content: ".";
-      //text-indent: 9999px;
+      visibility: hidden;
       height: 1px;
       line-height: 1px;
       margin-top: -1px;
@@ -384,9 +333,21 @@ main .content-container article.cfct-can-haz-build .cfct-module-callout {
   }
   
   .image {
+    margin-bottom: 20px;
+    
+    img {
+      margin: auto;
+    }
+  
     .caption {
       padding: 12px;
     }
+    
+  }
+  
+  .width-250 {
+    margin: auto;
+    max-width: 250px;
   }
   
   .content {

@@ -86,7 +86,7 @@ $tcolor = !empty( $title_color ) ? "color: {$title_color} !important;" : $fcolor
                   <?php $counter = 0; ?>
                   <?php foreach( $post[ 'enabledArtists' ] as $artist_id ) : $artist = wp_festival()->get_post_data( $artist_id ); ?>
                     <?php if ( !( $counter % $artist_columns ) ) : ?>
-                      <div class="row clearfix">
+                      <div class="row"><div class="row-artists clearfix">
                     <?php endif; ?>
                     <div class="<?php echo $class_col; ?> <?php echo !( $counter % $artist_columns ) ? $class_offset : ''; ?>">
                       <article class="artist-preview">
@@ -96,7 +96,7 @@ $tcolor = !empty( $title_color ) ? "color: {$title_color} !important;" : $fcolor
                         <div class="image">
                           <?php $src = wp_festival()->get_artist_image_link( $artist[ 'ID' ], array( 'type' => $artist_image_type, 'width' => $artist_image_width, 'height' => $artist_image_height ) ); ?>
                           <img class="img-responsive" src="<?php echo $src; ?>" alt="<?php echo $artist[ 'post_title' ]; ?>"/>
-                          <div class="text-center caption"><?php echo $artist[ 'post_title' ]; ?></div>
+                          <div class="text-center caption width-<?php echo $artist_image_width; ?>"><?php echo $artist[ 'post_title' ]; ?></div>
                         </div>
                         <?php if ($enable_links) : ?>
                             </a>
@@ -105,7 +105,7 @@ $tcolor = !empty( $title_color ) ? "color: {$title_color} !important;" : $fcolor
                     </div>
                     <?php $counter++; ?>
                     <?php if ( !( $counter % $artist_columns ) ) : ?>
-                      </div>
+                      </div></div>
                     <?php endif; ?>
                   <?php endforeach; ?>     
                 </div>
