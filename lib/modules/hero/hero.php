@@ -37,11 +37,62 @@ if( !class_exists( 'FestivalHeroModule' ) && class_exists( 'ImageModule' ) ) {
 					<div class="cfct-inline-els">
 						<label for="' . $this->get_field_id( 'content' ) . '">' . __( 'Content' ) . '</label>
 						<textarea name="' . $this->get_field_name( 'content' ) . '" id="' . $this->get_field_id( 'content' ) . '">'
-        . ( !empty( $data[ $this->get_field_name( 'content' ) ] ) ? htmlspecialchars( $data[ $this->get_field_name( 'content' ) ] ) : '' ) .
-        '</textarea>
-      </div>
-    </fieldset>
-    ';
+            . ( !empty( $data[ $this->get_field_name( 'content' ) ] ) ? htmlspecialchars( $data[ $this->get_field_name( 'content' ) ] ) : '' ) .
+            '</textarea>
+          </div>
+        </fieldset>
+      ';
+    
+      // content
+      $html .= '
+        <style>
+          .share label { width: auto !important; }
+          .share span { line-height: 30px; padding-left: 6px; }
+          .share input[type="text"] { width: 30% !important; margin-left: 10px; }
+        </style>
+				<fieldset class="cfct-ftl-border ' . $this->id_base . '-content-section share">
+					<legend>Share</legend>
+					<div class="cfct-inline-els">
+						<label for="' . $this->get_field_id( 'fb_like' ) . '"> 
+              <input type="checkbox" name="' . $this->get_field_name( 'fb_like' ) . '" id="' . $this->get_field_id( 'fb_like' ) . '" value="true" ' . ( !empty( $data[ $this->get_field_name( 'fb_like' ) ] ) && $data[ $this->get_field_name( 'fb_like' ) ] == 'true' ? 'checked="checked"' : '' ) . '" />
+              <span>' . __( 'Enable Facebook Like Button' ) . '</span>
+            </label>
+					</div>
+          <div class="clear"></div>
+          <div class="cfct-inline-els">
+						<label for="' . $this->get_field_id( 'fb_app_id' ) . '">' . __( 'Facebook Application ID' ) . '</label>
+						<input type="text" name="' . $this->get_field_name( 'fb_app_id' ) . '" id="' . $this->get_field_id( 'fb_app_id' ) . '" value="' . ( !empty( $data[ $this->get_field_name( 'fb_app_id' ) ] ) ? esc_html( $data[ $this->get_field_name( 'fb_app_id' ) ] ) : '' ) . '" />
+            <span>(' . __( 'Required' ) . ')</span>
+					</div>
+					<div class="clear"></div>
+          <div class="cfct-inline-els">
+						<label for="' . $this->get_field_id( 'tw_share' ) . '"> 
+              <input type="checkbox" name="' . $this->get_field_name( 'tw_share' ) . '" id="' . $this->get_field_id( 'tw_share' ) . '" value="true" ' . ( !empty( $data[ $this->get_field_name( 'tw_share' ) ] ) && $data[ $this->get_field_name( 'tw_share' ) ] == 'true' ? 'checked="checked"' : '' ) . '" />
+              <span>' . __( 'Enable Twitter Share Button' ) . '</span>
+            </label>
+					</div>
+          <div class="clear"></div>
+          <div class="cfct-inline-els">
+						<label for="' . $this->get_field_id( 'tw_account' ) . '">' . __( 'Twitter Account' ) . '</label>
+						<input type="text" name="' . $this->get_field_name( 'tw_account' ) . '" id="' . $this->get_field_id( 'tw_account' ) . '" value="' . ( !empty( $data[ $this->get_field_name( 'tw_account' ) ] ) ? esc_html( $data[ $this->get_field_name( 'tw_account' ) ] ) : '' ) . '" />
+            <span>(' . __( 'Optional' ) . ')</span>
+					</div>
+					<div class="clear"></div>
+          <div class="cfct-inline-els">
+						<label for="' . $this->get_field_id( 'tw_hashtag' ) . '">' . __( 'Twitter Hashtag' ) . '</label>
+						<input type="text" name="' . $this->get_field_name( 'tw_hashtag' ) . '" id="' . $this->get_field_id( 'tw_hashtag' ) . '" value="' . ( !empty( $data[ $this->get_field_name( 'tw_hashtag' ) ] ) ? esc_html( $data[ $this->get_field_name( 'tw_hashtag' ) ] ) : '' ) . '" />
+            <span>(' . __( 'Optional' ) . ')</span>
+					</div>
+					<div class="clear"></div>
+          <div class="cfct-inline-els">
+						<label for="' . $this->get_field_id( 'gp_share' ) . '"> 
+              <input type="checkbox" name="' . $this->get_field_name( 'gp_share' ) . '" id="' . $this->get_field_id( 'gp_share' ) . '" value="true" ' . ( !empty( $data[ $this->get_field_name( 'gp_share' ) ] ) && $data[ $this->get_field_name( 'gp_share' ) ] == 'true' ? 'checked="checked"' : '' ) . '" />
+              <span>' . __( 'Enable Google Plus Share Button' ) . '</span>
+            </label>
+					</div>
+					<div class="clear"></div>
+        </fieldset>
+      ';
 
       // formatting
       $selected_alignment = ( !empty( $data[ $this->get_field_name( 'hero_alignment' ) ] ) ? esc_attr( $data[ $this->get_field_name( 'hero_alignment' ) ] ) : $this->default_alignment );
@@ -101,6 +152,12 @@ if( !class_exists( 'FestivalHeroModule' ) && class_exists( 'ImageModule' ) ) {
         'box_height' => ( !empty( $data[ $this->get_field_name( 'box-height' ) ] ) ? intval( $data[ $this->get_field_name( 'box-height' ) ] ) : 0 ),
         'id_base' => $this->id_base,
         'url' => $this->get_link_url( $data ),
+        'fb_like' => ( !empty( $data[ $this->get_field_name( 'fb_like' ) ] ) && $data[ $this->get_field_name( 'fb_like' ) ] == 'true' ? true : false ),
+        'fb_app_id' => ( !empty( $data[ $this->get_field_name( 'fb_app_id' ) ] ) ? esc_html( $data[ $this->get_field_name( 'fb_app_id' ) ] ) : '' ),
+        'tw_share' => ( !empty( $data[ $this->get_field_name( 'tw_share' ) ] ) && $data[ $this->get_field_name( 'tw_share' ) ] == 'true' ? true : false ),
+        'tw_account' => ( !empty( $data[ $this->get_field_name( 'tw_account' ) ] ) ? esc_html( $data[ $this->get_field_name( 'tw_account' ) ] ) : '' ),
+        'tw_hashtag' => ( !empty( $data[ $this->get_field_name( 'tw_hashtag' ) ] ) ? esc_html( $data[ $this->get_field_name( 'tw_hashtag' ) ] ) : '' ),
+        'gp_share' => ( !empty( $data[ $this->get_field_name( 'gp_share' ) ] ) && $data[ $this->get_field_name( 'gp_share' ) ] == 'true' ? true : false ),
       );
       /** Get our template */
       ob_start();
