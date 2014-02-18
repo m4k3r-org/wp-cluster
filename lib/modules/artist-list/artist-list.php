@@ -89,7 +89,8 @@ if( !class_exists( 'ArtistListModule' ) ){
       $wp_query = new WP_Query( array(
         'post__in' => $data[ 'artists' ],
         'post_type' => 'artist',
-        'orderby' => 'post__in'
+        'orderby' => 'post__in',
+        'nopaging' => true,
       ) );
       /** Add map for classes and images based on columns amount */
       $mapping = array(
