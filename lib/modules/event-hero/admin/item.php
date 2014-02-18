@@ -16,7 +16,7 @@
         <textarea name="<?php echo $this->get_field_name( 'posts' ); ?>[<?php echo $postdata[ 'id' ]; ?>][post_excerpt]"><?php echo esc_textarea( $postdata[ 'post_excerpt' ] ); ?></textarea>
       </li>
       <li>
-      <?php if( !empty( $postdata[ 'relatedArtists' ] ) ) : ?>
+      <?php if( !empty( $postdata[ 'relatedArtists' ] ) && is_array( $postdata[ 'relatedArtists' ] ) ) : ?>
       <li>
         <label><?php _e( 'Artists:', wp_festival( 'domain' ) ); ?></label>
         <ul>
@@ -27,7 +27,7 @@
                 <input 
                   type="checkbox" 
                   name="<?php echo $this->get_field_name( 'posts' ); ?>[<?php echo $postdata[ 'id' ]; ?>][enabledArtists][]" 
-                  value="<?php echo $artist_ID; ?>" <?php echo in_array( $artist_ID, $postdata[ 'enabledArtists' ] ) ? 'checked="checked"' : ''; ?> />
+                  value="<?php echo $artist_ID; ?>" <?php echo in_array( $artist_ID, (array)$postdata[ 'enabledArtists' ] ) ? 'checked="checked"' : ''; ?> />
                 <?php echo $artist[ 'post_title' ]; ?>
               </label>
             </li>
