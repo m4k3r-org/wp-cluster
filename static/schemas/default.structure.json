@@ -188,6 +188,241 @@
         },
         "taxonomies": [],
         "meta": {}
+      },
+      "Promoter": {
+        "data": {
+          "capability_type": "page",
+          "label": "Promoter",
+          "labels": {
+            "add_new": "New Promoter",
+            "add_new_item": "Add New Promoter",
+            "all_items": "All Promoters",
+            "edit_item": "Edit Promoter",
+            "menu_name": "Promoters",
+            "name": "Promoter",
+            "not_found": "No Promoters found",
+            "not_found_in_trash": "No Promoters in Trash",
+            "parent_item_colon": "Parent Promoter:",
+            "search_items": "Search Promoters",
+            "singular_name": "Promoter",
+            "update_item": "Update Promoter",
+            "view_item": "View Promoter"
+          },
+          "description": "Promoter",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "menu_position": 2,
+          "hierarchical": false,
+          "menu_icon": false,
+          "public": true,
+          "publicly_queryable": false,
+          "query_var": "promoter",
+          "rewrite": {
+            "feeds": false,
+            "pages": true,
+            "slug": "promoter",
+            "with_front": true
+          },
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title",
+            "editor"
+          ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {}
+      },
+      "Offer": {
+        "data": {
+          "capability_type": "page",
+          "label": "Offer",
+          "labels": {
+            "add_new": "New Offer",
+            "add_new_item": "Add New Offer",
+            "all_items": "All Offers",
+            "edit_item": "Edit Offer",
+            "menu_name": "Offers",
+            "name": "Offer",
+            "not_found": "No Offers found",
+            "not_found_in_trash": "No Offers in Trash",
+            "parent_item_colon": "Parent Offer:",
+            "search_items": "Search Offers",
+            "singular_name": "Offer",
+            "update_item": "Update Offer",
+            "view_item": "View Offer"
+          },
+          "description": "Offer",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "menu_position": 2,
+          "hierarchical": false,
+          "menu_icon": false,
+          "public": true,
+          "publicly_queryable": false,
+          "query_var": "offer",
+          "rewrite": {
+            "feeds": false,
+            "pages": true,
+            "slug": "offer",
+            "with_front": true
+          },
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title",
+            "editor"
+          ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {}
+      },
+      "Performance": {
+        "data": {
+          "capability_type": "page",
+          "label": "Performance",
+          "labels": {
+            "add_new": "New Performance",
+            "add_new_item": "Add New Performance",
+            "all_items": "All Performances",
+            "edit_item": "Edit Performance",
+            "menu_name": "Performances",
+            "name": "Performance",
+            "not_found": "No Performances found",
+            "not_found_in_trash": "No Performances in Trash",
+            "parent_item_colon": "Parent Performance:",
+            "search_items": "Search Performances",
+            "singular_name": "Performance",
+            "update_item": "Update Performance",
+            "view_item": "View Performance"
+          },
+          "description": "Performance",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "menu_position": 2,
+          "hierarchical": false,
+          "menu_icon": false,
+          "public": true,
+          "publicly_queryable": false,
+          "query_var": "performance",
+          "rewrite": {
+            "feeds": false,
+            "pages": true,
+            "slug": "performance",
+            "with_front": true
+          },
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title",
+            "editor"
+          ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {}
+      },
+      "Genre": {
+        "data": {
+          "capability_type": "page",
+          "label": "Genre",
+          "labels": {
+            "add_new": "New Genre",
+            "add_new_item": "Add New Genre",
+            "all_items": "All Genres",
+            "edit_item": "Edit Genre",
+            "menu_name": "Genres",
+            "name": "Genre",
+            "not_found": "No Genres found",
+            "not_found_in_trash": "No Genres in Trash",
+            "parent_item_colon": "Parent Genre:",
+            "search_items": "Search Genres",
+            "singular_name": "Genre",
+            "update_item": "Update Genre",
+            "view_item": "View Genre"
+          },
+          "description": "Genre",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "menu_position": 2,
+          "hierarchical": false,
+          "menu_icon": false,
+          "public": true,
+          "publicly_queryable": false,
+          "query_var": "genre",
+          "rewrite": {
+            "feeds": false,
+            "pages": true,
+            "slug": "genre",
+            "with_front": true
+          },
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title",
+            "editor"
+          ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {}
+      },
+      "Venue": {
+        "data": {
+          "capability_type": "page",
+          "label": "Venue",
+          "labels": {
+            "add_new": "New Venue",
+            "add_new_item": "Add New Venue",
+            "all_items": "All Venues",
+            "edit_item": "Edit Venue",
+            "menu_name": "Venues",
+            "name": "Venue",
+            "not_found": "No Venues found",
+            "not_found_in_trash": "No Venues in Trash",
+            "parent_item_colon": "Parent Venue:",
+            "search_items": "Search Venues",
+            "singular_name": "Venue",
+            "update_item": "Update Venue",
+            "view_item": "View Venue"
+          },
+          "description": "Venue",
+          "exclude_from_search": true,
+          "has_archive": false,
+          "menu_position": 2,
+          "hierarchical": false,
+          "menu_icon": false,
+          "public": true,
+          "publicly_queryable": false,
+          "query_var": "venue",
+          "rewrite": {
+            "feeds": false,
+            "pages": true,
+            "slug": "venue",
+            "with_front": true
+          },
+          "show_in_admin_bar": false,
+          "show_in_menu": true,
+          "show_in_nav_menus": false,
+          "show_ui": true,
+          "supports": [
+            "title",
+            "editor"
+          ],
+          "can_export": true
+        },
+        "taxonomies": [],
+        "meta": {}
       }
     },
     "meta": {
