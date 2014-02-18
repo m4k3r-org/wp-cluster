@@ -78,12 +78,6 @@
               "promoters",
               "venue"
             ]
-          },
-          "location": {
-            "fields": [
-              "location",
-              "address"
-            ]
           }
         }
       },
@@ -424,7 +418,14 @@
           "can_export": true
         },
         "taxonomies": [],
-        "meta": {}
+        "meta": {
+          "location": {
+            "fields": [
+              "location",
+              "address"
+            ]
+          }
+        }
       }
     },
     "meta": {
