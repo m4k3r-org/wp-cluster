@@ -194,7 +194,7 @@ if( !class_exists( 'EventHeroModule' ) ){
 				
 				cfct_builder.addModuleSaveCallback("'.$this->id_base.'", function() {
 					// find the non-active image selector and clear his value
-					$("#'.$this->id_base.'-image-selectors .cfct-module-tab-contents>div:not(.active)").find("input:hidden").val("");
+					$(".'.$this->id_base.'-image-selectors .cfct-module-tab-contents>div:not(.active)").find("input:hidden").val("");
           $("#car-item-search .otypeahead-target").children().remove();
 					return true;
 				});

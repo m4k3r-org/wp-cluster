@@ -120,7 +120,7 @@
         }
         ?>
         <!-- image selector tabs -->
-        <div id="<?php echo $this->id_base; ?>-image-selectors">
+        <div class="<?php echo $this->id_base; ?>-image-selectors">
           <!-- tabs -->
           <?php echo $this->cfct_module_tabs($this->id_base.'-image-selector-tabs', $image_selector_tabs, $active_tab); ?>
           <!-- /tabs -->
@@ -155,7 +155,7 @@
         }
         ?>
         <!-- image selector tabs -->
-        <div id="<?php echo $this->id_base; ?>-image-selectors">
+        <div class="<?php echo $this->id_base; ?>-image-selectors">
           <!-- tabs -->
           <?php echo $this->cfct_module_tabs($this->id_base.'-image-selector-tabs', $image_selector_tabs, $active_tab); ?>
           <!-- /tabs -->

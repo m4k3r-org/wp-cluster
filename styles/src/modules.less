@@ -1,6 +1,6 @@
-/* ==============
+/* ============================
  Carington Builder: Common Styles.
-============== */
+============================ */
 // Full Width Page
 main.full-width .module {
   margin-left: -15px;
@@ -39,9 +39,9 @@ footer {
 
 
 
-/* ==============
+/* ============================
  Module: Hero
-============== */
+============================ */
 
 .cfct-module-hero-image {
   -webkit-background-size: cover;
@@ -140,7 +140,7 @@ footer {
 
 }
 
-@media only screen and ( max-width: 980px ) {
+@media only screen and ( max-width: 990px ) {
   .cfct-module-hero-image {
     .cfct-module-hero-content {
       .row {
@@ -154,9 +154,9 @@ footer {
 }
 
 
-/* ==============
+/* ============================
  Module: Sidebar
-============== */
+============================ */
 
 // Fix paddings and margins for sidebar
 .cfct-sidebar {
@@ -188,9 +188,9 @@ footer {
   
 }
 
-/* ==============
+/* ============================
  Module: Artists List
-============== */
+============================ */
 
 main .cfct-can-haz-build .artists-list article {
   border-width: 0;
@@ -313,9 +313,9 @@ main .cfct-can-haz-build .artists-list article {
   
 }
 
-/* ==============
+/* ============================
  Module: Callout
-============== */
+============================ */
 
 // Callout Module.
 main .cfct-module-callout {
@@ -350,9 +350,9 @@ main .cfct-module-callout {
   }
 }
 
-/* ==============
+/* ============================
  Module: Event Hero
-============== */
+============================ */
 
 .event-hero {
   background-repeat: no-repeat;
@@ -411,4 +411,51 @@ main .cfct-module-callout {
     margin: 20px 0;
   }
   
+}
+
+/* ============================
+ Module: Advanced Hero
+============================ */
+
+.advanced-hero {
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: relative;
+  
+  .advanced-hero-content {
+    padding: 60px 20px;
+  }
+
+  .parallax-img {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  h3 {
+    font-size: 200%;
+    margin-top: 80px;
+    margin-bottom: 20px;
+  }
+}
+
+@media only screen and ( max-width: 990px ) {
+  .advanced-hero {
+    .parallax-img {
+      display: none;
+    }
+  }
 }
