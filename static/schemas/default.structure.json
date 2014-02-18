@@ -73,7 +73,10 @@
               "performers",
               "tours",
               "offers",
-              "performances"
+              "performances",
+              "genres",
+              "promoters",
+              "venue"
             ]
           },
           "location": {
@@ -425,6 +428,45 @@
       }
     },
     "meta": {
+      "venue": {
+        "name": "Venue",
+        "type": "post",
+        "post_type": "venue",
+        "field_type": "select_advanced",
+        "multiple": true,
+        "placeholder": "Select Venue",
+        "desc": "List of event Venue",
+        "query_args": {
+          "post_status": "publish",
+          "posts_per_page": -1
+        }
+      },
+      "promoters": {
+        "name": "Promoters",
+        "type": "post",
+        "post_type": "promoter",
+        "field_type": "select_advanced",
+        "multiple": true,
+        "placeholder": "Select Promoters",
+        "desc": "List of event Promoters",
+        "query_args": {
+          "post_status": "publish",
+          "posts_per_page": -1
+        }
+      },
+      "genres": {
+        "name": "Genres",
+        "type": "post",
+        "post_type": "genre",
+        "field_type": "select_advanced",
+        "multiple": true,
+        "placeholder": "Select Genres",
+        "desc": "List of event Genres",
+        "query_args": {
+          "post_status": "publish",
+          "posts_per_page": -1
+        }
+      },
       "tours": {
         "name": "Tours",
         "type": "post",
@@ -559,6 +601,11 @@
         "type": "map",
         "style": "width: 100%; height: 300px",
         "address_field": "address"
+      },
+      "address": {
+        "name": "Address",
+        "desc": "Address of the Venue",
+        "type": "text"
       }
     },
     "taxonomies": {
