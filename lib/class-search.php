@@ -20,7 +20,16 @@ namespace UsabilityDynamics\Disco {
      */
     class Search {
 
+      /**
+       *
+       * @var type
+       */
       static $errors = array();
+
+      /**
+       *
+       * @var type
+       */
       static $success = array();
 
       /**
@@ -153,9 +162,20 @@ namespace UsabilityDynamics\Disco {
        */
       static public function manage_search_mapping() {
 
+        if ( !empty( $_POST ) && !empty( $_POST['index_types'] ) ) {
+          wp_disco()->set('search.index_types', $_POST['index_types']);
+          if ( wp_disco()->settings->commit() ) {
+            self::$success[] = __('Saved.', DOMAIN_CURRENT_SITE);
+          }
+        }
+
         try {
-          $client = self::get_client();
-          $mapping = $client->getIndex( wp_disco()->get('search.index') )->getMapping();
+//          $client = self::get_client();
+//          $mapping = $client->getIndex( wp_disco()->get('search.index') )->getMapping();
+
+          $post_types = get_post_types(array(), 'objects');
+          $active_types = wp_disco()->get('search.index_types');
+
         } catch ( \Elastica\Exception\ClientException $ex ) {
           self::$errors[] = $ex->getMessage();
         }

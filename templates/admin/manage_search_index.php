@@ -12,8 +12,4 @@
 
   <?php wp_disco()->search->action_messages(); ?>
 
-  <?php  echo '<pre>';
-  print_r( $structure );
-  echo '</pre>'; ?>
-
 </div>
