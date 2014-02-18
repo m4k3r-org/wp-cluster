@@ -614,8 +614,7 @@
         "hierarchical": true
       },
       "eventTypicalAgeRange": {
-        "label": "Age Range",
-        "hierarchical": true
+        "label": "Age Range"
       },
       "eventType": {
         "label": "Type"
