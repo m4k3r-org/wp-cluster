@@ -122,7 +122,7 @@ if( !class_exists( 'EventHeroModule' ) ){
         'artist_image_width' => $map[ 2 ],
         'artist_image_height' => $map[ 3 ],
       );
-      $wp_query->data = $_data;
+      $wp_query->data[ 'event-hero' ] = $_data;
       /** Get our template */
       ob_start();
       get_template_part( 'templates/article/listing-event', 'hero' );

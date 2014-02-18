@@ -91,21 +91,23 @@ if( !class_exists( 'FestivalHeroModule' ) && class_exists( 'ImageModule' ) ) {
      * @return array string HTML
      */
     public function display( $data ) {
-      if( isset( $data[ $this->get_field_name( 'image_id' ) ] ) ) {
-        $image_src       = wp_get_attachment_image_src( intval( $data[ $this->get_field_name( 'image_id' ) ] ), esc_attr( $data[ $this->get_field_name( 'image_id' ) . '-size' ] ), false );
-        $image_alignment = esc_attr( str_replace( '-', ' ', $data[ $this->get_field_name( 'hero_alignment' ) ] ) );
-      } else {
-        $image_src       = '';
-        $image_alignment = '';
-      }
-      $title      = ( !empty( $data[ $this->get_field_name( 'title' ) ] ) ? esc_html( $data[ $this->get_field_name( 'title' ) ] ) : '' );
-      $content    = ( !empty( $data[ $this->get_field_name( 'content' ) ] ) ? $this->wp_formatting( $data[ $this->get_field_name( 'content' ) ] ) : '' );
-      $box_height = ( !empty( $data[ $this->get_field_name( 'box-height' ) ] ) ? intval( $data[ $this->get_field_name( 'box-height' ) ] ) : 0 );
-      $id_base    = $this->id_base;
-      $url        = $this->get_link_url( $data );
-
-      return $this->load_view( $data, compact( 'image_src', 'title', 'content', 'box_height', 'image_alignment', 'id_base', 'url' ) );
-      //return $html;
+      global $wp_query;
+      /** Backup wp_query */
+      $wp_query->data[ 'hero' ] = array(
+        'image_src' => ( isset( $data[ $this->get_field_name( 'image_id' ) ] ) ? wp_get_attachment_image_src( intval( $data[ $this->get_field_name( 'image_id' ) ] ), esc_attr( $data[ $this->get_field_name( 'image_id' ) . '-size' ] ), false ) : '' ),
+        'image_alignment' => ( isset( $data[ $this->get_field_name( 'image_id' ) ] ) ? esc_attr( str_replace( '-', ' ', $data[ $this->get_field_name( 'hero_alignment' ) ] ) ) : '' ),
+        'title' => ( !empty( $data[ $this->get_field_name( 'title' ) ] ) ? esc_html( $data[ $this->get_field_name( 'title' ) ] ) : '' ),
+        'content' => ( !empty( $data[ $this->get_field_name( 'content' ) ] ) ? $this->wp_formatting( $data[ $this->get_field_name( 'content' ) ] ) : '' ),
+        'box_height' => ( !empty( $data[ $this->get_field_name( 'box-height' ) ] ) ? intval( $data[ $this->get_field_name( 'box-height' ) ] ) : 0 ),
+        'id_base' => $this->id_base,
+        'url' => $this->get_link_url( $data ),
+      );
+      /** Get our template */
+      ob_start();
+      get_template_part( 'templates/aside/hero' );
+      /** Return our string */
+      return ob_get_clean();
+      
     }
 
     /**

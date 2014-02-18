@@ -25,7 +25,7 @@ extract( $data = wp_festival()->extend( array(
   'artist_columns' => 3,
   'class_col' => 'col-md-4',
   'class_offset' => 'col-md-offset-0',
-), $wp_query->data ) );
+), (array)$wp_query->data[ 'event-hero' ] ) );
 
 //echo "<pre>"; print_r( $data ); echo "</pre>";
 
