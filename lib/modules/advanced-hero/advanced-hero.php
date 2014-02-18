@@ -237,7 +237,7 @@ if( !class_exists( 'AdvancedHeroModule' ) ){
 					tinyMCE.remove(_ed);
 				});
 			';
-			$js .= $this->global_image_selector_js();
+			$js .= $this->global_image_selector_js( '' );
 			return $js;
 		}
     
