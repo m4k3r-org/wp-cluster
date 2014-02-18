@@ -877,10 +877,6 @@ namespace UsabilityDynamics {
         wp_enqueue_style( 'app.admin' );
       });
 
-      add_filter( 'the_category', function ( $c ) {
-        //return self::_backtrace_function( 'wp_popular_terms_checklist' ) ? '<span class="do_inline_hierarchial_taxonomy_stuff do_not_esc_html">' . $c . '</span>' : $c;
-      });
-
       add_filter( 'esc_html', function ( $s, $u = '' ) {
         return strpos( $s, 'do_not_esc_html' ) ? $u : $s;
       }, 10, 2 );
