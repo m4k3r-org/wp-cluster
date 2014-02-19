@@ -267,36 +267,36 @@ namespace UsabilityDynamics\Disco {
           }
 
           //** TEST */
-          $client = self::get_client();
-          $_index = $client->getIndex( wp_disco()->get('search.index') );
-          $_type  = $_index->getType('photo');
-
-          // The Id of the document
-          $id = rand(1, 9999999);
-
-          // Create a document
-          $event = array(
-              'id'      => $id,
-              'user'    => array(
-                  'name'      => 'mewantcookie',
-                  'fullName'  => 'Cookie Monster'
-              ),
-              'msg'     => 'Me wish there were expression for cookies like there is for apples. "A cookie a day make the doctor diagnose you with diabetes" not catchy.',
-              'tstamp'  => time(),
-              'location'=> '41.12,-71.34',
-              'terms' => array(
-                  'f', 'g', 'e'
-              )
-          );
-          // First parameter is the id of document.
-          $eventDocument = new \Elastica\Document($id, $event);
-
-          echo '<pre>';
-          print_r( $_type->addDocument($eventDocument) );
-          echo '</pre>';
-
-          // Refresh Index
-          $_type->getIndex()->refresh();
+//          $client = self::get_client();
+//          $_index = $client->getIndex( wp_disco()->get('search.index') );
+//          $_type  = $_index->getType('photo');
+//
+//          // The Id of the document
+//          $id = rand(1, 9999999);
+//
+//          // Create a document
+//          $event = array(
+//              'id'      => $id,
+//              'user'    => array(
+//                  'name'      => 'mewantcookie',
+//                  'fullName'  => 'Cookie Monster'
+//              ),
+//              'msg'     => 'Me wish there were expression for cookies like there is for apples. "A cookie a day make the doctor diagnose you with diabetes" not catchy.',
+//              'tstamp'  => time(),
+//              'location'=> '41.12,-71.34',
+//              'terms' => array(
+//                  'f', 'g', 'e'
+//              )
+//          );
+//          // First parameter is the id of document.
+//          $eventDocument = new \Elastica\Document($id, $event);
+//
+//          echo '<pre>';
+//          print_r( $_type->addDocument($eventDocument) );
+//          echo '</pre>';
+//
+//          // Refresh Index
+//          $_type->getIndex()->refresh();
 
           //** #TEST */
 
