@@ -21,7 +21,8 @@
     "UsabilityDynamics/lib-settings": "master",
     "UsabilityDynamics/lib-carrington": "master",
     "UsabilityDynamics/wp-meta-box": "master",
-    "UsabilityDynamics/wp-menufication": "master"
+    "UsabilityDynamics/wp-menufication": "master",
+    "UsabilityDynamics/lib-wp-shortcode": "master"
   },
   "autoload": {
     "classmap": [ "lib/" ]
