@@ -12,4 +12,13 @@
 
   <?php wp_disco()->search->action_messages(); ?>
 
+<!--      jQuery(document).ready(function(){
+      jQuery.ajax(ajaxurl, {
+        data: {
+          action: 'index_documents',
+          type: 'event'
+        }
+      });
+    });-->
+
 </div>

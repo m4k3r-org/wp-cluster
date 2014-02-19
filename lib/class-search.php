@@ -187,6 +187,42 @@ namespace UsabilityDynamics\Disco {
           }
         }
 
+        if ( !empty( $_POST ) && !empty( $_POST['mapping'] ) ) {
+
+          try {
+
+            $mapping_decoded = array();
+
+            if ( is_array( $_POST['mapping'] ) ) {
+              foreach( $_POST['mapping'] as $type => $_mapping ) {
+                if ( !$mapping_decoded[$type] = json_decode( preg_replace( "/\s+/", "", stripslashes( $_mapping ) ), true ) ) {
+                  throw new \Exception( __( 'Could not validate mapping object.', DOMAIN_CURRENT_SITE ) );
+                }
+              }
+            }
+
+            $client = self::get_client();
+            $mapping = new \Elastica\Type\Mapping();
+            if ( is_array( $mapping_decoded ) && !empty( $mapping_decoded ) ) {
+              foreach( $mapping_decoded as $_type => $_data ) {
+                $mapping->setType( $client->getIndex( wp_disco()->get('search.index') )->getType($_type) );
+                $mapping->setProperties( $_data['properties'] );
+                if ( $mapping->send()->isOk() ) {
+                  self::$success[] = $_type.': '.__( 'Mapping has been updated', DOMAIN_CURRENT_SITE );
+                }
+              }
+            }
+
+          } catch ( \Elastica\Exception\ClientException $ex ) {
+            self::$errors[] = $_type.': '.$ex->getMessage();
+          } catch ( \Elastica\Exception\InvalidException $ex ) {
+            self::$errors[] = $_type.': '.$ex->getMessage();
+          } catch ( \Exception $ex ) {
+            self::$errors[] = $_type.': '.$ex->getMessage();
+          }
+
+        }
+
         $post_types = get_post_types(array(), 'objects');
         $active_types = wp_disco()->get('search.index_types');
 
@@ -197,7 +233,15 @@ namespace UsabilityDynamics\Disco {
           }
 
           $client = self::get_client();
-          $mapping = json_encode( $client->getIndex( wp_disco()->get('search.index') )->getMapping() );
+
+          $_index_mapping = $client->getIndex( wp_disco()->get('search.index') )->getMapping();
+
+          $mapping = array();
+          foreach( $_index_mapping[ wp_disco()->get('search.index') ] as $type_key => $type_mapping ) {
+            $mapping[$type_key] = json_encode( $type_mapping, JSON_PRETTY_PRINT );
+          }
+
+          wp_enqueue_script('jquery-ui-tabs');
 
         } catch ( \Elastica\Exception\ClientException $ex ) {
           self::$errors[] = $ex->getMessage();
@@ -222,36 +266,36 @@ namespace UsabilityDynamics\Disco {
           }
 
           //** TEST */
-          $client = self::get_client();
-          $_index = $client->getIndex( wp_disco()->get('search.index') );
-          $_type  = $_index->getType('event');
-
-          // The Id of the document
-          $id = rand(1, 9999999);
-
-          // Create a document
-          $event = array(
-              'id'      => $id,
-              'user'    => array(
-                  'name'      => 'mewantcookie',
-                  'fullName'  => 'Cookie Monster'
-              ),
-              'msg'     => 'Me wish there were expression for cookies like there is for apples. "A cookie a day make the doctor diagnose you with diabetes" not catchy.',
-              'tstamp'  => time(),
-              'location'=> '41.12,-71.34',
-              'terms' => array(
-                  'f', 'g', 'e'
-              )
-          );
-          // First parameter is the id of document.
-          $eventDocument = new \Elastica\Document($id, $event);
-
-          echo '<pre>';
-          print_r( $_type->addDocument($eventDocument) );
-          echo '</pre>';
-
-          // Refresh Index
-          $_type->getIndex()->refresh();
+//          $client = self::get_client();
+//          $_index = $client->getIndex( wp_disco()->get('search.index') );
+//          $_type  = $_index->getType('event');
+//
+//          // The Id of the document
+//          $id = rand(1, 9999999);
+//
+//          // Create a document
+//          $event = array(
+//              'id'      => $id,
+//              'user'    => array(
+//                  'name'      => 'mewantcookie',
+//                  'fullName'  => 'Cookie Monster'
+//              ),
+//              'msg'     => 'Me wish there were expression for cookies like there is for apples. "A cookie a day make the doctor diagnose you with diabetes" not catchy.',
+//              'tstamp'  => time(),
+//              'location'=> '41.12,-71.34',
+//              'terms' => array(
+//                  'f', 'g', 'e'
+//              )
+//          );
+//          // First parameter is the id of document.
+//          $eventDocument = new \Elastica\Document($id, $event);
+//
+//          echo '<pre>';
+//          print_r( $_type->addDocument($eventDocument) );
+//          echo '</pre>';
+//
+//          // Refresh Index
+//          $_type->getIndex()->refresh();
 
           //** #TEST */
 

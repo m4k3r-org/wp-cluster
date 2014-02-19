@@ -40,37 +40,32 @@
 
   <?php if ( !empty($mapping) ): ?>
 
+  <script type="text/javascript">
+    jQuery(function() {
+      jQuery( "#tabs" ).tabs();
+    });
+  </script>
+
   <h3><?php _e('Current Mapping', DOMAIN_CURRENT_SITE); ?></h3>
 
   <form action="" method="post">
 
-    <table class="form-table">
-      <tbody>
-        <tr>
-          <td>
-            <textarea name="mapping" class="widefat" style="height: 400px;font-family: monospace;" id="mapping_area"></textarea>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div id="tabs">
+      <ul>
+        <?php foreach( $mapping as $type_key => $type_mapping ): ?>
+        <li><a href="#<?php echo $type_key; ?>"><?php echo $type_key; ?></a></li>
+        <?php endforeach; ?>
+      </ul>
+
+      <?php foreach( $mapping as $type_key => $type_mapping ): ?>
+      <div id="<?php echo $type_key; ?>">
+        <textarea name="mapping[<?php echo $type_key; ?>]" class="widefat" style="height: 400px;font-family: monospace;" id="mapping_area"><?php echo $type_mapping; ?></textarea>
+      </div>
+      <?php endforeach; ?>
+    </div>
 
     <?php submit_button(__( 'Put Mapping', DOMAIN_CURRENT_SITE )); ?>
   </form>
-
-  <script type="text/javascript">
-    jQuery(document).ready(function(){
-      jQuery('#mapping_area').val( JSON.stringify(<?php echo $mapping; ?>, null, 4) );
-    });
-
-    jQuery(document).ready(function(){
-      jQuery.ajax(ajaxurl, {
-        data: {
-          action: 'index_documents',
-          type: 'event'
-        }
-      });
-    });
-  </script>
 
   <?php endif; ?>
 </div>
