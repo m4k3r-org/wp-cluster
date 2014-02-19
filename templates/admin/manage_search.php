@@ -8,11 +8,9 @@
   <h2><?php echo !empty( $cluster_info['name'] )?$cluster_info['name']:__('ElasticSearch Status', DOMAIN_CURRENT_SITE); ?> [<?php echo !empty( $cluster_info['version']['number'] )?$cluster_info['version']['number']:__('Unknown', DOMAIN_CURRENT_SITE); ?>]</h2>
   <p class="description"><?php echo !empty($cluster_info['tagline'])?$cluster_info['tagline']:__('Unconfigured environment', DOMAIN_CURRENT_SITE); ?></p>
 
-  <?php if ( empty( $search_settings ) ) : ?>
-  <div class="error settings-error" id="setting-error-settings_updated">
-    <p><strong><?php echo sprintf(__('Currently your ElasticSearch configuration is empty. Visit <a href="%s">Server</a> section to configure.', DOMAIN_CURRENT_SITE), admin_url('admin.php?page=wp-disco-manage-search-server')); ?></strong></p>
-  </div>
-  <?php else: ?>
+  <?php wp_disco()->search->action_messages(); ?>
+
+  <?php if ( $search_server && $search_index ) : ?>
 
   <table id="cluster-health">
     <tr>

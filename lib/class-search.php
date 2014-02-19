@@ -37,6 +37,11 @@ namespace UsabilityDynamics\Disco {
        */
       public function __construct() {
         add_action( 'admin_menu', array( __CLASS__, 'add_pages' ) );
+        add_action( 'wp_ajax_search_index_documents', array( __CLASS__, 'index_documents' ) );
+      }
+
+      public function index_documents() {
+        
       }
 
       /**
@@ -90,15 +95,24 @@ namespace UsabilityDynamics\Disco {
        *
        */
       static public function manage_search() {
-        $search_settings = wp_disco()->get('search');
+        $search_server = wp_disco()->get('search.server');
+        $search_index = wp_disco()->get('search.index');
 
         $client = self::get_client();
 
         try {
+
+          if ( !$search_server || !$search_index ) {
+            throw new \Exception( sprintf( __('Currently your ElasticSearch configuration is empty. Visit <a href="%s">Server</a> section to configure.', DOMAIN_CURRENT_SITE), admin_url('admin.php?page=wp-disco-manage-search-server')) );
+          }
+
           $cluster_health = $client->getCluster()->getHealth()->getData();
           $cluster_info = $client->getStatus()->getServerStatus();
-          $current_index = $client->getIndex( $search_settings['index'] )->getStats()->getData();
+          $current_index = $client->getIndex( $search_index )->getStats()->getData();
+
         } catch ( \Elastica\Exception\ClientException $ex ) {
+          self::$errors[] = $ex->getMessage();
+        } catch ( \Exception $ex ) {
           self::$errors[] = $ex->getMessage();
         }
 
@@ -114,7 +128,8 @@ namespace UsabilityDynamics\Disco {
 
           $filtered = array_filter( $_POST['configuration'] );
           if ( empty( $filtered ) ) {
-            wp_disco()->set('search', false);
+            wp_disco()->set('search.server', false);
+            wp_disco()->set('search.index', false);
             wp_disco()->settings->commit();
           }
 
@@ -169,14 +184,23 @@ namespace UsabilityDynamics\Disco {
           }
         }
 
-        try {
-//          $client = self::get_client();
-//          $mapping = $client->getIndex( wp_disco()->get('search.index') )->getMapping();
+        $post_types = get_post_types(array(), 'objects');
+        $active_types = wp_disco()->get('search.index_types');
 
-          $post_types = get_post_types(array(), 'objects');
-          $active_types = wp_disco()->get('search.index_types');
+        try {
+
+          if ( !wp_disco()->get('search.index') ) {
+            throw new \Exception(__( 'Configure search server first to manage mappings.', DOMAIN_CURRENT_SITE ));
+          }
+
+          $client = self::get_client();
+          $mapping = json_encode( $client->getIndex( wp_disco()->get('search.index') )->getMapping() );
 
         } catch ( \Elastica\Exception\ClientException $ex ) {
+          self::$errors[] = $ex->getMessage();
+        } catch ( \Elastica\Exception\InvalidException $ex ) {
+          self::$errors[] = $ex->getMessage();
+        } catch ( \Exception $ex ) {
           self::$errors[] = $ex->getMessage();
         }
 
@@ -188,7 +212,15 @@ namespace UsabilityDynamics\Disco {
        */
       static public function manage_search_index() {
 
-        $structure = wp_disco()->get('structure');
+        try {
+
+          if ( !wp_disco()->get('search.index') ) {
+            throw new \Exception(__( 'Configure search server first to manage indexing.', DOMAIN_CURRENT_SITE ));
+          }
+
+        } catch ( \Exception $ex ) {
+          self::$errors[] = $ex->getMessage();
+        }
 
         require_once TEMPLATEPATH.'/templates/admin/manage_search_index.php';
       }
