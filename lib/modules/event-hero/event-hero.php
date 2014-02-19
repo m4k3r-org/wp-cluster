@@ -85,12 +85,36 @@ if( !class_exists( 'EventHeroModule' ) ){
       if( !isset( $data[ $this->get_field_name( 'posts' ) ] ) ) {
         return false;
       }
+      /** Get Event data */
       reset( $data[ $this->get_field_name( 'posts' ) ] );
-      $event_id = key( $data[ $this->get_field_name( 'posts' ) ] );
+      $event = array_shift( $data[ $this->get_field_name( 'posts' ) ] );
+      /** Go through the sorting array */
+      if( isset( $event[ 'sorting' ] ) && is_array( $event[ 'sorting' ] ) ){
+        foreach( $event[ 'sorting' ] as $post_id => $sort_value ){
+          if( !( isset( $sort_value ) && is_numeric( $sort_value ) ) ){
+            unset( $event[ 'sorting' ][ $post_id ] );
+          }
+        }
+        asort( $event[ 'sorting' ] );
+      }else{
+        $event[ 'sorting' ] = array();
+      }
+      /** Go through the sorting array, and see if they're selected */
+      $artists = array();
+      if( isset( $event[ 'enabledArtists' ] ) && is_array( $event[ 'enabledArtists' ] ) ){
+        foreach( $event[ 'sorting' ] as $post_id => $sort_value ){
+          if( in_array( $post_id, $event[ 'enabledArtists' ] ) ){
+            $artists[] = $post_id;
+            unset( $event[ 'enabledArtists' ][ $post_id ] );
+          }
+        }
+      }
+      /** Finally, go through data artists, and append them */
+      $event[ 'enabledArtists' ] = array_values( array_unique( array_merge( $artists, $event[ 'enabledArtists' ] ) ) );
       /** Get event */
       $wp_query = new WP_Query( array(
-        'post__in' => array( $event_id ),
-        'post_type' => 'event'
+        'post__in' => array( $event[ 'id' ] ),
+        'post_type' => 'event',
       ) );
       /** Add map for classes and images based on columns amount */
       $mapping = array(
@@ -107,7 +131,7 @@ if( !class_exists( 'EventHeroModule' ) ){
       /** Set templates data */
       $map = isset( $mapping[ $data[ 'artist_columns' ] ] ) ? $mapping[ $data[ 'artist_columns' ] ] : $mapping[4];
       $_data = array(
-        'postdata' => ( array_shift( $data[ $this->get_field_name( 'posts' ) ] ) ),
+        'postdata' => $event,
         'logo_image' => $data[ 'logo_image' ],
         'background_image' => $data[ 'background_image' ],
         'background_color' => $data[ 'background_color' ],
@@ -267,7 +291,7 @@ if( !class_exists( 'EventHeroModule' ) ){
 					$postdata = array(
 						'id' => get_the_id(),
 						'post_title' => get_the_title(),
-						'post_excerpt' => get_the_excerpt()
+						'post_excerpt' => get_the_excerpt(),
 					);
 					add_filter( 'the_content', 'wptexturize' );
 					$html .= $this->get_event_admin_item( $postdata );

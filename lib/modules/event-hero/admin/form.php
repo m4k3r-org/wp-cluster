@@ -37,6 +37,43 @@
     margin-left: 0;
   }
   
+  .artists-list ul{
+    margin-top: 0;
+    border: 1px solid #bbb;
+    padding: 3px;
+  }
+  .artists-list ul li input[type=checkbox],
+  .artists-list ul li label{
+    position: relative;
+    top: 6px;
+    left: 6px;
+  }
+  .artists-list ul li select,
+  .artists-list ul li input[type=text],
+  .artists-list ul li span.order {
+    display: inline;
+    float: right;
+    width: 50px;
+    text-align: right;
+  }
+  .artists-list ul li span.name {
+    display: inline;
+    float: left;
+    margin-left: 24px;
+  }
+  .artists-list ul li input[type=text] {
+    width: 35px;
+    margin-left: 15px;
+    margin-right: 4px;
+  }
+  .artists-list ul li select{
+    width: 38px;
+    margin-left: 12px;
+  }
+  .artists-list ul li.header {
+    padding: 4px;
+  }
+  
 </style>
 
 <div class="event-hero-form">

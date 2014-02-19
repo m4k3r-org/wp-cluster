@@ -38,6 +38,9 @@ $fcolor = !empty( $font_color ) ? "color: {$font_color} !important;" : "";
 $dcolor = !empty( $desc_color ) ? "color: {$desc_color} !important;" : $fcolor;
 $tcolor = !empty( $title_color ) ? "color: {$title_color} !important;" : $fcolor;
 
+$date_format = ( $date_format = get_option( 'date_format' ) ) !== false ? $date_format : 'l, F jS';
+$time_format = ( $time_format = get_option( 'time_format' ) ) !== false ? $time_format : 'g:i a';
+
 ?>
 <?php if( have_posts() ) : ?>
   <div class="event-hero" style="<?php echo $bimage; ?><?php echo $bcolor; ?>" >
@@ -63,11 +66,11 @@ $tcolor = !empty( $title_color ) ? "color: {$title_color} !important;" : $fcolor
                   <div class="row">
                     <div class="col-md-4">
                       <h5 style="<?php echo $tcolor; ?>" class="h-color text-center"><?php _e( 'Date', wp_festival( 'domain' ) ); ?></h5>
-                      <span style="<?php echo $fcolor; ?>"><?php echo date( 'l, F jS', strtotime( $post[ 'startDateTime' ] ) ); ?></span>
+                      <span style="<?php echo $fcolor; ?>"><?php echo date( $date_format, strtotime( $post[ 'startDateTime' ] ) ); ?></span>
                     </div>
                     <div class="col-md-4">
                       <h5 style="<?php echo $tcolor; ?>" class="h-color text-center"><?php _e( 'Time', wp_festival( 'domain' ) ); ?></h5>
-                      <span class="text-center" style="<?php echo $fcolor; ?>"><?php echo date( 'g:i a', strtotime( $post[ 'startDateTime' ] ) ); ?></span>
+                      <span class="text-center" style="<?php echo $fcolor; ?>"><?php echo date( $time_format, strtotime( $post[ 'startDateTime' ] ) ); ?></span>
                     </div>
                     <div class="col-md-4">
                       <h5 style="<?php echo $tcolor; ?>" class="h-color text-center"><?php _e( 'Location', wp_festival( 'domain' ) ); ?></h5>
