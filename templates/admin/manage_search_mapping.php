@@ -40,13 +40,15 @@
 
   <?php if ( !empty($mapping) ): ?>
 
+  <h3><?php _e('Current Mapping', DOMAIN_CURRENT_SITE); ?></h3>
+
   <form action="" method="post">
-    
+
     <table class="form-table">
       <tbody>
         <tr>
           <td>
-            <textarea name="mapping" class="widefat" style="height: 400px;" id="mapping_area"></textarea>
+            <textarea name="mapping" class="widefat" style="height: 400px;font-family: monospace;" id="mapping_area"></textarea>
           </td>
         </tr>
       </tbody>
@@ -58,6 +60,15 @@
   <script type="text/javascript">
     jQuery(document).ready(function(){
       jQuery('#mapping_area').val( JSON.stringify(<?php echo $mapping; ?>, null, 4) );
+    });
+
+    jQuery(document).ready(function(){
+      jQuery.ajax(ajaxurl, {
+        data: {
+          action: 'index_documents',
+          type: 'event'
+        }
+      });
     });
   </script>
 

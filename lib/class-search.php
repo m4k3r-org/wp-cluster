@@ -37,11 +37,14 @@ namespace UsabilityDynamics\Disco {
        */
       public function __construct() {
         add_action( 'admin_menu', array( __CLASS__, 'add_pages' ) );
-        add_action( 'wp_ajax_search_index_documents', array( __CLASS__, 'index_documents' ) );
+        add_action( 'wp_ajax_index_documents', array( __CLASS__, 'index_documents' ) );
       }
 
-      public function index_documents() {
-        
+      public static function index_documents() {
+        echo '<pre>';
+        print_r( $_REQUEST );
+        echo '</pre>';
+        die();
       }
 
       /**
@@ -218,6 +221,44 @@ namespace UsabilityDynamics\Disco {
             throw new \Exception(__( 'Configure search server first to manage indexing.', DOMAIN_CURRENT_SITE ));
           }
 
+          //** TEST */
+          $client = self::get_client();
+          $_index = $client->getIndex( wp_disco()->get('search.index') );
+          $_type  = $_index->getType('event');
+
+          // The Id of the document
+          $id = rand(1, 9999999);
+
+          // Create a document
+          $event = array(
+              'id'      => $id,
+              'user'    => array(
+                  'name'      => 'mewantcookie',
+                  'fullName'  => 'Cookie Monster'
+              ),
+              'msg'     => 'Me wish there were expression for cookies like there is for apples. "A cookie a day make the doctor diagnose you with diabetes" not catchy.',
+              'tstamp'  => time(),
+              'location'=> '41.12,-71.34',
+              'terms' => array(
+                  'f', 'g', 'e'
+              )
+          );
+          // First parameter is the id of document.
+          $eventDocument = new \Elastica\Document($id, $event);
+
+          echo '<pre>';
+          print_r( $_type->addDocument($eventDocument) );
+          echo '</pre>';
+
+          // Refresh Index
+          $_type->getIndex()->refresh();
+
+          //** #TEST */
+
+        } catch ( \Elastica\Exception\ClientException $ex ) {
+          self::$errors[] = $ex->getMessage();
+        } catch ( \Elastica\Exception\InvalidException $ex ) {
+          self::$errors[] = $ex->getMessage();
         } catch ( \Exception $ex ) {
           self::$errors[] = $ex->getMessage();
         }
