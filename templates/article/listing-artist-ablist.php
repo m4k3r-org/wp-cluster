@@ -11,7 +11,6 @@ global $wp_query;
 extract( $data = wp_festival()->extend( array(
   'enable_links' => false,
   'enable_dates' => false,
-  'custom_date' => false,
   'font_color' => false,
   'logo_image' => false,
   'image_width' => false,
@@ -22,6 +21,7 @@ $enable_links = ( isset( $enable_links ) && $enable_links == 'true' ) ? true : f
 $enable_dates = ( isset( $enable_dates ) && $enable_dates == 'true' ) ? true : false;
 $date = false;
 if( $enable_dates ) {
+  $custom_date = isset( $wp_query->data[ 'custom_date' ] ) && is_array( $wp_query->data[ 'custom_date' ] ) ? $wp_query->data[ 'custom_date' ] : array();
   if( !empty( $custom_date[ get_the_ID() ] ) ) {
     $date = strtotime( $custom_date[ get_the_ID() ] );
   } else {
