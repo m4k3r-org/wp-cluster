@@ -22,7 +22,7 @@ html, body {
 }
 
 span.hr {
-  display:block;
+  display: block;
   height: 1px;
   font-size: 1px;
   line-height: 1px;
@@ -140,7 +140,7 @@ main {
         text-align: center;
       }
 
-      [class^="icon-"],[class*=" icon-"] {
+      [class^="icon-"], [class*=" icon-"] {
         font-size: 22px;
         line-height: 50px;
       }
@@ -170,7 +170,7 @@ main {
   .social-wrap {
 
     .social-collapse {
-      float:none;
+      float: none;
       clear: both;
     }
 
@@ -205,7 +205,6 @@ main {
     }
 
   }
-
 
 }
 
@@ -253,7 +252,6 @@ main {
 
 }
 
-
 /* ==============
  Custom
 ============== */
@@ -299,7 +297,7 @@ footer {
       text-align: center;
     }
 
-    [class^="icon-"],[class*=" icon-"] {
+    [class^="icon-"], [class*=" icon-"] {
       font-size: 22px;
       line-height: 40px;
     }
@@ -347,7 +345,6 @@ footer {
   }
 
 }
-
 
 /* ==============
  Bottom Content
@@ -426,7 +423,7 @@ footer {
       &.stream-item {
         .text {
           padding: 45px 20px 20px;
-    }
+        }
       }
       .title {
         font-size: 100%;
@@ -481,7 +478,7 @@ footer {
         height: 2px;
         margin: 0 0 0 20px;
         width: 40px;
-}
+      }
       .featured-image {
         border-bottom: 1px solid;
       }
@@ -594,16 +591,17 @@ footer {
 }
 
 /** UME Specific Styles for Header */
-@media all{
-  .section-header-banner{
-    background-image: url( '//media.umesouthpadre.com/media/2014/02/d229bbf31eaeebc7c88897732d8b932d14.jpg' );
+@media all {
+  .section-header-banner {
+    background-image: url('//media.umesouthpadre.com/media/2014/02/d229bbf31eaeebc7c88897732d8b932d14.jpg');
     background-repeat: no-repeat;
     background-position: center top;
-    background-size: auto 100%;
+
+    //background-size: auto 100%;
     background-color: #d4e7ee;
     border-top: 10px solid #7940dc;
-    .module.element-event-logo{
-      h1.logo-placeholder{
+    .module.element-event-logo {
+      h1.logo-placeholder {
         margin: 0;
         padding: 0;
         position: absolute;
@@ -612,7 +610,7 @@ footer {
         width: 100%;
         height: 100%;
         z-index: 100;
-        a{
+        a {
           display: block;
           text-indent: -9999px;
           border: 0px solid red;
@@ -621,16 +619,16 @@ footer {
         }
       }
     }
-    .module.element-video{
+    .module.element-video {
       margin: 0;
       margin-top: 20px;
       padding: 10px;
-      background-color: rgba( 77, 13, 118, 0.25 );
-      .cfct-mod-content{
+      background-color: rgba(77, 13, 118, 0.25);
+      .cfct-mod-content {
         position: relative;
         padding-bottom: 39%;
         height: 0;
-        iframe{
+        iframe {
           position: absolute;
           top: 0;
           left: 0;
@@ -639,26 +637,26 @@ footer {
         }
       }
     }
-    .module.element-sponsors{
+    .module.element-sponsors {
       margin: 50% 7% 0 21%;
       padding: 0 0 20px 0;
       text-align: center;
-      i.icon{
+      i.icon {
         color: #5a61a9;
         font-size: 25px;
         line-height: 25px;
         margin-left: 10px;
-        &:first-child{
+        &:first-child {
           margin-left: 0;
         }
       }
     }
-    .module.element-event-meta{
+    .module.element-event-meta {
       margin: 0;
       padding: 0;
-      p.event-date{
+      p.event-date {
         padding: 0;
-        font-family: Montserrat;
+        font-family: 'Montserrat';
         color: #4d0dbc;
         text-transform: uppercase;
         text-align: center;
@@ -666,16 +664,16 @@ footer {
         line-height: 35px;
         margin: 20px 0;
       }
-      p.event-city{
-        font-family: "Myriad Pro";
+      p.event-city {
+        //font-family: "Myriad Pro";
         color: white;
         text-transform: uppercase;
         text-align: center;
         font-size: 20px;
         line-height: 20px;
       }
-      address{
-        background-color: rgba( 77, 13, 118, 0.25 );
+      address {
+        background-color: rgba(77, 13, 118, 0.25);
         color: white;
         text-transform: uppercase;
         text-align: center;
@@ -683,28 +681,29 @@ footer {
         display: block;
         margin-bottom: 30px;
       }
-      p.buy-tickets{
-        margin: 0 7% 15px 21%;
+      p.buy-tickets {
+        //margin: 0 7% 15px 21%;
         text-align: center;
-        a{
+        a {
           z-index: 101;
           position: relative;
           background-color: #cb22a5;
           border-width: 0;
           text-transform: uppercase;
           border-radius: 0px;
+          padding: 0.7em 1.8em;
         }
       }
-      p.ticket-information{
-        margin: 0 7% 30px 21%;
+      p.ticket-information {
+        //margin: 0 7% 30px 21%;
         text-align: center;
-        a{
+        a {
           z-index: 101;
           position: relative;
           color: white;
           text-decoration: none;
           text-transform: uppercase;
-          &:hover{
+          &:hover {
             color: white;
             text-decoration: none;
           }
@@ -713,57 +712,60 @@ footer {
     }
   }
 }
-@media (min-width: 992px){
-  .section-header-banner{
-    .module.element-event-logo{
-      h1.logo-placeholder{
-        a{
-          margin: 5% 7% 0 31%;
+
+@media (min-width: 992px) {
+  .section-header-banner {
+    .module.element-event-logo {
+      h1.logo-placeholder {
+        a {
+          //margin: 5% 7% 0 31%;
           height: 41%;
         }
       }
     }
-    .module.element-sponsors{
+    .module.element-sponsors {
       margin-top: 40%;
-      margin-left: 31%;
-      margin-right: 7%;
+      //margin-left: 31%;
+      //margin-right: 7%;
     }
-    .module.element-event-meta{
-      p.buy-tickets{
-        margin-left: 31%;
-        margin-right: 7%;
+    .module.element-event-meta {
+      p.buy-tickets {
+        //margin-left: 31%;
+        //margin-right: 7%;
       }
-      p.ticket-information{
-        margin-left: 31%;
-        margin-right: 7%;
+      p.ticket-information {
+        //margin-left: 31%;
+        //margin-right: 7%;
       }
     }
   }
 }
-@media (min-width: 1200px){
-  .section-header-banner{
-    .module.element-event-logo{
-      h1.logo-placeholder{
-        a{
-          margin: 5% 6% 0 42%;
+
+@media (min-width: 1200px) {
+  .section-header-banner {
+    .module.element-event-logo {
+      h1.logo-placeholder {
+        a {
+          //margin: 5% 6% 0 42%;
           height: 40%;
         }
       }
     }
-    .module.element-sponsors{
+    .module.element-sponsors {
       margin-top: 34%;
-      margin-left: 42%;
-      margin-right: 6%;
+      //margin-left: 42%;
+      //margin-right: 6%;
     }
-    .module.element-event-meta{
-      p.buy-tickets{
-        margin-left: 42%;
-        margin-right: 6%;
+    .module.element-event-meta {
+      p.buy-tickets {
+        //margin-left: 42%;
+        //margin-right: 6%;
       }
-      p.ticket-information{
-        margin-left: 42%;
-        margin-right: 6%;
+      p.ticket-information {
+        //margin-left: 42%;
+        //margin-right: 6%;
       }
     }
   }
 }
+
