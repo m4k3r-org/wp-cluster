@@ -618,7 +618,9 @@ namespace UsabilityDynamics {
       // Register Carrington Modules.
       if( is_object( $this->carrington ) ) {
         $this->carrington->deregisterModule( 'HeroModule' );
+        $this->carrington->deregisterModule( 'LoopModule' );
         
+        $this->carrington->registerModule( 'FestivalLoopModule' ); // Modified LoopModule
         $this->carrington->registerModule( 'FestivalHeroModule' ); // Modified HeroModule
         $this->carrington->registerModule( 'VideoModule' );
         $this->carrington->registerModule( 'EventHeroModule' );

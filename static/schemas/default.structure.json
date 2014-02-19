@@ -181,7 +181,7 @@
           "hierarchical": false,
           "menu_icon": false,
           "public": true,
-          "publicly_queryable": false,
+          "publicly_queryable": true,
           "query_var": "_artist",
           "rewrite": {
             "feeds": false,
