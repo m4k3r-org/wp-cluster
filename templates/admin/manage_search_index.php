@@ -12,6 +12,10 @@
 
   <?php wp_disco()->search->action_messages(); ?>
 
+  <h3><?php _e('Console', DOMAIN_CURRENT_SITE); ?></h3>
+
+  <div id="console"></div>
+
   <h3><?php _e('Bulk Actions', DOMAIN_CURRENT_SITE); ?></h3>
 
   <form action="clear_all_docs" class="ajax-form-action" id="clear">
