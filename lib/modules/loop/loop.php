@@ -135,23 +135,44 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
      * @return string HTML
      */
     public function display( $data ) {
+      
+      /*
       $data = $this->migrate_data( $data );
-
       $args = $this->set_display_args( $data );
-
       // put it all together now
       $title = ( !empty( $data[ $this->get_field_name( 'title' ) ] ) ? esc_html( $data[ $this->get_field_name( 'title' ) ] ) : '' );
-
       $content = $this->get_custom_loop( $data, apply_filters( $this->id_base . '-query-args', $args, $data ) );
-
       if( ( !empty( $data[ $this->get_field_name( 'show_pagination' ) ] ) ? $data[ $this->get_field_name( 'show_pagination' ) ] : '' ) == 'yes' && !empty( $data[ $this->get_field_name( 'next_pagination_link' ) ] ) ) {
         $pagination_url  = $data[ $this->get_field_name( 'next_pagination_link' ) ];
         $pagination_text = esc_html( $data[ $this->get_field_name( 'next_pagination_text' ) ] );
       } else {
         $pagination_url = $pagination_text = null;
       }
-
       return $this->load_view( $data, compact( 'title', 'content', 'pagination_url', 'pagination_text' ) );
+      //*/
+      
+      $data = $this->migrate_data( $data );
+      $args = $this->set_display_args( $data );
+      
+      //echo "<pre>"; print_r( $args ); echo "</pre>";
+      
+      global $wp_query;
+      /** Backup wp_query */
+      $_wp_query = $wp_query;
+      
+      /** Now run our query */
+      $wp_query = new WP_Query( $args );
+      
+      $wp_query->data = $data;
+      /** Get our template */
+      ob_start();
+      get_template_part( 'templates/aside/post-loop' );
+      /** Restore our wp_query */
+      $wp_query = $_wp_query;
+      /** Return our string */
+      return ob_get_clean();
+      
+      
     }
 
     protected function set_display_args( $data ) {
@@ -211,71 +232,6 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
       return $args;
     }
 
-    /**
-     * Returns the HTML of the custom loop
-     *
-     * @param array $data Custom options from the module
-     * @param array $args
-     *
-     * @return string HTML
-     */
-    protected function get_custom_loop( $data, $args = array() ) {
-      global $post;
-
-      $_post = $post;
-
-      $this->cache_global_post();
-
-      $args[ 'this_count' ] = 0;
-
-      $query = new WP_Query( $args );
-
-      ob_start();
-
-      do_action( $this->id_base . '-query-results', $query );
-
-      if( !$query->have_posts() ) {
-        return;
-      }
-
-      while( $query->have_posts() ) {
-
-        $args[ 'this_count' ] = $args[ 'this_count' ] + 1;
-
-        $query->the_post();
-
-        $post->show_thumbnail         = $args[ 'show_thumbnail' ] == 'yes' ? true : false;
-        $post->show_meta_header       = $args[ 'show_meta_header' ] == 'yes' ? true : false;
-        $post->show_meta_footer       = $args[ 'show_meta_footer' ] == 'yes' ? true : false;
-        $post->show_title             = $args[ 'show_title' ] == 'yes' ? true : false;
-        $post->show_post_content_type = $args[ 'show_post_content_type' ];
-
-        ?>
-        <div data-post-id="post-<?php the_ID(); ?>" <?php post_class( 'clearfix cb_custom_entry ' . ( $args[ 'this_count' ] % 2 ? 'odd' : 'even' ) ); ?> object_count="<?php echo $args[ 'this_count' ] % 2 ? 'odd' : 'even'; ?>">
-          <div class="cfct-module post_listing_inner" element_type="carrington">
-
-          </div>
-        </div>
-        <?php
-
-        //$item = apply_filters( 'cfct-build-loop-item', $item, $data, $args, $query ); // @TODO deprecate in 1.2? doesn't scale well when extending the loop object
-
-        //echo apply_filters( $this->id_base . '-loop-item', $item, $data, $args, $query );
-        //echo apply_filters( $this->id_base . '-loop-item', $item );
-
-      }
-
-      $html = ob_get_clean();
-      $this->reset_global_post();
-
-      $html = @apply_filters( 'cfct-build-loop-html', $html, $data, $args, $query ); // @TODO deprecate in 1.2? doesn't scale well when extending the loop object
-      $html = @apply_filters( $this->id_base . 'loop-html', $html, $data, $args, $query );
-
-      $post = $_post;
-
-      return $html;
-
-    }
 
 # Admin Form
 
