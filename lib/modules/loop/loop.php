@@ -244,44 +244,7 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
      */
     public function admin_form( $data ) {
       $data = $this->migrate_data( $data );
-      /** Now get and return the template */
-      ob_start();
-      require_once( __DIR__ . '/admin/form.php' );
-      return ob_get_clean();
-    }
-
-    /**
-     * Show module title input
-     *
-     * @param array $data - saved module data
-     *
-     * @return string HTML
-     */
-    public function admin_form_title( $data ) {
-      return '
-        <fieldset class="cfct-form-section">
-          <!-- title -->
-          <legend>' . __( 'Title', 'carrington-build' ) . '</legend>
-          <span class="cfct-input-full">
-            <input type="text" name="' . $this->get_field_id( 'title' ) . '" id="' . $this->get_field_id( 'title' ) . '" value="' . esc_attr( $data[ $this->get_field_name( 'title' ) ] ) . '" />
-          </span>
-          <!-- /title -->
-        </fieldset>';
-    }
-
-    /**
-     * Show module post types filter
-     * If only 1 post type is available the method ouputs a hidden
-     * element instead of a select list
-     *
-     * @see this::get_post_type_dropdown() for how $type is used
-     *
-     * @param string $type - 'post' or 'page' - does this even do anything? ~sp
-     * @param array  $data - saved module data
-     *
-     * @return string HTML
-     */
-    public function admin_form_post_types( $data ) {
+      
       $post_types = $this->get_post_types();
       $selected   = ( !empty( $data[ $this->gfn( 'post_type' ) ] ) ? $data[ $this->gfn( 'post_type' ) ] : array() );
 
@@ -293,48 +256,11 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
         }
         $tax_defs[ $taxonomy->name ] = $taxonomy->label;
       }
-
-      $html = '
-      <fieldset class="cfct-form-section" id="' . $this->gfi( 'post_type_checks' ) . '">
-        <legend>Post Type</legend>';
-      if( count( $post_types ) > 1 ) {
-        $html .= '
-          <div class="cfct-columnized cfct-columnized-4x">
-            <ul>';
-        foreach( $post_types as $key => $post_type ) {
-          $post_taxonomies = $this->get_post_type_taxonomies( $key );
-          $html .= '
-              <li>
-                <input type="checkbox" name="' . $this->gfn( 'post_type' ) . '[]" id="' . $this->gfi( 'post-type-' . $key ) . '" ';
-          if( is_array( $selected ) && in_array( $key, $selected ) ) {
-            $html .= 'checked="checked" ';
-          }
-          $html .= 'class="post-type-select" data-taxonomies="' . implode( ',', $post_taxonomies ) . '" value="' . $key . '" />
-                <label for="' . $this->gfi( 'post-type-' . $key ) . '">' . $post_type->labels->name . '</label>
-              </li>';
-        }
-        $html .= '
-            </ul>
-          </div>';
-      } elseif( count( $post_types ) == 1 ) {
-        // if we only have one option then just set a hidden element
-        $key             = key( $post_types );
-        $post_type       = current( $post_types );
-        $post_taxonomies = $this->get_post_type_taxonomies( $key );
-        $html .= '
-          <input type="hidden" class="post-type-select" name="' . $this->get_field_name( 'post_type' ) . '[]" value="' . $key . '" data-taxonomies="' . implode( ',', $post_taxonomies ) . '" />';
-      } elseif( empty( $post_types ) ) {
-        $type            = get_post_type( $this->default_post_type );
-        $post_taxonomies = $this->get_post_type_taxonomies( $type->name );
-        $html .= '
-          <input type="hidden" class="post-type-select" name="' . $this->gfn( 'post_type' ) . '[]" value="' . $post_type->name . '" data-taxonomies="' . implode( ',', $post_taxonomies ) . '" />';
-      }
-
-      $html .= '
-          <input type="hidden" name="' . $this->gfn( 'tax_defs' ) . '" id="' . $this->gfi( 'tax_defs' ) . '" disabled="disabled" value=\'' . json_encode( $tax_defs ) . '\' />
-        </fieldset>';
-
-      return $html;
+      
+      /** Now get and return the template */
+      ob_start();
+      require_once( __DIR__ . '/admin/form.php' );
+      return ob_get_clean();
     }
 
     protected function get_post_type_taxonomies( $post_type ) {
