@@ -619,7 +619,7 @@ namespace UsabilityDynamics {
       if( is_object( $this->carrington ) ) {
         $this->carrington->deregisterModule( 'HeroModule' );
         $this->carrington->deregisterModule( 'LoopModule' );
-        
+
         $this->carrington->registerModule( 'FestivalLoopModule' ); // Modified LoopModule
         $this->carrington->registerModule( 'FestivalHeroModule' ); // Modified HeroModule
         $this->carrington->registerModule( 'VideoModule' );
@@ -657,6 +657,9 @@ namespace UsabilityDynamics {
 
       // Sync 'Social Streams' data with social networks
       $this->sync_streams();
+
+      //
+      $this->load_shortcodes();
 
       // Register Editor Style.
       add_editor_style( home_url( '/assets/styles/app.editor.css' ) );
@@ -854,6 +857,11 @@ namespace UsabilityDynamics {
 
       return json_decode( json_encode( $_result ));
 
+    }
+
+    private function load_shortcodes() {
+      // Inits shortcodes
+      \UsabilityDynamics\Shortcode\Utility::maybe_load_shortcodes( get_stylesheet_directory() . '/lib/shortcodes' );
     }
 
     /**
