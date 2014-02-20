@@ -59,18 +59,18 @@ namespace UsabilityDynamics\Festival {
 
         $defaults = array(
           'size' => 'medium', //** small, medium, large */
-          'color' => '#783FDC', //** background */
+          'color' => '#EF0D95', //** background */
           'anchor_color' => 'white', //** text color */
           'anchor' => __( 'Button', wp_festival( 'domain' ) ), //** Button text */
           'url' => '#', //** Button url */
           'style' => '', //** Custom styles */
-          'class' => '', //** Custom classes */
+          'class' => 'btn-default', //** Custom classes */
           'target' => '' //** Link target */
         );
 
-        $args = shortcode_atts( $defaults, $atts );
+        extract( shortcode_atts( $defaults, $atts ) );
 
-        return '<a href="#">asas</a>';
+        return '<a href="'.$url.'" target="'.$target.'" class="btn btn-custom '.$size.' '.$class.'" style="color:'.$anchor_color.';background:'.$color.';border-color:'.$color.'; '.$style.'">'.$anchor.'</a>';
 
       }
 
