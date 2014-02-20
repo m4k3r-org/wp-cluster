@@ -20,6 +20,7 @@ extract( $data = wp_festival()->extend( array(
   'url' => '',
   'fb_like' => false,
   'fb_app_id' => '',
+  'fb_url' => '',
   'tw_share' => false,
   'tw_account' => '',
   'tw_hashtag' => '',
@@ -35,7 +36,7 @@ extract( $data = wp_festival()->extend( array(
           <div class="<?php echo $id_base; ?>-wrap" >
             <div class="<?php echo $id_base; ?>-content">
               <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-6">
                   <?php if (!empty($title)) : ?>
                     <h2 class="cfct-mod-title"><?php echo $title; ?></h2>
                   <?php endif; ?>
@@ -46,11 +47,11 @@ extract( $data = wp_festival()->extend( array(
                     <p><a href="<?php echo $url; ?>" class="more-link"><?php _e( 'Read More', wp_festival( 'domain' ) ); ?></a></p>
                   <?php endif; ?>
                 </div>
-                <div class="col-md-5 share-buttons-wrapper">
+                <div class="col-md-6 share-buttons-wrapper">
                   <ul class="share-buttons-list">
                     <?php if ( $fb_like && !empty( $fb_app_id ) ) : ?>
                       <li class="fb-share">
-                        <div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-type="button_count"></div>
+                        <div class="fb-share-button" data-href="<?php echo !empty( $fb_url ) ? $fb_url : get_permalink( get_the_ID() ); ?>" data-type="button_count"></div>
                         <div id="fb-root"></div>
                         <script>
                           (function(d, s, id) {

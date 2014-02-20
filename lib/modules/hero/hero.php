@@ -64,6 +64,11 @@ if( !class_exists( 'FestivalHeroModule' ) && class_exists( 'ImageModule' ) ) {
 						<input type="text" name="' . $this->get_field_name( 'fb_app_id' ) . '" id="' . $this->get_field_id( 'fb_app_id' ) . '" value="' . ( !empty( $data[ $this->get_field_name( 'fb_app_id' ) ] ) ? esc_html( $data[ $this->get_field_name( 'fb_app_id' ) ] ) : '' ) . '" />
             <span>(' . __( 'Required' ) . ')</span>
 					</div>
+          <div class="cfct-inline-els">
+						<label for="' . $this->get_field_id( 'fb_url' ) . '">' . __( 'Facebook Custom Like URL' ) . '</label>
+						<input type="text" name="' . $this->get_field_name( 'fb_url' ) . '" id="' . $this->get_field_id( 'fb_url' ) . '" value="' . ( !empty( $data[ $this->get_field_name( 'fb_url' ) ] ) ? esc_html( $data[ $this->get_field_name( 'fb_url' ) ] ) : '' ) . '" />
+            <span>(' . __( 'Optional' ) . ')</span>
+					</div>
 					<div class="clear"></div>
           <div class="cfct-inline-els">
 						<label for="' . $this->get_field_id( 'tw_share' ) . '"> 
@@ -154,6 +159,7 @@ if( !class_exists( 'FestivalHeroModule' ) && class_exists( 'ImageModule' ) ) {
         'url' => $this->get_link_url( $data ),
         'fb_like' => ( !empty( $data[ $this->get_field_name( 'fb_like' ) ] ) && $data[ $this->get_field_name( 'fb_like' ) ] == 'true' ? true : false ),
         'fb_app_id' => ( !empty( $data[ $this->get_field_name( 'fb_app_id' ) ] ) ? esc_html( $data[ $this->get_field_name( 'fb_app_id' ) ] ) : '' ),
+        'fb_url' => ( !empty( $data[ $this->get_field_name( 'fb_url' ) ] ) ? esc_html( $data[ $this->get_field_name( 'fb_url' ) ] ) : '' ),
         'tw_share' => ( !empty( $data[ $this->get_field_name( 'tw_share' ) ] ) && $data[ $this->get_field_name( 'tw_share' ) ] == 'true' ? true : false ),
         'tw_account' => ( !empty( $data[ $this->get_field_name( 'tw_account' ) ] ) ? esc_html( $data[ $this->get_field_name( 'tw_account' ) ] ) : '' ),
         'tw_hashtag' => ( !empty( $data[ $this->get_field_name( 'tw_hashtag' ) ] ) ? esc_html( $data[ $this->get_field_name( 'tw_hashtag' ) ] ) : '' ),
