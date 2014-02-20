@@ -268,8 +268,9 @@ main > p > .btn {
   margin: 5px 0;
 }
 
+
 /* ==============
- Footer
+ FOOTER. MENU AND SOCIAL MENU
 ============== */
 
 footer {
@@ -279,71 +280,75 @@ footer {
   .row {
     padding-top: 20px;
   }
-
-  ul.social {
+  
+  ul.menu {
     list-style-type: none;
     padding: 0;
-    float: right;
-
-    li {
-      display: inline-block;
-      margin-bottom: 2px;
-      margin-right: 2px;
-    }
-
-    a {
-      display: block;
-      text-decoration: none;
-      width: 40px;
-      height: 40px;
-      text-align: center;
-    }
-
-    [class^="icon-"],[class*=" icon-"] {
-      font-size: 22px;
-      line-height: 40px;
-    }
-
-  }
-
-  .footer-nav {
-
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-
-      li {
-        display: inline-block;
-        padding: 0 12px 0 10px;
-        border-right-width: 1px;
-        border-right-style: solid;
-
-        &:first-child {
-          margin-left: 0;
-          padding-left: 0;
-        }
-
-        &:last-child {
-          border: 0;
-        }
-
-        a {
-          text-transform: uppercase;
-        }
-
+  
+    li.menu-item {
+      
+      &:after {
+        display: block;
+        clear: both;
+        content: ".";
+        text-indent: 9999px;
+        line-height: 1px;
+        height: 1px;
+        font-size: 1px;
+        margin-top: -1px;
       }
-
+    
+      a {
+        text-transform: uppercase;
+      
+        &[href *="facebook.com"],
+        &[href *="twitter.com"],
+        &[href *="instagram.com"],
+        &[href *="youtu.be"],
+        &[href *="youtube.com"] {
+          display: block;
+          margin-bottom: 2px;
+          line-height: 30px;
+        }
+      
+        &[href *="facebook.com"]:before,
+        &[href *="twitter.com"]:before,
+        &[href *="instagram.com"]:before,
+        &[href *="youtu.be"]:before,
+        &[href *="youtube.com"]:before {
+          font-family: 'edm';
+          display: block;
+          float: left;
+          background: #fff;
+          width: 30px;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          font-size: 20px;
+          margin-right: 8px;
+        }
+      
+        &[href *="facebook.com"]:before {
+          content: "\e696";
+        }
+        
+        &[href *="twitter.com"]:before {
+          content: "\e695";
+        }
+        
+        &[href *="instagram.com"]:before {
+          content: "\e750";
+        }
+        
+        &[href *="youtu.be"]:before,
+        &[href *="youtube.com"]:before {
+          content: "\e74a";
+        }
+      
+      }
+    
     }
-
-  }
-
-  p {
-    display: block;
-    clear: both;
-    text-align: right;
-    margin: 0;
-    text-transform: uppercase;
+  
   }
 
 }

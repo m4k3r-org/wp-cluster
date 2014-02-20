@@ -272,6 +272,36 @@ footer {
   .footer-nav li {
     border-right-color: @footer-color;
   }
+  
+  ul.menu {
+  
+    li.menu-item {
+    
+      a {
+      
+        &:hover {
+          &[href *="facebook.com"]:before,
+          &[href *="twitter.com"]:before,
+          &[href *="instagram.com"]:before,
+          &[href *="youtu.be"]:before,
+          &[href *="youtube.com"]:before {
+            background: darken( @header-bg-color, 10% );
+          }
+        }
+      
+        &[href *="facebook.com"]:before,
+        &[href *="twitter.com"]:before,
+        &[href *="instagram.com"]:before,
+        &[href *="youtu.be"]:before,
+        &[href *="youtube.com"]:before {
+          background: darken( @header-bg-color, 5% );
+        }
+      
+      }
+    
+    }
+  
+  }
 
 }
 
