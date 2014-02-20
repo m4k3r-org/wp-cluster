@@ -401,97 +401,6 @@ main .artists-list {
 }
 
 
-/* ==============
- Bottom Content
-============== */
-
-.bottom-content {
-  border-color: @gray-lighter;
-
-  ul {
-    > li {
-      border-color: @gray-lighter;
-      box-shadow-color: @gray-lighter;
-    }
-  }
-
-  .stream-items {
-    li {
-      &.stream-item {
-        .text {
-          color: @gray;
-}
-      }
-      .title {
-        a {
-          color: @gray;
-        }
-      }
-      .content {
-        color: @gray-light;
-      }
-      .network {
-        color: @dark-blue;
-      }
-    }
-  }
-
-  .blog-updates {
-    .blog-item {
-      .hr {
-        background: @default-color;
-      }
-      .featured-image {
-        border-bottom-color: @gray-lighter;
-      }
-      .category {
-        a {
-          color: @category-link;
-        }
-      }
-      .title {
-        a {
-          color: @gray;
-        }
-      }
-      .share {
-        a {
-          color: @gray-light;
-        }
-      }
-    }
-  }
-
-  .festival-news {
-    .news-item {
-      .image {
-        .category {
-          background: #fff;
-          a {
-            color: @category-link;
-          }
-        }
-        .hr {
-          background: @default-color;
-        }
-      }
-      .title {
-        a {
-          color: @gray;
-        }
-      }
-      .content {
-        color: @gray-light;
-      }
-      .share {
-        a {
-          color: @gray-light;
-        }
-      }
-    }
-  }
-}
-
 /* ============================
   Single Post content
 ============================ */
@@ -514,6 +423,7 @@ main.single .container-inner {
   
 
 }
+
 
 /* ============================
   Author
@@ -686,4 +596,114 @@ article.comments {
     }
   }
 
+}
+
+/* ============================
+  POSTS LOOP MODULE
+============================ */
+
+.posts-loop-module {
+
+  ul {
+  
+    > li {
+      border-color: @gray-lighter;
+      box-shadow-color: @gray-lighter;
+    }
+    
+  }
+  
+  .featured {
+  
+    li {
+      
+      .image {
+      
+        .category {
+          background: @content-bg;
+          a {
+            color: @category-link;
+          }
+        }
+        
+        .hr {
+          background: @default-color;
+        }
+        
+      }
+      
+      .text {
+        background: @content-bg;
+      }
+      
+      .title {
+      
+        a {
+          color: @gray;
+        }
+       
+      }
+      
+      .content {
+        color: @gray-light;
+      }
+      
+      .share {
+        a {
+          color: @gray-light;
+        }
+      }
+      
+    }
+    
+  }
+
+  .stream-items {
+    li {
+      &.stream-item {
+        .text {
+          color: @gray;
+        }
+      }
+      .title {
+        a {
+          color: @gray;
+        }
+      }
+      .content {
+        color: @gray-light;
+      }
+      .network {
+        color: @dark-blue;
+      }
+    }
+  }
+
+  .blog-updates {
+    .blog-item {
+      .hr {
+        background: @default-color;
+      }
+      .featured-image {
+        border-bottom-color: @gray-lighter;
+      }
+      .category {
+        a {
+          color: @category-link;
+        }
+      }
+      .title {
+        a {
+          color: @gray;
+        }
+      }
+      .share {
+        a {
+          color: @gray-light;
+        }
+      }
+    }
+  }
+
+  
 }

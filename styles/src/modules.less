@@ -460,3 +460,107 @@ main .cfct-module-callout {
     }
   }
 }
+
+
+/* ============================
+ Module: Post Loop
+============================ */
+
+.posts-loop-module {
+
+  ul {
+    padding-left: 0;
+    list-style: none;
+
+    > li {
+      border: 1px solid;
+      box-shadow: 0 1px 2px #dfdfdf;
+      margin-bottom: 40px;
+    }
+    
+    a {
+    
+      &:before,
+      &:after {
+        display: none !important;
+      }
+    
+    }
+      
+  }
+
+  .featured {
+      
+    li {
+
+      h4 {
+        margin: 0;
+      }
+
+      .category {
+
+        ul {
+
+          li {
+            display: inline-block;
+            border: 0;
+            margin: 0 10px 0 0;
+            padding: 0;
+            box-shadow: none;
+          }
+
+        }
+
+      }
+
+      .image {
+        position: relative;
+
+        .category {
+          position: absolute;
+          left: 20px;
+          right: 20px;
+          bottom: 0;
+          padding: 10px 20px;
+
+          a {
+            text-transform: uppercase;
+            font-size: 80%;
+          }
+        }
+
+        .hr {
+          height: 2px;
+          margin: 10px 0 0;
+          width: 40px;
+        }
+
+        img {
+          width: 100%;
+        }
+
+      }
+
+      .text {
+        padding: 20px 40px;
+
+        .title {
+          font-size: 150%;
+        }
+
+        .content {
+          font-size: 90%;
+        }
+
+        .share {
+          font-size: 70%;
+          text-transform: uppercase;
+        }
+
+      }
+
+    }
+  
+  }
+  
+}
