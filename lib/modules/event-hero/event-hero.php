@@ -110,7 +110,7 @@ if( !class_exists( 'EventHeroModule' ) ){
         }
       }
       /** Finally, go through data artists, and append them */
-      $event[ 'enabledArtists' ] = array_values( array_unique( array_merge( $artists, $event[ 'enabledArtists' ] ) ) );
+      $event[ 'enabledArtists' ] = array_values( array_unique( array_merge( (array) $artists, (array) $event[ 'enabledArtists' ] ) ) );
       /** Get event */
       $wp_query = new WP_Query( array(
         'post__in' => array( $event[ 'id' ] ),
