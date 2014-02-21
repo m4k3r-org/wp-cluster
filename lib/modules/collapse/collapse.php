@@ -13,6 +13,7 @@ if( !class_exists( 'CollapseModule' ) ) {
      * Construct
      */
     public function __construct(){
+      wp_enqueue_script('jquery-ui-accordion');
       $opts = array(
         'description' => __( '', wp_festival( 'domain' ) ),
         'icon' => plugins_url( '/icon.png', __DIR__ )
@@ -28,6 +29,12 @@ if( !class_exists( 'CollapseModule' ) ) {
 		 * @return array
 		 */
 		public function update( $new_data, $old_data ) {
+
+      echo '<pre>';
+      print_r( $new_data );
+      echo '</pre>';
+
+      die();
 
 			return $new_data;
 		}
