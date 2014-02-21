@@ -658,27 +658,25 @@ article.listing-post {
   }
   
   &.default {
-    .blog-item {
-      .hr {
-        background: @default-color;
+    .hr {
+      background: @default-color;
+    }
+    .featured-image {
+      border-bottom-color: @gray-lighter;
+    }
+    .category {
+      a {
+        color: @category-link;
       }
-      .featured-image {
-        border-bottom-color: @gray-lighter;
+    }
+    .title {
+      a {
+        color: @gray;
       }
-      .category {
-        a {
-          color: @category-link;
-        }
-      }
-      .title {
-        a {
-          color: @gray;
-        }
-      }
-      .share {
-        a {
-          color: @gray-light;
-        }
+    }
+    .share {
+      a {
+        color: @gray-light;
       }
     }
   }

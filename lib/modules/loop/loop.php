@@ -163,7 +163,10 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
       /** Now run our query */
       $wp_query = new WP_Query( $args );
       
-      $wp_query->data = $data;
+      $wp_query->data = array(
+        'template' => $data[ $this->get_field_name( 'template' ) ],
+      );
+      
       /** Get our template */
       ob_start();
       get_template_part( 'templates/aside/post-loop' );
@@ -257,6 +260,35 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
         $tax_defs[ $taxonomy->name ] = $taxonomy->label;
       }
       
+      $post_type = ( $data[ $this->get_field_name( 'post_type' ) ] ) ? $data[ $this->get_field_name( 'post_type' ) ] : $this->default_post_type;
+      $_taxes    = apply_filters( self::TAXONOMY_TYPES_FILTER, get_object_taxonomies( $post_type, 'objects' ), $this );
+
+      foreach( $_taxes as $tax_type => $taxonomy ) {
+        if( $tax_type == 'post_format' ) {
+          continue;
+        }
+        if( !is_array( $post_type ) ) {
+          $post_type = array( $post_type );
+        }
+        $matches = array_intersect( $post_type, $taxonomy->object_type );
+        if( count( $matches ) == count( $post_type ) ) {
+          $taxes[ $tax_type ] = $taxonomy;
+        }
+      }
+      unset( $_taxes );
+      
+      $show_title             = isset( $data[ $this->id_base . '-show_title' ] ) ? $data[ $this->id_base . '-show_title' ] : $this->default_show_title;
+      $show_meta_header       = isset( $data[ $this->id_base . '-show_meta_header' ] ) ? $data[ $this->id_base . '-show_meta_header' ] : $this->default_show_meta_header;
+      $show_meta_footer       = isset( $data[ $this->id_base . '-show_meta_footer' ] ) ? $data[ $this->id_base . '-show_meta_footer' ] : $this->default_show_meta_footer;
+      $show_thumbnail         = isset( $data[ $this->id_base . '-show_thumbnail' ] ) ? $data[ $this->id_base . '-show_thumbnail' ] : $this->default_show_thumbnail;
+      $show_post_content_type = isset( $data[ $this->id_base . '-show_post_content_type' ] ) ? $data[ $this->id_base . '-show_post_content_type' ] : $this->default_show_post_content_type;
+      
+      $templates = array(
+        'default' => __( 'Default', wp_festival( 'domain' ) ),
+        'featured' => __( 'Featured', wp_festival( 'domain' ) ),
+        //'slider' => __( 'Slider', wp_festival( 'domain' ) ),
+      );
+      
       /** Now get and return the template */
       ob_start();
       require_once( __DIR__ . '/admin/form.php' );
@@ -273,70 +305,6 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
       }
 
       return $taxonomies;
-    }
-
-    /**
-     * Show module taxonomy filter options
-     *
-     * @param array $data - saved module data
-     *
-     * @return string HTML
-     */
-    public function admin_form_taxonomy_filter( $data ) {
-      $html = '';
-
-      $post_type = ( $data[ $this->get_field_name( 'post_type' ) ] ) ? $data[ $this->get_field_name( 'post_type' ) ] : $this->default_post_type;
-      $_taxes    = apply_filters( self::TAXONOMY_TYPES_FILTER, get_object_taxonomies( $post_type, 'objects' ), $this );
-
-      $tax_defs = array();
-      foreach( $_taxes as $tax_type => $taxonomy ) {
-        if( $tax_type == 'post_format' ) {
-          continue;
-        }
-        if( !is_array( $post_type ) ) {
-          $post_type = array( $post_type );
-        }
-        $matches = array_intersect( $post_type, $taxonomy->object_type );
-        if( count( $matches ) == count( $post_type ) ) {
-          $taxes[ $tax_type ] = $taxonomy;
-        }
-      }
-      unset( $_taxes );
-
-      $html = '
-        <fieldset class="cfct-form-section">
-          <script type="text/javascript">
-            // you will not see this in the DOM, it gets parsed right away at ajax load
-            var tax_defs = ' . json_encode( $tax_defs ) . ';
-          </script>
-          <legend>' . __( 'Taxonomies', 'carrington-build' ) . '</legend>
-          <!-- taxonomy select -->
-          <div class="' . $this->id_base . '-input-wrapper ' . $this->id_base . '-post-category-select ' . $this->id_base . '-tax-wrapper">
-            <div id="' . $this->gfi( 'tax-select-inputs' ) . '" class="cfct-inline-els">
-              ' . $this->get_taxonomy_dropdown( $taxes, $data ) . '
-              <button id="' . $this->id_base . '-add-tax-button" class="button" type="button">' . __( 'Add Filter', 'carrington-build' ) . '</button>
-              <span class="' . $this->id_base . '-loading cfct-spinner" style="display: none;">Loading&hellip;</span>
-            </div>
-            <div id="' . $this->id_base . '-tax-filter-items" class="cfct-module-admin-repeater-block">
-              <ol class="' . ( empty( $data[ $this->gfn( 'tax_input' ) ] ) ? ' no-items' : '' ) . '">';
-      $html .= $this->get_taxonomy_filter_items( $data );
-      $html .= '
-              </ol>
-            </div>
-          </div>
-          ' . $this->get_filter_advanced_options( $data ) . '
-          <!-- /taxonomy select -->
-        </fieldset>
-        <fieldset class="cfct-form-section">
-          <legend>' . __( 'Author', 'carrington-build' ) . '</legend>
-          <!-- author select -->
-          <div class="cfct-inline-els">
-            ' . $this->get_author_dropdown( $data ) . '
-          </div>
-          <!-- /author select -->
-        </fieldset>';
-
-      return $html;
     }
 
     protected function get_filter_advanced_options( $data ) {
@@ -384,95 +352,6 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
         </div>';
 
       return $html;
-    }
-
-    /**
-     * Show module output display options
-     *
-     * @param array $data - saved module data
-     *
-     * @return string HTML
-     */
-    public function admin_form_display_options( $data ) {
-
-      $show_title             = isset( $data[ $this->id_base . '-show_title' ] ) ? $data[ $this->id_base . '-show_title' ] : $this->default_show_title;
-      $show_meta_header       = isset( $data[ $this->id_base . '-show_meta_header' ] ) ? $data[ $this->id_base . '-show_meta_header' ] : $this->default_show_meta_header;
-      $show_meta_footer       = isset( $data[ $this->id_base . '-show_meta_footer' ] ) ? $data[ $this->id_base . '-show_meta_footer' ] : $this->default_show_meta_footer;
-      $show_thumbnail         = isset( $data[ $this->id_base . '-show_thumbnail' ] ) ? $data[ $this->id_base . '-show_thumbnail' ] : $this->default_show_thumbnail;
-      $show_post_content_type = isset( $data[ $this->id_base . '-show_post_content_type' ] ) ? $data[ $this->id_base . '-show_post_content_type' ] : $this->default_show_post_content_type;
-
-      return '
-        <script type="text/javascript">jQuery(document).ready(function() {});</script>
-
-        <fieldset class="cfct-form-section">
-          <legend>' . __( 'Display', 'carrington-build' ) . '</legend>
-          <div class="' . $this->id_base . '-display-group-left">
-
-          <div class="cfct-inline-els cfct-show-titles">
-            <label for="' . $this->get_field_id( 'show_title' ) . '">' . __( 'Show Titles:', 'carrington-build' ) . '</label>
-            <input type="hidden" name="' . $this->get_field_name( 'show_title' ) . '" value="no"  />
-            <input type="checkbox" name="' . $this->get_field_name( 'show_title' ) . '" id="' . $this->get_field_name( 'show_title' ) . '" value="yes"' . checked( 'yes', $this->get_data( 'show_title', $data, $this->show_title ), false ) . ' />
-          </div>
-
-          <div class="cfct-inline-els cfct-show-meta">
-            <label for="' . $this->get_field_id( 'show_meta_header' ) . '">' . __( 'Show Header Meta:', 'carrington-build' ) . '</label>
-            <input type="hidden" name="' . $this->get_field_name( 'show_meta_header' ) . '" value="no"  />
-            <input type="checkbox" name="' . $this->get_field_name( 'show_meta_header' ) . '" id="' . $this->get_field_name( 'show_meta_header' ) . '" value="yes"' . checked( 'yes', $this->get_data( 'show_meta_header', $data, $this->show_meta_header ), false ) . ' />
-          </div>
-
-          <div class="cfct-inline-els cfct-show-meta">
-            <label for="' . $this->get_field_id( 'show_thumbnail' ) . '">' . __( 'Show Thumbnails:', 'carrington-build' ) . '</label>
-            <input type="hidden" name="' . $this->get_field_name( 'show_thumbnail' ) . '" value="no"  />
-            <input type="checkbox" name="' . $this->get_field_name( 'show_thumbnail' ) . '" id="' . $this->get_field_name( 'show_thumbnail' ) . '" value="yes"' . checked( 'yes', $this->get_data( 'show_thumbnail', $data, $this->show_thumbnail ), false ) . ' />
-          </div>
-
-          <div class="cfct-inline-els cfct-show-entry-advanced">
-            <label for="' . $this->get_field_id( 'show_post_content_type' ) . '">' . __( 'Post Excerpt:', 'carrington-build' ) . '</label>
-            <input type="radio" name="' . $this->get_field_name( 'show_post_content_type' ) . '"value="post_excerpt"' . checked( 'post_excerpt', $show_post_content_type, false ) . ' />
-          </div>
-
-          <div class="cfct-inline-els cfct-show-entry-advanced">
-            <label for="' . $this->get_field_id( 'show_post_content_type' ) . '">' . __( 'Full Content:', 'carrington-build' ) . '</label>
-            <input type="radio" name="' . $this->get_field_name( 'show_post_content_type' ) . '"value="post_content"' . checked( 'post_content', $show_post_content_type, false ) . ' />
-          </div>
-
-          <div class="cfct-inline-els cfct-show-entry-utility">
-            <label for="' . $this->get_field_id( 'show_meta_footer' ) . '">' . __( 'Show Meta Footer:', 'carrington-build' ) . '</label>
-            <input type="hidden" name="' . $this->get_field_name( 'show_meta_footer' ) . '" value="no"  />
-            <input type="checkbox" name="' . $this->get_field_name( 'show_meta_footer' ) . '" id="' . $this->get_field_name( 'show_meta_footer' ) . '" value="yes"' . checked( 'yes', $show_meta_footer, false ) . ' />
-            <span class="description">' . __( 'Information such the post\'s category, tags and comments.', 'carrington-build' ) . '</span>
-          </div>
-
-            <!-- num posts input -->
-            ' . $this->get_item_count_input( $data ) . '
-            <!-- / num posts input -->
-
-            <!-- num posts input -->
-            ' . $this->get_item_count_offset_input( $data ) . '
-            <!-- / num posts input -->
-          </div>
-          <!-- pagination -->
-          <div class="' . $this->id_base . '-display-group-right">
-            ' . $this->get_pagination_section( $data ) . '
-          </div>
-          <!-- /pagination -->
-        </fieldset>';
-    }
-
-    protected function get_item_count_input( $data ) {
-      return '
-        <div class="cfct-inline-els">
-          <label for="' . $this->get_field_id( 'item_count' ) . '">' . __( 'Number of Items:', 'carrington-build' ) . '</label>
-          <input class="cfct-number-field" id="' . $this->get_field_id( 'item_count' ) . '" name="' . $this->get_field_name( 'item_count' ) . '" type="text" value="' . esc_attr( $this->get_data( 'item_count', $data, $this->default_item_count ) ) . '" />
-        </div>';
-    }
-
-    protected function get_item_count_offset_input( $data ) {
-      return '
-        <div class="cfct-inline-els">
-          <label for="' . $this->get_field_id( 'item_offset' ) . '">' . __( 'Start at Item:', 'carrington-build' ) . '</label>
-          <input class="cfct-number-field" id="' . $this->get_field_id( 'item_offset' ) . '" name="' . $this->get_field_name( 'item_offset' ) . '" type="text" value="' . esc_attr( $this->get_data( 'item_offset', $data, $this->default_item_offset ) ) . '" />
-        </div>';
     }
 
     protected function get_taxonomy_filter_items( $data ) {
@@ -610,37 +489,6 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
       }
 
       return apply_filters( self::POST_TYPES_FILTER, $post_types, $this );
-    }
-
-    /**
-     * Pagination selection items
-     *
-     * @param array $data - module save data
-     *
-     * @return string HTML
-     */
-    protected function get_pagination_section( $data ) {
-      $checkbox_value = ( !empty( $data[ $this->get_field_name( 'show_pagination' ) ] ) ) ? $data[ $this->get_field_name( 'show_pagination' ) ] : '';
-      $url_value      = ( !empty( $data[ $this->get_field_name( 'next_pagination_link' ) ] ) ) ? $data[ $this->get_field_name( 'next_pagination_link' ) ] : '';
-      $text_value     = ( !empty( $data[ $this->get_field_name( 'next_pagination_text' ) ] ) ) ? $data[ $this->get_field_name( 'next_pagination_text' ) ] : '';
-
-      $html = '
-        <div class="cfct-inline-els">
-          <label for="' . $this->get_field_id( 'show_pagination' ) . '">' . __( 'Pagination Link', 'carrington-build' ) . '</label>
-          <input type="checkbox" name="' . $this->get_field_name( 'show_pagination' ) . '" id="' . $this->get_field_name( 'show_pagination' ) . '" value="yes"' . checked( 'yes', $checkbox_value, false ) . ' />
-        </div>
-        <div id="pagination-wrapper">
-          <div class="cfct-inline-els">
-            <label for="' . $this->get_field_id( 'next_pagination_link' ) . '">' . __( 'Link URL', 'carrington-build' ) . '</label>
-            <input type="text" name="' . $this->get_field_name( 'next_pagination_link' ) . '" id="' . $this->get_field_id( 'next_pagination_link' ) . '" value="' . $url_value . '" />
-          </div>
-          <div class="cfct-inline-els">
-            <label for="' . $this->get_field_id( 'next_pagination_text' ) . '">' . __( 'Link Text', 'carrington-build' ) . '</label>
-            <input type="text" name="' . $this->get_field_name( 'next_pagination_text' ) . '" id="' . $this->get_field_id( 'next_pagination_text' ) . '" value="' . $text_value . '" />
-          </div>
-        </div>';
-
-      return $html;
     }
 
 // Required

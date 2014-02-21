@@ -475,13 +475,60 @@ main .cfct-module-callout {
   
 }
 
-article.listing-post {
-  border: 1px solid;
+main article.listing-post {
+  border: 1px solid #eeeeee;
   box-shadow: 0 1px 2px #dfdfdf;
   margin-bottom: 40px;
   
   a:before, a:after {
     display: none !important;
+  }
+  
+  &.default {
+  
+    .hr {
+      height: 2px;
+      margin: 0 0 0 20px;
+      width: 40px;
+    }
+    .category {
+      padding: 10px 20px;
+
+      ul {
+
+        li {
+          display: inline-block;
+          border: 0;
+          margin: 0 10px 0 0;
+          padding: 0;
+          box-shadow: none;
+        }
+
+      }
+
+      a {
+        text-transform: uppercase;
+        font-size: 80%;
+        padding: 0;
+      }
+    }
+    .title {
+      padding: 0 20px;
+      font-size: 100%;
+      margin: 13px 0;
+      
+      a {
+        text-transform: none;
+      }
+      
+    }
+    .share {
+      padding-left: 20px;
+      font-size: 70%;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+  
   }
   
   &.featured {
@@ -519,6 +566,7 @@ article.listing-post {
         a {
           text-transform: uppercase;
           font-size: 80%;
+          padding: 0;
         }
       }
 

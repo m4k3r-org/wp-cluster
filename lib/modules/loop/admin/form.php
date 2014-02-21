@@ -1,5 +1,9 @@
 <div id="<?php echo $this->id_base; ?>-admin-form-wrapper">
-  
+  <style>
+    input.wauto {
+      width: auto !important;
+    }
+  </style>
   <fieldset class="cfct-form-section">
     <!-- title -->
     <legend><?php _e( 'Title', wp_festival( 'domain' ) ); ?></legend>
@@ -58,11 +62,78 @@
       name="<?php echo $this->gfn( 'tax_defs' ); ?>" 
       id="<?php echo $this->gfi( 'tax_defs' ); ?>" 
       disabled="disabled" 
-      value="<?php echo json_encode( $tax_defs ); ?>" />
+      value='<?php echo json_encode( $tax_defs ); ?>' />
   </fieldset>
   
+  <fieldset class="cfct-form-section">
+    <script type="text/javascript">
+      // you will not see this in the DOM, it gets parsed right away at ajax load
+      var tax_defs = <?php echo json_encode( $tax_defs ); ?>;
+    </script>
+    <legend><?php _e( 'Taxonomies', 'carrington-build' ); ?></legend>
+    <!-- taxonomy select -->
+    <div class="<?php echo $this->id_base; ?>-input-wrapper <?php echo $this->id_base; ?>-post-category-select <?php echo $this->id_base; ?>-tax-wrapper">
+      <div id="<?php echo $this->gfi( 'tax-select-inputs' ); ?>" class="cfct-inline-els">
+        <?php echo $this->get_taxonomy_dropdown( $taxes, $data ); ?>
+        <button id="<?php echo $this->id_base; ?>-add-tax-button" class="button" type="button"><?php _e( 'Add Filter', 'carrington-build' ); ?></button>
+        <span class="<?php echo $this->id_base; ?>-loading cfct-spinner" style="display: none;">Loading&hellip;</span>
+      </div>
+      <div id="<?php echo $this->id_base; ?>-tax-filter-items" class="cfct-module-admin-repeater-block">
+        <ol class="<?php echo ( empty( $data[ $this->gfn( 'tax_input' ) ] ) ? ' no-items' : '' ); ?>">
+          <?php echo $this->get_taxonomy_filter_items( $data ); ?>
+        </ol>
+      </div>
+    </div>
+    <?php echo $this->get_filter_advanced_options( $data ); ?>
+    <!-- /taxonomy select -->
+  </fieldset>
   
-  <?php echo $this->admin_form_taxonomy_filter( $data ); ?>
+  <fieldset class="cfct-form-section">
+    <legend><?php _e( 'Author', 'carrington-build' ); ?></legend>
+    <!-- author select -->
+    <div class="cfct-inline-els">
+      <?php echo $this->get_author_dropdown( $data ); ?>
+    </div>
+    <!-- /author select -->
+  </fieldset>
   
-  <?php echo $this->admin_form_display_options( $data ); ?>
+  <script type="text/javascript">jQuery(document).ready(function() {});</script>
+  <fieldset class="cfct-form-section">
+    <legend><?php _e( 'Display', 'carrington-build' ); ?></legend>
+    <div class="<?php echo $this->id_base; ?>-display-group-left">
+      <div class="cfct-inline-els">
+        <label for="<?php echo $this->get_field_id( 'template' ); ?>"><?php _e( 'Template:', wp_festival( 'domain' ) ); ?></label>
+        <select name="<?php echo $this->get_field_name( 'template' ); ?>" id="<?php echo $this->get_field_id( 'template' ); ?>">
+          <?php foreach( $templates as $k => $v ) : 
+            $selected = isset( $data[ $this->get_field_name( 'template' ) ] ) && $data[ $this->get_field_name( 'template' ) ] == $k ? 'selected="selected"' : ''; ?>
+            <option value="<?php echo $k ?>" <?php echo $selected; ?>><?php echo $v; ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <!-- num posts input -->
+      <div class="cfct-inline-els">
+        <label for="<?php echo $this->get_field_id( 'item_count' ); ?>"><?php _e( 'Number of Items:', 'carrington-build' ); ?></label>
+        <input 
+          class="cfct-number-field wauto" 
+          id="<?php echo $this->get_field_id( 'item_count' ); ?>" 
+          name="<?php echo $this->get_field_name( 'item_count' ); ?>" 
+          type="text" 
+          value="<?php echo esc_attr( $this->get_data( 'item_count', $data, $this->default_item_count ) ); ?>" />
+      </div>
+      <!-- / num posts input -->
+
+      <!-- num posts input -->
+      <div class="cfct-inline-els">
+        <label for="<?php echo $this->get_field_id( 'item_offset' ); ?>"><?php _e( 'Start at Item:', 'carrington-build' ); ?></label>
+        <input 
+          class="cfct-number-field wauto" 
+          id="<?php echo $this->get_field_id( 'item_offset' ); ?>" 
+          name="<?php echo $this->get_field_name( 'item_offset' ); ?>" 
+          type="text" 
+          value="<?php echo esc_attr( $this->get_data( 'item_offset', $data, $this->default_item_offset ) ); ?>" />
+      </div>
+      <!-- / num posts input -->
+    </div>
+  </fieldset>
+  
 </div>
