@@ -30,5 +30,6 @@ switch( wp_festival()->get_query_template() ) {
 <?php if( $title ) : ?>
   <section class="main-title">
     <h2><?php echo $title; ?></h2>
+    <span class="hr"></span>
   </section>
 <?php endif; ?>
