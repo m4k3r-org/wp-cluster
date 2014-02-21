@@ -278,13 +278,13 @@ footer {
   .row {
     padding-top: 20px;
   }
-  
+
   ul.menu {
     list-style-type: none;
     padding: 0;
-  
+
     li.menu-item {
-      
+
       &:after {
         display: block;
         clear: both;
@@ -295,12 +295,12 @@ footer {
         font-size: 1px;
         margin-top: -1px;
       }
-    
+
       a {
         display: inline-block;
         text-transform: uppercase;
         margin-bottom: 10px;
-      
+
         &[href *="facebook.com"],
         &[href *="twitter.com"],
         &[href *="instagram.com"],
@@ -310,7 +310,7 @@ footer {
           margin-bottom: 3px;
           line-height: 50px;
         }
-      
+
         &[href *="facebook.com"]:before,
         &[href *="twitter.com"]:before,
         &[href *="instagram.com"]:before,
@@ -327,30 +327,88 @@ footer {
           font-size: 24px;
           margin-right: 8px;
         }
-      
+
         &[href *="facebook.com"]:before {
           content: "\e696";
         }
-        
+
         &[href *="twitter.com"]:before {
           content: "\e695";
         }
-        
+
         &[href *="instagram.com"]:before {
           content: "\e750";
         }
-        
+
         &[href *="youtu.be"]:before,
         &[href *="youtube.com"]:before {
           content: "\e74d";
         }
-      
+
       }
-    
+
     }
-  
+
   }
 
+}
+
+.social-wrap {
+  ul.nav {
+    list-style-type: none;
+    padding: 0;
+
+    li.menu-item {
+
+      a {
+        display: inline-block;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+
+        &[href *="facebook.com"],
+        &[href *="twitter.com"],
+        &[href *="instagram.com"],
+        &[href *="youtu.be"],
+        &[href *="youtube.com"] {
+          display: block;
+          margin-bottom: 3px;
+          line-height: 50px;
+          overflow: hidden;
+        }
+
+        &[href *="facebook.com"]:before,
+        &[href *="twitter.com"]:before,
+        &[href *="instagram.com"]:before,
+        &[href *="youtu.be"]:before,
+        &[href *="youtube.com"]:before {
+          font-family: 'edm';
+          font-size: 22px;
+          line-height: 25px;
+          display: block;
+        }
+
+        &[href *="facebook.com"]:before {
+          content: "\e696";
+        }
+
+        &[href *="twitter.com"]:before {
+          content: "\e695";
+        }
+
+        &[href *="instagram.com"]:before {
+          content: "\e750";
+        }
+
+        &[href *="youtu.be"]:before,
+        &[href *="youtube.com"]:before {
+          content: "\e74d";
+        }
+
+      }
+
+    }
+
+  }
 }
 
 
@@ -362,7 +420,7 @@ footer {
 @media all {
   .section-header-banner {
     padding: 30px 0;
-  
+
     background-image: url('//media.umesouthpadre.com/media/2014/02/d229bbf31eaeebc7c88897732d8b932d14.jpg');
     background-repeat: no-repeat;
     background-position: center top;
