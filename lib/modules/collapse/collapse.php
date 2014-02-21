@@ -30,12 +30,6 @@ if( !class_exists( 'CollapseModule' ) ) {
 		 */
 		public function update( $new_data, $old_data ) {
 
-      echo '<pre>';
-      print_r( $new_data );
-      echo '</pre>';
-
-      die();
-
 			return $new_data;
 		}
 
@@ -48,9 +42,8 @@ if( !class_exists( 'CollapseModule' ) ) {
      * @return string HTML
      */
     public function display( $data ) {
-      ob_start();
-
-      return ob_get_clean();
+      wp_enqueue_script('jquery-ui-accordion');
+      return $this->load_view( $data );
     }
 
     /**
