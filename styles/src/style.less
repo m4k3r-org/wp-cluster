@@ -433,31 +433,22 @@ footer {
 /** UME Specific Styles for Header */
 @media all {
   .section-header-banner {
-    padding: 30px 0;
-
-    background-image: url('//media.umesouthpadre.com/media/2014/02/d229bbf31eaeebc7c88897732d8b932d14.jpg');
+    padding: 0;
+    border-top: 5px solid #7940dc;
+    background-image: url('//media.umesouthpadre.com/media/2014/02/9f5f90596e6517b2698b4a56112f08de1.jpg');
+    background-color: #13c8fc;
     background-repeat: no-repeat;
     background-position: center top;
-
-    //background-size: auto 100%;
-    background-color: #d4e7ee;
-    border-top: 10px solid #7940dc;
+    max-height: 405px;
     .module.element-event-logo {
       h1.logo-placeholder {
-        margin: 0;
+        margin: 0 0 20px 0;
         padding: 0;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 100;
+        text-align: center;
         a {
-          display: block;
-          text-indent: -9999px;
-          border: 0px solid red;
-          height: 48%;
-          margin: 5% 7% 0 21%;
+          img{
+            max-width: 100%;
+          }
         }
       }
     }
@@ -465,7 +456,7 @@ footer {
       margin: 0;
       margin-top: 20px;
       padding: 10px;
-      background-color: rgba(77, 13, 118, 0.25);
+      background-color: rgba(4, 154, 224, 0.5);
       .cfct-mod-content {
         position: relative;
         padding-bottom: 39%;
@@ -480,14 +471,18 @@ footer {
       }
     }
     .module.element-sponsors {
-      margin: 0 auto;
-      padding: 0 0 20px 0;
+      margin: 20px auto 10px auto;
+      padding: 0;
       text-align: center;
       i.icon {
         color: #5a61a9;
-        font-size: 25px;
-        line-height: 25px;
+        font-size: 30px;
+        line-height: 50px;
         margin-left: 10px;
+        vertical-align: middle;
+        &.icon-disco-donnie-presents{
+          font-size: 50px;
+        }
         &:first-child {
           margin-left: 0;
         }
@@ -515,7 +510,7 @@ footer {
         line-height: 20px;
       }
       address {
-        background-color: rgba(77, 13, 118, 0.25);
+        background-color: rgba(4, 154, 224, 0.5);
         color: white;
         text-transform: uppercase;
         text-align: center;
@@ -524,24 +519,19 @@ footer {
         margin-bottom: 30px;
       }
       p.buy-tickets {
-        //margin: 0 7% 15px 21%;
         text-align: center;
         a {
-          z-index: 101;
-          position: relative;
-          background-color: #cb22a5;
+          background-color: #ef0d95;
           border-width: 0;
           text-transform: uppercase;
           border-radius: 0px;
-          padding: 0.7em 1.8em;
+          padding: 20px 60px;
         }
       }
       p.ticket-information {
         //margin: 0 7% 30px 21%;
         text-align: center;
         a {
-          z-index: 101;
-          position: relative;
           color: white;
           text-decoration: none;
           text-transform: uppercase;
@@ -549,59 +539,30 @@ footer {
             color: white;
             text-decoration: none;
           }
+          em{
+            position: relative;
+            top: 2px;
+          }
         }
       }
     }
   }
 }
-
-@media (min-width: 992px) {
+@media (max-width: @screen-xs-max) {
   .section-header-banner {
-    .module.element-event-logo {
-      h1.logo-placeholder {
-        a {
-          //margin: 5% 7% 0 31%;
-          height: 41%;
-        }
-      }
+    max-height: none;
+    background-image: none;
+    .module.element-countdown{
+      display: none !important;
     }
     .module.element-sponsors {
-    }
-    .module.element-event-meta {
-      p.buy-tickets {
-        //margin-left: 31%;
-        //margin-right: 7%;
-      }
-      p.ticket-information {
-        //margin-left: 31%;
-        //margin-right: 7%;
-      }
-    }
-  }
-}
-
-@media (min-width: 1200px) {
-  .section-header-banner {
-    .module.element-event-logo {
-      h1.logo-placeholder {
-        a {
-          //margin: 5% 6% 0 42%;
-          height: 40%;
+      i.icon {
+        font-size: 15px;
+        line-height: 25px;
+        &.icon-disco-donnie-presents{
+          font-size: 25px;
         }
       }
     }
-    .module.element-sponsors {
-    }
-    .module.element-event-meta {
-      p.buy-tickets {
-        //margin-left: 42%;
-        //margin-right: 6%;
-      }
-      p.ticket-information {
-        //margin-left: 42%;
-        //margin-right: 6%;
-      }
-    }
   }
 }
-
