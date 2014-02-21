@@ -29,6 +29,6 @@
   </div>
 </section>
 
-<?php get_template_part( 'templates/article/author', wp_festival()->get_query_template() ); ?>
+<?php //get_template_part( 'templates/article/author', wp_festival()->get_query_template() ); ?>
 <?php comments_template(); ?>
 
