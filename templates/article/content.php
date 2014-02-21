@@ -3,7 +3,7 @@
  * The default template for displaying content. Used for both single and index/archive/search.
  *
  * @author Usability Dynamics
- * @module festival  
+ * @module festival
  * @since festival 0.1.0
  */
 ?>
@@ -28,4 +28,7 @@
   <?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', wp_festival( 'domain' ) ) ); ?>
   </div>
 </section>
+
+<?php get_template_part( 'templates/article/author', wp_festival()->get_query_template() ); ?>
+<?php comments_template(); ?>
 
