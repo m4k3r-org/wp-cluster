@@ -31,5 +31,13 @@ require( [ '/assets/models/locale/', '/assets/models/settings/', 'jquery', 'skro
 
   });
 
+  /**
+   * Ok for all eventbrite links, we're going to add the Google Analytics cross domain tracking code
+   */
+  jQuery( 'a' ).click( function( e ){
+    //console.log( 'hi' );
+    //debugger;
+  } );
+
 });
 
