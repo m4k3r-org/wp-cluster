@@ -381,22 +381,12 @@ footer {
         text-transform: uppercase;
         margin-bottom: 10px;
 
-        &[href *="facebook.com"],
-        &[href *="twitter.com"],
-        &[href *="instagram.com"],
-        &[href *="youtu.be"],
-        &[href *="youtube.com"] {
-          display: block;
-          margin-bottom: 3px;
-          line-height: 50px;
-          overflow: hidden;
-        }
+        display: block;
+        margin-bottom: 3px;
+        line-height: 50px;
+        overflow: hidden;
 
-        &[href *="facebook.com"]:before,
-        &[href *="twitter.com"]:before,
-        &[href *="instagram.com"]:before,
-        &[href *="youtu.be"]:before,
-        &[href *="youtube.com"]:before {
+        &:before {
           font-family: 'edm';
           font-size: 22px;
           line-height: 25px;
@@ -418,6 +408,14 @@ footer {
         &[href *="youtu.be"]:before,
         &[href *="youtube.com"]:before {
           content: "\e74d";
+        }
+
+        &[href *="google.com"]:before {
+          content: "\e6c1";
+        }
+
+        &[href *="eventbrite.com"]:before {
+          content: "\e6c2";
         }
 
       }
