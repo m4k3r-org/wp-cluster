@@ -216,45 +216,6 @@ main .right-sidebar-section .module {
 
 
 /* ==============
- Carousel
-============== */
-
-.carousel-inner {
-
-  .item {
-
-    span.date {
-      color: @text-gray-color;
-    }
-
-    span.hr {
-      background-color: @text-gray-color;
-    }
-
-    h5 {
-      color: @default-color;
-    }
-
-    p {
-      color: @text-gray-color;
-    }
-
-  }
-
-}
-
-.carousel-indicators {
-  bottom: 0px;
-
-  li {
-    background-color: @carousel-indicator-bg;
-  }
-  .active {
-    background-color: @carousel-indicator-active-bg;
-  }
-}
-
-/* ==============
  Footer
 ============== */
 
@@ -598,10 +559,18 @@ article.comments {
   POSTS LOOP MODULE
 ============================ */
 
+.posts-loop-module {
+
+  .hr {
+    background: @content-title-color;
+  }
+  
+}
+
 article.listing-post {
   border-color: @gray-lighter;
   box-shadow-color: @gray-lighter;
-
+  
   // listing-post-featured template
   &.featured {
   
@@ -681,4 +650,44 @@ article.listing-post {
     }
   }
   
+}
+
+
+/* ==============
+ Carousel
+============== */
+
+.carousel-inner {
+
+  .item {
+
+    span.date {
+      color: @text-gray-color;
+    }
+
+    span.hr {
+      background-color: @text-gray-color;
+    }
+
+    h5 {
+      color: @default-color;
+    }
+
+    p {
+      color: @text-gray-color;
+    }
+
+  }
+
+}
+
+.carousel-indicators {
+  bottom: 0px;
+
+  li {
+    background-color: @carousel-indicator-bg;
+  }
+  .active {
+    background-color: @carousel-indicator-active-bg;
+  }
 }

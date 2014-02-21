@@ -22,6 +22,7 @@ extract( $data = wp_festival()->extend( array(
   <div class="row">
     <div class="col-md-12">
         <h3><?php echo $title; ?><br/><small><?php echo $content; ?></small></h3>
+        <span class="hr"></span>
         <ul>
           <?php //wp_festival()->set_excerpt_filter( '25', 'length' ); ?>
           <?php while( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
