@@ -23,6 +23,7 @@
     }
   ],
   "require": {
+    "monolog/monolog": "master",
     "usabilitydynamics/lib-settings": "master",
     "usabilitydynamics/lib-ui": "master",
     "usabilitydynamics/lib-utility": "master",
