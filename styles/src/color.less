@@ -598,84 +598,66 @@ article.comments {
   POSTS LOOP MODULE
 ============================ */
 
-.posts-loop-module {
+article.listing-post {
+  border-color: @gray-lighter;
+  box-shadow-color: @gray-lighter;
 
-  ul {
+  // listing-post-featured template
+  &.featured {
   
-    > li {
-      border-color: @gray-lighter;
-      box-shadow-color: @gray-lighter;
-    }
-    
-  }
-  
-  .featured {
-  
-    li {
-      
-      .image {
-      
-        .category {
-          background: @content-bg;
-          a {
-            color: @category-link;
-          }
-        }
-        
-        .hr {
-          background: @default-color;
-        }
-        
-      }
-      
-      .text {
+    .image {
+      .category {
         background: @content-bg;
-      }
-      
-      .title {
-      
         a {
-          color: @gray;
+          color: @category-link;
         }
-       
       }
-      
-      .content {
+      .hr {
+        background: @default-color;
+      }
+    }
+    
+    .text {
+      background: @content-bg;
+    }
+    
+    .title {
+      a {
+        color: @gray;
+      }
+    }
+    
+    .content {
+      color: @gray-light;
+    }
+    
+    .share {
+      a {
         color: @gray-light;
       }
-      
-      .share {
-        a {
-          color: @gray-light;
-        }
-      }
-      
     }
     
   }
-
-  .stream-items {
-    li {
-      &.stream-item {
-        .text {
-          color: @gray;
-        }
-      }
-      .title {
-        a {
-          color: @gray;
-        }
-      }
-      .content {
-        color: @gray-light;
-      }
-      .network {
-        color: @dark-blue;
+  
+  // listing-post-stream template
+  &.stream {
+    .text {
+      color: @gray;
+    }
+    .title {
+      a {
+        color: @gray;
       }
     }
+    .content {
+      color: @gray-light;
+    }
+    .network {
+      color: @dark-blue;
+    }
   }
-
-  .blog-updates {
+  
+  &.default {
     .blog-item {
       .hr {
         background: @default-color;
@@ -700,6 +682,5 @@ article.comments {
       }
     }
   }
-
   
 }

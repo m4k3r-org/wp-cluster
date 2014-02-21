@@ -8,7 +8,7 @@
  */
 
 ?>
-<article class="post-featured">
+<article class="listing-post featured">
   <div class="image">
     <img class="img-responsive" src="<?php echo wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '738', 'height' => '415' ) ); ?>" />
     <h4 class="category">
