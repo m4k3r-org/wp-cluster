@@ -1,6 +1,6 @@
 <?php
 /**
- * The Template for displaying all single posts.
+ * Archive template
  *
  * @author Usability Dynamics
  * @module festival

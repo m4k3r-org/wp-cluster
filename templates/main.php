@@ -6,31 +6,36 @@
  */
 ?>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="container">
-        <div class="row">
+<?php get_template_part( 'templates/header' ); ?>
 
-            <?php wp_festival()->section( 'left-sidebar' ); ?>
-            <?php wp_festival()->section( 'right-sidebar' ); ?>
+<main id="main" class="main" role="main">
+  <?php wp_festival()->section( 'above-content' ); ?>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container">
+          <div class="row">
 
-            <?php if( have_posts() ) : ?>
-              <div <?php echo post_class(); ?>>
-                <section class="container-inner">
-                <?php while( have_posts() ) : the_post(); ?>
-                  <?php get_template_part( 'templates/article/content', wp_festival()->get_query_template() ); ?>
-                <?php endwhile; ?>
-                <section>
-              </div>
-            <?php endif; ?>
+              <?php wp_festival()->section( 'left-sidebar' ); ?>
+              <?php wp_festival()->section( 'right-sidebar' ); ?>
 
-          </div>
+              <?php if( have_posts() ) : ?>
+                <div <?php echo post_class(); ?>>
+                  <?php get_template_part( 'templates/aside/title' ); ?>
+                  <section class="container-inner">
+                  <?php while( have_posts() ) : the_post(); ?>
+                    <?php get_template_part( 'templates/article/content', wp_festival()->get_query_template() ); ?>
+                  <?php endwhile; ?>
+                  <section>
+                </div>
+              <?php endif; ?>
+
+            </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <?php wp_festival()->section( 'below-content' ); ?>
+</main>
 
-<?php //get_template_part( 'templates/article/listing' ); ?>
-<?php //get_template_part( 'templates/section/articles' ); ?>
-<?php //get_template_part( 'templates/section/grid-artist' ); ?>
+<?php get_template_part( 'templates/footer' ); ?>

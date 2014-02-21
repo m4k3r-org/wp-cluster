@@ -25,7 +25,7 @@ get_template_part( 'templates/header', get_post_type() );
         <?php if( have_posts() ) : ?>
           <section class="container-inner">
           <?php while( have_posts() ) : the_post(); ?>
-            <?php get_template_part( 'templates/article/content', get_post_type() ); ?>
+            <?php get_template_part( 'templates/article/content-page' ); ?>
           <?php endwhile; ?>
           <section>
         <?php endif; ?>
