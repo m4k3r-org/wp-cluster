@@ -11,16 +11,17 @@ global $wp_query;
 
 extract( $data = wp_festival()->extend( array(
   'template' => 'default',
+  'title' => '',
+  'content' => '',
 ), (array)$wp_query->data ) );
-
-//var_dump($template);
 
 ?>
 
+<?php if( $wp_query->have_posts() ) : ?>
 <div class="posts-loop-module">
   <div class="row">
     <div class="col-md-12">
-      <?php if( $wp_query->have_posts() ) : ?>
+        <h3><?php echo $title; ?><br/><small><?php echo $content; ?></small></h3>
         <ul>
           <?php //wp_festival()->set_excerpt_filter( '25', 'length' ); ?>
           <?php while( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
@@ -30,7 +31,7 @@ extract( $data = wp_festival()->extend( array(
           <?php endwhile; ?>
           <?php //wp_festival()->set_excerpt_filter( false, 'length' ); ?>
         </ul>
-      <?php endif; ?>
     </div>
   </div>
 </div>
+<?php endif; ?>

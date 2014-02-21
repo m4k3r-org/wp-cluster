@@ -7,13 +7,22 @@
   <fieldset class="cfct-form-section">
     <!-- title -->
     <legend><?php _e( 'Title', wp_festival( 'domain' ) ); ?></legend>
-    <span class="cfct-input-full">
+    <div class="cfct-inline-els">
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', wp_festival( 'domain' ) ); ?></label>
       <input 
         type="text" 
-        name="<?php echo $this->get_field_id( 'title' ); ?>" 
+        name="<?php echo $this->get_field_name( 'title' ); ?>" 
         id="<?php echo $this->get_field_id( 'title' ); ?>" 
         value="<?php echo esc_attr( $data[ $this->get_field_name( 'title' ) ] ); ?>" />
-    </span>
+    </div>
+    <div class="cfct-inline-els">
+      <label for="<?php echo $this->get_field_id( 'content' ); ?>"><?php _e( 'Tagline:', wp_festival( 'domain' ) ); ?></label>
+      <input 
+        type="text"
+        name="<?php echo $this->get_field_name( 'content' ); ?>" 
+        id="<?php echo $this->get_field_id( 'content' ); ?>"
+        value="<?php echo esc_attr( $data[ $this->get_field_name( 'content' ) ] ); ?>" />
+    </div>
     <!-- /title -->
   </fieldset>
   

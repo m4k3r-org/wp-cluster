@@ -135,47 +135,25 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
      * @return string HTML
      */
     public function display( $data ) {
-      
-      /*
-      $data = $this->migrate_data( $data );
-      $args = $this->set_display_args( $data );
-      // put it all together now
-      $title = ( !empty( $data[ $this->get_field_name( 'title' ) ] ) ? esc_html( $data[ $this->get_field_name( 'title' ) ] ) : '' );
-      $content = $this->get_custom_loop( $data, apply_filters( $this->id_base . '-query-args', $args, $data ) );
-      if( ( !empty( $data[ $this->get_field_name( 'show_pagination' ) ] ) ? $data[ $this->get_field_name( 'show_pagination' ) ] : '' ) == 'yes' && !empty( $data[ $this->get_field_name( 'next_pagination_link' ) ] ) ) {
-        $pagination_url  = $data[ $this->get_field_name( 'next_pagination_link' ) ];
-        $pagination_text = esc_html( $data[ $this->get_field_name( 'next_pagination_text' ) ] );
-      } else {
-        $pagination_url = $pagination_text = null;
-      }
-      return $this->load_view( $data, compact( 'title', 'content', 'pagination_url', 'pagination_text' ) );
-      //*/
-      
-      $data = $this->migrate_data( $data );
-      $args = $this->set_display_args( $data );
-      
-      //echo "<pre>"; print_r( $args ); echo "</pre>";
-      
       global $wp_query;
+      $data = $this->migrate_data( $data );
+      $args = $this->set_display_args( $data );
       /** Backup wp_query */
       $_wp_query = $wp_query;
-      
       /** Now run our query */
       $wp_query = new WP_Query( $args );
-      
       $wp_query->data = array(
         'template' => $data[ $this->get_field_name( 'template' ) ],
+        'title' => $data[ $this->get_field_name( 'title' ) ],
+        'content' => $data[ $this->get_field_name( 'content' ) ],
       );
-      
       /** Get our template */
       ob_start();
-      get_template_part( 'templates/aside/post-loop' );
+      get_template_part( 'templates/aside/post-loop', $wp_query->data[ 'template' ] );
       /** Restore our wp_query */
       $wp_query = $_wp_query;
       /** Return our string */
       return ob_get_clean();
-      
-      
     }
 
     protected function set_display_args( $data ) {
@@ -286,7 +264,7 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
       $templates = array(
         'default' => __( 'Default', wp_festival( 'domain' ) ),
         'featured' => __( 'Featured', wp_festival( 'domain' ) ),
-        //'slider' => __( 'Slider', wp_festival( 'domain' ) ),
+        'slider' => __( 'Slider', wp_festival( 'domain' ) ),
       );
       
       /** Now get and return the template */
