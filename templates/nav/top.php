@@ -13,11 +13,14 @@
     <div class="social-wrap">
       <a class="btn btn-default" role="button" href="#"><?php _e( 'Buy Tickets', wp_festival( 'domain' ) ); ?></a>
       <div class="no-sticky social-flex">
-        <?php get_template_part( 'templates/aside/social', get_post_type() ); ?>
+        <?php //get_template_part( 'templates/aside/social', get_post_type() ); ?>
+        <?php echo wp_festival()->nav( 'social', 2 ); ?>
       </div>
       <div class="sticky social-flex">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".social-collapse"><span class="icon icon-plus"></span></button>
-        <div class="social-collapse collapse"><?php get_template_part( 'templates/aside/social', get_post_type() ); ?></div>
+        <div class="social-collapse collapse">
+          <?php get_template_part( 'templates/aside/social', get_post_type() ); ?>
+        </div>
       </div>
     </div>
 
