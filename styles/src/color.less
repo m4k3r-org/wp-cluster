@@ -259,14 +259,10 @@ main .right-sidebar-section .module {
 ============== */
 
 footer {
-  background-color: @header-bg-color;
+  background-color: @footer-bg-color;
 
   span, div, p, a, a:hover {
     color: @footer-color;
-  }
-
-  .social a {
-    background-color: @footer-social-button;
   }
 
   .footer-nav li {
@@ -285,7 +281,7 @@ footer {
           &[href *="instagram.com"]:before,
           &[href *="youtu.be"]:before,
           &[href *="youtube.com"]:before {
-            background: darken( @header-bg-color, 10% );
+            background-color: darken( @footer-social-button, 10% );
           }
         }
       
@@ -294,7 +290,7 @@ footer {
         &[href *="instagram.com"]:before,
         &[href *="youtu.be"]:before,
         &[href *="youtube.com"]:before {
-          background: darken( @header-bg-color, 5% );
+          background-color: @footer-social-button;
         }
       
       }
