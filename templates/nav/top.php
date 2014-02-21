@@ -19,7 +19,8 @@
       <div class="sticky social-flex">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".social-collapse"><span class="icon icon-plus"></span></button>
         <div class="social-collapse collapse">
-          <?php get_template_part( 'templates/aside/social', get_post_type() ); ?>
+          <?php //get_template_part( 'templates/aside/social', get_post_type() ); ?>
+          <?php echo wp_festival()->nav( 'social', 2 ); ?>
         </div>
       </div>
     </div>
