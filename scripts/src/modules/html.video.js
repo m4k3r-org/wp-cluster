@@ -4,7 +4,7 @@
  * @note Can not require "udx.storage" here.
  */
 define( 'html.video', function() {
-  console.log( 'html.video', 'loaded' );
+//  console.log( 'html.video', 'loaded' );
 
   var trailer = document.getElementById( 'trailer-video' );
   var banner = document.getElementById( 'banner' );

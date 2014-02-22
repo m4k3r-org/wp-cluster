@@ -5,7 +5,7 @@
  *
  */
 require( [ 'html.picture', 'html.video' ], function Bootstrap() {
-  console.debug( 'app.bootstrap' );
+//  console.debug( 'app.bootstrap' );
 
   require.config({
     paths: {

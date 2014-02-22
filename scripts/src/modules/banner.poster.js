@@ -3,7 +3,7 @@
  *
  */
 define( 'banner.poster', [ 'udx.storage' ], function( Storage ) {
-  console.debug( 'banner.poster', 'loaded' );
+//  console.debug( 'banner.poster', 'loaded' );
 
   var storage = Storage.create( 'app.state' );
 

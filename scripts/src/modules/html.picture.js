@@ -3,7 +3,7 @@
  *
  */
 define( 'html.picture', function( exports, module ) {
-  console.log( 'html.picture', 'loaded' );
+//  console.log( 'html.picture', 'loaded' );
 
 });
 

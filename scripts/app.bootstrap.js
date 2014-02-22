@@ -1,10 +1,9 @@
-
 /**
  * HTML Picture Element
  *
  */
 define( 'html.picture', ['require','exports','module'],function( exports, module ) {
-  console.log( 'html.picture', 'loaded' );
+//  console.log( 'html.picture', 'loaded' );
 
 });
 
@@ -15,7 +14,7 @@ define( 'html.picture', ['require','exports','module'],function( exports, module
  * @note Can not require "udx.storage" here.
  */
 define( 'html.video', [],function() {
-  console.log( 'html.video', 'loaded' );
+//  console.log( 'html.video', 'loaded' );
 
   var trailer = document.getElementById( 'trailer-video' );
   var banner = document.getElementById( 'banner' );
@@ -127,7 +126,7 @@ define( 'html.video', [],function() {
  *
  */
 define( 'banner.poster', [ 'udx.storage' ], function( Storage ) {
-  console.debug( 'banner.poster', 'loaded' );
+//  console.debug( 'banner.poster', 'loaded' );
 
   var storage = Storage.create( 'app.state' );
 
@@ -153,7 +152,7 @@ define( 'banner.poster', [ 'udx.storage' ], function( Storage ) {
  *
  */
 require( [ 'html.picture', 'html.video' ], function Bootstrap() {
-  console.debug( 'app.bootstrap' );
+//  console.debug( 'app.bootstrap' );
 
   require.config({
     paths: {
@@ -172,3 +171,4 @@ require( [ 'html.picture', 'html.video' ], function Bootstrap() {
 
 
 });
+
