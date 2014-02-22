@@ -635,13 +635,7 @@ namespace UsabilityDynamics {
       $this->scripts(array(
         'app.admin'             => array( 'url' => content_url( '/assets/scripts/app.admin.js' ), 'deps' => array( 'app.require' ) ),
         'app.bootstrap'         => array( 'url' => content_url( '/assets/scripts/app.bootstrap.js' ), 'deps' => array( 'app.require' ) ),
-        'app.main'              => array( 'url' => content_url( '/assets/scripts/app.main.js' ), 'deps' => array( 'app.require', 'app.bootstrap' ) ),
-        'jquery.elasticsearch'  => content_url( '/assets/scripts/jquery.new.ud.elasticsearch.js' ),
-        'jquery.fitvids'        => content_url( '/assets/scripts/jquery.fitvids.js' ),
-        'jquery.cookie'         => content_url( '/assets/scripts/jquery.cookie.js' ),
-        'jquery.flexslider'     => content_url( '/assets/scripts/jquery.flexslider.js' ),
-        'jquery.jqtransform'    => content_url( '/assets/scripts/jquery.jqtransform.js' ),
-        'jquery.simplyscroll'   => content_url( '/assets/scripts/jquery.simplyscroll.js' )
+        'app.main'              => array( 'url' => content_url( '/assets/scripts/app.main.js' ), 'deps' => array( 'app.require', 'app.bootstrap' ) )
       ));
 
       // Declare Public Styles.
