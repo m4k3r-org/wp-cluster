@@ -162,7 +162,7 @@
     }
   }
   #menufication-top {
-    top: 28px;
+    //top: 28px;
   }
 }
 
@@ -842,4 +842,23 @@
   .menufication-non-css3-multiple-left {
     left: 0 !important;
   }
+}
+
+
+// Fix for double Menufication loading
+#menufication-inner-wrap {
+  
+  #menufication-scroll-container,
+  #menufication-top {
+    display: none !important;
+  }
+  
+  #menufication-page-holder {
+  
+    #menufication-outer-wrap {
+      padding-top: 0 !important;
+    }
+  
+  }
+
 }
