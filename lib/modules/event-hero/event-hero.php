@@ -118,10 +118,10 @@ if( !class_exists( 'EventHeroModule' ) ){
       ) );
       /** Add map for classes and images based on columns amount */
       $mapping = array(
-        1   => array( 'col-md-2', 'col-md-offset-5', '250', '220' ), // array( 'column_class', 'first_column_class', 'image_width', 'image_height' )
-        2   => array( 'col-md-2', 'col-md-offset-4', '250', '220' ),
-        3   => array( 'col-md-2', 'col-md-offset-3', '250', '220' ),
-        4   => array( 'col-md-2', 'col-md-offset-2', '250', '220' ),
+        1   => array( 'col-md-4', 'col-md-offset-4', '250', '220' ), // array( 'column_class', 'first_column_class', 'image_width', 'image_height' )
+        2   => array( 'col-md-4', 'col-md-offset-2', '250', '220' ),
+        3   => array( 'col-md-4', 'col-md-offset-0', '250', '220' ),
+        4   => array( 'col-md-3', 'col-md-offset-0', '250', '220' ),
         5   => array( 'col-md-2', 'col-md-offset-1', '250', '220' ),
         6   => array( 'col-md-2', 'col-md-offset-0', '250', '220' ),
         8   => array( 'col-md-1', 'col-md-offset-2', '250', '220' ),
