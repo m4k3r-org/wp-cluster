@@ -38,7 +38,7 @@ require( [ '/assets/models/locale/', '/assets/models/settings/', 'jquery', 'skro
       }
   
       jQuery( ".navbar-top" ).sticky({
-        topSpacing: st
+        //topSpacing: st
       });
   
     });
