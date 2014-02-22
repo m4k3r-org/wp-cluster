@@ -106,6 +106,9 @@ namespace UsabilityDynamics\Cluster {
         add_filter( 'user_admin_url', array( &$this, 'user_admin_url' ), 100, 2 );
         add_filter( 'network_admin_url', array( &$this, 'network_admin_url' ), 100, 2 );
 
+        add_filter( 'stylesheet_directory_uri', array( &$this, 'stylesheet_directory_uri' ), 100, 3 );
+        add_filter( 'template_directory_uri', array( &$this, 'template_directory_uri' ), 100, 3 );
+
         // URLs
         self::$home_url          = get_home_url();
         self::$site_url          = get_site_url();
@@ -119,10 +122,38 @@ namespace UsabilityDynamics\Cluster {
         self::$self_admin_url    = self_admin_url();
         self::$user_admin_url    = user_admin_url();
 
-        // die( json_encode( $this->_debug() ) );
+if( $_SERVER['REMOTE_ADDR'] === '68.118.5.140') {
+//        die( json_encode( $this->_debug() ) );
+        }
 
       }
 
+/**
+ * Fix DDP problem
+ */
+public function template_directory_uri( $template_dir_uri, $template, $theme_root_uri ) {
+
+  if( strpos( $template_dir_uri, get_home_url() ) === 0 ) {
+    return $template_dir_uri;    
+  }
+
+    return untrailingslashit( get_home_url() ) . '/' . $template_dir_uri;    
+}
+
+
+/**
+ * Fix DDP problem
+ */
+public function stylesheet_directory_uri( $stylesheet_dir_uri, $stylesheet, $theme_root_uri ) {
+
+  if( strpos( $stylesheet_dir_uri, get_home_url() ) === 0 ) {
+    return $stylesheet_dir_uri;    
+  }
+
+    return untrailingslashit( get_home_url() ) . '/' . $stylesheet_dir_uri;    
+  
+  
+}
       /**
        * Return URL Mapping Array
        *

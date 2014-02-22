@@ -50,6 +50,9 @@
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^(assets|media)/(.*)$ /static/storage/%{SERVER_NAME}/$1/$2 [L]
 
+  # Direct
+  # RewriteRule ^/storage/(.*)$ /static/%{REQUEST_URI} [NC,QSA,L]
+
   # Rewrite other media URLs
   RewriteRule ^system/files/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
   RewriteRule ^system/media/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
@@ -57,6 +60,7 @@
   RewriteRule ^uploads/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
 
   # Look to rewrite for the root specifically to index.html if it exists
+  # RewriteCond %{QUERY_STRING} ^.*cfct_action.*$
   RewriteCond %{DOCUMENT_ROOT}/static/storage/%{SERVER_NAME}/static/index\.html -f
   RewriteRule ^$ /static/storage/%{SERVER_NAME}/static/index.html [NC,QSA,L]
   
