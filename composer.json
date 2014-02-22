@@ -25,6 +25,9 @@
     "UsabilityDynamics/lib-wp-shortcode": "master"
   },
   "autoload": {
-    "classmap": [ "lib/" ]
+    "classmap": [
+      "lib/",
+      "lib/modules/recent-posts-flex-slider"
+    ]
   }
 }

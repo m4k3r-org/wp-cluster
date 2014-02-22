@@ -40,6 +40,9 @@ namespace UsabilityDynamics\Festival {
       // Load all helper files from functions directory.
       // \UsabilityDynamics\Utility::load_files( get_template_directory() . '/functions' );
 
+      /** Init our widgets */
+      add_action( 'widgets_init', array( __CLASS__, 'register_widgets' ) );
+
     }
 
     /**
@@ -48,6 +51,13 @@ namespace UsabilityDynamics\Festival {
      */
     public static function get_instance() {
       return null === self::$instance ? self::$instance = new self() : self::$instance->theme;
+    }
+
+    /**
+     * Register our specific widgets
+     */
+    function register_widgets(){
+      register_widget( 'Recent_Posts_FlexSlider' );
     }
 
   }
