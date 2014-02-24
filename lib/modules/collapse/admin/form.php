@@ -17,7 +17,7 @@ jQuery(document).ready(function(){
   });
   //** Add button handler */
   jQuery( "#collapse-add-bar" ).on('click', function() {
-    var newDiv = '<div><h3><input type="text" name="<?php echo $this->get_field_name( 'bars[]' ) ?>" /></h3><div><textarea name="<?php echo $this->get_field_name( 'contents[]' ) ?>"></textarea></div></div>';
+    var newDiv = '<div><h3><input type="text" name="<?php echo $this->get_field_name( 'bars[]' ) ?>" /><a class="collapse-delete" href="javascript:void(0);"><?php _e('Delete'); ?></a><div class="clear"></div></h3><div><textarea name="<?php echo $this->get_field_name( 'contents[]' ) ?>"></textarea></div></div>';
     jQuery('#accordion').append(newDiv);
     jQuery('#accordion').accordion("refresh");
   });
