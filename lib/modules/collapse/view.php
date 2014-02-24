@@ -18,6 +18,8 @@
         <a href="javascript:void(0);">
           <?php echo $bar; ?>
         </a>
+        <span class="collapse-sign icon icon-plus"></span>
+        <span class="collapse-sign icon icon-minus"></span>
       </h4>
     </div>
     <div id="<?php echo $data['module_id'].'_'.$key; ?>" class="panel-collapse collapse">
