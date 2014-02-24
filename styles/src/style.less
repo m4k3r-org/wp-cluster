@@ -389,14 +389,26 @@ footer {
     -moz-border-radius: 0px;
     border: none;
     .panel-heading {
-      background: #EBEDEC;
+      transition: .5s all;
+      -webkit-transition: .5s all;
+      -moz-transition: .5s all;
+      background: #fff;
       border-radius: 0px;
       -webkit-border-radius: 0px;
       -moz-border-radius: 0px;
+      border-top: 1px solid #E4E4E4;
+      border-left: 1px solid #E4E4E4;
+      border-right: 1px solid #E4E4E4;
+      &.collapsed {
+        background: #EBEDEC;
+        border: 1px solid #EBEDEC;
+      }
     }
     .panel-body {
-      margin-top: 3px;
-      border: 1px solid #E4E4E4;
+      border-top: none !important;
+      border-bottom: 1px solid #E4E4E4;
+      border-left: 1px solid #E4E4E4;
+      border-right: 1px solid #E4E4E4;
     }
   }
 }

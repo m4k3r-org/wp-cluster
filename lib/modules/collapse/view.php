@@ -13,9 +13,9 @@
   <?php if ( !empty( $data[$this->get_field_name( 'bars' )] ) && is_array( $data[$this->get_field_name( 'bars' )] ) ): ?>
   <?php foreach( $data[$this->get_field_name( 'bars' )] as $key => $bar ): ?>
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div data-toggle="collapse" data-parent="#<?php echo $data['module_id']; ?>" class="panel-heading collapsed" href="#<?php echo $data['module_id'].'_'.$key; ?>">
       <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#<?php echo $data['module_id']; ?>" href="#<?php echo $data['module_id'].'_'.$key; ?>">
+        <a href="javascript:void(0);">
           <?php echo $bar; ?>
         </a>
       </h4>
