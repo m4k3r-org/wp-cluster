@@ -42,7 +42,6 @@ if( !class_exists( 'CollapseModule' ) ) {
      * @return string HTML
      */
     public function display( $data ) {
-      wp_enqueue_script('jquery-ui-accordion');
       return $this->load_view( $data );
     }
 

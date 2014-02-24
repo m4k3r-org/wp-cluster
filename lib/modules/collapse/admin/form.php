@@ -28,6 +28,22 @@ jQuery(document).ready(function(){
 });
 </script>
 
+<style type="text/css">
+  #accordion .item h3 {
+    line-height: 25px;
+  }
+  #accordion .item h3 span {
+    float: left;
+  }
+  #accordion .item h3 input {
+    width: 80%;
+    float: left;
+  }
+  #accordion .item h3 .collapse-delete {
+    float: left;
+  }
+</style>
+
 <div class="collapse-form">
 
   <fieldset class="cfct-form-section">
@@ -40,6 +56,7 @@ jQuery(document).ready(function(){
           <h3>
             <input type="text" value="<?php echo $bar; ?>" name="<?php echo $this->get_field_name( 'bars[]' ) ?>" />
             <a class="collapse-delete" href="javascript:void(0);"><?php _e('Delete'); ?></a>
+            <div class="clear"></div>
           </h3>
           <div>
             <textarea name="<?php echo $this->get_field_name( 'contents[]' ) ?>"><?php echo $data[$this->get_field_name( 'contents' )][$key]; ?></textarea>
@@ -51,6 +68,7 @@ jQuery(document).ready(function(){
           <h3>
             <input type="text" name="<?php echo $this->get_field_name( 'bars[]' ) ?>" />
             <a class="collapse-delete" href="javascript:void(0);"><?php _e('Delete'); ?></a>
+            <div class="clear"></div>
           </h3>
           <div>
             <textarea name="<?php echo $this->get_field_name( 'contents[]' ) ?>"></textarea>
