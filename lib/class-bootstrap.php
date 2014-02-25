@@ -2,6 +2,9 @@
 /**
  * UsabilityDynamics\Cluster Bootstrap
  *
+ * ### Options
+ * * hide.toolbar.login
+ *
  * @verison 0.4.1
  * @author potanin@UD
  * @namespace UsabilityDynamics\Cluster
@@ -203,6 +206,7 @@ namespace UsabilityDynamics\Cluster {
         // Initialize all else.
         add_action( 'plugins_loaded', array( &$this, 'plugins_loaded' ) );
         add_action( 'admin_bar_menu', array( &$this, 'admin_bar_menu' ), 21 );
+        add_action( 'add_admin_bar_menus', array( &$this, 'add_admin_bar_menus' ), 21 );
 
         add_action( 'init', array( &$this, 'init' ) );
         add_action( 'admin_init', array( &$this, 'admin_init' ) );
@@ -538,12 +542,58 @@ namespace UsabilityDynamics\Cluster {
       }
 
       /**
+       * Modify Admin Bar Menus Hooks.
+       *
+       * @param bool $wp_admin_bar
+       */
+      public function add_admin_bar_menus( $wp_admin_bar = false ) {
+
+        if( $this->get( 'hide.toolbar.login' ) ) {
+          remove_action( 'admin_bar_menu', 'wp_admin_bar_my_account_menu', 0 );
+          remove_action( 'admin_bar_menu', 'wp_admin_bar_my_account_item', 7 );
+        }
+
+
+      }
+
+
+      /**
+       * Change My Account Toolbar Dropdown.
+       *
+       * @method admin_bar_menu
+       * @author potanin@UD
+       */
+      public function my_account_toolbar( $wp_admin_bar = false ) {
+
+        $user_id      = get_current_user_id();
+        $current_user = wp_get_current_user();
+        $profile_url  = get_edit_profile_url( $user_id );
+
+        $wp_admin_bar->remove_node( 'my-account' );
+
+        $wp_admin_bar->add_menu( array(
+          'id'        => 'my-account',
+          'parent'    => 'top-secondary',
+          'title'     => sprintf( __('%1$s'), $current_user->display_name ),
+          'href'      => $profile_url,
+          'meta'      => array(
+            'class'     => $class,
+            'title'     => __('My Account'),
+          ),
+        ));
+
+      }
+
+      /**
        * Update Amin Menu
        *
        * @method admin_bar_menu
        * @author potanin@UD
        */
       public function admin_bar_menu( $wp_admin_bar = false ) {
+
+        if ( ! $user_id )
+          return;
 
         if( !is_super_admin() || !is_multisite() || !$wp_admin_bar ) {
           return;

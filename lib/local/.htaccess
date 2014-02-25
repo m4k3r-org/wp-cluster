@@ -100,6 +100,7 @@
   RewriteRule ^wp-signup.php$ /vendor/wordpress/core/wp-signup.php$1 [L]
   RewriteRule ^manage/login/$ /vendor/wordpress/core/wp-login.php [L]
   RewriteRule ^manage/login$ /vendor/wordpress/core/wp-login.php [L]
+  RewriteRule ^manage/wp-login.php$ /manage/login [R=301,L] # /manage/wp-login.php => /manage/login?loggedout=true
   RewriteRule ^manage/(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
   RewriteRule ^manage$ /vendor/wordpress/core/wp-admin [L]
 </IfModule>
