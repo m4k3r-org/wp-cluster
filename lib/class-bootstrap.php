@@ -433,7 +433,7 @@ namespace UsabilityDynamics\Cluster {
        */
       public function admin_menu() {
         global $submenu;
-        
+
         // die( '<pre>' . print_r( $submenu, true ) . '</pre>' );
 
         remove_submenu_page( 'index.php', 'my-sites.php' );
@@ -591,9 +591,6 @@ namespace UsabilityDynamics\Cluster {
        * @author potanin@UD
        */
       public function admin_bar_menu( $wp_admin_bar = false ) {
-
-        if ( ! $user_id )
-          return;
 
         if( !is_super_admin() || !is_multisite() || !$wp_admin_bar ) {
           return;
