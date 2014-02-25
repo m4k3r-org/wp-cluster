@@ -26,7 +26,7 @@ extract( $data = wp_festival()->extend( array(
             <div class="carousel-inner">
               <div class="item active">
                 <div class="row">
-                  <?php wp_festival()->set_excerpt_filter( '25', 'length' ); ?>
+                  <?php wp_festival()->set_excerpt_filter( '25', 'length' ); $counter = 0; ?>
                   <?php while( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
                     <?php if( $counter && !( $counter % 3 ) ) : ?>
                       </div></div>
@@ -54,7 +54,7 @@ extract( $data = wp_festival()->extend( array(
             <?php if( $counter >= 3 ) : ?>
             <ol class="carousel-indicators">
               <?php $step = 0; ?>
-              <?php for( $i = 0; $i <= $counter; $i+=3 ) : ?>
+              <?php for( $i = 0; $i < $counter; $i+=3 ) : ?>
                 <li data-target="#carousel-generic" data-slide-to="<?php echo $step ?>" class="<?php echo $step++ ? '' : 'active'; ?>"></li>
               <?php endfor; ?>
             </ol>

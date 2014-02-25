@@ -2,23 +2,22 @@
 /**
  *
  */
-if( !class_exists( 'CollapseModule' ) ) {
+if( !class_exists( 'SectionBreakModule' ) ) {
 
   /**
    *
    */
-  class CollapseModule extends \UsabilityDynamics\Theme\Module {
+  class SectionBreakModule extends \UsabilityDynamics\Theme\Module {
 
     /**
      * Construct
      */
     public function __construct(){
-      wp_enqueue_script('jquery-ui-accordion');
       $opts = array(
         'description' => __( '', wp_festival( 'domain' ) ),
         'icon' => plugins_url( '/icon.png', __DIR__ )
       );
-      parent::__construct( 'cfct-module-collapse', __( 'Collapse', wp_festival( 'domain' ) ), $opts );
+      parent::__construct( 'cfct-module-collapse', __( 'Section Break', wp_festival( 'domain' ) ), $opts );
     }
 
     /**

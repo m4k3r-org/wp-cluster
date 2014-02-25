@@ -629,6 +629,7 @@ namespace UsabilityDynamics {
         $this->carrington->registerModule( 'EventLoopModule' );
         $this->carrington->registerModule( 'AdvancedHeroModule' );
         $this->carrington->registerModule( 'CollapseModule' );
+        $this->carrington->registerModule( 'SectionBreakModule' );
       }
 
       // Declare Public Scripts.

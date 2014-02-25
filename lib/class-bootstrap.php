@@ -56,7 +56,7 @@ namespace UsabilityDynamics\Festival {
     /**
      * Register our specific widgets
      */
-    function register_widgets(){
+    public static function register_widgets(){
       register_widget( 'Recent_Posts_FlexSlider' );
     }
 

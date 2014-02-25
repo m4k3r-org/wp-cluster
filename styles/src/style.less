@@ -382,6 +382,66 @@ footer {
   }
 }
 
+.collapse-module {
+  .panel {
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border: none;
+    .panel-heading {
+      transition: .5s all;
+      -webkit-transition: .5s all;
+      -moz-transition: .5s all;
+      background: #fff;
+      border-radius: 0px;
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-top: 1px solid #E4E4E4;
+      border-left: 1px solid #E4E4E4;
+      border-right: 1px solid #E4E4E4;
+      .collapse-sign {
+        float: right;
+        font-size: 15px;
+        line-height: 19px;
+      }
+      .icon-plus {
+        display: none;
+      }
+      &.collapsed {
+        background: #EBEDEC;
+        border: 1px solid #EBEDEC;
+        .icon-minus {
+          display: none;
+        }
+        .icon-plus {
+          display: block;
+        }
+        a {
+          text-transform: none;
+          color: @content-title-color !important;
+        }
+      }
+      .panel-title {
+        a {
+          transition: .5s all;
+          -webkit-transition: .5s all;
+          -moz-transition: .5s all;
+          text-decoration: none;
+          text-transform: none;
+          outline: none;
+          color: @default-color;
+        }
+      }
+    }
+    .panel-body {
+      padding-top: 0;
+      border-top: none !important;
+      border-bottom: 1px solid #E4E4E4;
+      border-left: 1px solid #E4E4E4;
+      border-right: 1px solid #E4E4E4;
+    }
+  }
+}
 
 /* ==============
  HEADER BANNER
