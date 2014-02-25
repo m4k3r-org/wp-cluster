@@ -2,7 +2,7 @@
 /**
  * Carrington Build Event Hero Module
  *
- * 
+ *
  * There's a base class that outputs full loop content, but 2 class
  * extensions which extend it, but change it to "excerpts" or "titles"
  * Don't forget to call EventHeroModule::init() in your constructor if you
@@ -11,25 +11,25 @@
 if( !class_exists( 'EventHeroModule' ) ){
 
   class EventHeroModule extends \UsabilityDynamics\Theme\Module {
-  
+
     protected $content_support = array(
 			'title',
 			'content',
 			'url',
 			'images'
 		);
-  
+
     public function __construct(){
       $opts = array(
         'description' => __( 'Choose Event to display as Hero widget.', 'wp-festival' ),
         'icon' => plugins_url( '/icon.png', __DIR__ )
       );
       parent::__construct( 'cfct-module', __( 'Event Hero', wp_festival( 'domain' ) ), $opts );
-      
+
       //
       add_filter('wp_ajax_cfct_event_post_search', array( $this, '_handle_request' ) );
     }
-    
+
     /**
      * Don't contribute to the post_content stored in the database
      * @return null
@@ -37,19 +37,19 @@ if( !class_exists( 'EventHeroModule' ) ){
     public function text( $data ){
       return null;
     }
-    
+
     /**
 		 * Modify the data before it is saved, or not
 		 *
-		 * @param array $new_data 
-		 * @param array $old_data 
+		 * @param array $new_data
+		 * @param array $old_data
 		 * @return array
 		 */
 		public function update( $new_data, $old_data ) {
 			// keep the image search field value from being saved
 			unset( $new_data[ $this->get_field_name('global_image-image-search') ] );
       unset( $new_data[ $this->get_field_name('logo_global_image-image-search') ] );
-			
+
 			// normalize the selected image value in to a 'background_image' value for easy output
 			if ( !empty( $new_data[ $this->get_field_name('post_image') ] ) ) {
 				$new_data[ 'background_image' ] = $new_data[ $this->get_field_name('post_image') ];
@@ -57,7 +57,7 @@ if( !class_exists( 'EventHeroModule' ) ){
 			elseif (!empty($new_data[$this->get_field_name('global_image')])) {
 				$new_data[ 'background_image' ] = $new_data[ $this->get_field_name('global_image') ];
 			}
-      
+
       // normalize the selected image value in to a 'featured_image' value for easy output
 			if ( !empty( $new_data[ $this->get_field_name('logo_post_image') ] ) ) {
 				$new_data[ 'logo_image' ] = $new_data[ $this->get_field_name('logo_post_image') ];
@@ -65,7 +65,7 @@ if( !class_exists( 'EventHeroModule' ) ){
 			elseif (!empty($new_data[$this->get_field_name('logo_global_image')])) {
 				$new_data[ 'logo_image' ] = $new_data[ $this->get_field_name('logo_global_image') ];
 			}
-      
+
 			return $new_data;
 		}
 
@@ -184,12 +184,15 @@ if( !class_exists( 'EventHeroModule' ) ){
       require_once( __DIR__ . '/admin/form.php' );
       return ob_get_clean();
     }
-    
+
     public function admin_js() {
+      //** @todo: should utilize some id to be predended to function names */
+      $js_base = '';
+      
 			$js = '
 				cfct_builder.addModuleLoadCallback("'.$this->id_base.'", function() {
 					'.$this->cfct_module_tabs_js().'
-          
+
           var cfct_event_link_search_results = function(target) {
             $(target).unbind().bind("otypeahead-select", function() {
 							var _insert = $(this).find("li.otypeahead-current").clone().removeClass("otypeahead-current");
@@ -200,7 +203,7 @@ if( !class_exists( 'EventHeroModule' ) ){
 							return false;
 						});
           };
-          
+
           // set up search
 					$("#car-item-search #car-search-term").oTypeAhead({
 						searchParams: {
@@ -213,16 +216,16 @@ if( !class_exists( 'EventHeroModule' ) ){
 						disableForm: false,
 						resultsCallback: cfct_event_link_search_results
 					});
-          
+
 				});
-				
+
 				cfct_builder.addModuleSaveCallback("'.$this->id_base.'", function() {
 					// find the non-active image selector and clear his value
 					$(".'.$this->id_base.'-image-selectors .cfct-module-tab-contents>div:not(.active)").find("input:hidden").val("");
           $("#car-item-search .otypeahead-target").children().remove();
 					return true;
 				});
-        
+
         var ' . $js_base . '_insert_selected_item = function(_insert) {
           $("#car-item-search").addClass( "hidden" );
 					$("#car-items ol").append(_insert).find(".no-items").hide().end();
@@ -230,7 +233,7 @@ if( !class_exists( 'EventHeroModule' ) ){
 					$("body").trigger("click");
 					$("#car-item-search #car-search-term").val("");
 				};
-								
+
 				// set up post remove
 				$("#car-items li.event-post-item .event-edit-remove a").live("click", function() {
 					if (confirm("Do you really want to remove this item?")) {
@@ -247,7 +250,7 @@ if( !class_exists( 'EventHeroModule' ) ){
       $js .= $this->global_image_selector_js('logo_global_image', array('direction' => 'horizontal'));
 			return $js;
 		}
-    
+
     public function _handle_request() {
 			if (!empty( $_POST[ 'method' ] ) ) {
 				switch( $_POST[ 'method' ] ) {
@@ -258,25 +261,25 @@ if( !class_exists( 'EventHeroModule' ) ){
 				exit;
 			}
 		}
-    
+
     protected function _do_search() {
 			$posts_per_page = 8;
 			$page = isset( $_POST['car_search_page'] ) ? absint( $_POST['car_search_page'] ) : 1;
-			
+
 			$s = new WP_Query(array(
 				's' => $_POST[ 'car-search-term' ],
 				'post_type' => 'event',
 				'posts_per_page' => $posts_per_page,
 				'paged' => $page,
 			));
-			
+
 			$ids = array();
 			$ret = array(
 				'html' => '',
 				'key' => isset( $_POST['key'] ) ? $_POST['key'] : ''
 			);
-			
-			
+
+
 			$html = '';
 			if ( $s->have_posts() ) {
 				$html = '<ul class="car-search-elements">';
@@ -313,12 +316,12 @@ if( !class_exists( 'EventHeroModule' ) ){
 			if (empty($ret['html'])) {
 				$ret['html'] = '<ul><li class="no-items-found">No items found for search: "'.esc_html($_POST['car-search-term']).'"</li></ul>';
 			}
-						
+
 			header('content-type: application/javascript');
 			echo json_encode($ret);
 			exit;
 		}
-    
+
     /**
      * Formats the data for admin editing
      *
@@ -329,13 +332,13 @@ if( !class_exists( 'EventHeroModule' ) ){
     protected function get_event_admin_item( $postdata ) {
       $post = wp_festival()->get_post_data( $postdata[ 'id' ] );
       $postdata = wp_festival()->extend( $post, $postdata );
-      
+
       ob_start();
       //echo "<pre>"; print_r( $postdata ); echo "</pre>";
       require_once( __DIR__ . '/admin/item.php' );
       return ob_get_clean();
     }
-    
+
     function post_image_selector( $data = false, $prefix = '' ) {
 			$name = !empty( $prefix ) ? $prefix . '_post_image' : 'post_image';
       if (isset($_POST['args'])) {
@@ -344,7 +347,7 @@ if( !class_exists( 'EventHeroModule' ) ){
 			else {
 				$ajax_args = null;
 			}
-      
+
 			$selected = 0;
 			if (!empty($data[$this->get_field_id( $name )])) {
 				$selected = $data[$this->get_field_id( $name )];
@@ -366,8 +369,8 @@ if( !class_exists( 'EventHeroModule' ) ){
 
 			return $this->image_selector('post', $args);
 		}
-		
-		function global_image_selector( $data = false, $prefix = '' ) {		
+
+		function global_image_selector( $data = false, $prefix = '' ) {
       $name = !empty( $prefix ) ? $prefix . '_global_image' : 'global_image';
 			$selected = 0;
 			if (!empty($data[$this->get_field_id( $name )])) {
@@ -388,14 +391,14 @@ if( !class_exists( 'EventHeroModule' ) ){
 
 			return $this->image_selector('global', $args);
 		}
-    
+
     // Content Move Helpers
 
 		protected $reference_fields = array( 'global_image', 'post_image', 'background_image' );
 
 		public function get_referenced_ids($data) {
 			$references = array();
-			
+
       foreach ($this->reference_fields as $field) {
 				$id = $this->get_data($field, $data);
 				if ($id) {
@@ -405,7 +408,7 @@ if( !class_exists( 'EventHeroModule' ) ){
 					);
 				}
 			}
-      
+
       if( !empty( $data[ $this->gfn( 'posts' ) ] ) ) {
         $references[ 'posts' ] = array();
         foreach( $data[ $this->gfn( 'posts' ) ] as $post_id => $post_info ) {
@@ -421,7 +424,7 @@ if( !class_exists( 'EventHeroModule' ) ){
 		}
 
 		public function merge_referenced_ids($data, $reference_data) {
-    
+
 			if (!empty($reference_data) && !empty($data)) {
 				foreach ($this->reference_fields as $field) {
 					if (isset($data[$this->gfn($field)]) && isset($reference_data[$field])) {
@@ -429,7 +432,7 @@ if( !class_exists( 'EventHeroModule' ) ){
 					}
 				}
 			}
-      
+
       if( !empty( $reference_data[ 'posts' ] ) && !empty( $data ) ) {
         foreach( $reference_data[ 'posts' ] as $key => $r_data ) {
           // Data here is stored with the post_id in the data as well as being the array key,
@@ -444,6 +447,6 @@ if( !class_exists( 'EventHeroModule' ) ){
 
 			return $data;
 		}
-    
+
   }
 }
