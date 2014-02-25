@@ -26,7 +26,7 @@ extract( $data = wp_festival()->extend( array(
             <div class="carousel-inner">
               <div class="item active">
                 <div class="row">
-                  <?php wp_festival()->set_excerpt_filter( '25', 'length' ); ?>
+                  <?php wp_festival()->set_excerpt_filter( '25', 'length' ); $counter = 0; ?>
                   <?php while( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
                     <?php if( $counter && !( $counter % 3 ) ) : ?>
                       </div></div>
