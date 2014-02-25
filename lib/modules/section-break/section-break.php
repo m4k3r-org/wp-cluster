@@ -69,7 +69,7 @@ if( !class_exists( 'SectionBreakModule' ) ) {
      * @return type
      */
     public function admin_text( $data ){
-      return strip_tags( $data[ 'title' ] );
+      return null;
     }
 
     /**
