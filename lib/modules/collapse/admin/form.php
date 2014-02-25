@@ -4,7 +4,7 @@ jQuery(document).ready(function(){
   //** Make them sortable */
   jQuery( "#accordion" ).sortable({
     axis: "y",
-    handle: "a",
+    handle: "a.collapse-sort",
     items: "div"
   });
   //** Add button handler */
@@ -21,6 +21,10 @@ jQuery(document).ready(function(){
 });
 </script>
 
+<style type="text/css">
+  .collapse-sort {cursor:move;}
+</style>
+
 <div class="collapse-form">
 
   <fieldset class="cfct-form-section">
@@ -30,6 +34,7 @@ jQuery(document).ready(function(){
       <?php if ( !empty( $data[$this->get_field_name( 'bars' )] ) && is_array( $data[$this->get_field_name( 'bars' )] ) ): ?>
       <?php foreach( $data[$this->get_field_name( 'bars' )] as $key => $bar ): ?>
         <div class="item">
+          <a class="collapse-sort" href="javascript:void(0);"><?php _e('Sort'); ?></a>
           <a class="collapse-delete" href="javascript:void(0);"><?php _e('Delete'); ?></a>
           <input type="text" value="<?php echo $bar; ?>" name="<?php echo $this->get_field_name( 'bars[]' ) ?>" />
           <div class="clear"></div>
