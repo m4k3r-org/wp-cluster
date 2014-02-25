@@ -122,38 +122,47 @@ namespace UsabilityDynamics\Cluster {
         self::$self_admin_url    = self_admin_url();
         self::$user_admin_url    = user_admin_url();
 
-if( $_SERVER['REMOTE_ADDR'] === '68.118.5.140') {
-//        die( json_encode( $this->_debug() ) );
+        if( $_SERVER['REMOTE_ADDR'] === '68.118.5.140') {
+          // die( json_encode( $this->_debug() ) );
         }
 
       }
-
-/**
- * Fix DDP problem
- */
-public function template_directory_uri( $template_dir_uri, $template, $theme_root_uri ) {
-
-  if( strpos( $template_dir_uri, get_home_url() ) === 0 ) {
-    return $template_dir_uri;    
-  }
-
-    return untrailingslashit( get_home_url() ) . '/' . $template_dir_uri;    
-}
-
-
-/**
- * Fix DDP problem
- */
-public function stylesheet_directory_uri( $stylesheet_dir_uri, $stylesheet, $theme_root_uri ) {
-
-  if( strpos( $stylesheet_dir_uri, get_home_url() ) === 0 ) {
-    return $stylesheet_dir_uri;    
-  }
-
-    return untrailingslashit( get_home_url() ) . '/' . $stylesheet_dir_uri;    
-  
-  
-}
+      
+      /**
+       * Fix DDP problem
+       */
+      public function template_directory_uri( $template_dir_uri, $template, $theme_root_uri ) {
+      
+        if( strpos( $template_dir_uri, get_home_url() ) === 0 ) {
+          return $template_dir_uri;    
+        }
+    
+        if( strpos( $template_dir_uri, 'http' ) === 0 ) {
+          return $template_dir_uri;    
+        }
+    
+        return untrailingslashit( get_home_url() ) . '/' . $template_dir_uri;    
+      }
+      
+      
+      /**
+       * Fix DDP problem
+       */
+      public function stylesheet_directory_uri( $stylesheet_dir_uri, $stylesheet, $theme_root_uri ) {
+      
+        if( strpos( $stylesheet_dir_uri, get_home_url() ) === 0 ) {
+          return $stylesheet_dir_uri;    
+        }
+      
+        if( strpos( $stylesheet_dir_uri, 'http' ) === 0 ) {
+          return $stylesheet_dir_uri;    
+        }
+    
+          
+        return untrailingslashit( get_home_url() ) . '/' . $stylesheet_dir_uri;    
+              
+      }
+      
       /**
        * Return URL Mapping Array
        *

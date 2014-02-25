@@ -144,10 +144,6 @@ namespace UsabilityDynamics\Cluster {
           wp_die( '<h1>Cluster Fatal Error.</h1><p>MULTISITE constant is not defined.</p>' );
         }
 
-        if( !defined( 'UPLOADBLOGSDIR' ) ) {
-          wp_die( '<h1>Cluster Fatal Error.</h1><p>UPLOADBLOGSDIR constant is not defined.</p>' );
-        }
-
         // Save Instance.
         $wp_cluster = self::$instance = &$this;
 
