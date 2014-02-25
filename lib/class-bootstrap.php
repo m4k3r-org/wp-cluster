@@ -144,10 +144,6 @@ namespace UsabilityDynamics\Cluster {
           wp_die( '<h1>Cluster Fatal Error.</h1><p>MULTISITE constant is not defined.</p>' );
         }
 
-        if( !defined( 'UPLOADBLOGSDIR' ) ) {
-          wp_die( '<h1>Cluster Fatal Error.</h1><p>UPLOADBLOGSDIR constant is not defined.</p>' );
-        }
-
         // Save Instance.
         $wp_cluster = self::$instance = &$this;
 
@@ -433,7 +429,7 @@ namespace UsabilityDynamics\Cluster {
        */
       public function admin_menu() {
         global $submenu;
-        
+
         // die( '<pre>' . print_r( $submenu, true ) . '</pre>' );
 
         remove_submenu_page( 'index.php', 'my-sites.php' );
@@ -591,9 +587,6 @@ namespace UsabilityDynamics\Cluster {
        * @author potanin@UD
        */
       public function admin_bar_menu( $wp_admin_bar = false ) {
-
-        if ( ! $user_id )
-          return;
 
         if( !is_super_admin() || !is_multisite() || !$wp_admin_bar ) {
           return;
