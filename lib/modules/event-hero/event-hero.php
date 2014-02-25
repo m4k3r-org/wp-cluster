@@ -132,15 +132,15 @@ if( !class_exists( 'EventHeroModule' ) ){
       $map = isset( $mapping[ $data[ 'artist_columns' ] ] ) ? $mapping[ $data[ 'artist_columns' ] ] : $mapping[4];
       $_data = array(
         'postdata' => $event,
-        'logo_image' => $data[ 'logo_image' ],
-        'background_image' => $data[ 'background_image' ],
-        'background_color' => $data[ 'background_color' ],
-        'font_color' => $data[ 'font_color' ],
-        'title_color' => $data[ 'title_color' ],
-        'desc_color' => $data[ 'desc_color' ],
-        'enable_links' => $data[ 'enable_links' ],
-        'artist_image_type' => $data[ 'artist_image_type' ],
-        'artist_columns' => $data[ 'artist_columns' ],
+        'logo_image' => !empty($data[ 'logo_image' ])?$data[ 'logo_image' ]:'',
+        'background_image' => !empty($data[ 'background_image' ])?$data[ 'background_image' ]:'',
+        'background_color' => !empty($data[ 'background_color' ])?$data[ 'background_color' ]:'',
+        'font_color' => !empty($data[ 'font_color' ])?$data[ 'font_color' ]:'',
+        'title_color' => !empty($data[ 'title_color' ])?$data[ 'title_color' ]:'',
+        'desc_color' => !empty($data[ 'desc_color' ])?$data[ 'desc_color' ]:'',
+        'enable_links' => !empty($data[ 'enable_links' ])?$data[ 'enable_links' ]:'',
+        'artist_image_type' => !empty($data[ 'artist_image_type' ])?$data[ 'artist_image_type' ]:'',
+        'artist_columns' => !empty($data[ 'artist_columns' ])?$data[ 'artist_columns' ]:'',
         'class_col' => $map[ 0 ],
         'class_offset' => $map[ 1 ],
         'artist_image_width' => $map[ 2 ],
@@ -188,7 +188,7 @@ if( !class_exists( 'EventHeroModule' ) ){
     public function admin_js() {
       //** @todo: should utilize some id to be predended to function names */
       $js_base = '';
-      
+
 			$js = '
 				cfct_builder.addModuleLoadCallback("'.$this->id_base.'", function() {
 					'.$this->cfct_module_tabs_js().'
