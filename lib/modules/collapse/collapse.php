@@ -29,7 +29,6 @@ if( !class_exists( 'CollapseModule' ) ) {
 		 * @return array
 		 */
 		public function update( $new_data, $old_data ) {
-
 			return $new_data;
 		}
 
@@ -71,7 +70,7 @@ if( !class_exists( 'CollapseModule' ) ) {
      * @return type
      */
     public function admin_text( $data ){
-      return strip_tags( $data[ 'title' ] );
+      return null;
     }
 
     /**
