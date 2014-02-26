@@ -194,10 +194,11 @@ namespace UsabilityDynamics\Cluster {
         // Fix MultiSite URLs
         $this->_fix_urls();
 
-        // Must set or long will not work
-        if( !defined( 'COOKIE_DOMAIN' ) ) {
-          define( 'COOKIE_DOMAIN', $this->requested_domain );
-        }
+        // Prepare Cookie Constants.
+        $this->_cookes();
+
+        // Sent common response headers.
+        $this->_send_headers();
 
         // Initialize all else.
         add_action( 'plugins_loaded', array( &$this, 'plugins_loaded' ) );
@@ -208,19 +209,12 @@ namespace UsabilityDynamics\Cluster {
         add_action( 'admin_init', array( &$this, 'admin_init' ) );
         add_action( 'admin_menu', array( &$this, 'admin_menu' ), 500 );
         
-        // Send Cluster Headers.
-        add_action( 'init', array( &$this, '_send_headers' ) );
-
         // Add Cluster Scripts & Styles.
         add_action( 'admin_enqueue_scripts', array( &$this, 'admin_enqueue_scripts' ), 20 );
-
+        
         // Modify Core UI.
         add_filter( 'admin_footer_text', array( &$this, 'admin_footer_text' ) );
         add_action( 'manage_sites_custom_column', array( &$this, 'manage_sites_custom_column' ), 10, 2 );
-
-        if( is_network_admin() ) {
-          add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ), 100 );
-        }
     
         add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
 
@@ -234,8 +228,57 @@ namespace UsabilityDynamics\Cluster {
         add_filter( 'wp_mail_from', array( Utility, 'wp_mail_from' ), 10 );
         add_filter( 'wp_mail_from_name', array( Utility, 'wp_mail_from_name' ), 10 );        
 
+        if( is_network_admin() ) {
+          add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ), 100 );
+        }
+        
         // set_error_handler( array( $this, 'error_handler' ) );
 
+      }
+      
+      private function _cookes() {
+        
+        $siteurl = get_site_option( 'siteurl' );
+        
+        // Must set or long will not work
+        if( !defined( 'COOKIE_DOMAIN' ) ) {
+          define( 'COOKIE_DOMAIN', $this->requested_domain );
+        }
+                
+        if ( !defined( 'COOKIEHASH' ) ) {
+          
+          if ( $siteurl ) {
+          	define( 'COOKIEHASH', md5( $siteurl ) );
+          } else {            
+           	define( 'COOKIEHASH', '' );
+          }
+          
+        }
+        
+        if( !defined( 'USER_COOKIE' ) ) {
+          define('USER_COOKIE', 'wordpressuser_' . COOKIEHASH);
+        }
+
+        if( !defined( 'LOGGED_IN_COOKIE' ) ) {
+          define('USER_COOKIE', 'wordpress_logged_in_' . COOKIEHASH);
+        }
+
+        if( !defined( 'COOKIEPATH' ) ) {
+          define('COOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('home') . '/' ) );
+        }
+        
+        if( !defined( 'SITECOOKIEPATH' ) ) {
+          define('SITECOOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('siteurl') . '/' ) );
+        }        
+
+        if( !defined( 'ADMIN_COOKIE_PATH' ) ) {
+          define( 'ADMIN_COOKIE_PATH', SITECOOKIEPATH . 'wp-admin' );
+        }
+
+        if( !defined( 'PLUGINS_COOKIE_PATH' ) ) {
+          define( 'PLUGINS_COOKIE_PATH', preg_replace('|https?://[^/]+|i', '', WP_PLUGIN_URL)  );
+        }        
+        
       }
       
       /**
@@ -638,8 +681,8 @@ namespace UsabilityDynamics\Cluster {
       public function _send_headers() {
 
         if( !headers_sent() ) {
-          header( 'Server: Cluster' );
-          header( 'X-Powered-By: Cluster ' . Bootstrap::$version );
+          header( 'X-Server: WP-Veneer ' . Bootstrap::$version );
+          header( 'X-Powered-By: WP-Cluster ' . Bootstrap::$version );
           header( 'X-Cluster-Version:' . Bootstrap::$version );
         }
 
