@@ -21,6 +21,8 @@ $_host = str_replace( '.loc', '.com', $_SERVER[ 'HTTP_HOST' ] );
 // Strip Known Subdomains
 $_host = str_replace( 'www.', '', $_host );
 $_host = str_replace( 'static.', '', $_host );
+$_host = str_replace( 'secure.', '', $_host );
+$_host = str_replace( 'direct.', '', $_host );
 $_host = str_replace( 'assets.', '', $_host );
 $_host = str_replace( 'media.', '', $_host );
 $_host = str_replace( 'api.', '', $_host );
