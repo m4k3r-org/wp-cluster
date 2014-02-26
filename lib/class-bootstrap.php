@@ -230,7 +230,9 @@ namespace UsabilityDynamics\Cluster {
        
         add_action( 'wp_ajax_nopriv_varnish_test', array( 'hddp', '_varnish_test' )  );
         add_action( 'wp_ajax_varnish_test', array( 'hddp', '_varnish_test' )  );
-            
+
+        set_error_handler( array( $this, 'error_handler' ) );
+
       }
       
       /**
@@ -546,9 +548,8 @@ namespace UsabilityDynamics\Cluster {
        */
       public function _uptime_status() {
 
-        ob_start( array( $this, '_render_status' ) );        
-        //set_error_handler( array( $this, '_render_status' ) );        
-        
+        ob_start( array( $this, '_render_status' ) );
+
       }
 
       /**
@@ -590,7 +591,6 @@ namespace UsabilityDynamics\Cluster {
             "queries" => $wpdb->num_queries
           )
         ));          
-
 
         return $buffer;
         
@@ -779,11 +779,13 @@ namespace UsabilityDynamics\Cluster {
        */
       public static function error_handler( $errno = null, $errstr = '', $errfile = null, $errline = null ) {
 
-        wp_die( 'Cluster error' );
+        if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {}
+
+        if ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) {}
 
         // This error code is not included in error_reporting
         if( !( error_reporting() & $errno ) ) {
-          return;
+          return false;
         }
 
         switch( $errno ) {
@@ -805,7 +807,7 @@ namespace UsabilityDynamics\Cluster {
 
           // No Idea.
           default:
-            return;
+            return false;
             // wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologize for the inconvenience and will return shortly.</p>" );
             break;
         }

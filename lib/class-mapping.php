@@ -2,6 +2,7 @@
 /**
  * Domain Mapping
  *
+ * @todo It may be better to direct get_stylesheet_directory_uri and get_template_directory_uri directly to /assets
  *
  * @version 0.1.6
  * @module Cluster
@@ -72,18 +73,14 @@ namespace UsabilityDynamics\Cluster {
           wp_die( '<h1>Network Error</h1><p>The WP_BASE_DOMAIN constant is not defined.</p>' );
         }
 
-        // add_filter( 'pre_option_home', array( get_class(), 'pre_option_home' ) );
-        // add_filter( 'pre_option_siteurl', array( &$this, 'replace_network_url' ) );
-
         add_filter( 'admin_url', array( &$this, 'admin_url' ), 50, 3 );
         add_filter( 'includes_url', array( &$this, 'includes_url' ), 50, 3 );
         add_filter( 'logout_url', array( &$this, 'logout_url' ), 50, 2 );
-        //add_filter( 'content_url', array( &$this, 'admin_url' ), 50, 2 );
 
         // Replace Network URL with Site URL.
+        add_filter( 'pre_option_home', array( &$this, '_option_home' ), 10 );
         add_filter( 'content_url', array( &$this, 'replace_network_url' ), 10, 2 );
         add_filter( 'user_admin_url', array( &$this, 'replace_network_url' ), 10, 2 );
-        add_filter( 'home_url', array( &$this, 'replace_network_url' ), 10, 2 );
         add_filter( 'site_url', array( &$this, 'replace_network_url' ), 10, 2 );
         add_filter( 'cfct-build-module-url', array( &$this, 'replace_network_url' ), 10, 3 );
 
@@ -109,6 +106,13 @@ namespace UsabilityDynamics\Cluster {
         add_filter( 'stylesheet_directory_uri', array( &$this, 'stylesheet_directory_uri' ), 100, 3 );
         add_filter( 'template_directory_uri', array( &$this, 'template_directory_uri' ), 100, 3 );
 
+        // Failures.
+        // add_filter( 'pre_option_home', array( get_class(), 'pre_option_home' ) );
+        // add_filter( 'pre_option_siteurl', array( &$this, 'replace_network_url' ) );
+        // add_filter( 'content_url', array( &$this, 'admin_url' ), 50, 2 );
+        // add_filter( 'home_url', array( &$this, 'replace_network_url' ), 10, 2 );
+        // add_filter( 'home', array( &$this, 'home' ), 50, 3 );
+
         // URLs
         self::$home_url          = get_home_url();
         self::$site_url          = get_site_url();
@@ -127,6 +131,19 @@ namespace UsabilityDynamics\Cluster {
         }
 
       }
+
+      /**
+       * Simgple Home URL Detection.
+       *
+       * Hooks into get_option( 'home' )
+       *
+       * @param $default
+       * @return string
+       */
+      public function _option_home( $default ) {
+        global $wp_cluster;
+        return 'http://' . $wp_cluster->domain;
+      }
       
       /**
        * Fix DDP problem
@@ -143,8 +160,7 @@ namespace UsabilityDynamics\Cluster {
     
         return untrailingslashit( get_home_url() ) . '/' . $template_dir_uri;    
       }
-      
-      
+
       /**
        * Fix DDP problem
        */
@@ -261,6 +277,8 @@ namespace UsabilityDynamics\Cluster {
        */
       public static function home_url( $url, $path, $orig_scheme, $blog_id ) {
         $url = str_replace( '/vendor/wordpress/core', '', $url );
+
+        //die($url);
         return $url;
       }
 
