@@ -207,7 +207,9 @@ namespace UsabilityDynamics\Cluster {
         add_action( 'init', array( &$this, 'init' ) );
         add_action( 'admin_init', array( &$this, 'admin_init' ) );
         add_action( 'admin_menu', array( &$this, 'admin_menu' ), 500 );
-        add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
+        
+        // Send Cluster Headers.
+        add_action( 'init', array( &$this, '_send_headers' ) );
 
         // Add Cluster Scripts & Styles.
         add_action( 'admin_enqueue_scripts', array( &$this, 'admin_enqueue_scripts' ), 20 );
@@ -515,12 +517,12 @@ namespace UsabilityDynamics\Cluster {
        * Add Frontend Headers
        *
        */
-      public function template_redirect() {
+      public function _send_headers() {
 
         if( !headers_sent() ) {
-          header( 'server: Cluster' );
-          header( 'x-Powered-by: Cluster ' . Bootstrap::$version );
-          header( 'x-Cluster-version:' . Bootstrap::$version );
+          header( 'Server: Cluster' );
+          header( 'X-Powered-By: Cluster ' . Bootstrap::$version );
+          header( 'X-Cluster-Version:' . Bootstrap::$version );
         }
 
       }
