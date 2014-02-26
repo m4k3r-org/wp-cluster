@@ -4,11 +4,11 @@
  *
  * @see carrington builder module Event Hero
  * @author Usability Dynamics
- * @module festival  
+ * @module festival
  * @since festival 0.1.0
  */
 
-global $wp_query; 
+global $wp_query;
 
 extract( $data = wp_festival()->extend( array(
   'postdata' => array(),
@@ -48,7 +48,7 @@ $time_format = ( $time_format = get_option( 'time_format' ) ) !== false ? $time_
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <?php while( have_posts() ) : the_post(); ?>
-            <?php $post = wp_festival()->get_post_data( get_the_ID() ); ?> 
+            <?php $post = wp_festival()->get_post_data( get_the_ID() ); ?>
             <?php $post = wp_festival()->extend( $post, $postdata ); ?>
             <?php //echo "<pre>"; print_r( $post ); echo "</pre>"; ?>
             <section class="event-hero-block text-center">
@@ -59,7 +59,7 @@ $time_format = ( $time_format = get_option( 'time_format' ) ) !== false ? $time_
                 </div>
               <?php endif; ?>
               <?php if( !empty( $post[ 'ticketURL' ] ) ) : ?>
-                <a href="<?php echo $post[ 'ticketURL' ]; ?>" class="btn btn-default"><?php _e( 'Buy Ticket', wp_festival( 'domain' ) ); ?></a>
+                <a onclick="_gaq.push(['_link', '<?php echo $post[ 'ticketURL' ]; ?>']); return false;" href="<?php echo $post[ 'ticketURL' ]; ?>" class="btn btn-default"><?php _e( 'Buy Ticket', wp_festival( 'domain' ) ); ?></a>
               <?php endif; ?>
               <div class="row location">
                 <div class="col-md-10 col-md-offset-1">
@@ -110,7 +110,7 @@ $time_format = ( $time_format = get_option( 'time_format' ) ) !== false ? $time_
                     <?php if ( !( $counter % $artist_columns ) ) : ?>
                       </div></div>
                     <?php endif; ?>
-                  <?php endforeach; ?>     
+                  <?php endforeach; ?>
                 </div>
               <?php endif; ?>
             </section>
