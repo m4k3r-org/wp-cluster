@@ -207,7 +207,7 @@ namespace UsabilityDynamics\Cluster {
         add_action( 'init', array( &$this, 'init' ) );
         add_action( 'admin_init', array( &$this, 'admin_init' ) );
         add_action( 'admin_menu', array( &$this, 'admin_menu' ), 500 );
-        
+
         // Send Cluster Headers.
         add_action( 'init', array( &$this, '_send_headers' ) );
 
@@ -221,23 +221,23 @@ namespace UsabilityDynamics\Cluster {
         if( is_network_admin() ) {
           add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ), 100 );
         }
-    
+
         add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
 
         // /manage/admin-ajax.php?action=cluster_uptime_status
         add_action( 'wp_ajax_cluster_uptime_status', array( $this, '_uptime_status' )  );
         add_action( 'wp_ajax_nopriv_cluster_uptime_status', array( $this, '_uptime_status' ) );
-       
+
         add_action( 'wp_ajax_nopriv_varnish_test', array( $this, '_varnish_test' )  );
         add_action( 'wp_ajax_varnish_test', array( $this, '_varnish_test' )  );
 
-        add_filter( 'wp_mail_from', array( Utility, 'wp_mail_from' ), 10 );
-        add_filter( 'wp_mail_from_name', array( Utility, 'wp_mail_from_name' ), 10 );        
+        add_filter( 'wp_mail_from', array( 'Utility', 'wp_mail_from' ), 10 );
+        add_filter( 'wp_mail_from_name', array( 'Utility', 'wp_mail_from_name' ), 10 );
 
         // set_error_handler( array( $this, 'error_handler' ) );
 
       }
-      
+
       /**
        * Initialize Settings.
        *
@@ -282,7 +282,7 @@ namespace UsabilityDynamics\Cluster {
 
         // Enable Varnish.
         //$this->_varnish = new Varnish($this->get( 'varnish' ));
-                
+
         // Basic Frontend Security
         remove_action( 'wp_head', 'feed_links', 2 );
         remove_action( 'wp_head', 'feed_links_extra', 3 );
@@ -292,7 +292,7 @@ namespace UsabilityDynamics\Cluster {
         remove_action( 'wp_head', 'wp_generator' );
         remove_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
 
-        
+
         /*
         Utility::add_filters( array(
           'bloginfo_url',
@@ -313,7 +313,7 @@ namespace UsabilityDynamics\Cluster {
           'style_loader_src'
         ), array( Utility, 'relative_url' ) );
         */
-        
+
 
       }
 
@@ -590,14 +590,14 @@ namespace UsabilityDynamics\Cluster {
       /**
        * Renders on "shutdown" filter.
        *
-       */      
+       */
       public function _render_status( $buffer, $errstr,  $errfile, $errline, $errcontext ) {
         global $wp, $wpdb;
 
         $have_error = false;
 
         //trigger_error("Cannot divide by zero", E_USER_ERROR);
-        
+
         if ( $error = error_get_last() ) {
           switch( $error['type'] ){
             case E_ERROR:
@@ -608,14 +608,14 @@ namespace UsabilityDynamics\Cluster {
             break;
           }
         }
-                
+
         header( "Content-type: application/json; charset: UTF-8" );
         header( "Cache-Control: private, must-revalidate" );
-        
+
         if( !$have_error ) {
           header( ':', true, 200 );
         } else {
-          header( ':', true, 200 );          
+          header( ':', true, 200 );
         }
 
         $buffer = json_encode(array(
@@ -625,12 +625,12 @@ namespace UsabilityDynamics\Cluster {
           "stats" => array(
             "queries" => $wpdb->num_queries
           )
-        ));          
+        ));
 
         return $buffer;
-        
+
       }
-      
+
       /**
        * Add Frontend Headers
        *
@@ -726,17 +726,17 @@ namespace UsabilityDynamics\Cluster {
        * @temp
        */
       public static function _varnish_test() {
-                  
+
         // AJAX Request.
         if( Utility::requestHeaders()->{'X-Requested-With'} === "XMLHttpRequest" ) {
-          
+
         }
-    
+
         // Veneer/Varnish API Proxy.
         if( Utility::requestHeaders()->{'X-Veneer-Proxy'} === "true" ) {
-          
+
         }
-    
+
         // must have Cache-Control header
         header( "X-Api-Response: true" );
         header( "Pragma: public" );
@@ -746,12 +746,12 @@ namespace UsabilityDynamics\Cluster {
         header( "Cache-Control: public, must-revalidate, max-age=2592000" );
         header( 'Expires: ' . gmdate('D, d M Y H:i:s', time() + 2592000 ) . ' GMT' );
         header( "Content-Length: application/json" );
-        
+
         // header_remove( 'X-Content-Type-Options' );
         // header_remove( 'X-Powered-By' );
         // header_remove( 'X-Frame-Options' );
         // header_remove( 'X-Robots-Tag' );
-    
+
         die(json_encode(array(
           "varnish-request-id" => Utility::requestHeaders()->{'X-Varnish'},
           "request-headers" => Utility::requestHeaders(),
@@ -761,8 +761,8 @@ namespace UsabilityDynamics\Cluster {
             "key" => "value"
           )
         )));
-        
-      }    
+
+      }
 
       /**
        * Network URL
