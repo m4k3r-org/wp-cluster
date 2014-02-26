@@ -9,23 +9,58 @@ if( !defined( 'SUNRISE_LOADED' ) ) {
 }
 
 if( defined( 'COOKIE_DOMAIN' ) ) {
+  header( "Status: 500 Not Found" );
   wp_die( '<h1>Network Error</h1><p>The constant "COOKIE_DOMAIN" is defined (probably in wp-config.php). Please remove or comment out that define() line.</p>' );
 }
 
 if( !count( $wpdb->get_col( "SHOW TABLES" ) ) ) {
+  header( "Status: 500 Not Found" );
   wp_die( '<h1>Network Error</h1><p>The network database is not setup.</p>' );
 }
 
 $_host = str_replace( '.loc', '.com', $_SERVER[ 'HTTP_HOST' ] );
 
+// Amazon CloudFront gets access.
+if( strpos( $_SERVER[ 'HTTP_HOST' ], 'origin.' ) === 0 && $_SERVER['HTTP_USER_AGENT'] === 'Amazon CloudFront' ) {
+  $_SERVER[ 'HTTP_HOST' ] = $_host = str_replace( 'origin.', 'www.', $_host );
+}
+
+// Veneer API Proxy Gets gets access.
+if( strpos( $_SERVER[ 'HTTP_HOST' ], 'origin.' ) === 0 && $_SERVER['HTTP_USER_AGENT'] === 'Veneer' ) {
+  $_SERVER[ 'HTTP_HOST' ] = $_host = str_replace( 'origin.', 'www.', $_host );
+}
+
+// @todo Decide how to handle direct access to origin.
+if( strpos( $_SERVER[ 'HTTP_HOST' ], 'origin.' ) === 0 ) {
+  //die( home_url() );
+  //wp_redirect( home_url() ); 
+    //exit;
+  // die( 'http://' . str_replace( 'origin.', 'www.', $_host ) );
+  // die( wp_redirect( 'http://' . str_replace( 'origin.', 'www.', $_host ) ) );  
+  
+  // @temp force removal of origin subdomain.. ?
+  $_SERVER[ 'HTTP_HOST' ] = str_replace( 'origin.', 'www.', $_SERVER[ 'HTTP_HOST' ] );
+
+  // @temp Just sending everybody to 'www'.
+  header( "Location: http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" );
+
+	exit();
+  
+}
+
+//die($_host);
+//$_SERVER[ 'HTTP_HOST' ] = $_host;
+//die('ss');
+
+//echo "<pre>" . print_r($_SERVER, true) . "</pre>";
+//print_r($_SERVER);
+
 // Strip Known Subdomains
-$_host = str_replace( 'www.', '', $_host );
-$_host = str_replace( 'static.', '', $_host );
-$_host = str_replace( 'secure.', '', $_host );
-$_host = str_replace( 'direct.', '', $_host );
-$_host = str_replace( 'assets.', '', $_host );
-$_host = str_replace( 'media.', '', $_host );
-$_host = str_replace( 'api.', '', $_host );
+# $_host = str_replace( 'static.', '', $_host );
+# $_host = str_replace( 'assets.', '', $_host );
+# $_host = str_replace( 'media.', '', $_host );
+# $_host = str_replace( 'api.', '', $_host );
+//$_host = str_replace( 'www.', '', $_host );
 
 if( ( $nowww = preg_replace( '|^www\.|', '', $_host ) ) != $_host )
   $where = $wpdb->prepare( 'domain IN (%s,%s)', $_host, $nowww );
@@ -35,6 +70,7 @@ else
 $domain_mapping_id = $wpdb->get_var( "SELECT blog_id FROM {$wpdb->blogs} WHERE {$where} ORDER BY CHAR_LENGTH(domain) DESC LIMIT 1" );
 
 if( !$domain_mapping_id ) {
+  header( "Status: 404 Not Found" );
   wp_die( '<h1>Network Error</h1><p>The domain you requested (' . $_host . ') is not available on network.</p>' );
 }
 
@@ -47,7 +83,7 @@ if( $domain_mapping_id ) {
 
   // Add cookie with subdomain support
   if( !defined( 'COOKIE_DOMAIN' ) ) {
-    define( 'COOKIE_DOMAIN', '.' . $_host );
+    //define( 'COOKIE_DOMAIN', '.' . $_host ); // @note can't set "dot" on subdomain.
   }
 
   if( !defined( 'DOMAIN_CURRENT_SITE' ) ) {
