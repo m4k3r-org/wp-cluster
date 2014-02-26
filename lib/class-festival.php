@@ -499,12 +499,7 @@ namespace UsabilityDynamics {
 
     }
 
-    /**
-     * Get Site / Theme Locale
-     *
-     * @author Usability Dynamics
-     * @since 0.1.0
-     */
+
     public function locale_model() {
 
       // Include Translation File.
@@ -634,6 +629,8 @@ namespace UsabilityDynamics {
 
       // Declare Public Scripts.
       $this->scripts(array(
+        'app.config'            => array( 'url' => content_url( '/assets/models/config.js' ), 'deps' => array( 'app.require' ) ),
+        'app.locale'            => array( 'url' => content_url( '/assets/models/locale.js' ), 'deps' => array( 'app.require' ) ),
         'app.admin'             => array( 'url' => content_url( '/assets/scripts/app.admin.js' ), 'deps' => array( 'app.require' ) ),
         'app.bootstrap'         => array( 'url' => content_url( '/assets/scripts/app.bootstrap.js' ), 'deps' => array( 'app.require' ) ),
         'app.main'              => array( 'url' => content_url( '/assets/scripts/app.main.js' ), 'deps' => array( 'app.require', 'app.bootstrap' ) )
