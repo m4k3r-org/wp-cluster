@@ -1,8 +1,7 @@
-Removed temporarily
-    "usabilitydynamics/wp-elastic": "master",
-
-
 This used to be wp-cluster but was renamed to wp-cluster and made private.
+
+## API Endpoints
+ * /api/status.json
 
 ## Network Concepts
   - upload_url_path honored when serving images although option is hidden in MS.

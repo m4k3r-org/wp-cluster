@@ -107,6 +107,12 @@
 </IfModule>
 # Cluster Management END
 
+# Cluster API BEGIN
+<IfModule mod_rewrite.c>
+  RewriteRule ^api/status.json$ /manage/admin-ajax.php?action=cluster_uptime_status [L]
+</IfModule>
+# Cluster API END
+
 # Cluster Access Control BEGIN
 <IfModule mod_headers.c>
   Header set Access-Control-Allow-Origin "*"

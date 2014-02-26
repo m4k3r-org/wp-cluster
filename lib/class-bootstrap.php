@@ -221,9 +221,18 @@ namespace UsabilityDynamics\Cluster {
         if( is_network_admin() ) {
           add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ), 100 );
         }
+    
+        add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
 
+        // /manage/admin-ajax.php?action=cluster_uptime_status
+        add_action( 'wp_ajax_cluster_uptime_status', array( $this, '_uptime_status' )  );
+        add_action( 'wp_ajax_nopriv_cluster_uptime_status', array( $this, '_uptime_status' ) );
+       
+        add_action( 'wp_ajax_nopriv_varnish_test', array( 'hddp', '_varnish_test' )  );
+        add_action( 'wp_ajax_varnish_test', array( 'hddp', '_varnish_test' )  );
+            
       }
-
+      
       /**
        * Initialize Settings.
        *
@@ -278,7 +287,6 @@ namespace UsabilityDynamics\Cluster {
       public function admin_footer_text() {
         return '<span id="footer-thankyou">' . __( 'Provided by the <a href="http://' . $this->network_domain . '">' . $this->organization . '</a>' ) . ' network.</span>';
       }
-
 
       /**
        * Output Fatal Error Message
@@ -514,6 +522,81 @@ namespace UsabilityDynamics\Cluster {
       }
 
       /**
+       * Modify Rewrite Rules on Save.
+       *
+       * @todo Fix rule - does not seem to work.
+       * @param $rules
+       * @internal param $value
+       * @return array
+       */
+      public function _update_option_rewrite_rules( $rules ) {
+
+        // Define New Rules.
+        $new_rules = array(
+          '^api/uptime-status/?' => str_replace( trailingslashit( site_url() ), '', admin_url( 'admin-ajax.php?action=cluster_uptime_status' ) ),
+        );
+
+        // Return concatenated rules.
+        return $new_rules + $rules;
+
+      }
+
+      /**
+       *
+       */
+      public function _uptime_status() {
+
+        ob_start( array( $this, '_render_status' ) );        
+        //set_error_handler( array( $this, '_render_status' ) );        
+        
+      }
+
+      /**
+       * Renders on "shutdown" filter.
+       *
+       */      
+      public function _render_status( $buffer, $errstr,  $errfile, $errline, $errcontext ) {
+        global $wp, $wpdb;
+
+        $have_error = false;
+
+        //trigger_error("Cannot divide by zero", E_USER_ERROR);
+        
+        if ( $error = error_get_last() ) {
+          switch( $error['type'] ){
+            case E_ERROR:
+            case E_CORE_ERROR:
+            case E_COMPILE_ERROR:
+            case E_USER_ERROR:
+              $have_error = true;
+            break;
+          }
+        }
+                
+        header( "Content-type: application/json; charset: UTF-8" );
+        header( "Cache-Control: private, must-revalidate" );
+        
+        if( !$have_error ) {
+          header( ':', true, 200 );
+        } else {
+          header( ':', true, 200 );          
+        }
+
+        $buffer = json_encode(array(
+          "ok" => true,
+          "message" => $have_error ? sprintf( __( "Error occured. Message: %s", self::$text_domain ), $error[ 'message' ] ) : __( "Service is fully operational.", self::$text_domain ),
+          "took" => timer_stop(),
+          "stats" => array(
+            "queries" => $wpdb->num_queries
+          )
+        ));          
+
+
+        return $buffer;
+        
+      }
+      
+      /**
        * Add Frontend Headers
        *
        */
@@ -553,7 +636,6 @@ namespace UsabilityDynamics\Cluster {
 
 
       }
-
 
       /**
        * Change My Account Toolbar Dropdown.
@@ -602,6 +684,50 @@ namespace UsabilityDynamics\Cluster {
         ) );
 
       }
+
+      /**
+       * Testing Varnish
+       *
+       * @temp
+       */
+      public static function _varnish_test() {
+                  
+        // AJAX Request.
+        if( Utility::requestHeaders()->{'X-Requested-With'} === "XMLHttpRequest" ) {
+          
+        }
+    
+        // Veneer/Varnish API Proxy.
+        if( Utility::requestHeaders()->{'X-Veneer-Proxy'} === "true" ) {
+          
+        }
+    
+        // must have Cache-Control header
+        header( "X-Api-Response: true" );
+        header( "Pragma: public" );
+        header( "Content-Type: application/json" );
+        header( "Vary: Accept-Encoding" );
+        header( "X-Men: Wolverine" );
+        header( "Cache-Control: public, must-revalidate, max-age=2592000" );
+        header( 'Expires: ' . gmdate('D, d M Y H:i:s', time() + 2592000 ) . ' GMT' );
+        header( "Content-Length: application/json" );
+        
+        // header_remove( 'X-Content-Type-Options' );
+        // header_remove( 'X-Powered-By' );
+        // header_remove( 'X-Frame-Options' );
+        // header_remove( 'X-Robots-Tag' );
+    
+        die(json_encode(array(
+          "varnish-request-id" => Utility::requestHeaders()->{'X-Varnish'},
+          "request-headers" => Utility::requestHeaders(),
+          "ok"=> true,
+          "message"=> __( 'Hello!' ),
+          "message"=> array(
+            "key" => "value"
+          )
+        )));
+        
+      }    
 
       /**
        * Network URL
