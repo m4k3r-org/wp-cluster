@@ -15,7 +15,7 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
     protected $_deprecated_id = 'cfct-module-loop'; // deprecated property, not needed for new module development
 
     protected $default_display_args = array(
-      'caller_get_posts' => 1
+      'ignore_sticky_posts' => 1
     );
 
     protected $default_content_display = 'title';
@@ -225,7 +225,7 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
      */
     public function admin_form( $data ) {
       $data = $this->migrate_data( $data );
-      
+
       $post_types = $this->get_post_types();
       $selected   = ( !empty( $data[ $this->gfn( 'post_type' ) ] ) ? $data[ $this->gfn( 'post_type' ) ] : array() );
 
@@ -237,7 +237,7 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
         }
         $tax_defs[ $taxonomy->name ] = $taxonomy->label;
       }
-      
+
       $post_type = ( $data[ $this->get_field_name( 'post_type' ) ] ) ? $data[ $this->get_field_name( 'post_type' ) ] : $this->default_post_type;
       $_taxes    = apply_filters( self::TAXONOMY_TYPES_FILTER, get_object_taxonomies( $post_type, 'objects' ), $this );
 
@@ -254,19 +254,19 @@ if( !class_exists( 'FestivalLoopModule' ) ) {
         }
       }
       unset( $_taxes );
-      
+
       $show_title             = isset( $data[ $this->id_base . '-show_title' ] ) ? $data[ $this->id_base . '-show_title' ] : $this->default_show_title;
       $show_meta_header       = isset( $data[ $this->id_base . '-show_meta_header' ] ) ? $data[ $this->id_base . '-show_meta_header' ] : $this->default_show_meta_header;
       $show_meta_footer       = isset( $data[ $this->id_base . '-show_meta_footer' ] ) ? $data[ $this->id_base . '-show_meta_footer' ] : $this->default_show_meta_footer;
       $show_thumbnail         = isset( $data[ $this->id_base . '-show_thumbnail' ] ) ? $data[ $this->id_base . '-show_thumbnail' ] : $this->default_show_thumbnail;
       $show_post_content_type = isset( $data[ $this->id_base . '-show_post_content_type' ] ) ? $data[ $this->id_base . '-show_post_content_type' ] : $this->default_show_post_content_type;
-      
+
       $templates = array(
         'default' => __( 'Default', wp_festival( 'domain' ) ),
         'featured' => __( 'Featured', wp_festival( 'domain' ) ),
         'slider' => __( 'Slider', wp_festival( 'domain' ) ),
       );
-      
+
       /** Now get and return the template */
       ob_start();
       require_once( __DIR__ . '/admin/form.php' );

@@ -378,6 +378,21 @@ namespace UsabilityDynamics {
         $this->menufication = \Menufication::getInstance();
       }
 
+      // Remove URL from comments form
+      add_filter('comment_form_default_fields', array( $this, 'url_filtered' ) );
+
+    }
+
+    /**
+     * Remove URL from comments form
+     * @param type $fields
+     * @return type
+     */
+    public function url_filtered( $fields ) {
+      if( isset( $fields['url'] ) ) {
+        unset($fields['url']);
+      }
+      return $fields;
     }
 
     /**
