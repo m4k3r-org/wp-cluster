@@ -15,24 +15,13 @@ namespace UsabilityDynamics\Cluster {
      * @module Cluster
      */
     class Utility {
-
-      /**
-       * Initialize Utility
-       *
-       * @for Utility
-       */
-      public function __construct() {
-
-        add_shortcode( 'wp_login_form', array( $this, 'wp_login_form_shortcode' ) );
-
-      }
-
+    
       /**
        * Login Shortcode
        *
        * @param array $args
        */
-      public function wp_login_form_shortcode( $args = array() ) {
+      static public function wp_login_form_shortcode( $args = array() ) {
 
         $args = shortcode_atts( $args, array(
           'echo'           => true,
@@ -60,7 +49,7 @@ namespace UsabilityDynamics\Cluster {
        *
        * @method requestHeaders
        */      
-      public function requestHeaders()  { 
+      static public function requestHeaders()  { 
         $headers = ''; 
         foreach ($_SERVER as $name => $value)  { 
          if (substr($name, 0, 5) == 'HTTP_')  { 
@@ -70,6 +59,89 @@ namespace UsabilityDynamics\Cluster {
         return (object) $headers; 
       }       
 
+      /**
+       * Replace Default Sender Email
+       *
+       * @param $from_email
+       *
+       * @return mixed
+       */
+      static public function wp_mail_from( $from_email ) {
+  
+        // Get the site domain and get rid of www.
+        $sitename = strtolower( $_SERVER['SERVER_NAME'] );
+        
+        if ( substr( $sitename, 0, 4 ) == 'www.' ) {
+          $sitename = substr( $sitename, 4 );
+        }
+  
+        if( $from_email == 'wordpress@' . $sitename ) {
+          return str_replace( 'wordpress', 'info', $from_email );
+        }
+  
+        return $from_email;
+  
+      }
+  
+      /**
+       * Replace Default Sender Name
+       *
+       * @param $from_name
+       *
+       * @return string
+       */
+      static public function wp_mail_from_name( $from_name ) {
+  
+        $searchParams = array(
+          //'index' => '...',
+          'type' => $type,
+          'body' => $query
+        );
+  
+        return $from_name;
+  
+      }
+          
+      /**
+     * Apply a method to multiple filters
+     *
+     * @param $tags
+     * @param $function
+     */
+      static public function add_filters( $tags, $function ) {
+
+      foreach( $tags as $tag ) {
+        add_filter( $tag, $function );
+      }
+
     }
+  
+      /**
+       * Root relative URLs
+       *
+       * WordPress likes to use absolute URLs on everything - let's clean that up.
+       * Inspired by http://www.456bereastreet.com/archive/201010/how_to_make_wordpress_urls_root_relative/
+       *
+       * You can enable/disable this feature in config.php:
+       * current_theme_supports('root-relative-urls');
+       *
+       * @souce roots
+       * @author Scott Walkinshaw <scott.walkinshaw@gmail.com>
+       */
+      static public function relative_url( $input ) {
+        return $input;
+  
+        preg_match( '|https?://([^/]+)(/.*)|i', $input, $matches );
+  
+        if( isset( $matches[ 1 ] ) && isset( $matches[ 2 ] ) && $matches[ 1 ] === $_SERVER[ 'SERVER_NAME' ] ) {
+          return wp_make_link_relative( $input );
+        } else {
+          return $input;
+        }
+      }
+        
+    }
+    
   }
+  
 }

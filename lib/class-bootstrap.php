@@ -141,7 +141,7 @@ namespace UsabilityDynamics\Cluster {
         }
 
         if( !defined( 'MULTISITE' ) ) {
-          wp_die( '<h1>Cluster Fatal Error.</h1><p>MULTISITE constant is not defined.</p>' );
+          return;
         }
 
         // Save Instance.
@@ -228,10 +228,13 @@ namespace UsabilityDynamics\Cluster {
         add_action( 'wp_ajax_cluster_uptime_status', array( $this, '_uptime_status' )  );
         add_action( 'wp_ajax_nopriv_cluster_uptime_status', array( $this, '_uptime_status' ) );
        
-        add_action( 'wp_ajax_nopriv_varnish_test', array( 'hddp', '_varnish_test' )  );
-        add_action( 'wp_ajax_varnish_test', array( 'hddp', '_varnish_test' )  );
+        add_action( 'wp_ajax_nopriv_varnish_test', array( $this, '_varnish_test' )  );
+        add_action( 'wp_ajax_varnish_test', array( $this, '_varnish_test' )  );
 
-        set_error_handler( array( $this, 'error_handler' ) );
+        add_filter( 'wp_mail_from', array( Utility, 'wp_mail_from' ), 10 );
+        add_filter( 'wp_mail_from_name', array( Utility, 'wp_mail_from_name' ), 10 );        
+
+        // set_error_handler( array( $this, 'error_handler' ) );
 
       }
       
@@ -279,6 +282,38 @@ namespace UsabilityDynamics\Cluster {
 
         // Enable Varnish.
         //$this->_varnish = new Varnish($this->get( 'varnish' ));
+                
+        // Basic Frontend Security
+        remove_action( 'wp_head', 'feed_links', 2 );
+        remove_action( 'wp_head', 'feed_links_extra', 3 );
+        remove_action( 'wp_head', 'rsd_link' );
+        remove_action( 'wp_head', 'wlwmanifest_link' );
+        remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
+        remove_action( 'wp_head', 'wp_generator' );
+        remove_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
+
+        
+        /*
+        Utility::add_filters( array(
+          'bloginfo_url',
+          'the_permalink',
+          'wp_list_pages',
+          'wp_list_categories',
+          'roots_wp_nav_menu_item',
+          'the_content_more_link',
+          'the_tags',
+          'get_pagenum_link',
+          'get_comment_link',
+          'month_link',
+          'day_link',
+          'year_link',
+          'tag_link',
+          'the_author_posts_link',
+          'script_loader_src',
+          'style_loader_src'
+        ), array( Utility, 'relative_url' ) );
+        */
+        
 
       }
 
