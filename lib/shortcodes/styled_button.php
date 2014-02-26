@@ -35,7 +35,8 @@ namespace UsabilityDynamics\Festival {
 
       /**
        * Construct
-       * @param type $options
+       *
+       * @param array|\UsabilityDynamics\Festival\type $options
        */
       public function __construct( $options = array() ) {
 
@@ -60,13 +61,14 @@ namespace UsabilityDynamics\Festival {
 
       /**
        * Caller
-       * @param type $atts
+       *
+       * @param string|\UsabilityDynamics\Festival\type $atts
+       *
        * @return type
        */
       public function call( $atts = "" ) {
 
-        //** Default values */
-        $defaults = array(
+        $atts = shortcode_atts( array(
           'size' => 'medium', //** small, medium, large */
           'color' => '#EF0D95', //** background */
           'anchor_color' => 'white', //** text color */
@@ -76,9 +78,8 @@ namespace UsabilityDynamics\Festival {
           'class' => 'btn-default', //** Custom classes */
           'target' => '', //** Link target */
           'track' => false
-        );
+        ), $atts );
 
-        extract( shortcode_atts( $defaults, $atts ) );
 
         $other = '';
         if ( $track ) {

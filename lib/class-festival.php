@@ -227,17 +227,12 @@ namespace UsabilityDynamics {
         array(
           'tag'  => 'link',
           'rel'  => 'shortcut icon',
-          'href' => home_url( '/images/favicon.png' )
+          'href' => home_url( '/assets/favicon.png' )
         ),
         array(
           'tag'  => 'link',
           'rel'  => 'api',
           'href' => admin_url( 'admin-ajax.php' )
-        ),
-        array(
-          'tag'  => 'link',
-          'rel'  => 'pingback',
-          'href' => get_bloginfo( 'pingback_url' )
         ),
         array(
           'tag'  => 'link',
@@ -514,7 +509,10 @@ namespace UsabilityDynamics {
 
     }
 
-
+    /**
+     *
+     * @return array|void
+     */
     public function locale_model() {
 
       // Include Translation File.
