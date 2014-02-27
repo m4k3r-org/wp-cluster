@@ -89,9 +89,9 @@ module.exports = function( grunt ) {
       main: {
         options: {
           baseUrl: "scripts/src",
-          skipModuleInsertion: true, // important to avoid "app.main" being created
+          skipModuleInsertion: true,
           locale: "en-us",
-          optimize: 'none', // uglify|none
+          optimize: 'none',
           uglify: {
             toplevel: true,
             ascii_only: true,
@@ -103,12 +103,13 @@ module.exports = function( grunt ) {
             no_mangle: true
           },
           include: [
+            'app.main',
+            'countdown',
             'modules/html.picture',
             'modules/html.video',
-            'modules/banner.poster',
-            'app.bootstrap'
+            'modules/banner.poster'
           ],
-          out: "scripts/app.bootstrap.js"
+          out: "scripts/app.main.js"
         }
       },
       foobox: {
@@ -146,7 +147,7 @@ module.exports = function( grunt ) {
           'scripts/src/*.js',
           'scripts/src/modules/*.js'
         ],
-        tasks: [ 'uglify', 'requirejs:main' ]
+        tasks: [ 'uglify' ]
       },
       docs: {
         files: [
@@ -220,16 +221,16 @@ module.exports = function( grunt ) {
   grunt.loadNpmTasks( 'grunt-shell' );
 
   // Build Assets
-  grunt.registerTask( 'default', [ 'yuidoc', 'uglify', 'requirejs:main', 'markdown', 'less' ] );
+  grunt.registerTask( 'default', [ 'yuidoc', 'uglify', 'markdown', 'less' ] );
 
   // Install environment
-  grunt.registerTask( 'install', [ 'yuidoc', 'uglify', 'requirejs:main', 'markdown', 'less' ] );
+  grunt.registerTask( 'install', [ 'yuidoc', 'uglify',  'markdown', 'less' ] );
 
   // Update Environment
-  grunt.registerTask( 'update', [ 'yuidoc', 'uglify', 'requirejs:main', 'markdown', 'less' ] );
+  grunt.registerTask( 'update', [ 'yuidoc', 'uglify',  'markdown', 'less' ] );
 
   // Prepare distribution
-  grunt.registerTask( 'dist', [ 'yuidoc', 'uglify', 'requirejs:main', 'markdown', 'less' ] );
+  grunt.registerTask( 'dist', [ 'yuidoc', 'uglify',  'markdown', 'less' ] );
 
   // Update Documentation
   grunt.registerTask( 'doc', [ 'yuidoc', 'markdown' ] );

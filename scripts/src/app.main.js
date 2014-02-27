@@ -10,15 +10,8 @@
  *      require( 'site.model' ).ajax
  *
  */
-require( [ '/assets/models/locale/', '/assets/models/settings/', 'jquery', 'skrollr', 'twitter.bootstrap' ], function( _locale, _settings, jQuery ) {
-//  console.debug( 'app.main', 'loaded', _locale.domain );
-
-  // unfuck some WP stuff, i don't care.
-  window.jQuery = window.jQuery || jQuery;
-  window.jQuery.widget = window.jQuery.widget || {};
-  window.mejs = window.mejs || {
-    Utility: {}
-  };
+define( 'app.main', [ 'jquery', 'skrollr' ], function( jQuery ) {
+  console.debug( 'app.main', 'loaded' );
 
   // ghetto fix because w/o it breaks mobile by preventing scrolling - potanin
   if( window.innerWidth > 700 ) {
@@ -28,27 +21,26 @@ require( [ '/assets/models/locale/', '/assets/models/settings/', 'jquery', 'skro
 
     // Sticky elements implementation
     require( [ 'sticky' ], function() {
-      // console.debug( 'app.main', 'sticky' );
 
-      var st = 0;
-
-      if( jQuery( '#wpadminbar' ).length > 0 ) {
-        st = jQuery( '#wpadminbar' ).height();
-      }
-
-      jQuery( ".navbar-top" ).sticky( {
+      jQuery( ".navbar-top" ).sticky({
         //topSpacing: st
-      } );
+      });
 
-    } );
+    });
 
   }
 
   /**
    * Ok for all eventbrite links, we're going to add the Google Analytics cross domain tracking code
    */
-  jQuery( 'a' ).click( function( e ) {
-  } );
+  jQuery( 'a[data-track]' ).click( function( e ) {
+    e.preventDefault();
+    _gaq.push([ '_link', 'https://www.eventbrite.com/e/ume-2014-tickets-9467005067' ]);
+    return true;
+  });
 
-} );
+  // Initialization the SPA.
+  require( [ 'twitter.bootstrap', 'udx.wp.spa' ] );
+
+});
 

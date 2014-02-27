@@ -573,9 +573,9 @@ namespace UsabilityDynamics {
 
       // Declare Dynamic / Public Scripts.
       $this->scripts(array(
-        'app.config'            => array( 'url' => content_url( '/assets/app.config.js' ), 'deps' => array( 'app.require' ) ),
-        'app.bootstrap'         => array( 'url' => content_url( '/assets/scripts/app.bootstrap.js' ), 'deps' => array( 'app.require', 'app.config' ) ),
-        'app.main'              => array( 'url' => content_url( '/assets/scripts/app.main.js' ), 'deps' => array( 'app.require', 'app.bootstrap' ) )
+        // 'app.config'            => array( 'url' => content_url( '/assets/app.config.js' ), 'deps' => array( 'app.require' ) ),
+        // 'app.bootstrap'         => array( 'url' => content_url( '/assets/scripts/app.bootstrap.js' ), 'deps' => array( 'app.require', 'app.config' ) ),
+        // 'app.main'              => array( 'url' => content_url( '/assets/scripts/app.main.js' ), 'deps' => array( 'app.require', 'app.bootstrap' ) )
       ));
 
       // Declare Public Styles.
