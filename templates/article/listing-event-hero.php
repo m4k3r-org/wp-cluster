@@ -27,8 +27,6 @@ extract( $data = wp_festival()->extend( array(
   'class_offset' => 'col-md-offset-0',
 ), (array)$wp_query->data[ 'event-hero' ] ) );
 
-//echo "<pre>"; print_r( $data ); echo "</pre>";
-
 $bgi_url = !empty( $background_image ) ? wp_festival()->get_image_link_by_attachment_id( $background_image, array( 'default' => false ) ) : false;
 $logo_url = !empty( $logo_image ) ? wp_festival()->get_image_link_by_attachment_id( $logo_image, array( 'default' => false ) ) : false;
 
@@ -50,7 +48,6 @@ $time_format = ( $time_format = get_option( 'time_format' ) ) !== false ? $time_
           <?php while( have_posts() ) : the_post(); ?>
             <?php $post = wp_festival()->get_post_data( get_the_ID() ); ?>
             <?php $post = wp_festival()->extend( $post, $postdata ); ?>
-            <?php //echo "<pre>"; print_r( $post ); echo "</pre>"; ?>
             <section class="event-hero-block text-center">
               <h1 class="h-color text-center" style="<?php echo $tcolor; ?>"><?php echo $post[ 'post_title' ]; ?></h1>
               <?php if( $logo_url ) : ?>
@@ -59,7 +56,7 @@ $time_format = ( $time_format = get_option( 'time_format' ) ) !== false ? $time_
                 </div>
               <?php endif; ?>
               <?php if( !empty( $post[ 'ticketURL' ] ) ) : ?>
-                <a onclick="_gaq.push(['_link', '<?php echo $post[ 'ticketURL' ]; ?>']); return false;" href="<?php echo $post[ 'ticketURL' ]; ?>" class="btn btn-default"><?php _e( 'Buy Ticket', wp_festival( 'domain' ) ); ?></a>
+                <a data-track href="<?php echo $post[ 'ticketURL' ]; ?>" class="btn btn-default"><?php _e( 'Buy Ticket', wp_festival( 'domain' ) ); ?></a>
               <?php endif; ?>
               <div class="row location">
                 <div class="col-md-10 col-md-offset-1">

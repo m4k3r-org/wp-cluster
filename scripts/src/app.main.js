@@ -17,7 +17,7 @@ define( 'app.main', [ 'jquery', 'skrollr' ], function( jQuery ) {
   if( window.innerWidth > 700 ) {
     //console.log( 'window.screen.availWidth', window.screen.availWidth );
 
-    //window.skrollr.init( { forceHeight: false });     
+    //window.skrollr.init( { forceHeight: false });
 
     // Sticky elements implementation
     require( [ 'sticky' ], function() {
@@ -32,9 +32,9 @@ define( 'app.main', [ 'jquery', 'skrollr' ], function( jQuery ) {
 
   // Bind Cross Domain Tracking for EventBrite.
   jQuery( 'a[data-track], a[href*=eventbrite]' ).click( function( e ) {
-    console.debug( 'app.main', 'external click' );
+    console.debug( 'app.main', 'external click', e.target.href );
     e.preventDefault();
-    _gaq.push([ '_link', 'https://www.eventbrite.com/e/ume-2014-tickets-9467005067' ]);
+    _gaq.push([ '_link', e.target.href ]);
     return true;
   });
 
