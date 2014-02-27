@@ -141,7 +141,7 @@ namespace UsabilityDynamics\Cluster {
         }
 
         if( !defined( 'MULTISITE' ) ) {
-          return $this;
+          return;
         }
 
         // Save Instance.
@@ -182,9 +182,6 @@ namespace UsabilityDynamics\Cluster {
           wp_die( '<h1>Cluster Network Error</h1><p>Your request is for an invalid domain.</p>', $this->domain );
         }
 
-        // Fatal Error Handler.
-        register_shutdown_function( array( $this, '_shutdown' ) );
-
         // Initialize Settings.
         $this->_settings();
 
@@ -198,7 +195,7 @@ namespace UsabilityDynamics\Cluster {
         $this->_fix_urls();
 
         // Prepare Cookie Constants.
-        $this->_cookie();
+        $this->_cookes();
 
         // Sent common response headers.
         $this->_send_headers();
@@ -238,37 +235,11 @@ namespace UsabilityDynamics\Cluster {
           add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ), 100 );
         }
         
-      }
-
-      public function _shutdown() {
-
-
-        if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {}
-
-        if ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) {}
-
-        $errfile = 'unknown file';
-        $errstr  = 'shutdown';
-        $errno   = E_CORE_ERROR;
-        $errline = 0;
-
-        $error = error_get_last();
-
-        if( $error !== NULL) {
-          $errno   = $error[ 'type' ];
-          $errfile = $error[ 'file' ];
-          $errline = $error[ 'line' ];
-          $errstr  = $error[ 'message' ];
-          // die( '<pre>' . print_r( $error, true ) . '</pre>' );
-          // self::fatal();
-        }
+        // set_error_handler( array( $this, 'error_handler' ) );
 
       }
-
-      /**
-       *
-       */
-      private function _cookie() {
+      
+      private function _cookes() {
         
         $siteurl = get_site_option( 'siteurl' );
         
@@ -288,20 +259,20 @@ namespace UsabilityDynamics\Cluster {
         }
         
         if( !defined( 'USER_COOKIE' ) ) {
-          define( 'USER_COOKIE', 'wordpressuser_' . COOKIEHASH );
+          define('USER_COOKIE', 'wordpressuser_' . COOKIEHASH);
         }
 
         if( !defined( 'LOGGED_IN_COOKIE' ) ) {
-          define( 'LOGGED_IN_COOKIE', 'wordpress_logged_in_' . COOKIEHASH );
+          define('USER_COOKIE', 'wordpress_logged_in_' . COOKIEHASH);
         }
 
         if( !defined( 'COOKIEPATH' ) ) {
-          define( 'COOKIEPATH', preg_replace( '|https?://[^/]+|i', '', get_option( 'home' ) . '/' ) );
+          define('COOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('home') . '/' ) );
         }
-
+        
         if( !defined( 'SITECOOKIEPATH' ) ) {
-          define( 'SITECOOKIEPATH', preg_replace( '|https?://[^/]+|i', '', get_option( 'siteurl' ) . '/' ) );
-        }
+          define('SITECOOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('siteurl') . '/' ) );
+        }        
 
         if( !defined( 'ADMIN_COOKIE_PATH' ) ) {
           define( 'ADMIN_COOKIE_PATH', SITECOOKIEPATH . 'wp-admin' );
@@ -351,7 +322,11 @@ namespace UsabilityDynamics\Cluster {
         $this->_api       = new API();
         $this->_theme     = new Theme();
         $this->_log       = new Log();
-        //$this->_media    = new Media( $this->get( 'media' ) );
+
+        // Enable CDN Media.
+        //$this->_media = new Media( $this->get( 'media' ) );
+
+        // Enable Varnish.
         //$this->_varnish = new Varnish($this->get( 'varnish' ));
 
         // Basic Frontend Security
@@ -362,6 +337,29 @@ namespace UsabilityDynamics\Cluster {
         remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
         remove_action( 'wp_head', 'wp_generator' );
         remove_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
+
+
+        /*
+        Utility::add_filters( array(
+          'bloginfo_url',
+          'the_permalink',
+          'wp_list_pages',
+          'wp_list_categories',
+          'roots_wp_nav_menu_item',
+          'the_content_more_link',
+          'the_tags',
+          'get_pagenum_link',
+          'get_comment_link',
+          'month_link',
+          'day_link',
+          'year_link',
+          'tag_link',
+          'the_author_posts_link',
+          'script_loader_src',
+          'style_loader_src'
+        ), array( Utility, 'relative_url' ) );
+        */
+
 
       }
 
@@ -378,8 +376,8 @@ namespace UsabilityDynamics\Cluster {
        *
        * @param $message
        */
-      public function fatal( $message = null ) {
-        wp_die( $message ? '<h1>Cluster Error</h1><p>' . $message . '</p>' : '<hr />' );
+      public function fatal( $message ) {
+        wp_die( '<h1>Cluster Error</h1><p>' . $message . '</p>' );
       }
 
       /**
@@ -785,7 +783,6 @@ namespace UsabilityDynamics\Cluster {
 
         }
 
-<<<<<<< HEAD
         // must have Cache-Control header
         header( "Cache-Control: public, must-revalidate, max-age=2592000" );
 
@@ -795,19 +792,6 @@ namespace UsabilityDynamics\Cluster {
         // header( 'Expires: ' . gmdate('D, d M Y H:i:s', time() + 2592000 ) . ' GMT' );
         // header( "Content-Length: application/json" );
         // header( "X-Api-Response: true" );
-=======
-        // CloudFront / Varnish Essetnails
-        header( "Pragma: public" );
-        header( "Cache-Control: public, must-revalidate, max-age=2592000" ); //  CF will not cache at all if set: no-cache='Set-Cookie'
-        header( 'Expires: ' . gmdate('D, d M Y H:i:s', time() + 2592000 ) . ' GMT' );
-
-
-        header( "Vary: Accept-Encoding" );
-        header( "Content-Type: application/json" );
-
-        // header( "X-Api-Response: true" );
-        // header( "Content-Length: ..." );
->>>>>>> b1221be8b6f1d7d98a01fc229bcd03cdfb2ae178
 
         // header_remove( 'X-Content-Type-Options' );
         // header_remove( 'X-Powered-By' );
@@ -817,8 +801,7 @@ namespace UsabilityDynamics\Cluster {
         die(json_encode(array(
           "varnish-request-id" => Utility::requestHeaders()->{'X-Varnish'},
           "request-headers" => Utility::requestHeaders(),
-          "ok" => true,
-          "id" => time(),
+          "ok"=> true,
           "message"=> __( 'Hello!' ),
           "data"=> array(
             "key" => "value"
@@ -860,6 +843,57 @@ namespace UsabilityDynamics\Cluster {
         } else {
           return str_replace( '/wp-admin', '/manage', $url );
         }
+
+      }
+
+      /**
+       * Error Handler
+       *
+       * @param $errno
+       * @param $errstr
+       * @param $errfile
+       * @param $errline
+       *
+       * @param $errfile
+       *
+       * @return bool
+       */
+      public static function error_handler( $errno = null, $errstr = '', $errfile = null, $errline = null ) {
+
+        if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {}
+
+        if ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) {}
+
+        // This error code is not included in error_reporting
+        if( !( error_reporting() & $errno ) ) {
+          return false;
+        }
+
+        switch( $errno ) {
+
+          // Fatal
+          case E_ERROR:
+          case E_CORE_ERROR:
+          case E_RECOVERABLE_ERROR:
+          case E_COMPILE_ERROR:
+          case E_USER_ERROR:
+            wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologize for the inconvenience and will return shortly.</p>" );
+            break;
+
+          // Do Nothing
+          case E_WARNING:
+          case E_USER_NOTICE:
+            return true;
+            break;
+
+          // No Idea.
+          default:
+            return false;
+            // wp_die( "<h1>Website Temporarily Unavailable</h1><p>We apologize for the inconvenience and will return shortly.</p>" );
+            break;
+        }
+
+        return true;
 
       }
 

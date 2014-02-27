@@ -31,9 +31,7 @@ if( strpos( $_SERVER[ 'HTTP_HOST' ], 'origin.' ) === 0 && $_SERVER['HTTP_USER_AG
 }
 
 // @todo Decide how to handle direct access to origin.
-// @temp force removal of origin subdomain.. ?
 if( strpos( $_SERVER[ 'HTTP_HOST' ], 'origin.' ) === 0 ) {
-<<<<<<< HEAD
   //die( home_url() );
   //wp_redirect( home_url() ); 
   //exit;
@@ -41,26 +39,15 @@ if( strpos( $_SERVER[ 'HTTP_HOST' ], 'origin.' ) === 0 ) {
   // die( wp_redirect( 'http://' . str_replace( 'origin.', 'www.', $_host ) ) );  
 
   // @temp force removal of origin subdomain.. ?
-=======
->>>>>>> b1221be8b6f1d7d98a01fc229bcd03cdfb2ae178
   $_SERVER[ 'HTTP_HOST' ] = str_replace( 'origin.', 'www.', $_SERVER[ 'HTTP_HOST' ] );
+
+  // @temp Just sending everybody to 'www'.
   header( "Location: http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" );
-<<<<<<< HEAD
 
   exit();
 
-=======
-	exit();  
->>>>>>> b1221be8b6f1d7d98a01fc229bcd03cdfb2ae178
 }
 
-// CloudFront / Varnish Essetnails
-//header( "Pragma: public" );
-//header( "Cache-Control: public, must-revalidate, max-age=10" ); //  CF will not cache at all if set: no-cache='Set-Cookie'
-
-//header( "Status: 500 Not Found" );
-
-//die( 'stuff not found!' );
 //die($_host);
 //$_SERVER[ 'HTTP_HOST' ] = $_host;
 //die('ss');
