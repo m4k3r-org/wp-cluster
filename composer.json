@@ -1,0 +1,34 @@
+{
+  "name": "usabilitydynamics/wp-amd",
+  "version": "0.5.1",
+  "homepage": "https://github.com/UsabilityDynamics/wp-amd",
+  "keywords": [
+    "amd",
+    "js",
+    "css"
+  ],
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Andy Potanin",
+      "homepage": "http://usabilitydynamics.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://repository.usabilitydynamics.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3",
+    "usabilitydynamics/lib-ui": "master",
+    "usabilitydynamics/lib-utility": "master"
+  },
+  "autoload": {
+    "classmap": [ 
+      "lib"
+     ]
+  }
+}
