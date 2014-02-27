@@ -34,18 +34,18 @@ if( strpos( $_SERVER[ 'HTTP_HOST' ], 'origin.' ) === 0 && $_SERVER['HTTP_USER_AG
 if( strpos( $_SERVER[ 'HTTP_HOST' ], 'origin.' ) === 0 ) {
   //die( home_url() );
   //wp_redirect( home_url() ); 
-    //exit;
+  //exit;
   // die( 'http://' . str_replace( 'origin.', 'www.', $_host ) );
   // die( wp_redirect( 'http://' . str_replace( 'origin.', 'www.', $_host ) ) );  
-  
+
   // @temp force removal of origin subdomain.. ?
   $_SERVER[ 'HTTP_HOST' ] = str_replace( 'origin.', 'www.', $_SERVER[ 'HTTP_HOST' ] );
 
   // @temp Just sending everybody to 'www'.
   header( "Location: http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" );
 
-	exit();
-  
+  exit();
+
 }
 
 //die($_host);

@@ -784,14 +784,14 @@ namespace UsabilityDynamics\Cluster {
         }
 
         // must have Cache-Control header
-        header( "X-Api-Response: true" );
-        header( "Pragma: public" );
-        header( "Content-Type: application/json" );
-        header( "Vary: Accept-Encoding" );
-        header( "X-Men: Wolverine" );
         header( "Cache-Control: public, must-revalidate, max-age=2592000" );
-        header( 'Expires: ' . gmdate('D, d M Y H:i:s', time() + 2592000 ) . ' GMT' );
-        header( "Content-Length: application/json" );
+
+        // header( "Pragma: public" );
+        // header( "Vary: Accept-Encoding" );
+        // header( "Content-Type: application/json" );
+        // header( 'Expires: ' . gmdate('D, d M Y H:i:s', time() + 2592000 ) . ' GMT' );
+        // header( "Content-Length: application/json" );
+        // header( "X-Api-Response: true" );
 
         // header_remove( 'X-Content-Type-Options' );
         // header_remove( 'X-Powered-By' );
@@ -803,7 +803,7 @@ namespace UsabilityDynamics\Cluster {
           "request-headers" => Utility::requestHeaders(),
           "ok"=> true,
           "message"=> __( 'Hello!' ),
-          "message"=> array(
+          "data"=> array(
             "key" => "value"
           )
         )));
