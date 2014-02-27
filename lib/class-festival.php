@@ -365,9 +365,6 @@ namespace UsabilityDynamics {
       add_action( 'customize_register', array( $this, 'customize_register' ), 600 );
       add_action( 'wp_head', array( $this, 'wp_head' ));
 
-      add_filter( 'udx:theme:public:model:locale', array( $this, 'locale_model' ) );
-      add_filter( 'udx:theme:public:model:settings', array( $this, 'settings_model' ) );
-
       // Initializes Wordpress Menufication
       if( class_exists( '\Menufication' ) ) {
         $this->menufication = \Menufication::getInstance();
@@ -510,73 +507,6 @@ namespace UsabilityDynamics {
     }
 
     /**
-     * May be Depreciatd
-     *
-     * @return array|void
-     */
-    public function locale_model() {
-
-      // Include Translation File.
-      //$locale = include_once $this->get( '_computed.path.root' ) . '/l10n.php';
-
-      $locale = array(
-        'domain' => __( 'Domain' ),
-        'settings' => __( 'Settings' )
-      );
-
-      // Noramlize HTML Strings.
-      foreach( (array) $locale as $key => $value ) {
-
-        if( !is_scalar( $value ) ) {
-          continue;
-        }
-
-        $locale[ $key ] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
-
-      }
-
-      return (array) apply_filters( 'festival:model:locale', $locale );
-
-    }
-
-    /**
-     * Get Site Model.
-     *
-     * See http://www.dancingastronaut.com/ (DancingAstronaut_AppState)
-     * See http://www.livenation.com/geo.js
-     *
-     * @return array
-     */
-    public function settings_model() {
-
-      $_home_url = parse_url( home_url());
-
-      return (array) apply_filters( 'festival:model:settings', array(
-        'settings' => array(
-          'permalinks' => get_option( 'permalink_structure' ) == '' ? false : true,
-        ),
-        'geo'      => array(
-          'latitude'  => null,
-          'longitude' => null,
-          'city'      => null,
-          'state'     => null,
-          'country'   => null
-        ),
-        'user'     => array(
-          'id'    => '',
-          'login' => ''
-        ),
-        'url'      => array(
-          'domain' => trim( $_home_url[ 'host' ] ? $_home_url[ 'host' ] : array_shift( explode( '/', $_home_url[ 'path' ], 2 ) ) ),
-          'ajax'   => admin_url( 'admin-ajax.php' ),
-          'home'   => admin_url( 'admin-ajax.php' ),
-          'assets' => admin_url( 'admin-ajax.php' ),
-        )
-      ));
-
-    }
-
-    /**
      * Register Sidebars
      *
      * @author Usability Dynamics
@@ -643,9 +573,9 @@ namespace UsabilityDynamics {
 
       // Declare Dynamic / Public Scripts.
       $this->scripts(array(
-        // 'app.config'            => array( 'url' => content_url( '/assets/app.config.js' ), 'deps' => array( 'app.require' ) ),
-        // 'app.bootstrap'         => array( 'url' => content_url( '/assets/scripts/app.bootstrap.js' ), 'deps' => array( 'app.require', 'app.config' ) ),
-        // 'app.main'              => array( 'url' => content_url( '/assets/scripts/app.main.js' ), 'deps' => array( 'app.require', 'app.bootstrap' ) )
+        'app.config'            => array( 'url' => content_url( '/assets/app.config.js' ), 'deps' => array( 'app.require' ) ),
+        'app.bootstrap'         => array( 'url' => content_url( '/assets/scripts/app.bootstrap.js' ), 'deps' => array( 'app.require', 'app.config' ) ),
+        'app.main'              => array( 'url' => content_url( '/assets/scripts/app.main.js' ), 'deps' => array( 'app.require', 'app.bootstrap' ) )
       ));
 
       // Declare Public Styles.
