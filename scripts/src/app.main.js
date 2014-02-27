@@ -30,17 +30,13 @@ define( 'app.main', [ 'jquery', 'skrollr' ], function( jQuery ) {
 
   }
 
-  /**
-   * Ok for all eventbrite links, we're going to add the Google Analytics cross domain tracking code
-   */
-  jQuery( 'a[data-track]' ).click( function( e ) {
+  // Bind Cross Domain Tracking for EventBrite.
+  jQuery( 'a[data-track], a[href*=eventbrite]' ).click( function( e ) {
+    console.debug( 'app.main', 'external click' );
     e.preventDefault();
     _gaq.push([ '_link', 'https://www.eventbrite.com/e/ume-2014-tickets-9467005067' ]);
     return true;
   });
-
-  // Initialization the SPA.
-  require( [ 'twitter.bootstrap', 'udx.wp.spa' ] );
 
 });
 
