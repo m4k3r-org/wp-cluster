@@ -32,7 +32,6 @@ define( 'app.main', [ 'jquery', 'skrollr' ], function( jQuery ) {
 
   // Bind Cross Domain Tracking for EventBrite.
   jQuery( 'a[data-track], a[href*=eventbrite]' ).click( function( e ) {
-    console.debug( 'app.main', 'external click', e.target.href );
     e.preventDefault();
     _gaq.push([ '_link', e.target.href ]);
     return true;

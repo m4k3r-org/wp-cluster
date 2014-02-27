@@ -11,7 +11,7 @@
   <div class="container">
 
     <div class="social-wrap">
-      <a class="btn btn-default" role="button" href="https://www.eventbrite.com/e/ume-2014-tickets-9467005067" onclick="_gaq.push(['_link', 'https://www.eventbrite.com/e/ume-2014-tickets-9467005067']); return false;"><?php _e( 'Buy Tickets', wp_festival( 'domain' ) ); ?></a>
+      <a class="btn btn-default" role="button" href="https://www.eventbrite.com/e/ume-2014-tickets-9467005067" data-track><?php _e( 'Buy Tickets', wp_festival( 'domain' ) ); ?></a>
       <div class="no-sticky social-flex">
         <?php echo wp_festival()->nav( 'social', 2 ); ?>
       </div>
