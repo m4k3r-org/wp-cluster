@@ -783,15 +783,17 @@ namespace UsabilityDynamics\Cluster {
 
         }
 
-        // must have Cache-Control header
-        header( "X-Api-Response: true" );
+        // CloudFront / Varnish Essetnails
         header( "Pragma: public" );
-        header( "Content-Type: application/json" );
-        header( "Vary: Accept-Encoding" );
-        header( "X-Men: Wolverine" );
-        header( "Cache-Control: public, must-revalidate, max-age=2592000" );
+        header( "Cache-Control: public, must-revalidate, max-age=2592000" ); //  CF will not cache at all if set: no-cache='Set-Cookie'
         header( 'Expires: ' . gmdate('D, d M Y H:i:s', time() + 2592000 ) . ' GMT' );
-        header( "Content-Length: application/json" );
+
+
+        header( "Vary: Accept-Encoding" );
+        header( "Content-Type: application/json" );
+
+        // header( "X-Api-Response: true" );
+        // header( "Content-Length: ..." );
 
         // header_remove( 'X-Content-Type-Options' );
         // header_remove( 'X-Powered-By' );
@@ -801,9 +803,10 @@ namespace UsabilityDynamics\Cluster {
         die(json_encode(array(
           "varnish-request-id" => Utility::requestHeaders()->{'X-Varnish'},
           "request-headers" => Utility::requestHeaders(),
-          "ok"=> true,
+          "ok" => true,
+          "id" => time(),
           "message"=> __( 'Hello!' ),
-          "message"=> array(
+          "data"=> array(
             "key" => "value"
           )
         )));
