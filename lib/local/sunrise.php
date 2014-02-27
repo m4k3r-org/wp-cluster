@@ -22,12 +22,12 @@ $_host = str_replace( '.loc', '.com', $_SERVER[ 'HTTP_HOST' ] );
 
 // Amazon CloudFront gets access.
 if( strpos( $_SERVER[ 'HTTP_HOST' ], 'origin.' ) === 0 && $_SERVER['HTTP_USER_AGENT'] === 'Amazon CloudFront' ) {
-  $_SERVER[ 'HTTP_HOST' ] = $_host = str_replace( 'origin.', 'www.', $_host );
+//  $_SERVER[ 'HTTP_HOST' ] = $_host = str_replace( 'origin.', 'www.', $_host );
 }
 
 // Veneer API Proxy Gets gets access.
 if( strpos( $_SERVER[ 'HTTP_HOST' ], 'origin.' ) === 0 && $_SERVER['HTTP_USER_AGENT'] === 'Veneer' ) {
-  $_SERVER[ 'HTTP_HOST' ] = $_host = str_replace( 'origin.', 'www.', $_host );
+//  $_SERVER[ 'HTTP_HOST' ] = $_host = str_replace( 'origin.', 'www.', $_host );
 }
 
 // @todo Decide how to handle direct access to origin.
@@ -39,13 +39,18 @@ if( strpos( $_SERVER[ 'HTTP_HOST' ], 'origin.' ) === 0 ) {
   // die( wp_redirect( 'http://' . str_replace( 'origin.', 'www.', $_host ) ) );  
 
   // @temp force removal of origin subdomain.. ?
-  $_SERVER[ 'HTTP_HOST' ] = str_replace( 'origin.', 'www.', $_SERVER[ 'HTTP_HOST' ] );
+  //$_SERVER[ 'HTTP_HOST' ] = str_replace( 'origin.', 'www.', $_SERVER[ 'HTTP_HOST' ] );
 
   // @temp Just sending everybody to 'www'.
-  header( "Location: http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" );
+  //header( "Location: http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" );
 
+  //exit();
+
+}
+
+if( $_SERVER[ 'HTTP_HOST' ] === 'www.discodonniepresents.com' ) {
+  header( "Location: http://discodonniepresents.com" );
   exit();
-
 }
 
 //die($_host);
