@@ -1,12 +1,4 @@
-<?php
-// Frontend View of Slider
 
-// Enqueue Stylesheet and Script only where loaded
-
-wp_enqueue_style( 'recent-posts-flexslider-widget-styles' );
-wp_enqueue_script( 'recent-posts-flexslider-script' );
-
-?>
 
 <h3 class="flexslider-title"><?php if( !empty( $title ) ){
     echo $title;
@@ -68,7 +60,7 @@ function recent_post_flexslider_excerpt( $string, $word_limit, $more = '&nbsp;&h
 $id = rand(); ?>
 
 <div id="slider-wrap">
-  <div id="<?php echo $id; ?>" class="flexslider" <?php /* Remove margin if only one slide */
+  <div data-requires="/assets/scripts/flexslider.js" class="flexslider" <?php /* Remove margin if only one slide */
   if( $slider_count == 1 ){
     echo 'style="margin: 0;"';
   } ?>>
