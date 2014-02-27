@@ -1,0 +1,12 @@
+#global-editor-shell{
+	border: 1px solid #DFDFDF;
+    border-radius: 3px 3px 3px 3px;
+    height: 600px;
+    position: relative;
+    width: 99.5%;
+}
+
+#global-editor-shell .ace_editor{
+	font-size: 12px;
+	font-family: Consolas, Monaco, Courier, monospace
+}
