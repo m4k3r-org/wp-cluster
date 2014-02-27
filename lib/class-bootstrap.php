@@ -288,7 +288,7 @@ namespace UsabilityDynamics\Cluster {
         }
         
         if( !defined( 'USER_COOKIE' ) ) {
-          define('USER_COOKIE', 'wordpressuser_' . COOKIEHASH);
+          define( 'USER_COOKIE', 'wordpressuser_' . COOKIEHASH);
         }
 
         if( !defined( 'LOGGED_IN_COOKIE' ) ) {
@@ -296,11 +296,11 @@ namespace UsabilityDynamics\Cluster {
         }
 
         if( !defined( 'COOKIEPATH' ) ) {
-          define('COOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('home') . '/' ) );
+          define( 'COOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('home') . '/' ) );
         }
         
         if( !defined( 'SITECOOKIEPATH' ) ) {
-          define('SITECOOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('siteurl') . '/' ) );
+          define( 'SITECOOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('siteurl') . '/' ) );
         }        
 
         if( !defined( 'ADMIN_COOKIE_PATH' ) ) {
@@ -716,7 +716,6 @@ namespace UsabilityDynamics\Cluster {
           remove_action( 'admin_bar_menu', 'wp_admin_bar_my_account_menu', 0 );
           remove_action( 'admin_bar_menu', 'wp_admin_bar_my_account_item', 7 );
         }
-
 
       }
 
