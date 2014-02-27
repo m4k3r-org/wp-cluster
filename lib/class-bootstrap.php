@@ -259,7 +259,8 @@ namespace UsabilityDynamics\Cluster {
           $errfile = $error[ 'file' ];
           $errline = $error[ 'line' ];
           $errstr  = $error[ 'message' ];
-          self::fatal();
+          // die( '<pre>' . print_r( $error, true ) . '</pre>' );
+          // self::fatal();
         }
 
       }
