@@ -80,13 +80,7 @@ namespace UsabilityDynamics\Festival {
           'track' => false
         ), $atts );
 
-
-        $other = '';
-        if ( $track ) {
-          $other .= "onclick=\"if(typeof _gaq == 'object'){_gaq.push(['_link', '$url']); return false;}else{console.log('no _gaq')}\" ";
-        }
-
-        return '<a href="'.$url.'" target="'.$target.'" class="btn btn-custom '.$size.' '.$class.'" style="color:'.$anchor_color.';background:'.$color.';border-color:'.$color.'; '.$style.'" '.$other.'>'.$anchor.'</a>';
+        return '<a href="'.$atts['url'].'" target="'.$atts['target'].'" class="btn btn-custom '.$atts['size'].' '.$atts['class'].'" style="color:'.$atts['anchor_color'].';background:'.$atts['color'].';border-color:'.$atts['color'].'; '.$atts['style'].'" '.($atts['track']?'data-track':'').'>'.$atts['anchor'].'</a>';
 
       }
 
