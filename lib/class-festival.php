@@ -510,6 +510,7 @@ namespace UsabilityDynamics {
     }
 
     /**
+     * May be Depreciatd
      *
      * @return array|void
      */
@@ -640,13 +641,11 @@ namespace UsabilityDynamics {
         $this->carrington->registerModule( 'SectionBreakModule' );
       }
 
-      // Declare Public Scripts.
+      // Declare Dynamic / Public Scripts.
       $this->scripts(array(
-        'app.config'            => array( 'url' => content_url( '/assets/models/config.js' ), 'deps' => array( 'app.require' ) ),
-        'app.locale'            => array( 'url' => content_url( '/assets/models/locale.js' ), 'deps' => array( 'app.require' ) ),
-        'app.admin'             => array( 'url' => content_url( '/assets/scripts/app.admin.js' ), 'deps' => array( 'app.require' ) ),
-        'app.bootstrap'         => array( 'url' => content_url( '/assets/scripts/app.bootstrap.js' ), 'deps' => array( 'app.require' ) ),
-        'app.main'              => array( 'url' => content_url( '/assets/scripts/app.main.js' ), 'deps' => array( 'app.require', 'app.bootstrap' ) )
+        // 'app.config'            => array( 'url' => content_url( '/assets/app.config.js' ), 'deps' => array( 'app.require' ) ),
+        // 'app.bootstrap'         => array( 'url' => content_url( '/assets/scripts/app.bootstrap.js' ), 'deps' => array( 'app.require', 'app.config' ) ),
+        // 'app.main'              => array( 'url' => content_url( '/assets/scripts/app.main.js' ), 'deps' => array( 'app.require', 'app.bootstrap' ) )
       ));
 
       // Declare Public Styles.
@@ -826,6 +825,9 @@ namespace UsabilityDynamics {
 
     }
 
+    /**
+     *
+     */
     private function load_shortcodes() {
       // Inits shortcodes
       \UsabilityDynamics\Shortcode\Utility::maybe_load_shortcodes( get_stylesheet_directory() . '/lib/shortcodes' );

@@ -2,18 +2,17 @@
  * HTML Picture Element
  *
  */
-define( 'html.picture', ['require','exports','module'],function( exports, module ) {
+define( 'html.picture', ['require', 'exports', 'module'], function( exports, module ) {
 //  console.log( 'html.picture', 'loaded' );
 
-});
-
+} );
 
 /**
  * HTML Video Element
  *
  * @note Can not require "udx.storage" here.
  */
-define( 'html.video', [],function() {
+define( 'html.video', [], function() {
 //  console.log( 'html.video', 'loaded' );
 
   var trailer = document.getElementById( 'trailer-video' );
@@ -30,12 +29,12 @@ define( 'html.video', [],function() {
 
     //var storage = Storage.create( 'app.state' );
 
-    banner.appendChild(  trailer );
+    banner.appendChild( trailer );
     jQuery( '.container', banner ).css( 'position', 'absolute' );
     jQuery( '.element-event-meta', banner ).fadeOut();
     jQuery( trailer ).css( 'width', '100%' );
 
-    if( trailer.readyState  === 0 ) {
+    if( trailer.readyState === 0 ) {
       trailer.load();
     }
 
@@ -61,24 +60,23 @@ define( 'html.video', [],function() {
 
     // container -> position absolute
 
-  });
+  } );
 
   trailer.addEventListener( 'canplay', function PLAY() {
     console.log( 'trailer', 'canplay' );
     trailer.play();
-  })
+  } )
 
   trailer.addEventListener( 'abort', function PLAY() {
     console.log( 'trailer', 'abort' );
-  });
+  } );
 
   trailer.addEventListener( 'loadstart', function PLAY() {
     console.log( 'trailer', 'loadstart' );
-  })
+  } )
 
   trailer.addEventListener( 'timeupdate', function PLAY() {
     console.log( 'trailer', 'timeupdate', trailer.currentTime );
-
 
     // @note when the motherfucking beat drops
     if( trailer.currentTime > 80 ) {
@@ -86,14 +84,14 @@ define( 'html.video', [],function() {
     }
 
     //if( trailer.currentTime === )
-  });
+  } );
 
   trailer.addEventListener( 'ended', function PLAY() {
     console.log( 'trailer', 'ended' );
 
     jQuery( '.element-event-meta', banner ).fadeIn();
     //jQuery( trailer ).fadeOut();
-  })
+  } )
 
   trailer.addEventListener( 'playing', function PLAY() {
     console.log( 'trailer', 'playing' );
@@ -101,7 +99,7 @@ define( 'html.video', [],function() {
     jQuery( '.element-event-days' ).fadeTo( 'slow', 0.1 );
     jQuery( '.element-event-location' ).fadeTo( 'slow', 0.1 );
 
-  });
+  } );
 
   trailer.addEventListener( 'play', function PLAY() {
     console.log( 'trailer', 'play', trailer.readyState );
@@ -110,16 +108,13 @@ define( 'html.video', [],function() {
       trailer.load();
     }
 
-  })
+  } )
 
   trailer.addEventListener( 'error', function PLAY() {
     console.log( 'trailer', 'error' );
-  })
+  } )
 
-
-
-});
-
+} );
 
 /**
  * HTML Video Element
@@ -141,9 +136,7 @@ define( 'banner.poster', [ 'udx.storage' ], function( Storage ) {
   //setItem
   console.log( state );
 
-
-});
-
+} );
 
 /**
  * Application Bootstrap
@@ -154,13 +147,13 @@ define( 'banner.poster', [ 'udx.storage' ], function( Storage ) {
 require( [ 'html.picture', 'html.video' ], function Bootstrap() {
 //  console.debug( 'app.bootstrap' );
 
-  require.config({
+  require.config( {
     paths: {
       scrollr: '/assets/scripts/scrollr',
       countdown: '/assets/scripts/countdown',
       sticky: '/assets/scripts/sticky'
     }
-  });
+  } );
 
   // require.loadStyle( '//cdn.udx.io/vendor/animate.css' );
 
@@ -169,6 +162,5 @@ require( [ 'html.picture', 'html.video' ], function Bootstrap() {
   // Load Main Application
   //require( [ '/assets/scripts/app.main.js' ] );
 
-
-});
+} );
 
