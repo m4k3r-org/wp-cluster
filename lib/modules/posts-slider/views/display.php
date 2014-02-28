@@ -60,7 +60,7 @@ function recent_post_flexslider_excerpt( $string, $word_limit, $more = '&nbsp;&h
 $id = rand(); ?>
 
 <div id="slider-wrap">
-  <div data-requires="flexslider" class="flexslider" <?php /* Remove margin if only one slide */
+  <div data-requires="flexslider" class="flexslider" <?php
   if( $slider_count == 1 ){
     echo 'style="margin: 0;"';
   } ?>>

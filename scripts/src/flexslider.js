@@ -1,5 +1,5 @@
 /**
- * Event Countdown Timer.
+ * Flex slider
  *
  */
 define( 'flexslider', [ 'jquery.flexslider' ], function() {
