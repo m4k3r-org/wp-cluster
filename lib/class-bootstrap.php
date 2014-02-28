@@ -102,6 +102,7 @@ namespace UsabilityDynamics\Cluster {
 
       /**
        * Original host, when proxied.
+       *
        * @public
        * @property $original_host
        * @type {String}
@@ -145,7 +146,7 @@ namespace UsabilityDynamics\Cluster {
         }
 
         // Save Instance.
-        $wp_cluster = self::$instance = &$this;
+        $wp_cluster = self::$instance = & $this;
 
         // Seek ./vendor/autoload.php and autoload
         if( is_file( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' ) ) {
@@ -217,7 +218,7 @@ namespace UsabilityDynamics\Cluster {
 
         // Add Cluster Scripts & Styles.
         add_action( 'admin_enqueue_scripts', array( &$this, 'admin_enqueue_scripts' ), 20 );
-        
+
         // Modify Core UI.
         add_filter( 'admin_footer_text', array( &$this, 'admin_footer_text' ) );
         add_action( 'manage_sites_custom_column', array( &$this, 'manage_sites_custom_column' ), 10, 2 );
@@ -225,11 +226,11 @@ namespace UsabilityDynamics\Cluster {
         add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
 
         // /manage/admin-ajax.php?action=cluster_uptime_status
-        add_action( 'wp_ajax_cluster_uptime_status', array( $this, '_uptime_status' )  );
+        add_action( 'wp_ajax_cluster_uptime_status', array( $this, '_uptime_status' ) );
         add_action( 'wp_ajax_nopriv_cluster_uptime_status', array( $this, '_uptime_status' ) );
 
-        add_action( 'wp_ajax_nopriv_varnish_test', array( $this, '_varnish_test' )  );
-        add_action( 'wp_ajax_varnish_test', array( $this, '_varnish_test' )  );
+        add_action( 'wp_ajax_nopriv_varnish_test', array( $this, '_varnish_test' ) );
+        add_action( 'wp_ajax_varnish_test', array( $this, '_varnish_test' ) );
 
         add_filter( 'wp_mail_from', array( 'Utility', 'wp_mail_from' ), 10 );
         add_filter( 'wp_mail_from_name', array( 'Utility', 'wp_mail_from_name' ), 10 );
@@ -237,15 +238,16 @@ namespace UsabilityDynamics\Cluster {
         if( is_network_admin() ) {
           add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ), 100 );
         }
-        
+
       }
 
       public function _shutdown() {
 
+        if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+        }
 
-        if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {}
-
-        if ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) {}
+        if( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) {
+        }
 
         $errfile = 'unknown file';
         $errstr  = 'shutdown';
@@ -254,41 +256,41 @@ namespace UsabilityDynamics\Cluster {
 
         $error = error_get_last();
 
-        if( $error !== NULL) {
+        if( $error !== NULL ) {
           $errno   = $error[ 'type' ];
           $errfile = $error[ 'file' ];
           $errline = $error[ 'line' ];
           $errstr  = $error[ 'message' ];
           // die( '<pre>' . print_r( $error, true ) . '</pre>' );
           // self::fatal();
+        }
+
       }
-      
-      }
-        
+
       /**
        *
        */
       private function _cookie() {
 
         $siteurl = get_site_option( 'siteurl' );
-        
+
         // Must set or long will not work
         if( !defined( 'COOKIE_DOMAIN' ) ) {
           define( 'COOKIE_DOMAIN', $this->requested_domain );
         }
-                
+
         if( !defined( 'COOKIEHASH' ) ) {
-          
-          if ( $siteurl ) {
-          	define( 'COOKIEHASH', md5( $siteurl ) );
-          } else {            
-           	define( 'COOKIEHASH', '' );
+
+          if( $siteurl ) {
+            define( 'COOKIEHASH', md5( $siteurl ) );
+          } else {
+            define( 'COOKIEHASH', '' );
           }
-          
+
         }
-        
+
         if( !defined( 'USER_COOKIE' ) ) {
-          define( 'USER_COOKIE', 'wordpressuser_' . COOKIEHASH);
+          define( 'USER_COOKIE', 'wordpressuser_' . COOKIEHASH );
         }
 
         if( !defined( 'LOGGED_IN_COOKIE' ) ) {
@@ -296,23 +298,23 @@ namespace UsabilityDynamics\Cluster {
         }
 
         if( !defined( 'COOKIEPATH' ) ) {
-          define( 'COOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('home') . '/' ) );
+          define( 'COOKIEPATH', preg_replace( '|https?://[^/]+|i', '', get_option( 'home' ) . '/' ) );
         }
-        
+
         if( !defined( 'SITECOOKIEPATH' ) ) {
-          define( 'SITECOOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('siteurl') . '/' ) );
-        }        
+          define( 'SITECOOKIEPATH', preg_replace( '|https?://[^/]+|i', '', get_option( 'siteurl' ) . '/' ) );
+        }
 
         if( !defined( 'ADMIN_COOKIE_PATH' ) ) {
           define( 'ADMIN_COOKIE_PATH', SITECOOKIEPATH . 'wp-admin' );
         }
 
         if( !defined( 'PLUGINS_COOKIE_PATH' ) ) {
-          define( 'PLUGINS_COOKIE_PATH', preg_replace('|https?://[^/]+|i', '', WP_PLUGIN_URL)  );
-        }        
-        
+          define( 'PLUGINS_COOKIE_PATH', preg_replace( '|https?://[^/]+|i', '', WP_PLUGIN_URL ) );
+        }
+
       }
-      
+
       /**
        * Initialize Settings.
        *
@@ -320,10 +322,10 @@ namespace UsabilityDynamics\Cluster {
       private function _settings() {
 
         // Initialize Settings.
-        $this->_settings = new Settings(array(
+        $this->_settings = new Settings( array(
           "store" => "options",
           "key"   => "ud:cluster",
-        ));
+        ) );
 
         // ElasticSearch Service Settings.
         $this->set( 'documents', array(
@@ -331,7 +333,7 @@ namespace UsabilityDynamics\Cluster {
           "host"   => "localhost",
           "port"   => 9200,
           "token"  => null,
-        ));
+        ) );
 
         // Save Settings.
         // $this->_settings->commit();
@@ -425,7 +427,7 @@ namespace UsabilityDynamics\Cluster {
         $wp_admin_bar->remove_menu( 'wp-logo' );
         $wp_admin_bar->remove_menu( 'comments' );
 
-        $wp_admin_bar->add_menu(array(
+        $wp_admin_bar->add_menu( array(
           'id'    => 'cluster',
           'meta'  => array(
             'html'     => '<div class="cluster-toolbar-info"></div>',
@@ -435,24 +437,24 @@ namespace UsabilityDynamics\Cluster {
             'class'    => 'cluster-toolbar'
           ),
           'title' => 'Cluster',
-          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
-        ));
+          'href'  => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
+        ) );
 
-        $wp_admin_bar->add_menu(array(
+        $wp_admin_bar->add_menu( array(
           'parent' => 'cluster',
           'id'     => 'cluster-network',
           'meta'   => array(),
           'title'  => 'Networks',
           'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
-        ));
+        ) );
 
-        $wp_admin_bar->add_menu(array(
+        $wp_admin_bar->add_menu( array(
           'parent' => 'cluster',
           'id'     => 'cluster-dns',
           'meta'   => array(),
           'title'  => 'DNS',
           'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=dns'
-        ));
+        ) );
 
       }
 
@@ -477,6 +479,7 @@ namespace UsabilityDynamics\Cluster {
        * @todo Use register_column_headers();
        *
        * @param $sites_columns
+       *
        * @return mixed
        */
       public function wpmu_blogs_columns( $sites_columns ) {
@@ -503,15 +506,15 @@ namespace UsabilityDynamics\Cluster {
        */
       public function manage_sites_custom_column( $column_name, $blog_id ) {
 
-        switch ($column_name) {
+        switch( $column_name ) {
 
           case 'blog_id':
             echo '<p>' . $blog_id . '</p>';
-          break;
+            break;
 
           case 'thumbnail':
             echo '<img src="" class="cluster-site-thumbnail"/>';
-          break;
+            break;
 
         }
 
@@ -531,9 +534,9 @@ namespace UsabilityDynamics\Cluster {
         remove_submenu_page( 'index.php', 'my-networks' );
 
         // Add Site Administration (Settings -> Cluster).
-        add_submenu_page( 'options-general.php', __( 'Cluster', self::$text_domain ), __( 'Cluster', self::$text_domain ), 'manage_network', 'cluster', function() {
+        add_submenu_page( 'options-general.php', __( 'Cluster', self::$text_domain ), __( 'Cluster', self::$text_domain ), 'manage_network', 'cluster', function () {
           include( dirname( __DIR__ ) . '/views/site-settings.php' );
-        });
+        } );
 
       }
 
@@ -549,13 +552,13 @@ namespace UsabilityDynamics\Cluster {
         // add_action('network_admin_notices', array( &$this, 'admin_notices' ));
 
         // Add Network Administration.
-        add_menu_page( __( 'Cluster', self::$text_domain ), __( 'Cluster', self::$text_domain ), 'manage_network', 'cluster-dashboard', function() {
+        add_menu_page( __( 'Cluster', self::$text_domain ), __( 'Cluster', self::$text_domain ), 'manage_network', 'cluster-dashboard', function () {
           include( dirname( __DIR__ ) . '/views/network-settings.php' );
-        });
+        } );
 
-        add_submenu_page( 'cluster-dashboard', __( 'DNS', self::$text_domain ), __( 'DNS', self::$text_domain ), 'manage_network', 'cluster-dns', function() {
+        add_submenu_page( 'cluster-dashboard', __( 'DNS', self::$text_domain ), __( 'DNS', self::$text_domain ), 'manage_network', 'cluster-dns', function () {
           include( dirname( __DIR__ ) . '/views/-settings.php' );
-        });
+        } );
 
       }
 
@@ -610,7 +613,9 @@ namespace UsabilityDynamics\Cluster {
        * Modify Rewrite Rules on Save.
        *
        * @todo Fix rule - does not seem to work.
+       *
        * @param $rules
+       *
        * @internal param $value
        * @return array
        */
@@ -639,21 +644,21 @@ namespace UsabilityDynamics\Cluster {
        * Renders on "shutdown" filter.
        *
        */
-      public function _render_status( $buffer, $errstr,  $errfile, $errline, $errcontext ) {
+      public function _render_status( $buffer, $errstr, $errfile, $errline, $errcontext ) {
         global $wp, $wpdb;
 
         $have_error = false;
 
         //trigger_error("Cannot divide by zero", E_USER_ERROR);
 
-        if ( $error = error_get_last() ) {
-          switch( $error['type'] ){
+        if( $error = error_get_last() ) {
+          switch( $error[ 'type' ] ) {
             case E_ERROR:
             case E_CORE_ERROR:
             case E_COMPILE_ERROR:
             case E_USER_ERROR:
               $have_error = true;
-            break;
+              break;
           }
         }
 
@@ -666,14 +671,14 @@ namespace UsabilityDynamics\Cluster {
           header( ':', true, 200 );
         }
 
-        $buffer = json_encode(array(
-          "ok" => true,
+        $buffer = json_encode( array(
+          "ok"      => true,
           "message" => $have_error ? sprintf( __( "Error occured. Message: %s", self::$text_domain ), $error[ 'message' ] ) : __( "Service is fully operational.", self::$text_domain ),
-          "took" => timer_stop(),
-          "stats" => array(
+          "took"    => timer_stop(),
+          "stats"   => array(
             "queries" => $wpdb->num_queries
           )
-        ));
+        ) );
 
         return $buffer;
 
@@ -734,15 +739,15 @@ namespace UsabilityDynamics\Cluster {
         $wp_admin_bar->remove_node( 'my-account' );
 
         $wp_admin_bar->add_menu( array(
-          'id'        => 'my-account',
-          'parent'    => 'top-secondary',
-          'title'     => sprintf( __('%1$s'), $current_user->display_name ),
-          'href'      => $profile_url,
-          'meta'      => array(
-            'class'     => $class,
-            'title'     => __('My Account'),
+          'id'     => 'my-account',
+          'parent' => 'top-secondary',
+          'title'  => sprintf( __( '%1$s' ), $current_user->display_name ),
+          'href'   => $profile_url,
+          'meta'   => array(
+            'class' => $class,
+            'title' => __( 'My Account' ),
           ),
-        ));
+        ) );
 
       }
 
@@ -794,15 +799,15 @@ namespace UsabilityDynamics\Cluster {
         // header( "Content-Length: application/json" );
         // header( "X-Api-Response: true" );
 
-        die(json_encode(array(
+        die( json_encode( array(
           "varnish-request-id" => Utility::requestHeaders()->{'X-Varnish'},
-          "request-headers" => Utility::requestHeaders(),
-          "ok"=> true,
-          "message"=> __( 'Hello!' ),
-          "data"=> array(
+          "request-headers"    => Utility::requestHeaders(),
+          "ok"                 => true,
+          "message"            => __( 'Hello!' ),
+          "data"               => array(
             "key" => "value"
           )
-        )));
+        ) ) );
 
       }
 
