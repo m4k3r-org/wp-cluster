@@ -8,16 +8,15 @@
  */
 
 ?>
-<article class="post-slider">
+<li class="post-slider">
   <div class="image">
-    <img class="img-responsive" src="<?php echo wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '738', 'height' => '415' ) ); ?>" />
-    <h4 class="category">
-      <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-      <span class="hr"></span>
-    </h4>
+    <a href="<?php the_permalink(); ?>">
+      <img class="img-responsive" src="<?php echo wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '738', 'height' => '415' ) ); ?>" />
+    </a>
   </div>
-  <div class="text">
-    <div class="content"><?php the_excerpt(); ?></div>
-    <?php get_template_part( 'templates/aside/share', get_post_type() ); ?>
+  <div class="category">
+    <?php the_category(', '); ?>
+    <span class="hr"></span>
   </div>
-</article>
+  <h4><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
+</li>

@@ -1,1 +1,1 @@
-define("flexslider",["jquery.flexslider"],function(){return console.debug("flexslider","loaded"),function(){return console.debug("flexslider","dom ready"),console.log(jQuery(this).flexslider()),this}});
+define("flexslider",["jquery.flexslider"],function(){return console.debug("flexslider","loaded"),function(){console.debug("flexslider","dom ready");var a=jQuery(this);return a.flexslider({animation:a.data("animation"),directionNav:!1,slideshowSpeed:a.data("slideshowSpeed"),animationSpeed:a.data("animationSpeed")}),this}});

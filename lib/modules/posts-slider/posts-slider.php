@@ -54,6 +54,16 @@ class Widget_Posts_Slider extends WP_Widget {
       $post_type_array = $post_type;
     }
 
+    $flex_args = array(
+      'cat' => $categories,
+      'post_status' => 'publish',
+      'post_type' => $post_type_array,
+      'showposts' => $slider_count,
+      'ignore_sticky_posts' => true,
+    );
+
+    $flex_query = new WP_Query( $flex_args );
+
     include( plugin_dir_path( __FILE__ ) . '/views/display.php' );
 
     echo $after_widget;

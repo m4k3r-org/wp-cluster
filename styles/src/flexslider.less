@@ -34,22 +34,20 @@
   text-transform: capitalize;
 }
 
-.flexslider .slides > li{
+.flexslider .slides > li {
   /* Hide the slides before the JS is loaded. Avoids image jumping */
   display: none;
   -webkit-backface-visibility: hidden;
   margin: 0px;
   overflow: hidden;
   position: relative;
+  list-style: none;
 }
 
-.flexslider .slides img{
+.flexslider .slides img {
   width: 100%;
   display: block;
   margin: auto;
-  position: absolute;
-  top: 0;
-  bottom: 0;
 }
 
 /* Clearfix for the .slides element */
@@ -78,7 +76,7 @@ html[xmlns] .slides{
 /* FlexSlider Default Theme
 *********************************/
 .flexslider{
-  margin: 0 0 60px;
+  margin: 0 0 20px;
   position: relative;
   zoom: 1;
 }
@@ -97,48 +95,6 @@ html[xmlns] .slides{
 
 .carousel li{
   margin-right: 5px
-}
-
-/* Direction Nav */
-.flex-direction-nav{
-  *height: 0;
-}
-.flex-direction-nav a{
-  width: 30px;
-  height: 30px;
-  margin: -20px 0 0;
-  display: block;
-  background: url('../images/bg_direction_nav.png') no-repeat 0 0;
-  position: absolute;
-  top: 50%;
-  z-index: 10;
-  cursor: pointer;
-  text-indent: -9999px;
-  opacity: 0;
-  -webkit-transition: all .3s ease;
-}
-.flex-direction-nav .flex-next{
-  background-position: 100% 0;
-  right: -36px;
-}
-.flex-direction-nav .flex-prev{
-  left: -36px;
-}
-.flexslider:hover .flex-next{
-  opacity: 0.8;
-  right: 5px;
-}
-.flexslider:hover .flex-prev{
-  opacity: 0.8;
-  left: 5px;
-}
-.flexslider:hover .flex-next:hover, .flexslider:hover .flex-prev:hover{
-  opacity: 1;
-}
-.flex-direction-nav .flex-disabled{
-  opacity: .3 !important;
-  filter: alpha(opacity=30);
-  cursor: default;
 }
 
 /* Control Nav */
@@ -201,33 +157,6 @@ html[xmlns] .slides{
   opacity: 1;
   cursor: default;
 }
-
-.flexslider-caption{
-  position: relative;
-  bottom: 90px;
-  height: 90px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #ffffff;
-}
-.flexslider-caption:before{
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-}
-.flexslider-caption-inner{
-  margin: 0;
-  padding: 0 10px;
-  display: inline-block;
-  vertical-align: middle;
-}
-.flexslider-caption-inner h3,
-.flexslider-caption-inner p{
-  margin: 0;
-}
-.flexslider-caption-inner h3{
-  font-size: 1.6em;
-}
 .flexslider a{
   text-decoration: none;
 }
@@ -240,5 +169,21 @@ html[xmlns] .slides{
   .flex-direction-nav .flex-next{
     opacity: 1;
     right: 0;
+  }
+}
+
+.flexslider {
+  .image {
+    a {
+      width: 100%;
+    }
+  }
+  a {
+    display: inline-block !important;
+    position: static !important;
+    padding-right: 0 !important;
+    &:after, &:before {
+      content: none !important;
+    }
   }
 }
