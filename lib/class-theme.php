@@ -9,7 +9,6 @@ namespace UsabilityDynamics\Cluster {
 
   if( !class_exists( 'UsabilityDynamics\Cluster\Theme' ) ) {
 
-
     /**
      * Class Theme
      *
@@ -52,13 +51,6 @@ namespace UsabilityDynamics\Cluster {
       public function __construct() {
         global $wp_cluster;
 
-        if( defined( 'WP_PRIMARY_THEME_DIR' ) && is_dir( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'themes' ) ) {
-          //add_filter( 'template_directory', create_function( '', ' return WP_PRIMARY_THEME_DIR; ' ) );
-          //add_filter( 'stylesheet_directory', create_function( '', ' return WP_PRIMARY_THEME_URL; ' ) );
-          //add_filter( 'template_directory_uri', create_function( '', ' return WP_PRIMARY_THEME_URL; ' ) );
-          //add_filter( 'stylesheet_directory_uri', create_function( '', ' return WP_PRIMARY_THEME_URL; ' ) );
-        }
-
         if( defined( 'WP_BASE_DIR' ) && is_dir( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'themes' ) ) {
           //register_theme_directory( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'themes' );
         }
@@ -91,7 +83,7 @@ namespace UsabilityDynamics\Cluster {
       public function template_redirect() {
 
         if( !$this->exists ) {
-          self::fatal( 'This website is not yet set up, please check back later.' );
+          self::fatal( 'Our apologies, but this site is yet set up. Please check back soon.' );
         }
 
       }
