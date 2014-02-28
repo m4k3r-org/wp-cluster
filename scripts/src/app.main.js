@@ -38,4 +38,3 @@ define( 'app.main', [ 'jquery', 'skrollr' ], function( jQuery ) {
   });
 
 });
-
