@@ -76,7 +76,7 @@ html[xmlns] .slides{
 /* FlexSlider Default Theme
 *********************************/
 .flexslider{
-  margin: 0 0 20px;
+  margin: 0 0 30px;
   position: relative;
   zoom: 1;
 }
@@ -114,7 +114,7 @@ html[xmlns] .slides{
   width: 10px;
   height: 10px;
   display: block;
-  background: #666666;
+  background: #eee !important;
   background: rgba(0, 0, 0, 0.5);
   cursor: pointer;
   text-indent: -9999px;
@@ -124,13 +124,11 @@ html[xmlns] .slides{
   border-radius: 20px;
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
 }
-.flex-control-paging li a:hover{
-  background: #333333;
-  background: rgba(0, 0, 0, 0.7);
+.flex-control-paging li a:hover {
+  background: #55C9F4 !important;
 }
-.flex-control-paging li a.flex-active{
-  background: #000000;
-  background: rgba(0, 0, 0, 0.9);
+.flex-control-paging li a.flex-active {
+  background: #55C9F4 !important;
   cursor: default;
 }
 
@@ -172,8 +170,20 @@ html[xmlns] .slides{
   }
 }
 
+.flexslider-title {
+  margin-top:0 !important;
+}
 .flexslider {
+  h4 {
+    margin-top: 15px !important;
+    margin-bottom: 0;
+    a {
+      font-size: 15px !important;
+      text-transform: none !important;
+    }
+  }
   .image {
+    margin-bottom: 10px;
     a {
       width: 100%;
     }
@@ -181,9 +191,22 @@ html[xmlns] .slides{
   a {
     display: inline-block !important;
     position: static !important;
-    padding-right: 0 !important;
+    padding: 0 !important;
     &:after, &:before {
       content: none !important;
+    }
+  }
+  span {
+    &.hr {
+      margin: 0;
+      margin-top: 15px;
+      height: 2px;
+      width: 40px;
+    }
+  }
+  .category {
+    a {
+      color: @default-color !important;
     }
   }
 }
