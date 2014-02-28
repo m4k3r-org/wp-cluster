@@ -139,6 +139,28 @@ namespace UsabilityDynamics\Cluster {
           return $input;
         }
       }
+
+      /**
+       * Returns server hostname
+       *
+       * @return string
+       */
+      function get_host() {
+        static $host = null;
+
+        if ($host === null) {
+          if (!empty($_SERVER['HTTP_X_FORWARDED_HOST'])) {
+            $host = $_SERVER['HTTP_X_FORWARDED_HOST'];
+          } elseif (!empty($_SERVER['HTTP_HOST'])) {
+            // HTTP_HOST sometimes is not set causing warning
+            $host = $_SERVER['HTTP_HOST'];
+          } else {
+            $host = '';
+          }
+        }
+
+        return $host;
+      }
         
     }
     
