@@ -14,7 +14,7 @@ main {
     border-width: 2px;
     padding: 15px;
   }
-  
+
   .column {
     margin-bottom: 20px;
   }
@@ -22,15 +22,15 @@ main {
   .article-title {
     margin-top: 0;
   }
-  
+
   .article-image {
     text-align: center;
     margin-bottom: 50px;
-    
+
     img {
       display: inline-block;
     }
-    
+
   }
 
   .module {
@@ -54,74 +54,74 @@ main {
 
         & > ul {
           position: static;
-          
+
           & > li {
             padding-left: 20px;
           }
-          
+
         }
 
         a {
           text-transform: uppercase;
           padding-left: 20px;
           display: block;
-          
+
           &:before {
             content: "\0AB";
             position: absolute;
             left: 0;
           }
-          
+
         }
-        
+
       }
 
     }
 
   }
-  
+
   .column,
   .left-sidebar-section  {
-  
+
     &:first-child {
-    
+
       ul {
-      
+
         li {
-          
+
           a {
             position: relative;
             display: block;
             padding-right: 20px;
             padding-left: 0;
-            
+
             &:before {
               content: none;
             }
-            
+
             &:after {
               content: "\0BB";
               position: absolute;
               right: 0;
             }
-            
+
           }
-        
+
         }
-      
+
       }
-    
+
     }
-  
+
   }
-  
+
   section.section {
-  
+
     &, &:hover {
       border: 0;
       box-shadow: none;
     }
-    
+
   }
 
 }
@@ -133,6 +133,9 @@ main {
 main .article-content .cfct-build {
 
   .module-container {
+    box-shadow: 0 0 5px #EEEEEE;
+    -moz-box-shadow: 0 0 5px #EEEEEE;
+    -webkit-box-shadow: 0 0 5px #EEEEEE;
     border-width: 2px;
     border-style: solid;
   }
@@ -140,26 +143,26 @@ main .article-content .cfct-build {
   .module {
     border-width: 0;
   }
-    
+
   .cfct-block-sidebar {
-  
+
     .module-container {
       background: none;
       border-width: 0;
     }
-  
+
     .module {
       border-width: 2px;
-      
+
       // Disable borders on child modules to prevent extra borders
       .module {
         border-width: 0;
       }
-      
+
     }
-  
+
   }
-  
+
   .cfct-mod-title,
   .widget-title {
     margin-top: 0;
@@ -172,14 +175,14 @@ main .article-content .cfct-build {
 ============================ */
 
 main.full-width {
-  
+
   .content-container article,
   .module-container .module,
   .cfct-build .module-container {
     border-width: 0;
     background: none;
   }
-  
+
 }
 
 /* ============================
@@ -189,47 +192,47 @@ main.full-width {
 main.single {
 
   .content-container {
-    
+
     article {
       border-width: 0;
       background: none;
     }
-    
+
   }
 
   header {
-    
+
     .article-title {
       text-transform: none;
     }
-    
+
   }
-  
+
   section.meta {
     text-transform: uppercase;
     margin: 20px 0;
-    
+
     label {
       display: inline-block;
       margin-right: 10px;
       font-weight: 100;
     }
-    
+
   }
-  
+
   blockquote {
     margin-left: 0;
     padding-left: 15px;
-    
+
     p {
       margin: 10px 0;
       font-style: italic;
       line-height: 20px;
     }
-    
+
   }
-  
-  
+
+
 
 }
 
@@ -244,25 +247,25 @@ article.author {
     border-top-style: solid;
     padding: 50px 20px;
   }
-  
+
   .author-avatar {
     float: left;
     margin-right: 20px;
   }
-  
+
   .author-name {
     font-size: 75%;
-    
+
     .display-name {
       font-size: 150%;
     }
-  
+
   }
-  
+
   p {
     margin: 20px 0;
   }
-  
+
   img.avatar {
     width: 104px;
     height: 104px;
@@ -273,7 +276,7 @@ article.author {
     border-width: 4px;
     border-style: solid;
   }
-  
+
 }
 
 /* ============================
@@ -286,101 +289,101 @@ article.comments {
     padding: 20px;
     border-bottom-style: solid;
     border-bottom-width: 2px;
-    
+
     h1, h2, h3, h4, h5, h5 {
       margin: 0;
       text-transform: none;
     }
-    
+
   }
-  
+
   .respond {
     border-left: none;
     border-right: none;
     border-bottom: none;
     border-radius: 0;
-    
+
     textarea {
       width: 100%;
     }
-    
+
   }
-  
+
   .comments-list {
     margin-bottom: 50px;
-  
+
     ul {
       list-style: none;
       margin: 0;
       padding: 0;
-      
+
       li {
         margin: 0;
         padding: 10px 0;
         border-bottom-style: solid;
         border-bottom-width: 2px;
-        
+
         article {
           margin-top: 10px;
           margin-bottom: 10px;
         }
-        
+
         ul li,
         &:last-child {
           border: none;
           padding-top: 0;
           padding-bottom: 0;
         }
-        
+
         a {
-        
+
           &:after {
             display: none;
           }
-        
+
         }
-        
+
         footer {
           background: none;
           padding: 0;
         }
-        
+
         .comment-content, .reply, li {
           padding-left: 130px;
         }
-        
+
         li li li {
           padding-left: 0;
         }
-        
+
         .comment-content {
           padding-top: 10px;
-          
+
           p {
             margin-bottom: 10px;
           }
-          
+
         }
-        
-        .comment-author, 
+
+        .comment-author,
         .comment-metadata {
-        
+
           &, span, a {
             display: inline;
           }
-          
+
           span.says {
             display: none;
           }
-          
+
         }
-        
+
         .reply a {
           text-transform: uppercase;
           display: inline-block;
           padding: 0 0 0 20px;
           position: relative;
-          
+
           &:after {
             content: "\e6fa";
             display: block;
@@ -389,9 +392,9 @@ article.comments {
             top: 0;
             left: 0;
           }
-          
+
         }
-        
+
         img.avatar {
           width: 80px;
           height: 80px;
@@ -401,11 +404,11 @@ article.comments {
           overflow: hidden;
           border-width: 4px;
           border-style: solid;
-          
+
           margin: 0 40px 0 10px;
           display: block;
           float: left;
-          
+
           &:after {
             content: " ";
             clear: both;
@@ -414,14 +417,14 @@ article.comments {
             height: 1px;
             margin-top: -1px;
           }
-          
+
         }
-        
+
       }
-    
+
     }
-  
+
   }
-  
+
 }
 
