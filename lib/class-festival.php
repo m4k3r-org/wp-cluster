@@ -580,10 +580,10 @@ namespace UsabilityDynamics {
 
       // Declare Public Styles.
       $this->styles(array(
-        'app.admin'             => content_url( '/assets/styles/app.admin.css' ),
-        'app.bootstrap'         => content_url( '/assets/styles/app.bootstrap.css' ),
-        'app.main'              => array( 'url' => content_url( '/assets/styles/app.main.css' ), 'deps' => array( 'app.bootstrap' ) ),
-        'app.editor'            => content_url( '/assets/styles/app.editor.css' ),
+        'app-admin'             => content_url( '/assets/styles/app-admin.css' ),
+        'app-bootstrap'         => content_url( '/assets/styles/app-bootstrap.css' ),
+        'app-main'              => array( 'url' => content_url( '/assets/styles/app-main.css' ), 'deps' => array( 'app-bootstrap' ) ),
+        'app-editor'            => content_url( '/assets/styles/app-editor.css' ),
         'content'               => content_url( '/assets/styles/content.css' ),
         'bootstrap'             => content_url( '/assets/styles/bootstrap.css' ),
         'jquery.jqtransform'    => content_url( '/assets/styles/jqtransform.css' ),
@@ -597,7 +597,7 @@ namespace UsabilityDynamics {
       $this->load_shortcodes();
 
       // Register Editor Style.
-      add_editor_style( home_url( '/assets/styles/app.editor.css' ) );
+      add_editor_style( home_url( '/assets/styles/app-editor.css' ) );
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
@@ -646,8 +646,8 @@ namespace UsabilityDynamics {
       //wp_deregister_script( 'jquery' );
       wp_deregister_script( 'devicepx' );
 
-      wp_enqueue_style( 'app.main' );
-      wp_enqueue_script( 'app.main' );
+      wp_enqueue_style( 'app-main' );
+      wp_enqueue_script( 'app-main' );
 
     }
 

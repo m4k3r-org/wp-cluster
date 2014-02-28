@@ -48,8 +48,8 @@ module.exports = function( grunt ) {
           relativeUrls: true
         },
         files: {
-          'styles/app.main.css': [ 'styles/src/app.main.less' ],
-          'styles/app.bootstrap.css': [ 'styles/src/app.bootstrap.less' ],
+          'styles/app-main.css': [ 'styles/src/app-main.less' ],
+          'styles/app-bootstrap.css': [ 'styles/src/app-bootstrap.less' ],
           'styles/default.css': [ 'styles/src/colors/default.less' ],
           'styles/editor-style.css': [ 'styles/src/editor-style.less' ]
         }
