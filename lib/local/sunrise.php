@@ -10,7 +10,7 @@
  */
 
 // Disable caching to avoid errors being cached by CloudFront.
-header( "Cache-Control: no-cache, max-age=0" );
+header( 'Cache-Control: no-cache, max-age=0' );
 
 if( !defined( 'SUNRISE_LOADED' ) ) {
   define( 'SUNRISE_LOADED', 1 );
