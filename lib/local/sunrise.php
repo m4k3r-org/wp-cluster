@@ -101,7 +101,6 @@ if( $current_blog = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE {$where}
 
 }
 
-die($wpdb->last_query);
 header( 'HTTP/1.1 404 Not Found' );
 wp_die( '<h1>Network Error</h1><p>The domain you requested (' . $_host . ') is not available on network.</p>' );
 
