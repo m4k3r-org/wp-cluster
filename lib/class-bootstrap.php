@@ -1,18 +1,45 @@
 <?php
-/*
-*/
+/**
+ *
+ *
+ */
 namespace UsabilityDynamics\AMD {
 
   if( !class_exists( 'UsabilityDynamics\AMD\Bootstrap' ) ) {
 
     class Bootstrap {
 
+      /**
+       * Cluster core version.
+       *
+       * @static
+       * @property $version
+       * @type {Object}
+       */
+      public static $version = '0.1.0';
+
+      /**
+       * Textdomain String
+       *
+       * @public
+       * @property text_domain
+       * @var string
+       */
+      public static $text_domain = 'wp-amd';
+
+      /**
+       * Singleton Instance Reference.
+       *
+       * @public
+       * @static
+       * @property $instance
+       * @type {Object}
+       */
+      public static $instance = false;
+
       public $path = null;
-
       public $option = array();
-
       public $file;
-
       public $js_file_name;
       public $js_min_file_name_prefix;
       public $js_min_file_name;
@@ -199,6 +226,9 @@ namespace UsabilityDynamics\AMD {
        * This function will be called to save the javascript to an external .js file
        *
        * @access private
+       *
+       * @param $js
+       *
        * @return void
        */
       private function save_to_external_file( $js ) {
@@ -279,7 +309,7 @@ namespace UsabilityDynamics\AMD {
        * Gets the post id from posts table
        *
        * @access public
-       * @return $post_id
+       * @return bool $post_id
        */
       public function get_plugin_post_id() {
         if( $a = array_shift( get_posts( array( 'numberposts' => 1, 'post_type' => 's-global-javascript', 'post_status' => 'publish' ) ) ) ):
@@ -377,7 +407,6 @@ namespace UsabilityDynamics\AMD {
        * get_all_dependencies function.
        *
        * @access public
-       * @return void
        */
       function get_all_dependencies() {
 
@@ -402,12 +431,6 @@ namespace UsabilityDynamics\AMD {
             'load_in_head' => false,
             'infourl'      => 'https://github.com/douglascrockford/JSON-js'
           ),
-          'modernizer'             => array(
-            'name'         => 'Modernizr',
-            'load_in_head' => true,
-            'url'          => 'js/dependencies/modernizer.min.js',
-            'infourl'      => 'http://modernizr.com'
-          ),
           'thickbox'               => array(
             'name'         => 'Thickbox',
             'load_in_head' => false,
@@ -429,7 +452,7 @@ namespace UsabilityDynamics\AMD {
        *
        * @param $post_id
        *
-       * @return $dependency_arr
+       * @return array|mixed $dependency_arr
        */
       function get_saved_dependencies( $post_id ) {
         $dependency_arr = get_post_meta( $post_id, 'dependency', true );
@@ -488,15 +511,19 @@ namespace UsabilityDynamics\AMD {
 
       }
 
+      /**
+       * @param $_content
+       *
+       * @return mixed
+       */
       function filter( $_content ) {
-        /*require_once ( 'min/lib/Minify/JS/ClosureCompiler.php' );
-        $_return = Minify_JS_ClosureCompiler::minify( $_content, array( 'compilation_level' => 'SIMPLE_OPTIMIZATIONS' ) );*/
-        require_once( 'min/lib/JSMin.php' );
-        $_return = JSMin::minify( $_content );
+        // $_content = JSMin::minify( $_content );
 
-        return $_return;
+        return $_content;
       }
+
     }
 
   }
+
 }

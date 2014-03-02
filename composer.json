@@ -1,11 +1,13 @@
 {
   "name": "usabilitydynamics/wp-amd",
-  "version": "0.5.1",
+  "version": "0.1.0",
   "homepage": "https://github.com/UsabilityDynamics/wp-amd",
   "keywords": [
     "amd",
-    "js",
-    "css"
+    "async",
+    "wordpress",
+    "scripts",
+    "styles"
   ],
   "license": "MIT",
   "minimum-stability": "dev",
@@ -24,11 +26,10 @@
   "require": {
     "php": ">=5.3",
     "usabilitydynamics/lib-ui": "master",
+    "usabilitydynamics/lib-settings": "master",
     "usabilitydynamics/lib-utility": "master"
   },
   "autoload": {
-    "classmap": [ 
-      "lib/class-bootstrap.php"
-     ]
+    "classmap": [ "lib" ]
   }
 }

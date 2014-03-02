@@ -11,6 +11,18 @@ module.exports = function build( grunt ) {
 
     pkg: grunt.file.readJSON( 'composer.json' ),
 
+    // Generate Locale Files.
+    makepot: {
+      target: {
+        options: {
+          domainPath: 'static/languages',
+          mainFile: 'wp-amd.php',
+          potFilename: 'wp-amd.pot',
+          type: 'wp-plugin'
+        }
+      }
+    },
+
     yuidoc: {
       compile: {
         name: '<%= pkg.name %>',
@@ -32,7 +44,7 @@ module.exports = function build( grunt ) {
           relativeUrls: true
         },
         files: {
-          'styles/veneer.min.css': [ 'styles/src/veneer.less' ]
+          'styles/wp-amd.css': [ 'styles/src/wp-amd.less' ]
         }
       },
       development: {
@@ -40,7 +52,7 @@ module.exports = function build( grunt ) {
           relativeUrls: true
         },
         files: {
-          'styles/veneer.dev.css': [ 'styles/src/veneer.less' ]
+          'styles/wp-amd.dev.css': [ 'styles/src/wp-amd.less' ]
         }
       }
     },
@@ -68,10 +80,10 @@ module.exports = function build( grunt ) {
       minified: {
         options: {
           preserveComments: false,
-          wrap: true,
+          wrap: true
         },
         files: {
-          'scripts/veneer.min.js': [ 'scripts/src/veneer.js' ]
+          'scripts/wp-amd.js': [ 'scripts/src/wp-amd.js' ]
         }
       }
     },
@@ -143,15 +155,13 @@ module.exports = function build( grunt ) {
 
   // Load tasks
   grunt.loadNpmTasks( 'grunt-markdown' );
-  grunt.loadNpmTasks( 'grunt-contrib-symlink' );
-  grunt.loadNpmTasks( 'grunt-requirejs' );
   grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
   grunt.loadNpmTasks( 'grunt-contrib-uglify' );
   grunt.loadNpmTasks( 'grunt-contrib-watch' );
   grunt.loadNpmTasks( 'grunt-contrib-less' );
   grunt.loadNpmTasks( 'grunt-contrib-concat' );
   grunt.loadNpmTasks( 'grunt-contrib-clean' );
-  grunt.loadNpmTasks( 'grunt-shell' );
+  grunt.loadNpmTasks( 'grunt-wp-i18n' );
 
   // Register tasks
   grunt.registerTask( 'default', [ 'markdown', 'less' , 'yuidoc', 'uglify' ] );
