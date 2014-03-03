@@ -15,7 +15,6 @@
 // Disable caching to avoid errors being cached by CloudFront.
 //header( 'Pragma: no-cache' );
 header( 'Cache-Control: no-cache' );
-
 // die( '<pre>' . print_r( getallheaders(), true ) . '</pre>' );
 
 if( !defined( 'SUNRISE_LOADED' ) ) {
@@ -34,14 +33,19 @@ if( !isset( $wpdb ) || !count( $wpdb->get_col( "SHOW TABLES" ) ) ) {
 
 $_host = $_SERVER[ 'HTTP_HOST' ];
 
+// Enable HTTPS Setting if proxied from Nginx.
+if( isset( $_SERVER[ 'HTTP_X_FORWARDED_PROTO' ] ) ) {
+  $_SERVER[ 'HTTPS' ] = 'on';
+}
+
 // Amazon CloudFront gets access.
-if( $_SERVER[ 'HTTP_USER_AGENT' ] === 'Amazon CloudFront' ) {
+if( isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) && $_SERVER[ 'HTTP_USER_AGENT' ] === 'Amazon CloudFront' ) {
   // $_host = str_replace( 'www.origin.', 'www.', $_host );
   // $_host = str_replace( 'origin.', '', $_host );
 }
 
 // Veneer API Proxy Gets gets access.
-if( $_SERVER[ 'HTTP_USER_AGENT' ] === 'Veneer' ) {
+if( isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) && $_SERVER[ 'HTTP_USER_AGENT' ] === 'Veneer' ) {
   // $_host = str_replace( 'www.origin.', 'www.', $_host );
   // $_host = str_replace( 'origin.', '', $_host );
 }
@@ -78,6 +82,12 @@ if( $current_blog = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE {$where}
   // Determine if extra subdomain exists.
   if( $_host != $subdomain = str_replace( '.' . $current_blog->domain, '', $_host ) ) {
     $current_blog->subdomain = $subdomain;
+  }
+
+  // Unsupported Subdomain, redirect to primary domain.
+  if( isset( $current_blog->subdomain ) && !in_array( $current_blog->subdomain, array( 'secure', 'cdn', 'media', 'assets', 'static' ) ) ) {
+    header( "Location: http://{$current_blog->domain}{$_SERVER['REQUEST_URI']}" );
+    die();
   }
 
   // Add cookie with subdomain support.
