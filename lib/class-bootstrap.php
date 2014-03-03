@@ -5,7 +5,7 @@
  */
 namespace UsabilityDynamics\AMD {
 
-  if( !class_exists( 'UsabilityDynamics\AMD\Bootstrap' ) ) {
+  if( !class_exists( '\UsabilityDynamics\AMD\Bootstrap' ) ) {
 
     class Bootstrap {
 
@@ -86,6 +86,8 @@ namespace UsabilityDynamics\AMD {
         add_filter( 'template_include', array( $this, 'responde_js' ), 1, 1 );
 
         $global_javascript_object = $this;
+        
+        Style::define( array( 'name'  => 'app-style' ));
 
       }
 

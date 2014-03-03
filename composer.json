@@ -28,5 +28,8 @@
     "usabilitydynamics/lib-ui": "master",
     "usabilitydynamics/lib-settings": "master",
     "usabilitydynamics/lib-requires": "master"
+  },
+  "autoload": {
+    "classmap": [ "lib" ]
   }
 }

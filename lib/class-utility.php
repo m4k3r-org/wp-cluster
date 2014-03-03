@@ -7,7 +7,7 @@ namespace UsabilityDynamics\AMD {
 
   if( !class_exists( 'UsabilityDynamics\AMD\Utility' ) ) {
 
-    class Bootstrap {
+    class Utility {
 
       function generate_inline_script( $scripts ) {
         ?>

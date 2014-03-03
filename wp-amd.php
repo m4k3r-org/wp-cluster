@@ -34,10 +34,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
   require_once ( __DIR__ . '/vendor/autoload.php' );
 }
 
-// Bootstrap Plugin.
-require_once( __DIR__ . '/lib/class-bootstrap.php' );
-
 // Intialize Plugin.
-if( class_exists( 'UsabilityDynamics\AMD\Bootstrap' ) ) {
-  new UsabilityDynamics\AMD\Bootstrap();
+if( class_exists( '\UsabilityDynamics\AMD\Bootstrap' ) ) {
+  new \UsabilityDynamics\AMD\Bootstrap();
 }

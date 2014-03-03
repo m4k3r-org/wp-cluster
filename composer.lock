@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e3d7f52fbb6f2621e2eea8cbc56418e1",
+    "hash": "44e005e5b8e120559555ba33526b8703",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -157,7 +157,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-02-25 23:33:31"
+            "time": "2014-03-03 16:06:19"
         },
         {
             "name": "usabilitydynamics/lib-utility",
