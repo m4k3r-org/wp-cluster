@@ -55,10 +55,9 @@ namespace UsabilityDynamics\AMD {
           'key'  => 'amd',
           'data' => array(
             'scripts' => array(
-              'minify'   => true,
-              'path'     => trailingslashit( $wp_upload_dir[ 'basedir' ] ) . "global-js/",
-              'url'      => trailingslashit( $wp_upload_dir[ 'baseurl' ] ) . "global-js/",
-              'filename' => 'global-javascript.js'
+              'minify'   => false,
+              'url'      => "/assets/",
+              'filename' => 'app.js'
             ),
             'styles'  => array(
               'minify'   => true,
@@ -97,8 +96,20 @@ namespace UsabilityDynamics\AMD {
             $dependencies = $this->get_saved_dependencies( $post_id );
             $this->load_dependencies( $dependencies );
           endif;
-          wp_register_script( 'add-global-javascript', $url, $dependencies, '1.0', true );
+          wp_register_script( 'add-global-javascript', $url, $dependencies, $this->get_latest_version_id(), true );
         }
+      }
+
+      /**
+       * Get latest revision ID
+       * @return string
+       */
+      public function get_latest_version_id() {
+        if( $a = array_shift( get_posts( array( 'numberposts' => 1, 'post_type' => 'revision', 'post_status' => 'any', 'post_parent' => $this->get_plugin_post_id() ) ) ) ) {
+          $post_row = get_object_vars( $a );
+          return $post_row[ 'ID' ];
+        }
+        return false;
       }
 
       /**
@@ -266,6 +277,8 @@ namespace UsabilityDynamics\AMD {
        * save_to_external_file function
        * This function will be called to save the javascript to an external .js file
        *
+       * currently not used
+       *
        * @access private
        *
        * @param $js
@@ -307,7 +320,8 @@ namespace UsabilityDynamics\AMD {
       }
 
       /**
-       * @param bool $all
+       * Currently not used
+       * @param type $all
        */
       function unlink_files( $all = false ) {
 
@@ -369,11 +383,8 @@ namespace UsabilityDynamics\AMD {
        * @return bool|string
        */
       public function get_global_js_url() {
-        if( $a = get_posts( array( 'numberposts' => 1, 'post_type' => 's-global-javascript', 'post_status' => 'publish' ) ) ):
-          return $this->get( 'scripts.url' ) . $a[ 0 ]->post_excerpt;
-        else:
-          return false;
-        endif;
+        return apply_filters( 'amd_scripts_url',      $this->get( 'scripts.url' ) )
+              .apply_filters( 'amd_scripts_filename', $this->get( 'scripts.filename' ) );
       }
 
       /**
@@ -537,7 +548,8 @@ namespace UsabilityDynamics\AMD {
 
           $js_form        = stripslashes( $_POST [ 'global-javascript' ] );
           $post_id        = $this->save_revision( $js_form );
-          $error_id       = $this->save_to_external_file( $js_form );
+          //** Uncomment when need to save file */
+          //$error_id       = $this->save_to_external_file( $js_form );
           $js_val[ 0 ]    = $js_form;
           $updated        = true;
           $message_number = 1;
