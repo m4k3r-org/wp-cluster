@@ -130,12 +130,7 @@ namespace UsabilityDynamics\AMD {
       public function responde_js( $template ) {
         global $wp_query;
 
-        echo '<pre>';
-        print_r( $wp_query->query );
-        echo '</pre>';
-
         if ( get_query_var( 'amd_is_asset' ) ) {
-          $js_post = $this->get_js();
 
           $headers = apply_filters( 'amd:' . get_query_var( 'amd_asset_type' ) . ':headers', array(
             'Cache-Control'   => 'public',
@@ -146,9 +141,11 @@ namespace UsabilityDynamics\AMD {
 
           switch( get_query_var( 'amd_asset_type' ) ) {
             case 'script':
+              $data = $this->get_js();
               $headers[ 'Content-Type' ] = isset( $headers[ 'Content-Type' ] ) && $headers[ 'Content-Type' ] ? $headers[ 'Content-Type' ] : 'application/javascript; charset=' . get_bloginfo( 'charset' );
               break;
             case 'style':
+              $data = $this->get_css();
               $headers[ 'Content-Type' ] = isset( $headers[ 'Content-Type' ] ) && $headers[ 'Content-Type' ] ? $headers[ 'Content-Type' ] : 'text/css; charset=' . get_bloginfo( 'charset' );
             default: break;
           }
@@ -157,7 +154,7 @@ namespace UsabilityDynamics\AMD {
             @header( "{$_key}: {$field_value}" );
           }
 
-          die( $js_post['post_content'] );
+          die( $data['post_content'] );
         }
 
         return $template;
@@ -175,7 +172,7 @@ namespace UsabilityDynamics\AMD {
             $dependencies = $this->get_saved_dependencies( $post_id );
             $this->load_dependencies( $dependencies, 'javascript' );
           endif;
-          wp_register_script( 'add-global-javascript', $url, $dependencies, $this->get_latest_version_id( $post_id ), true );
+          wp_register_script( 'add-global-javascript', $url, $dependencies, $this->get_latest_version_id( $post_id ) );
 
           //** CSS */
           $url          = $this->get_global_css_url();
@@ -184,7 +181,7 @@ namespace UsabilityDynamics\AMD {
             $dependencies = $this->get_saved_dependencies( $post_id );
             $this->load_dependencies( $dependencies, 'stylesheet' );
           endif;
-          wp_register_style( 'add-global-stylesheet', $url, $dependencies, $this->get_latest_version_id( $post_id ), true );
+          wp_register_style( 'add-global-stylesheet', $url, $dependencies, $this->get_latest_version_id( $post_id ) );
         }
       }
 
