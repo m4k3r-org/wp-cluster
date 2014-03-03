@@ -56,7 +56,7 @@ namespace UsabilityDynamics\AMD {
           'data' => array(
             'scripts' => array(
               'minify'   => false,
-              'url'      => "/assets/",
+              'url'      => "assets/",
               'filename' => 'app.js'
             ),
             'styles'  => array(
@@ -81,12 +81,83 @@ namespace UsabilityDynamics\AMD {
         // Override the edit link, the default link causes a redirect loop
         add_filter( 'get_edit_post_link', array( $this, 'revision_post_link' ) );
 
+        add_action( 'query_vars', array( $this, '_query_vars' ) );
+        add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
+        add_filter( 'template_include', array( $this, 'responde_js' ), 1, 1 );
+
         $global_javascript_object = $this;
 
       }
 
       /**
+       * New query vars
+       * @param type $query_vars
+       * @return string
+       */
+      public function _query_vars( $query_vars ) {
+
+        $query_vars[ ] = 'amd_asset_type';
+        $query_vars[ ] = 'amd_is_asset';
+
+        return $query_vars;
+
+      }
+
+      /**
+       * Dynamic Rules
+       * @param type $current
+       * @return type
+       */
+      public function _update_option_rewrite_rules( $current ) {
+
+        $scripts_url =     apply_filters( 'amd_scripts_url',      $this->get( 'scripts.url' ) );
+        $script_filename = apply_filters( 'amd_scripts_filename', $this->get( 'scripts.filename' ) );
+
+        $new_rules = array(
+          "^{$scripts_url}{$script_filename}" => 'index.php?amd_is_asset=1&amd_asset_type=script'
+        );
+
+        return $new_rules + (array)$current;
+      }
+
+      /**
        *
+       * @global type $wp_query
+       * @param type $template
+       * @return type
+       */
+      public function responde_js( $template ) {
+        global $wp_query;
+
+        if ( get_query_var( 'amd_is_asset' ) ) {
+          $js_post = $this->get_js();
+
+          $headers = apply_filters( 'amd:' . get_query_var( 'amd_asset_type' ) . ':headers', array(
+            'Cache-Control'   => 'public',
+            'Pragma'          => 'cache',
+            'X-Frame-Options' => 'SAMEORIGIN',
+            'Vary'            => 'Accept-Encoding'
+          ) );
+
+          switch( get_query_var( 'amd_asset_type' ) ) {
+            case 'script':
+              $headers[ 'Content-Type' ] = isset( $headers[ 'Content-Type' ] ) && $headers[ 'Content-Type' ] ? $headers[ 'Content-Type' ] : 'application/javascript; charset=' . get_bloginfo( 'charset' );
+              break;
+            default: break;
+          }
+
+          foreach( (array) $headers as $_key => $field_value ) {
+            @header( "{$_key}: {$field_value}" );
+          }
+
+          die( $js_post['post_content'] );
+        }
+
+        return $template;
+      }
+
+      /**
+       * Register scripts
        */
       function register_scripts() {
         if( !is_admin() ) {
@@ -113,7 +184,7 @@ namespace UsabilityDynamics\AMD {
       }
 
       /**
-       *
+       * Enqueue js
        */
       function print_scripts() {
         wp_enqueue_script( 'add-global-javascript' );
@@ -380,11 +451,12 @@ namespace UsabilityDynamics\AMD {
       }
 
       /**
+       * Global JS URL
        * @return bool|string
        */
       public function get_global_js_url() {
-        return apply_filters( 'amd_scripts_url',      $this->get( 'scripts.url' ) )
-              .apply_filters( 'amd_scripts_filename', $this->get( 'scripts.filename' ) );
+        return '/'.apply_filters( 'amd_scripts_url',      $this->get( 'scripts.url' ) )
+                  .apply_filters( 'amd_scripts_filename', $this->get( 'scripts.filename' ) );
       }
 
       /**
