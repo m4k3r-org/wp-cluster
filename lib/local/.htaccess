@@ -2,7 +2,7 @@
 #
 # This file should be symbolically linked to Cluster Network root.
 #
-# @version 3.0.0
+# @version 3.0.1
 # @author potanin@UD
 
 # Cluster Mimes BEGIN
@@ -103,7 +103,7 @@
   RewriteRule ^manage/login$ /vendor/wordpress/core/wp-login.php [L]
   RewriteRule ^manage/wp-login.php$ /manage/login [R=301,L] # /manage/wp-login.php => /manage/login?loggedout=true
   RewriteRule ^manage/(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
-  RewriteRule ^manage$ /vendor/wordpress/core/wp-admin/ [R=401L]
+  RewriteRule ^manage$ /vendor/wordpress/core/wp-admin/ [L]
 </IfModule>
 # Cluster Management END
 
@@ -196,6 +196,7 @@
 </IfModule>
 </FilesMatch>
 # END W3TC CDN
+
 # BEGIN W3TC Browser Cache
 <IfModule mod_deflate.c>
     <IfModule mod_headers.c>
