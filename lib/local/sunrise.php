@@ -13,9 +13,7 @@
 //
 
 // Disable caching to avoid errors being cached by CloudFront.
-//header( 'Pragma: no-cache' );
 header( 'Cache-Control: no-cache' );
-// die( '<pre>' . print_r( getallheaders(), true ) . '</pre>' );
 
 if( !defined( 'SUNRISE_LOADED' ) ) {
   define( 'SUNRISE_LOADED', 1 );
@@ -39,24 +37,10 @@ if( isset( $_SERVER[ 'HTTP_X_FORWARDED_PROTO' ] ) ) {
 }
 
 // Amazon CloudFront gets access.
-if( isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) && $_SERVER[ 'HTTP_USER_AGENT' ] === 'Amazon CloudFront' ) {
-  // $_host = str_replace( 'www.origin.', 'www.', $_host );
-  // $_host = str_replace( 'origin.', '', $_host );
-}
+if( isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) && $_SERVER[ 'HTTP_USER_AGENT' ] === 'Amazon CloudFront' ) {}
 
 // Veneer API Proxy Gets gets access.
-if( isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) && $_SERVER[ 'HTTP_USER_AGENT' ] === 'Veneer' ) {
-  // $_host = str_replace( 'www.origin.', 'www.', $_host );
-  // $_host = str_replace( 'origin.', '', $_host );
-}
-
-// Uncaught origin request - strip away possible origins and forward to public primary.
-if( strpos( $_host, 'origin.' ) > 0 ) {
-  // $_host = str_replace( 'www.origin.', 'www.', $_host );
-  // $_host = str_replace( 'origin.', '', $_host );
-  // header( "Location: http://{$_host}{$_SERVER['REQUEST_URI']}" );
-  // exit();
-}
+if( isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) && $_SERVER[ 'HTTP_USER_AGENT' ] === 'Veneer' ) {}
 
 $_domains = array();
 
@@ -86,7 +70,13 @@ if( $current_blog = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE {$where}
 
   // Unsupported Subdomain, redirect to primary domain.
   if( isset( $current_blog->subdomain ) && !in_array( $current_blog->subdomain, array( 'secure', 'cdn', 'media', 'assets', 'static' ) ) ) {
-    header( "Location: http://{$current_blog->domain}{$_SERVER['REQUEST_URI']}" );
+
+    if( isset( $_SERVER[ 'HTTPS' ] ) ) {
+      header( "Location: https://{$current_blog->domain}{$_SERVER['REQUEST_URI']}" );
+    } else {
+      header( "Location: https://{$current_blog->domain}{$_SERVER['REQUEST_URI']}" );
+    }
+
     die();
   }
 
