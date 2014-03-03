@@ -3,14 +3,20 @@
  * Multisite Domain Mapping Handler
  *
  * SELECT blog_id FROM corporate_blogs WHERE domain IN ('www.udx.io','udx.io') ORDER BY CHAR_LENGTH(domain) DESC LIMIT 1
- *
  * Manually going to origin.udx.io will redirect to udx.io while www.origin.udx.io will redirect to www.udx.io.
+ *
+ * $current_blog->domain      => usabilitydyamics.com
+ * $current_blog->subdomain   => media|static|assets
  *
  * @version 0.4.2
  */
+//
 
 // Disable caching to avoid errors being cached by CloudFront.
-header( 'Cache-Control: no-cache, max-age=0' );
+//header( 'Pragma: no-cache' );
+header( 'Cache-Control: no-cache' );
+
+// die( '<pre>' . print_r( getallheaders(), true ) . '</pre>' );
 
 if( !defined( 'SUNRISE_LOADED' ) ) {
   define( 'SUNRISE_LOADED', 1 );
@@ -30,40 +36,49 @@ $_host = $_SERVER[ 'HTTP_HOST' ];
 
 // Amazon CloudFront gets access.
 if( $_SERVER[ 'HTTP_USER_AGENT' ] === 'Amazon CloudFront' ) {
-  $_host = str_replace( 'www.origin.', 'www.', $_host );
-  $_host = str_replace( 'origin.', '', $_host );
+  // $_host = str_replace( 'www.origin.', 'www.', $_host );
+  // $_host = str_replace( 'origin.', '', $_host );
 }
 
 // Veneer API Proxy Gets gets access.
 if( $_SERVER[ 'HTTP_USER_AGENT' ] === 'Veneer' ) {
-  $_host = str_replace( 'www.origin.', 'www.', $_host );
-  $_host = str_replace( 'origin.', '', $_host );
+  // $_host = str_replace( 'www.origin.', 'www.', $_host );
+  // $_host = str_replace( 'origin.', '', $_host );
 }
 
 // Uncaught origin request - strip away possible origins and forward to public primary.
 if( strpos( $_host, 'origin.' ) > 0 ) {
-  $_host = str_replace( 'www.origin.', 'www.', $_host );
-  $_host = str_replace( 'origin.', '', $_host );
-  header( "Location: http://{$_host}{$_SERVER['REQUEST_URI']}" );
-  exit();
+  // $_host = str_replace( 'www.origin.', 'www.', $_host );
+  // $_host = str_replace( 'origin.', '', $_host );
+  // header( "Location: http://{$_host}{$_SERVER['REQUEST_URI']}" );
+  // exit();
 }
 
-// Strip Known Subdomains
-$_host = str_replace( array( 'static.', 'assets.', 'media.', 'public.' ), '', $_host );
+$_domains = array();
 
-// Lookup both versions, returning the longer.
-if( ( $nowww = preg_replace( '|^www\.|', '', $_host ) ) != $_host ) {
-  $where = $wpdb->prepare( 'domain IN (%s,%s)', $_host, $nowww );
-} else {
-  $where = $wpdb->prepare( 'domain IN (%s,%s)', $_host, 'www.' . $_host );
-}
+// Build domain lookup query.
+foreach( $_parts = (array) explode( '.', $_host ) as $index => $_domain ) {
 
-// Order by char length in case of multiple results essentially gives the longer domain more prevelance.  
+  if( !in_array( $_domain, array( 'origin', 'net', 'com', 'io' ) ) ) {
+    $_domains[ ] = 'www.' . implode( '.', array_slice( $_parts, $index ) );
+    $_domains[ ] = implode( '.', array_slice( $_parts, $index ) );
+  }
+
+};
+
+$where = $wpdb->prepare( 'domain IN ("' . implode( '","', array_unique( $_domains ) ) . '")', '' );
+
+// Order by char length in case of multiple results essentially gives the longer domain more prevelance.
 if( $current_blog = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE {$where} ORDER BY CHAR_LENGTH(domain) DESC LIMIT 1" ) ) {
 
   // Define globals.
   $blog_id = $current_blog->blog_id;
   $site_id = $current_blog->site_id;
+
+  // Determine if extra subdomain exists.
+  if( $_host != $subdomain = str_replace( '.' . $current_blog->domain, '', $_host ) ) {
+    $current_blog->subdomain = $subdomain;
+  }
 
   // Add cookie with subdomain support.
   if( !defined( 'COOKIE_DOMAIN' ) ) {
