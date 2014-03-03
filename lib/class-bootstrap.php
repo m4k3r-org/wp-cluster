@@ -16,7 +16,7 @@ namespace UsabilityDynamics\AMD {
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.1.0';
+      public $version = '0.1.0';
 
       /**
        * Textdomain String
@@ -37,31 +37,40 @@ namespace UsabilityDynamics\AMD {
        */
       public static $instance = false;
 
+      public $pages = array();
+
       public $path = null;
       public $option = array();
       public $file;
-      public $js_file_name;
-      public $js_min_file_name_prefix;
       public $js_min_file_name;
-      public $path_to_js;
-      public $url_to_js;
 
       /***************
        * Constructor *
        ***************/
       function __construct() {
         global $global_javascript_object;
+        $wp_upload_dir = wp_upload_dir();
+
+        $this->settings = new \UsabilityDynamics\Settings( array(
+          'key'  => 'amd',
+          'data' => array(
+            'scripts' => array(
+              'minify'   => true,
+              'path'     => trailingslashit( $wp_upload_dir[ 'basedir' ] ) . "global-js/",
+              'url'      => trailingslashit( $wp_upload_dir[ 'baseurl' ] ) . "global-js/",
+              'filename' => 'global-javascript.js'
+            ),
+            'styles'  => array(
+              'minify'   => true,
+              'filename' => 'global-styles.css'
+            ),
+          )
+        ) );
 
         $this->path = plugin_basename( dirname( __FILE__ ) );
         $this->file = plugin_basename( __FILE__ );
 
-        $this->js_file_name            = 'global-javascript.js';
-        $this->js_min_file_name_prefix = '-global-javascript.min.js';
-
-        $wp_upload_dir = wp_upload_dir();
-
         $this->path_to_js = trailingslashit( $wp_upload_dir[ 'basedir' ] ) . "global-js/";
-        $this->url_to_js  = trailingslashit( $wp_upload_dir[ 'baseurl' ] ) . "global-js/";
 
         add_action( 'init', array( $this, 'register_scripts' ) );
         add_action( 'wp_footer', array( $this, 'print_scripts' ) );
@@ -77,6 +86,9 @@ namespace UsabilityDynamics\AMD {
 
       }
 
+      /**
+       *
+       */
       function register_scripts() {
         if( !is_admin() ) {
           $url          = $this->get_global_js_url();
@@ -89,10 +101,16 @@ namespace UsabilityDynamics\AMD {
         }
       }
 
+      /**
+       *
+       */
       function print_scripts() {
         wp_enqueue_script( 'add-global-javascript' );
       }
 
+      /**
+       * @param $dependencies
+       */
       function load_dependencies( $dependencies ) {
         $all_deps = $this->get_all_dependencies();
         foreach( $dependencies as $dependency ) {
@@ -110,9 +128,28 @@ namespace UsabilityDynamics\AMD {
         }
       }
 
+      /**
+       * Add Administrative Menus
+       *
+       * @return array
+       */
       public function add_menu() {
-        $page = add_theme_page( 'Global Javascript', 'Global Javascript', 8, __FILE__, array( $this, 'admin_page' ) );
-        add_action( 'admin_print_scripts-' . $page, array( $this, 'admin_scripts' ) );
+
+        $this->pages = (object) array(
+          'scripts' => add_theme_page( 'Script Editor', 'Script Editor', 'edit_theme', 'amd-scripts', array( $this, 'admin_page' ) ),
+          //'styles'  => add_theme_page( 'Styles', 'Styles', 'edit_theme', 'amd-styles', array( $this, 'admin_page' ) ),
+        );
+
+        if( isset( $this->pages->scripts ) ) {
+          add_action( 'admin_print_scripts-' . $this->pages->scripts, array( $this, 'admin_scripts' ) );
+        }
+
+        if( isset( $this->pages->styles ) ) {
+          add_action( 'admin_print_scripts-' . $this->pages->styles, array( $this, 'admin_scripts' ) );
+        }
+
+        return $this->pages;
+
       }
 
       /**
@@ -124,13 +161,12 @@ namespace UsabilityDynamics\AMD {
        */
       public function admin_scripts() {
 
-        wp_enqueue_style( 'global-javascript-admin-styles', plugins_url( $this->path . '/css/admin.css' ) );
+        wp_enqueue_style( 'global-javascript-admin-styles', plugins_url( '/styles/wp-amd.css', dirname( __DIR__ ) ) );
 
-        wp_register_script( 'acejs', plugins_url( '/ace/ace.js', __FILE__ ), '', '1.0', 'true' );
-        wp_enqueue_script( 'acejs' );
+        wp_register_script( 'acejs', plugins_url( '/scripts/src/ace/ace.js', dirname( __DIR__ ) ), array(), $this->version, true );
+        wp_register_script( 'wp-amd', plugins_url( '/scripts/wp-amd.js', dirname( __DIR__ ) ), array( 'acejs', 'jquery-ui-resizable' ), $this->version, true );
 
-        wp_register_script( 'aceinit', plugins_url( '/js/admin.js', __FILE__ ), array( 'acejs', 'jquery-ui-resizable' ), '1.1', 'true' );
-        wp_enqueue_script( 'aceinit' );
+        wp_enqueue_script( 'wp-amd' );
 
       }
 
@@ -191,7 +227,7 @@ namespace UsabilityDynamics\AMD {
        */
       public function save_revision( $js ) {
 
-        $this->js_min_file_name = time() . $this->js_min_file_name_prefix;
+        $this->js_min_file_name = time() . $this->get( 'scripts.filename' );
 
         // If null, there was no original safejs record, so create one
         if( !$safejs_post = $this->get_js() ) {
@@ -213,8 +249,13 @@ namespace UsabilityDynamics\AMD {
         wp_update_post( $safejs_post );
 
         return $safejs_post[ 'ID' ];
+
       }
 
+      /**
+       * @param $post_id
+       * @param $js_dependencies
+       */
       function save_dependency( $post_id, $js_dependencies ) {
 
         add_post_meta( $post_id, 'dependency', $js_dependencies, true ) or update_post_meta( $post_id, 'dependency', $js_dependencies );
@@ -233,7 +274,7 @@ namespace UsabilityDynamics\AMD {
        */
       private function save_to_external_file( $js ) {
 
-        if( !wp_mkdir_p( $this->path_to_js ) )
+        if( !wp_mkdir_p( $this->get( 'scripts.path' ) ) )
           return 1; // we can't make the folder
 
         if( empty( $js ) ):
@@ -244,8 +285,8 @@ namespace UsabilityDynamics\AMD {
         // lets minify the javascript to save first to solve timing issues
         $js_min = $this->filter( $js );
 
-        $js_file_path          = $this->path_to_js . $this->js_file_name;
-        $js_minified_file_path = $this->path_to_js . $this->js_min_file_name;
+        $js_file_path          = $this->get( 'scripts.path' ) . $this->get( 'scripts.filename' );
+        $js_minified_file_path = $this->get( 'scripts.path' ) . $this->get( 'scripts.filename' );
 
         // if files saved proccess to the else statment
         if( !file_put_contents( $js_file_path, $js ) || !file_put_contents( $js_minified_file_path, $js_min ) ):
@@ -265,20 +306,23 @@ namespace UsabilityDynamics\AMD {
         endif;
       }
 
+      /**
+       * @param bool $all
+       */
       function unlink_files( $all = false ) {
 
-        if( $directory_handle = opendir( $this->path_to_js ) ):
+        if( $directory_handle = opendir( $this->get( 'scripts.path' ) ) ):
 
           while( false !== ( $js_file_handle = readdir( $directory_handle ) ) ):
 
             if( $all )
               $new_files = array( '.', '..' );
             else
-              $new_files = array( $this->js_min_file_name, $this->js_file_name, '.', '..' );
+              $new_files = array( $this->js_min_file_name, $this->get( 'scripts.filename' ), '.', '..' );
 
             if( !in_array( $js_file_handle, $new_files ) ):
 
-              unlink( $this->path_to_js . '/' . $js_file_handle );
+              unlink( $this->get( 'scripts.path' ) . '/' . $js_file_handle );
 
             endif;
 
@@ -321,14 +365,20 @@ namespace UsabilityDynamics\AMD {
         endif;
       }
 
+      /**
+       * @return bool|string
+       */
       public function get_global_js_url() {
         if( $a = get_posts( array( 'numberposts' => 1, 'post_type' => 's-global-javascript', 'post_status' => 'publish' ) ) ):
-          return $this->url_to_js . $a[ 0 ]->post_excerpt;
+          return $this->get( 'scripts.url' ) . $a[ 0 ]->post_excerpt;
         else:
           return false;
         endif;
       }
 
+      /**
+       *
+       */
       public function admin_page() {
         $this->update_js();
         $js = $this->get_js();
@@ -340,47 +390,46 @@ namespace UsabilityDynamics\AMD {
         ?>
 
         <div class="wrap">
-		
-			<div id="icon-themes" class="icon32"></div>
-			<h2>Global Javascript Editor</h2>
-			
-			<form action="themes.php?page=<?php echo $this->file; ?>" method="post" id="global-javascript-form">
-				<?php wp_nonce_field( 'update_global_js_js', 'update_global_js_js_field' ); ?>
-        <div class="metabox-holder has-right-sidebar">
-					
-					<div class="inner-sidebar">
-			
-						<div class="postbox">
-							<h3><span>Publish</span></h3>
-							<div class="inside">
-								<input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save Javascript' ); ?>"/>
-							</div>
-						</div>
-						<div class="postbox">
-							<h3><span>Dependency</span></h3>
-							<div class="inside">
-								<?php foreach( $this->get_all_dependencies() as $dep => $dep_array ): ?>
-                  <label><input type="checkbox" name="dependency[]" value="<?php echo $dep; ?>" <?php checked( in_array( $dep, $dependency ), true ); ?> /><a href="<?php echo $dep_array[ 'infourl' ]; ?>"> <?php echo $dep_array[ 'name' ]; ?> </a></label>
-                  <br/>
-                <?php endforeach; ?>
-							</div>
-						</div>
-						<!-- ... more boxes ... -->
-            <?php do_meta_boxes( 's-global-javascript', 'normal', $js ); ?>
-						
-					</div> <!-- .inner-sidebar -->
-			
-					<div id="post-body">
-						<div id="post-body-content">
-							<div id="global-editor-shell">
-							<textarea style="width:100%; height: 360px; resize: none;" id="global-javascript" class="wp-editor-area" name="global-javascript"><?php echo $js[ 'post_content' ]; ?></textarea>
-							</div>
-						</div> <!-- #post-body-content -->
-					</div> <!-- #post-body -->
-					
-				</div> <!-- .metabox-holder -->
-			</form>
-		</div> <!-- .wrap -->
+
+        <h2>JavaScript Editor</h2>
+
+        <form action="themes.php?page=amd-scripts" method="post" id="global-javascript-form">
+          <?php wp_nonce_field( 'update_global_js_js', 'update_global_js_js_field' ); ?>
+          <div class="metabox-holder has-right-sidebar">
+
+            <div class="inner-sidebar">
+
+              <div class="postbox">
+                <h3><span>Publish</span></h3>
+                <div class="inside">
+                  <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save Javascript' ); ?>"/>
+                </div>
+              </div>
+              <div class="postbox">
+                <h3><span>Dependency</span></h3>
+                <div class="inside">
+                  <?php foreach( $this->get_all_dependencies() as $dep => $dep_array ): ?>
+                    <label><input type="checkbox" name="dependency[]" value="<?php echo $dep; ?>" <?php checked( in_array( $dep, $dependency ), true ); ?> /><a href="<?php echo $dep_array[ 'infourl' ]; ?>"> <?php echo $dep_array[ 'name' ]; ?> </a></label>
+                    <br/>
+                  <?php endforeach; ?>
+                </div>
+              </div>
+              <!-- ... more boxes ... -->
+              <?php do_meta_boxes( 's-global-javascript', 'normal', $js ); ?>
+
+            </div> <!-- .inner-sidebar -->
+
+            <div id="post-body">
+              <div id="post-body-content">
+                <div id="global-editor-shell">
+                <textarea style="width:100%; height: 360px; resize: none;" id="global-javascript" class="wp-editor-area" name="global-javascript"><?php echo $js[ 'post_content' ]; ?></textarea>
+                </div>
+              </div> <!-- #post-body-content -->
+            </div> <!-- #post-body -->
+
+          </div> <!-- .metabox-holder -->
+        </form>
+      </div> <!-- .wrap -->
 
       <?php
       }
@@ -462,6 +511,9 @@ namespace UsabilityDynamics\AMD {
         return $dependency_arr;
       }
 
+      /**
+       * @param $safejs_post
+       */
       function post_revisions_meta_box( $safejs_post ) {
 
         // Specify numberposts and ordering args
@@ -473,6 +525,9 @@ namespace UsabilityDynamics\AMD {
         wp_list_post_revisions( $safejs_post[ 'ID' ], $args );
       }
 
+      /**
+       *
+       */
       function update_js() {
 
         $updated = false;
@@ -487,16 +542,19 @@ namespace UsabilityDynamics\AMD {
           $updated        = true;
           $message_number = 1;
 
-          $this->save_dependency( $post_id, $_POST[ 'dependency' ] );
+          if( isset( $_POST[ 'dependency' ] ) ) {
+            $this->save_dependency( $post_id, $_POST[ 'dependency' ] );
+          }
+
         endif; // end of update
 
         if( isset( $_GET[ 'message' ] ) )
           $message_number = (int) $_GET[ 'message' ];
 
-        if( $error_id )
+        if( isset( $error_id ) && $error_id )
           $message_number = 3;
 
-        if( $message_number ):
+        if( isset( $message_number ) && $message_number ):
 
           $messages[ 's-global-javascript' ] = array(
             1 => "Global Javascript saved",
@@ -520,6 +578,26 @@ namespace UsabilityDynamics\AMD {
         // $_content = JSMin::minify( $_content );
 
         return $_content;
+      }
+
+      /**
+       * @param null $key
+       * @param null $value
+       *
+       * @return \UsabilityDynamics\Settings
+       */
+      public function set( $key = null, $value = null ) {
+        return $this->settings->set( $key, $value );
+      }
+
+      /**
+       * @param null $key
+       * @param null $default
+       *
+       * @return \UsabilityDynamics\type
+       */
+      public function get( $key = null, $default = null ) {
+        return $this->settings->get( $key, $default );
       }
 
     }

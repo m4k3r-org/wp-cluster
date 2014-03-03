@@ -30,10 +30,10 @@
  * @module WP-Preview
  */
 
-// Load bootstrap
+// Bootstrap Plugin.
 require_once( __DIR__ . '/lib/class-bootstrap.php' );
 
-// Intialize Plugin
+// Intialize Plugin.
 if( class_exists( 'UsabilityDynamics\AMD\Bootstrap' ) ) {
   new UsabilityDynamics\AMD\Bootstrap();
 }

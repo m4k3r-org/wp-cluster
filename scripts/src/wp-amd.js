@@ -98,8 +98,8 @@ jQuery( document ).ready( function( $ ) {
     containerResizable: function() {
       var self = this;
       this.$container.resizable( {handles: 's'} ).css( {position: 'relative', height: this.defaultHt, minHeight: '400px'} ).on( 'resize.aceEditorResize', function() {
-          self.editor.resize( true );
-        } );
+        self.editor.resize( true );
+      } );
     },
 
     synchronize: function() {

@@ -77,14 +77,33 @@ module.exports = function build( grunt ) {
     },
 
     uglify: {
-      minified: {
+      production: {
         options: {
-          preserveComments: false,
-          wrap: true
+          mangle: false,
+          beautify: false
         },
-        files: {
-          'scripts/wp-amd.js': [ 'scripts/src/wp-amd.js' ]
-        }
+        files: [
+          {
+            expand: true,
+            cwd: 'scripts/src',
+            src: [ '*.js' ],
+            dest: 'scripts'
+          }
+        ]
+      },
+      staging: {
+        options: {
+          mangle: false,
+          beautify: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'scripts/src',
+            src: [ '*.js' ],
+            dest: 'scripts'
+          }
+        ]
       }
     },
 
