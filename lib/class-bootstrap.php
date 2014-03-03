@@ -136,7 +136,7 @@ namespace UsabilityDynamics\AMD {
       public function add_menu() {
 
         $this->pages = (object) array(
-          'scripts' => add_theme_page( 'Script Editor', 'Script Editor', 'edit_theme', 'amd-scripts', array( $this, 'admin_page' ) ),
+          'scripts' => add_theme_page( 'Script Editor', 'Script Editor', 'edit_theme_options', 'amd-scripts', array( $this, 'admin_page' ) ),
           //'styles'  => add_theme_page( 'Styles', 'Styles', 'edit_theme', 'amd-styles', array( $this, 'admin_page' ) ),
         );
 
@@ -163,8 +163,8 @@ namespace UsabilityDynamics\AMD {
 
         wp_enqueue_style( 'global-javascript-admin-styles', plugins_url( '/styles/wp-amd.css', dirname( __DIR__ ) ) );
 
-        wp_register_script( 'acejs', plugins_url( '/scripts/src/ace/ace.js', dirname( __DIR__ ) ), array(), $this->version, true );
-        wp_register_script( 'wp-amd', plugins_url( '/scripts/wp-amd.js', dirname( __DIR__ ) ), array( 'acejs', 'jquery-ui-resizable' ), $this->version, true );
+        wp_register_script( 'acejs', plugins_url( '/scripts/src/ace/ace.js', __DIR__ ), array(), $this->version, true );
+        wp_register_script( 'wp-amd', plugins_url( '/scripts/wp-amd.js', __DIR__ ), array( 'acejs', 'jquery-ui-resizable' ), $this->version, true );
 
         wp_enqueue_script( 'wp-amd' );
 
