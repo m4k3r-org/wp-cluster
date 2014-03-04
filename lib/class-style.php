@@ -34,7 +34,7 @@ namespace UsabilityDynamics\AMD {
         if( !$this::$called ) {
         
           //** Enqueue Frontend Style. */
-          if( !did_action( 'wp_enqueue_scripts' ) ) {
+          if( !did_action( 'wp_enqueue_scripts' ) && !is_admin() ) {
             add_action( 'wp_enqueue_scripts', function() {
               wp_enqueue_style( "wp-amd-{$this->args[ 'name' ]}", home_url() . "/wp-admin/admin-ajax.php?action=wp_amd_{$this->args[ 'name' ]}", $this->args[ 'deps' ], $this->args[ 'version' ] );
             });
@@ -83,7 +83,7 @@ namespace UsabilityDynamics\AMD {
         
         //** Input for CSS Code. */
         $wp_customize->add_control( new Customize_Editor_Control( $wp_customize, 'amd_css_editor', array(
-          'label'   => __( 'CSS' ),
+          'label'   => __( 'Styles' ),
           'section' => 'amd_custom_style',
           'priority' => 10
         )));

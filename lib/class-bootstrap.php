@@ -286,8 +286,8 @@ namespace UsabilityDynamics\AMD {
 
         wp_enqueue_style( 'global-javascript-admin-styles', plugins_url( '/styles/wp-amd.css', __DIR__ ) );
 
-        wp_register_script( 'acejs', plugins_url( '/scripts/src/ace/ace.js', __DIR__ ), array(), $this->version, true );
-        wp_register_script( 'wp-amd', plugins_url( '/scripts/wp-amd.js', __DIR__ ), array( 'acejs', 'jquery-ui-resizable' ), $this->version, true );
+        wp_register_script( 'wp-amd-ace', plugins_url( '/scripts/src/ace/ace.js', __DIR__ ), array(), $this->version, true );
+        wp_register_script( 'wp-amd', plugins_url( '/scripts/wp-amd.js', __DIR__ ), array( 'wp-amd-ace', 'jquery-ui-resizable' ), $this->version, true );
 
         wp_enqueue_script( 'wp-amd' );
 

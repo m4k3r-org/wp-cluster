@@ -25,6 +25,19 @@ namespace UsabilityDynamics\AMD {
        *
        */
       public $type = 'textarea';
+      
+      /**
+       * Enqueue control related scripts/styles.
+       *
+       * @since 3.4.0
+       */
+      public function enqueue() {
+        return null;
+        wp_enqueue_style( 'jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/jquery-ui.css', array(), '' );
+        wp_enqueue_style( 'wp-amd-customize-editor-control', WP_AMD_URL . 'styles/wp.amd.editor.style.css', array( 'jquery-ui' ), '' );
+        wp_enqueue_script( 'wp-amd-ace', WP_AMD_URL . 'scripts/src/ace/ace.js', array(), '', true );
+        wp_enqueue_script( 'wp-amd-customize-editor-control', WP_AMD_URL . 'scripts/wp.amd.editor.style.js', array( 'jquery', 'wp-amd-ace', 'jquery-ui-resizable' ), '', true );
+      }
 
       /**
        * Render Textarea Input
@@ -32,12 +45,9 @@ namespace UsabilityDynamics\AMD {
        */
       public function render_content() {
         ?>
-        <div id="udx-style-editor-wrapper" class="udx-customization-editor" data-require="ui.wp.editor.style">
-          <label>
-            <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
-            <textarea class="udx-style-editor" rows="5" style="width:100%;" <?php $this->link(); ?>><?php echo esc_textarea( $this->value() ); ?></textarea>
-          </label>
-        </div>
+        <label class="customize-control-title"><?php echo esc_html( $this->label ); ?></label>
+        <a href="#" id="wp_amd_editor_button" ><?php _e( 'Edit' ); ?></a>
+        <textarea style="display:none;" id="wp_amd_default_style_editor" <?php $this->link(); ?>><?php echo esc_textarea( $this->value() ); ?></textarea> 
         <?php
       }
 

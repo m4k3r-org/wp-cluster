@@ -44,7 +44,8 @@ module.exports = function build( grunt ) {
           relativeUrls: true
         },
         files: {
-          'styles/wp-amd.css': [ 'styles/src/wp-amd.less' ]
+          'styles/wp-amd.css': [ 'styles/src/wp-amd.less' ],
+          'styles/wp.amd.editor.style.css': [ 'styles/src/wp.amd.editor.style.less' ]
         }
       },
       development: {
