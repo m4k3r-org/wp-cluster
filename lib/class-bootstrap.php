@@ -81,7 +81,7 @@ namespace UsabilityDynamics\AMD {
         // rewrite and respond
         add_action( 'query_vars', array( $this, '_query_vars' ) );
         add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
-        add_filter( 'template_include', array( $this, 'responde_js' ), 1, 1 );
+        add_filter( 'template_include', array( $this, 'return_asset' ), 1, 1 );
 
         $global_javascript_object = $this;
 
@@ -129,7 +129,7 @@ namespace UsabilityDynamics\AMD {
        * @param type $template
        * @return type
        */
-      public function responde_js( $template ) {
+      public function return_asset( $template ) {
         global $wp_query;
 
         if ( get_query_var( 'amd_is_asset' ) ) {
@@ -156,7 +156,11 @@ namespace UsabilityDynamics\AMD {
             @header( "{$_key}: {$field_value}" );
           }
 
-          die( $data['post_content'] );
+          if ( $data ) {
+            die( $data['post_content'] );
+          } else {
+            die('/** Global asset is empty */');
+          }
         }
 
         return $template;
@@ -196,7 +200,7 @@ namespace UsabilityDynamics\AMD {
           $post_row = get_object_vars( $a );
           return $post_row[ 'ID' ];
         }
-        return false;
+        return 'unknown';
       }
 
       /**
@@ -280,7 +284,7 @@ namespace UsabilityDynamics\AMD {
        */
       public function admin_scripts() {
 
-        wp_enqueue_style( 'global-javascript-admin-styles', plugins_url( '/styles/wp-amd.css', dirname( __DIR__ ) ) );
+        wp_enqueue_style( 'global-javascript-admin-styles', plugins_url( '/styles/wp-amd.css', __DIR__ ) );
 
         wp_register_script( 'acejs', plugins_url( '/scripts/src/ace/ace.js', __DIR__ ), array(), $this->version, true );
         wp_register_script( 'wp-amd', plugins_url( '/scripts/wp-amd.js', __DIR__ ), array( 'acejs', 'jquery-ui-resizable' ), $this->version, true );
