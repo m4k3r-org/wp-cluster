@@ -85,7 +85,7 @@ namespace UsabilityDynamics\AMD {
 
         $global_javascript_object = $this;
 
-        Style::define( array( 'name'  => 'app-style' ));
+        new Style();
 
       }
 
