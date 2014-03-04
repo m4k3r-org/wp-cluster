@@ -34,6 +34,9 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
   require_once ( __DIR__ . '/vendor/autoload.php' );
 }
 
+define( 'WP_AMD_DIR', plugin_dir_path( __FILE__ ) );
+define( 'WP_AMD_URL', plugin_dir_url( __FILE__ ) );
+
 // Intialize Plugin.
 if( class_exists( '\UsabilityDynamics\AMD\Bootstrap' ) ) {
   new \UsabilityDynamics\AMD\Bootstrap();

@@ -15,6 +15,8 @@ namespace UsabilityDynamics\AMD {
     class Style {
     
       var $args = false;
+      
+      static $called = false;
     
       /**
        * Constructor
@@ -28,19 +30,32 @@ namespace UsabilityDynamics\AMD {
           'version' => '1.0'
         ), $args );
         
-        //** Enqueue Frontend Style. */
-        add_action( 'wp_enqueue_scripts', function() {
-          wp_enqueue_style( "wp-amd-{$this->args[ 'name' ]}", home_url() . "/wp-admin/admin-ajax.php?action=wp_amd_{$this->args[ 'name' ]}", $this->args[ 'deps' ], $this->args[ 'version' ] );
-        });
+        //** Class must not be initialized more than once to prevent issues. */
+        if( !$this::$called ) {
         
-        //** Renders Custom Styles */
-        add_action( "wp_ajax_wp_amd_{$this->args[ 'name' ]}", array( &$this, "render_styles" ) );
-        add_action( "wp_ajax_nopriv_wp_amd_{$this->args[ 'name' ]}", array( &$this, "render_styles" ) );
+          //** Enqueue Frontend Style. */
+          if( !did_action( 'wp_enqueue_scripts' ) ) {
+            add_action( 'wp_enqueue_scripts', function() {
+              wp_enqueue_style( "wp-amd-{$this->args[ 'name' ]}", home_url() . "/wp-admin/admin-ajax.php?action=wp_amd_{$this->args[ 'name' ]}", $this->args[ 'deps' ], $this->args[ 'version' ] );
+            });
+          }
+          
+          //** Renders Custom Styles */
+          add_action( "wp_ajax_wp_amd_{$this->args[ 'name' ]}", array( &$this, "render_styles" ) );
+          add_action( "wp_ajax_nopriv_wp_amd_{$this->args[ 'name' ]}", array( &$this, "render_styles" ) );
+          
+          //** Adds settings to customizer */
+          if( !did_action( 'customize_register' ) ) {
+            add_action( 'customize_register', array( &$this, 'customize_register' ) );
+          }
+          
+          if( !did_action( 'customize_preview_init' ) ) {
+            add_action( 'customize_preview_init', array( &$this, 'customize_live_preview' ) );
+          }
         
-        //** Adds settings to customizer */
-        if( !did_action( 'customize_register' ) ) {
-          add_action( 'customize_register', array( &$this, 'customize_register' ) );
         }
+        
+        $this::$called = true;
         
       }
       
@@ -120,11 +135,22 @@ namespace UsabilityDynamics\AMD {
       }
       
       /**
+       * Used by hook: 'customize_preview_init'
+       * 
+       * @see add_action( 'customize_preview_init', $func )
+       * @author peshkov@UD
+       */
+      function customize_live_preview() {
+        wp_enqueue_script( 'wp-amd-themecustomizer', WP_AMD_URL . 'scripts/wp.amd.customizer.style.js', array( 'jquery','customize-preview' ), '', true );
+        wp_localize_script( 'wp-amd-themecustomizer', 'wp_amd_themecustomizer', $this->args );
+      }
+      
+      /**
        * Renders Custom CSS File
        *
        * @author peshkov@UD
        */
-      static function render_styles() {
+      function render_styles() {
 
         // Set Some Headers.
         header( 'Cache-Control: public' );
