@@ -16,7 +16,7 @@ namespace UsabilityDynamics\AMD {
        * @property $version
        * @type {Object}
        */
-      public $version = '1.0';
+      public $version = '1.0.0';
 
       /**
        * Textdomain String

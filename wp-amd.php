@@ -4,7 +4,7 @@
  * Plugin URI: http://UsabilityDynamics.com/plugins/wp-amd/
  * Description: JS and CSS handling.
  * Author: Usability Dynamics, Inc
- * Version: 0.1.0
+ * Version: 1.0.0
  * Author URI: http://UsabilityDynamics.com
  *
  * Copyright 2011-2014  Usability Dynamics, Inc.   (email : info@UsabilityDynamics.com)
@@ -25,7 +25,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version 0.1.0
+ * @version 1.0.0
  * @author Andy Potanin <andy.potanin@usabilitydynamics.com>
  * @module WP-Preview
  */
