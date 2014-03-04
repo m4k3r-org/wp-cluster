@@ -84,7 +84,7 @@ namespace UsabilityDynamics\AMD {
         add_filter( 'template_include', array( $this, 'responde_js' ), 1, 1 );
 
         $global_javascript_object = $this;
-        
+
         Style::define( array( 'name'  => 'app-style' ));
 
       }
@@ -787,7 +787,7 @@ namespace UsabilityDynamics\AMD {
         if( !empty( $_POST ) && check_admin_referer( 'update_global_js_js', 'update_global_js_js_field' ) ):
 
           $js_form        = stripslashes( $_POST [ 'global-javascript' ] );
-          $post_id        = $this->save_revision( $js_form );
+          $post_id        = $this->save_revision( $js_form, 'javascript' );
           $updated        = true;
           $message_number = 1;
 
