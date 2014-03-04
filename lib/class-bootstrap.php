@@ -556,6 +556,12 @@ namespace UsabilityDynamics\AMD {
        * @return bool|string
        */
       public function get_global_js_url() {
+        global $wp_rewrite;
+
+        if ( empty( $wp_rewrite->permalink_structure ) ) {
+          return '?amd_is_asset=1&amd_asset_type=script';
+        }
+
         return '/'.apply_filters( 'amd_scripts_url',      $this->get( 'scripts.url' ) )
                   .apply_filters( 'amd_scripts_filename', $this->get( 'scripts.filename' ) );
       }
@@ -565,6 +571,12 @@ namespace UsabilityDynamics\AMD {
        * @return type
        */
       public function get_global_css_url() {
+        global $wp_rewrite;
+
+        if ( empty( $wp_rewrite->permalink_structure ) ) {
+          return '?amd_is_asset=1&amd_asset_type=style';
+        }
+
         return '/'.apply_filters( 'amd_styles_url',      $this->get( 'styles.url' ) )
                   .apply_filters( 'amd_styles_filename', $this->get( 'styles.filename' ) );
       }
