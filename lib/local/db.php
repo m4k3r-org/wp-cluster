@@ -60,7 +60,7 @@ function require_cluster_db() {
  * @return mixed
  */
 function identify_current_network() {
-  global $cdb, $current_blog, $wpdb, $table_prefix;
+  global $cdb, $current_blog, $wpdb, $table_prefix, $blog_id;
 
   $_domains = array();
 
@@ -115,6 +115,9 @@ function identify_current_network() {
      * users, usermeta
      * blogs, signsup, site, sitemeta, sitecategories, registration_log, blog_versions, sitecategories
      *
+     *
+     * SELECT * FROM site_usermeta WHERE user_id IN (1) -> SELECT * FROM cluster.cluster_usermeta WHERE user_id IN
+     *
      * @note sitecategories should not be cluster-wide, although currently disabled altogether.
      */
     add_filter( 'query', function( $query ) {
@@ -122,23 +125,26 @@ function identify_current_network() {
 
       $_tables = array_merge( $cdb->global_tables, $cdb->ms_global_tables );
 
-      $_tables = array( 'users', 'usermta', 'blogs', 'site', 'blog_versions' );
+      $_tables = array( 'usermeta', 'users', 'blogs', 'site', 'blog_versions' );
 
-      foreach( $_tables as $table ) {
-
-        if( strpos( $query, DB_PREFIX . $table ) ) {
-          $query = str_replace( DB_PREFIX . $table, CLUSTER_NAME . '.' . CLUSTER_PREFIX . $table, $query );
-
-          // If not used, fails to Insert new sites.
-          $query = str_replace( '`', '',  $query );
-        }
-
+      foreach( array( 'usermeta', 'users' ) as $table ) {
+        $query = str_replace( DB_PREFIX . $table, CLUSTER_NAME . '.' . CLUSTER_PREFIX . $table, $query );
       }
+
+      foreach( array( 'blogs', 'site', 'blog_versions' ) as $table ) {
+        $query = str_replace( DB_PREFIX . $table, CLUSTER_NAME . '.' . CLUSTER_PREFIX . $table, $query );
+      }
+
+      // If not used, fails to Insert new sites.
+      $query = str_replace( '`', '',  $query );
 
       return $query;
 
 
     });
+
+    // Necessary for caching to work properly.
+    $blog_id = $_blog->blog_id;
 
     // Set global variable if not alrady set.
     if( !isset( $current_blog ) ) {
