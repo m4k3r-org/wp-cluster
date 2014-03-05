@@ -32,11 +32,16 @@ namespace UsabilityDynamics\AMD {
        * @since 3.4.0
        */
       public function enqueue() {
-        return null;
         wp_enqueue_style( 'jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/jquery-ui.css', array(), '' );
         wp_enqueue_style( 'wp-amd-customize-editor-control', WP_AMD_URL . 'styles/wp.amd.editor.style.css', array( 'jquery-ui' ), '' );
+        
         wp_enqueue_script( 'wp-amd-ace', WP_AMD_URL . 'scripts/src/ace/ace.js', array(), '', true );
-        wp_enqueue_script( 'wp-amd-customize-editor-control', WP_AMD_URL . 'scripts/wp.amd.editor.style.js', array( 'jquery', 'wp-amd-ace', 'jquery-ui-resizable' ), '', true );
+        wp_enqueue_script( 'wp-amd-customize-editor-control', WP_AMD_URL . 'scripts/wp.amd.editor.style.js', array( 'jquery', 'wp-amd-ace', 'jquery-ui-resizable' ), '123', true );
+        
+        wp_localize_script( 'wp-amd-customize-editor-control', 'wp_amd_customize_editor_control', array(
+          'done' => __( 'Done' ),
+          'cancel' => __( 'Cancel' ),
+        ) );
       }
 
       /**
@@ -45,8 +50,7 @@ namespace UsabilityDynamics\AMD {
        */
       public function render_content() {
         ?>
-        <label class="customize-control-title"><?php echo esc_html( $this->label ); ?></label>
-        <a href="#" id="wp_amd_editor_button" ><?php _e( 'Edit' ); ?></a>
+        <a href="#" id="wp_amd_style_editor_button_open" class="wp-amd-style-editor-toggle button" ><?php _e( 'Open Editor' ); ?></a>
         <textarea style="display:none;" id="wp_amd_default_style_editor" <?php $this->link(); ?>><?php echo esc_textarea( $this->value() ); ?></textarea> 
         <?php
       }
