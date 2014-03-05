@@ -80,10 +80,21 @@ function identify_current_network() {
     $network = new stdClass();
     $network->id = $_blog->site_id;
 
-    define( 'DB_USER', CLUSTER_USER );
-    define( 'DB_PASSWORD', CLUSTER_PASSWORD );
-    define( 'DB_NAME', ( defined( 'CLUSTER_NETWORK_NAME' ) ? CLUSTER_NETWORK_NAME : CLUSTER_NAME . '_' ) . $network->id );
-    define( 'DB_HOST', CLUSTER_HOST );
+    if( !defined( 'DB_USER' ) && defined( 'CLUSTER_USER' ) ) {
+      define( 'DB_USER', CLUSTER_USER );
+    }
+
+    if( !defined( 'DB_PASSWORD' ) && defined( 'CLUSTER_PASSWORD' ) ) {
+      define( 'DB_PASSWORD', CLUSTER_PASSWORD );
+    }
+
+    if( !defined( 'DB_NAME' ) && ( defined( 'CLUSTER_NETWORK_NAME' ) || defined( 'CLUSTER_NAME' ) ) ) {
+      define( 'DB_NAME', ( defined( 'CLUSTER_NETWORK_NAME' ) ? CLUSTER_NETWORK_NAME : CLUSTER_NAME . '_' ) . $network->id );
+    }
+
+    if( !defined( 'DB_HOST' ) && defined( 'CLUSTER_HOST' ) ) {
+      define( 'DB_HOST', CLUSTER_HOST );
+    }
 
     if( !defined( 'DB_PREFIX' ) ) {
       define( 'DB_PREFIX', 'site_' );
@@ -92,6 +103,7 @@ function identify_current_network() {
     $table_prefix = DB_PREFIX;
 
     /**
+     * Add Cluster Filter
      *
      * Replaces
      * users, usermeta
@@ -104,10 +116,15 @@ function identify_current_network() {
 
       $_tables = array_merge( $cdb->global_tables, $cdb->ms_global_tables );
 
+      $_tables = array( 'users', 'usermta', 'blogs', 'site', 'blog_versions' );
+
       foreach( $_tables as $table ) {
 
         if( strpos( $query, DB_PREFIX . $table ) ) {
-          $query = str_replace( 'FROM ' . DB_PREFIX, 'FROM ' . CLUSTER_NAME . '.' . CLUSTER_PREFIX, $query );
+          $query = str_replace( DB_PREFIX . $table, CLUSTER_NAME . '.' . CLUSTER_PREFIX . $table, $query );
+
+          // If not used, fails to Insert new sites.
+          $query = str_replace( '`', '',  $query );
         }
 
       }
@@ -117,10 +134,16 @@ function identify_current_network() {
 
     });
 
+    // Set global variable if not alrady set.
     if( !isset( $current_blog ) ) {
       $current_blog = $_blog;
     }
 
+  }
+
+  if( !defined( 'DB_USER' ) ) {
+    nocache_headers();
+    wp_die( '<h1>Cluster Error</h1><p>Site not configured.</p>' );
   }
 
   return $_blog;
@@ -146,5 +169,4 @@ function create_network_database( $name = null, $user = 'user' ) {
 require_cluster_db();
 
 identify_current_network();
-
 

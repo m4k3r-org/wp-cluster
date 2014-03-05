@@ -10,9 +10,6 @@
  *
  * @version 0.4.2
  */
-//
-//die( '<pre>' . print_r( $wpdb, true ) . '</pre>' );
-//die( '<pre>' . print_r( $cluster, true ) . '</pre>' );
 
 // Disable caching to avoid errors being cached by CloudFront.
 nocache_headers();
@@ -24,11 +21,6 @@ if( !defined( 'SUNRISE_LOADED' ) ) {
 if( defined( 'COOKIE_DOMAIN' ) ) {
   header( 'HTTP/1.1 500 Internal Server Error' );
   wp_die( '<h1>Network Error</h1><p>The constant "COOKIE_DOMAIN" is defined (probably in wp-config.php). Please remove or comment out that define() line.</p>' );
-}
-
-if( !isset( $wpdb ) || !count( $wpdb->get_col( "SHOW TABLES" ) ) ) {
-  header( 'HTTP/1.1 500 Internal Server Error' );
-  wp_die( '<h1>Network Error</h1><p>The network database is not setup.</p>' );
 }
 
 $_host = $_SERVER[ 'HTTP_HOST' ];
@@ -44,22 +36,8 @@ if( isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) && $_SERVER[ 'HTTP_USER_AGENT' ] === 
 // Veneer API Proxy Gets gets access.
 if( isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) && $_SERVER[ 'HTTP_USER_AGENT' ] === 'Veneer' ) {}
 
-$_domains = array();
-
-// Build domain lookup query.
-foreach( $_parts = (array) explode( '.', $_host ) as $index => $_domain ) {
-
-  if( !in_array( $_domain, array( 'origin', 'net', 'com', 'io' ) ) ) {
-    $_domains[ ] = 'www.' . implode( '.', array_slice( $_parts, $index ) );
-    $_domains[ ] = implode( '.', array_slice( $_parts, $index ) );
-  }
-
-};
-
-$where = $wpdb->prepare( 'domain IN ("' . implode( '","', array_unique( $_domains ) ) . '")', '' );
-
 // Get $current_blog unless already set (by db.php)
-if( isset( $current_blog ) || $current_blog = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE {$where} ORDER BY CHAR_LENGTH(domain) DESC LIMIT 1" ) ) {
+if( isset( $current_blog ) || ( function_exists( 'identify_current_network' ) && $current_blog = identify_current_network() ) ) {
 
   // Define globals.
   $blog_id = $current_blog->blog_id;
@@ -121,9 +99,6 @@ if( isset( $current_blog ) || $current_blog = $wpdb->get_row( "SELECT * FROM {$w
   return;
 
 }
-
-//die( '<pre>' . print_r( $wpdb, true ) . '</pre>' );
-die($wpdb->last_query);
 
 //die($wpdb->last_query);
 header( 'HTTP/1.1 404 Not Found' );

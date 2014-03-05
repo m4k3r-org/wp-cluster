@@ -232,8 +232,8 @@ namespace UsabilityDynamics\Cluster {
         add_action( 'wp_ajax_nopriv_varnish_test', array( $this, '_varnish_test' ) );
         add_action( 'wp_ajax_varnish_test', array( $this, '_varnish_test' ) );
 
-        add_filter( 'wp_mail_from', array( 'Utility', 'wp_mail_from' ), 10 );
-        add_filter( 'wp_mail_from_name', array( 'Utility', 'wp_mail_from_name' ), 10 );
+        add_filter( 'wp_mail_from', array( 'UsabilityDynamics\Cluster\Utility', 'wp_mail_from' ), 10 );
+        add_filter( 'wp_mail_from_name', array( 'UsabilityDynamics\Cluster\Utility', 'wp_mail_from_name' ), 10 );
 
         if( is_network_admin() ) {
           add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ), 100 );

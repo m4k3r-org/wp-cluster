@@ -69,7 +69,7 @@ namespace UsabilityDynamics\Cluster {
       static public function wp_mail_from( $from_email ) {
   
         // Get the site domain and get rid of www.
-        $sitename = strtolower( $_SERVER['SERVER_NAME'] );
+        $sitename = strtolower( $_SERVER[ 'SERVER_NAME' ] );
         
         if ( substr( $sitename, 0, 4 ) == 'www.' ) {
           $sitename = substr( $sitename, 4 );
@@ -91,12 +91,9 @@ namespace UsabilityDynamics\Cluster {
        * @return string
        */
       static public function wp_mail_from_name( $from_name ) {
-  
-        $searchParams = array(
-          //'index' => '...',
-          'type' => $type,
-          'body' => $query
-        );
+        global $current_site;
+
+        $from_name = str_replace( 'WordPress', $current_site->domain, $from_name );
   
         return $from_name;
   
