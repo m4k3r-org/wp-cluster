@@ -186,10 +186,7 @@ namespace UsabilityDynamics\Cluster {
         // Fatal Error Handler.
         register_shutdown_function( array( $this, '_shutdown' ) );
 
-        // Initialize Settings.
-        $this->_settings();
-
-        // Initialize Components.
+        // Initialize Components and Settings.
         $this->_components();
 
         // Initialize Interfaces.
@@ -205,23 +202,22 @@ namespace UsabilityDynamics\Cluster {
         $this->_send_headers();
 
         // Initialize all else.
-        add_action( 'plugins_loaded', array( &$this, 'plugins_loaded' ) );
-        add_action( 'admin_bar_menu', array( &$this, 'admin_bar_menu' ), 21 );
-        add_action( 'add_admin_bar_menus', array( &$this, 'add_admin_bar_menus' ), 21 );
+        add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+        add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
+        add_action( 'add_admin_bar_menus', array( $this, 'add_admin_bar_menus' ), 21 );
 
-        add_action( 'init', array( &$this, 'init' ) );
-        add_action( 'admin_init', array( &$this, 'admin_init' ) );
-        add_action( 'admin_menu', array( &$this, 'admin_menu' ), 500 );
+        add_action( 'init', array( $this, 'init' ) );
+        add_action( 'admin_init', array( $this, 'admin_init' ) );
 
         // Send Cluster Headers.
-        add_action( 'init', array( &$this, '_send_headers' ) );
+        add_action( 'init', array( $this, '_send_headers' ) );
 
         // Add Cluster Scripts & Styles.
-        add_action( 'admin_enqueue_scripts', array( &$this, 'admin_enqueue_scripts' ), 20 );
+        add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 20 );
 
         // Modify Core UI.
-        add_filter( 'admin_footer_text', array( &$this, 'admin_footer_text' ) );
-        add_action( 'manage_sites_custom_column', array( &$this, 'manage_sites_custom_column' ), 10, 2 );
+        add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ) );
+        add_action( 'manage_sites_custom_column', array( $this, 'manage_sites_custom_column' ), 10, 2 );
 
         add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
 
@@ -234,10 +230,6 @@ namespace UsabilityDynamics\Cluster {
 
         add_filter( 'wp_mail_from', array( 'UsabilityDynamics\Cluster\Utility', 'wp_mail_from' ), 10 );
         add_filter( 'wp_mail_from_name', array( 'UsabilityDynamics\Cluster\Utility', 'wp_mail_from_name' ), 10 );
-
-        if( is_network_admin() ) {
-          add_action( 'network_admin_menu', array( &$this, 'network_admin_menu' ), 100 );
-        }
 
       }
 
@@ -261,8 +253,6 @@ namespace UsabilityDynamics\Cluster {
           $errfile = $error[ 'file' ];
           $errline = $error[ 'line' ];
           $errstr  = $error[ 'message' ];
-          // die( '<pre>' . print_r( $error, true ) . '</pre>' );
-          // self::fatal();
         }
 
       }
@@ -316,31 +306,6 @@ namespace UsabilityDynamics\Cluster {
       }
 
       /**
-       * Initialize Settings.
-       *
-       */
-      private function _settings() {
-
-        // Initialize Settings.
-        $this->_settings = new Settings( array(
-          "store" => "options",
-          "key"   => "ud:cluster",
-        ) );
-
-        // ElasticSearch Service Settings.
-        $this->set( 'documents', array(
-          "active" => true,
-          "host"   => "localhost",
-          "port"   => 9200,
-          "token"  => null,
-        ) );
-
-        // Save Settings.
-        // $this->_settings->commit();
-
-      }
-
-      /**
        * Initialize Media, Varnish, etc.
        *
        */
@@ -355,6 +320,26 @@ namespace UsabilityDynamics\Cluster {
         $this->_log       = new Log();
         //$this->_media = new Media( $this->get( 'media' ) );
         //$this->_varnish = new Varnish($this->get( 'varnish' ));
+
+
+        // Initialize Settings.
+        $this->set( array(
+          "store" => "options",
+          "key"   => "ud:cluster",
+        ) );
+
+        // ElasticSearch Service Settings.
+        $this->set( 'documents', array(
+          "active" => true,
+          "host"   => "localhost",
+          "port"   => 9200,
+          "token"  => null,
+        ) );
+
+        // @note Disabled until improved.
+        $this->set( 'toolbar.menu.enabled', false );
+
+        // $this->_settings->commit();
 
         // Basic Frontend Security
         remove_action( 'wp_head', 'feed_links', 2 );
@@ -391,7 +376,7 @@ namespace UsabilityDynamics\Cluster {
       private function _interfaces() {
 
         // Render Toolbar.
-        add_action( 'wp_before_admin_bar_render', array( &$this, 'toolbar' ), 10 );
+        add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar' ), 10 );
 
       }
 
@@ -427,43 +412,56 @@ namespace UsabilityDynamics\Cluster {
         $wp_admin_bar->remove_menu( 'wp-logo' );
         $wp_admin_bar->remove_menu( 'comments' );
 
-        $wp_admin_bar->add_menu( array(
-          'id'    => 'cluster',
-          'meta'  => array(
-            'html'     => '<div class="cluster-toolbar-info"></div>',
-            'target'   => '',
-            'onclick'  => '',
-            'tabindex' => 10,
-            'class'    => 'cluster-toolbar'
-          ),
-          'title' => 'Cluster',
-          'href'  => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
-        ) );
+        if( $this->get( 'toolbar.menu.enabled' ) ) {
 
-        $wp_admin_bar->add_menu( array(
-          'parent' => 'cluster',
-          'id'     => 'cluster-network',
-          'meta'   => array(),
-          'title'  => 'Networks',
-          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
-        ) );
+          $wp_admin_bar->add_menu( array(
+            'id'    => 'cloud-manager',
+            'meta'  => array(
+              'html'     => '<div class="cluster-toolbar-info"></div>',
+              'target'   => '',
+              'onclick'  => '',
+              'tabindex' => 10,
+              'class'    => 'cluster-toolbar'
+            ),
+            'title' => 'Cloud',
+            'href'  => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
+          ) );
 
-        $wp_admin_bar->add_menu( array(
-          'parent' => 'cluster',
-          'id'     => 'cluster-dns',
-          'meta'   => array(),
-          'title'  => 'DNS',
-          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=dns'
-        ) );
+          $wp_admin_bar->add_menu( array(
+            'parent' => 'cloud-manager',
+            'id'     => 'cloud-policy',
+            'meta'   => array(),
+            'title'  => 'Policy',
+            'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=policy'
+          ) );
+
+          $wp_admin_bar->add_menu( array(
+            'parent' => 'cloud-manager',
+            'id'     => 'cluster-dns',
+            'meta'   => array(),
+            'title'  => 'DNS',
+            'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=dns'
+          ) );
+
+        }
+
 
       }
 
       /**
        * Added by anton.
+       *
+       * @note Could also use can_edit_network().
        */
       public function init() {
-        // global $wpi_xml_server;
-        // $wpi_xml_server = new \UsabilityDynamics\UD_XMLRPC( 'https://raas.usabilitydynamics.com:443', \UsabilityDynamics\get_option('ud_api_public_key'), 'WordPress/3.7.1', 'ud' );
+
+        // Only admin can see W3TC notices and errors
+        // add_action('admin_notices', array( $this, 'admin_notices' ));
+        // add_action('network_admin_notices', array( $this, 'admin_notices' ));
+
+        add_action( 'admin_menu', array( $this, '_admin_menu' ), 8 );
+        add_action( 'network_admin_menu', array( $this, '_admin_menu' ), 8 );
+
       }
 
       /**
@@ -521,47 +519,80 @@ namespace UsabilityDynamics\Cluster {
       }
 
       /**
-       * Site Administration Menus.
-       *
-       * @method admin_menu
-       */
-      public function admin_menu() {
-        global $submenu;
-
-        // die( '<pre>' . print_r( $submenu, true ) . '</pre>' );
-
-        remove_submenu_page( 'index.php', 'my-sites.php' );
-        remove_submenu_page( 'index.php', 'my-networks' );
-
-        // Add Site Administration (Settings -> Cluster).
-        add_submenu_page( 'options-general.php', __( 'Cluster', self::$text_domain ), __( 'Cluster', self::$text_domain ), 'manage_network', 'cluster', function () {
-          include( dirname( __DIR__ ) . '/views/site-settings.php' );
-        } );
-
-      }
-
-      /**
        * Network Administration Menu.
        *
        * network_admin_url( 'cluster-icon.png' )
        */
-      public function network_admin_menu() {
+      public function _admin_menu() {
+        global $menu, $submenu;
 
-        // Only admin can see W3TC notices and errors
-        // add_action('admin_notices', array( &$this, 'admin_notices' ));
-        // add_action('network_admin_notices', array( &$this, 'admin_notices' ));
+        //die( '<pre>' . print_r( $submenu, true ) . '</pre>' );
 
-        // Add Network Administration.
-        add_menu_page( __( 'Cluster', self::$text_domain ), __( 'Cluster', self::$text_domain ), 'manage_network', 'cluster-dashboard', function () {
-          include( dirname( __DIR__ ) . '/views/network-settings.php' );
-        } );
+        // Add Network Administration to Network and Site.
+        add_submenu_page( 'settings.php', __( 'Site Provisioning', self::$text_domain ), __( 'Site Provisioning', self::$text_domain ), 'manage_network', 'network/settings.php?sites', array( $this, 'network_settings' ) );
+        add_submenu_page( 'settings.php', __( 'Themes', self::$text_domain ), __( 'Themes', self::$text_domain ), 'manage_network', 'network/themes.php?security', array( $this, 'network_settings' ) );
+        add_submenu_page( 'settings.php', __( 'Policy Delegation', self::$text_domain ), __( 'Policy Delegation', self::$text_domain ), 'manage_network', 'network/settings.php?policy', array( $this, 'network_settings' ) );
+        add_submenu_page( 'settings.php', __( 'Security', self::$text_domain ), __( 'Security', self::$text_domain ), 'manage_network', 'network/settings.php?security', array( $this, 'network_settings' ) );
 
-        add_submenu_page( 'cluster-dashboard', __( 'DNS', self::$text_domain ), __( 'DNS', self::$text_domain ), 'manage_network', 'cluster-dns', function () {
-          include( dirname( __DIR__ ) . '/views/-settings.php' );
-        } );
+        // Site Only.
+        if( current_filter() === 'admin_menu' ) {
+
+          // Remove Native Site Sections.
+          remove_submenu_page( 'index.php', 'my-sites.php' );
+          remove_submenu_page( 'index.php', 'my-networks' );
+          remove_submenu_page( 'tools.php', 'ms-delete-site.php' );
+
+          // Add Network Administration.
+          add_options_page( __( 'DNS', self::$text_domain ), __( 'DNS', self::$text_domain ), 'manage_network', 'network-dns', array( $this, 'network_settings' ) );
+          add_options_page( __( 'Domains', self::$text_domain ), __( 'Domains', self::$text_domain ), 'manage_network', 'network-dns', array( $this, 'network_settings' ) );
+
+          // Add Network Administration to Network and Site.
+          add_menu_page( 'Network', 'Network', 'manage_network', 'settings.php', array( $this, 'network_settings' ) );
+          add_submenu_page( 'settings.php', __( 'Options', self::$text_domain ), __( 'Options', self::$text_domain ), 'manage_network', 'cloud-settings', array( $this, 'network_settings' ) );
+
+
+        }
+
+        // Network Only.
+        if( current_filter() === 'network_admin_menu' ) {
+
+          remove_submenu_page( 'settings.php', 'setup.php' );
+          //remove_submenu_page( 'settings.php', 'settings.php' );
+
+          // Remove Native Network Settings.
+          remove_menu_page( 'update-core.php' );
+          remove_menu_page( 'sites.php' );
+
+          // add_submenu_page( 'settings.php', __( 'Manage Users', self::$text_domain ), __( 'Manage Users', self::$text_domain ), 'manage_network', 'network-policy', array( $this, 'network_settings' ) );
+
+        }
+
 
       }
 
+      /**
+       * Cluster Settings Page
+       *
+       */
+      public function network_settings() {
+
+        if( file_exists( dirname( __DIR__ ) . '/views/settings-network.php' ) ) {
+          include( dirname( __DIR__ ) . '/views/settings-network.php' );
+        }
+
+      }
+
+      /**
+       * Site Settings Page
+       *
+       */
+      public function site_settings() {
+
+        if( file_exists( dirname( __DIR__ ) . '/views/settings-site.php' ) ) {
+          include( dirname( __DIR__ ) . '/views/settings-site.php' );
+        }
+
+      }
       /**
        * Identify Request
        *
@@ -765,7 +796,7 @@ namespace UsabilityDynamics\Cluster {
 
         $wp_admin_bar->add_menu( array(
           'parent' => 'network-admin',
-          'id'     => 'network-settings',
+          'id'     => 'cloud-settings',
           'title'  => __( 'Settings', self::$text_domain ),
           'href'   => network_admin_url( 'settings.php' ),
         ) );
@@ -859,7 +890,7 @@ namespace UsabilityDynamics\Cluster {
        * @author potanin@UD
        * @since 0.1.1
        */
-      public static function get( $key, $default = null ) {
+      public static function get( $key = null, $default = null ) {
         return self::$instance->_settings ? self::$instance->_settings->get( $key, $default ) : null;
       }
 
@@ -877,7 +908,7 @@ namespace UsabilityDynamics\Cluster {
        * @author potanin@UD
        * @since 0.1.1
        */
-      public static function set( $key, $value = null ) {
+      public static function set( $key = null, $value = null ) {
         return self::$instance->_settings ? self::$instance->_settings->set( $key, $value ) : null;
       }
 

@@ -1,6 +1,11 @@
 <?php
 /**
- * Multisite Domain Mapping Handler
+ * Plugin Name: Multisite Domain Mapping Handler
+ * Version: 1.2.0
+ * Description: Handles database for WP-Cluster.
+ * Author: Usability Dynamics
+ * Domain Path: WIP
+ * Network: True
  *
  * SELECT blog_id FROM corporate_blogs WHERE domain IN ('www.udx.io','udx.io') ORDER BY CHAR_LENGTH(domain) DESC LIMIT 1
  * Manually going to origin.udx.io will redirect to udx.io while www.origin.udx.io will redirect to www.udx.io.

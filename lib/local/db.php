@@ -1,7 +1,13 @@
 <?php
 /**
+ * Plugin Name: WP-Cluster Database
+ * Version: 1.2.0
+ * Description: Handles database for WP-Cluster.
+ * Author: Usability Dynamics
+ * Domain Path: WIP
+ * Network: True
  *
- * everything after "muplugins_loaded" action will have access to network-specific database.
+ * Everything after "muplugins_loaded" action will have access to network-specific database.
  *
  * Constants are set at this point.
  */
