@@ -85,7 +85,9 @@ namespace UsabilityDynamics\AMD {
 
         $global_javascript_object = $this;
 
-        new Style();
+        if( class_exists( '\UsabilityDynamics\AMD\Style' ) ) {
+          new Style();
+        }
 
       }
 
