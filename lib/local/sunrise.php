@@ -11,9 +11,11 @@
  * @version 0.4.2
  */
 //
+//die( '<pre>' . print_r( $wpdb, true ) . '</pre>' );
+//die( '<pre>' . print_r( $cluster, true ) . '</pre>' );
 
 // Disable caching to avoid errors being cached by CloudFront.
-header( 'Cache-Control: no-cache' );
+nocache_headers();
 
 if( !defined( 'SUNRISE_LOADED' ) ) {
   define( 'SUNRISE_LOADED', 1 );
@@ -56,15 +58,15 @@ foreach( $_parts = (array) explode( '.', $_host ) as $index => $_domain ) {
 
 $where = $wpdb->prepare( 'domain IN ("' . implode( '","', array_unique( $_domains ) ) . '")', '' );
 
-// Order by char length in case of multiple results essentially gives the longer domain more prevelance.
-if( $current_blog = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE {$where} ORDER BY CHAR_LENGTH(domain) DESC LIMIT 1" ) ) {
+// Get $current_blog unless already set (by db.php)
+if( isset( $current_blog ) || $current_blog = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE {$where} ORDER BY CHAR_LENGTH(domain) DESC LIMIT 1" ) ) {
 
   // Define globals.
   $blog_id = $current_blog->blog_id;
   $site_id = $current_blog->site_id;
 
   // Determine if extra subdomain exists.
-  if( $_host != $subdomain = str_replace( '.' . $current_blog->domain, '', $_host ) ) {
+  if( $_SERVER[ 'HTTP_HOST' ] != $subdomain = str_replace( '.' . $current_blog->domain, '', $_SERVER[ 'HTTP_HOST' ] ) ) {
     $current_blog->subdomain = $subdomain;
   }
 
@@ -101,13 +103,17 @@ if( $current_blog = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE {$where}
     define( 'PATH_CURRENT_SITE', $current_blog->path );
   }
 
-  $current_site          = $wpdb->get_row( "SELECT * from {$wpdb->site} WHERE id = '{$current_blog->site_id}' LIMIT 0,1" );
+  if( !$current_site = $wpdb->get_row( "SELECT * from {$wpdb->site} WHERE id = '{$current_blog->site_id}' LIMIT 0,1" ) ) {
+    wp_die( 'Unable to determine network.' );
+  }
+
   $current_site->blog_id = $wpdb->get_var( "SELECT blog_id FROM {$wpdb->blogs} WHERE domain='{$current_site->domain}' AND path='{$current_site->path}'" );
   $current_site->host    = $_host;
 
   if( function_exists( 'get_current_site_name' ) ) {
     $current_site = get_current_site_name( $current_site );
   }
+
 
   // Domain mapping has been successful.
   define( 'DOMAIN_MAPPING', 1 );
@@ -116,6 +122,10 @@ if( $current_blog = $wpdb->get_row( "SELECT * FROM {$wpdb->blogs} WHERE {$where}
 
 }
 
+//die( '<pre>' . print_r( $wpdb, true ) . '</pre>' );
+die($wpdb->last_query);
+
+//die($wpdb->last_query);
 header( 'HTTP/1.1 404 Not Found' );
 wp_die( '<h1>Network Error</h1><p>The domain you requested (' . $_host . ') is not available on network.</p>' );
 
