@@ -167,6 +167,19 @@ main {
 
 }
 
+/** Fix to navbar preloading */
+.navbar-nav {
+  @media (min-width: @grid-float-breakpoint) {
+    > div > li {
+      float: left;
+      > a {
+        display: block;
+        padding: @navbar-padding-vertical;
+      }
+    }
+  }
+} 
+
 .navbar-top {
   border-left: 0px;
   border-right: 0px;

@@ -31,13 +31,13 @@
     background-color: @default-color;
     color: @font-default-color;
   }
-  
+
   .inner-banner {
-  
+
     h3 {
       color: @default-color;
     }
-    
+
     .days {
 
       .day {
@@ -47,11 +47,11 @@
       }
 
     }
-    
+
     .value {
       color: @default-color;
     }
-    
+
   }
 
 }
@@ -70,7 +70,7 @@
       color: @font-default-color;
     }
 
-    .navbar-nav {
+    .navbar-nav { 
 
       a {
         color: @font-default-color;
@@ -83,17 +83,17 @@
       & > li > a:focus {
         background-color: @default-color-active;
       }
-      
-      & > .open > a, 
-      & > .open > a:hover, 
+
+      & > .open > a,
+      & > .open > a:hover,
       & > .open > a:focus {
         background-color: @default-color;
       }
-      
+
       .dropdown-menu {
         background-color: @default-color-active;
         border-top: 4px solid @default-color-dark;
-        
+
         & > li > a:hover,
         & > li > a:focus {
           background-color: @default-color;
@@ -109,7 +109,7 @@
     }
 
     .social-wrap {
-    
+
       ul > li > a:hover,
       ul > li > a:focus {
         background-color: @default-color-active;
@@ -149,7 +149,7 @@ main,
   p, span, div, li, ol, section, header, footer, blockquote {
     color: @content-font-color;
   }
-  
+
 }
 
 main .content-container article,
@@ -168,30 +168,30 @@ main .left-sidebar-section .module,
 main .right-sidebar-section .module,
 main .cfct-build .module-container {
   border-color: @content-border-color;
-  
+
   a {
     color: @default-color;
-    
+
     &:hover {
       color: @default-color-active;
       text-decoration: none;
     }
   }
-  
+
   h1, h2, h3, h4, h4, h6 {
     color: @content-title-color;
-    
+
     & a, & span {
       color: @content-title-color;
     }
-    
+
   }
-  
+
   blockquote {
     border-color: @content-font-color;
   }
-  
-  
+
+
 }
 
 main .cfct-block-sidebar .module,
@@ -200,12 +200,12 @@ main .right-sidebar-section .module {
 
   a {
     color: @content-font-color;
-    
+
     &:hover {
       color: @default-color-active;
       text-decoration: none;
     }
-    
+
   }
 
 }
@@ -229,13 +229,13 @@ footer {
   .footer-nav li {
     border-right-color: @footer-color;
   }
-  
+
   ul.menu {
-  
+
     li.menu-item {
-    
+
       a {
-      
+
         &:hover {
           &[href *="facebook.com"]:before,
           &[href *="twitter.com"]:before,
@@ -245,7 +245,7 @@ footer {
             background-color: darken( @footer-social-button, 10% );
           }
         }
-      
+
         &[href *="facebook.com"]:before,
         &[href *="twitter.com"]:before,
         &[href *="instagram.com"]:before,
@@ -253,11 +253,11 @@ footer {
         &[href *="youtube.com"]:before {
           background-color: @footer-social-button;
         }
-      
+
       }
-    
+
     }
-  
+
   }
 
 }
@@ -268,38 +268,38 @@ footer {
 
 main .artists-list {
   color: @the-artist-color;
-  
+
   // Artist Alphabetical ( B-List )
   &.blist {
     h3, p {
       color: @font-default-color;
     }
   }
-  
+
   // Local Artists
   &.local {
-  
-    .col-md-1, 
-    .col-md-2, 
-    .col-md-3, 
-    .col-md-4, 
-    .col-md-5, 
-    .col-md-6, 
-    .col-md-7, 
-    .col-md-8, 
-    .col-md-9, 
-    .col-md-10, 
-    .col-md-11, 
+
+    .col-md-1,
+    .col-md-2,
+    .col-md-3,
+    .col-md-4,
+    .col-md-5,
+    .col-md-6,
+    .col-md-7,
+    .col-md-8,
+    .col-md-9,
+    .col-md-10,
+    .col-md-11,
     .col-md-12 {
       border-color: @content-font-color;
-      
+
       &:hover,
       a:hover,
       span:hover {
         color: @default-color !important;
       }
     }
-  
+
   }
 
   span {
@@ -307,7 +307,7 @@ main .artists-list {
       background: @default-color;
     }
   }
-  
+
   .artist-preview {
     .date {
       .month, .day {
@@ -321,7 +321,7 @@ main .artists-list {
       }
     }
   }
-  
+
   a {
     &:hover {
       .image {
@@ -368,16 +368,16 @@ main.single .container-inner {
     .article-title {
       color: @default-color;
     }
-  }  
-  
+  }
+
   blockquote {
     border-color: @default-color-active;
     &, p {
       color: @default-color;
     }
   }
-  
-  
+
+
 
 }
 
@@ -391,11 +391,11 @@ article.author {
   .author-wrapper {
     border-color: @content-border-color;
   }
-  
+
   img.avatar {
     border-color: @default-color;
   }
-  
+
   .display-name {
     color: @content-title-color;
   }
@@ -408,13 +408,13 @@ article.author {
  Menuficiation
 ============== */
 
-#menufication-top, 
+#menufication-top,
 #menufication-non-css3-top,
 #menufication-scroll-container {
   background: @default-color;
 }
 
-#menufication-top #menufication-btn:before, 
+#menufication-top #menufication-btn:before,
 #menufication-non-css3-top #menufication-non-css3-btn:before {
   border-bottom: 11px double @font-default-color;
   border-top: 4px solid @font-default-color;
@@ -422,27 +422,27 @@ article.author {
 
 #menufication-nav li, #menufication-non-css3-nav li {
   border-bottom: 1px solid @default-color-active;
-  
+
   a {
     color: @font-default-color;
   }
-  
+
 }
 
 #menufication-nav {
-  
+
   ul > li {
-    
+
     & > ul {
-      
+
       li {
         border-color: @default-color-active;
       }
-      
+
     }
-  
+
   }
-  
+
 }
 
 /* ==============
@@ -450,11 +450,11 @@ article.author {
 ============== */
 
 .gallery {
-  
+
   .gallery-item {
     border-color: @content-border-color;
   }
-  
+
 }
 
 /* ==============
@@ -470,25 +470,25 @@ article.author {
 .cfct-module {
 
   .artists-list {
-    
+
     .hr {
       background-color: @hr-color;
     }
-    
+
   }
 
 }
 
 .cfct-sidebar {
-  
+
   .module {
 
     &:after {
       background-color: @content-border-color;
     }
-    
+
   }
-  
+
 }
 
 /* ============================
@@ -501,27 +501,27 @@ article.comments {
     border-color: darken( @content-border-color, 10% );
     background-color: @content-border-color;
   }
-  
+
   .comments-list {
-  
+
     ul {
-    
+
       li {
         border-color: @content-border-color;
-        
+
         img.avatar {
           border-color: darken( @content-border-color, 20% );
         }
-        
+
         .comment-author .fn,
         .reply a {
           color: @default-color;
         }
-        
+
       }
-    
+
     }
-  
+
   }
 
 }
@@ -537,7 +537,7 @@ article.comments {
     color: @font-default-color !important;
     border-color: @high-color;
   }
-  
+
   a {
     &:hover {
       .caption {
@@ -545,7 +545,7 @@ article.comments {
       }
     }
   }
-  
+
   .image {
     .caption {
       color: @artist-preview-caption;
@@ -564,16 +564,16 @@ article.comments {
   .hr {
     background: @content-title-color;
   }
-  
+
 }
 
 article.listing-post {
   border-color: @gray-lighter;
   box-shadow-color: @gray-lighter;
-  
+
   // listing-post-featured template
   &.featured {
-  
+
     .image {
       .category {
         background: @content-bg;
@@ -585,29 +585,29 @@ article.listing-post {
         background: @default-color;
       }
     }
-    
+
     .text {
       background: @content-bg;
     }
-    
+
     .title {
       a {
         color: @gray;
       }
     }
-    
+
     .content {
       color: @gray-light;
     }
-    
+
     .share {
       a {
         color: @gray-light;
       }
     }
-    
+
   }
-  
+
   // listing-post-stream template
   &.stream {
     .text {
@@ -625,7 +625,7 @@ article.listing-post {
       color: @dark-blue;
     }
   }
-  
+
   &.default {
     .hr {
       background: @default-color;
@@ -649,7 +649,7 @@ article.listing-post {
       }
     }
   }
-  
+
 }
 
 
