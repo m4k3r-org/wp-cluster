@@ -21,6 +21,6 @@
   <div class="text">
     <h4 class="title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
     <div class="content"><?php the_excerpt(); ?></div>
-    <?php get_template_part( 'templates/aside/share', get_post_type() ); ?>
+    <div class="date"><?php the_time(get_option('date_format')); ?></div>
   </div>
 </article>
