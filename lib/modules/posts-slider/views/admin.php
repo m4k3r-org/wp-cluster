@@ -20,6 +20,23 @@
 </p>
 
 <p>
+  <label for="<?php echo $this->get_field_id( 'tags' ); ?>"><?php _e( 'Filter by Tag' ) ?></label>
+  <?php wp_dropdown_categories( array(
+    'name' => $this->get_field_name( 'tags' ),
+    'selected' => $instance[ 'tags' ],
+    'orderby' => 'Name',
+    'hierarchical' => 1,
+    'show_option_all' => 'All Tags',
+    'hide_empty' => '0',
+    'taxonomy' => 'post_tag'
+  ) ); ?>
+  <?php
+  $post_types = get_post_types();
+  unset( $post_types[ 'page' ], $post_types[ 'attachment' ], $post_types[ 'revision' ], $post_types[ 'nav_menu_item' ] );
+  ?>
+</p>
+
+<p>
   <label for="<?php echo $this->get_field_id( 'categories' ); ?>"><?php _e( 'Filter by Post Type' ) ?></label>
   <select id="<?php echo $this->get_field_id( 'post_type' ); ?>" name="<?php echo $this->get_field_name( 'post_type' ); ?>" style="width:100%;">
     <?php
@@ -58,25 +75,4 @@
     <option value="slide" <?php selected( 'slide', $instance[ 'slider_animate' ], true ); ?>>slide</option>
     <option value="fade" <?php selected( 'fade', $instance[ 'slider_animate' ], true ); ?>>fade</option>
   </select>
-</p>
-
-<p>
-  <input class="checkbox" type="checkbox" <?php checked( $instance[ 'post_category' ], 'on' ); ?> id="<?php echo $this->get_field_id( 'post_category' ); ?>" name="<?php echo $this->get_field_name( 'post_category' ); ?>" />
-  <label for="<?php echo $this->get_field_id( 'post_category' ); ?>"><?php _e( 'Show Post Category' ) ?></label>
-</p>
-
-<p>
-  <input class="checkbox" type="checkbox" <?php checked( $instance[ 'post_title' ], 'on' ); ?> id="<?php echo $this->get_field_id( 'post_title' ); ?>" name="<?php echo $this->get_field_name( 'post_title' ); ?>" />
-  <label for="<?php echo $this->get_field_id( 'post_title' ); ?>"><?php _e( 'Show Post Title' ) ?></label>
-</p>
-
-<p>
-  <input class="checkbox" type="checkbox" <?php checked( $instance[ 'post_date' ], 'on' ); ?> id="<?php echo $this->get_field_id( 'post_date' ); ?>" name="<?php echo $this->get_field_name( 'post_date' ); ?>" />
-  <label for="<?php echo $this->get_field_id( 'post_date' ); ?>"><?php _e( 'Show Post Date' ) ?></label>
-</p>
-
-<p>
-  <input class="checkbox" type="checkbox" <?php checked( $instance[ 'post_excerpt' ], 'on' ); ?> id="<?php echo $this->get_field_id( 'post_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'post_excerpt' ); ?>" />
-  <label for="<?php echo $this->get_field_id( 'post_excerpt' ); ?>"><?php _e( 'Post Excerpt &nbsp;&nbsp;&nbsp; Length<em>(words)</em>:' ) ?></label>
-  <input style="width: 40px;" id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" value="<?php echo $instance[ 'excerpt_length' ]; ?>" type="text" />
 </p>

@@ -30,6 +30,7 @@ class Widget_Posts_Slider extends WP_Widget {
 
     $title = $instance[ 'title' ];
     $categories = $instance[ 'categories' ];
+    $tag = $instance[ 'tags' ];
     $post_type = $instance[ 'post_type' ];
     $slider_duration = $instance[ 'slider_duration' ];
     $slider_pause = $instance[ 'slider_pause' ];
@@ -56,6 +57,7 @@ class Widget_Posts_Slider extends WP_Widget {
 
     $flex_args = array(
       'cat' => $categories,
+      'tag_id' => $tag,
       'post_status' => 'publish',
       'post_type' => $post_type_array,
       'showposts' => $slider_count,
@@ -82,6 +84,7 @@ class Widget_Posts_Slider extends WP_Widget {
 
     $instance[ 'title' ] = $new_instance[ 'title' ];
     $instance[ 'categories' ] = $new_instance[ 'categories' ];
+    $instance[ 'tags' ] = $new_instance[ 'tags' ];
     $instance[ 'post_type' ] = $new_instance[ 'post_type' ];
     $instance[ 'slider_duration' ] = $new_instance[ 'slider_duration' ];
     $instance[ 'slider_pause' ] = $new_instance[ 'slider_pause' ];
