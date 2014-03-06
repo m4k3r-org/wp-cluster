@@ -65,15 +65,50 @@ namespace UsabilityDynamics\AMD {
           'data' => array(
             'version' => $this->version,
             'text_domain' => $this->text_domain,
-            'scripts' => array(
+            'javascript' => array(
               'minify'   => false,
               'url'      => "assets/",
-              'filename' => 'app.js'
+              'filename' => 'app.js',
+              'dependencies' => array(
+                'backbone'  => array(
+                  'name'         => 'Backbone js',
+                  'load_in_head' => false,
+                  'infourl'      => 'http://backbonejs.com'
+                ),
+                'jquery' => array(
+                  'name'         => 'jQuery',
+                  'load_in_head' => false,
+                  'infourl'      => 'http://jquery.com'
+                ),
+                'jquery-ui-autocomplete' => array(
+                  'name'         => 'jQuery UI Autocomplete',
+                  'load_in_head' => false,
+                  'infourl'      => 'http://jqueryui.com/autocomplete'
+                ),
+                'json2' => array(
+                  'name'         => 'JSON for JS',
+                  'load_in_head' => false,
+                  'infourl'      => 'https://github.com/douglascrockford/JSON-js'
+                ),
+                'thickbox' => array(
+                  'name'         => 'Thickbox',
+                  'load_in_head' => false,
+                  'infourl'      => 'http://codex.wordpress.org/ThickBox'
+                ),
+                'underscore' => array(
+                  'name' => 'Underscore js',
+                  'load_in_head' => false,
+                  'infourl' => 'http://underscorejs.org'
+                )
+              ),
             ),
-            'styles'  => array(
+            'stylesheet'  => array(
               'minify'   => false,
               'url'      => "assets/",
-              'filename' => 'app.css'
+              'filename' => 'app.css',
+              'dependencies' => array(
+                
+              ),
             ),
           )
         ) );
@@ -233,7 +268,9 @@ namespace UsabilityDynamics\AMD {
        * @param $dependencies
        */
       function load_dependencies( $dependencies, $type ) {
-        $all_deps = $this->get_all_dependencies( $type );
+      
+      
+        $all_deps = $this->get( "{$type}.dependencies" );
 
         foreach( $dependencies as $dependency ) {
           if( isset( $all_deps[ $dependency ][ 'url' ] ) ) {
@@ -451,52 +488,6 @@ namespace UsabilityDynamics\AMD {
       }
 
       /**
-       * save_to_external_file function
-       * This function will be called to save the javascript to an external .js file
-       *
-       * currently not used
-       *
-       * @access private
-       *
-       * @param $js
-       *
-       * @return void
-       */
-      private function save_to_external_file( $js ) {
-
-        if( !wp_mkdir_p( $this->get( 'scripts.path' ) ) )
-          return 1; // we can't make the folder
-
-        if( empty( $js ) ):
-          $this->unlink_files( true );
-
-          return 0;
-        endif;
-        // lets minify the javascript to save first to solve timing issues
-        $js_min = $this->filter( $js );
-
-        $js_file_path          = $this->get( 'scripts.path' ) . $this->get( 'scripts.filename' );
-        $js_minified_file_path = $this->get( 'scripts.path' ) . $this->get( 'scripts.filename' );
-
-        // if files saved proccess to the else statment
-        if( !file_put_contents( $js_file_path, $js ) || !file_put_contents( $js_minified_file_path, $js_min ) ):
-          return 1; // return an error upon failure
-        else:
-          // we created the new files
-          // lets clear some cache
-          if( function_exists( 'wp_cache_clear_cache' ) ):
-            wp_cache_clear_cache();
-          endif;
-          // lets delete the old minified files
-          $this->unlink_files();
-
-          return 0;
-
-
-        endif;
-      }
-
-      /**
        * Currently not used
        * @param type $all
        */
@@ -580,8 +571,8 @@ namespace UsabilityDynamics\AMD {
           return '?amd_is_asset=1&amd_asset_type=script';
         }
 
-        return '/'.apply_filters( 'amd_scripts_url',      $this->get( 'scripts.url' ) )
-                  .apply_filters( 'amd_scripts_filename', $this->get( 'scripts.filename' ) );
+        return '/'.apply_filters( 'amd_scripts_url',      $this->get( 'javascript.url' ) )
+                  .apply_filters( 'amd_scripts_filename', $this->get( 'javascript.filename' ) );
       }
 
       /**
@@ -595,8 +586,8 @@ namespace UsabilityDynamics\AMD {
           return '?amd_is_asset=1&amd_asset_type=style';
         }
 
-        return '/'.apply_filters( 'amd_styles_url',      $this->get( 'styles.url' ) )
-                  .apply_filters( 'amd_styles_filename', $this->get( 'styles.filename' ) );
+        return '/'.apply_filters( 'amd_styles_url',      $this->get( 'stylesheet.url' ) )
+                  .apply_filters( 'amd_styles_filename', $this->get( 'stylesheet.filename' ) );
       }
 
       /**
@@ -646,52 +637,6 @@ namespace UsabilityDynamics\AMD {
       }
 
       /**
-       * get_all_dependencies function.
-       *
-       * @access public
-       */
-      function get_all_dependencies( $type ) {
-
-        if ( $type == 'javascript' ) {
-          return array(
-            'backbone'               => array(
-              'name'         => 'Backbone js',
-              'load_in_head' => false,
-              'infourl'      => 'http://backbonejs.com'
-            ),
-            'jquery'                 => array(
-              'name'         => 'jQuery',
-              'load_in_head' => false,
-              'infourl'      => 'http://jquery.com'
-            ),
-            'jquery-ui-autocomplete' => array(
-              'name'         => 'jQuery UI Autocomplete',
-              'load_in_head' => false,
-              'infourl'      => 'http://jqueryui.com/autocomplete'
-            ),
-            'json2'                  => array(
-              'name'         => 'JSON for JS',
-              'load_in_head' => false,
-              'infourl'      => 'https://github.com/douglascrockford/JSON-js'
-            ),
-            'thickbox'               => array(
-              'name'         => 'Thickbox',
-              'load_in_head' => false,
-              'infourl'      => 'http://codex.wordpress.org/ThickBox'
-            ),
-            'underscore'             => array(
-              'name'         => 'Underscore js',
-              'load_in_head' => false,
-              'infourl'      => 'http://underscorejs.org'
-            )
-          );
-        } elseif ( $type == 'stylesheet' ) {
-          return array();
-        }
-
-      }
-
-      /**
        * get_saved_dependencies function
        *
        * @access public
@@ -709,7 +654,7 @@ namespace UsabilityDynamics\AMD {
       }
 
       /**
-       * @param $safejs_post
+       * @param $_post
        */
       function post_revisions_meta_box( $_post ) {
 
@@ -804,17 +749,6 @@ namespace UsabilityDynamics\AMD {
         <?php
         endif;
 
-      }
-
-      /**
-       * @param $_content
-       *
-       * @return mixed
-       */
-      function filter( $_content ) {
-        // $_content = JSMin::minify( $_content );
-
-        return $_content;
       }
 
       /**
