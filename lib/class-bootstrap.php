@@ -16,7 +16,7 @@ namespace UsabilityDynamics\AMD {
        * @property $version
        * @type {Object}
        */
-      public $version = '1.0.0';
+      public $version = false;
 
       /**
        * Textdomain String
@@ -25,7 +25,7 @@ namespace UsabilityDynamics\AMD {
        * @property text_domain
        * @var string
        */
-      public static $text_domain = 'wp-amd';
+      public $text_domain = false;
 
       /**
        * Singleton Instance Reference.
@@ -35,7 +35,7 @@ namespace UsabilityDynamics\AMD {
        * @property $instance
        * @type {Object}
        */
-      public static $instance = false;
+      public static $instance = null;
 
       public $pages = array();
 
@@ -46,15 +46,25 @@ namespace UsabilityDynamics\AMD {
 
       /**
        *
-       * @global type $global_javascript_object
        */
-      function __construct() {
-        global $global_javascript_object;
+      private function __construct() {
+        
+        $plugin_data = \get_file_data( ( dirname( __DIR__ ) . '/wp-amd.php' ), array(
+          'Name' => 'Plugin Name',
+          'Version' => 'Version',
+          'TextDomain' => 'Text Domain',
+        ), 'plugin' );
+        
+        $this->version = trim( $plugin_data['Version'] );
+        $this->text_domain = trim( $plugin_data['TextDomain'] );
+        
         $wp_upload_dir = wp_upload_dir();
 
         $this->settings = new \UsabilityDynamics\Settings( array(
-          'key'  => 'amd',
+          'key'  => 'wp_amd',
           'data' => array(
+            'version' => $this->version,
+            'text_domain' => $this->text_domain,
             'scripts' => array(
               'minify'   => false,
               'url'      => "assets/",
@@ -67,6 +77,10 @@ namespace UsabilityDynamics\AMD {
             ),
           )
         ) );
+        
+        if( class_exists( '\UsabilityDynamics\AMD\Style' ) ) {
+          new Style();
+        }
 
         add_action( 'init', array( $this, 'register_scripts' ) );
         add_action( 'wp_footer', array( $this, 'print_scripts' ) );
@@ -82,15 +96,17 @@ namespace UsabilityDynamics\AMD {
         add_action( 'query_vars', array( $this, '_query_vars' ) );
         add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
         add_filter( 'template_include', array( $this, 'return_asset' ), 1, 1 );
-
-        $global_javascript_object = $this;
-
-        if( class_exists( '\UsabilityDynamics\AMD\Style' ) ) {
-          new Style();
-        }
-
+        
       }
 
+      /**
+       * Determine if instance already exists and Return Theme Instance
+       *
+       */
+      public static function get_instance( $args = array() ) {
+        return null === self::$instance ? self::$instance = new self() : self::$instance;
+      }
+      
       /**
        * New query vars
        * @param type $query_vars
@@ -591,54 +607,10 @@ namespace UsabilityDynamics\AMD {
         $js = $this->get_js();
         $this->add_metabox( $js, 'javascript' );
         $dependency = get_post_meta( $js[ 'ID' ], 'dependency', true );
-        if( !is_array( $dependency ) )
+        if( !is_array( $dependency ) ) {
           $dependency = array();
-
-        ?>
-
-        <div class="wrap">
-
-        <h2>JavaScript Editor</h2>
-
-        <form action="themes.php?page=amd-scripts" method="post" id="global-javascript-form">
-          <?php wp_nonce_field( 'update_global_js_js', 'update_global_js_js_field' ); ?>
-          <div class="metabox-holder has-right-sidebar">
-
-            <div class="inner-sidebar">
-
-              <div class="postbox">
-                <h3><span>Publish</span></h3>
-                <div class="inside">
-                  <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save Javascript' ); ?>"/>
-                </div>
-              </div>
-              <div class="postbox">
-                <h3><span>Dependency</span></h3>
-                <div class="inside">
-                  <?php foreach( $this->get_all_dependencies( 'javascript' ) as $dep => $dep_array ): ?>
-                    <label><input type="checkbox" name="dependency[]" value="<?php echo $dep; ?>" <?php checked( in_array( $dep, $dependency ), true ); ?> /><a href="<?php echo $dep_array[ 'infourl' ]; ?>"> <?php echo $dep_array[ 'name' ]; ?> </a></label>
-                    <br/>
-                  <?php endforeach; ?>
-                </div>
-              </div>
-              <!-- ... more boxes ... -->
-              <?php do_meta_boxes( 's-global-javascript', 'normal', $js ); ?>
-
-            </div> <!-- .inner-sidebar -->
-
-            <div id="post-body">
-              <div id="post-body-content">
-                <div id="global-editor-shell">
-                <textarea style="width:100%; height: 360px; resize: none;" id="global-javascript" class="wp-editor-area" name="global-javascript"><?php echo $js[ 'post_content' ]; ?></textarea>
-                </div>
-              </div> <!-- #post-body-content -->
-            </div> <!-- #post-body -->
-
-          </div> <!-- .metabox-holder -->
-        </form>
-      </div> <!-- .wrap -->
-
-      <?php
+        }
+        include( WP_AMD_DIR . 'templates/js_edit_page.php' );
       }
 
       /**
@@ -649,54 +621,10 @@ namespace UsabilityDynamics\AMD {
         $css = $this->get_css();
         $this->add_metabox( $css, 'stylesheet' );
         $dependency = get_post_meta( $css[ 'ID' ], 'dependency', true );
-        if( !is_array( $dependency ) )
+        if( !is_array( $dependency ) ) {
           $dependency = array();
-
-        ?>
-
-        <div class="wrap">
-
-        <h2>StyleSheet Editor</h2>
-
-        <form action="themes.php?page=amd-styles" method="post" id="global-stylesheet-form">
-          <?php wp_nonce_field( 'update_global_css_css', 'update_global_css_css_field' ); ?>
-          <div class="metabox-holder has-right-sidebar">
-
-            <div class="inner-sidebar">
-
-              <div class="postbox">
-                <h3><span>Publish</span></h3>
-                <div class="inside">
-                  <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save Stylesheet' ); ?>"/>
-                </div>
-              </div>
-              <div class="postbox">
-                <h3><span>Dependency</span></h3>
-                <div class="inside">
-                  <?php foreach( $this->get_all_dependencies( 'stylesheet' ) as $dep => $dep_array ): ?>
-                    <label><input type="checkbox" name="dependency[]" value="<?php echo $dep; ?>" <?php checked( in_array( $dep, $dependency ), true ); ?> /><a href="<?php echo $dep_array[ 'infourl' ]; ?>"> <?php echo $dep_array[ 'name' ]; ?> </a></label>
-                    <br/>
-                  <?php endforeach; ?>
-                </div>
-              </div>
-              <!-- ... more boxes ... -->
-              <?php do_meta_boxes( 's-global-stylesheet', 'normal', $css ); ?>
-
-            </div> <!-- .inner-sidebar -->
-
-            <div id="post-body">
-              <div id="post-body-content">
-                <div id="global-editor-shell">
-                <textarea style="width:100%; height: 360px; resize: none;" id="global-stylesheet" class="wp-editor-area" name="global-stylesheet"><?php echo $css[ 'post_content' ]; ?></textarea>
-                </div>
-              </div> <!-- #post-body-content -->
-            </div> <!-- #post-body -->
-
-          </div> <!-- .metabox-holder -->
-        </form>
-      </div> <!-- .wrap -->
-
-      <?php
+        }
+        include( WP_AMD_DIR . 'templates/css_edit_page.php' );
       }
 
       /**

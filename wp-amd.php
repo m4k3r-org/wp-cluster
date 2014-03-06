@@ -1,6 +1,7 @@
 <?php
 /**
  * Plugin Name: WP-AMD
+ * Text Domain: wp-amd
  * Plugin URI: http://UsabilityDynamics.com/plugins/wp-amd/
  * Description: JS and CSS handling.
  * Author: Usability Dynamics, Inc
@@ -37,7 +38,20 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 define( 'WP_AMD_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WP_AMD_URL', plugin_dir_url( __FILE__ ) );
 
-// Intialize Plugin.
-if( class_exists( '\UsabilityDynamics\AMD\Bootstrap' ) ) {
-  new \UsabilityDynamics\AMD\Bootstrap();
+if( !function_exists( 'get_wp_amd_instance' ) ) {
+  /**
+   * Returns WP_AMD object
+   *
+   * @author peshkov@UD
+   */
+  function get_wp_amd( $key = false, $default = null ) {
+    if( class_exists( '\UsabilityDynamics\AMD\Bootstrap' ) ) {
+      $instance = \UsabilityDynamics\AMD\Bootstrap::get_instance();
+      return $key ? $instance->get( $key, $default ) : $instance;
+    }
+    return false;
+  }
 }
+
+//** Initialize Plugin. */
+get_wp_amd();

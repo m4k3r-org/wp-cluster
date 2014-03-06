@@ -36,7 +36,7 @@ namespace UsabilityDynamics\AMD {
           //** Enqueue Frontend Style. */
           if( !did_action( 'wp_enqueue_scripts' ) && !is_admin() ) {
             add_action( 'wp_enqueue_scripts', function() {
-              wp_enqueue_style( "wp-amd-{$this->args[ 'name' ]}", home_url() . "/wp-admin/admin-ajax.php?action=wp_amd_{$this->args[ 'name' ]}", $this->args[ 'deps' ], $this->args[ 'version' ] );
+              wp_enqueue_style( "wp-amd-{$this->args[ 'name' ]}", admin_url( "/admin-ajax.php?action=wp_amd_{$this->args[ 'name' ]}" ) , $this->args[ 'deps' ], $this->args[ 'version' ] );
             });
           }
           

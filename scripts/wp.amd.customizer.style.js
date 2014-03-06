@@ -1,11 +1,11 @@
-!function($, args) {
+!function($, l10n) {
     function createStyleContainer() {
         if ($("#wp_amd_style_preview_container").length) return null;
         var _element = $('<style type="text/css" id="wp_amd_style_preview_container"></style>');
         $("head").append(_element);
     }
     function updateStyles(style) {
-        var d = document.getElementById("wp-amd-" + args.name + "-css");
+        var d = document.getElementById("wp-amd-" + l10n.name + "-css");
         d && d.parentNode.removeChild(d), $("head #wp_amd_style_preview_container").text(style);
     }
     wp.customize("amd_css_editor", function(style) {

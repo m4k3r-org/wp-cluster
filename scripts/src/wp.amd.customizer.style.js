@@ -6,9 +6,9 @@
  * @author potanin@ud
  */
  
-( function( $, args ) {
+( function( $, l10n ) {
 
-  // console.log( args );
+  // console.log( l10n );
 
   /**
    * Create Element for Hot Swapping Styles
@@ -31,7 +31,7 @@
    */
   function updateStyles( style ) {
     // Remove original CSS link from head
-    var d = document.getElementById( 'wp-amd-' + args.name + '-css' );
+    var d = document.getElementById( 'wp-amd-' + l10n.name + '-css' );
     if( d ) {
       d.parentNode.removeChild( d );
     }
