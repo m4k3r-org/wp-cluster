@@ -21,7 +21,7 @@
       </section>
     <?php endif; // have_comments() ?>
     <!-- Comment posting -->
-    <section class="respond well">
+    <section class="respond">
       <?php comment_form( array( 'comment_notes_after' => '' ) ); ?>
     </section>
   </article>

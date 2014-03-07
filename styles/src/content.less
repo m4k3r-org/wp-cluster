@@ -317,8 +317,45 @@ article.comments {
 
     textarea {
       width: 100%;
+      background: @content-border-color;
+      border: 1px solid @content-border-color;
+      padding: 15px;
     }
 
+    .comment-reply-title {
+      text-transform: none;
+      color: @gray;
+      padding-bottom: 20px;
+      border-bottom: 1px solid @content-border-color;
+    }
+
+    .comment-notes {
+      display: none;
+    }
+
+    .comment-form-author, .comment-form-email {
+      input {
+        display: block;
+        width: 60%;
+        background: @content-border-color;
+        border: 1px solid @content-border-color;
+        padding: 15px;
+      }
+    }
+
+    label {
+      font-weight: normal;
+    }
+
+    .form-submit {
+      input {
+        background: @brand-blue;
+        border: 1px solid @brand-blue;
+        color: white;
+        text-transform: uppercase;
+        padding: 10px 30px;
+      }
+    }
   }
 
   .comments-list {
