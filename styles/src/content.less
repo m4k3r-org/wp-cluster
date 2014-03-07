@@ -290,6 +290,18 @@ article.comments {
     border-bottom-style: solid;
     border-bottom-width: 1px;
 
+    h5 {
+      padding-left: 30px;
+      position: relative;
+      &:before {
+        content: "\e683";
+        font-family: 'edm';
+        left: 0;
+        position: absolute;
+        color: @default-color;
+      }
+    }
+
     h1, h2, h3, h4, h5, h5 {
       margin: 0;
       text-transform: none;
