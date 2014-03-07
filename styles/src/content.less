@@ -288,7 +288,7 @@ article.comments {
   .title {
     padding: 20px;
     border-bottom-style: solid;
-    border-bottom-width: 2px;
+    border-bottom-width: 1px;
 
     h1, h2, h3, h4, h5, h5 {
       margin: 0;
@@ -319,9 +319,14 @@ article.comments {
 
       li {
         margin: 0;
-        padding: 10px 0;
+        padding: 30px 0;
         border-bottom-style: solid;
-        border-bottom-width: 2px;
+        border-bottom-width: 1px;
+
+        time {
+          text-transform: uppercase;
+          font-size: 11px;
+        }
 
         article {
           margin-top: 10px;
@@ -331,8 +336,6 @@ article.comments {
         ul li,
         &:last-child {
           border: none;
-          padding-top: 0;
-          padding-bottom: 0;
         }
 
         a {
@@ -350,6 +353,7 @@ article.comments {
 
         .comment-content, .reply, li {
           padding-left: 130px;
+          padding-bottom: 0;
         }
 
         li li li {
@@ -381,16 +385,15 @@ article.comments {
         .reply a {
           text-transform: uppercase;
           display: inline-block;
-          padding: 0 0 0 20px;
           position: relative;
 
           &:after {
-            content: "\e6fa";
+            content: "\e663";
             display: block;
             font-family: 'edm';
             position: absolute;
             top: 0;
-            left: 0;
+            right: -18px;
           }
 
         }
@@ -398,11 +401,11 @@ article.comments {
         img.avatar {
           width: 80px;
           height: 80px;
-          border-radius: 40px;
-          -webkit-border-radius: 40px;
-          -moz-border-radius: 40px;
+          border-radius: 50%;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
           overflow: hidden;
-          border-width: 4px;
+          border-width: 3px;
           border-style: solid;
 
           margin: 0 40px 0 10px;

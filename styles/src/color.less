@@ -519,7 +519,7 @@ article.comments {
 
   .title {
     border-color: darken( @content-border-color, 10% );
-    background-color: @content-border-color;
+    background-color: lighten( @content-border-color, 2% );
   }
 
   .comments-list {
@@ -527,7 +527,7 @@ article.comments {
     ul {
 
       li {
-        border-color: @content-border-color;
+        border-color: darken( @content-border-color, 10% );
 
         img.avatar {
           border-color: darken( @content-border-color, 20% );
@@ -535,7 +535,7 @@ article.comments {
 
         .comment-author .fn,
         .reply a {
-          color: @default-color;
+          color: @brand-primary;
         }
 
       }
