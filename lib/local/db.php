@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP-Cluster Database
- * Version: 1.2.0
+ * Version: 1.2.1
  * Description: Handles database for WP-Cluster.
  * Author: Usability Dynamics
  * Domain Path: WIP
@@ -31,6 +31,11 @@ function require_cluster_db() {
 
   // Create Cluster Database Instance.
   $wpdb = new wpdb( CLUSTER_USER, CLUSTER_PASSWORD, CLUSTER_NAME, CLUSTER_HOST );
+
+  // Output error if unable to establish connection.
+  if( !$wpdb->ready ) {
+    wp_die('<h1>WordPress Cloud Error</h1><p>Unable to establsh connection to ' . CLUSTER_NAME . '.</p>');
+  }
 
   if( defined( 'CLUSTER_PREFIX' ) ) {
     $table_prefix = CLUSTER_PREFIX;
@@ -162,6 +167,19 @@ function identify_current_network() {
 
 }
 
+function require_cloud_db() {
+  global $cdb, $wpdb;
+
+  if( defined( 'DB_USER' ) && defined( 'DB_PASSWORD' ) && defined( 'DB_NAME' ) ) {
+    $wpdb = new wpdb( DB_USER, DB_PASSWORD, DB_NAME, defined( 'DB_NAME' ) ? DB_NAME : 'localhost' );
+  }
+
+  if( !$wpdb || !$wpdb->ready ) {
+    wp_die('<h1>WordPress Cloud Error</h1><p>Unable to establsh connection to site database.</p>');
+  }
+
+}
+
 /**
  * Create Network Specific Database and User.
  *
@@ -181,4 +199,6 @@ function create_network_database( $name = null, $user = 'user' ) {
 require_cluster_db();
 
 identify_current_network();
+
+require_cloud_db();
 
