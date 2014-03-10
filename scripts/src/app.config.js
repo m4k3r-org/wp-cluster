@@ -53,7 +53,9 @@ require({
     'jquery.ui.widget': [ 'http://umesouthpadre.com/wp-includes/js/jquery/ui/jquery.ui.widget.min' ],
     'jquery.ui.accordion': [ 'http://umesouthpadre.com/wp-includes/js/jquery/ui/jquery.ui.accordion.min' ],
     'admin-bar': [ 'http://discodonniepresents.com/wp-includes/js/admin-bar.min' ],
-    'jquery.flexslider' : [ 'http://umesouthpadre.com/assets/scripts/jquery.flexslider' ]
+    'jquery.flexslider' : [ 'http://umesouthpadre.com/assets/scripts/jquery.flexslider' ],
+    'jquery.socialstream' : [ '/vendor/usabilitydynamics/wp-festival/lib/modules/social-stream/scripts/jquery.social.stream.1.5.4.min' ],
+    'jquery.socialstream.wall' : [ '/vendor/usabilitydynamics/wp-festival/lib/modules/social-stream/scripts/jquery.social.stream.wall.1.3' ]
   },
   deps: [ 'jquery', 'app.bootstrap' ],
   shim: {
@@ -64,6 +66,9 @@ require({
       deps: [ 'jquery' ]
     },
     'jquery.flexslider': {
+      deps: [ 'jquery' ]
+    },
+    'jquery.socialstream': {
       deps: [ 'jquery' ]
     }
   }

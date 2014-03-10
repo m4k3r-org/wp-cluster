@@ -569,6 +569,9 @@ namespace UsabilityDynamics {
         $this->carrington->registerModule( 'AdvancedHeroModule' );
         $this->carrington->registerModule( 'CollapseModule' );
         $this->carrington->registerModule( 'SectionBreakModule' );
+        if ( class_exists( 'SocialStreamModule' ) ) {
+          $this->carrington->registerModule( 'SocialStreamModule' );
+        }
       }
 
       // Declare Dynamic / Public Scripts.

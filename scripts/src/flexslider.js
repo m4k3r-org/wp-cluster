@@ -16,19 +16,6 @@ define( 'flexslider', [ 'jquery.flexslider' ], function() {
       animationSpeed: that.data('animationSpeed')
     });
 
-//    if ( !that.data('sliderHeight') ) {
-//      var maxHeight = 0, lis = jQuery( 'ul li', that );
-//      lis.each( function( i, e ){
-//        var height = jQuery( e ).height();
-//        if( height > maxHeight ){
-//          maxHeight = height;
-//        }
-//      } );
-//      lis.each( function( i, e ){
-//        jQuery( 'div:first-child', e ).height( maxHeight + 'px' );
-//      } );
-//    }
-
     return this;
   };
 

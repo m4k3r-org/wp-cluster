@@ -1,0 +1,1 @@
+define("socialstream",["jquery.socialstream","jquery.socialstream.wall"],function(){return console.debug("socialstream","loaded"),function(){return console.debug("socialstream","dom ready"),jQuery(this).dcSocialStream({feeds:{youtube:{id:"wired"}}}),this}});
