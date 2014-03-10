@@ -13,13 +13,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="container">
-          <div class="row">
 
-            <h1>404</h1>
-            <p>The requested URL is this error was not found on this serve.</p>
+        <img class="splash-img img-responsive" src="<?php echo get_stylesheet_directory_uri().'/images/404.png' ?>" alt="404" />
 
-          </div>
+        <h2>The requested URL is this error was not found on this serve.</h2>
+
+        <div class="text-center">
+        <?php echo do_shortcode('[styled_button class="button-404" url="/" anchor="BACK TO HOMEPAGE"]'); ?>
         </div>
       </div>
     </div>
