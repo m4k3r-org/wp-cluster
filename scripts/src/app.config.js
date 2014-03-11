@@ -70,6 +70,9 @@ require({
     },
     'jquery.socialstream': {
       deps: [ 'jquery' ]
+    },
+    'jquery.socialstream.wall': {
+      deps: [ 'jquery.socialstream' ]
     }
   }
 });
