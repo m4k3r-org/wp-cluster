@@ -24,8 +24,8 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
         },
         instagram: {
           id: '#UMEfestival',
-          intro: 'Posted',
-          search: 'Search',
+          intro: '',
+          search: '',
           out: 'intro,thumb',
           accessToken: '44220099.ec4c95b.d2c3acc28b1f432884be1ddcd8733499',
           redirectUrl: 'http://umesouthpadre.com/?page_id=1904&preview=true',
@@ -40,7 +40,8 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
       controls: false,
       rotate: {delay: 0},
       debug: true,
-      iconPath: that.data('path')+'/images/'
+      iconPath: that.data('path')+'/images/',
+      imagePath: that.data('path')+'/images/'
     });
 
     return this;

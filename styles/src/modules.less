@@ -749,6 +749,7 @@ main article.listing-post {
 .dcsns-toolbar .dcsns-loading {
 	right: 10px;
 	left: auto;
+  display: none;
 }
 .stream p {
 	margin: 0;
@@ -765,8 +766,9 @@ main article.listing-post {
 	background-color: #FFFFFF;
   border: 1px solid #F3F3F2;
 	position: relative;
-  width: 300px;
-	margin: 0 12px 12px 0 !important;
+	margin-left: 1% !important;
+  margin-right: 1% !important;
+  margin-top: 15px;
 	line-height: 1.35em;
   a {
     &:before {
@@ -786,15 +788,51 @@ main article.listing-post {
     position: absolute !important;
     right:0;
     bottom:0;
-    padding:0 !important;
+    padding: 5px !important;
   }
 }
+
+.col-md-12 {
+  .stream {
+    li {
+      width: 23%;
+    }
+  }
+}
+
+.col-md-8 {
+  .stream {
+    li {
+      width: 31%;
+    }
+  }
+}
+
+.col-md-4 {
+  .stream {
+    li {
+      width: 98%;
+    }
+  }
+}
+
 .stream li .inner {
 	overflow: hidden;
 }
 
+.stream li img {
+  width: 100%;
+}
+
 .stream li .section-intro {
-  padding: 7px 0;
+  padding: 7px 0 7px 10px;
+  a {
+    padding-left: 0;
+    color: @gray !important;
+    &:hover {
+      color: lighten( @gray, 30% ) !important;
+    }
+  }
 }
 .stream li .clear {
 	clear: both;
@@ -814,15 +852,15 @@ main article.listing-post {
 	color: #2DB6E8;
 }
 .stream li .section-thumb {
-	float: left;
-	margin: 0 7px 0 0;
+  a {
+    padding: 0 !important;
+  }
 }
 .stream li .section-thumb img {
-	border: 1px solid #ccc;
-	padding: 1px;
-	background: #fff;
+
 }
-.stream li .section-text {
+.stream li .section-text,
+.stream li .section-thumb {
 	display: block;
 	margin-bottom: 3px;
 }
@@ -978,6 +1016,9 @@ main article.listing-post {
 }
 #wall .dcsns-toolbar {
 	margin-bottom: 25px;
+}
+.dcsns .dcsns-toolbar {
+  display: none;
 }
 .dcsns-toolbar .filter {
 	padding: 0;
@@ -1185,33 +1226,18 @@ main article.listing-post {
 	padding: 5px 0 0 17px;
 	margin-bottom: 0;
 }
-/* instagram */
-.stream li.dcsns-instagram {
-	padding-bottom: 40px;
+
+.dcsns-twitter {
+  .network-label {
+    background:#01BEF6;
+  }
 }
-.stream li.dcsns-instagram .section-title {
-	font-weight: normal;
-	clear: both;
+.dcsns-instagram {
+  .network-label {
+    background:#7C4E3F;
+  }
 }
-.stream li.dcsns-instagram .section-thumb img {
-	margin: 0 7px 5px 0;
-	float: left;
-	border: 1px solid #ddd;
-	padding: 1px;
-	background: #fff;
-	max-width: 192px;
-}
-.stream li.dcsns-instagram .meta {
-	clear: both;
-}
-.stream li.dcsns-instagram .section-meta .meta .comments, .stream li.dcsns-instagram .section-meta .meta .likes {
-	margin: 0 0 5px 0;
-	padding-top: 5px;
-	background-position: 0px 5px;
-	float: none;
-	font-size: 100%;
-	font-weight: bold;
-}
+
 /*isotope */
 .isotope,
 .isotope .isotope-item {
@@ -1249,4 +1275,24 @@ main article.listing-post {
       -ms-transition-duration: 0s;
        -o-transition-duration: 0s;
           transition-duration: 0s;
+}
+
+#dcsns-filter {
+  a {
+    height: 27px;
+    line-height: 22px;
+    padding: 2px;
+    position: static;
+    text-align: center;
+    text-transform: lowercase;
+    width: 29px;
+
+    &:before {
+      content: none !important;
+    }
+
+    &:after {
+      content: none !important;
+    }
+  }
 }
