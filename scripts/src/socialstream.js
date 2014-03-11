@@ -36,10 +36,11 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
           icon: 'instagram.png'
         }
       },
-      wall: true,
+      wall: that.data('wall'),
       controls: false,
-      rotate: {delay: 0},
-      debug: true,
+      rotate: {
+        delay: parseInt(that.data('rotate_delay'))
+      },
       iconPath: that.data('path')+'/images/',
       imagePath: that.data('path')+'/images/'
     });

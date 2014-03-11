@@ -5,3 +5,8 @@
     <option value="true" <?php selected( 'true', $instance[ 'wall' ], true ); ?>>Yes</option>
   </select>
 </p>
+
+<p>
+  <label for="<?php echo $this->get_field_id( 'rotate_delay' ); ?>"><?php _e( 'Rotate Delay (ms)' ) ?></label>
+  <input type="text" value="<?php echo !empty( $instance[ 'rotate_delay' ] )?$instance[ 'rotate_delay' ]:''; ?>" id="<?php echo $this->get_field_id( 'rotate_delay' ); ?>" name="<?php echo $this->get_field_name( 'rotate_delay' ); ?>" />
+</p>
