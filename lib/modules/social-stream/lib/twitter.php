@@ -1,9 +1,9 @@
 <?php
 // SET YOUR TWITTER API DETAILS HERE
-$consumer_key = "iofHkaMCCzxR12Vt9vUL1g";
-$consumer_secret = "jyzSl4zg26HaBP9eefTWZHjojgWUMxk7XUyJ8J3qiqY";
-$oauth_access_token = "101485804-shGXjN0D43uU7CtCBHaML5K8uycHqgvEMd5gHtrY";
-$oauth_access_token_secret = "YcCOXWu1bidAv1APgRAd8ATNBl2UmTDXFkoGzicJny5aw";
+$consumer_key = SS_TWITTER_CONSUMER_KEY;
+$consumer_secret = SS_TWITTER_CONSUMER_SECRET;
+$oauth_access_token = SS_TWITTER_ACCESS_TOKEN;
+$oauth_access_token_secret = SS_TWITTER_ACCESS_TOKEN_SECRET;
 
 // DO NOT EDIT BELOW THIS LINE
 switch($_GET['url'])

@@ -19,7 +19,7 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
           retweets: false,
           replies: false,
           images: 'small', // large w: 786 h: 346, thumb w: 150 h: 150, medium w: 600 h: 264, small w: 340 h 150
-          url: that.data('path')+'/lib/modules/social-stream/lib/twitter.php',
+          url: that.data('callback'),
           icon: 'twitter.png'
         },
         instagram: {
