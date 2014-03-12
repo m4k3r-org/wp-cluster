@@ -1009,6 +1009,8 @@ main article.listing-post {
 	width: 100%;
 	overflow: hidden;
 	position: relative;
+  border-bottom: 1px solid #E5E5E1;
+  margin-bottom: 15px;
 }
 /* Filter */
 #wall {
@@ -1039,11 +1041,8 @@ main article.listing-post {
 }
 .dcsns-toolbar .filter li a {
 	padding: 4px 3px 0 3px;
-	margin: 0 1px 1px 0;
 	display: block;
 	float: left;
-	background: #777;
-	height: 28px;
 }
 .dcsns-toolbar .filter li img {
 	margin: 0;
@@ -1279,13 +1278,16 @@ main article.listing-post {
 
 #dcsns-filter {
   a {
+    transition: .5s all;
+    text-decoration: none;
+    outline: none;
     height: 27px;
-    line-height: 22px;
-    padding: 2px;
+    line-height: 14px;
+    padding: 2px 10px 4px;
     position: static;
     text-align: center;
-    text-transform: lowercase;
-    width: 29px;
+    text-transform: uppercase;
+    color: #E5E5E1;
 
     &:before {
       content: none !important;
@@ -1293,6 +1295,11 @@ main article.listing-post {
 
     &:after {
       content: none !important;
+    }
+
+    &.iso-active {
+      color: @default-color;
+      border-bottom: 3px solid @default-color;
     }
   }
 }
