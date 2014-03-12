@@ -23,13 +23,13 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
           icon: 'twitter.png'
         },
         instagram: {
-          id: '#UMEfestival',
+          id: that.data('instagram_search_for'),
           intro: '',
           search: '',
           out: 'intro,thumb',
-          accessToken: '44220099.ec4c95b.d2c3acc28b1f432884be1ddcd8733499',
-          redirectUrl: 'http://umesouthpadre.com/?page_id=1904&preview=true',
-          clientId: 'ec4c95bf89754e1d8fd3581edba04808',
+          accessToken: that.data('instagram_access_token'),
+          redirectUrl: that.data('instagram_redirect_url'),
+          clientId: that.data('instagram_client_id'),
           thumb: 'low_resolution',
           comments: 0,
           likes: 0,
@@ -42,7 +42,8 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
         delay: parseInt(that.data('rotate_delay'))
       },
       iconPath: that.data('path')+'/images/',
-      imagePath: that.data('path')+'/images/'
+      imagePath: that.data('path')+'/images/',
+      cache: true
     });
 
     return this;
