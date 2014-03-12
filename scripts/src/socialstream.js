@@ -12,7 +12,7 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
     that.dcSocialStream({
       feeds: {
         twitter: {
-          id: '#umesouthpadre',
+          id: that.data('twitter_search_for'),
           intro: '',
           search: '',
           out: 'intro,text,date',

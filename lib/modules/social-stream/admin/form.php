@@ -39,7 +39,11 @@
 
 <fieldset>
   <legend><h2>Twitter</h2></legend>
-
+  <p>
+    <label for="<?php echo $this->get_field_id( 'twitter_search_for' ); ?>"><?php _e( 'Search for' ) ?></label>
+    <input type="text" value="<?php echo !empty( $data[ $this->get_field_name( 'twitter_search_for' ) ] )?$data[ $this->get_field_name( 'twitter_search_for' ) ]:''; ?>" id="<?php echo $this->get_field_id( 'twitter_search_for' ); ?>" name="<?php echo $this->get_field_name( 'twitter_search_for' ); ?>" />
+    <small>e.g. google - Tweets from a specific user name. /9927875 - Tweets from a list. #london - Tweets from a search.</small>
+  </p>
   <p>
     <label for="<?php echo $this->get_field_id( 'twitter_consumer_key' ); ?>"><?php _e( 'Consumer Key' ) ?></label>
     <input type="text" value="<?php echo !empty( $data[ $this->get_field_name( 'twitter_consumer_key' ) ] )?$data[ $this->get_field_name( 'twitter_consumer_key' ) ]:''; ?>" id="<?php echo $this->get_field_id( 'twitter_consumer_key' ); ?>" name="<?php echo $this->get_field_name( 'twitter_consumer_key' ); ?>" />
