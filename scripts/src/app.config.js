@@ -56,7 +56,8 @@ require({
     'jquery.flexslider' : [ 'http://umesouthpadre.com/assets/scripts/jquery.flexslider' ],
     'jquery.socialstream' : [ '/vendor/usabilitydynamics/wp-festival/lib/modules/social-stream/scripts/jquery.social.stream.1.5.5.custom' ],
     'jquery.socialstream.wall' : [ '/vendor/usabilitydynamics/wp-festival/lib/modules/social-stream/scripts/jquery.social.stream.wall.1.3' ],
-    'jquery.masonry' : [ 'http://umesouthpadre.com/wp-includes/js/jquery/jquery.masonry.min' ]
+    'jquery.masonry' : [ 'http://umesouthpadre.com/wp-includes/js/jquery/jquery.masonry.min' ],
+    'jquery.colorbox' : [ 'http://umesouthpadre.com/assets/scripts/jquery.colorbox' ]
   },
   deps: [ 'jquery', 'app.bootstrap' ],
   shim: {
