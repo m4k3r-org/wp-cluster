@@ -59,7 +59,6 @@ main {
 /* ==============
  Navbar
 ============== */
-
 .customize-support {
 
   .navbar-fixed-top {
@@ -69,6 +68,11 @@ main {
 }
 
 .navbar {
+
+  .caret {
+    display:none;
+  }
+
   z-index: 1000;
   width: 100%;
   margin-bottom: 0;
@@ -177,6 +181,13 @@ main {
         padding: @navbar-padding-vertical;
       }
     }
+  }
+  margin-left: -30px;
+}
+
+.is-sticky {
+  .navbar-nav {
+    margin-left: 0;
   }
 }
 
