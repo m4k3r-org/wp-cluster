@@ -1,0 +1,1 @@
+define("gallery-masonry",["jquery.masonry"],function(){return console.debug("masonry","loaded"),function(){return console.debug("masonry","dom ready"),jQuery(this).parents(".use-masonry").length&&jQuery(this).masonry({itemSelector:".gallery-item"}),this}});

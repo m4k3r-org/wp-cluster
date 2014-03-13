@@ -373,6 +373,18 @@ namespace UsabilityDynamics {
       // Remove URL from comments form
       add_filter('comment_form_default_fields', array( $this, 'url_filtered' ) );
 
+      // Alter gallery container to load masonry
+      add_filter('gallery_style', array( $this, 'gallery_attributes' ));
+
+    }
+
+    /**
+     * Make standard gallery "masonarable"
+     * @param type $current
+     * @return type
+     */
+    public function gallery_attributes( $current ) {
+      return preg_replace('/(id=\'gallery.+?\')/', '$1 data-requires="gallery-masonry"', $current);
     }
 
     /**
