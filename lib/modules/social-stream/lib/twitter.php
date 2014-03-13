@@ -14,7 +14,7 @@ switch($_GET['url'])
 	break;
 	case 'search':
 	$rest = "search/tweets";
-	$params = Array('q' => $_GET['q'].' filter:images', 'count' => $_GET['count']);
+	$params = Array('q' => $_GET['q'], 'count' => $_GET['count']);
 	break;
 	case 'list':
 	$rest = "lists/statuses";
