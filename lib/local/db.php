@@ -171,7 +171,7 @@ function require_cloud_db() {
   global $cdb, $wpdb;
 
   if( defined( 'DB_USER' ) && defined( 'DB_PASSWORD' ) && defined( 'DB_NAME' ) ) {
-    $wpdb = new wpdb( DB_USER, DB_PASSWORD, DB_NAME, defined( 'DB_NAME' ) ? DB_NAME : 'localhost' );
+    $wpdb = new wpdb( DB_USER, DB_PASSWORD, DB_NAME, defined( 'DB_HOST' ) ? DB_HOST : 'localhost' );
   }
 
   if( !$wpdb || !$wpdb->ready ) {
