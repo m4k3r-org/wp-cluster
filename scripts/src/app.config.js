@@ -122,6 +122,10 @@ define( 'app.bootstrap', [ 'jquery.menufication', 'menufication-setup' ], functi
     s.parentNode.insertBefore( p, s );
   })();
 
+  jQuery('#menufication-nav li li a').on('click',function(e){
+    e.stopPropagation();
+  });
+
   // Load main theme logic.
   require( [ 'app.main', 'twitter.bootstrap', 'udx.wp.spa' ] );
 
