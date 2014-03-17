@@ -615,12 +615,23 @@ footer {
 }
 
 .widget {
-  .widget-title {
-    font-size: 100%;
-  }
-  .current_page_item {
+  &.widget_nav_menu {
+    .widget-title {
+      font-size: 100%;
+      margin-bottom: 35px;
+    }
     a {
-      color: @default-color-active !important;
+      color: @gray-light !important;
+    }
+    .current_page_item {
+      a {
+        color: @default-color-active !important;
+      }
+    }
+    .menu {
+      li {
+        line-height: 30px;
+      }
     }
   }
 }
