@@ -121,7 +121,7 @@ namespace UsabilityDynamics\AMD {
         $post_id = !empty( $data[ 'ID' ] ) ? $data[ 'ID' ] : false;
         
         $this->add_metabox( $post_id );
-        $dependency = get_post_meta( $css[ 'ID' ], 'dependency', true );
+        $dependency = get_post_meta( $data[ 'ID' ], 'dependency', true );
         if( !is_array( $dependency ) ) {
           $dependency = array();
         }

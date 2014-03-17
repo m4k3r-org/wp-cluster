@@ -23,7 +23,7 @@
         <div class="postbox">
           <h3><span><?php _e( 'Dependency', get_wp_amd( 'text_domain' ) ); ?></span></h3>
           <div class="inside">
-            <?php foreach( (array)get_wp_amd( 'javascript.dependencies' ) as $dep => $dep_array ): ?>
+            <?php foreach( (array)$this->get( 'dependencies' ) as $dep => $dep_array ): ?>
               <label>
                 <input type="checkbox" name="dependency[]" value="<?php echo $dep; ?>" <?php checked( in_array( $dep, $dependency ), true ); ?> />
                 <a href="<?php echo $dep_array[ 'infourl' ]; ?>"> <?php echo $dep_array[ 'name' ]; ?> </a>
