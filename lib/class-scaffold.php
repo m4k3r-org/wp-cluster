@@ -140,16 +140,16 @@ namespace UsabilityDynamics\AMD {
        * @param mixed $js
        * @return void
        */
-      public function save_asset( $data ) {
+      public function save_asset( $value ) {
         if( !$post = self::get_asset( $this->get( 'type' )  ) ) {
           $post_id = wp_insert_post( array(
             'post_title' => ( 'Global AMD ' . ucfirst( $this->get( 'type' ) ) ),
-            'post_content' => $data,
+            'post_content' => $value,
             'post_status' => 'publish',
             'post_type' => $this->get( 'post_type' ),
           ) );
         } else {
-          $post[ 'post_content' ] = $data;
+          $post[ 'post_content' ] = $value;
           $post_id = wp_update_post( $post );
         }
         return $post_id;

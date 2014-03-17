@@ -31,7 +31,7 @@
    */
   function updateStyles( style ) {
     // Remove original CSS link from head
-    var d = document.getElementById( 'wp-amd-' + l10n.name + '-css' );
+    var d = document.getElementById( l10n.id );
     if( d ) {
       d.parentNode.removeChild( d );
     }
@@ -40,13 +40,13 @@
   }
 
   // Update Styles Live.
-  wp.customize( 'amd_css_editor', function( style ) {
+  wp.customize( l10n.name, function( style ) {
     var intent;
     createStyleContainer();
     
     // Listen for Changes.
     style.bind( function ( style ) {
-      // console.log( 'stylesChanged', style );
+       console.log( 'stylesChanged', style );
       // Clear Intent
       window.clearTimeout( intent );
       // Pause for Intent Check

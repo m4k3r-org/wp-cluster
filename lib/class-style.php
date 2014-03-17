@@ -15,7 +15,7 @@ namespace UsabilityDynamics\AMD {
 
     class Style extends \UsabilityDynamics\AMD\Scaffold {
       
-      public $name = 'amd_customizer_style';
+      public $name = 'amd_css_style';
       
       /**
        * Constructor
@@ -118,7 +118,18 @@ namespace UsabilityDynamics\AMD {
        */
       function customize_live_preview() {
         wp_enqueue_script( 'wp-amd-themecustomizer', WP_AMD_URL . 'scripts/wp.amd.customizer.style.js', array( 'jquery','customize-preview' ), '', true );
-        wp_localize_script( 'wp-amd-themecustomizer', 'wp_amd_themecustomizer', $this->args );
+        wp_localize_script( 'wp-amd-themecustomizer', 'wp_amd_themecustomizer', array(
+          'name' => $this->name,
+          'id' => 'wp-amd-style-css',
+        ) );
+      }
+      
+      /**
+       * Saves/updates asset.
+       */
+      public function save_asset( $value ) {
+        set_theme_mod( $this->name, $value );
+        return parent::save_asset( $value );
       }
       
     }

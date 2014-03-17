@@ -5,13 +5,13 @@
         $("head").append(_element);
     }
     function updateStyles(style) {
-        var d = document.getElementById("wp-amd-" + l10n.name + "-css");
+        var d = document.getElementById(l10n.id);
         d && d.parentNode.removeChild(d), $("head #wp_amd_style_preview_container").text(style);
     }
-    wp.customize("amd_css_editor", function(style) {
+    wp.customize(l10n.name, function(style) {
         var intent;
         createStyleContainer(), style.bind(function(style) {
-            window.clearTimeout(intent), intent = window.setTimeout(function() {
+            console.log("stylesChanged", style), window.clearTimeout(intent), intent = window.setTimeout(function() {
                 updateStyles(style);
             }, 200);
         });
