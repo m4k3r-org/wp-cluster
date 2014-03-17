@@ -1,6 +1,5 @@
 <?php
 /**
- * Global Custom CSS styles
  * Custom Styles Customizer
  * Uses theme customization API
  *
@@ -15,16 +14,16 @@ namespace UsabilityDynamics\AMD {
 
     class Style extends \UsabilityDynamics\AMD\Scaffold {
       
-      public $name = 'amd_css_style';
+      public $name = 'amd_css_editor';
       
       /**
        * Constructor
        *
        */
-      public function __construct( $args = array() ) {
-      
-        parent::__construct( $args );
+      function __construct( $args = array() ) {
         
+        parent::__construct( $args );
+          
         //** Adds settings to customizer */
         if( !did_action( 'customize_register' ) ) {
           add_action( 'customize_register', array( &$this, 'customize_register' ) );
@@ -34,6 +33,18 @@ namespace UsabilityDynamics\AMD {
           add_action( 'customize_preview_init', array( &$this, 'customize_live_preview' ) );
         }
         
+        add_action( 'customize_update_wp_amd', array( $this, 'customize_update' ) );
+        add_filter( 'customize_value_' . $this->name, array( $this, 'customize_value' ) );
+        
+      }
+      
+      public function customize_update( $value ) {
+        $this->save_asset( $value );
+      }
+      
+      public function customize_value( $default ) {
+        $post = $this->get_asset( $this->get( 'type' ) );
+        return !empty( $post[ 'post_content' ] ) ? $post[ 'post_content' ] : '';
       }
       
       /**
@@ -42,7 +53,7 @@ namespace UsabilityDynamics\AMD {
        * @param object $wp_customize Instance of the WP_Customize_Manager class
        * @see wp-includes/class-wp-customize-manager.php
        */
-      function customize_register( $wp_customize ) {
+      public function customize_register( $wp_customize ) {
         
         //** Configure Section. */
         $wp_customize->add_section( 'amd_custom_style', array(
@@ -55,7 +66,8 @@ namespace UsabilityDynamics\AMD {
         //** Stores raw CSS. */
         $wp_customize->add_setting( $this->name, array(
           'capability' => 'edit_theme_options',
-          'transport' => 'postMessage'
+          'type' => 'wp_amd',
+          'transport' => 'postMessage',
         ));
         
         //** Input for CSS Code. */
@@ -64,6 +76,7 @@ namespace UsabilityDynamics\AMD {
           'section' => 'amd_custom_style',
           'priority' => 10
         )));
+        
         
         /*
         // Minification Option.
@@ -116,22 +129,14 @@ namespace UsabilityDynamics\AMD {
        * @see add_action( 'customize_preview_init', $func )
        * @author peshkov@UD
        */
-      function customize_live_preview() {
+      public function customize_live_preview() {
         wp_enqueue_script( 'wp-amd-themecustomizer', WP_AMD_URL . 'scripts/wp.amd.customizer.style.js', array( 'jquery','customize-preview' ), '', true );
         wp_localize_script( 'wp-amd-themecustomizer', 'wp_amd_themecustomizer', array(
           'name' => $this->name,
-          'id' => 'wp-amd-style-css',
+          'link_id' => 'wp-amd-' . $this->get( 'type' ) . '-css',
         ) );
       }
-      
-      /**
-       * Saves/updates asset.
-       */
-      public function save_asset( $value ) {
-        set_theme_mod( $this->name, $value );
-        return parent::save_asset( $value );
-      }
-      
+    
     }
     
   }

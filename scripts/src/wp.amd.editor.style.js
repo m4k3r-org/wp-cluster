@@ -36,8 +36,8 @@
   editor.getSession().setValue( defEditor.text() );
   // Trigger changes in actual editor.
   editor.on( 'change', function() {
-    defEditor.text( editor.getValue() );
-    defEditor.trigger( 'change' );
+    defEditor.val( editor.getValue() );
+    $( '#wp_amd_default_style_editor' ).trigger( 'change' );
   });
   
   $( '.wp-amd-style-editor-toggle' ).click( function() {

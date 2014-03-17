@@ -5,7 +5,7 @@
     editor.getSession().setUseSoftTabs(!0), editor.setHighlightActiveLine(!1), editor.setShowPrintMargin(!1), 
     editor.getSession().setTabSize(2), editor.getSession().setValue(defEditor.text()), 
     editor.on("change", function() {
-        defEditor.text(editor.getValue()), defEditor.trigger("change");
+        defEditor.val(editor.getValue()), $("#wp_amd_default_style_editor").trigger("change");
     }), $(".wp-amd-style-editor-toggle").click(function() {
         editorBlock.hasClass("closed") ? editorBlock.removeClass("closed").addClass("opened") : editorBlock.removeClass("opened").addClass("closed"), 
         defaultValue = defEditor.text();

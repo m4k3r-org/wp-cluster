@@ -6,9 +6,9 @@
  * @author potanin@ud
  */
  
-( function( $, l10n ) {
+( function( $, args ) {
 
-  // console.log( l10n );
+  // console.log( args );
 
   /**
    * Create Element for Hot Swapping Styles
@@ -31,7 +31,7 @@
    */
   function updateStyles( style ) {
     // Remove original CSS link from head
-    var d = document.getElementById( l10n.id );
+    var d = document.getElementById( args.link_id );
     if( d ) {
       d.parentNode.removeChild( d );
     }
@@ -40,13 +40,13 @@
   }
 
   // Update Styles Live.
-  wp.customize( l10n.name, function( style ) {
+  wp.customize( args.name, function( style ) {
     var intent;
     createStyleContainer();
     
     // Listen for Changes.
     style.bind( function ( style ) {
-       console.log( 'stylesChanged', style );
+      console.log( 'stylesChanged', style );
       // Clear Intent
       window.clearTimeout( intent );
       // Pause for Intent Check
