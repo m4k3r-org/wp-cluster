@@ -58,55 +58,55 @@ namespace UsabilityDynamics\AMD {
           'data' => array(
             'version' => $this->version,
             'text_domain' => $this->text_domain,
-            'javascript' => array(
-              'type' => 'script',
-              'minify' => false,
-              'permalink' => "assets/app.js",
-              'dependencies' => array(
-                'backbone'  => array(
-                  'name'         => 'Backbone js',
-                  'load_in_head' => false,
-                  'infourl'      => 'http://backbonejs.com'
+            'assets' => array(
+              'script' => array(
+                'type' => 'script',
+                'minify' => false,
+                'admin_menu' => true,
+                'load_in_head' => false,
+                'permalink' => "assets/app.js",
+                'dependencies' => array(
+                  'backbone'  => array(
+                    'name'         => 'Backbone js',
+                    'infourl'      => 'http://backbonejs.com'
+                  ),
+                  'jquery' => array(
+                    'name'         => 'jQuery',
+                    'infourl'      => 'http://jquery.com'
+                  ),
+                  'jquery-ui-autocomplete' => array(
+                    'name'         => 'jQuery UI Autocomplete',
+                    'infourl'      => 'http://jqueryui.com/autocomplete'
+                  ),
+                  'json2' => array(
+                    'name'         => 'JSON for JS',
+                    'infourl'      => 'https://github.com/douglascrockford/JSON-js'
+                  ),
+                  'thickbox' => array(
+                    'name'         => 'Thickbox',
+                    'infourl'      => 'http://codex.wordpress.org/ThickBox'
+                  ),
+                  'underscore' => array(
+                    'name' => 'Underscore js',
+                    'infourl' => 'http://underscorejs.org'
+                  )
                 ),
-                'jquery' => array(
-                  'name'         => 'jQuery',
-                  'load_in_head' => false,
-                  'infourl'      => 'http://jquery.com'
-                ),
-                'jquery-ui-autocomplete' => array(
-                  'name'         => 'jQuery UI Autocomplete',
-                  'load_in_head' => false,
-                  'infourl'      => 'http://jqueryui.com/autocomplete'
-                ),
-                'json2' => array(
-                  'name'         => 'JSON for JS',
-                  'load_in_head' => false,
-                  'infourl'      => 'https://github.com/douglascrockford/JSON-js'
-                ),
-                'thickbox' => array(
-                  'name'         => 'Thickbox',
-                  'load_in_head' => false,
-                  'infourl'      => 'http://codex.wordpress.org/ThickBox'
-                ),
-                'underscore' => array(
-                  'name' => 'Underscore js',
-                  'load_in_head' => false,
-                  'infourl' => 'http://underscorejs.org'
-                )
               ),
-            ),
-            'stylesheet'  => array(
-              'type' => 'style',
-              'minify' => false,
-              'permalink' => "assets/app.css",
-              'dependencies' => array(),
+              'style'  => array(
+                'type' => 'style',
+                'minify' => false,
+                'permalink' => "assets/app.css",
+                'admin_menu' => true,
+                'load_in_head' => true,
+                'dependencies' => array(),
+              ),
             ),
           )
         ) );
         
         //** Init our scripts and styles classes */
-        //$this->style = new Style( $this->get( 'stylesheet' ) );
-        $this->script = new Script( $this->get( 'javascript' ) );
+        //$this->style = new Style( $this->get( 'assets.stylesheet' ) );
+        $this->script = new Script( $this->get( 'assets.script' ) );
         
       }
 
@@ -116,52 +116,6 @@ namespace UsabilityDynamics\AMD {
        */
       public static function get_instance( $args = array() ) {
         return null === self::$instance ? self::$instance = new self() : self::$instance;
-      }
-
-      /**
-       * Get latest revision ID
-       * @return string
-       */
-      public function get_latest_version_id( $post_id ) {
-        if( $a = array_shift( get_posts( array( 'numberposts' => 1, 'post_type' => 'revision', 'post_status' => 'any', 'post_parent' => $post_id ) ) ) ) {
-          $post_row = get_object_vars( $a );
-          return $post_row[ 'ID' ];
-        }
-        return 'unknown';
-      }
-
-      /**
-       * get_plugin_post_id function
-       * Gets the post id from posts table
-       *
-       * @access public
-       * @return bool $post_id
-       */
-      public function get_plugin_post_id( $type ) {
-        if( $a = array_shift( get_posts( array( 'numberposts' => 1, 'post_type' => 's-global-'.$type, 'post_status' => 'publish' ) ) ) ):
-          $post_row = get_object_vars( $a );
-
-          return $post_row[ 'ID' ];
-        else:
-          return false;
-        endif;
-      }
-
-      /**
-       * get_saved_dependencies function
-       *
-       * @access public
-       *
-       * @param $post_id
-       *
-       * @return array|mixed $dependency_arr
-       */
-      function get_saved_dependencies( $post_id ) {
-        $dependency_arr = get_post_meta( $post_id, 'dependency', true );
-        if( !is_array( $dependency_arr ) )
-          $dependency_arr = array();
-
-        return $dependency_arr;
       }
 
       /**

@@ -14,13 +14,13 @@ namespace UsabilityDynamics\AMD {
 
     abstract class Scaffold {
       
+      public $args = NULL;
+      
       public static $query_vars = array(
         'amd_asset_type',
         'amd_is_asset',
       );
       
-      public $post_type = NULL;
-    
       /**
        * Constructor
        * Must be called in child constructor firstly!
@@ -31,59 +31,38 @@ namespace UsabilityDynamics\AMD {
           'version' => '1.0', 
           'type' => '', // style, script
           'minify' => false,
+          'load_in_head' => true,
           'permalink' => '', // assets/amd.js
           'dependencies' => array(),
           'admin_menu' => true,
+          'post_type' => false,
         ) );
         
-        $this->post_type = self::get_post_type( $this->get( 'type' ) );
+        //** Add hooks only if type is allowed */
+        if( in_array( $this->get( 'type' ), array( 'script', 'style' ) ) ) {
         
-        //** rewrite and respond */
-        add_action( 'query_vars', array( $this, 'query_vars' ) );
-        add_filter( 'pre_update_option_rewrite_rules', array( $this, 'update_option_rewrite_rules' ), 1 );
-        add_filter( 'template_include', array( __CLASS__, 'return_asset' ), 1, 1 );
+          if( !$this->get( 'post_type' ) ) {
+            $this->args[ 'post_type' ] = self::get_post_type( $this->get( 'type' ) );
+          }
+          
+          //** rewrite and respond */
+          add_action( 'query_vars', array( __CLASS__, 'query_vars' ) );
+          add_filter( 'pre_update_option_rewrite_rules', array( &$this, 'update_option_rewrite_rules' ), 1 );
+          add_filter( 'template_include', array( __CLASS__, 'return_asset' ), 1, 1 );
+          
+          //** Register assets and post_type */
+          add_action( 'admin_init', array( &$this, 'register_post_type' ) );
+          add_action( 'init', array( &$this, 'register_asset' ) );
+          
+          //** Determine if Admin Menu is enabled */
+          if( $this->get( 'admin_menu' ) ) {
+            add_action( 'admin_menu', array( &$this, 'add_admin_menu' ) );
+            // Override the edit link, the default link causes a redirect loop
+            add_filter( 'get_edit_post_link', array( &$this, 'revision_post_link' ) );
+          }
         
-        add_action( 'init', array( $this, 'register_assets' ) );
-        
-        
-        //**  */
-        add_action( 'admin_init', array( $this, 'register_post_type' ) );
-        
-        //** Determine if Admin Menu is enabled */
-        if( $this->get( 'admin_menu' ) ) {
-          add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
-          // Override the edit link, the default link causes a redirect loop
-          add_filter( 'get_edit_post_link', array( __CLASS__, 'revision_post_link' ) );
         }
-      }
-      
-      /**
-       * Register scripts
-       */
-      function register_assets() {
-        if( !is_admin() ) {
-          $url = $this->get_asset_url();
-          $dependencies = array();
-          if( false !== ( $post_id = $this->get_plugin_post_id( 'javascript' ) ) ):
-            $dependencies = $this->get_saved_dependencies( $post_id );
-            $this->load_dependencies( $dependencies, 'javascript' );
-          endif;
-          wp_register_script( 'add-global-javascript', $url, $dependencies, $this->get_latest_version_id( $post_id ) );
-
-          wp_register_style( 'add-global-stylesheet', $url, $dependencies, $this->get_latest_version_id( $post_id ) );
-        }
-      }
-      
-      /**
-       * Global JS URL
-       * @return bool|string
-       */
-      public function get_asset_url() {
-        global $wp_rewrite;
-        if ( empty( $wp_rewrite->permalink_structure ) ) {
-          return '?' . self::$query_vars[0] . '=' . $this->get( 'type' ) . '&' . self::$query_vars[1] . '=1';
-        }
-        return '/'. $this->get( 'permalink' );
+        
       }
       
       /**
@@ -119,7 +98,7 @@ namespace UsabilityDynamics\AMD {
         // the form has been submited save the options
         if( !empty( $_POST ) && check_admin_referer( 'update_amd_' . $this->get( 'type' ), 'update_amd_' . $this->get( 'type' ) . '_nonce' ) ) {
           $data = stripslashes( $_POST [ 'content' ] );
-          $post_id = $this->save_revision( $data );
+          $post_id = $this->save_asset( $data );
           $updated = true;
           $msg = 1;
           if( isset( $_POST[ 'dependency' ] ) ) {
@@ -136,7 +115,7 @@ namespace UsabilityDynamics\AMD {
           5 => isset( $_GET[ 'revision' ] ) ? sprintf( __( '%s restored to revision from %s, <em>Save Changes for the revision to take effect</em>', get_wp_amd( 'text_domain' ) ), ucfirst( $this->get( 'type' ) ), wp_post_revision_title( (int) $_GET[ 'revision' ], false ) ) : false
         );
         
-        $data = $this->get_post( $this->get( 'type' ) );
+        $data = self::get_asset( $this->get( 'type' ) );
         $data[ 'msg' ] = $messages[ $msg ];
         
         $post_id = !empty( $data[ 'ID' ] ) ? $data[ 'ID' ] : false;
@@ -155,19 +134,19 @@ namespace UsabilityDynamics\AMD {
       }
       
       /**
-       * save_revision function.
+       * Saves/updates asset.
        *
        * @access public
        * @param mixed $js
        * @return void
        */
-      public function save_revision( $data ) {
-        if( !$post = self::get_post( $this->get( 'type' )  ) ) {
+      public function save_asset( $data ) {
+        if( !$post = self::get_asset( $this->get( 'type' )  ) ) {
           $post_id = wp_insert_post( array(
             'post_title' => ( 'Global AMD' . ucfirst( $this->get( 'type' ) ) ),
             'post_content' => $data,
             'post_status' => 'publish',
-            'post_type' => $this->post_type,
+            'post_type' => $this->get( 'post_type' ),
           ) );
         } else {
           $post[ 'post_content' ] = $data;
@@ -184,14 +163,14 @@ namespace UsabilityDynamics\AMD {
        * @param mixed $post_link
        * @return void
        */
-      public static function revision_post_link( $post_link ) {
+      public function revision_post_link( $post_link ) {
         global $post;
         if( isset( $post ) && strstr( $post_link, 'action=edit' ) && !strstr( $post_link, 'revision=' ) ) {
           switch( true ) {
-            case ( self::get_post_type( 'script' ) == $post->post_type ):
+            case ( self::get_post_type( 'script' ) == $this->get( 'post_type' ) ):
               $post_link = 'themes.php?page=amd-page-script';
               break;
-            case ( self::get_post_type( 'style' ) == $post->post_type ):
+            case ( self::get_post_type( 'style' ) == $this->get( 'post_type' ) ):
               $post_link = 'themes.php?page=amd-page-style';
               break;
           }
@@ -208,7 +187,7 @@ namespace UsabilityDynamics\AMD {
        */
       public function add_metabox( $post_id ) {
         if( $post_id && wp_get_post_revisions( $post_id ) ) {
-          add_meta_box( 'revisionsdiv', __( 'Revisions', get_wp_amd( 'text_domain' ) ), array( $this, 'post_revisions_meta_box' ), $this->post_type, 'normal' );
+          add_meta_box( 'revisionsdiv', __( 'Revisions', get_wp_amd( 'text_domain' ) ), array( $this, 'post_revisions_meta_box' ), $this->get( 'post_type' ), 'normal' );
         }
       }
       
@@ -240,18 +219,17 @@ namespace UsabilityDynamics\AMD {
         foreach( $dependencies as $dependency ) {
           if( isset( $all_deps[ $dependency ] ) ) {
             $current = wp_parse_args( $all_deps[ $dependency ], array(
-              'load_in_head' => ( $this->get( 'type' ) == 'script' ? false : true ),
               'url' => '',
             ) );
             if( !empty( $current[ 'url' ] ) ) {
               switch( $this->get( 'type' ) ) {
                 case 'script':
-                  wp_register_script( $dependency, $current[ 'url' ], array(), $this->get( 'version' ), !$current[ 'load_in_head' ] );
-                  wp_enqueue_script( $dependency );
+                  wp_register_script( $dependency, $current[ 'url' ], array(), $this->get( 'version' ) );
+                  //wp_enqueue_script( $dependency );
                   break;
                 case 'style':
-                  wp_register_style( $dependency, $current[ 'url' ], array(), $this->get( 'version' ), !$all_deps[ $dependency ][ 'load_in_head' ] );
-                  wp_enqueue_style( $dependency );
+                  wp_register_style( $dependency, $current[ 'url' ], array(), $this->get( 'version' ) );
+                  //wp_enqueue_style( $dependency );
                   break;
                 default: break;
               }
@@ -266,8 +244,8 @@ namespace UsabilityDynamics\AMD {
        * @param type $query_vars
        * @return string
        */
-      public function query_vars( $query_vars ) {
-        return array_unique( $query_vars + self::$query_vars );
+      public static function query_vars( $query_vars ) {
+        return array_unique( array_merge( $query_vars, self::$query_vars ) );
       }
       
       /**
@@ -290,9 +268,9 @@ namespace UsabilityDynamics\AMD {
        */
       public static function return_asset( $template ) {
         global $wp_query;
-
-        if ( $type = get_query_var( self::$query_vars[0] ) && in_array( $type, array( 'style', 'script' ) ) ) {
-
+        
+        if ( ( $type = get_query_var( self::$query_vars[0] ) ) && in_array( $type, array( 'script', 'style' ) ) ) {
+        
           $headers = apply_filters( 'amd:' . $type . ':headers', array(
             'Cache-Control'   => 'public',
             'Pragma'          => 'cache',
@@ -313,7 +291,8 @@ namespace UsabilityDynamics\AMD {
             @header( "{$_key}: {$field_value}" );
           }
           
-          if ( $data = self::get_post( $type ) && !empty( $data[ 'post_content' ] ) ) {
+          $data = self::get_asset( $type );
+          if ( !empty( $data[ 'post_content' ] ) ) {
             die( $data[ 'post_content' ] );
           } else {
             die('/** Global asset is empty */');
@@ -324,12 +303,79 @@ namespace UsabilityDynamics\AMD {
       }
       
       /**
-       * Get 
+       * Registers asset with all selected dependencies
+       *
+       */
+      public function register_asset() {
+        if( !is_admin() ) {
+          $url = $this->get_asset_url();
+          $dependencies = array();
+          $post = self::get_asset( $this->get( 'type' ) );
+          if( !empty( $post ) ) {
+            $dependencies = $this->get_saved_dependencies( $post[ 'ID' ] );
+            $this->load_dependencies( $dependencies, 'javascript' );
+          }
+          
+          switch( $this->get( 'type' ) ) {
+            case 'script':
+              wp_enqueue_script( 'wp-amd-script', $url, $dependencies, $this->get_latest_version_id( $post[ 'ID' ] ), !$this->get( 'load_in_head' ) );
+              break;
+            case 'style':
+              wp_enqueue_style( 'wp-amd-style', $url, $dependencies, $this->get_latest_version_id( $post[ 'ID' ] ), !$this->get( 'load_in_head' ) );
+              break;
+          }
+          
+        }
+      }
+      
+      /**
+       * Get latest revision ID
+       * @return string
+       */
+      public function get_latest_version_id( $post_id ) {
+        if( $a = array_shift( get_posts( array( 'numberposts' => 1, 'post_type' => 'revision', 'post_status' => 'any', 'post_parent' => $post_id ) ) ) ) {
+          $post_row = get_object_vars( $a );
+          return $post_row[ 'ID' ];
+        }
+        return 'unknown';
+      }
+      
+      /**
+       * get_saved_dependencies function
+       *
+       * @access public
+       *
+       * @param $post_id
+       *
+       * @return array|mixed $dependency_arr
+       */
+      function get_saved_dependencies( $post_id ) {
+        $dependency_arr = get_post_meta( $post_id, 'dependency', true );
+        if( !is_array( $dependency_arr ) )
+          $dependency_arr = array();
+
+        return $dependency_arr;
+      }
+      
+      /**
+       * Global JS URL
+       * @return bool|string
+       */
+      public function get_asset_url() {
+        global $wp_rewrite;
+        if ( empty( $wp_rewrite->permalink_structure ) ) {
+          return '?' . self::$query_vars[0] . '=' . $this->get( 'type' ) . '&' . self::$query_vars[1] . '=1';
+        }
+        return '/'. $this->get( 'permalink' );
+      }
+      
+      /**
+       * Returns asset by type ( script, style )
        *
        * @access public
        * @return void
        */
-      public static function get_post( $type ) {
+      public static function get_asset( $type ) {
         $post = array_shift( get_posts( array( 
           'numberposts' => 1, 
           'post_type' => self::get_post_type( $type ), 
@@ -346,7 +392,7 @@ namespace UsabilityDynamics\AMD {
        *
        */
       public function register_post_type() {
-        register_post_type( $this->post_type, array(
+        register_post_type( $this->get( 'post_type' ), array(
           'supports' => array( 'revisions' )
         ) );
       }
