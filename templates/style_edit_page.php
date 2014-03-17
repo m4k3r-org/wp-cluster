@@ -37,7 +37,7 @@
       <div id="post-body">
         <div id="post-body-content">
           <div id="global-editor-shell">
-          <textarea style="width:100%; height: 360px; resize: none;" id="global-stylesheet" class="wp-editor-area" name="global-stylesheet"><?php echo $data[ 'post_content' ]; ?></textarea>
+          <textarea style="width:100%; height: 360px; resize: none;" id="global-stylesheet" class="wp-editor-area" name="content"><?php echo $data[ 'post_content' ]; ?></textarea>
           </div>
         </div> <!-- #post-body-content -->
       </div> <!-- #post-body -->

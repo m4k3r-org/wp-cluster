@@ -105,7 +105,7 @@ namespace UsabilityDynamics\AMD {
         ) );
         
         //** Init our scripts and styles classes */
-        //$this->style = new Style( $this->get( 'assets.stylesheet' ) );
+        $this->style = new Style( $this->get( 'assets.style' ) );
         $this->script = new Script( $this->get( 'assets.script' ) );
         
       }

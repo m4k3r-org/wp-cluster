@@ -1,5 +1,6 @@
 <?php
 /**
+ * Global Custom CSS styles
  * Custom Styles Customizer
  * Uses theme customization API
  *
@@ -14,7 +15,7 @@ namespace UsabilityDynamics\AMD {
 
     class Style extends \UsabilityDynamics\AMD\Scaffold {
       
-      public $name = 'amd_custom_style';
+      public $name = 'amd_customizer_style';
       
       /**
        * Constructor
@@ -23,23 +24,6 @@ namespace UsabilityDynamics\AMD {
       public function __construct( $args = array() ) {
       
         parent::__construct( $args );
-        
-        $this->args = shortcode_atts( array(
-          'name'  => 'custom_style',
-          'deps'  => array(),
-          'version' => '1.0'
-        ), $args );
-        
-        //** Enqueue Frontend Style. */
-        if( !did_action( 'wp_enqueue_scripts' ) && !is_admin() ) {
-          add_action( 'wp_enqueue_scripts', function() {
-            wp_enqueue_style( "wp-amd-{$this->args[ 'name' ]}", admin_url( "/admin-ajax.php?action=wp_amd_{$this->args[ 'name' ]}" ) , $this->args[ 'deps' ], $this->args[ 'version' ] );
-          });
-        }
-        
-        //** Renders Custom Styles */
-        add_action( "wp_ajax_wp_amd_{$this->args[ 'name' ]}", array( &$this, "render_styles" ) );
-        add_action( "wp_ajax_nopriv_wp_amd_{$this->args[ 'name' ]}", array( &$this, "render_styles" ) );
         
         //** Adds settings to customizer */
         if( !did_action( 'customize_register' ) ) {
@@ -80,7 +64,6 @@ namespace UsabilityDynamics\AMD {
           'section' => 'amd_custom_style',
           'priority' => 10
         )));
-        
         
         /*
         // Minification Option.
@@ -138,24 +121,6 @@ namespace UsabilityDynamics\AMD {
         wp_localize_script( 'wp-amd-themecustomizer', 'wp_amd_themecustomizer', $this->args );
       }
       
-      /**
-       * Renders Custom CSS File
-       *
-       * @author peshkov@UD
-       */
-      function render_styles() {
-
-        // Set Some Headers.
-        header( 'Cache-Control: public' );
-        header( 'Content-Type: text/css' );
-        header( 'Expires: 0' );
-        header( 'Pragma: public' );
-
-        // Output CSS.
-        die( get_theme_mod( 'amd_css_editor' ) );
-
-      }
-    
     }
     
   }

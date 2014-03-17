@@ -52,7 +52,7 @@ namespace UsabilityDynamics\AMD {
           
           //** Register assets and post_type */
           add_action( 'admin_init', array( &$this, 'register_post_type' ) );
-          add_action( 'init', array( &$this, 'register_asset' ) );
+          add_action( 'wp_enqueue_scripts', array( &$this, 'register_asset' ) );
           
           //** Determine if Admin Menu is enabled */
           if( $this->get( 'admin_menu' ) ) {
@@ -102,7 +102,7 @@ namespace UsabilityDynamics\AMD {
           $updated = true;
           $msg = 1;
           if( isset( $_POST[ 'dependency' ] ) ) {
-            $this->save_dependency( $post_id, $_POST[ 'dependency' ] );
+            add_post_meta( $post_id, 'dependency', $dependencies, true ) or update_post_meta( $post_id, 'dependency', $dependencies );
           }
         }
 
@@ -111,7 +111,7 @@ namespace UsabilityDynamics\AMD {
         }
 
         $messages = array(
-          1 => __( "Global Javascript saved", get_wp_amd( 'text_domain' ) ),
+          1 => sprintf( __( "Global %s saved", get_wp_amd( 'text_domain' ) ), ucfirst( $this->get( 'type' ) ) ),
           5 => isset( $_GET[ 'revision' ] ) ? sprintf( __( '%s restored to revision from %s, <em>Save Changes for the revision to take effect</em>', get_wp_amd( 'text_domain' ) ), ucfirst( $this->get( 'type' ) ), wp_post_revision_title( (int) $_GET[ 'revision' ], false ) ) : false
         );
         
@@ -143,7 +143,7 @@ namespace UsabilityDynamics\AMD {
       public function save_asset( $data ) {
         if( !$post = self::get_asset( $this->get( 'type' )  ) ) {
           $post_id = wp_insert_post( array(
-            'post_title' => ( 'Global AMD' . ucfirst( $this->get( 'type' ) ) ),
+            'post_title' => ( 'Global AMD ' . ucfirst( $this->get( 'type' ) ) ),
             'post_content' => $data,
             'post_status' => 'publish',
             'post_type' => $this->get( 'post_type' ),
@@ -202,13 +202,6 @@ namespace UsabilityDynamics\AMD {
           unset( $args[ 'numberposts' ] );
         }
         wp_list_post_revisions( $post[ 'ID' ], $args );
-      }
-
-      /**
-       * @param $post_id
-       */
-      public function save_dependency( $post_id, $dependencies ) {
-        add_post_meta( $post_id, 'dependency', $dependencies, true ) or update_post_meta( $post_id, 'dependency', $dependencies );
       }
       
       /**
@@ -307,24 +300,20 @@ namespace UsabilityDynamics\AMD {
        *
        */
       public function register_asset() {
-        if( !is_admin() ) {
-          $url = $this->get_asset_url();
-          $dependencies = array();
-          $post = self::get_asset( $this->get( 'type' ) );
-          if( !empty( $post ) ) {
-            $dependencies = $this->get_saved_dependencies( $post[ 'ID' ] );
-            $this->load_dependencies( $dependencies, 'javascript' );
-          }
-          
-          switch( $this->get( 'type' ) ) {
-            case 'script':
-              wp_enqueue_script( 'wp-amd-script', $url, $dependencies, $this->get_latest_version_id( $post[ 'ID' ] ), !$this->get( 'load_in_head' ) );
-              break;
-            case 'style':
-              wp_enqueue_style( 'wp-amd-style', $url, $dependencies, $this->get_latest_version_id( $post[ 'ID' ] ), !$this->get( 'load_in_head' ) );
-              break;
-          }
-          
+        $url = $this->get_asset_url();
+        $dependencies = array();
+        $post = self::get_asset( $this->get( 'type' ) );
+        if( !empty( $post ) ) {
+          $dependencies = $this->get_saved_dependencies( $post[ 'ID' ] );
+          $this->load_dependencies( $dependencies, 'javascript' );
+        }
+        switch( $this->get( 'type' ) ) {
+          case 'script':
+            wp_enqueue_script( 'wp-amd-script', $url, $dependencies, $this->get_latest_version_id( $post[ 'ID' ] ), !$this->get( 'load_in_head' ) );
+            break;
+          case 'style':
+            wp_enqueue_style( 'wp-amd-style', $url, $dependencies, $this->get_latest_version_id( $post[ 'ID' ] ), !$this->get( 'load_in_head' ) );
+            break;
         }
       }
       
