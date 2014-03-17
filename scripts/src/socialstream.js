@@ -34,6 +34,15 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
           comments: 0,
           likes: 0,
           icon: 'instagram.png'
+        },
+        facebook: {
+          id: that.data('facebook_search_for'), //'198700443493330'
+          intro: '',
+          out: 'intro,title,text',
+          text: 'content',
+          comments: 0,
+          image_width: 5,
+          icon: 'facebook.png'
         }
       },
       wall: that.data('wall'),
