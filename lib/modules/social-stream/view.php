@@ -8,6 +8,7 @@
      data-rotate_delay="<?php echo $data[$this->get_field_name( 'rotate_delay' )]; ?>"
 
      data-twitter_search_for="<?php echo $data[$this->get_field_name('twitter_search_for')]; ?>"
+     data-twitter_show_text="<?php echo $data[$this->get_field_name('twitter_show_text')]; ?>"
 
      data-instagram_search_for="<?php echo $data[$this->get_field_name('instagram_search_for')]; ?>"
      data-instagram_client_id="<?php echo $data[$this->get_field_name('instagram_client_id')]; ?>"

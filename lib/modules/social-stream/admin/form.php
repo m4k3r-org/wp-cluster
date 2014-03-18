@@ -60,6 +60,13 @@
     <label for="<?php echo $this->get_field_id( 'twitter_access_token_secret' ); ?>"><?php _e( 'Access Token Secret' ) ?></label>
     <input type="text" value="<?php echo !empty( $data[ $this->get_field_name( 'twitter_access_token_secret' ) ] )?$data[ $this->get_field_name( 'twitter_access_token_secret' ) ]:''; ?>" id="<?php echo $this->get_field_id( 'twitter_access_token_secret' ); ?>" name="<?php echo $this->get_field_name( 'twitter_access_token_secret' ); ?>" />
   </p>
+  <p>
+    <label for="<?php echo $this->get_field_id( 'twitter_show_text' ); ?>"><?php _e( 'Show tweet text' ) ?></label>
+    <select id="<?php echo $this->get_field_id( 'twitter_show_text' ); ?>" name="<?php echo $this->get_field_name( 'twitter_show_text' ); ?>" style="width:100%;">
+      <option value="-" <?php selected( '-', $data[ $this->get_field_name( 'twitter_show_text' ) ], true ); ?>>No</option>
+      <option value="text" <?php selected( 'text', $data[ $this->get_field_name( 'twitter_show_text' ) ], true ); ?>>Yes</option>
+    </select>
+  </p>
 </fieldset>
 
 <fieldset>

@@ -15,7 +15,7 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
           id: String(that.data('twitter_search_for')),
           intro: '',
           search: '',
-          out: 'intro,text,date',
+          out: 'intro,image,'+String(that.data('twitter_show_text')),
           retweets: false,
           replies: false,
           images: 'small', // large w: 786 h: 346, thumb w: 150 h: 150, medium w: 600 h: 264, small w: 340 h 150
