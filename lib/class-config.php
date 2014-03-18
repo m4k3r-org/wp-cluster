@@ -48,6 +48,29 @@ namespace UsabilityDynamics\Cluster {
       );
 
       /**
+       * This function looks through the configuration options that are stored and returns them
+       *
+       * @param string $config The config we're trying to load
+       * @param string $value Whether we want to get a specific value from this config, or the whole thing
+       */
+      function get_config( $config, $value = false ){
+        if( isset( $this->loaded[ $config ] ) && is_array( $this->loaded[ $config ] ) && isset( $this->loaded[ $config ][ 'vars' ] ) ){
+          if( is_string( $value ) && !empty( $value ) && isset( $this->loaded[ $config ][ 'vars' ][ $value ] ) ){
+            return $this->loaded[ $config ][ 'vars' ][ $value ];
+          }else{
+            /** If there is only one item, return it directly */
+            if( count( $this->loaded[ $config ][ 'vars' ] ) == 1 ){
+              return array_pop( array_values( $this->loaded[ $config ][ 'vars' ] ) );
+            }else{
+              return $this->loaded[ $config ][ 'vars' ];
+            }
+          }
+        }else{
+          return false;
+        }
+      }
+
+      /**
        * This function basically looks for a way to load the specific config files, by first looking in the
        * current environment's folder, and then looking into the base config folder afterwards
        *
@@ -134,8 +157,12 @@ namespace UsabilityDynamics\Cluster {
       /**
        * On init, we're just going to setup and include all our config files
        * @param string $base_dir Override the base dir to search for files (defaults to __DIR__)
+       * @param bool $do_stuff Whether we should actually do initialization( needed for 'init' )
        */
-      function __construct( $base_dir = __DIR__ ){
+      function __construct( $base_dir = __DIR__, $do_stuff = true ){
+        if( !( is_bool( $do_stuff ) && $do_stuff ) ){
+          return;
+        }
         /** Set some local variables */
         $this->config_folders[] = rtrim( $base_dir, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR . 'wp-config' . DIRECTORY_SEPARATOR . ENVIRONMENT . DIRECTORY_SEPARATOR;
         $this->config_folders[] = rtrim( $base_dir, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR . 'wp-config' . DIRECTORY_SEPARATOR;
@@ -172,7 +199,7 @@ namespace UsabilityDynamics\Cluster {
        * This function lets us chain methods without having to instantiate first, YOU MUST COPY THIS TO ALL SUB CLASSES
        */
       static public function init(){
-        return new self();
+        return new self( false );
       }
 
     }

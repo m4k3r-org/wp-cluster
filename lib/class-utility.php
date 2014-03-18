@@ -15,7 +15,25 @@ namespace UsabilityDynamics\Cluster {
      * @module Cluster
      */
     class Utility {
-    
+
+      /**
+       * Adds items onto the global wp_cluster object, although it does
+       * simple overwriting if there is something there
+       *
+       * @param string $key The attribute name
+       * @param object $object The attribute value
+       */
+      static public function add_global_object_attribute( $key, $object ){
+        /** Pull the global */
+        global $wp_cluster;
+        /** Init the object if it isn't one */
+        if( !is_object( $wp_cluster ) ){
+          $wp_cluster = new \stdClass;
+        }
+        /** Add on our value */
+        $wp_cluster->{$key} = $object;
+      }
+
       /**
        * Login Shortcode
        *
@@ -48,16 +66,16 @@ namespace UsabilityDynamics\Cluster {
        * Get Request Headers.
        *
        * @method requestHeaders
-       */      
-      static public function requestHeaders()  { 
-        $headers = ''; 
-        foreach ($_SERVER as $name => $value)  { 
-         if (substr($name, 0, 5) == 'HTTP_')  { 
-           $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value; 
-         } 
-        } 
-        return (object) $headers; 
-      }       
+       */
+      static public function requestHeaders()  {
+        $headers = '';
+        foreach ($_SERVER as $name => $value)  {
+         if (substr($name, 0, 5) == 'HTTP_')  {
+           $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+         }
+        }
+        return (object) $headers;
+      }
 
       /**
        * Replace Default Sender Email
@@ -67,22 +85,22 @@ namespace UsabilityDynamics\Cluster {
        * @return mixed
        */
       static public function wp_mail_from( $from_email ) {
-  
+
         // Get the site domain and get rid of www.
         $sitename = strtolower( $_SERVER[ 'SERVER_NAME' ] );
-        
+
         if ( substr( $sitename, 0, 4 ) == 'www.' ) {
           $sitename = substr( $sitename, 4 );
         }
-  
+
         if( $from_email == 'wordpress@' . $sitename ) {
           return str_replace( 'wordpress', 'info', $from_email );
         }
-  
+
         return $from_email;
-  
+
       }
-  
+
       /**
        * Replace Default Sender Name
        *
@@ -94,11 +112,11 @@ namespace UsabilityDynamics\Cluster {
         global $current_site;
 
         $from_name = str_replace( 'WordPress', $current_site->domain, $from_name );
-  
+
         return $from_name;
-  
+
       }
-          
+
       /**
      * Apply a method to multiple filters
      *
@@ -112,7 +130,7 @@ namespace UsabilityDynamics\Cluster {
       }
 
     }
-  
+
       /**
        * Root relative URLs
        *
@@ -127,9 +145,9 @@ namespace UsabilityDynamics\Cluster {
        */
       static public function relative_url( $input ) {
         return $input;
-  
+
         preg_match( '|https?://([^/]+)(/.*)|i', $input, $matches );
-  
+
         if( isset( $matches[ 1 ] ) && isset( $matches[ 2 ] ) && $matches[ 1 ] === $_SERVER[ 'SERVER_NAME' ] ) {
           return wp_make_link_relative( $input );
         } else {
@@ -158,9 +176,9 @@ namespace UsabilityDynamics\Cluster {
 
         return $host;
       }
-        
+
     }
-    
+
   }
-  
+
 }
