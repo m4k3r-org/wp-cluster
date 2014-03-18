@@ -66,6 +66,15 @@ namespace UsabilityDynamics\AMD {
       }
       
       /**
+       *
+       */
+      public function register_post_type() {
+        register_post_type( $this->get( 'post_type' ), array(
+          'supports' => array( 'revisions' )
+        ) );
+      }
+      
+      /**
        * Add Administrative Menus
        *
        * @return array
@@ -94,7 +103,6 @@ namespace UsabilityDynamics\AMD {
        * 
        */
       public function admin_edit_page() {
-        
         // the form has been submited save the options
         if( !empty( $_POST ) && check_admin_referer( 'update_amd_' . $this->get( 'type' ), 'update_amd_' . $this->get( 'type' ) . '_nonce' ) ) {
           $data = stripslashes( $_POST [ 'content' ] );
@@ -148,6 +156,9 @@ namespace UsabilityDynamics\AMD {
             'post_status' => 'publish',
             'post_type' => $this->get( 'post_type' ),
           ) );
+          if( $post_id ) {
+            add_post_meta( $post_id, 'theme_relation', get_current_theme(), true );
+          }
         } else {
           $post[ 'post_content' ] = $value;
           $post_id = wp_update_post( $post );
@@ -368,22 +379,15 @@ namespace UsabilityDynamics\AMD {
         $post = array_shift( get_posts( array( 
           'numberposts' => 1, 
           'post_type' => self::get_post_type( $type ), 
-          'post_status' => 'publish' 
+          'post_status' => 'publish',
+          'meta_key' => 'theme_relation',
+          'meta_value' => get_current_theme(),
         ) ) );
         return $post ? get_object_vars( $post ) : false;
       }
       
       public static function get_post_type( $type ) {
         return 'amd_' . $type;
-      }
-      
-      /**
-       *
-       */
-      public function register_post_type() {
-        register_post_type( $this->get( 'post_type' ), array(
-          'supports' => array( 'revisions' )
-        ) );
       }
       
       /**
