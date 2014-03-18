@@ -56,12 +56,15 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
       },
       wall: that.data('wall'),
       controls: false,
+      height: parseInt(that.data('height')),
       rotate: {
-        delay: parseInt(that.data('rotate_delay'))
+        delay: parseInt(that.data('rotate_delay')),
+        direction: String(that.data('rotate_direction'))
       },
       iconPath: that.data('path')+'/images/',
       imagePath: that.data('path')+'/images/',
       cache: true,
+      limit: parseInt(that.data('limit')),
       max: 'limit'
     });
 

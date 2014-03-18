@@ -13,6 +13,24 @@
     <label for="<?php echo $this->get_field_id( 'rotate_delay' ); ?>"><?php _e( 'Rotate Delay (ms)' ) ?></label>
     <input type="text" value="<?php echo !empty( $data[ $this->get_field_name( 'rotate_delay' ) ] )?$data[ $this->get_field_name( 'rotate_delay' ) ]:''; ?>" id="<?php echo $this->get_field_id( 'rotate_delay' ); ?>" name="<?php echo $this->get_field_name( 'rotate_delay' ); ?>" />
   </p>
+
+  <p>
+    <label for="<?php echo $this->get_field_id( 'rotate_direction' ); ?>"><?php _e( 'Rotate Direction' ) ?></label>
+    <select id="<?php echo $this->get_field_id( 'rotate_direction' ); ?>" name="<?php echo $this->get_field_name( 'rotate_direction' ); ?>" style="width:100%;">
+      <option value="up" <?php selected( 'up', $data[ $this->get_field_name( 'rotate_direction' ) ], true ); ?>>Up</option>
+      <option value="down" <?php selected( 'down', $data[ $this->get_field_name( 'rotate_direction' ) ], true ); ?>>Down</option>
+    </select>
+  </p>
+
+  <p>
+    <label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Container Height (not for wall mode)' ) ?></label>
+    <input type="text" value="<?php echo !empty( $data[ $this->get_field_name( 'height' ) ] )?$data[ $this->get_field_name( 'height' ) ]:''; ?>" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" />
+  </p>
+
+  <p>
+    <label for="<?php echo $this->get_field_id( 'limit' ); ?>"><?php _e( 'Items Limit (for each social network)' ) ?></label>
+    <input type="text" value="<?php echo !empty( $data[ $this->get_field_name( 'limit' ) ] )?$data[ $this->get_field_name( 'limit' ) ]:''; ?>" id="<?php echo $this->get_field_id( 'limit' ); ?>" name="<?php echo $this->get_field_name( 'limit' ); ?>" />
+  </p>
 </fieldset>
 
 <fieldset>

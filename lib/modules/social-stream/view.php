@@ -6,6 +6,9 @@
      data-callback="<?php echo admin_url('admin-ajax.php?action=social_stream_twitter&module_id='.$data['module_id'].'&post_id='.$post->ID); ?>"
      data-wall="<?php echo $data[$this->get_field_name( 'wall' )]; ?>"
      data-rotate_delay="<?php echo $data[$this->get_field_name( 'rotate_delay' )]; ?>"
+     data-rotate_direction="<?php echo $data[$this->get_field_name( 'rotate_direction' )]; ?>"
+     data-height="<?php echo $data[$this->get_field_name( 'height' )]; ?>"
+     data-limit="<?php echo $data[$this->get_field_name( 'limit' )]; ?>"
 
      data-twitter_search_for="<?php echo $data[$this->get_field_name('twitter_search_for')]; ?>"
      data-twitter_show_text="<?php echo $data[$this->get_field_name('twitter_show_text')]; ?>"
