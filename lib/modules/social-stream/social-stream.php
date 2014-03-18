@@ -1,11 +1,9 @@
 <?php
-/**
- *
- */
+
 if( !class_exists( 'SocialStreamModule' ) ) {
 
   /**
-   *
+   * Social Stream Module
    */
   class SocialStreamModule extends \UsabilityDynamics\Theme\Module {
 
@@ -26,7 +24,7 @@ if( !class_exists( 'SocialStreamModule' ) ) {
     }
 
     /**
-     *
+     * Ajax twitter responder
      */
     function social_stream_twitter() {
       $post_data = maybe_unserialize(get_post_meta($_GET['post_id'], CFCT_BUILD_POSTMETA, true));

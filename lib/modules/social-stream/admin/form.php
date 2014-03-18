@@ -61,3 +61,21 @@
     <input type="text" value="<?php echo !empty( $data[ $this->get_field_name( 'twitter_access_token_secret' ) ] )?$data[ $this->get_field_name( 'twitter_access_token_secret' ) ]:''; ?>" id="<?php echo $this->get_field_id( 'twitter_access_token_secret' ); ?>" name="<?php echo $this->get_field_name( 'twitter_access_token_secret' ); ?>" />
   </p>
 </fieldset>
+
+<fieldset>
+  <legend><h2>Youtube</h2></legend>
+  <p>
+    <label for="<?php echo $this->get_field_id( 'youtube_search_for' ); ?>"><?php _e( 'Search for' ) ?></label>
+    <input type="text" value="<?php echo !empty( $data[ $this->get_field_name( 'youtube_search_for' ) ] )?$data[ $this->get_field_name( 'youtube_search_for' ) ]:''; ?>" id="<?php echo $this->get_field_id( 'youtube_search_for' ); ?>" name="<?php echo $this->get_field_name( 'youtube_search_for' ); ?>" />
+    <small>e.g. username - Videos from a specific user name. #designchemical - Videos from a search. 'Playlist Title/8BCDD04DE8F771B2' - Videos from a playlist.</small>
+  </p>
+</fieldset>
+
+<fieldset>
+  <legend><h2>Facebook</h2></legend>
+  <p>
+    <label for="<?php echo $this->get_field_id( 'facebook_search_for' ); ?>"><?php _e( 'Search for' ) ?></label>
+    <input type="text" value="<?php echo !empty( $data[ $this->get_field_name( 'facebook_search_for' ) ] )?$data[ $this->get_field_name( 'facebook_search_for' ) ]:''; ?>" id="<?php echo $this->get_field_id( 'facebook_search_for' ); ?>" name="<?php echo $this->get_field_name( 'facebook_search_for' ); ?>" />
+    <small>e.g. 112372345237465 - Facebook page wall posts. 'Facebook Timeline/376995711728' - Facebook page gallery images (Enter the text you would like to show for the facebook gallery name followed by "/" followed by the page gallery ID).</small>
+  </p>
+</fieldset>

@@ -12,5 +12,9 @@
      data-instagram_search_for="<?php echo $data[$this->get_field_name('instagram_search_for')]; ?>"
      data-instagram_client_id="<?php echo $data[$this->get_field_name('instagram_client_id')]; ?>"
      data-instagram_access_token="<?php echo $data[$this->get_field_name('instagram_access_token')]; ?>"
-     data-instagram_redirect_url="<?php echo $data[$this->get_field_name('instagram_redirect_url')]; ?>"></div>
+     data-instagram_redirect_url="<?php echo $data[$this->get_field_name('instagram_redirect_url')]; ?>"
+
+     data-youtube_search_for="<?php echo $data[$this->get_field_name('youtube_search_for')]; ?>"
+
+     data-facebook_search_for="<?php echo $data[$this->get_field_name('facebook_search_for')]; ?>"></div>
 <!-- #Social Stream Module -->

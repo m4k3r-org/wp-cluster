@@ -12,7 +12,7 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
     that.dcSocialStream({
       feeds: {
         twitter: {
-          id: that.data('twitter_search_for'),
+          id: String(that.data('twitter_search_for')),
           intro: '',
           search: '',
           out: 'intro,text,date',
@@ -23,7 +23,7 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
           icon: 'twitter.png'
         },
         instagram: {
-          id: that.data('instagram_search_for'),
+          id: String(that.data('instagram_search_for')),
           intro: '',
           search: '',
           out: 'intro,thumb',
@@ -36,13 +36,22 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
           icon: 'instagram.png'
         },
         facebook: {
-          id: that.data('facebook_search_for'), //'198700443493330'
+          id: String(that.data('facebook_search_for')),
           intro: '',
           out: 'intro,title,text',
           text: 'content',
           comments: 0,
           image_width: 5,
           icon: 'facebook.png'
+        },
+        youtube: {
+          id: String(that.data('youtube_search_for')),
+          intro: '',
+          search: '',
+          out: 'intro,thumb,title',
+          feed: 'uploads,favorites,newsubscriptionvideos',
+          thumb: '0',
+          icon: 'youtube.png'
         }
       },
       wall: that.data('wall'),
