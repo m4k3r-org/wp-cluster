@@ -5,6 +5,15 @@
 # @version 3.0.1
 # @author potanin@UD
 
+# Application Environment BEGIN
+# Options are: local, development, staging, or production
+# Should use (In scripts):
+# export ENVIRONMENT=development
+# cat .htaccess.tpl | sed -e s@{ENVIRONMENT}@$ENVIRONMENT@g > .htaccess
+# Will replace: SetEnv ENVIRONMENT "{ENVIRONMENT}"
+SetEnv ENVIRONMENT "{ENVIRONMENT}"
+# Application Environment END
+
 # Cluster Mimes BEGIN
 <IfModule mod_mime.c>
   AddEncoding gzip                                    svgz
@@ -53,10 +62,10 @@
   RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(?:origin\.)?(assets|static|cache|media)\.(.*)::/(?:assets/|cache/|media/|static/)?(.*)$
   RewriteCond %{DOCUMENT_ROOT}/static/storage/%2/%1/%3 -f
   RewriteRule ^.*$ /static/storage/%2/%1/%3 [L]
-  
+
   # Rewrite local when the domain name isn't involved
   RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d  
+  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(assets|static|cache|media|)/(.*)$
   RewriteCond %{DOCUMENT_ROOT}/static/storage/%1/%2/%3 -f
   RewriteRule ^.*$ /static/storage/%1/%2/%3 [L]
@@ -72,11 +81,11 @@
   # Look to rewrite for the root specifically to index.html if it exists
   #RewriteCond %{DOCUMENT_ROOT}/static/storage/%{HTTP_HOST}/(static|cache)/index\.html -f
   #RewriteRule ^$ /static/storage/%{HTTP_HOST}/$1/index.html [NC,QSA,L]
-  
+
   # Rewrite static assets that exist in the storage cache or static directory
   #RewriteCond %{DOCUMENT_ROOT}/static/storage/%{HTTP_HOST}/(static|cache)%{REQUEST_URI}.html -f
   #RewriteRule ^(.*)$ /static/storage/%{HTTP_HOST}/%1%{REQUEST_URI}.html [NC,QSA,L]
-  
+
   #RewriteRule $(.*)$ http://yahoo.com/%{DOCUMENT_ROOT}/static/storage/%{HTTP_HOST}/(static|cache)%{REQUEST_URI}.html [R=301,L]
 
 </IfModule>
