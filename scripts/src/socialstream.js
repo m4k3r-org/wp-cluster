@@ -49,7 +49,7 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
           intro: '',
           search: '',
           out: 'intro,thumb,title',
-          feed: 'uploads,favorites,newsubscriptionvideos',
+          feed: 'uploads',
           thumb: '0',
           icon: 'youtube.png'
         }
@@ -61,7 +61,8 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
       },
       iconPath: that.data('path')+'/images/',
       imagePath: that.data('path')+'/images/',
-      cache: true
+      cache: true,
+      max: 'limit'
     });
 
     return this;
