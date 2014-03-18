@@ -20,16 +20,7 @@
             <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save Stylesheet' ); ?>"/>
           </div>
         </div>
-        <div class="postbox">
-          <h3><span><?php _e( 'Dependency', get_wp_amd( 'text_domain' ) ); ?></span></h3>
-          <div class="inside">
-            <?php foreach( (array)$this->get( 'dependencies' ) as $dep => $dep_array ): ?>
-              <label><input type="checkbox" name="dependency[]" value="<?php echo $dep; ?>" <?php checked( in_array( $dep, $dependency ), true ); ?> /><a href="<?php echo $dep_array[ 'infourl' ]; ?>"> <?php echo $dep_array[ 'name' ]; ?> </a></label>
-              <br/>
-            <?php endforeach; ?>
-          </div>
-        </div>
-        <!-- ... more boxes ... -->
+
         <?php do_meta_boxes( 'amd_style', 'normal', $data ); ?>
 
       </div> <!-- .inner-sidebar -->

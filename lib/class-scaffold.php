@@ -110,7 +110,7 @@ namespace UsabilityDynamics\AMD {
           $updated = true;
           $msg = 1;
           if( isset( $_POST[ 'dependency' ] ) ) {
-            add_post_meta( $post_id, 'dependency', $dependencies, true ) or update_post_meta( $post_id, 'dependency', $dependencies );
+            add_post_meta( $post_id, 'dependency', $_POST[ 'dependency' ], true ) or update_post_meta( $post_id, 'dependency', $_POST[ 'dependency' ] );
           }
         }
 
@@ -128,11 +128,7 @@ namespace UsabilityDynamics\AMD {
         
         $post_id = !empty( $data[ 'ID' ] ) ? $data[ 'ID' ] : false;
         
-        $this->add_metabox( $post_id );
-        $dependency = get_post_meta( $data[ 'ID' ], 'dependency', true );
-        if( !is_array( $dependency ) ) {
-          $dependency = array();
-        }
+        $this->add_metaboxes( $post_id );
         
         $template = WP_AMD_DIR . 'templates/' . $this->get( 'type' ) . '_edit_page.php';
         
@@ -196,16 +192,39 @@ namespace UsabilityDynamics\AMD {
        * @param mixed $js
        * @return void
        */
-      public function add_metabox( $post_id ) {
+      public function add_metaboxes( $post_id ) {
+        if( $this->get( 'dependencies' ) ) {
+          add_meta_box( 'dependencies', __( 'Dependency', get_wp_amd( 'text_domain' ) ), array( $this, 'render_metabox_dependencies' ), $this->get( 'post_type' ), 'normal' );
+        }
         if( $post_id && wp_get_post_revisions( $post_id ) ) {
-          add_meta_box( 'revisionsdiv', __( 'Revisions', get_wp_amd( 'text_domain' ) ), array( $this, 'post_revisions_meta_box' ), $this->get( 'post_type' ), 'normal' );
+          add_meta_box( 'revisionsdiv', __( 'Revisions', get_wp_amd( 'text_domain' ) ), array( $this, 'render_metabox_revisions' ), $this->get( 'post_type' ), 'normal' );
         }
       }
       
       /**
        * @param $_post
        */
-      function post_revisions_meta_box( $post ) {
+      function render_metabox_dependencies( $post ) {
+        $dependency = get_post_meta( $post[ 'ID' ], 'dependency', true );
+        $dependency = !is_array( $dependency ) ? array() : $dependency;
+        ?>
+        <ul>
+        <?php foreach( (array)$this->get( 'dependencies' ) as $key => $data ) : ?> 
+          <li>
+            <label>
+              <input type="checkbox" name="dependency[]" value="<?php echo $key; ?>" <?php checked( in_array( $key, $dependency ), true ); ?> />
+              <a href="<?php echo $data[ 'infourl' ]; ?>"> <?php echo $data[ 'name' ]; ?> </a>
+            </label>
+          </li>
+        <?php endforeach; ?>
+        </ul>
+        <?php
+      }
+      
+      /**
+       * @param $_post
+       */
+      function render_metabox_revisions( $post ) {
         // Specify numberposts and ordering args
         $args = array( 'numberposts' => 5, 'orderby' => 'ID', 'order' => 'DESC' );
         // Remove numberposts from args if show_all_rev is specified
