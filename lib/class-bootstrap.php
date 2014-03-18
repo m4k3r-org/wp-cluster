@@ -66,29 +66,32 @@ namespace UsabilityDynamics\AMD {
                 'load_in_head' => false,
                 'permalink' => "assets/app.js",
                 'dependencies' => array(
-                  'backbone'  => array(
-                    'name'         => 'Backbone js',
-                    'infourl'      => 'http://backbonejs.com'
-                  ),
                   'jquery' => array(
                     'name'         => 'jQuery',
-                    'infourl'      => 'http://jquery.com'
+                    'infourl'      => 'http://jquery.com',
+                    'url'          => 'http://code.jquery.com/ui/1.10.4/jquery-ui.min.js',
                   ),
                   'jquery-ui-autocomplete' => array(
                     'name'         => 'jQuery UI Autocomplete',
-                    'infourl'      => 'http://jqueryui.com/autocomplete'
+                    'infourl'      => 'http://jqueryui.com/autocomplete',
+                  ),
+                  'backbone'  => array(
+                    'name'         => 'Backbone js',
+                    'infourl'      => 'http://backbonejs.com',
+                    'url'          => 'http://backbonejs.org/backbone-min.js',
                   ),
                   'json2' => array(
                     'name'         => 'JSON for JS',
-                    'infourl'      => 'https://github.com/douglascrockford/JSON-js'
+                    'infourl'      => 'https://github.com/douglascrockford/JSON-js',
                   ),
                   'thickbox' => array(
                     'name'         => 'Thickbox',
-                    'infourl'      => 'http://codex.wordpress.org/ThickBox'
+                    'infourl'      => 'http://codex.wordpress.org/ThickBox',
                   ),
                   'underscore' => array(
-                    'name' => 'Underscore js',
-                    'infourl' => 'http://underscorejs.org'
+                    'name'         => 'Underscore js',
+                    'infourl'      => 'http://underscorejs.org',
+                    'url'          => 'http://underscorejs.org/underscore-min.js',
                   )
                 ),
               ),

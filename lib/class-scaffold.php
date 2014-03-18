@@ -204,12 +204,13 @@ namespace UsabilityDynamics\AMD {
       /**
        * @param $_post
        */
-      function render_metabox_dependencies( $post ) {
+      public function render_metabox_dependencies( $post ) {
         $dependency = get_post_meta( $post[ 'ID' ], 'dependency', true );
         $dependency = !is_array( $dependency ) ? array() : $dependency;
         ?>
         <ul>
-        <?php foreach( (array)$this->get( 'dependencies' ) as $key => $data ) : ?> 
+        <?php foreach( (array)$this->get( 'dependencies' ) as $key => $data ) : ?>
+          <?php if( !$this->is_wp_dependency( $key ) && empty( $data[ 'url' ] ) ) continue; ?>
           <li>
             <label>
               <input type="checkbox" name="dependency[]" value="<?php echo $key; ?>" <?php checked( in_array( $key, $dependency ), true ); ?> />
@@ -224,7 +225,7 @@ namespace UsabilityDynamics\AMD {
       /**
        * @param $_post
        */
-      function render_metabox_revisions( $post ) {
+      public function render_metabox_revisions( $post ) {
         // Specify numberposts and ordering args
         $args = array( 'numberposts' => 5, 'orderby' => 'ID', 'order' => 'DESC' );
         // Remove numberposts from args if show_all_rev is specified
@@ -235,30 +236,55 @@ namespace UsabilityDynamics\AMD {
       }
       
       /**
+       * Determine if dependency belongs to Wordpress ( already registered by WordPress )
+       *
+       * @param $dependency
+       */
+      public function is_wp_dependency( $dep ) {
+        switch( $this->get( 'type' ) ) {
+          case 'script':
+            if( wp_script_is( $dep, 'registered' ) ) {
+              return true;
+            }
+            break;
+          case 'style':
+            if( wp_style_is( $dep, 'registered' ) ) {
+              return true;
+            }
+            break;
+        }        
+        return false;
+      }
+      
+      /**
+       * Register dependencies
+       *
        * @param $dependencies
        */
-      function load_dependencies( $dependencies ) {
+      public function register_dependencies( $dependencies ) {
         $all_deps = $this->get( 'dependencies' );
+        $registered = array();
         foreach( $dependencies as $dependency ) {
           if( isset( $all_deps[ $dependency ] ) ) {
-            $current = wp_parse_args( $all_deps[ $dependency ], array(
-              'url' => '',
-            ) );
-            if( !empty( $current[ 'url' ] ) ) {
+            if( $this->is_wp_dependency( $dependency ) ) {
+              array_push( $registered, $dependency );
+            } 
+            else if( !empty( $all_deps[ $dependency ][ 'url' ] ) ) {
               switch( $this->get( 'type' ) ) {
                 case 'script':
-                  wp_register_script( $dependency, $current[ 'url' ], array(), $this->get( 'version' ) );
-                  //wp_enqueue_script( $dependency );
+                  wp_register_script( $dependency, $all_deps[ $dependency ][ 'url' ], array(), $this->get( 'version' ) );
+                  array_push( $registered, $dependency );
                   break;
                 case 'style':
-                  wp_register_style( $dependency, $current[ 'url' ], array(), $this->get( 'version' ) );
-                  //wp_enqueue_style( $dependency );
+                  wp_register_style( $dependency, $all_deps[ $dependency ][ 'url' ], array(), $this->get( 'version' ) );
+                  array_push( $registered, $dependency );
                   break;
                 default: break;
               }
             }
           }
         }
+        return $registered;
       }
       
       /**
@@ -335,7 +361,7 @@ namespace UsabilityDynamics\AMD {
         $post = self::get_asset( $this->get( 'type' ) );
         if( !empty( $post ) ) {
           $dependencies = $this->get_saved_dependencies( $post[ 'ID' ] );
-          $this->load_dependencies( $dependencies, 'javascript' );
+          $dependencies = $this->register_dependencies( $dependencies );
         }
         switch( $this->get( 'type' ) ) {
           case 'script':
