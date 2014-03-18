@@ -3,9 +3,9 @@
  * Plugin Name: WP-AMD
  * Text Domain: wp-amd
  * Plugin URI: http://UsabilityDynamics.com/plugins/wp-amd/
- * Description: JS and CSS handling.
+ * Description: Global JS and CSS handling.
  * Author: Usability Dynamics, Inc
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author URI: http://UsabilityDynamics.com
  *
  * Copyright 2011-2014  Usability Dynamics, Inc.   (email : info@UsabilityDynamics.com)

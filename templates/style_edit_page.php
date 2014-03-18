@@ -17,6 +17,9 @@
         <div class="postbox">
           <h3><span><?php _e( 'Publish', get_wp_amd( 'text_domain' ) ); ?></span></h3>
           <div class="inside">
+            <ul>
+              <li><a href="<?php echo admin_url( 'customize.php' ); ?>"><?php _e( 'Go to edit in Preview Mode', get_wp_amd( 'text_domain' ) ); ?></a></li>
+            </ul>
             <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save Stylesheet' ); ?>"/>
           </div>
         </div>
