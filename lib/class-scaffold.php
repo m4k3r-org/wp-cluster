@@ -58,7 +58,7 @@ namespace UsabilityDynamics\AMD {
           if( $this->get( 'admin_menu' ) ) {
             add_action( 'admin_menu', array( &$this, 'add_admin_menu' ) );
             // Override the edit link, the default link causes a redirect loop
-            add_filter( 'get_edit_post_link', array( &$this, 'revision_post_link' ) );
+            add_filter( 'get_edit_post_link', array( __CLASS__, 'revision_post_link' ) );
           }
         
         }
@@ -170,14 +170,14 @@ namespace UsabilityDynamics\AMD {
        * @param mixed $post_link
        * @return void
        */
-      public function revision_post_link( $post_link ) {
+      public static function revision_post_link( $post_link ) {
         global $post;
         if( isset( $post ) && strstr( $post_link, 'action=edit' ) && !strstr( $post_link, 'revision=' ) ) {
           switch( true ) {
-            case ( self::get_post_type( 'script' ) == $this->get( 'post_type' ) ):
+            case ( self::get_post_type( 'script' ) == $post->post_type ):
               $post_link = 'themes.php?page=amd-page-script';
               break;
-            case ( self::get_post_type( 'style' ) == $this->get( 'post_type' ) ):
+            case ( self::get_post_type( 'style' ) == $post->post_type ):
               $post_link = 'themes.php?page=amd-page-style';
               break;
           }
