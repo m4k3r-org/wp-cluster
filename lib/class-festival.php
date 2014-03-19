@@ -253,15 +253,20 @@ namespace UsabilityDynamics {
         'template' => dirname( __DIR__ ) . '/templates/admin.manage.php'
       ));
 
-      // Enables Customizer for Options.
-      $this->customizer( array(
-        'disable' => array(
-          'static_front_page',
-          'nav',
-          'title_tagline'
-        ),
-        'enable'  => array(),
-      ));
+      //** Add Global JS and CSS handlers ( wp-amd ) */
+      if( defined( 'WP_VENDOR_PATH' ) && file_exists( WP_VENDOR_PATH . '/usabilitydynamics/wp-amd/wp-amd.php' ) ) {
+        include_once( WP_VENDOR_PATH . '/usabilitydynamics/wp-amd/wp-amd.php' );
+      } else {
+        // Enables Customizer for Options.
+        $this->customizer( array(
+          'disable' => array(
+            'static_front_page',
+            'nav',
+            'title_tagline'
+          ),
+          'enable'  => array(),
+        ));
+      }
 
       // Enable Carrington Build.
       $this->carrington( array(
