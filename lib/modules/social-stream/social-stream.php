@@ -15,11 +15,51 @@ if( !class_exists( 'SocialStreamModule' ) ) {
       add_action( 'wp_ajax_nopriv_social_stream_twitter', array( $this, 'social_stream_twitter' ) );
       add_action( 'wp_ajax_social_stream_twitter', array( $this, 'social_stream_twitter' ) );
 
+      add_shortcode( 'social_stream', array( $this, 'social_stream_shortcode' ) );
+
       $opts = array(
         'description' => __( 'The plugin creates a social stream, which is a single stream of items and updates created from all of your individual social network profiles, data feeds and APIs.' ),
         'icon' => plugins_url( '/icon.png', __DIR__ )
       );
       parent::__construct( 'cfct-module-social-stream', __( 'Social Stream' ), $opts );
+
+    }
+
+    /**
+     *
+     * @param type $attrs
+     * @return type
+     */
+    function social_stream_shortcode( $attrs ) {
+      $defaults = array(
+          'requires' => 'socialstream',
+          'path' => get_stylesheet_directory_uri(),
+          // 'callback' needs to be hardcoded since it can't be changed
+          'wall' => 'true',
+          'rotate_delay' => '',
+          'rotate_direction' => 'up',
+          'height' => '',
+          'limit' => '50',
+
+          'twitter_search_for' => '',
+          'twitter_show_text' => 'text',
+          'twitter_consumer_key' => '',
+          'twitter_consumer_secret' => '',
+          'twitter_access_token' => '',
+          'twitter_access_token_secret' => '',
+
+          'instagram_search_for' => '',
+          'instagram_client_id' => '',
+          'instagram_access_token' => '',
+          'instagram_redirect_url' => '',
+
+          'youtube_search_for' => '',
+
+          'facebook_search_for' => ''
+      );
+      $data = shortcode_atts( $defaults, $attrs );
+
+      return $this->load_view( $data );
 
     }
 
@@ -60,7 +100,32 @@ if( !class_exists( 'SocialStreamModule' ) ) {
      * @return string HTML
      */
     public function display( $data ) {
-      return $this->load_view( $data );
+      global $post;
+
+      $_data = array();
+
+      $_data['requires'] = 'socialstream';
+      $_data['path']     = get_stylesheet_directory_uri();
+      $_data['callback'] = admin_url('admin-ajax.php?action=social_stream_twitter&module_id='.$data['module_id'].'&post_id='.$post->ID);
+      $_data['wall']     = $data[$this->get_field_name( 'wall' )];
+      $_data['rotate_delay'] = $data[$this->get_field_name( 'rotate_delay' )];
+      $_data['rotate_direction'] = $data[$this->get_field_name( 'rotate_direction' )];
+      $_data['height']   = $data[$this->get_field_name( 'height' )];
+      $_data['limit']    = $data[$this->get_field_name( 'limit' )];
+
+      $_data['twitter_search_for'] = $data[$this->get_field_name('twitter_search_for')];
+      $_data['twitter_show_text']  = $data[$this->get_field_name('twitter_show_text')];
+
+      $_data['instagram_search_for'] = $data[$this->get_field_name('instagram_search_for')];
+      $_data['instagram_client_id']  = $data[$this->get_field_name('instagram_client_id')];
+      $_data['instagram_access_token'] = $data[$this->get_field_name('instagram_access_token')];
+      $_data['instagram_redirect_url'] = $data[$this->get_field_name('instagram_redirect_url')];
+
+      $_data['youtube_search_for'] = $data[$this->get_field_name('youtube_search_for')];
+
+      $_data['facebook_search_for'] = $data[$this->get_field_name('facebook_search_for')];
+
+      return $this->load_view( $_data );
     }
 
     /**
