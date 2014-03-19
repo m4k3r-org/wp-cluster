@@ -23,7 +23,7 @@
     "UsabilityDynamics/wp-meta-box": "master",
     "UsabilityDynamics/wp-menufication": "master",
     "UsabilityDynamics/lib-wp-shortcode": "master",
-    "UsabilityDynamics/wp-amd": "master",
+    "UsabilityDynamics/wp-amd": "master"
   },
   "autoload": {
     "classmap": [
