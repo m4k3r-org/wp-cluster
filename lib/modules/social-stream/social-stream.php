@@ -59,6 +59,7 @@ if( !class_exists( 'SocialStreamModule' ) ) {
       $data = shortcode_atts( $defaults, $attrs );
 
       $data['callback'] = admin_url('admin-ajax.php?action=social_stream_twitter&shortcode='.base64_encode($data['twitter_consumer_key'].':'.$data['twitter_consumer_secret'].':'.$data['twitter_access_token'].':'.$data['twitter_access_token_secret']));
+      $data['moderate'] = current_user_can('manage_options')?'1':'0';
 
       return $this->load_view( $data );
 
@@ -117,6 +118,7 @@ if( !class_exists( 'SocialStreamModule' ) ) {
       $_data['rotate_direction'] = $data[$this->get_field_name( 'rotate_direction' )];
       $_data['height']   = $data[$this->get_field_name( 'height' )];
       $_data['limit']    = $data[$this->get_field_name( 'limit' )];
+      $_data['moderate'] = current_user_can('manage_options')?'1':'0';
 
       $_data['twitter_search_for'] = $data[$this->get_field_name('twitter_search_for')];
       $_data['twitter_show_text']  = $data[$this->get_field_name('twitter_show_text')];

@@ -8,6 +8,7 @@
      data-rotate_direction="<?php echo $data['rotate_direction'] ?>"
      data-height="<?php echo $data['height'] ?>"
      data-limit="<?php echo $data['limit'] ?>"
+     data-moderate="<?php echo $data['moderate'] ?>"
 
      data-twitter_search_for="<?php echo $data['twitter_search_for'] ?>"
      data-twitter_show_text="<?php echo $data['twitter_show_text'] ?>"
