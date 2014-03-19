@@ -34,7 +34,6 @@ if( !class_exists( 'SocialStreamModule' ) ) {
       $defaults = array(
           'requires' => 'socialstream',
           'path' => get_stylesheet_directory_uri(),
-          // 'callback' needs to be hardcoded since it can't be changed
           'wall' => 'true',
           'rotate_delay' => '',
           'rotate_direction' => 'up',
@@ -42,7 +41,7 @@ if( !class_exists( 'SocialStreamModule' ) ) {
           'limit' => '50',
 
           'twitter_search_for' => '',
-          'twitter_show_text' => 'text',
+          'twitter_show_text' => '',
           'twitter_consumer_key' => '',
           'twitter_consumer_secret' => '',
           'twitter_access_token' => '',
@@ -59,6 +58,8 @@ if( !class_exists( 'SocialStreamModule' ) ) {
       );
       $data = shortcode_atts( $defaults, $attrs );
 
+      $data['callback'] = admin_url('admin-ajax.php?action=social_stream_twitter&shortcode='.base64_encode($data['twitter_consumer_key'].':'.$data['twitter_consumer_secret'].':'.$data['twitter_access_token'].':'.$data['twitter_access_token_secret']));
+
       return $this->load_view( $data );
 
     }
@@ -67,14 +68,18 @@ if( !class_exists( 'SocialStreamModule' ) ) {
      * Ajax twitter responder
      */
     function social_stream_twitter() {
-      $post_data = maybe_unserialize(get_post_meta($_GET['post_id'], CFCT_BUILD_POSTMETA, true));
+      if ( empty( $_GET['shortcode'] ) ) {
+        $post_data = maybe_unserialize(get_post_meta($_GET['post_id'], CFCT_BUILD_POSTMETA, true));
 
-      $options = $post_data['data']['modules'][$_GET['module_id']];
+        $options = $post_data['data']['modules'][$_GET['module_id']];
+      } else {
+        $options = explode(':', base64_decode( $_GET['shortcode'] ) );
+      }
 
-      define( 'SS_TWITTER_CONSUMER_KEY', $options[$this->get_field_name('twitter_consumer_key')] );
-      define( 'SS_TWITTER_CONSUMER_SECRET', $options[$this->get_field_name('twitter_consumer_secret')] );
-      define( 'SS_TWITTER_ACCESS_TOKEN', $options[$this->get_field_name('twitter_access_token')] );
-      define( 'SS_TWITTER_ACCESS_TOKEN_SECRET', $options[$this->get_field_name('twitter_access_token_secret')] );
+      define( 'SS_TWITTER_CONSUMER_KEY', $options[$this->get_field_name('twitter_consumer_key')]?$options[$this->get_field_name('twitter_consumer_key')]:$options[0] );
+      define( 'SS_TWITTER_CONSUMER_SECRET', $options[$this->get_field_name('twitter_consumer_secret')]?$options[$this->get_field_name('twitter_consumer_secret')]:$options[1] );
+      define( 'SS_TWITTER_ACCESS_TOKEN', $options[$this->get_field_name('twitter_access_token')]?$options[$this->get_field_name('twitter_access_token')]:$options[2] );
+      define( 'SS_TWITTER_ACCESS_TOKEN_SECRET', $options[$this->get_field_name('twitter_access_token_secret')]?$options[$this->get_field_name('twitter_access_token_secret')]:$options[3] );
 
       require_once 'lib/twitter.php';
       die();
