@@ -409,9 +409,9 @@ namespace UsabilityDynamics\AMD {
       public function get_asset_url() {
         global $wp_rewrite;
         if ( empty( $wp_rewrite->permalink_structure ) ) {
-          return '?' . self::$query_vars[0] . '=' . $this->get( 'type' ) . '&' . self::$query_vars[1] . '=1';
+          return home_url() . '?' . self::$query_vars[0] . '=' . $this->get( 'type' ) . '&' . self::$query_vars[1] . '=1';
         }
-        return '/'. $this->get( 'permalink' );
+        return home_url( $this->get( 'permalink' ) );
       }
       
       /**
