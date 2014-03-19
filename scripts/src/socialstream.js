@@ -71,7 +71,7 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
     jQuery(window).load(function(){
       console.debug('stream loaded');
       if ( that.data('moderate') == '1' ) {
-        jQuery('.stream .dcsns-li').prepend('<a href="javascript:;">x</a>');
+        //jQuery('.stream .dcsns-li').prepend('<a href="javascript:;">x</a>');
       }
     });
 
