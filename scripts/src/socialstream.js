@@ -71,7 +71,21 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
     jQuery(window).load(function(){
       console.debug('stream loaded');
       if ( that.data('moderate') == '1' ) {
-        //jQuery('.stream .dcsns-li').prepend('<a href="javascript:;">x</a>');
+        jQuery('.stream .dcsns-li').prepend('<a class="moderate" href="javascript:;">x</a>');
+        jQuery('a.moderate', jQuery('.stream')).on('click', function(e){
+          var that = jQuery(this);
+          e.stopPropagation();
+          jQuery.ajax(ajaxurl, {
+            type:'post',
+            data: {
+              action: 'social_stream_moderate',
+              net: that.parent().data('net'),
+              item: that.parent().attr('url')
+            }
+          });
+          that.parent().hide();
+          setTimeout(function(){jQuery('.filter a.iso-active').click()}, 100);
+        });
       }
     });
 

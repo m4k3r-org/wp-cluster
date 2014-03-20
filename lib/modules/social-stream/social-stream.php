@@ -15,6 +15,10 @@ if( !class_exists( 'SocialStreamModule' ) ) {
       add_action( 'wp_ajax_nopriv_social_stream_twitter', array( $this, 'social_stream_twitter' ) );
       add_action( 'wp_ajax_social_stream_twitter', array( $this, 'social_stream_twitter' ) );
 
+      if ( current_user_can('manage_options') ) {
+        add_action( 'wp_ajax_social_stream_moderate', array( $this, 'social_stream_moderate' ) );
+      }
+
       add_shortcode( 'social_stream', array( $this, 'social_stream_shortcode' ) );
 
       $opts = array(
@@ -24,6 +28,24 @@ if( !class_exists( 'SocialStreamModule' ) ) {
       parent::__construct( 'cfct-module-social-stream', __( 'Social Stream' ), $opts );
 
     }
+
+    /**
+     * Ajax moderation
+     */
+    function social_stream_moderate() {
+      if ( !current_user_can('manage_options') ) die('Permission Denied');
+
+      $current = get_option( 'social_stream_hidden' );
+
+      if ( empty( $current[$_POST['net']] ) ) $current[$_POST['net']] = array();
+
+      $current[$_POST['net']][] = $_POST['item'];
+
+      $current[$_POST['net']] = array_unique($current[$_POST['net']]);
+
+      die( update_option( 'social_stream_hidden', $current ) );
+    }
+
 
     /**
      *
@@ -61,8 +83,24 @@ if( !class_exists( 'SocialStreamModule' ) ) {
       $data['callback'] = admin_url('admin-ajax.php?action=social_stream_twitter&shortcode='.base64_encode($data['twitter_consumer_key'].':'.$data['twitter_consumer_secret'].':'.$data['twitter_access_token'].':'.$data['twitter_access_token_secret']));
       $data['moderate'] = current_user_can('manage_options')?'1':'0';
 
+      $data['css'] = $this->get_hider_css();
+
       return $this->load_view( $data );
 
+    }
+
+    function get_hider_css() {
+      $css= '';
+
+      $hidden_items = get_option( 'social_stream_hidden' );
+
+      foreach( (array)$hidden_items as $net => $items ) {
+        foreach( (array)$items as $item ) {
+          $css .= '.dcsns-li[url="'.$item.'"]{display:none;} ';
+        }
+      }
+
+      return $css;
     }
 
     /**
@@ -131,6 +169,8 @@ if( !class_exists( 'SocialStreamModule' ) ) {
       $_data['youtube_search_for'] = $data[$this->get_field_name('youtube_search_for')];
 
       $_data['facebook_search_for'] = $data[$this->get_field_name('facebook_search_for')];
+
+      $_data['css'] = $this->get_hider_css();
 
       return $this->load_view( $_data );
     }

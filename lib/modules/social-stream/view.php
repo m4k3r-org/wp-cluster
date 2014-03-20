@@ -21,4 +21,5 @@
      data-youtube_search_for="<?php echo $data['youtube_search_for'] ?>"
 
      data-facebook_search_for="<?php echo $data['facebook_search_for'] ?>"></div>
+<style type="text/css"><?php echo $data['css']; ?></style>
 <!-- #Social Stream Module -->
