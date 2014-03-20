@@ -93,6 +93,9 @@ namespace UsabilityDynamics\AMD {
        * @return void
        */
       public function admin_scripts() {
+        //** Add action to denqueue or deregister scripts which cause conflicts and errors. */
+        do_action( 'amd::admin_scripts::edit_page' );
+        
         wp_register_script( 'wp-amd-ace', WP_AMD_URL . '/scripts/src/ace/ace.js', array(), $this->get( 'version' ), true );
         wp_enqueue_script( 'wp-amd-admin-scripts', WP_AMD_URL . '/scripts/wp-amd.js', array( 'wp-amd-ace', 'jquery-ui-resizable' ), $this->get( 'version' ), true );
         wp_enqueue_script( 'wp-amd-admin-scripts' );
