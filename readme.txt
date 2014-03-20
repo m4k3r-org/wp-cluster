@@ -4,13 +4,15 @@ Donate link: http://usabilitydynamics.com/products/wp-amd/
 Tags: JS, CSS, Global JS, Global CSS, JS handling, CSS handling.
 Requires at least: 3.6.0
 Tested up to: 3.8.1
-Stable tag: 1.0.1
+Stable tag: 1.0.3
 
 == Description ==
 
 The plugin allows to add/update custom global javascript and CSS on your site in real time using version control.
 
-== Features ==
+Visit project on GitHub: https://github.com/UsabilityDynamics/wp-amd
+
+= Features =
 
 * Adds backend JavaScript editor with version control.
 * Adds frontend CSS editor with version control.
@@ -33,6 +35,10 @@ The plugin allows to add/update custom global javascript and CSS on your site in
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 1.0.3 =
+* Fixed rewrite rules for assets links.
+* Fixed warnings and notices.
 
 = 1.0.1 =
 * Added theme's dependency.

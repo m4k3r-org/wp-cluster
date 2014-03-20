@@ -64,7 +64,7 @@ namespace UsabilityDynamics\AMD {
                 'minify' => false,
                 'admin_menu' => true,
                 'load_in_head' => false,
-                'permalink' => "assets/app.js",
+                'permalink' => "assets/wp-amd.js",
                 'dependencies' => array(
                   'jquery' => array(
                     'name'         => 'jQuery',
@@ -98,7 +98,7 @@ namespace UsabilityDynamics\AMD {
               'style'  => array(
                 'type' => 'style',
                 'minify' => false,
-                'permalink' => "assets/app.css",
+                'permalink' => "assets/wp-amd.css",
                 'admin_menu' => true,
                 'load_in_head' => true,
                 'dependencies' => array(),

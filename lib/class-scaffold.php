@@ -106,6 +106,8 @@ namespace UsabilityDynamics\AMD {
        * 
        */
       public function admin_edit_page() {
+        $msg = 0;
+        
         // the form has been submited save the options
         if( !empty( $_POST ) && check_admin_referer( 'update_amd_' . $this->get( 'type' ), 'update_amd_' . $this->get( 'type' ) . '_nonce' ) ) {
           $data = stripslashes( $_POST [ 'content' ] );
@@ -122,12 +124,15 @@ namespace UsabilityDynamics\AMD {
         }
 
         $messages = array(
+          0 => false,
           1 => sprintf( __( "Global %s saved", get_wp_amd( 'text_domain' ) ), ucfirst( $this->get( 'type' ) ) ),
           5 => isset( $_GET[ 'revision' ] ) ? sprintf( __( '%s restored to revision from %s, <em>Save Changes for the revision to take effect</em>', get_wp_amd( 'text_domain' ) ), ucfirst( $this->get( 'type' ) ), wp_post_revision_title( (int) $_GET[ 'revision' ], false ) ) : false
         );
         
         $data = self::get_asset( $this->get( 'type' ) );
+        $data = $data ? $data : array();
         $data[ 'msg' ] = $messages[ $msg ];
+        $data[ 'post_content' ] = isset( $data[ 'post_content' ] ) ? $data[ 'post_content' ] : '';
         
         $post_id = !empty( $data[ 'ID' ] ) ? $data[ 'ID' ] : false;
         
@@ -156,7 +161,7 @@ namespace UsabilityDynamics\AMD {
             'post_type' => $this->get( 'post_type' ),
           ) );
           if( $post_id ) {
-            add_post_meta( $post_id, 'theme_relation', get_current_theme(), true );
+            add_post_meta( $post_id, 'theme_relation', sanitize_key( wp_get_theme()->get( 'Name' ) ), true );
           }
         } else {
           $post[ 'post_content' ] = $value;
@@ -208,8 +213,11 @@ namespace UsabilityDynamics\AMD {
        * @param $_post
        */
       public function render_metabox_dependencies( $post ) {
-        $dependency = get_post_meta( $post[ 'ID' ], 'dependency', true );
-        $dependency = !is_array( $dependency ) ? array() : $dependency;
+        $dependency = array();
+        if( !empty( $post[ 'ID' ] ) ) {
+          $dependency = get_post_meta( $post[ 'ID' ], 'dependency', true );
+          $dependency = !is_array( $dependency ) ? array() : $dependency;
+        }
         ?>
         <ul>
         <?php foreach( (array)$this->get( 'dependencies' ) as $key => $data ) : ?>
@@ -381,9 +389,10 @@ namespace UsabilityDynamics\AMD {
        * @return string
        */
       public function get_latest_version_id( $post_id ) {
-        if( $a = array_shift( get_posts( array( 'numberposts' => 1, 'post_type' => 'revision', 'post_status' => 'any', 'post_parent' => $post_id ) ) ) ) {
-          $post_row = get_object_vars( $a );
-          return $post_row[ 'ID' ];
+        $posts = get_posts( array( 'numberposts' => 1, 'post_type' => 'revision', 'post_status' => 'any', 'post_parent' => $post_id ) );
+        $post = !empty( $posts ) ? array_shift( $posts ) : false;
+        if( $post ) {
+          return $post->ID;
         }
         return 'unknown';
       }
@@ -411,10 +420,23 @@ namespace UsabilityDynamics\AMD {
        */
       public function get_asset_url() {
         global $wp_rewrite;
-        if ( empty( $wp_rewrite->permalink_structure ) ) {
-          return home_url() . '?' . self::$query_vars[0] . '=' . $this->get( 'type' ) . '&' . self::$query_vars[1] . '=1';
+        
+        $url = home_url() . '?' . self::$query_vars[0] . '=' . $this->get( 'type' ) . '&' . self::$query_vars[1] . '=1';
+        switch( true ) {
+          case ( empty( $wp_rewrite->permalink_structure ) ):
+            // Do nothing.
+            break;
+          case ( !key_exists( '^' . $this->get( 'permalink' ), $wp_rewrite->rules ) ):
+            // Looks like permalink structure is set, but our rules are not.
+            // Flush rewrite rules to have correct permalink next time.
+            flush_rewrite_rules( );
+            break;
+          default:
+            $url = home_url( $this->get( 'permalink' ) );
+            break;
         }
-        return home_url( $this->get( 'permalink' ) );
+        
+        return $url;
       }
       
       /**
@@ -424,13 +446,14 @@ namespace UsabilityDynamics\AMD {
        * @return void
        */
       public static function get_asset( $type ) {
-        $post = array_shift( get_posts( array( 
+        $posts = get_posts( array( 
           'numberposts' => 1, 
           'post_type' => self::get_post_type( $type ), 
           'post_status' => 'publish',
           'meta_key' => 'theme_relation',
-          'meta_value' => get_current_theme(),
-        ) ) );
+          'meta_value' => sanitize_key( wp_get_theme()->get( 'Name' ) ),
+        ) );
+        $post = !empty( $posts ) ? array_shift( $posts ) : false;        
         return $post ? get_object_vars( $post ) : false;
       }
       
