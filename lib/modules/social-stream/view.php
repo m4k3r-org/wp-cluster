@@ -9,6 +9,7 @@
      data-height="<?php echo $data['height'] ?>"
      data-limit="<?php echo $data['limit'] ?>"
      data-moderate="<?php echo $data['moderate'] ?>"
+     data-remove="<?php echo $data['remove'] ?>"
 
      data-twitter_search_for="<?php echo $data['twitter_search_for'] ?>"
      data-twitter_show_text="<?php echo $data['twitter_show_text'] ?>"
@@ -21,5 +22,4 @@
      data-youtube_search_for="<?php echo $data['youtube_search_for'] ?>"
 
      data-facebook_search_for="<?php echo $data['facebook_search_for'] ?>"></div>
-<style type="text/css"><?php echo $data['css']; ?></style>
 <!-- #Social Stream Module -->
