@@ -65,26 +65,33 @@ define( 'socialstream', [ 'jquery.socialstream', 'jquery.socialstream.wall' ], f
       imagePath: that.data('path')+'/images/',
       cache: true,
       limit: parseInt(that.data('limit')),
-      max: 'limit'
+      max: 'limit',
+      remove: String(that.data('remove'))
     });
 
     jQuery(window).load(function(){
       console.debug('stream loaded');
+      jQuery('.filter a.iso-active').click();
+
       if ( that.data('moderate') == '1' ) {
         jQuery('.stream .dcsns-li').prepend('<a class="moderate" href="javascript:;">x</a>');
         jQuery('a.moderate', jQuery('.stream')).on('click', function(e){
           var that = jQuery(this);
+          jQuery('a.moderate', jQuery('.stream')).hide();
+          that.parent().css({transition:'5s opacity',opacity:'0'});
           e.stopPropagation();
           jQuery.ajax(ajaxurl, {
             type:'post',
             data: {
               action: 'social_stream_moderate',
-              net: that.parent().data('net'),
               item: that.parent().attr('url')
+            },
+            complete: function() {
+              jQuery('a.moderate', jQuery('.stream')).show();
+              that.parent().hide();
+              setTimeout(function(){jQuery('.filter a.iso-active').click()}, 100);
             }
           });
-          that.parent().hide();
-          setTimeout(function(){jQuery('.filter a.iso-active').click()}, 100);
         });
       }
     });

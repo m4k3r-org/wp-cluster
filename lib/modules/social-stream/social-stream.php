@@ -37,11 +37,7 @@ if( !class_exists( 'SocialStreamModule' ) ) {
 
       $current = get_option( 'social_stream_hidden' );
 
-      if ( empty( $current[$_POST['net']] ) ) $current[$_POST['net']] = array();
-
-      $current[$_POST['net']][] = $_POST['item'];
-
-      $current[$_POST['net']] = array_unique($current[$_POST['net']]);
+      $current[] = $_POST['item'];
 
       die( update_option( 'social_stream_hidden', $current ) );
     }
@@ -83,24 +79,28 @@ if( !class_exists( 'SocialStreamModule' ) ) {
       $data['callback'] = admin_url('admin-ajax.php?action=social_stream_twitter&shortcode='.base64_encode($data['twitter_consumer_key'].':'.$data['twitter_consumer_secret'].':'.$data['twitter_access_token'].':'.$data['twitter_access_token_secret']));
       $data['moderate'] = current_user_can('manage_options')?'1':'0';
 
-      $data['css'] = $this->get_hider_css();
+      $data['remove'] = $this->get_removed_items();
 
       return $this->load_view( $data );
 
     }
 
-    function get_hider_css() {
-      $css= '';
+    /**
+     *
+     * @return string
+     */
+    function get_removed_items() {
+      $hidden= '';
 
       $hidden_items = get_option( 'social_stream_hidden' );
 
       foreach( (array)$hidden_items as $net => $items ) {
         foreach( (array)$items as $item ) {
-          $css .= '.dcsns-li[url="'.$item.'"]{display:none;} ';
+          $hidden .= $item.',';
         }
       }
 
-      return $css;
+      return $hidden;
     }
 
     /**
@@ -170,7 +170,7 @@ if( !class_exists( 'SocialStreamModule' ) ) {
 
       $_data['facebook_search_for'] = $data[$this->get_field_name('facebook_search_for')];
 
-      $_data['css'] = $this->get_hider_css();
+      $_data['remove'] = $this->get_removed_items();
 
       return $this->load_view( $_data );
     }
