@@ -95,14 +95,17 @@ namespace UsabilityDynamics\Cluster {
               /** Skip root folders */
               if( $possible == '.' || $possible == '..' ){
                 continue;
-              }else{
-                /** Remove the '.php' file from the name if it has it */
-                if( substr( $possible, strlen( $possible ) - 4, 4 ) == '.php' ){
-                  $possible = substr( $possible, 0, strlen( $possible ) - 4 );
-                }
-                /** Ok, now call ourselves, so we'll recurse through directories */
-                $this->load_config( $file . DIRECTORY_SEPARATOR . $possible, $scope );
               }
+              /** Remove the '.php' file from the name if it has it */
+              if( substr( $possible, strlen( $possible ) - 4, 4 ) == '.php' ){
+                $possible = substr( $possible, 0, strlen( $possible ) - 4 );
+              }
+              /** Remove the '.json' file from the name if it has it */
+              if( substr( $possible, strlen( $possible ) - 5, 5 ) == '.json' ){
+                $possible = substr( $possible, 0, strlen( $possible ) - 5 );
+              }
+              /** Ok, now call ourselves, so we'll recurse through directories */
+              $this->load_config( $file . DIRECTORY_SEPARATOR . $possible, $scope );
             }
           }elseif( is_file( $config_folder . $file . '.php' ) ){
             // echo 'File: ' . $config_folder . $file . '.php' . "\r\n";
@@ -111,6 +114,15 @@ namespace UsabilityDynamics\Cluster {
               $files[ $file ] = array(
                 'scope' => $scope,
                 'file' => $config_folder . $file . '.php'
+              );
+            }
+          }elseif( is_file( $config_folder . $file . '.json' ) ){
+            // echo 'File: ' . $config_folder . $file . '.json' . "\r\n";
+            /** Try to include the file in our exclusions list, if not already included */
+            if( !isset( $files[ $file ] ) ){
+              $files[ $file ] = array(
+                'scope' => $scope,
+                'file' => $config_folder . $file . '.json'
               );
             }
           }
@@ -133,10 +145,13 @@ namespace UsabilityDynamics\Cluster {
        */
       function _try_load_config_file( $slug, $file ){
         if( !in_array( $slug, array_keys( $this->loaded ) ) ){
-          /** Now, require the file */
-          require_once( $file[ 'file' ] );
-          /** Ge the vars */
-          $file[ 'vars' ] = get_defined_vars();
+          /** Now, require the file, base on the type it is */
+          if( substr( $file[ 'file' ], strlen( $file[ 'file' ] ) - 4, 4 ) == '.php' ){
+            require_once( $file[ 'file' ] );
+            $file[ 'vars' ] = get_defined_vars();
+          }elseif( substr( $file[ 'file' ], strlen( $file[ 'file' ] ) - 5, 5 ) == '.json' ){
+            $file[ 'vars' ] = json_decode( file_get_contents( $file[ 'file' ] ), true );
+          }
           /** Go through and unset the protected variables */
           foreach( $this->protected_variables as $protected_variable ){
             if( isset( $file[ 'vars' ][ $protected_variable ] ) ){

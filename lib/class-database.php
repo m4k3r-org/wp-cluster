@@ -237,7 +237,13 @@ namespace UsabilityDynamics\Cluster {
         $blog = $this->_identify_current_network();
         /** Get our config info */
         /** @todo We should really be getting this from the DB */
-        $blog_db_options = $wp_cluster->config->get_config( 'options/domains/' . $blog->domain, 'db' );
+        $blog_db_options = $wp_cluster->config->get_config( 'options/sites/' . $blog->domain, 'db' );
+        /** For each of the options, check to see if one of them is a constant */
+        foreach( $blog_db_options as $key => $value ){
+          if( defined( $value ) ){
+            $blog_db_options[ $key ] = constant( $value );
+          }
+        }
         /** If we have our blog options, lets go ahead and set them up */
         if( $blog_db_options ){
           /** Loop through them and define the vars */
@@ -260,6 +266,8 @@ namespace UsabilityDynamics\Cluster {
         /** Well, the only thing left to do is create those actions */
         add_filter( 'tables_to_repair', array( $this, '_filter_tables_to_repair' ) );
         add_filter( 'query', array( $this, '_filter_query' ) );
+        /** Return ourselves */
+        return $this;
       }
 
       /**

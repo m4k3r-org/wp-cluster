@@ -146,6 +146,12 @@ namespace UsabilityDynamics\Cluster {
         }
 
         // Save Instance.
+        if( isset( $wp_cluster ) && is_object( $wp_cluster ) && get_class( $wp_cluster ) == 'stdClass' ){
+          $attributes = get_object_vars( $wp_cluster );
+          foreach( $attributes as $key => $attribute ){
+            $this->{$key} = $attribute;
+          }
+        }
         $wp_cluster = self::$instance = & $this;
 
         // Seek ./vendor/autoload.php and autoload
