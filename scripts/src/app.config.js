@@ -123,7 +123,7 @@ define( 'app.bootstrap', [ 'jquery.menufication', 'menufication-setup' ], functi
   })();
 
   jQuery('#menufication-nav li li a').on('click',function(e){
-    e.stopPropagation();
+    e.preventDefault();
   });
 
   // Load main theme logic.

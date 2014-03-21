@@ -196,7 +196,7 @@ namespace UsabilityDynamics {
         array(
           'tag'     => 'meta',
           'name'    => 'viewport',
-          'content' => 'user-scalable=no,width=device-width'
+          'content' => 'width=device-width, initial-scale=1.0'
         ),
         array(
           'tag'     => 'link',
