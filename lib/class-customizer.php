@@ -103,6 +103,14 @@ namespace UsabilityDynamics\Festival {
         'priority'       => 60,
       ) );
       
+      $wp_customize->add_setting( 'sticky_bar_logo' );
+      
+      $wp_customize->add_control( new \WP_Customize_Image_Control( $wp_customize, 'sticky_bar_logo', array(
+        'label'    => __( 'Sticky Bar Logo' ),
+        'section'  => 'festival_images',
+        'settings' => 'sticky_bar_logo',
+      ) ) );
+      
     }
 
     /**
