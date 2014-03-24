@@ -13,6 +13,17 @@ namespace UsabilityDynamics\Festival {
    *
    */
   class Customizer {
+  
+    /**
+     *
+     *
+     */
+    public function __construct(  ) {
+    
+      add_action( 'customize_register', array( $this, 'register' ), 100 );
+      add_action( 'customize_preview_init', array( $this, 'admin_scripts' ), 100 );
+
+    }
 
     /**
      * This hooks into 'customize_register' (available as of WP 3.4) and allows
@@ -29,64 +40,69 @@ namespace UsabilityDynamics\Festival {
      * @since MyTheme 1.0
      */
     public static function register( $wp_customize ) {
-      //1. Define a new section (if desired) to the Theme Customizer
+    
+      //** Remove extra sections and settings */
+      $wp_customize->remove_section( 'title_tagline' );
+      $wp_customize->remove_section( 'static_front_page' );
+      $wp_customize->remove_section( 'nav' );
+      $wp_customize->remove_section( 'background_image' );
+      $wp_customize->remove_section( 'colors' );
+      
+      //echo "<pre>"; print_r( $wp_customize ); echo "</pre>";die();
+      
+      //*************** Colors ***************/
 
-      $wp_customize->add_section( 'mytheme_options',
-        array(
-          'title'       => __( 'MyTheme Options', 'mytheme' ), //Visible title of section
-          'priority'    => 35, //Determines what order this appears in
-          'capability'  => 'edit_theme_options', //Capability needed to tweak
-          'description' => __( 'Allows you to customize some example settings for MyTheme.', 'mytheme' ), //Descriptive tooltip
-        )
-      );
-
-      //2. Register new settings to the WP database...
-      $wp_customize->add_setting( 'mytheme_options[link_textcolor]', //Give it a SERIALIZED name (so all theme settings can live under one db record)
-        array(
-          'default'    => '#2BA6CB', //Default setting/value to save
-          'type'       => 'option', //Is this an 'option' or a 'theme_mod'?
-          'capability' => 'edit_theme_options', //Optional. Special permissions for accessing this setting.
-          'transport'  => 'postMessage', //What triggers a refresh of the setting? 'refresh' or 'postMessage' (instant)?
-        )
-      );
-
-      //3. Finally, we define the control itself (which links a setting to a section and renders the HTML controls)...
-      $wp_customize->add_control( new WP_Customize_Color_Control( //Instantiate the color control class
-        $wp_customize, //Pass the $wp_customize object (required)
-        'mytheme_link_textcolor', //Set a unique ID for the control
-        array(
-          'label'    => __( 'Link Color', 'mytheme' ), //Admin-visible name of the control
-          'section'  => 'mytheme_options', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
-          'settings' => 'mytheme_options[link_textcolor]', //Which setting to load and manipulate (serialized is okay)
-          'priority' => 10, //Determines the order this control appears in for the specified section
-        )
+      $wp_customize->add_section( 'festival_colors', array(
+        'title'    => __( 'Colors' ),
+        'priority' => 40,
+      ) );
+      
+      $wp_customize->add_setting( 'header_banner_bg_color', array(
+        'default'    => '#fcfcf9',
+        'type'       => 'option',
+        'capability' => 'edit_theme_options',
+        'transport'  => 'postMessage',
+      ) );
+      
+      $wp_customize->add_control( new \WP_Customize_Color_Control( $wp_customize, 'header_banner_bg_color', array(
+        'label'    => __( 'Header Banner Background' ),
+        'section'  => 'festival_colors',
+        'settings' => 'header_banner_bg_color',
+      ) ) );
+      
+      $wp_customize->add_setting( 'content_bg_color', array(
+        'default'    => '#fcfcf9',
+        'type'       => 'option',
+        'capability' => 'edit_theme_options',
+        'transport'  => 'postMessage',
       ) );
 
-      //4. We can also change built-in settings by modifying properties. For instance, let's make some stuff use live preview JS...
-      $wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
-      $wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
-      $wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
-      $wp_customize->get_setting( 'background_color' )->transport = 'postMessage';
-    }
+      $wp_customize->add_control( new \WP_Customize_Color_Control( $wp_customize, 'content_bg_color', array(
+        'label'    => __( 'Content Background' ),
+        'section'  => 'festival_colors',
+        'settings' => 'content_bg_color',
+      ) ) );
+      
+      $wp_customize->add_setting( 'footer_bg_color', array(
+        'default'    => '#fcfcf9',
+        'type'       => 'option',
+        'capability' => 'edit_theme_options',
+        'transport'  => 'postMessage',
+      ) );
 
-    /**
-     * This will output the custom WordPress settings to the live theme's WP head.
-     *
-     * Used by hook: 'wp_head'
-     *
-     * @see add_action('wp_head',$func)
-     * @since MyTheme 1.0
-     */
-    public static function header_output() {
-      ?>
-      <!--Customizer CSS-->
-      <style type="text/css">
-           <?php self::generate_css('#site-title a', 'color', 'header_textcolor', '#'); ?>
-           <?php self::generate_css('body', 'background-color', 'background_color', '#'); ?>
-           <?php self::generate_css('a', 'color', 'mytheme_options[link_textcolor]'); ?>
-      </style>
-      <!--/Customizer CSS-->
-    <?php
+      $wp_customize->add_control( new \WP_Customize_Color_Control( $wp_customize, 'footer_bg_color', array(
+        'label'    => __( 'Footer Background' ),
+        'section'  => 'festival_colors',
+        'settings' => 'footer_bg_color',
+      ) ) );
+      
+      //*************** Images ***************/
+      
+      $wp_customize->add_section( 'festival_images', array(
+        'title'          => __( 'Images' ),
+        'priority'       => 60,
+      ) );
+      
     }
 
     /**
@@ -100,47 +116,14 @@ namespace UsabilityDynamics\Festival {
      * @see add_action('customize_preview_init',$func)
      * @since MyTheme 1.0
      */
-    public static function live_preview() {
+    public static function admin_scripts() {
       wp_enqueue_script(
-        'mytheme-themecustomizer', // Give the script a unique ID
-        get_template_directory_uri() . '/assets/js/theme-customizer.js', // Define the path to the JS file
+        'festival-themecustomizer', // Give the script a unique ID
+        get_template_directory_uri() . '/scripts/app.admin.customize.js', // Define the path to the JS file
         array( 'jquery', 'customize-preview' ), // Define dependencies
         '', // Define a version (optional)
         true // Specify whether to put in footer (leave this true)
       );
-    }
-
-    /**
-     * This will generate a line of CSS for use in header output. If the setting
-     * ($mod_name) has no defined value, the CSS will not be output.
-     *
-     * @uses get_theme_mod()
-     *
-     * @param string $selector CSS selector
-     * @param string $style The name of the CSS *property* to modify
-     * @param string $mod_name The name of the 'theme_mod' option to fetch
-     * @param string $prefix Optional. Anything that needs to be output before the CSS property
-     * @param string $postfix Optional. Anything that needs to be output after the CSS property
-     * @param bool   $echo Optional. Whether to print directly to the page (default: true).
-     *
-     * @return string Returns a single line of CSS with selectors and a property.
-     * @since MyTheme 1.0
-     */
-    public static function generate_css( $selector, $style, $mod_name, $prefix = '', $postfix = '', $echo = true ) {
-      $return = '';
-      $mod    = get_theme_mod( $mod_name );
-      if( !empty( $mod ) ) {
-        $return = sprintf( '%s { %s:%s; }',
-          $selector,
-          $style,
-          $prefix . $mod . $postfix
-        );
-        if( $echo ) {
-          echo $return;
-        }
-      }
-
-      return $return;
     }
 
   }
