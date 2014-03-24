@@ -46,7 +46,7 @@
     
     // Listen for Changes.
     style.bind( function ( style ) {
-      console.log( 'stylesChanged', style );
+      //console.log( 'stylesChanged', style );
       // Clear Intent
       window.clearTimeout( intent );
       // Pause for Intent Check

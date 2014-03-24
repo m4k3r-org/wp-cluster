@@ -11,7 +11,7 @@
     wp.customize(args.name, function(style) {
         var intent;
         createStyleContainer(), style.bind(function(style) {
-            console.log("stylesChanged", style), window.clearTimeout(intent), intent = window.setTimeout(function() {
+            window.clearTimeout(intent), intent = window.setTimeout(function() {
                 updateStyles(style);
             }, 200);
         });
