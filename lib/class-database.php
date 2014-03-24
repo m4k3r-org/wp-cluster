@@ -201,7 +201,7 @@ namespace UsabilityDynamics\Cluster {
         $blog = $this->db->get_row( $query );
         /** If we don't have a blog, bail */
         if( !$blog ){
-          throw new Exception( 'Could not find site for: ' . $_SERVER[ 'HTTP_HOST' ] );
+          throw new \Exception( 'Could not find site for: ' . $_SERVER[ 'HTTP_HOST' ] );
         }
         /** Set the blog ID */
         $this->db->set_blog_id( null, null );
