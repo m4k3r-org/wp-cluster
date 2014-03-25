@@ -399,7 +399,9 @@ namespace UsabilityDynamics {
         include_once( WP_VENDOR_PATH . '/usabilitydynamics/wp-amd/wp-amd.php' );
       }
       if( class_exists( '\UsabilityDynamics\Festival\Customizer' ) ) {
-        new \UsabilityDynamics\Festival\Customizer();
+        \UsabilityDynamics\Festival\Customizer::define( array(
+          'text_domain' => $this->domain,
+        ) );
       }
     }
 

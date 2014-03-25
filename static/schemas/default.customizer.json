@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "permalink": "assets/festival-custom.css",
+  "exclude": [
+    "title_tagline",
+    "static_front_page",
+    "nav",
+    "background_image",
+    "colors",
+    "header_image"
+  ],
+  "sections": {
+    "festival_colors": {
+      "title": "l10n.colors",
+      "priority": 40
+    },
+    "festival_images": {
+      "title": "l10n.background_images",
+      "priority": 50
+    }
+  },
+  "settings": [
+    {
+      "key": "header_banner_bg_color",
+      "label": "l10n.header_banner_bg_color",
+      "section": "festival_colors",
+      "control": "bg_color",
+      "selector": "#header .section-header-banner"
+    },
+    {
+      "key": "content_bg_color",
+      "label": "l10n.content_bg_color",
+      "section": "festival_colors",
+      "control": "bg_color",
+      "selector": "body #main"
+    },
+    {
+      "key": "footer_bg_color",
+      "label": "l10n.footer_bg_color",
+      "section": "festival_colors",
+      "control": "bg_color",
+      "selector": "footer.footer"
+    },
+    {
+      "key": "header_banner_bg_image",
+      "label": "l10n.header_banner_bg_image",
+      "section": "festival_images",
+      "control": "image",
+      "selector": "#header .section-header-banner"
+    },
+    {
+      "key": "sticky_bar_logo",
+      "label": "l10n.sticky_bar_logo",
+      "section": "festival_images",
+      "control": "image",
+      "selector": "#header nav.navbar-top .navbar-brand a"
+    }
+  ]
+}

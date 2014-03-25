@@ -9,129 +9,91 @@
 namespace UsabilityDynamics\Festival {
 
   /**
-   * Carrington Builder functionality
+   * Customizer.
    *
    */
-  class Customizer {
-  
-    /**
-     *
-     *
-     */
-    public function __construct(  ) {
+  class Customizer extends \UsabilityDynamics\Theme\Customizer {
     
-      add_action( 'customize_register', array( $this, 'register' ), 100 );
-      add_action( 'customize_preview_init', array( $this, 'admin_scripts' ), 100 );
-
-    }
-
-    /**
-     * This hooks into 'customize_register' (available as of WP 3.4) and allows
-     * you to add new sections and controls to the Theme Customize screen.
-     *
-     * Note: To enable instant preview, we have to actually write a bit of custom
-     * javascript. See live_preview() for more.
-     *
-     * @see add_action('customize_register',$func)
-     *
-     * @param \WP_Customize_Manager $wp_customize
-     *
-     * @link http://ottopress.com/2012/how-to-leverage-the-theme-customizer-in-your-own-themes/
-     * @since MyTheme 1.0
-     */
-    public static function register( $wp_customize ) {
+    public static $text_domain = NULL;
     
-      //** Remove extra sections and settings */
-      $wp_customize->remove_section( 'title_tagline' );
-      $wp_customize->remove_section( 'static_front_page' );
-      $wp_customize->remove_section( 'nav' );
-      $wp_customize->remove_section( 'background_image' );
-      $wp_customize->remove_section( 'colors' );
+    /**
+     * Create Customizer Instance
+     *
+     * Note: all specific hooks should be added here before object initialization.
+     */
+    public static function define( $args = array() ) {
       
-      //echo "<pre>"; print_r( $wp_customize ); echo "</pre>";die();
+      self::$text_domain = !empty( $args[ 'text_domain' ] ) ? $args[ 'text_domain' ] : '';
       
-      //*************** Colors ***************/
-
-      $wp_customize->add_section( 'festival_colors', array(
-        'title'    => __( 'Colors' ),
-        'priority' => 40,
-      ) );
-      
-      $wp_customize->add_setting( 'header_banner_bg_color', array(
-        'default'    => '#fcfcf9',
-        'type'       => 'option',
-        'capability' => 'edit_theme_options',
-        'transport'  => 'postMessage',
-      ) );
-      
-      $wp_customize->add_control( new \WP_Customize_Color_Control( $wp_customize, 'header_banner_bg_color', array(
-        'label'    => __( 'Header Banner Background' ),
-        'section'  => 'festival_colors',
-        'settings' => 'header_banner_bg_color',
-      ) ) );
-      
-      $wp_customize->add_setting( 'content_bg_color', array(
-        'default'    => '#fcfcf9',
-        'type'       => 'option',
-        'capability' => 'edit_theme_options',
-        'transport'  => 'postMessage',
-      ) );
-
-      $wp_customize->add_control( new \WP_Customize_Color_Control( $wp_customize, 'content_bg_color', array(
-        'label'    => __( 'Content Background' ),
-        'section'  => 'festival_colors',
-        'settings' => 'content_bg_color',
-      ) ) );
-      
-      $wp_customize->add_setting( 'footer_bg_color', array(
-        'default'    => '#fcfcf9',
-        'type'       => 'option',
-        'capability' => 'edit_theme_options',
-        'transport'  => 'postMessage',
-      ) );
-
-      $wp_customize->add_control( new \WP_Customize_Color_Control( $wp_customize, 'footer_bg_color', array(
-        'label'    => __( 'Footer Background' ),
-        'section'  => 'festival_colors',
-        'settings' => 'footer_bg_color',
-      ) ) );
-      
-      //*************** Images ***************/
-      
-      $wp_customize->add_section( 'festival_images', array(
-        'title'          => __( 'Images' ),
-        'priority'       => 60,
-      ) );
-      
-      $wp_customize->add_setting( 'sticky_bar_logo' );
-      
-      $wp_customize->add_control( new \WP_Customize_Image_Control( $wp_customize, 'sticky_bar_logo', array(
-        'label'    => __( 'Sticky Bar Logo' ),
-        'section'  => 'festival_images',
-        'settings' => 'sticky_bar_logo',
-      ) ) );
+      //** Initialize Customizer with predefined settings stored in json */
+      $settings = self::_get_system_settings();
+      return new Customizer( $settings );
       
     }
 
     /**
-     * This outputs the javascript needed to automate the live settings preview.
-     * Also keep in mind that this function isn't necessary unless your settings
-     * are using 'transport'=>'postMessage' instead of the default 'transport'
-     * => 'refresh'
+     * Get default Settings from schema
      *
-     * Used by hook: 'customize_preview_init'
-     *
-     * @see add_action('customize_preview_init',$func)
-     * @since MyTheme 1.0
      */
-    public static function admin_scripts() {
-      wp_enqueue_script(
-        'festival-themecustomizer', // Give the script a unique ID
-        get_template_directory_uri() . '/scripts/app.admin.customize.js', // Define the path to the JS file
-        array( 'jquery', 'customize-preview' ), // Define dependencies
-        '', // Define a version (optional)
-        true // Specify whether to put in footer (leave this true)
-      );
+    public static function _get_system_settings() {
+      $short_path = '/static/schemas/default.customizer.json';
+      $file = get_stylesheet_directory() . $short_path;
+      if( !file_exists( $file ) ) {
+        $file = get_template_directory() . $short_path;
+      }
+      if( !file_exists( $file ) ) {
+        return false;
+      }
+      return self::_localize( json_decode( file_get_contents( $file ), true ) );
+    }
+    
+    /**
+     * Localization functionality.
+     * Replaces array's l10n data.
+     * Helpful for localization of data which is stored in JSON files ( see /schemas )
+     *
+     * @param type $data
+     *
+     * @return type
+     * @author peshkov@UD
+     */
+    public static function _localize( $data ) {
+      static $l10n;
+      
+      if ( !is_array( $data ) ) return $data;
+
+      //** The Localization's list. */
+      if( empty( $l10n ) ) {
+        $l10n = apply_filters( 'ud::theme::festival::customizer', array(
+          'colors' => __( 'Colors', self::$text_domain ),
+          'background_images' => __( 'Background Images', self::$text_domain ),
+          'header_banner_bg_color' => __( 'Header Banner Background', self::$text_domain ),
+          'content_bg_color' => __( 'Content Background', self::$text_domain ),
+          'footer_bg_color' => __( 'Footer Background', self::$text_domain ),
+          'header_banner_bg_image' => __( 'Header Banner Image', self::$text_domain ),
+          'sticky_bar_logo' => __( 'Sticky Bar Logo', self::$text_domain ),
+        ));
+      }
+      
+      //** Replace l10n entries */
+      foreach ( $data as $k => $v ) {
+        if ( is_array( $v ) ) {
+          $data[ $k ] = self::_localize( $v );
+        } elseif ( is_string( $v ) ) {
+          if ( strpos( $v, 'l10n' ) !== false ) {
+            preg_match_all( '/l10n\.([^\s]*)/', $v, $matches );
+            if ( !empty( $matches[ 1 ] ) ) {
+              foreach ( $matches[ 1 ] as $i => $m ) {
+                if ( key_exists( $m, $l10n ) ) {
+                  $data[ $k ] = str_replace( $matches[ 0 ][ $i ], $l10n[ $m ], $data[ $k ] );
+                }
+              }
+            }
+          }
+        }
+      }
+
+      return $data;
     }
 
   }
