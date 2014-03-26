@@ -151,6 +151,15 @@ namespace UsabilityDynamics\Cluster {
             $file[ 'vars' ] = get_defined_vars();
           }elseif( substr( $file[ 'file' ], strlen( $file[ 'file' ] ) - 5, 5 ) == '.json' ){
             $file[ 'vars' ] = json_decode( file_get_contents( $file[ 'file' ] ), true );
+            /** Loop through the items, and if they prefix with 'c:', they should be defined constants */
+            foreach( $file[ 'vars' ] as $key => $value ){
+              if( substr( $key, 0, 2 ) == 'c:' ){
+                /** Let's go ahead and unset the key */
+                unset( $file[ 'vars' ][ $key ] );
+                /** Set the constant */
+                define( substr( $key, 2, strlen( $key ) - 2 ), $value );
+              }
+            }
           }
           /** Go through and unset the protected variables */
           foreach( $this->protected_variables as $protected_variable ){
@@ -214,7 +223,7 @@ namespace UsabilityDynamics\Cluster {
        * This function lets us chain methods without having to instantiate first, YOU MUST COPY THIS TO ALL SUB CLASSES
        */
       static public function init(){
-        return new self( false );
+        return new self( __DIR__, false );
       }
 
     }
