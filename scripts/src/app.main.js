@@ -25,7 +25,7 @@ define( 'app.main', [ 'jquery', 'skrollr' ], function( jQuery ) {
       jQuery( ".navbar-top" ).sticky();
       
       //** Inits sticky for all modules which have .sticky selector */
-      var st = parseInt( jQuery( ".navbar-top" ).height() );
+      var st = parseInt( jQuery( ".navbar-top" ).height() ) + parseInt( jQuery( 'main' ).css( 'padding-top' ) );
       jQuery( ".module.sticky" ).each( function( i, e ) {
         jQuery( e ).css( 'width', jQuery( e ).innerWidth() + 'px' );
         jQuery( e ).sticky({
