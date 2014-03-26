@@ -180,7 +180,7 @@ namespace UsabilityDynamics\Cluster {
        * Sets database configuration constants.
        *
        * @return mixed
-       * @throws exception
+       * @throws \Exception
        */
       function _identify_current_network() {
         /** Bring in our globals */
@@ -216,7 +216,9 @@ namespace UsabilityDynamics\Cluster {
 
       /**
        * Initializes the databases, actions, and filters for this to properly operate
+       *
        * @param bool $do_stuff Whether we should actually do initialization( needed for 'init' )
+       * @throws \Exception
        */
       function __construct( $do_stuff = true ){
         global $wp_cluster;
@@ -237,7 +239,10 @@ namespace UsabilityDynamics\Cluster {
         $blog = $this->_identify_current_network();
         /** Get our config info */
         /** @todo We should really be getting this from the DB */
-        $blog_db_options = $wp_cluster->config->get_config( 'options/sites/' . $blog->domain, 'db' );
+        if( !( $blog_db_options = $wp_cluster->config->get_config( 'options/sites/' . $blog->domain, 'db' ) ) ){
+          /** Make sure we have a connection */
+          throw new \Exception( 'Could not retreive the blog\'s options - it may not be configured properly.' );
+        }
         /** For each of the options, check to see if one of them is a constant */
         foreach( $blog_db_options as $key => $value ){
           if( defined( $value ) ){
