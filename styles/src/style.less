@@ -106,13 +106,24 @@ main {
   }
 
   .navbar-brand {
-    padding: 4px 7px 7px 7px;
-    height: 50px;
+    padding: 5px;
+    height: 60px;
     margin-left: 0 !important;
     padding-left: 0;
 
     .logo {
       float: left;
+      display: block;
+      width: 120px;
+      height: 50px;
+      text-indent: -9999px;
+      overflow: hidden;
+      background-repeat: no-repeat;
+      background-position: center;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
     }
 
     .btn {
@@ -195,13 +206,29 @@ main {
   }
 }
 
-.is-sticky {
-  .navbar-nav {
-    margin-left: 0;
-    float: right;
-    margin-right: 213px;
+.sticky-wrapper {
+  
+  .navbar-brand {
+    display: none;
   }
+
+  &.is-sticky {
+  
+    .navbar-brand {
+      display: block;
+    }
+  
+    .navbar-nav {
+      margin-left: 0;
+      float: right;
+      margin-right: 213px;
+    }
+    
+  }
+
 }
+
+
 
 .navbar-top {
   border-left: 0px;
