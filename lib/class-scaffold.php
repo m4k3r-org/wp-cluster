@@ -52,7 +52,7 @@ namespace UsabilityDynamics\AMD {
           
           //** Register assets and post_type */
           add_action( 'admin_init', array( &$this, 'register_post_type' ) );
-          add_action( 'wp_enqueue_scripts', array( &$this, 'register_asset' ) );
+          add_action( 'wp_enqueue_scripts', array( &$this, 'register_asset' ), 100 );
           
           //** Determine if Admin Menu is enabled */
           if( $this->get( 'admin_menu' ) ) {
