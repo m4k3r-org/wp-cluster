@@ -4,6 +4,8 @@ WP-AMD. WordPress plugin.
 ### Description
 The current WordPress plugin allows to add/update custom global javascript and CSS on your site in real time using version control.
 
+Visit us on WordPress.org: http://wordpress.org/plugins/wp-amd/
+
 ### Features
 * Adds backend JavaScript editor with version control.
 * Adds frontend CSS editor with version control.
