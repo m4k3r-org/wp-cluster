@@ -28,42 +28,42 @@
       "key": "header_banner_bg_color",
       "label": "l10n.header_banner_bg_color",
       "section": "festival_colors",
-      "control": "bg_color",
+      "control": "background-color",
       "selector": "#header .section-header-banner"
     },
     {
       "key": "content_bg_color",
       "label": "l10n.content_bg_color",
       "section": "festival_colors",
-      "control": "bg_color",
+      "control": "background-color",
       "selector": "body #main"
     },
     {
       "key": "footer_bg_color",
       "label": "l10n.footer_bg_color",
       "section": "festival_colors",
-      "control": "bg_color",
+      "control": "background-color",
       "selector": "footer.footer"
     },
     {
       "key": "header_banner_bg_image",
       "label": "l10n.header_banner_bg_image",
       "section": "festival_images",
-      "control": "image",
+      "control": "background-image",
       "selector": "#header .section-header-banner"
     },
     {
       "key": "sticky_bar_logo",
       "label": "l10n.sticky_bar_logo",
       "section": "festival_images",
-      "control": "image",
+      "control": "background-image",
       "selector": "#header nav.navbar-top .navbar-brand a"
     },
     {
       "key": "button_background_color",
       "label": "l10n.button_background_color",
       "section": "styled_button_colors",
-      "control": "bg_color",
+      "control": "background-color",
       "selector": ".btn-custom"
     },
     {
@@ -80,12 +80,11 @@
       "control": "border-color",
       "selector": ".btn-custom"
     },
-
     {
       "key": "button_background_color_hover",
       "label": "l10n.button_background_color_hover",
       "section": "styled_button_colors",
-      "control": "bg_color",
+      "control": "background-color",
       "selector": ".btn-custom:hover, .btn-custom:active"
     },
     {
