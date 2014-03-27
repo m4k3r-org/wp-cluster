@@ -57,7 +57,7 @@
   # Rewrite local when the domain name isn't involved
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(assets|static|cache|media|)/(.*)$
+  RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(assets|static|cache|media|modules|themes)/(.*)$
   RewriteCond %{DOCUMENT_ROOT}/static/storage/%1/%2/%3 -f
   RewriteRule ^.*$ /static/storage/%1/%2/%3 [L]
 

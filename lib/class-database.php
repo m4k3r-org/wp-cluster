@@ -20,6 +20,52 @@ namespace UsabilityDynamics\Cluster {
       function get_blog_prefix( $blog_id = null ){
         return $this->base_prefix;
       }
+
+      /**
+       * Sets the table prefix for the WordPress tables.
+       *
+       * @modified williams@ud
+       * We need to ensure that the proper prefixes are getting applied to these tables
+       *
+       * @since 2.5.0
+       *
+       * @param string $prefix Alphanumeric name for the new prefix.
+       * @param bool $set_table_names Optional. Whether the table names, e.g. wpdb::$posts, should be updated or not.
+       * @return string|WP_Error Old prefix or WP_Error on error
+       */
+      function set_prefix( $prefix, $set_table_names = true ){
+        global $wp_cluster;
+        if( preg_match( '|[^a-z0-9_]|i', $prefix ) ){
+          return new WP_Error( 'invalid_db_prefix', 'Invalid database prefix' );
+        }
+        $old_prefix = is_multisite() ? '' : $prefix;
+        if( isset( $this->base_prefix ) ){
+          $old_prefix = $this->base_prefix;
+        }
+        $this->base_prefix = $prefix;
+        if( $set_table_names ){
+          if( is_object( $wp_cluster ) && isset( $wp_cluster->database ) ){
+            /** Make sure that the global tables have the proper prefix */
+            $_global_tables = array_unique( array_merge( array_keys( $this->tables( 'global' ) ), $wp_cluster->database->get( 'wpc_global_tables' ) ) );
+            foreach( $_global_tables as $table ){
+              $this->{$table} = CLUSTER_PREFIX . $table;
+            }
+          }else{
+            foreach( $this->tables( 'global' ) as $table => $prefixed_table ){
+              $this->$table = $prefixed_table;
+            }
+          }
+          if( is_multisite() && empty( $this->blogid ) ) return $old_prefix;
+          $this->prefix = $this->get_blog_prefix();
+          foreach( $this->tables( 'blog' ) as $table => $prefixed_table ){
+            $this->$table = $prefixed_table;
+          }
+          foreach( $this->tables( 'old' ) as $table => $prefixed_table ){
+            $this->$table = $prefixed_table;
+          }
+        }
+        return $old_prefix;
+      }
     }
   }
 
@@ -29,7 +75,7 @@ namespace UsabilityDynamics\Cluster {
      * initialized and handled in the db.php dropin
      */
     class Database{
-    
+
       /**
        * This variable holds the global tables, that should be written/read to
        * on the cluster database
@@ -92,6 +138,16 @@ namespace UsabilityDynamics\Cluster {
       );
 
       /**
+       * Getter
+       */
+      function get( $name ){
+        if( isset( $this->{$name} ) ){
+          return $this->{$name};
+        }
+        return false;
+      }
+
+      /**
        * Connects to a DB, possibly overriding the $wpdb object
        *
        * @param array $creds The DB info we're connecting with
@@ -152,6 +208,7 @@ namespace UsabilityDynamics\Cluster {
        */
       public function _filter_query( $query ) {
         global $blog_id;
+        //echo "\r\n\r\n::" . $query . "==";
         $global_tables = $this->wpc_global_tables;
         /** Trim it up */
         $query = trim( $query );
@@ -159,14 +216,13 @@ namespace UsabilityDynamics\Cluster {
         if( stripos( $query, '_' . $blog_id . '_' ) ){
           $query = preg_replace( '/' . DB_PREFIX . $blog_id . '_([^ ]*)/i', DB_PREFIX . '$1', $query );
         }
-        /** Don't touch non select queries past this point */
-        if ( !preg_match( '/^SELECT\s+/is', $query ) ) {
-          return $query;
-        }
         /** Look through all global tables and add global database prefix if it has been found */
         foreach ( $global_tables as $table ) {
-          $query = preg_replace( '/' . DB_PREFIX . $table . '/i', CLUSTER_NAME . '.' . CLUSTER_PREFIX . $table, $query );
+          //echo ';;;;' . $table . ';;;;';
+          $query = preg_replace( '/`' . CLUSTER_PREFIX . $table . '`/i', '`' . CLUSTER_NAME . '`.`' . CLUSTER_PREFIX . $table . '`', $query );
+          $query = preg_replace( '/ ' . CLUSTER_PREFIX . $table . ' /i', ' ' . CLUSTER_NAME . '.' . CLUSTER_PREFIX . $table . ' ', $query );
         }
+        //echo "==" . $query . "::\r\n\r\n";
         /** Return it! */
         return $query;
       }
