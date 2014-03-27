@@ -14,6 +14,10 @@
       "title": "l10n.colors",
       "priority": 40
     },
+    "styled_button_colors": {
+      "title": "l10n.styled_button_colors",
+      "priority": 45
+    },
     "festival_images": {
       "title": "l10n.background_images",
       "priority": 50
@@ -54,6 +58,49 @@
       "section": "festival_images",
       "control": "image",
       "selector": "#header nav.navbar-top .navbar-brand a"
+    },
+    {
+      "key": "button_background_color",
+      "label": "l10n.button_background_color",
+      "section": "styled_button_colors",
+      "control": "bg_color",
+      "selector": ".btn-custom"
+    },
+    {
+      "key": "button_font_color",
+      "label": "l10n.button_font_color",
+      "section": "styled_button_colors",
+      "control": "color",
+      "selector": ".btn-custom"
+    },
+    {
+      "key": "button_border_color",
+      "label": "l10n.button_border_color",
+      "section": "styled_button_colors",
+      "control": "border-color",
+      "selector": ".btn-custom"
+    },
+
+    {
+      "key": "button_background_color_hover",
+      "label": "l10n.button_background_color_hover",
+      "section": "styled_button_colors",
+      "control": "bg_color",
+      "selector": ".btn-custom:hover, .btn-custom:active"
+    },
+    {
+      "key": "button_font_color_hover",
+      "label": "l10n.button_font_color_hover",
+      "section": "styled_button_colors",
+      "control": "color",
+      "selector": ".btn-custom:hover, .btn-custom:active"
+    },
+    {
+      "key": "button_border_color_hover",
+      "label": "l10n.button_border_color_hover",
+      "section": "styled_button_colors",
+      "control": "border-color",
+      "selector": ".btn-custom:hover, .btn-custom:active"
     }
   ]
 }

@@ -70,8 +70,8 @@ namespace UsabilityDynamics\Festival {
 
         $atts = shortcode_atts( array(
           'size' => 'medium', //** small, medium, large */
-          'color' => '#EF0D95', //** background */
-          'anchor_color' => 'white', //** text color */
+          'color' => '', //** background */
+          'anchor_color' => '', //** text color */
           'anchor' => __( 'Button', wp_festival( 'domain' ) ), //** Button text */
           'url' => '#', //** Button url */
           'style' => '', //** Custom styles */
