@@ -4,11 +4,11 @@
  *
  * @see carrington builder module Hero
  * @author Usability Dynamics
- * @module festival  
+ * @module festival
  * @since festival 0.1.0
  */
- 
-global $wp_query; 
+
+global $wp_query;
 
 extract( $data = wp_festival()->extend( array(
   'image_src' => '',
@@ -36,10 +36,14 @@ extract( $data = wp_festival()->extend( array(
           <div class="<?php echo $id_base; ?>-wrap" >
             <div class="<?php echo $id_base; ?>-content">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <?php if (!empty($title)) : ?>
                     <h2 class="cfct-mod-title"><?php echo $title; ?></h2>
                   <?php endif; ?>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
                   <?php if (!empty($content)) : ?>
                     <div class="cfct-mod-content"><?php echo $content; ?></div>
                   <?php endif; ?>
