@@ -1,7 +1,7 @@
 <?php
 /**
  * Contains methods for customizing the theme customization screen.
- * 
+ *
  * @link http://codex.wordpress.org/Theme_Customization_API
  * @since 0.1.0
  * author peshkov@UD
@@ -13,22 +13,22 @@ namespace UsabilityDynamics\Festival {
    *
    */
   class Customizer extends \UsabilityDynamics\Theme\Customizer {
-    
+
     public static $text_domain = NULL;
-    
+
     /**
      * Create Customizer Instance
      *
      * Note: all specific hooks should be added here before object initialization.
      */
     public static function define( $args = array() ) {
-      
+
       self::$text_domain = !empty( $args[ 'text_domain' ] ) ? $args[ 'text_domain' ] : '';
-      
+
       //** Initialize Customizer with predefined settings stored in json */
       $settings = self::_get_system_settings();
       return new Customizer( $settings );
-      
+
     }
 
     /**
@@ -46,7 +46,7 @@ namespace UsabilityDynamics\Festival {
       }
       return self::_localize( json_decode( file_get_contents( $file ), true ) );
     }
-    
+
     /**
      * Localization functionality.
      * Replaces array's l10n data.
@@ -59,7 +59,7 @@ namespace UsabilityDynamics\Festival {
      */
     public static function _localize( $data ) {
       static $l10n;
-      
+
       if ( !is_array( $data ) ) return $data;
 
       //** The Localization's list. */
@@ -72,9 +72,16 @@ namespace UsabilityDynamics\Festival {
           'footer_bg_color' => __( 'Footer Background', self::$text_domain ),
           'header_banner_bg_image' => __( 'Header Banner Image', self::$text_domain ),
           'sticky_bar_logo' => __( 'Sticky Bar Logo', self::$text_domain ),
+          'styled_button_colors' => __( 'Styled Button Colors', self::$text_domain ),
+          'button_background_color' => __( 'Background', self::$text_domain ),
+          'button_font_color' => __( 'Text', self::$text_domain ),
+          'button_border_color' => __( 'Border', self::$text_domain ),
+          'button_background_color_hover' => __( 'Background (Hover)', self::$text_domain ),
+          'button_font_color_hover' => __( 'Text (Hover)', self::$text_domain ),
+          'button_border_color_hover' => __( 'Border (Border)', self::$text_domain )
         ));
       }
-      
+
       //** Replace l10n entries */
       foreach ( $data as $k => $v ) {
         if ( is_array( $v ) ) {
