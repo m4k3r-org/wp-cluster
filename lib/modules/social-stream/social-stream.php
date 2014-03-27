@@ -11,7 +11,6 @@ if( !class_exists( 'SocialStreamModule' ) ) {
      * Construct
      */
     public function __construct(){
-
       add_action( 'wp_ajax_nopriv_social_stream_twitter', array( $this, 'social_stream_twitter' ) );
       add_action( 'wp_ajax_social_stream_twitter', array( $this, 'social_stream_twitter' ) );
 
@@ -26,7 +25,6 @@ if( !class_exists( 'SocialStreamModule' ) ) {
         'icon' => plugins_url( '/icon.png', __DIR__ )
       );
       parent::__construct( 'cfct-module-social-stream', __( 'Social Stream' ), $opts );
-
     }
 
     /**
@@ -42,9 +40,8 @@ if( !class_exists( 'SocialStreamModule' ) ) {
       die( update_option( 'social_stream_hidden', $current ) );
     }
 
-
     /**
-     *
+     * Shortcode implementation for social stream
      * @param type $attrs
      * @return type
      */
@@ -86,7 +83,7 @@ if( !class_exists( 'SocialStreamModule' ) ) {
     }
 
     /**
-     *
+     * Get items that are hidden by admin
      * @return string
      */
     function get_removed_items() {
@@ -176,7 +173,7 @@ if( !class_exists( 'SocialStreamModule' ) ) {
     }
 
     /**
-     *
+     * Admin view
      * @param type $data
      * @return type
      */
@@ -187,7 +184,7 @@ if( !class_exists( 'SocialStreamModule' ) ) {
     }
 
     /**
-     *
+     * Some necessary js
      * @return type
      */
     public function admin_js() {
@@ -206,6 +203,10 @@ if( !class_exists( 'SocialStreamModule' ) ) {
 			return $js;
 		}
 
+    /**
+     * DO nothing for this
+     * @return null
+     */
     public function text() {return null;}
   }
 }
