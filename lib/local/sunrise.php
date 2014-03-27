@@ -27,6 +27,7 @@ if( !defined( 'SUNRISE_LOADED' ) ) {
 $protected_constants = array(
   'WP_PLUGIN_DIR',
   'WP_PLUGIN_URL',
+  'WP_THEME_DIR',
   'COOKIE_DOMAIN',
   'DOMAIN_CURRENT_SITE',
   'SITE_ID_CURRENT_SITE',
@@ -78,6 +79,7 @@ if( $_SERVER[ 'HTTP_HOST' ] != $subdomain = str_replace( '.' . $current_blog->do
 // Now declare our dynamically generated constants for the plugin directory
 define( 'WP_PLUGIN_DIR', rtrim( WP_BASE_DIR, '/' ) . '/' . rtrim( WP_VENEER_STORAGE, '/' ) . '/' . $current_blog->domain . '/modules' );
 define( 'PLUGINDIR', WP_PLUGIN_DIR );
+define( 'WP_THEME_DIR', rtrim( WP_BASE_DIR, '/' ) . '/' . rtrim( WP_VENEER_STORAGE, '/' ) . '/' . $current_blog->domain . '/themes' );
 
 // Now declare our dynamically generated constants for any URLs
 define( 'WP_BASE_DOMAIN', $current_blog->domain );

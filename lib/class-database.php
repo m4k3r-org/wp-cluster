@@ -7,9 +7,29 @@
  */
 
 namespace UsabilityDynamics\Cluster {
-  if( !class_exists( 'UsabilityDynamics\Cluster\Database' ) ){
-    class Database{
+  if( !class_exists( 'UsabilityDynamics\Cluster\WPDB' ) ){
+    /**
+     * We're extending the base wpdb class so that
+     * we can override certain functions
+     */
+    class WPDB extends \wpdb{
+      /**
+       * We need to change our blog prefix so that
+       * our own capabilities will work properly
+       */
+      function get_blog_prefix( $blog_id = null ){
+        return $this->base_prefix;
+      }
+    }
+  }
 
+  if( !class_exists( 'UsabilityDynamics\Cluster\Database' ) ){
+    /**
+     * This is our WP-Cluster database driver that is directly
+     * initialized and handled in the db.php dropin
+     */
+    class Database{
+    
       /**
        * This variable holds the global tables, that should be written/read to
        * on the cluster database
@@ -95,7 +115,7 @@ namespace UsabilityDynamics\Cluster {
         /** Overwrite the globals */
         $table_prefix = $creds[ 'DB_PREFIX' ];
         /** Create the DB */
-        $wpdb = new \wpdb( $creds[ 'DB_USER' ], $creds[ 'DB_PASSWORD' ], $creds[ 'DB_NAME' ], $creds[ 'DB_HOST' ] );
+        $wpdb = new WPDB( $creds[ 'DB_USER' ], $creds[ 'DB_PASSWORD' ], $creds[ 'DB_NAME' ], $creds[ 'DB_HOST' ] );
         /** Make sure we have a connection */
         if( !( $wpdb && is_object( $wpdb ) && $wpdb->ready ) ){
           throw new \Exception( 'Invalid credentials, cannot connect to DB' );
