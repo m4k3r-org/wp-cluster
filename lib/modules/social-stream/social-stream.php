@@ -56,16 +56,16 @@ if( !class_exists( 'SocialStreamModule' ) ) {
           'limit' => '50',
 
           'twitter_search_for' => '',
-          'twitter_show_text' => '',
-          'twitter_consumer_key' => '',
-          'twitter_consumer_secret' => '',
-          'twitter_access_token' => '',
-          'twitter_access_token_secret' => '',
+          'twitter_show_text' => 'text', // values: text
+          'twitter_consumer_key' => wp_festival()->get( 'configuration.social_stream.twitter.consumer_key' ),
+          'twitter_consumer_secret' => wp_festival()->get( 'configuration.social_stream.twitter.consumer_secret' ),
+          'twitter_access_token' => wp_festival()->get( 'configuration.social_stream.twitter.access_token' ),
+          'twitter_access_token_secret' => wp_festival()->get( 'configuration.social_stream.twitter.token_secret' ),
 
           'instagram_search_for' => '',
-          'instagram_client_id' => '',
-          'instagram_access_token' => '',
-          'instagram_redirect_url' => '',
+          'instagram_client_id' => wp_festival()->get( 'configuration.social_stream.instagram.client_id' ),
+          'instagram_access_token' => wp_festival()->get( 'configuration.social_stream.instagram.access_token' ),
+          'instagram_redirect_url' => wp_festival()->get( 'configuration.social_stream.instagram.redirect_url' ),
 
           'youtube_search_for' => '',
 
