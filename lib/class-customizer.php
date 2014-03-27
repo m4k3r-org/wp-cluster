@@ -78,7 +78,7 @@ namespace UsabilityDynamics\Festival {
           'button_border_color' => __( 'Border', self::$text_domain ),
           'button_background_color_hover' => __( 'Background (Hover)', self::$text_domain ),
           'button_font_color_hover' => __( 'Text (Hover)', self::$text_domain ),
-          'button_border_color_hover' => __( 'Border (Border)', self::$text_domain )
+          'button_border_color_hover' => __( 'Border (Hover)', self::$text_domain )
         ));
       }
 
