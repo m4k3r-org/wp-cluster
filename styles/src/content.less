@@ -131,16 +131,6 @@ main {
   CARRINGTON BUILDER EXCEPTIONS
 ============================ */
 
-main.full-width .article-content .cfct-build {
-
-  .module-container {
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-  }
-
-}
-
 main .article-content .cfct-build {
 
   .module-container {
@@ -192,6 +182,17 @@ main.full-width {
   .cfct-build .module-container {
     border-width: 0;
     background: none;
+    
+    .module {
+      padding: 0;
+    }
+    
+  }
+  
+  .article-content .cfct-build .module-container {
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
   }
 
 }
