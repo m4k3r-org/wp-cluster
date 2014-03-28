@@ -44,7 +44,7 @@
     line-height: 22px;
     width: 125px;
   }
-  
+
   fieldset#artists-list-artists ul li input.datepicker,
   fieldset#artists-list-artists ul li span.custom_date  {
     width: 100px;
@@ -90,6 +90,23 @@
           $selected = isset( $data[ 'artist_image' ] ) && $data[ 'artist_image' ] == $k ? 'selected="selected"' : ''; ?>
           <option value="<?php echo $k; ?>" <?php echo $selected; ?>><?php echo $v; ?></option>
         <?php endforeach; ?>
+      </select>
+    </li>
+    <li>
+      <label for="order_by"><?php _e( 'Order by', wp_festival( 'domain' ) ); ?></label>
+      <select name="order_by" id="order_by">
+          <option value="none" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'none' ? 'selected="selected"' : ''; ?>><?php _e( 'None', wp_festival( 'domain' ) ); ?></option>
+          <option value="ID" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'ID' ? 'selected="selected"' : ''; ?>><?php _e( 'ID', wp_festival( 'domain' ) ); ?></option>
+          <option value="author" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'author' ? 'selected="selected"' : ''; ?>><?php _e( 'Author', wp_festival( 'domain' ) ); ?></option>
+          <option value="title" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'title' ? 'selected="selected"' : ''; ?>><?php _e( 'Title', wp_festival( 'domain' ) ); ?></option>
+          <option value="name" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'name' ? 'selected="selected"' : ''; ?>><?php _e( 'Name', wp_festival( 'domain' ) ); ?></option>
+          <option value="date" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'date' ? 'selected="selected"' : ''; ?>><?php _e( 'Date', wp_festival( 'domain' ) ); ?></option>
+          <option value="modified" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'modified' ? 'selected="selected"' : ''; ?>><?php _e( 'Modified', wp_festival( 'domain' ) ); ?></option>
+          <option value="parent" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'parent' ? 'selected="selected"' : ''; ?>><?php _e( 'Parent', wp_festival( 'domain' ) ); ?></option>
+          <option value="rand" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'rand' ? 'selected="selected"' : ''; ?>><?php _e( 'Rand', wp_festival( 'domain' ) ); ?></option>
+          <option value="comment_count" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'comment_count' ? 'selected="selected"' : ''; ?>><?php _e( 'Comment Count', wp_festival( 'domain' ) ); ?></option>
+          <option value="menu_order" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'menu_order' ? 'selected="selected"' : ''; ?>><?php _e( 'Menu Order', wp_festival( 'domain' ) ); ?></option>
+          <option value="post__in" <?php echo isset( $data[ 'order_by' ] ) && $data[ 'order_by' ] == 'post__in' ? 'selected="selected"' : ''; ?>><?php _e( 'post__in Order', wp_festival( 'domain' ) ); ?></option>
       </select>
     </li>
     <li>
