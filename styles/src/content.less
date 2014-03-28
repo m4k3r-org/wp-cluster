@@ -504,7 +504,7 @@ main .artist-hero {
     img {
       float: left;
       margin-right: 15px;
-      padding: 4px;
+      padding: 3px;
       background-color: #fff;
     }
     
@@ -521,9 +521,47 @@ main .artist-hero {
       margin: 0;
       
       li {
-        margin: 0;
-        float: left;
+        display: inline-block;
+        margin: 0 20px 0 0;
         font-size: 75%;
+        
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    
+    }
+    
+    @media ( max-width: @screen-sm-max ) {
+      
+      & { 
+        text-align: center;
+      }
+    
+      img {
+        float: none;
+        margin: 0;
+      }
+      
+      h2 {
+        margin-top: 10px;
+      }
+    
+    }
+    
+  }
+  
+  .cfct-module-hero-content .row .share-buttons-wrapper {
+    bottom: 45px;
+    
+    @media ( max-width: @screen-sm-max ) {
+    
+      .share-buttons-list {
+        margin: 20px auto 0;
+        float: none;
+        display: block;
+        width: 320px;
+        padding-left: 20px;
       }
     
     }

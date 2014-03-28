@@ -56,14 +56,14 @@ $ptime = ( (int)date( 'G', $pdate ) && (int)date( 'i', $pdate ) && $time_format 
                     <?php endif; ?>
                     <h2 class="cfct-mod-title"><?php echo $title; ?></h2>
                     <ul class="clearfix">
-                      <li><?php echo $pday ? '<em class="icon icon-calendar"></em> ' . $pday : ''; ?></li>
-                      <li><?php echo $ptime ? '<em class="icon icon-time"></em> ' . $ptime : ''; ?></li>
-                      <li><?php /* @todo: stage */ ?></li>
+                      <?php echo $pday ? '<li><em class="icon icon-calendar"></em> ' . $pday . '</li>' : ''; ?>
+                      <?php echo $ptime ? '<li><em class="icon icon-time"></em> ' . $ptime . '</li>' : ''; ?>
+                      <?php /* @todo: stage */ ?>
                     </ul>
                   <?php endif; ?>
                 </div>
-                <div class="col-md-6 share-buttons-wrapper">
-                  <ul class="share-buttons-list">
+                <div class="col-md-6 share-buttons-wrapper clearfix">
+                  <ul class="share-buttons-list clearfix">
                     <?php if ( $fb_like && !empty( $fb_app_id ) ) : ?>
                       <li class="fb-share">
                         <div class="fb-share-button" data-href="<?php echo $fb_url; ?>" data-type="button_count"></div>
