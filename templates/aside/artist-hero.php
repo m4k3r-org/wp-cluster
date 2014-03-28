@@ -15,11 +15,10 @@ extract( $data = wp_festival()->extend( array(
   'title' => get_the_title(),
   'bg_img_src' => wp_festival()->get_artist_image_link( get_the_ID(), array( 'type' => 'landscapeImage', 'width' => 890, 'height' => 460 ) ),
   'art_img_src' => wp_festival()->get_artist_image_link( get_the_ID(), array( 'type' => 'headshotImage', 'width' => 150, 'height' => 150 ) ),
-  'date' => ( wp_festival()->get_artist_perfomance_date( get_the_ID() ) ),
   
   // Styles
   'image_alignment' => 'center bottom',
-  'box_height' => 460,
+  'box_height' => 400,
   
   // Social data
   'fb_like' => true,
@@ -31,10 +30,15 @@ extract( $data = wp_festival()->extend( array(
   'gp_share' => true,
 ), (array)$wp_query->data[ 'artist-hero' ] ) );
 
+$artist = wp_festival()->get_post_data( get_the_ID() );
+$perfomance = !empty( $artist[ 'perfomances' ][ 0 ] ) ? $artist[ 'perfomances' ][ 0 ] : false;
 
-$perfomance = 
+//* Get information about perfomance */
+$pdate = strtotime( $perfomance[ 'startDateTime' ] );
+$pday = ( $date_format = get_option( 'date_format' ) ) ? date( $date_format, $pdate ) : false;
+$ptime = ( (int)date( 'G', $pdate ) && (int)date( 'i', $pdate ) && $time_format = get_option( 'time_format' ) ) ? date( $time_format, $pdate ) : false;
 
-//echo "<pre>"; print_r( $data ); echo "</pre>"; die();
+//echo "<pre>"; var_dump( $ptime ); echo "</pre>"; die();
 
 ?>
 <div class="artist-hero cfct-module-hero-image" style="min-height: <?php echo $box_height; ?>px;<?php if (!empty($bg_img_src)) { ?> background-image: url(<?php echo $bg_img_src; ?>); background-position: <?php echo $image_alignment; ?>; background-repeat: no-repeat;<?php } ?>">
@@ -45,14 +49,17 @@ $perfomance =
           <div class="cfct-module-hero-wrap" >
             <div class="cfct-module-hero-content">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 artist-information">
                   <?php if (!empty($title)) : ?>
-                      <?php if( !empty( $art_img_src ) ) : ?>
-                        <img class="img-responsive" src="<?php echo $art_img_src; ?>" alt="<?php echo $title; ?>" />
-                      <?php endif; ?>
-                        <h2 class="cfct-mod-title"><?php echo $title; ?></h2>
-                      <?php endif; ?>
-                    </div>
+                    <?php if( !empty( $art_img_src ) ) : ?>
+                      <img src="<?php echo $art_img_src; ?>" alt="<?php echo $title; ?>" />
+                    <?php endif; ?>
+                    <h2 class="cfct-mod-title"><?php echo $title; ?></h2>
+                    <ul class="clearfix">
+                      <li><?php echo $pday ? '<em class="icon icon-calendar"></em> ' . $pday : ''; ?></li>
+                      <li><?php echo $ptime ? '<em class="icon icon-time"></em> ' . $ptime : ''; ?></li>
+                      <li><?php /* @todo: stage */ ?></li>
+                    </ul>
                   <?php endif; ?>
                 </div>
                 <div class="col-md-6 share-buttons-wrapper">
