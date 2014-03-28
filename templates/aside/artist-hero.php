@@ -18,7 +18,7 @@ extract( $data = wp_festival()->extend( array(
   'date' => ( wp_festival()->get_artist_perfomance_date( get_the_ID() ) ),
   
   // Styles
-  'image_alignment' => 'center center',
+  'image_alignment' => 'center bottom',
   'box_height' => 460,
   
   // Social data
@@ -30,6 +30,9 @@ extract( $data = wp_festival()->extend( array(
   'tw_hashtag' => '', // @todo
   'gp_share' => true,
 ), (array)$wp_query->data[ 'artist-hero' ] ) );
+
+
+$perfomance = 
 
 //echo "<pre>"; print_r( $data ); echo "</pre>"; die();
 
@@ -44,18 +47,10 @@ extract( $data = wp_festival()->extend( array(
               <div class="row">
                 <div class="col-md-6">
                   <?php if (!empty($title)) : ?>
-                    <div class="row">
                       <?php if( !empty( $art_img_src ) ) : ?>
-                        <div class="col-md-4">
-                          <img class="img-responsive" src="<?php echo $art_img_src; ?>" alt="<?php echo $title; ?>" />
-                        </div>
-                        <div class="col-md-8">
-                          <h2 class="cfct-mod-title"><?php echo $title; ?></h2>
-                        </div>
-                      <?php else : ?>
-                        <div class="col-md-12">
-                          <h2 class="cfct-mod-title"><?php echo $title; ?></h2>
-                        </div>
+                        <img class="img-responsive" src="<?php echo $art_img_src; ?>" alt="<?php echo $title; ?>" />
+                      <?php endif; ?>
+                        <h2 class="cfct-mod-title"><?php echo $title; ?></h2>
                       <?php endif; ?>
                     </div>
                   <?php endif; ?>
