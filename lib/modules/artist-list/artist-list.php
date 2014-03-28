@@ -11,34 +11,34 @@
 if( !class_exists( 'ArtistListModule' ) ){
 
   class ArtistListModule extends \UsabilityDynamics\Theme\Module {
-  
+
     protected $content_support = array(
 			'title',
 			'content',
 			'url',
 			'images'
 		);
-  
+
     public function __construct(){
       $opts = array(
         'description' => __( 'Choose and display a list of artists.', 'wp-festival' ),
         'icon' => plugins_url( '/icon.png', __DIR__ )
       );
       parent::__construct( 'cfct-module-loop', __( 'Artist List', 'wp-festival' ), $opts );
-      
+
     }
-    
+
     /**
 		 * Modify the data before it is saved, or not
 		 *
-		 * @param array $new_data 
-		 * @param array $old_data 
+		 * @param array $new_data
+		 * @param array $old_data
 		 * @return array
 		 */
 		public function update( $new_data, $old_data ) {
 			// keep the image search field value from being saved
 			unset( $new_data[ $this->get_field_name('global_image-image-search') ] );
-			
+
 			// normalize the selected image value in to a 'featured_image' value for easy output
 			if ( !empty( $new_data[ $this->get_field_name('post_image') ] ) ) {
 				$new_data[ 'featured_image' ] = $new_data[ $this->get_field_name('post_image') ];
@@ -84,12 +84,13 @@ if( !class_exists( 'ArtistListModule' ) ){
         }
       }
       /** Finally, go through data artists, and append them */
-      $data[ 'artists' ] = array_values( array_unique( array_merge( $artists, $data[ 'artists' ] ) ) );
+      $data[ 'artists' ] = array_values( array_filter( array_unique( array_merge( $artists, (array)$data[ 'artists' ] ) ) ) );
       /** Now run our query */
       $wp_query = new WP_Query( array(
         'post__in' => $data[ 'artists' ],
         'post_type' => 'artist',
-        'orderby' => 'post__in',
+        'orderby' => $data['order_by'],
+        'order' => 'ASC',
         'nopaging' => true,
       ) );
       /** Add map for classes and images based on columns amount */
@@ -256,13 +257,13 @@ if( !class_exists( 'ArtistListModule' ) ){
     public function admin_text( $data ){
       return strip_tags( $data[ 'title' ] );
     }
-    
+
     public function admin_js() {
 			$js = '
 				cfct_builder.addModuleLoadCallback("'.$this->id_base.'", function() {
 					'.$this->cfct_module_tabs_js().'
 				});
-				
+
 				cfct_builder.addModuleSaveCallback("'.$this->id_base.'", function() {
 					// find the non-active image selector and clear his value
 					$("#'.$this->id_base.'-image-selectors .cfct-module-tab-contents>div:not(.active)").find("input:hidden").val("");
@@ -272,7 +273,7 @@ if( !class_exists( 'ArtistListModule' ) ){
 			$js .= $this->global_image_selector_js('global_image', array('direction' => 'horizontal'));
 			return $js;
 		}
-    
+
     function post_image_selector( $data = false, $prefix = '' ) {
 			$name = !empty( $prefix ) ? $prefix . '_post_image' : 'post_image';
       if (isset($_POST['args'])) {
@@ -281,7 +282,7 @@ if( !class_exists( 'ArtistListModule' ) ){
 			else {
 				$ajax_args = null;
 			}
-      
+
 			$selected = 0;
 			if (!empty($data[$this->get_field_id( $name )])) {
 				$selected = $data[$this->get_field_id( $name )];
@@ -303,8 +304,8 @@ if( !class_exists( 'ArtistListModule' ) ){
 
 			return $this->image_selector('post', $args);
 		}
-		
-		function global_image_selector( $data = false, $prefix = '' ) {		
+
+		function global_image_selector( $data = false, $prefix = '' ) {
       $name = !empty( $prefix ) ? $prefix . '_global_image' : 'global_image';
 			$selected = 0;
 			if (!empty($data[$this->get_field_id( $name )])) {
@@ -325,7 +326,7 @@ if( !class_exists( 'ArtistListModule' ) ){
 
 			return $this->image_selector('global', $args);
 		}
-    
+
     // Content Move Helpers
 
 		protected $reference_fields = array( 'global_image', 'post_image', 'featured_image' );
@@ -357,6 +358,6 @@ if( !class_exists( 'ArtistListModule' ) ){
 
 			return $data;
 		}
-    
+
   }
 }
