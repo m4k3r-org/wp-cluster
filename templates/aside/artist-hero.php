@@ -13,13 +13,13 @@ global $wp_query;
 extract( $data = wp_festival()->extend( array(
   // Artist data
   'title' => get_the_title(),
-  'bg_img_src' => wp_festival()->get_artist_image_link( get_the_ID(), array( 'type' => 'landscapeImage' ) ),
-  'art_img_src' => wp_festival()->get_artist_image_link( get_the_ID(), array( 'type' => 'headshotImage' ) ),
+  'bg_img_src' => wp_festival()->get_artist_image_link( get_the_ID(), array( 'type' => 'landscapeImage', 'width' => 890, 'height' => 460 ) ),
+  'art_img_src' => wp_festival()->get_artist_image_link( get_the_ID(), array( 'type' => 'headshotImage', 'width' => 150, 'height' => 150 ) ),
   'date' => ( wp_festival()->get_artist_perfomance_date( get_the_ID() ) ),
   
   // Styles
   'image_alignment' => 'center center',
-  'box_height' => 500,
+  'box_height' => 460,
   
   // Social data
   'fb_like' => true,
@@ -44,7 +44,20 @@ extract( $data = wp_festival()->extend( array(
               <div class="row">
                 <div class="col-md-6">
                   <?php if (!empty($title)) : ?>
-                    <h2 class="title"><?php echo $title; ?></h2>
+                    <div class="row">
+                      <?php if( !empty( $art_img_src ) ) : ?>
+                        <div class="col-md-4">
+                          <img class="img-responsive" src="<?php echo $art_img_src; ?>" alt="<?php echo $title; ?>" />
+                        </div>
+                        <div class="col-md-8">
+                          <h2 class="cfct-mod-title"><?php echo $title; ?></h2>
+                        </div>
+                      <?php else : ?>
+                        <div class="col-md-12">
+                          <h2 class="cfct-mod-title"><?php echo $title; ?></h2>
+                        </div>
+                      <?php endif; ?>
+                    </div>
                   <?php endif; ?>
                 </div>
                 <div class="col-md-6 share-buttons-wrapper">
