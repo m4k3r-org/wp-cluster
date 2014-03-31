@@ -53,6 +53,9 @@
   RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(?:origin\.)?(assets|static|cache|media)\.(.*)::/(?:assets/|cache/|media/|static/)?(.*)$
   RewriteCond %{DOCUMENT_ROOT}/static/storage/%2/%1/%3 -f
   RewriteRule ^.*$ /static/storage/%2/%1/%3 [L]
+  
+  # Rewrite anything that begins with wp-content/uploads to media
+  RewriteRule ^wp-content/uploads/(.*)$ /media/$1 [L]
 
   # Rewrite local when the domain name isn't involved
   RewriteCond %{REQUEST_FILENAME} !-f
