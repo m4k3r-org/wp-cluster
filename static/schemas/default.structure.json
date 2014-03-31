@@ -225,6 +225,13 @@
               "logoImage",
               "galleryImages"
             ]
+          },
+          "view": {
+            "title": "Page View Settings",
+            "fields": [
+              "viewHeroHeight",
+              "viewHeroAlignment"
+            ]
           }
         }
       }
@@ -369,6 +376,29 @@
         "id": "usernameYoutube",
         "name": "Youtube",
         "desc": "e.g. username - Videos from a specific user name. #designchemical\n - Videos from a search. 'Playlist Title/8BCDD04DE8F771B2' - Videos from\n a playlist."
+      },
+      "viewHeroHeight": {
+        "id": "viewHeroHeight",
+        "name": "Box (Hero) Height",
+        "desc": "Default height is 400px. Leave field empty to have default value."
+      },
+      "viewHeroAlignment": {
+        "id": "viewHeroAlignment",
+        "name": "Image Alignment",
+        "type": "select",
+        "std": "center bottom",
+        "desc": "Background Image Alignment of Hero",
+        "options": {
+          "left top": "top left",
+          "center top": "top center",
+          "right top": "top right",
+          "left center": "center left",
+          "center center": "center center",
+          "right center": "center right",
+          "left bottom": "bottom left",
+          "center bottom": "bottom center",
+          "right bottom": "bottom right"
+        }
       }
     },
     "taxonomies": {
