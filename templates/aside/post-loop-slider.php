@@ -17,7 +17,7 @@ extract( $data = wp_festival()->extend( array(
 ?>
 
 <?php if( $wp_query->have_posts() ) : ?>
-  <div class="posts-loop-module">
+  <div class="сontainer posts-loop-module">
     <div class="row">
       <div class="col-md-12">
         <div class="carousel-wrap ">
