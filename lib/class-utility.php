@@ -30,6 +30,7 @@ namespace UsabilityDynamics\Festival {
         switch( $post[ 'post_type' ] ) {
       
           case 'artist':
+            //** Get related perfomances */
             $perfomances = $wpdb->get_col( "
               SELECT post_id 
                 FROM {$wpdb->postmeta} 
@@ -45,6 +46,15 @@ namespace UsabilityDynamics\Festival {
                 }
               }
             }
+            //** Try to get IDs for Social Streams */
+            $post[ 'socialStreams' ] = array();
+            if( !empty( $post[ 'socialLinks' ] ) && is_array( $post[ 'socialLinks' ] ) ) {
+              foreach( $post[ 'socialLinks' ] as $link ) {
+                if( $sdata = self::maybe_get_sn_data( $link ) ) {
+                  $post[ 'socialStreams' ][ $sdata[ 'network' ] ] = $sdata[ 'uid' ];
+                }
+              }
+            }
             break;
             
         }
@@ -53,6 +63,95 @@ namespace UsabilityDynamics\Festival {
       
       return $post;
     
+    }
+    
+    /**
+     * Parses social url link and returns network, username and username ID if success.
+     *
+     * @return array
+     * @author peshkov@UD
+     * @since 0.1.0
+     */
+    static public function maybe_get_sn_data( $url ) {
+      
+      //** Try to get username from url */
+      preg_match( "#[^\/]*$#", $url, $matches );
+      if( empty( $matches[0] ) ) {
+        return false;
+      }
+      
+      $data = array(
+        'network' => '',
+        'username' => $matches[0],
+        'uid' => $matches[0], // In some cases username == uid
+      );
+      
+      //** Try to determine social network and get username ID */
+      switch( true ) {
+      
+        //* YOUTUBE */
+        case ( strpos( $url, 'youtube' ) !== false ):
+          $data[ 'network' ] = 'youtube';
+          break;
+        
+        //* TWITTER */
+        case ( strpos( $url, 'twitter' ) !== false ):
+          $data[ 'network' ] = 'twitter';
+          break;
+        
+        //* FACEBOOK */
+        case ( strpos( $url, 'facebook' ) !== false ):
+          $data[ 'network' ] = 'facebook';
+          //** Try to get information about user from facebook by username */
+          $r = wp_safe_remote_get( "http://graph.facebook.com/{$data[ 'username' ]}" );
+          //* Validate our response */
+          if( 
+            empty( $r[ 'body' ] ) || 
+            !( $d = json_decode( $r[ 'body' ], true ) ) ||
+            !isset( $d[ 'id' ] )
+          ) {
+            return false;
+          }
+          $data[ 'uid' ] = $d[ 'id' ];
+          break;
+        
+        //* INSTAGRAM */
+        case ( strpos( $url, 'instagram' ) !== false ):
+          $data[ 'network' ] = 'instagram';
+          //** Determine if we have access_token */
+          $access_token = wp_festival()->get( 'configuration.social_stream.instagram.access_token' );
+          if( empty( $access_token ) ) {
+            return false;
+          }
+          //** Search for user with the similar username */
+          $r = wp_safe_remote_get( "https://api.instagram.com/v1/users/search?q={$data[ 'username' ]}&access_token={$access_token}" );
+          //* Validate our response */
+          if( 
+            empty( $r[ 'body' ] ) || 
+            !( $d = json_decode( $r[ 'body' ], true ) ) || 
+            !isset( $d[ 'meta' ][ 'code' ] ) || 
+            $d[ 'meta' ][ 'code' ] !== 200 ||
+            empty( $d[ 'data' ] ) ||
+            !is_array( $d[ 'data' ] )
+          ) {
+            return false;
+          }
+          //** Now, go through the response and try to get our user. */
+          foreach ( $d[ 'data' ] as $user ) {
+            if( $user[ 'username' ] == $data[ 'username' ] ) {
+              if( !isset( $user[ 'id' ] ) ) {
+                return false;
+              }
+              $data[ 'uid' ] = $user[ 'id' ];
+              break;
+            }
+          }
+          break;
+      
+      }
+      
+      return $data;
+      
     }
     
     /**

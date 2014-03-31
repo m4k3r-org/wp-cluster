@@ -202,15 +202,6 @@
         },
         "taxonomies": [],
         "meta": {
-          "social_stream": {
-            "title": "Social Stream ( Search For )",
-            "fields": [
-              "usernameFacebook",
-              "usernameInstagram",
-              "usernameTwitter",
-              "usernameYoutube"
-            ]
-          },
           "links": {
             "fields": [
               "socialLinks",
@@ -356,26 +347,6 @@
         "name": "Ticket URL",
         "desc": "The link for purchasing tickets",
         "type": "url"
-      },
-      "usernameFacebook": {
-        "id": "usernameFacebook",
-        "name": "Facebook",
-        "desc": "e.g. 112372345237465 - Facebook page wall posts. 'Facebook \nTimeline/376995711728' - Facebook page gallery images (Enter the text \nyou would like to show for the facebook gallery name followed by \"/\" \nfollowed by the page gallery ID)."
-      },
-      "usernameInstagram": {
-        "id": "usernameInstagram",
-        "name": "Instagram",
-        "desc": "e.g. !123456 - The user feed will show the latest posts from a \nspecific user ID. @123456 - To display the latest posts for a specific \nlocation. #london - To display the latest posts for a specific tag. \n?55.123/-1.345/1000 - To display the latest posts for a geographical \nlocation you need 3 parameters - latitude, longitude and distance(in \nmeters up to 5000m). \n!123456,@123456,?55.123/-1.345/1000,#london,#newyork - Multiple search."
-      },
-      "usernameTwitter": {
-        "id": "usernameTwitter",
-        "name": "Twitter",
-        "desc": "e.g. google - Tweets from a specific user name. /9927875 - Tweets from a list. #london - Tweets from a search."
-      },
-      "usernameYoutube": {
-        "id": "usernameYoutube",
-        "name": "Youtube",
-        "desc": "e.g. username - Videos from a specific user name. #designchemical\n - Videos from a search. 'Playlist Title/8BCDD04DE8F771B2' - Videos from\n a playlist."
       },
       "viewHeroHeight": {
         "id": "viewHeroHeight",
