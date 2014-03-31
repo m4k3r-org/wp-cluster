@@ -26,7 +26,7 @@ define( 'app.main', [ 'jquery', 'skrollr' ], function( jQuery ) {
 
       //** Inits sticky for all modules which have .sticky selector */
       if ( jQuery(window).width() > 990 ) {
-        var st = parseInt( jQuery( ".navbar-top" ).height() ) + 30;
+        var st = parseInt( jQuery( ".navbar-top" ).height() ) + 33;
         var sb = parseInt( jQuery( "footer" ).outerHeight() ) + 109;
         jQuery( ".module.sticky" ).parents('.module-container').each( function( i, e ) {
           jQuery( e ).css( 'width', jQuery( e ).innerWidth() + 'px' );
