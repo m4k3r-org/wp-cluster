@@ -14,7 +14,8 @@
     <div class="row">
       <div class="col-md-12">
 
-        <img class="splash-img img-responsive" src="<?php echo get_stylesheet_directory_uri().'/images/404.png' ?>" alt="404" />
+        <?php $_404_img = ( $_404_img = get_theme_mod( '404_page' ) ) ? $_404_img : get_stylesheet_directory_uri().'/images/404.png' ?>
+        <img id="404_image_page" class="404-image splash-img img-responsive" src="<?php echo $_404_img; ?>" alt="404" />
 
         <h2>Sorry, but the requested page was not found.</h2>
 

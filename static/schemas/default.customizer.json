@@ -18,9 +18,13 @@
       "title": "l10n.styled_button_colors",
       "priority": 45
     },
-    "festival_images": {
+    "festival_bg_images": {
       "title": "l10n.background_images",
       "priority": 50
+    },
+    "festival_images": {
+      "title": "l10n.images",
+      "priority": 55
     }
   },
   "settings": [
@@ -48,16 +52,23 @@
     {
       "key": "header_banner_bg_image",
       "label": "l10n.header_banner_bg_image",
-      "section": "festival_images",
+      "section": "festival_bg_images",
       "control": "background-image",
       "selector": "#header .section-header-banner"
     },
     {
       "key": "sticky_bar_logo",
       "label": "l10n.sticky_bar_logo",
-      "section": "festival_images",
+      "section": "festival_bg_images",
       "control": "background-image",
       "selector": "#header nav.navbar-top .navbar-brand a"
+    },
+    {
+      "key": "404_page",
+      "label": "l10n.404_page",
+      "section": "festival_images",
+      "control": "image",
+      "selector": "#404_image_page"
     },
     {
       "key": "button_background_color",
