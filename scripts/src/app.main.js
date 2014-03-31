@@ -25,17 +25,18 @@ define( 'app.main', [ 'jquery', 'skrollr' ], function( jQuery ) {
       jQuery( ".navbar-top" ).sticky();
 
       //** Inits sticky for all modules which have .sticky selector */
-      var st = parseInt( jQuery( ".navbar-top" ).height() ) + 30;
-      var sb = parseInt( jQuery( "footer" ).outerHeight() ) + 109; 
-      jQuery( ".module.sticky" ).parents('.module-container').each( function( i, e ) {
-        jQuery( e ).css( 'width', jQuery( e ).innerWidth() + 'px' );
-        jQuery( e ).css( 'height', jQuery( e ).innerHeight() + 'px' );
-        jQuery( e ).sticky({
-          topSpacing: st,
-          bottomSpacing: sb
+      if ( jQuery(window).width() > 990 ) {
+        var st = parseInt( jQuery( ".navbar-top" ).height() ) + 30;
+        var sb = parseInt( jQuery( "footer" ).outerHeight() ) + 109;
+        jQuery( ".module.sticky" ).parents('.module-container').each( function( i, e ) {
+          jQuery( e ).css( 'width', jQuery( e ).innerWidth() + 'px' );
+          jQuery( e ).css( 'height', jQuery( e ).innerHeight() + 'px' );
+          jQuery( e ).sticky({
+            topSpacing: st,
+            bottomSpacing: sb
+          });
         });
-
-      } );
+      }
 
     });
 
