@@ -53,7 +53,7 @@ extract( $data = wp_festival()->extend( array(
                 </div>
               </div>
             </div>
-            <?php if( $counter >= 3 ) : ?>
+            <?php if( $counter > 3 ) : ?>
             <ol class="carousel-indicators">
               <?php $step = 0; ?>
               <?php for( $i = 0; $i < $counter; $i+=3 ) : ?>
