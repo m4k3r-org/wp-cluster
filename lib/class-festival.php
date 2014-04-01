@@ -367,6 +367,29 @@ namespace UsabilityDynamics {
       // Alter gallery container to load masonry
       add_filter('gallery_style', array( $this, 'gallery_attributes' ));
 
+      // Temp hack to make navbar tickets link work. Needs to be replaced with settings page.
+      add_filter('navbar-tickets-link', array( $this, 'ticket_link' ));
+
+    }
+
+    /**
+     * Temp hack to make navbar tickets link work
+     * @param type $link
+     * @return type
+     */
+    public static function ticket_link( $link ) {
+
+      switch( get_blog_details()->domain ) {
+        case 'smftampa.com':
+          $link = 'https://www.eventbrite.com/e/sunset-music-festival-2014-tickets-10047942667';
+          break;
+        case 'umesouthpadre.com':
+          $link = 'https://www.eventbrite.com/e/ume-2014-tickets-9467005067';
+          break;
+        default: break;
+      }
+
+      return $link;
     }
 
     /**
@@ -389,7 +412,7 @@ namespace UsabilityDynamics {
       }
       return $fields;
     }
-    
+
     /**
      * Adds settings to customizer
      */
@@ -523,7 +546,7 @@ namespace UsabilityDynamics {
       } elseif ( wp_script_is( 'jquery.spin', 'enqueued' ) ) {
         wp_dequeue_script( 'jquery.spin' );
       }
-      
+
       // Disable WP Gallery styles
       add_filter( 'use_default_gallery_style', function () {
         return false;
