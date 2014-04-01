@@ -6,9 +6,11 @@ main.full-width .module {
   margin-left: -15px;
   margin-right: -15px;
   
-  @media ( max-width: @screen-sm-max ) {
-    margin-left: 0px;
-    margin-right: 0px;
+  @media ( max-width: @screen-sm-max ) {    
+    & {
+      margin-left: 0px;
+      margin-right: 0px;
+    }
   }
   
 }
