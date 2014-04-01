@@ -34,9 +34,9 @@ $artist = wp_festival()->get_post_data( get_the_ID() );
 $perfomance = !empty( $artist[ 'perfomances' ][ 0 ] ) ? $artist[ 'perfomances' ][ 0 ] : false;
 
 //* Get information about perfomance */
-$pdate = strtotime( $perfomance[ 'startDateTime' ] );
-$pday = ( $date_format = get_option( 'date_format' ) ) ? date( $date_format, $pdate ) : false;
-$ptime = ( (int)date( 'G', $pdate ) && (int)date( 'i', $pdate ) && $time_format = get_option( 'time_format' ) ) ? date( $time_format, $pdate ) : false;
+$pdate = $perfomance ? strtotime( $perfomance[ 'startDateTime' ] ) : false;
+$pday = ( $pdate && ( $date_format = get_option( 'date_format' ) ) ) ? date( $date_format, $pdate ) : false;
+$ptime = ( $pdate && (int)date( 'G', $pdate ) && (int)date( 'i', $pdate ) && ( $time_format = get_option( 'time_format' ) ) ) ? date( $time_format, $pdate ) : false;
 
 //echo "<pre>"; var_dump( $ptime ); echo "</pre>"; die();
 
