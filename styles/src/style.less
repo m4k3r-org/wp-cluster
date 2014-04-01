@@ -38,6 +38,18 @@ span.hr {
 main {
   padding-top: 4em;
   padding-bottom: 5em;
+
+  .article-content {
+    .cfct-mod-content {
+      a {
+        display: inline;
+        padding-left: 0;
+        &:before {
+          content: none;
+        }
+      }
+    }
+  }
 }
 
 .main-title {
@@ -213,7 +225,7 @@ main {
     float: right;
     margin-right: 213px;
   }
-  
+
 }
 
 .navbar-brand {
@@ -684,7 +696,7 @@ footer {
   .container-inner {
     padding: 30px;
   }
-  
+
   main .section {
     margin-bottom: 30px;
   }
