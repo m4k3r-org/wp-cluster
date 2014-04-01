@@ -50,7 +50,7 @@ namespace UsabilityDynamics\Festival {
             $post[ 'socialStreams' ] = array();
             if( !empty( $post[ 'socialLinks' ] ) && is_array( $post[ 'socialLinks' ] ) ) {
               foreach( $post[ 'socialLinks' ] as $link ) {
-                if( $sdata = self::maybe_get_sn_data( $link ) ) {
+                if( is_string( $link ) && $sdata = self::maybe_get_sn_data( $link ) ) {
                   $post[ 'socialStreams' ][ $sdata[ 'network' ] ] = $sdata[ 'uid' ];
                 }
               }
