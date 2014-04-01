@@ -93,11 +93,27 @@ footer {
         .share-buttons-list {
           float: right;
           margin: 20px 0 0 0;
+          
+          @media only screen and ( max-width: @screen-xs ) {
+            & {
+              margin-right: -10px;
+              margin-left: -5px;
+            }
+          }
 
           li {
             float: left;
             margin: 0 6px;
             max-width: 100px;
+            
+            @media only screen and ( max-width: @screen-xs ) {
+              & {
+                max-width: 90px;
+              }
+              &.gp-share {
+                max-width: 75px;
+              }
+            }
 
             &:last-child {
               margin-right: 0;
