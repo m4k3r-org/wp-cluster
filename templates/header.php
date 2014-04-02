@@ -16,8 +16,10 @@
 <!--[if gt IE 8]><!--> <html class="no-js" <?php language_attributes(); ?>> <!--<![endif]-->
 <head>
   <title><?php
-    global $page, $paged;
     wp_title( '|', true, 'right' );
+    
+    /*
+    global $page, $paged;
     bloginfo( 'name' );
     $site_description = get_bloginfo( 'description', 'display' );
     if ( $site_description && ( is_home() || is_front_page() ) )
@@ -25,6 +27,7 @@
 
     if ( $paged >= 2 || $page >= 2 )
       echo ' | ' . sprintf( __( 'Page %s', wp_festival( 'domain' ) ), max( $paged, $page ) );
+    //*/
     ?>
   </title>
   <?php wp_head(); ?>
