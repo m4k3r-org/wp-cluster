@@ -217,13 +217,20 @@ main {
 .is-sticky {
 
   .navbar-brand {
-    display: block;
+    display: block !important;
   }
 
   .navbar-nav {
     margin-left: 0;
     float: right;
     margin-right: 213px;
+    
+    @media ( max-width: @screen-sm-max ) {
+      & {
+        margin-right: 46px;
+      }
+    }
+    
   }
 
 }

@@ -5,12 +5,14 @@
 main.full-width .module {
   margin-left: -15px;
   margin-right: -15px;
-
-  @media ( max-width: @screen-sm-max ) {
-    margin-left: 0px;
-    margin-right: 0px;
+  
+  @media ( max-width: @screen-sm-max ) {    
+    & {
+      margin-left: 0px;
+      margin-right: 0px;
+    }
   }
-
+  
 }
 
 .cfct-build-module-edit-link {
@@ -91,11 +93,27 @@ footer {
         .share-buttons-list {
           float: right;
           margin: 20px 0 0 0;
+          
+          @media only screen and ( max-width: @screen-xs ) {
+            & {
+              margin-right: -10px;
+              margin-left: -5px;
+            }
+          }
 
           li {
             float: left;
             margin: 0 6px;
             max-width: 100px;
+            
+            @media only screen and ( max-width: @screen-xs ) {
+              & {
+                max-width: 90px;
+              }
+              &.gp-share {
+                max-width: 75px;
+              }
+            }
 
             &:last-child {
               margin-right: 0;
@@ -723,7 +741,7 @@ main article.listing-post {
 
   }
 
-} 
+}
 
 #carousel-small {
   .carousel-indicators {
