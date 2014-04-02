@@ -5,14 +5,14 @@
 main.full-width .module {
   margin-left: -15px;
   margin-right: -15px;
-  
-  @media ( max-width: @screen-sm-max ) {    
+
+  @media ( max-width: @screen-sm-max ) {
     & {
       margin-left: 0px;
       margin-right: 0px;
     }
   }
-  
+
 }
 
 .cfct-build-module-edit-link {
@@ -93,7 +93,7 @@ footer {
         .share-buttons-list {
           float: right;
           margin: 20px 0 0 0;
-          
+
           @media only screen and ( max-width: @screen-xs ) {
             & {
               margin-right: -10px;
@@ -105,7 +105,7 @@ footer {
             float: left;
             margin: 0 6px;
             max-width: 100px;
-            
+
             @media only screen and ( max-width: @screen-xs ) {
               & {
                 max-width: 90px;
@@ -409,6 +409,20 @@ main .cfct-module-callout {
 }
 .module {
   .cfct-mod-content {
+    ul {
+      margin-bottom: 20px;
+      padding-left: 20px;
+      li {
+        list-style: disc outside none;
+      }
+    }
+    ol {
+      margin-bottom: 20px;
+    }
+  }
+}
+.container-inner {
+  .article-content {
     ul {
       margin-bottom: 20px;
       padding-left: 20px;
