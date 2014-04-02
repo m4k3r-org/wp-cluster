@@ -497,13 +497,17 @@ article.comments {
 ============================ */
 
 /* Artist Hero */
-main .artist-hero {
+main .artist-hero.cfct-module-hero-image .cfct-module-hero-content .row  {
+
+  .share-buttons-wrapper {
+    bottom: 35px;
+  }
   
   .artist-information {
+    padding-right: 0;
     
     img {
       float: left;
-      margin-right: 15px;
       padding: 3px;
       background-color: #fff;
     }
@@ -511,6 +515,8 @@ main .artist-hero {
     h2.cfct-mod-title {
       margin-top: 30px;
       font-size: 275%;
+      word-wrap: break-word;
+      padding-left: 174px;
     }
     
     h2, a, span, em, div, li {
@@ -519,11 +525,17 @@ main .artist-hero {
     
     ul {
       margin: 0;
+      padding-left: 174px;
+      list-style: none outside none;
       
       li {
         display: inline-block;
         margin: 0 20px 0 0;
-        font-size: 75%;
+        font-size: 90%;
+        
+        .icon {
+          margin-right: 3px;
+        }
         
         &:last-child {
           margin-right: 0;
@@ -532,12 +544,45 @@ main .artist-hero {
     
     }
     
-    @media ( max-width: @screen-sm-max ) {
-      
-      & { 
-        text-align: center;
+  }
+  
+  @media ( max-width: @screen-md-max ) {
+    
+    .share-buttons-wrapper {
+    
+      .share-buttons-list {
+        margin: 20px auto 0;
+        float: none;
+        display: block;
+        width: 280px;
+        padding-left: 20px;
       }
     
+    }
+    
+  }
+  
+  @media ( min-width: @screen-md ) and ( max-width: @screen-md-max ) {
+    
+    .artist-information {
+      width: 100%;
+    }
+    
+    .share-buttons-wrapper {
+      bottom: 0;
+    }
+    
+  }
+    
+  @media ( max-width: @screen-sm-max ) {
+  
+    .artist-information {
+      text-align: center;
+    
+      h2.cfct-mod-title, ul {
+        padding-left: 0;
+      }
+      
       img {
         float: none;
         margin: 0;
@@ -548,24 +593,7 @@ main .artist-hero {
       }
     
     }
-    
-  }
   
-  .cfct-module-hero-content .row .share-buttons-wrapper {
-    bottom: 35px;
-    
-    @media ( max-width: @screen-sm-max ) {
-    
-      .share-buttons-list {
-        margin: 20px auto 0;
-        float: none;
-        display: block;
-        width: 320px;
-        padding-left: 20px;
-      }
-    
-    }
-    
   }
   
 }
