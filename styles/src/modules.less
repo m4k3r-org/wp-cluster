@@ -406,7 +406,27 @@ main .cfct-module-callout {
     }
 
   }
+  
+  @media ( max-width: @screen-xs-max ) {
+  
+    .cfct-mod-title {
+      display: block;
+      text-align: center;
+    }
+  
+    .cfct-mod-image {
+      float: none;
+      margin: 0 auto;
+    }
+    
+    .cfct-mod-content {
+      margin-top: 10px;
+    }
+  
+  }
+  
 }
+
 .module {
   .cfct-mod-content {
     ul {
@@ -421,6 +441,7 @@ main .cfct-module-callout {
     }
   }
 }
+
 .container-inner {
   .article-content {
     ul {
