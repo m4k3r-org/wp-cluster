@@ -472,9 +472,11 @@ footer {
       border-left: 1px solid #E4E4E4;
       border-right: 1px solid #E4E4E4;
       .collapse-sign {
-        float: right;
+        position: absolute;
         font-size: 15px;
         line-height: 19px;
+        right: 0;
+        top: ~"calc(50% - 10px)";
       }
       .icon-plus {
         display: none;
@@ -494,6 +496,7 @@ footer {
         }
       }
       .panel-title {
+        position: relative;
         a {
           transition: .5s all;
           -webkit-transition: .5s all;
@@ -502,6 +505,8 @@ footer {
           text-transform: none;
           outline: none;
           color: @default-color;
+          width: ~"calc(100% - 25px)";
+          display: block;
         }
       }
     }
