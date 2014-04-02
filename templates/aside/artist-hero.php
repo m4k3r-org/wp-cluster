@@ -36,7 +36,7 @@ $perfomance = !empty( $artist[ 'perfomances' ][ 0 ] ) ? $artist[ 'perfomances' ]
 //* Get information about perfomance */
 $pdate = $perfomance ? strtotime( $perfomance[ 'startDateTime' ] ) : false;
 $pday = ( $pdate && ( $date_format = get_option( 'date_format' ) ) ) ? date( $date_format, $pdate ) : false;
-$ptime = ( $pdate && (int)date( 'G', $pdate ) && (int)date( 'i', $pdate ) && ( $time_format = get_option( 'time_format' ) ) ) ? date( $time_format, $pdate ) : false;
+$ptime = ( $pdate && (int)date( 'G', $pdate ) && ( $time_format = get_option( 'time_format' ) ) ) ? date( $time_format, $pdate ) : false;
 
 //echo "<pre>"; var_dump( $ptime ); echo "</pre>"; die();
 
@@ -49,7 +49,7 @@ $ptime = ( $pdate && (int)date( 'G', $pdate ) && (int)date( 'i', $pdate ) && ( $
           <div class="cfct-module-hero-wrap" >
             <div class="cfct-module-hero-content">
               <div class="row">
-                <div class="col-md-6 artist-information">
+                <div class="col-md-7 artist-information">
                   <?php if (!empty($title)) : ?>
                     <?php if( !empty( $art_img_src ) ) : ?>
                       <img src="<?php echo $art_img_src; ?>" alt="<?php echo $title; ?>" />
