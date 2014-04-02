@@ -10,6 +10,9 @@
 </div>-->
 
 <div class="panel-group collapse-module" id="<?php echo $data['module_id']; ?>">
+  <?php if ( !empty( $data[$this->get_field_name( 'title' )] ) ): ?>
+  <h2><?php echo $data[$this->get_field_name( 'title' )]; ?></h2>
+  <?php endif; ?>
   <?php if ( !empty( $data[$this->get_field_name( 'bars' )] ) && is_array( $data[$this->get_field_name( 'bars' )] ) ): ?>
   <?php foreach( $data[$this->get_field_name( 'bars' )] as $key => $bar ): ?>
   <div class="panel panel-default">

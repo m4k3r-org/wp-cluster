@@ -26,6 +26,11 @@ jQuery(document).ready(function(){
 </style>
 
 <div class="collapse-form">
+  <fieldset class="cfct-form-section">
+    <legend><?php _e( 'Title' ); ?></legend>
+
+    <input type="text" value="<?php echo $data[$this->get_field_name( 'title' )]; ?>" name="<?php echo $this->get_field_name( 'title' ) ?>" />
+  </fieldset>
 
   <fieldset class="cfct-form-section">
     <legend><?php _e( 'Bars' ); ?></legend>
