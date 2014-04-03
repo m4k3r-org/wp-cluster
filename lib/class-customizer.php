@@ -36,7 +36,7 @@ namespace UsabilityDynamics\Festival {
      *
      */
     public static function _get_system_settings() {
-      $short_path = '/static/schemas/default.customizer.json';
+      $short_path = '/static/schemas/schema.customizer.json';
       $file = get_stylesheet_directory() . $short_path;
       if( !file_exists( $file ) ) {
         $file = get_template_directory() . $short_path;

@@ -85,8 +85,8 @@ namespace UsabilityDynamics {
         'version'   => $this->version
       ));
 
-      // Register Custom Post Types and set their taxonomies
-      $this->structure( $this->get( 'structure' ) );
+      // Register Custom Post Types, meta and set their taxonomies
+      $this->structure( $this->get_schema_structure( '/static/schemas/schema.structure.json' ) );
 
       // Configure API Methods.
       $this->api( array(
@@ -731,19 +731,6 @@ namespace UsabilityDynamics {
     private function load_shortcodes() {
       // Inits shortcodes
       \UsabilityDynamics\Shortcode\Utility::maybe_load_shortcodes( get_stylesheet_directory() . '/lib/shortcodes' );
-    }
-
-    /**
-     * Determine if called method is stored in Utility class.
-     * Allows to call \UsabilityDynamics\Festival\Utility methods directly.
-     *
-     * @author peshkov@UD
-     */
-    public function __call( $name , $arguments ) {
-      if( !is_callable( '\UsabilityDynamics\Festival\Utility', $name ) ) {
-        die( "Method $name is not found." );
-      }
-      return call_user_func_array( array( '\UsabilityDynamics\Festival\Utility', $name ), $arguments );
     }
 
   }
