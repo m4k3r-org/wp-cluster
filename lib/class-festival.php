@@ -370,6 +370,21 @@ namespace UsabilityDynamics {
       // Temp hack to make navbar tickets link work. Needs to be replaced with settings page.
       add_filter('navbar-tickets-link', array( $this, 'ticket_link' ));
 
+      // Auto-wrap videos with container to make them responsive
+      add_filter('embed_oembed_html', array( $this, 'wrap_video' ), 99, 4);
+
+    }
+
+    /**
+     * Auto-wrap videos with container to make them responsive
+     * @param type $html
+     * @param type $url
+     * @param type $attr
+     * @param type $post_id
+     * @return type
+     */
+    function wrap_video($html, $url, $attr, $post_id) {
+      return '<div class="video-container">' . $html . '</div>';
     }
 
     /**
