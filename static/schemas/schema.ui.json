@@ -1,7 +1,7 @@
 {
   "configuration": {
-    "menu": "themes.php",
-    "submenu": {
+    "main_menu": "themes.php",
+    "secondary_menu": {
       "page_title": "Theme Settings",
       "menu_title": "Theme Settings",
       "capability": "edit_theme_options",
@@ -42,34 +42,41 @@
       "menu": "social"
     }
   },
-  "fields": {
-    "configuration.social_stream.instagram.client_id": {
+  "fields": [
+    {
+      "id": "configuration.social_stream.instagram.client_id",
       "name": "Client ID",
       "section": "instagram"
     },
-    "configuration.social_stream.instagram.access_token": {
+    {
+      "id": "configuration.social_stream.instagram.access_token",
       "name": "Access Token",
       "section": "instagram"
     },
-    "configuration.social_stream.twitter.consumer_key": {
+    {
+      "id": "configuration.social_stream.twitter.consumer_key",
       "name": "Consumer Key",
       "section": "twitter"
     },
-    "configuration.social_stream.twitter.consumer_secret": {
+    {
+      "id": "configuration.social_stream.twitter.consumer_secret",
       "name": "Consumer Secret",
       "section": "twitter"
     },
-    "configuration.social_stream.twitter.access_token": {
+    {
+      "id": "configuration.social_stream.twitter.access_token",
       "name": "Access Token",
       "section": "twitter"
     },
-    "configuration.social_stream.twitter.access_token_secret": {
+    {
+      "id": "configuration.social_stream.twitter.access_token_secret",
       "name": "Access Token Secret",
       "section": "twitter"
     },
-    "configuration.social_stream.facebook.application_id": {
+    {
+      "id": "configuration.social_stream.facebook.application_id",
       "name": "Application ID",
       "section": "facebook"
     }
-  }
+  ]
 }

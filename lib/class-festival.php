@@ -80,13 +80,18 @@ namespace UsabilityDynamics {
       $this->version = wp_get_theme()->get( 'Version' );
 
       // Initialize Settings.
-      $this->initialize(array(
+      $this->initialize( array(
         'key'       => 'festival',
         'version'   => $this->version
       ));
 
       // Register Custom Post Types, meta and set their taxonomies
-      $this->structure( $this->get_schema_structure( '/static/schemas/schema.structure.json' ) );
+      $this->structure = \UsabilityDynamics\Structure::define( $this->get_schema( '/static/schemas/schema.structure.json' ) );
+      
+      // Set Theme UI
+      if( class_exists( '\UsabilityDynamics\UI\Settings' ) ) {
+        $this->ui = new \UsabilityDynamics\UI\Settings( $this->settings, $this->get_schema( '/static/schemas/schema.ui.json' ) );
+      }
 
       // Configure API Methods.
       $this->api( array(
