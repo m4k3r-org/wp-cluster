@@ -8,15 +8,24 @@ define( 'gallery-masonry', [ 'jquery.masonry', 'jquery.colorbox' ], function() {
   return function domReady() {
     console.debug( 'masonry', 'dom ready' );
 
-    if ( jQuery(this).parents('.use-masonry').length ) {
-      jQuery(this).masonry({
-        itemSelector: '.gallery-item'
-      });
+    var _this = this;
+
+    function init( _this ) {
+      if ( jQuery( _this ).parents('.use-masonry').length ) {
+      jQuery(_this).masonry({
+          itemSelector: '.gallery-item'
+        });
+      }
+
+      if ( jQuery( _this ).parents('.use-colorbox').length ) {
+        jQuery(".gallery-icon a", jQuery(_this)).colorbox({rel:'gallery',maxWidth:"95%",maxHeight:"95%"});
+      }
     }
 
-    if ( jQuery(this).parents('.use-colorbox').length ) {
-      jQuery(".gallery-icon a", jQuery(this)).colorbox({rel:'gallery',maxWidth:"95%",maxHeight:"95%"});
-    }
+    init( this );
+    jQuery(window).load(function() {
+      init( _this );
+    });
 
     return this;
   };
