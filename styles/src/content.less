@@ -182,13 +182,13 @@ main.full-width {
   .cfct-build .module-container {
     border-width: 0;
     background: none;
-    
+
     .module {
       padding: 0;
     }
-    
+
   }
-  
+
   .article-content .cfct-build .module-container {
     box-shadow: none;
     -moz-box-shadow: none;
@@ -302,21 +302,15 @@ article.comments {
     border-bottom-style: solid;
     border-bottom-width: 1px;
 
-    h5 {
-      padding-left: 30px;
-      position: relative;
-      &:before {
-        content: "\e683";
-        font-family: 'edm';
-        left: 0;
-        position: absolute;
-        color: @default-color;
-      }
-    }
-
     h1, h2, h3, h4, h5, h5 {
       margin: 0;
       text-transform: none;
+    }
+
+    h5 {
+      i {
+        margin-right: 15px;
+      }
     }
 
   }
@@ -502,54 +496,54 @@ main .artist-hero.cfct-module-hero-image .cfct-module-hero-content .row  {
   .share-buttons-wrapper {
     bottom: 35px;
   }
-  
+
   .artist-information {
     padding-right: 0;
-    
+
     img {
       float: left;
       padding: 3px;
       background-color: #fff;
     }
-    
+
     h2.cfct-mod-title {
       margin-top: 30px;
       font-size: 275%;
       word-wrap: break-word;
       padding-left: 174px;
     }
-    
+
     h2, a, span, em, div, li {
       color: #fff;
     }
-    
+
     ul {
       margin: 0;
       padding-left: 174px;
       list-style: none outside none;
-      
+
       li {
         display: inline-block;
         margin: 0 20px 0 0;
         font-size: 90%;
-        
+
         .icon {
           margin-right: 3px;
         }
-        
+
         &:last-child {
           margin-right: 0;
         }
       }
-    
+
     }
-    
+
   }
-  
+
   @media ( max-width: @screen-md-max ) {
-    
+
     .share-buttons-wrapper {
-    
+
       .share-buttons-list {
         margin: 20px auto 0;
         float: none;
@@ -557,45 +551,45 @@ main .artist-hero.cfct-module-hero-image .cfct-module-hero-content .row  {
         width: 280px;
         padding-left: 20px;
       }
-    
+
     }
-    
+
   }
-  
+
   @media ( min-width: @screen-md ) and ( max-width: @screen-md-max ) {
-    
+
     .artist-information {
       width: 100%;
     }
-    
+
     .share-buttons-wrapper {
       bottom: 0;
     }
-    
+
   }
-    
+
   @media ( max-width: @screen-sm-max ) {
-  
+
     .artist-information {
       text-align: center;
-    
+
       h2.cfct-mod-title, ul {
         padding-left: 0;
       }
-      
+
       img {
         float: none;
         margin: 0;
       }
-      
+
       h2 {
         margin-top: 10px;
       }
-    
+
     }
-  
+
   }
-  
+
 }
 
 /* ============================
@@ -607,11 +601,11 @@ main .artist-hero.cfct-module-hero-image .cfct-module-hero-content .row  {
   input, textarea, select {
     border: 1px solid #e5e5e5;
   }
-  
+
   .gform_button {
     text-transform: uppercase;
     font-weight: bold;
   }
-  
+
 
 }
