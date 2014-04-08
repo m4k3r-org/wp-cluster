@@ -16,7 +16,7 @@
     },
     "social": {
       "id": "social",
-      "name": "l10n.social",
+      "name": "Social Streams",
       "desc": "Social Networks Credentials"
     }
   },
