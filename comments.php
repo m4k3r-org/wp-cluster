@@ -16,7 +16,7 @@
     <?php if ( have_comments() ) : ?>
       <!-- Comment section -->
       <section class="comments-list">
-        <div class="title"><h5><?php comments_number( 'No Comments', 'One Comment', '% Comments' ); ?></h5></div>
+        <div class="title"><h5><i class="icon-comments"></i><?php comments_number( 'No Comments', 'One Comment', '% Comments' ); ?></h5></div>
         <ul><?php wp_list_comments( array( 'style' => 'ul', 'short_ping' => true, 'avatar_size' => 64 ) ); ?></ul>
       </section>
     <?php endif; // have_comments() ?>
