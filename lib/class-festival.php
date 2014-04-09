@@ -87,7 +87,7 @@ namespace UsabilityDynamics {
 
       // Register Custom Post Types, meta and set their taxonomies
       $this->structure = \UsabilityDynamics\Structure::define( $this->get_schema( '/static/schemas/schema.structure.json' ) );
-      
+
       // Set Theme UI
       if( class_exists( '\UsabilityDynamics\UI\Settings' ) ) {
         $this->ui = new \UsabilityDynamics\UI\Settings( $this->settings, $this->get_schema( '/static/schemas/schema.ui.json' ) );
@@ -751,6 +751,19 @@ namespace UsabilityDynamics {
     private function load_shortcodes() {
       // Inits shortcodes
       \UsabilityDynamics\Shortcode\Utility::maybe_load_shortcodes( get_stylesheet_directory() . '/lib/shortcodes' );
+    }
+
+    /**
+     * Determine if called method is stored in Utility class.
+     * Allows to call \UsabilityDynamics\Festival\Utility methods directly.
+     *
+     * @author peshkov@UD
+     */
+    public function __call( $name , $arguments ) {
+      if( !is_callable( '\UsabilityDynamics\Festival\Utility', $name ) ) {
+        die( "Method $name is not found." );
+      }
+      return call_user_func_array( array( '\UsabilityDynamics\Festival\Utility', $name ), $arguments );
     }
 
   }
