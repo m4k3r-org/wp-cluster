@@ -298,7 +298,7 @@ namespace UsabilityDynamics {
       ));
 
       // Configure Post Types and Meta.
-      $this->structure( $this->get('structure') );
+      $this->structure = \UsabilityDynamics\Structure::define( $this->get_schema( '/static/schemas/schema.structure.json' ) );
 
       // Configure API Methods.
       $this->api(array(
