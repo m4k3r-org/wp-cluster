@@ -21,7 +21,12 @@
     }
   },
   "sections": {
-    "Links": {
+    "meta": {
+      "id": "meta",
+      "name": "Theme Meta",
+      "menu": "main"
+    },
+    "links": {
       "id": "links",
       "name": "Links",
       "menu": "main"
@@ -83,6 +88,47 @@
       "name": "Buy Tickets",
       "section": "links",
       "size": 100
+    },
+    {
+      "id": "configuration.links.video",
+      "name": "Video",
+      "section": "links",
+      "size": 100
+    },
+    {
+      "id": "configuration.meta.start_date",
+      "name": "Start Date",
+      "section": "meta"
+    },
+    {
+      "id": "configuration.meta.end_date",
+      "name": "End Date",
+      "section": "meta"
+    },
+    {
+      "id": "configuration.meta.venue",
+      "name": "Venue",
+      "section": "meta"
+    },
+    {
+      "id": "configuration.meta.city",
+      "name": "City",
+      "section": "meta"
+    },
+    {
+      "id": "configuration.meta.state",
+      "name": "State",
+      "section": "meta"
+    },
+    {
+      "id": "configuration.meta.state",
+      "name": "State",
+      "section": "meta"
+    },
+    {
+      "id": "configuration.meta.lat_lon",
+      "name": "Latitude & Longitude",
+      "section": "meta"
     }
   ]
 }
