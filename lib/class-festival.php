@@ -372,9 +372,6 @@ namespace UsabilityDynamics {
       // Alter gallery container to load masonry
       add_filter('gallery_style', array( $this, 'gallery_attributes' ));
 
-      // Temp hack to make navbar tickets link work. Needs to be replaced with settings page.
-      add_filter('navbar-tickets-link', array( $this, 'ticket_link' ));
-
       // Auto-wrap videos with container to make them responsive
       add_filter('embed_oembed_html', array( $this, 'wrap_video' ), 99, 4);
 
@@ -390,26 +387,6 @@ namespace UsabilityDynamics {
      */
     function wrap_video($html, $url, $attr, $post_id) {
       return '<div class="video-container">' . $html . '</div>';
-    }
-
-    /**
-     * Temp hack to make navbar tickets link work
-     * @param type $link
-     * @return type
-     */
-    public static function ticket_link( $link ) {
-
-      switch( get_blog_details()->domain ) {
-        case 'smftampa.com':
-          $link = 'https://www.eventbrite.com/e/sunset-music-festival-2014-tickets-10047942667';
-          break;
-        case 'umesouthpadre.com':
-          $link = 'https://www.eventbrite.com/e/ume-2014-tickets-9467005067';
-          break;
-        default: break;
-      }
-
-      return $link;
     }
 
     /**

@@ -21,9 +21,9 @@
     }
   },
   "sections": {
-    "general": {
-      "id": "general",
-      "name": "General",
+    "Links": {
+      "id": "links",
+      "name": "Links",
       "menu": "main"
     },
     "instagram": {
@@ -77,6 +77,12 @@
       "id": "configuration.social_stream.facebook.application_id",
       "name": "Application ID",
       "section": "facebook"
+    },
+    {
+      "id": "configuration.links.buy_tickets",
+      "name": "Buy Tickets",
+      "section": "links",
+      "size": 100
     }
   ]
 }

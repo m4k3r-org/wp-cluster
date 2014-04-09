@@ -11,7 +11,7 @@
   <div class="container">
 
     <div class="social-wrap">
-      <a class="btn btn-default" role="button" href="<?php echo apply_filters('navbar-tickets-link', '#'); ?>" data-track><?php _e( 'Buy Tickets', wp_festival( 'domain' ) ); ?></a>
+      <a class="btn btn-default" role="button" href="<?php echo wp_festival()->get( 'configuration.links.buy_tickets', '#' ); ?>" data-track><?php _e( 'Buy Tickets', wp_festival( 'domain' ) ); ?></a>
       <div class="no-sticky social-flex">
         <?php echo wp_festival()->nav( 'social', 2 ); ?>
       </div>
