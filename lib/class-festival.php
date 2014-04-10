@@ -251,13 +251,6 @@ namespace UsabilityDynamics {
         )
       ));
 
-      // Add Management UI.
-      $this->manage( array(
-        'id'       => 'fesival_manage',
-        'title'    => __( 'Manage', $this->domain ),
-        'template' => dirname( __DIR__ ) . '/templates/admin.manage.php'
-      ));
-
       //** Enables Customizer for Options. */
       $this->customizer();
 
