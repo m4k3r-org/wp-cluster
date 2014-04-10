@@ -214,7 +214,7 @@ namespace UsabilityDynamics\Cluster {
           /** Include the files then */
           $this->load_config( $autoload_file, $autoload_scope );
         }
-        // echo "DONE\r\n" . print_r( $this->loaded, true ); die();
+
         /** Return this own object */
         return $this;
       }

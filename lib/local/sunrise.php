@@ -25,9 +25,7 @@ if( !defined( 'SUNRISE_LOADED' ) ) {
 
 // Setup our protected constants
 $protected_constants = array(
-  'WP_PLUGIN_DIR',
   'WP_PLUGIN_URL',
-  'WP_THEME_DIR',
   'COOKIE_DOMAIN',
   'DOMAIN_CURRENT_SITE',
   'SITE_ID_CURRENT_SITE',
@@ -39,7 +37,11 @@ $protected_constants = array(
   'WP_CONTENT_URL',
   'WPMU_PLUGIN_URL',
   'WP_VENDOR_URL',
-  'WP_BASE_DOMAIN'
+  'WP_BASE_DOMAIN',
+  'UPLOADS',
+  'UPLOADBLOGSDIR',
+  'BLOGUPLOADDIR'
+
 );
 // Make sure none of them are defined
 foreach( $protected_constants as $protected_constant ){
@@ -76,30 +78,6 @@ if( $_SERVER[ 'HTTP_HOST' ] != $subdomain = str_replace( '.' . $current_blog->do
   $current_blog->subdomain = $subdomain;
 }
 
-// Now declare our dynamically generated constants for the plugin directory
-define( 'WP_PLUGIN_DIR', rtrim( WP_BASE_DIR, '/' ) . '/' . rtrim( WP_VENEER_STORAGE, '/' ) . '/' . $current_blog->domain . '/modules' );
-define( 'PLUGINDIR', WP_PLUGIN_DIR );
-define( 'WP_THEME_DIR', rtrim( WP_BASE_DIR, '/' ) . '/' . rtrim( WP_VENEER_STORAGE, '/' ) . '/' . $current_blog->domain . '/themes' );
-
-// Now declare our dynamically generated constants for any URLs
-define( 'WP_BASE_DOMAIN', $current_blog->domain );
-define( 'WP_BASE_URL', WP_DEFAULT_PROTOCOL . '://' . $current_blog->domain );
-define( 'WP_PLUGIN_URL', rtrim( WP_BASE_URL, '/' ) . '/' . rtrim( WP_VENEER_STORAGE, '/' ) . '/' . $current_blog->domain . '/modules' );
-define( 'WP_HOME', WP_BASE_URL );
-define( 'WP_SITEURL', WP_BASE_URL . '/' . WP_SYSTEM_DIRECTORY . '' );
-define( 'WP_CONTENT_URL', WP_BASE_URL . '' );
-define( 'WPMU_PLUGIN_URL', WP_BASE_URL . '/application' );
-define( 'WP_VENDOR_URL', WP_BASE_URL . '/vendor' );
-
-// Define our cookie constants.
-define( 'COOKIE_DOMAIN', '.' . $current_blog->domain );
-define( 'DOMAIN_CURRENT_SITE', $current_blog->domain );
-
-// Define our current blog/site/path constants.
-define( 'SITE_ID_CURRENT_SITE', $site_id );
-define( 'BLOG_ID_CURRENT_SITE', $blog_id );
-define( 'PATH_CURRENT_SITE', $current_blog->path );
-
 // Setup the needed current_site variable.
 if( !$current_site = $wpdb->get_row( "SELECT * from {$wpdb->site} WHERE id = '{$current_blog->site_id}' LIMIT 0,1" ) ) {
   header( 'HTTP/1.1 404 Not Found' );
@@ -110,6 +88,34 @@ $current_site->host = $_host;
 if( function_exists( 'get_current_site_name' ) ) {
   $current_site = get_current_site_name( $current_site );
 }
+
+// Now declare our dynamically generated constants for any URLs
+define( 'WP_BASE_DOMAIN', $current_blog->domain );
+define( 'WP_BASE_URL', WP_DEFAULT_PROTOCOL . '://' . $current_blog->domain );
+define( 'WP_PLUGIN_URL', rtrim( WP_BASE_URL, '/' ) . '/' . rtrim( WP_VENEER_STORAGE, '/' ) . '/modules' );
+define( 'WP_HOME', WP_BASE_URL );
+define( 'WP_SITEURL', WP_BASE_URL . '/' . WP_SYSTEM_DIRECTORY . '' );
+define( 'WP_CONTENT_URL', WP_BASE_URL . '' );
+define( 'WPMU_PLUGIN_URL', WP_BASE_URL . '/application' );
+define( 'WP_VENDOR_URL', WP_BASE_URL . '/vendor' );
+
+// Ok, define our stuff for our uploads
+// Base uploads dir relative to ABSPATH
+define( 'UPLOADBLOGSDIR', WP_VENEER_STORAGE . '/sites/' . $current_blog->domain );
+// Note, the main site in a post-MU network uses wp-content/uploads.
+// This is handled in wp_upload_dir() by ignoring UPLOADS for this case.
+define( 'UPLOADS', UPLOADBLOGSDIR . '/media/' );
+// Uploads dir relative to ABSPATH
+define( 'BLOGUPLOADDIR', rtrim( WP_CONTENT_DIR, '/' ) . '/' . UPLOADS );
+
+// Define our cookie constants.
+define( 'COOKIE_DOMAIN', '.' . $current_blog->domain );
+define( 'DOMAIN_CURRENT_SITE', $current_blog->domain );
+
+// Define our current blog/site/path constants.
+define( 'SITE_ID_CURRENT_SITE', $site_id );
+define( 'BLOG_ID_CURRENT_SITE', $blog_id );
+define( 'PATH_CURRENT_SITE', $current_blog->path );
 
 // Domain mapping has been successful.
 define( 'DOMAIN_MAPPING', 1 );

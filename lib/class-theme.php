@@ -83,7 +83,7 @@ namespace UsabilityDynamics\Cluster {
       public function template_redirect() {
 
         if( !$this->exists ) {
-          self::fatal( 'Our apologies, but this site is yet set up. Please check back soon.' );
+          self::fatal( 'Our apologies, but this site is not yet set up. Please check back soon.' );
         }
 
       }
