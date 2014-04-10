@@ -5,6 +5,12 @@
 # @version 3.0.1
 # @author potanin@UD
 
+# Required at beginning
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+</IfModule>
+
 # Cluster Mimes BEGIN
 <IfModule mod_mime.c>
   AddEncoding gzip                                    svgz
@@ -44,8 +50,6 @@
 
 # Cluster Static and Media BEGIN
 <IfModule mod_rewrite.c>
-
-  RewriteEngine On
 
   # Rewrite assets or media when there is a subdomain
   RewriteCond %{REQUEST_FILENAME} !-f
@@ -102,7 +106,7 @@
 <IfModule mod_rewrite.c>
   RewriteRule ^xmlrpc.php$ /vendor/wordpress/core/xmlrpc.php [L]
   RewriteRule ^wp-comments-post.php$ /vendor/wordpress/core/wp-comments-post.php [L]
-  RewriteRule ^wp-admin(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
+  RewriteRule ^wp-admin(.*)$ /vendor/wordpress/core/wp-admin/$1 [R=301,L]
   RewriteRule ^wp-includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
   RewriteRule ^includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
   RewriteRule ^wp-signup.php$ /vendor/wordpress/core/wp-signup.php$1 [L]
@@ -198,9 +202,9 @@
 
 # BEGIN W3TC CDN
 <FilesMatch "\.(ttf|ttc|otf|eot|woff|font.css)$">
-<IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "*"
-</IfModule>
+  <IfModule mod_headers.c>
+      Header set Access-Control-Allow-Origin "*"
+  </IfModule>
 </FilesMatch>
 # END W3TC CDN
 
@@ -217,10 +221,17 @@
 </IfModule>
 # END W3TC Browser Cache
 
+# If we're using PHP-FPM
+<IfModule mod_proxy_fcgi.c>
+  <IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_FILENAME} ^.*\.php$
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/$1 [P,L]
+  </IfModule>
+</IfModule>
+
 # WordPress BEGIN
 <IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
   RewriteRule ^index\.php$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
