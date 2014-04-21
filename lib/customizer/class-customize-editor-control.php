@@ -32,11 +32,11 @@ namespace UsabilityDynamics\AMD {
        * @since 3.4.0
        */
       public function enqueue() {
-        wp_enqueue_style( 'jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/jquery-ui.css', array(), '' );
-        wp_enqueue_style( 'wp-amd-customize-editor-control', WP_AMD_URL . 'styles/wp.amd.editor.style.css', array( 'jquery-ui' ), '' );
+        wp_enqueue_style( 'wp-amd-jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/jquery-ui.css', array() );
+        wp_enqueue_style( 'wp-amd-customize-editor-control', WP_AMD_URL . 'styles/wp.amd.editor.style.css', array( 'wp-amd-jquery-ui' ) );
         
         wp_enqueue_script( 'wp-amd-ace', WP_AMD_URL . 'scripts/src/ace/ace.js', array(), '', true );
-        wp_enqueue_script( 'wp-amd-customize-editor-control', WP_AMD_URL . 'scripts/wp.amd.editor.style.js', array( 'jquery', 'wp-amd-ace', 'jquery-ui-resizable' ), '123', true );
+        wp_enqueue_script( 'wp-amd-customize-editor-control', WP_AMD_URL . 'scripts/wp.amd.editor.style.js', array( 'jquery', 'wp-amd-ace', 'jquery-ui-resizable' ), '', true );
         
         wp_localize_script( 'wp-amd-customize-editor-control', 'wp_amd_customize_editor_control', array(
           'done' => __( 'Done' ),

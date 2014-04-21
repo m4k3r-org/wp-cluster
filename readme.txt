@@ -3,8 +3,8 @@ Contributors: usability_dynamics, andypotanin, jbrw1984, maxim.peshkov, anton-ko
 Donate link: http://usabilitydynamics.com/
 Tags: JS, CSS, Global JS, Global CSS, JS handling, CSS handling, Customizer, customize, theme.
 Requires at least: 3.6.0
-Tested up to: 3.8.1
-Stable tag: 1.0.3
+Tested up to: 3.9
+Stable tag: 1.0.4
 
 == Description ==
 
@@ -35,6 +35,9 @@ Visit project on GitHub: https://github.com/UsabilityDynamics/wp-amd
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 1.0.4 =
+* Fixed Custom Styles Editor resizable issue on Customize page.
 
 = 1.0.3 =
 * Fixed rewrite rules for assets links.

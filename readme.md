@@ -14,6 +14,12 @@ Visit us on WordPress.org: http://wordpress.org/plugins/wp-amd/
 * Plugin can be loaded as a WordPress plugin or as a Composer module (dependency).
 * Theme's dependency.
 
+### Installation
+* Download or checkout source from repository.
+* Install Composer ( https://getcomposer.org/ ).
+* Run 'composer install' from command line.
+* To update assets ( scripts, styles ), use Grunt ( http://gruntjs.com/ ).
+
 ### To Do
 * Add Screen Options to Script Editor page.
 * Add Settings -> Assets options page.
