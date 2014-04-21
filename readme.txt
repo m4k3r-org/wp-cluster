@@ -38,6 +38,8 @@ Visit project on GitHub: https://github.com/UsabilityDynamics/wp-amd
 
 = 1.0.4 =
 * Fixed Custom Styles Editor resizable issue on Customize page.
+* Fixed plugin's styles/scripts order loading on front end.
+* Removed extra console log data.
 
 = 1.0.3 =
 * Fixed rewrite rules for assets links.
