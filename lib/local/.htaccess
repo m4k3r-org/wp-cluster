@@ -87,6 +87,14 @@
 </IfModule>
 # Cluster Static and Media END
 
+# Public API BEGIN
+<IfModule mod_rewrite.c>
+  RewriteRule ^api/(.*).xml$    /manage/admin-ajax.php?format=xml&action=/$1    [QSA,L]
+  RewriteRule ^api/(.*).json$   /manage/admin-ajax.php?format=json&action=/$1   [QSA,L]
+  RewriteRule ^api/(.*)$        /manage/admin-ajax.php?format=json&action=/$1   [QSA,L]
+</IfModule>
+# Public API END
+
 # Cluster Modules BEGIN
 <IfModule mod_rewrite.c>
   RewriteRule ^vendor/wordpress/core/wp-content/plugins/(.*)$ storage/modules/$1 [R=301,L]
