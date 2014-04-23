@@ -540,7 +540,7 @@ namespace UsabilityDynamics\AMD {
         if( $post ) {
           return $post->ID;
         }
-        return 'unknown';
+        return '1';
       }
       
       /**
