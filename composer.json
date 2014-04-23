@@ -1,7 +1,7 @@
 {
   "name": "usabilitydynamics/wp-festival",
   "version": "0.2.0",
-  "type": "theme",
+  "type": "wordpress-theme",
   "description": "Festival Theme for the Drop Network",
   "author": {
     "name": "Usability Dynamics",
@@ -17,6 +17,7 @@
   ],
   "minimum-stability": "dev",
   "require": {
+    "composer/installers": "~1.0",
     "UsabilityDynamics/lib-wp-theme": "master",
     "UsabilityDynamics/lib-settings": "master",
     "UsabilityDynamics/lib-carrington": "master",
@@ -26,8 +27,6 @@
     "UsabilityDynamics/wp-amd": "master"
   },
   "autoload": {
-    "classmap": [
-      "lib/"
-    ]
+    "classmap": [ "lib" ]
   }
 }
