@@ -1,7 +1,7 @@
 {
   "name": "usabilitydynamics/wp-disco",
   "version": "0.1.0",
-  "type": "theme",
+  "type": "wordpress-theme",
   "description": "DiscoDonniePresents theme for the EDM Network",
   "author": {
     "name": "Usability Dynamics",
@@ -16,8 +16,8 @@
       "url": "http://repository.usabilitydynamics.com"
     }
   ],
-  "minimum-stability": "dev",
   "require": {
+    "composer/installers": "~1.0",
     "UsabilityDynamics/lib-settings": "master",
     "UsabilityDynamics/lib-carrington": "master",
     "UsabilityDynamics/lib-wp-theme": "master",
@@ -32,5 +32,6 @@
       "lib/class-search.php",
       "lib/widgets/class-latest-posts.php"
     ]
-  }
+  },
+  "minimum-stability": "dev"
 }
