@@ -84,20 +84,20 @@ namespace UsabilityDynamics\AMD {
         if( $this->get( 'post_type' ) === 'amd_style' ) {
 
           $labels = array(
-            'name'               => _x( 'Styles', 'post type general name', 'wp-amd' ),
-            'singular_name'      => _x( 'Style', 'post type singular name', 'wp-amd' ),
-            'menu_name'          => _x( 'Styles', 'admin menu', 'wp-amd' ),
-            'name_admin_bar'     => _x( 'Style', 'add new on admin bar', 'wp-amd' ),
-            'add_new'            => _x( 'Add New', 'book', 'wp-amd' ),
-            'add_new_item'       => __( 'Add New Style', 'wp-amd' ),
-            'new_item'           => __( 'New Style', 'wp-amd' ),
-            'edit_item'          => __( 'Edit Style', 'wp-amd' ),
-            'view_item'          => __( 'View Style', 'wp-amd' ),
-            'all_items'          => __( 'All Styles', 'wp-amd' ),
-            'search_items'       => __( 'Search Styles', 'wp-amd' ),
-            'parent_item_colon'  => __( 'Parent Styles:', 'wp-amd' ),
-            'not_found'          => __( 'No books found.', 'wp-amd' ),
-            'not_found_in_trash' => __( 'No books found in Trash.', 'wp-amd' ),
+            'name'               => _x( 'Styles', 'post type general name', get_wp_amd( 'text_domain' ) ),
+            'singular_name'      => _x( 'Style', 'post type singular name', get_wp_amd( 'text_domain' ) ),
+            'menu_name'          => _x( 'Styles', 'admin menu', get_wp_amd( 'text_domain' ) ),
+            'name_admin_bar'     => _x( 'Style', 'add new on admin bar', get_wp_amd( 'text_domain' ) ),
+            'add_new'            => _x( 'Add New', 'book', get_wp_amd( 'text_domain' ) ),
+            'add_new_item'       => __( 'Add New Style', get_wp_amd( 'text_domain' ) ),
+            'new_item'           => __( 'New Style', get_wp_amd( 'text_domain' ) ),
+            'edit_item'          => __( 'Edit Style', get_wp_amd( 'text_domain' ) ),
+            'view_item'          => __( 'View Style', get_wp_amd( 'text_domain' ) ),
+            'all_items'          => __( 'All Styles', get_wp_amd( 'text_domain' ) ),
+            'search_items'       => __( 'Search Styles', get_wp_amd( 'text_domain' ) ),
+            'parent_item_colon'  => __( 'Parent Styles:', get_wp_amd( 'text_domain' ) ),
+            'not_found'          => __( 'No books found.', get_wp_amd( 'text_domain' ) ),
+            'not_found_in_trash' => __( 'No books found in Trash.', get_wp_amd( 'text_domain' ) ),
           );
 
         }
@@ -105,20 +105,20 @@ namespace UsabilityDynamics\AMD {
         if( $this->get( 'post_type' ) === 'amd_script' ) {
 
           $labels = array(
-            'name'               => _x( 'Scripts', 'post type general name', 'wp-amd' ),
-            'singular_name'      => _x( 'Script', 'post type singular name', 'wp-amd' ),
-            'menu_name'          => _x( 'Scripts', 'admin menu', 'wp-amd' ),
-            'name_admin_bar'     => _x( 'Script', 'add new on admin bar', 'wp-amd' ),
-            'add_new'            => _x( 'Add New', 'book', 'wp-amd' ),
-            'add_new_item'       => __( 'Add New Script', 'wp-amd' ),
-            'new_item'           => __( 'New Script', 'wp-amd' ),
-            'edit_item'          => __( 'Edit Script', 'wp-amd' ),
-            'view_item'          => __( 'View Script', 'wp-amd' ),
-            'all_items'          => __( 'All Scripts', 'wp-amd' ),
-            'search_items'       => __( 'Search Scripts', 'wp-amd' ),
-            'parent_item_colon'  => __( 'Parent Scripts:', 'wp-amd' ),
-            'not_found'          => __( 'No books found.', 'wp-amd' ),
-            'not_found_in_trash' => __( 'No books found in Trash.', 'wp-amd' ),
+            'name'               => _x( 'Scripts', 'post type general name', get_wp_amd( 'text_domain' ) ),
+            'singular_name'      => _x( 'Script', 'post type singular name', get_wp_amd( 'text_domain' ) ),
+            'menu_name'          => _x( 'Scripts', 'admin menu', get_wp_amd( 'text_domain' ) ),
+            'name_admin_bar'     => _x( 'Script', 'add new on admin bar', get_wp_amd( 'text_domain' ) ),
+            'add_new'            => _x( 'Add New', 'book', get_wp_amd( 'text_domain' ) ),
+            'add_new_item'       => __( 'Add New Script', get_wp_amd( 'text_domain' ) ),
+            'new_item'           => __( 'New Script', get_wp_amd( 'text_domain' ) ),
+            'edit_item'          => __( 'Edit Script', get_wp_amd( 'text_domain' ) ),
+            'view_item'          => __( 'View Script', get_wp_amd( 'text_domain' ) ),
+            'all_items'          => __( 'All Scripts', get_wp_amd( 'text_domain' ) ),
+            'search_items'       => __( 'Search Scripts', get_wp_amd( 'text_domain' ) ),
+            'parent_item_colon'  => __( 'Parent Scripts:', get_wp_amd( 'text_domain' ) ),
+            'not_found'          => __( 'No books found.', get_wp_amd( 'text_domain' ) ),
+            'not_found_in_trash' => __( 'No books found in Trash.', get_wp_amd( 'text_domain' ) ),
           );
 
         }
