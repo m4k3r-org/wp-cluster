@@ -46,11 +46,13 @@ namespace UsabilityDynamics\AMD {
         $post = $this->get_asset( $this->get( 'type' ) );
         return !empty( $post[ 'post_content' ] ) ? $post[ 'post_content' ] : '';
       }
-      
+
       /**
        * All our sections, settings, and controls are added here
        *
        * @param object $wp_customize Instance of the WP_Customize_Manager class
+       *
+       * @return object
        * @see wp-includes/class-wp-customize-manager.php
        */
       public function customize_register( $wp_customize ) {
@@ -77,50 +79,8 @@ namespace UsabilityDynamics\AMD {
           'priority' => 10
         )));
         
-        
-        /*
-        // Minification Option.
-        $wp_customize->add_setting( 'custom-style-minify', array(
-          'default'       => false,
-          'type'          => 'theme_mod',
-          'capability'    => 'edit_theme_options',
-          'transport'     => 'postMessage'
-        ));
-
-        // Caching Option.
-        $wp_customize->add_setting( 'custom-style-cache', array(
-          'default'       => true,
-          'type'          => 'theme_mod',
-          'capability'    => 'edit_theme_options',
-          'transport'     => 'postMessage'
-        ));
-        
-        // Basic Checkbox.
-        $wp_customize->add_control( 'custom-style-minify', array(
-          'label'   => __( 'Minify Output' ),
-          'settings' => 'custom-style-minify',
-          'section' => 'style-customizer',
-          'type'    => 'checkbox',
-          'priority' => 20
-        ));
-
-        // Basic Checkbox.
-        $wp_customize->add_control( 'custom-style-cache', array(
-          'label'   => __( 'Allow Caching' ),
-          'settings' => 'custom-style-cache',
-          'section' => 'style-customizer',
-          'type'    => 'checkbox',
-          'priority' => 30
-        ));
-
-        // Make Setting Magical.
-        $wp_customize->get_setting( 'custom-style' )->transport = 'postMessage';
-        $wp_customize->get_setting( 'custom-style-minify' )->transport = 'postMessage';
-        $wp_customize->get_setting( 'custom-style-cache' )->transport = 'postMessage';
-        
-        //*/
-        
         return $wp_customize;
+
       }
       
       /**

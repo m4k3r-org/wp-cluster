@@ -19,7 +19,7 @@ jQuery( document ).ready( function( $ ) {
     }
   } );
 
-  $( '#global-stylesheet' ).AceStylesheetEditor({
+  $( '#global-stylesheet' ).AceStylesheetEditor( {
     // overwrites the default
     setEditorContent: function() {
       var value = this.$elem.val();
@@ -132,8 +132,14 @@ jQuery( document ).ready( function( $ ) {
     setEditorProps: function() {
       this.editor.setTheme( 'ace/theme/' + this.theme );
       this.editor.getSession().setMode( 'ace/mode/javascript' );
-      this.editor.getSession().setUseWrapMode( true );
+
+      this.editor.getSession().setUseSoftTabs( true );
+      this.editor.getSession().setTabSize( 2 );
       this.editor.getSession().setWrapLimitRange();
+      //this.editor.getSession().setUseWrapMode( false );
+      //this.editor.getSession().setHighlightActiveLine( false );
+      //this.editor.getSession().setShowPrintMargin( false );
+
     },
 
     setEditorContent: function() {
@@ -201,8 +207,11 @@ jQuery( document ).ready( function( $ ) {
     setEditorProps: function() {
       this.editor.setTheme( 'ace/theme/' + this.theme );
       this.editor.getSession().setMode( 'ace/mode/css' );
-      this.editor.getSession().setUseWrapMode( true );
+
+      this.editor.getSession().setUseSoftTabs( true );
+      this.editor.getSession().setTabSize( 2 );
       this.editor.getSession().setWrapLimitRange();
+
     },
 
     setEditorContent: function() {

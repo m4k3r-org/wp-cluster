@@ -75,12 +75,65 @@ namespace UsabilityDynamics\AMD {
       }
       
       /**
+       * Register AMD Post Types
+       *
        *
        */
       public function register_post_type() {
+
+        if( $this->get( 'post_type' ) === 'amd_style' ) {
+
+          $labels = array(
+            'name'               => _x( 'Styles', 'post type general name', 'wp-amd' ),
+            'singular_name'      => _x( 'Style', 'post type singular name', 'wp-amd' ),
+            'menu_name'          => _x( 'Styles', 'admin menu', 'wp-amd' ),
+            'name_admin_bar'     => _x( 'Style', 'add new on admin bar', 'wp-amd' ),
+            'add_new'            => _x( 'Add New', 'book', 'wp-amd' ),
+            'add_new_item'       => __( 'Add New Style', 'wp-amd' ),
+            'new_item'           => __( 'New Style', 'wp-amd' ),
+            'edit_item'          => __( 'Edit Style', 'wp-amd' ),
+            'view_item'          => __( 'View Style', 'wp-amd' ),
+            'all_items'          => __( 'All Styles', 'wp-amd' ),
+            'search_items'       => __( 'Search Styles', 'wp-amd' ),
+            'parent_item_colon'  => __( 'Parent Styles:', 'wp-amd' ),
+            'not_found'          => __( 'No books found.', 'wp-amd' ),
+            'not_found_in_trash' => __( 'No books found in Trash.', 'wp-amd' ),
+          );
+
+        }
+
+        if( $this->get( 'post_type' ) === 'amd_script' ) {
+
+          $labels = array(
+            'name'               => _x( 'Scripts', 'post type general name', 'wp-amd' ),
+            'singular_name'      => _x( 'Script', 'post type singular name', 'wp-amd' ),
+            'menu_name'          => _x( 'Scripts', 'admin menu', 'wp-amd' ),
+            'name_admin_bar'     => _x( 'Script', 'add new on admin bar', 'wp-amd' ),
+            'add_new'            => _x( 'Add New', 'book', 'wp-amd' ),
+            'add_new_item'       => __( 'Add New Script', 'wp-amd' ),
+            'new_item'           => __( 'New Script', 'wp-amd' ),
+            'edit_item'          => __( 'Edit Script', 'wp-amd' ),
+            'view_item'          => __( 'View Script', 'wp-amd' ),
+            'all_items'          => __( 'All Scripts', 'wp-amd' ),
+            'search_items'       => __( 'Search Scripts', 'wp-amd' ),
+            'parent_item_colon'  => __( 'Parent Scripts:', 'wp-amd' ),
+            'not_found'          => __( 'No books found.', 'wp-amd' ),
+            'not_found_in_trash' => __( 'No books found in Trash.', 'wp-amd' ),
+          );
+
+        }
+
         register_post_type( $this->get( 'post_type' ), array(
+          'labels'              => $labels,
+          'can_export'          => true,
+          'public'              => false,
+          'publicly_queryable'  => false,
+          'show_ui'             => false,
+          'show_in_menu'        => false,
+          'capability_type'     => 'post',
           'supports' => array( 'revisions' )
-        ) );
+        ));
+
       }
       
       /**
@@ -89,9 +142,71 @@ namespace UsabilityDynamics\AMD {
        * @return array
        */
       public function add_admin_menu() {
-        $name = ucfirst( $this->get( 'type' ) ) . ' ' . __( 'Editor', 'amd' );
+
+        // @The pluralization is ghetto, I know.. - potanin@UD
+        $name = ucfirst( $this->get( 'type' ) ) . 's';
+
         $id = add_theme_page( $name, $name, 'edit_theme_options', 'amd-page-' . $this->get( 'type' ), array( $this, 'admin_edit_page' ) );
+
         add_action( 'admin_print_scripts-' . $id, array( $this, 'admin_scripts' ) );
+        add_action( "load-$id", array( $this, 'screen_options' ) );
+
+        $post_id = !empty( $data[ 'ID' ] ) ? $data[ 'ID' ] : false;
+
+        add_meta_box( 'amd-publish',        __( 'Publish',    get_wp_amd( 'text_domain' ) ), array( $this, 'render_metabox_publish' ),      $id, 'side', 'core' );
+
+        if( $this->get( 'dependencies' ) ) {
+          add_meta_box( 'amd-dependencies', __( 'Dependency', get_wp_amd( 'text_domain' ) ), array( $this, 'render_metabox_dependencies' ), $id, 'side', 'core' );
+        }
+
+        if( $post_id && wp_get_post_revisions( $post_id ) ) {
+          add_meta_box( 'amd-revisions',    __( 'Revisions',  get_wp_amd( 'text_domain' ) ), array( $this, 'render_metabox_revisions' ),    $id, 'side', 'core' );
+        }
+
+      }
+
+      /**
+       *
+       * @todo Implement...
+       */
+      static public function render_metabox_publish() {
+
+        ?> <input class="button-primary" type="submit" name="publish" value="<?php _e( 'Save Asset', get_wp_amd( 'text_domain' ) ); ?>"/>
+
+        <?php if( $_GET[ 'page' ] === 'amd-page-style' ) { ?>
+          <ul>
+            <li><a href="<?php echo admin_url( 'customize.php' ); ?>"><?php _e( 'Edit in Customizer', get_wp_amd( 'text_domain' ) ); ?></a></li>
+          </ul>
+        <?php } ?>
+
+        <?php
+      }
+
+      /**
+       *
+       * @todo Implement...
+       */
+      static public function screen_options() {
+
+        add_screen_option( 'layout_columns', array(
+          'max' => 2,
+          'default' => 2
+        ));
+
+        get_current_screen()->add_help_tab( array(
+          'id'      => 'overview',
+          'title'   => __('Overview', 'wp-adm'),
+          'content' =>
+            '<p>' . __( 'Coming soon.', 'wp-adm' ) . '</p>'
+        ) );
+
+        get_current_screen()->set_help_sidebar(
+          '<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
+          '<p>' . __( '<a href="https://github.com/UsabilityDynamics/wp-amd" target="_blank">GitHub Page</a>' ) . '</p>' .
+          '<p>' . __( '<a href="https://github.com/UsabilityDynamics/wp-amd/wiki" target="_blank">GitHub Wiki</a>' ) . '</p>' .
+          '<p>' . __( '<a href="http://UsabilityDynamics.com" target="_blank">UsabilityDynamics.com</a>' ) . '</p>'
+        );
+
       }
       
       /**
@@ -116,7 +231,7 @@ namespace UsabilityDynamics\AMD {
        */
       public function admin_edit_page() {
         $msg = 0;
-        
+
         // the form has been submited save the options
         if( !empty( $_POST ) && check_admin_referer( 'update_amd_' . $this->get( 'type' ), 'update_amd_' . $this->get( 'type' ) . '_nonce' ) ) {
           $data = stripslashes( $_POST [ 'content' ] );
@@ -143,22 +258,25 @@ namespace UsabilityDynamics\AMD {
         $data[ 'msg' ] = $messages[ $msg ];
         $data[ 'post_content' ] = isset( $data[ 'post_content' ] ) ? $data[ 'post_content' ] : '';
         
-        $post_id = !empty( $data[ 'ID' ] ) ? $data[ 'ID' ] : false;
-        
-        $this->add_metaboxes( $post_id );
-        
+
         $template = WP_AMD_DIR . 'templates/' . $this->get( 'type' ) . '_edit_page.php';
         
         if( file_exists( $template ) ) {
           include( $template );
         }
       }
-      
+
       /**
        * Saves/updates asset.
        *
+       *
+       * @todo After POST save, do wp_redirect() back to self to avoid re-posting data accidentally on page reload. - potanin@UD
+       *
        * @access public
-       * @param mixed $js
+       *
+       * @param $value
+       *
+       * @internal param mixed $js
        * @return void
        */
       public function save_asset( $value ) {
@@ -201,25 +319,26 @@ namespace UsabilityDynamics\AMD {
         }
         return $post_link;
       }
-      
+
       /**
        * add_metabox function.
        *
        * @access public
-       * @param mixed $js
+       *
+       * @param $post_id
+       *
+       * @internal param mixed $js
        * @return void
        */
       public function add_metaboxes( $post_id ) {
-        if( $this->get( 'dependencies' ) ) {
-          add_meta_box( 'dependencies', __( 'Dependency', get_wp_amd( 'text_domain' ) ), array( $this, 'render_metabox_dependencies' ), $this->get( 'post_type' ), 'normal' );
-        }
-        if( $post_id && wp_get_post_revisions( $post_id ) ) {
-          add_meta_box( 'revisionsdiv', __( 'Revisions', get_wp_amd( 'text_domain' ) ), array( $this, 'render_metabox_revisions' ), $this->get( 'post_type' ), 'normal' );
-        }
+
+
       }
-      
+
       /**
-       * @param $_post
+       * @param $post
+       *
+       * @internal param $_post
        */
       public function render_metabox_dependencies( $post ) {
         $dependency = array();
@@ -241,9 +360,11 @@ namespace UsabilityDynamics\AMD {
         </ul>
         <?php
       }
-      
+
       /**
-       * @param $_post
+       * @param $post
+       *
+       * @internal param $_post
        */
       public function render_metabox_revisions( $post ) {
         // Specify numberposts and ordering args
@@ -254,11 +375,15 @@ namespace UsabilityDynamics\AMD {
         }
         wp_list_post_revisions( $post[ 'ID' ], $args );
       }
-      
+
       /**
        * Determine if dependency belongs to Wordpress ( already registered by WordPress )
        *
-       * @param $dependency
+       * @param $dep
+       *
+       * @internal param $dependency
+       *
+       * @return bool
        */
       public function is_wp_dependency( $dep ) {
         switch( $this->get( 'type' ) ) {
@@ -275,35 +400,42 @@ namespace UsabilityDynamics\AMD {
         }        
         return false;
       }
-      
+
       /**
        * Register dependencies
        *
        * @param $dependencies
+       *
+       * @return array
        */
       public function register_dependencies( $dependencies ) {
         $all_deps = $this->get( 'dependencies' );
         $registered = array();
-        foreach( $dependencies as $dependency ) {
+
+        foreach( (array) $dependencies as $dependency ) {
           if( isset( $all_deps[ $dependency ] ) ) {
             if( $this->is_wp_dependency( $dependency ) ) {
               array_push( $registered, $dependency );
             } 
             else if( !empty( $all_deps[ $dependency ][ 'url' ] ) ) {
+
+              $_deps = $all_deps[ $dependency ][ 'dependencies' ] ? $all_deps[ $dependency ][ 'dependencies' ] : array();
+
               switch( $this->get( 'type' ) ) {
                 case 'script':
-                  wp_register_script( $dependency, $all_deps[ $dependency ][ 'url' ], array(), $this->get( 'version' ) );
+                  wp_register_script( $dependency, $all_deps[ $dependency ][ 'url' ], $_deps, $all_deps[ $dependency ][ 'version' ] ? $all_deps[ $dependency ][ 'version' ] : $this->get( 'version' ), true );
                   array_push( $registered, $dependency );
-                  break;
+                break;
                 case 'style':
-                  wp_register_style( $dependency, $all_deps[ $dependency ][ 'url' ], array(), $this->get( 'version' ) );
+                  wp_register_style( $dependency, $all_deps[ $dependency ][ 'url' ], $_deps, $all_deps[ $dependency ][ 'version' ] ? $all_deps[ $dependency ][ 'version' ] : $this->get( 'version' ) );
                   array_push( $registered, $dependency );
-                  break;
+                break;
                 default: break;
               }
             }
           }
         }
+
         return $registered;
       }
       
@@ -316,11 +448,13 @@ namespace UsabilityDynamics\AMD {
       public static function query_vars( $query_vars ) {
         return array_unique( array_merge( $query_vars, self::$query_vars ) );
       }
-      
+
       /**
        * Dynamic Rules
        *
-       * @param type $current
+       * @param $rules
+       *
+       * @internal param \UsabilityDynamics\AMD\type $current
        * @return type
        */
       public function update_option_rewrite_rules( $rules ) {     
@@ -392,9 +526,12 @@ namespace UsabilityDynamics\AMD {
             break;
         }
       }
-      
+
       /**
        * Get latest revision ID
+       *
+       * @param $post_id
+       *
        * @return string
        */
       public function get_latest_version_id( $post_id ) {
@@ -447,11 +584,14 @@ namespace UsabilityDynamics\AMD {
         
         return $url;
       }
-      
+
       /**
        * Returns asset by type ( script, style )
        *
        * @access public
+       *
+       * @param $type
+       *
        * @return void
        */
       public static function get_asset( $type ) {
@@ -473,14 +613,17 @@ namespace UsabilityDynamics\AMD {
       /**
        * Returns required argument
        */
-      public function get( $arg ) {
+      public function get( $arg = null ) {
+
+        if( !$arg ) {
+          return $this->args;
+        }
+
         return isset( $this->args[ $arg ] ) ? $this->args[ $arg ] : NULL;
       }
       
     }
-    
-    
-    
+
   }
 
 }

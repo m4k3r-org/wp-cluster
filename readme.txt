@@ -36,6 +36,14 @@ Visit project on GitHub: https://github.com/UsabilityDynamics/wp-amd
 
 == Changelog ==
 
+= 1.1.0 =
+* Added Metaboxes, Screen Options and Screen Help. (WIP)
+* Added support for dependency-dependencies.
+* Fixed bug with Style and Script post types not properly registering their titles.
+* Forces third-party JavaScript libraries to be loaded in footer by default.
+* Added Knockout.js and UDX Requires
+* Several minor documentation fixes.
+
 = 1.0.4 =
 * Fixed Custom Styles Editor resizable issue on Customize page.
 * Fixed plugin's styles/scripts order loading on front end.
