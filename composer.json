@@ -1,6 +1,6 @@
 {
   "name": "usabilitydynamics/wp-festival",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "theme",
   "description": "Festival Theme for the Drop Network",
   "author": {
@@ -20,9 +20,9 @@
     "UsabilityDynamics/lib-wp-theme": "master",
     "UsabilityDynamics/lib-settings": "master",
     "UsabilityDynamics/lib-carrington": "master",
-    "UsabilityDynamics/wp-meta-box": "master",
-    "UsabilityDynamics/wp-menufication": "master",
     "UsabilityDynamics/lib-wp-shortcode": "master",
+    "UsabilityDynamics/wp-menufication": "master",
+    "UsabilityDynamics/wp-meta-box": "master",
     "UsabilityDynamics/wp-amd": "master"
   },
   "autoload": {
