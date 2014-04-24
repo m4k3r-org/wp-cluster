@@ -273,7 +273,10 @@ namespace UsabilityDynamics\Cluster {
           $possible_domains[] = $last_domain;
         }
         /** Try to lookup the blog */
-        $query = "SELECT * FROM {$this->db->blogs} WHERE " . $this->db->prepare( 'domain IN ("' . implode( '","', array_unique( $possible_domains ) ) . '")', '' ) . " ORDER BY CHAR_LENGTH( domain ) DESC LIMIT 1";
+        $query = $this->db->prepare(
+          "SELECT * FROM {$this->db->blogs} WHERE domain IN (" . implode( ',', array_fill( 0, count( $possible_domains ), '%s' ) ) . ") ORDER BY CHAR_LENGTH( domain ) DESC LIMIT 1",
+          $possible_domains
+        );
         $blog = $this->db->get_row( $query );
         /** If we don't have a blog, bail */
         if( !$blog ){
