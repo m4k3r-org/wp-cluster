@@ -17,24 +17,6 @@ namespace UsabilityDynamics\Cluster {
     class Utility {
 
       /**
-       * Adds items onto the global wp_cluster object, although it does
-       * simple overwriting if there is something there
-       *
-       * @param string $key The attribute name
-       * @param object $object The attribute value
-       */
-      static public function add_global_object_attribute( $key, $object ){
-        /** Pull the global */
-        global $wp_cluster;
-        /** Init the object if it isn't one */
-        if( !is_object( $wp_cluster ) ){
-          $wp_cluster = new \stdClass;
-        }
-        /** Add on our value */
-        $wp_cluster->{$key} = $object;
-      }
-
-      /**
        * Login Shortcode
        *
        * @param array $args

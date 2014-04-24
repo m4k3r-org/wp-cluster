@@ -363,4 +363,8 @@ namespace UsabilityDynamics\Cluster {
 
     }
   }
+
+  /** Init the database handler using our global wp_cluster object automatically when including this file */
+  wpcluster_add_global_object_attribute( 'database', Database::init()->__construct() );
+
 }

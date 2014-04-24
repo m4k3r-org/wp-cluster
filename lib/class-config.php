@@ -188,8 +188,9 @@ namespace UsabilityDynamics\Cluster {
           return;
         }
         /** Set some local variables */
-        $this->config_folders[] = rtrim( $base_dir, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR . 'wp-config' . DIRECTORY_SEPARATOR . ENVIRONMENT . DIRECTORY_SEPARATOR;
-        $this->config_folders[] = rtrim( $base_dir, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR . 'wp-config' . DIRECTORY_SEPARATOR;
+        $base_dir = dirname( dirname( dirname( dirname( $base_dir ) ) ) );
+        $this->config_folders[] = rtrim( $base_dir, '/' ) . '/application/etc/wp-config/' . ENVIRONMENT . '/';
+        $this->config_folders[] = rtrim( $base_dir, '/' ) . '/application/etc/wp-config/';
         /** For these variables, make sure they exist */
         foreach( $this->config_folders as $key => $value ){
           if( !is_dir( $value ) ){
@@ -228,4 +229,19 @@ namespace UsabilityDynamics\Cluster {
 
     }
   }
+
+  /**
+   * Custom WP configuration loader for the WP-Cluster which replaces the old 'wp-config.php'
+   * with a multi-tiered configuration system
+   *
+   * @version 1.0.0
+   * @author williams@UD
+   */
+
+  /** Init the utility class, first */
+  wpcluster_add_global_object_attribute( 'config', Config::init()->__construct() );
+
+  /** Now that we've done that, lets include our wp settings file, as per normal operations */
+  require_once( ABSPATH . '/wp-settings.php' );
+
 }

@@ -104,7 +104,7 @@ define( 'WP_SITEURL', rtrim( WP_BASE_URL, '/' ) . '/' . WP_SYSTEM_DIRECTORY );
 define( 'WP_CONTENT_URL', rtrim( WP_BASE_URL, '/' ) . '/application/dropins' );
 define( 'WP_VENDOR_URL', rtrim( WP_BASE_URL, '/' ) . '/vendor' );
 define( 'WP_PLUGIN_URL', rtrim( WP_VENDOR_URL, '/' ) . '/modules' );
-define( 'WPMU_PLUGIN_URL', rtrim( WP_VENDOR_URL, '/' ) . '/modules' );
+define( 'WPMU_PLUGIN_URL', rtrim( WP_BASE_URL, '/' ) . '/application' );
 
 // Ok, define our stuff for our uploads
 // Base uploads dir relative to ABSPATH
