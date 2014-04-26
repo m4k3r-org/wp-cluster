@@ -66,32 +66,53 @@ namespace UsabilityDynamics\AMD {
                 'load_in_head' => false,
                 'permalink' => apply_filters( 'wp-amd:script:path', 'assets/wp-amd.js', $this ),
                 'dependencies' => apply_filters( 'wp-amd:script:dependencies', array(
-                  'jquery-ui-autocomplete' => array(
-                    'name'         => 'jQuery UI Autocomplete',
-                    'infourl'      => 'http://jqueryui.com/autocomplete',
-                    'dependencies' => array( 'jquery' )
+                  'jquery'  => array(
+                    'id'            => 'jquery',
+                    'name'          => 'jQuery',
+                    'infourl'       => 'http://jquery.com',
+                    'version'       => '2.1.0',
+                    'url'           => '//ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.0.min.js',
                   ),
                   'backbone'  => array(
-                    'name'         => 'Backbone.js',
-                    'infourl'      => 'http://backbonejs.com',
-                    'url'          => 'http://backbonejs.org/backbone-min.js',
+                    'id'            => 'backbone',
+                    'name'          => 'Backbone.js',
+                    'infourl'       => 'http://backbonejs.com',
+                    'url'           => 'http://backbonejs.org/backbone-min.js',
                   ),
                   'lodash' => array(
-                    'name'         => 'Lodash',
-                    'infourl'      => 'http://lodash.com',
-                    'version'      => '2.4.1',
-                    'url'          => 'http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js',
+                    'id'            => 'lodash',
+                    'name'          => 'Lodash',
+                    'infourl'       => 'http://lodash.com',
+                    'version'       => '2.4.1',
+                    'url'           => 'http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js',
                   ),
                   'knockout' => array(
-                    'name'         => 'Knockout.js',
-                    'version'      => '2.2.1',
-                    'infourl'      => 'http://knockoutjs.com',
-                    'url'          => 'http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js',
+                    'id'            => 'knockout',
+                    'name'          => 'Knockout.js',
+                    'version'       => '2.2.1',
+                    'infourl'       => 'http://knockoutjs.com',
+                    'url'           => 'http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js',
                   ),
-                  'udx.requires' => array(
-                    'name'         => 'UDX.Requires',
-                    'infourl'      => 'http://cdn.udx.io',
-                    'url'          => 'http://cdn.udx.io/udx.requires.js',
+                  'udx-requires' => array(
+                    'id'            => 'udx-requires',
+                    'name'          => 'Requires.js (UDX)',
+                    'infourl'       => 'http://cdn.udx.io',
+                    'version'       => '4.0.0',
+                    'url'           => '//cdn.udx.io/udx.requires.js',
+                  ),
+                  'twitter-bootstrap' => array(
+                    'id'            => 'twitter-bootstrap',
+                    'name'          => 'Twitter Bootstrap',
+                    'infourl'       => 'http://getbootstrap.com/',
+                    'version'       => '3.1.1',
+                    'url'           => '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'
+                  ),
+                  'google-analytics' => array(
+                    'id'            => 'google-analytics',
+                    'name'          => 'Google Analytics',
+                    'infourl'       => 'http://google-analytics.com/',
+                    'version'       => '3.1.1',
+                    'url'           => '//www.google-analytics.com/urchin.js'
                   )
                 ), $this ),
               ),
@@ -101,7 +122,21 @@ namespace UsabilityDynamics\AMD {
                 'permalink' => apply_filters( 'wp-amd:style:path', 'assets/wp-amd.css', $this ),
                 'admin_menu' => true,
                 'load_in_head' => true,
-                'dependencies' => apply_filters( 'wp-amd:style:dependencies', array(), $this ),
+                'dependencies' => apply_filters( 'wp-amd:style:dependencies', array(
+                  'twitter-bootstrap' => array(
+                    'id'            => 'twitter-bootstrap',
+                    'name'          => 'Twitter Bootstrap',
+                    'version'       => '3.1.1',
+                    'infourl'       => 'http://getbootstrap.com/',
+                    'url'           => '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'
+                  ),
+                  'fontawesome' => array(
+                    'id'            => 'fontawesome',
+                    'name'          => 'Font Awesome',
+                    'infourl'       => 'http://fontawesome.io/',
+                    'url'           => '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css'
+                  ),
+                ), $this ),
               )
             )
           )

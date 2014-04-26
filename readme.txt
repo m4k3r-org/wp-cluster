@@ -32,12 +32,13 @@ Visit project on GitHub: https://github.com/UsabilityDynamics/wp-amd
 2. Visit Appearance -> Style Editor page to add/update global CSS.
 4. Or visit Appearance -> Customize -> Custom Styles to update CSS in preview mode.
 
-== Upgrade Notice ==
-
 == Changelog ==
 
 = 1.1.0 =
 * Added Metaboxes, Screen Options and Screen Help. (WIP)
+* Added filters that allow override of default asset locations. e.g. /assets/scripts/app.js instead of /assets/wp-amd.js
+* Added Twitter Bootstrap CSS and JS as available dependencies.
+* Added Font Awesome as an available CSS dependency.
 * Added support for dependency-dependencies.
 * Fixed bug with Style and Script post types not properly registering their titles.
 * Forces third-party JavaScript libraries to be loaded in footer by default.

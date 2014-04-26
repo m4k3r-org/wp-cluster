@@ -257,7 +257,7 @@ jQuery( document ).ready( function( $ ) {
         var config = $.extend( {
           element: $( this ),
           aceId: 'ace-editor',
-          theme: 'textmate',
+          theme: 'wordpress',
           defaultHt: '600px',
           container: false
         }, option );
@@ -281,7 +281,7 @@ jQuery( document ).ready( function( $ ) {
         var config = $.extend( {
           element: $( this ),
           aceId: 'ace-editor',
-          theme: 'textmate',
+          theme: 'wordpress',
           defaultHt: '600px',
           container: false
         }, option );
