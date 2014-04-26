@@ -12,13 +12,3 @@ Visit us on WordPress.org: http://wordpress.org/plugins/wp-amd/
 ## To Do
 * Add Screen Options to Script Editor page.
 * Add Settings -> Assets options page.
-
-
-## Installation
-You may download a built version of this plugin from WordPress.org repository.
-However, if you check-out from GitHub, you will need to use Node.js, Grunt.js and Composer to fetch all the necessary dependencies.
-
-* Download or checkout source from repository.
-* Install Composer ( https://getcomposer.org/ ).
-* Run 'composer install' from command line.
-* To update assets ( scripts, styles ), use Grunt ( http://gruntjs.com/ ).

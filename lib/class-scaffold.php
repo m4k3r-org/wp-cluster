@@ -24,6 +24,7 @@ namespace UsabilityDynamics\AMD {
       /**
        * Constructor
        * Must be called in child constructor firstly!
+       *
        */
       public function __construct( $args = array() ) {
       
@@ -32,7 +33,7 @@ namespace UsabilityDynamics\AMD {
           'type' => '', // style, script
           'minify' => false,
           'load_in_head' => true,
-          'permalink' => '', // assets/amd.js
+          'permalink' => '', // (assets/wp-amd.js|assets/wp-amd.css)
           'dependencies' => array(),
           'admin_menu' => true,
           'post_type' => false,
@@ -131,7 +132,7 @@ namespace UsabilityDynamics\AMD {
           'show_ui'             => false,
           'show_in_menu'        => false,
           'capability_type'     => 'post',
-          'supports' => array( 'revisions' )
+          'supports' =>         array( 'revisions' )
         ));
 
       }
@@ -195,9 +196,9 @@ namespace UsabilityDynamics\AMD {
 
         get_current_screen()->add_help_tab( array(
           'id'      => 'overview',
-          'title'   => __('Overview', 'wp-adm'),
+          'title'   => __('Overview', 'wp-amd'),
           'content' =>
-            '<p>' . __( 'Coming soon.', 'wp-adm' ) . '</p>'
+            '<p>' . __( 'Coming soon.', 'wp-amd' ) . '</p>'
         ) );
 
         get_current_screen()->set_help_sidebar(
@@ -495,6 +496,7 @@ namespace UsabilityDynamics\AMD {
           }
           
           $data = self::get_asset( $type );
+
           if ( !empty( $data[ 'post_content' ] ) ) {
             die( $data[ 'post_content' ] );
           } else {
@@ -520,7 +522,7 @@ namespace UsabilityDynamics\AMD {
         switch( $this->get( 'type' ) ) {
           case 'script':
             wp_enqueue_script( 'wp-amd-script', $url, $dependencies, $this->get_latest_version_id( $post[ 'ID' ] ), !$this->get( 'load_in_head' ) );
-            break;
+          break;
           case 'style':
             wp_enqueue_style( 'wp-amd-style', $url, $dependencies, $this->get_latest_version_id( $post[ 'ID' ] ), !$this->get( 'load_in_head' ) );
             break;
@@ -571,15 +573,15 @@ namespace UsabilityDynamics\AMD {
         switch( true ) {
           case ( empty( $wp_rewrite->permalink_structure ) ):
             // Do nothing.
-            break;
-          case ( !key_exists( '^' . $this->get( 'permalink' ), $wp_rewrite->rules ) ):
+          break;
+          case ( !array_key_exists( '^' . $this->get( 'permalink' ), $wp_rewrite->rules ) ):
             // Looks like permalink structure is set, but our rules are not.
             // Flush rewrite rules to have correct permalink next time.
             flush_rewrite_rules( );
-            break;
+          break;
           default:
             $url = home_url( $this->get( 'permalink' ) );
-            break;
+          break;
         }
         
         return $url;
@@ -605,7 +607,11 @@ namespace UsabilityDynamics\AMD {
         $post = !empty( $posts ) ? array_shift( $posts ) : false;        
         return $post ? get_object_vars( $post ) : false;
       }
-      
+
+      /**
+       * @param $type
+       * @return string
+       */
       public static function get_post_type( $type ) {
         return 'amd_' . $type;
       }

@@ -64,8 +64,8 @@ namespace UsabilityDynamics\AMD {
                 'minify' => false,
                 'admin_menu' => true,
                 'load_in_head' => false,
-                'permalink' => "assets/wp-amd.js",
-                'dependencies' => array(
+                'permalink' => apply_filters( 'wp-amd:script:path', 'assets/wp-amd.js', $this ),
+                'dependencies' => apply_filters( 'wp-amd:script:dependencies', array(
                   'jquery-ui-autocomplete' => array(
                     'name'         => 'jQuery UI Autocomplete',
                     'infourl'      => 'http://jqueryui.com/autocomplete',
@@ -93,19 +93,19 @@ namespace UsabilityDynamics\AMD {
                     'infourl'      => 'http://cdn.udx.io',
                     'url'          => 'http://cdn.udx.io/udx.requires.js',
                   )
-                ),
+                ), $this ),
               ),
               'style'  => array(
                 'type' => 'style',
                 'minify' => false,
-                'permalink' => "assets/wp-amd.css",
+                'permalink' => apply_filters( 'wp-amd:style:path', 'assets/wp-amd.css', $this ),
                 'admin_menu' => true,
                 'load_in_head' => true,
-                'dependencies' => array(),
-              ),
-            ),
+                'dependencies' => apply_filters( 'wp-amd:style:dependencies', array(), $this ),
+              )
+            )
           )
-        ) );
+        ));
         
         //** Init our scripts and styles classes */
         $this->style    = new Style( $this->get( 'assets.style' ) );
