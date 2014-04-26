@@ -152,17 +152,13 @@ namespace UsabilityDynamics\AMD {
         add_action( 'admin_print_scripts-' . $id, array( $this, 'admin_scripts' ) );
         add_action( "load-$id", array( $this, 'screen_options' ) );
 
-        $post_id = !empty( $data[ 'ID' ] ) ? $data[ 'ID' ] : false;
-
         add_meta_box( 'amd-publish',        __( 'Publish',    get_wp_amd( 'text_domain' ) ), array( $this, 'render_metabox_publish' ),      $id, 'side', 'core' );
 
         if( $this->get( 'dependencies' ) ) {
           add_meta_box( 'amd-dependencies', __( 'Dependency', get_wp_amd( 'text_domain' ) ), array( $this, 'render_metabox_dependencies' ), $id, 'side', 'core' );
         }
 
-        if( $post_id && wp_get_post_revisions( $post_id ) ) {
-          add_meta_box( 'amd-revisions',    __( 'Revisions',  get_wp_amd( 'text_domain' ) ), array( $this, 'render_metabox_revisions' ),    $id, 'side', 'core' );
-        }
+        add_meta_box( 'amd-revisions',    __( 'Revisions',  get_wp_amd( 'text_domain' ) ), array( $this, 'render_metabox_revisions' ),    $id, 'side', 'core' );
 
       }
 
@@ -373,13 +369,21 @@ namespace UsabilityDynamics\AMD {
        * @internal param $_post
        */
       public function render_metabox_revisions( $post ) {
+
         // Specify numberposts and ordering args
-        $args = array( 'numberposts' => 5, 'orderby' => 'ID', 'order' => 'DESC' );
+        $args = array(
+          'numberposts' => 5,
+          'orderby' => 'ID',
+          'order' => 'DESC'
+        );
+
         // Remove numberposts from args if show_all_rev is specified
         if( isset( $_GET[ 'show_all_rev' ] ) ) {
           unset( $args[ 'numberposts' ] );
         }
+
         wp_list_post_revisions( $post[ 'ID' ], $args );
+
       }
 
       /**
