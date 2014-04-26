@@ -354,7 +354,7 @@ namespace UsabilityDynamics\AMD {
           <?php if( !$this->is_wp_dependency( $key ) && empty( $data[ 'url' ] ) ) continue; ?>
           <li>
             <label>
-              <input type="checkbox" name="dependency[]" value="<?php echo $key; ?>" <?php checked( in_array( $key, $dependency ), true ); ?> />
+              <input <?php if( current_theme_supports( $data[ 'id' ] ) ) { ?>disabled<?php } ?> type="checkbox" name="dependency[]" value="<?php echo $key; ?>" <?php checked( current_theme_supports( $data[ 'id' ] ) || in_array( $key, $dependency ), true ); ?> />
               <a href="<?php echo $data[ 'infourl' ]; ?>"> <?php echo $data[ 'name' ]; ?> </a>
             </label>
           </li>
