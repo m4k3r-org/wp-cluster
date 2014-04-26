@@ -130,6 +130,13 @@ namespace UsabilityDynamics\AMD {
                     'infourl'       => 'http://getbootstrap.com/',
                     'url'           => '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'
                   ),
+                  'normalize' => array(
+                    'id'            => 'normalize',
+                    'name'          => 'Normalize',
+                    'version'       => '3.0.1',
+                    'infourl'       => 'http://getbootstrap.com/',
+                    'url'           => '//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css'
+                  ),
                   'fontawesome' => array(
                     'id'            => 'fontawesome',
                     'name'          => 'Font Awesome',
