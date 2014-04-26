@@ -239,9 +239,14 @@ namespace UsabilityDynamics\AMD {
           $post_id = $this->save_asset( $data );
           $updated = true;
           $msg = 1;
+
           if( isset( $_POST[ 'dependency' ] ) ) {
             add_post_meta( $post_id, 'dependency', $_POST[ 'dependency' ], true ) or update_post_meta( $post_id, 'dependency', $_POST[ 'dependency' ] );
           }
+
+          // Redirect back to self.
+          die( wp_redirect( admin_url( 'themes.php?page=amd-page-' . $this->get( 'type' ) . '&updated=true' ) . '&message=' . $msg ) );
+
         }
 
         if( isset( $_GET[ 'message' ] ) ) {
@@ -250,8 +255,8 @@ namespace UsabilityDynamics\AMD {
 
         $messages = array(
           0 => false,
-          1 => sprintf( __( "Global %s saved", get_wp_amd( 'text_domain' ) ), ucfirst( $this->get( 'type' ) ) ),
-          5 => isset( $_GET[ 'revision' ] ) ? sprintf( __( '%s restored to revision from %s, <em>Save Changes for the revision to take effect</em>', get_wp_amd( 'text_domain' ) ), ucfirst( $this->get( 'type' ) ), wp_post_revision_title( (int) $_GET[ 'revision' ], false ) ) : false
+          1 => sprintf( __( 'Global %s saved. <a href="%s" target="_blank">View in browser</a>.', get_wp_amd( 'text_domain' ) ), $this->get( 'type' ), home_url( apply_filters( 'wp-amd:' . $this->get( 'type' ) . ':path', 'assets/wp-amd.' . ( $this->get( 'type' ) === 'script' ? 'js' : 'css' ), $this ) ) ),
+          5 => isset( $_GET[ 'revision' ] ) ? sprintf( __( '%s restored to revision from %s, <em>Save changes for the revision to take effect</em>', get_wp_amd( 'text_domain' ) ), ucfirst( $this->get( 'type' ) ), wp_post_revision_title( (int) $_GET[ 'revision' ], false ) ) : false
         );
         
         $data = self::get_asset( $this->get( 'type' ) );
@@ -570,6 +575,7 @@ namespace UsabilityDynamics\AMD {
         global $wp_rewrite;
         
         $url = home_url() . '?' . self::$query_vars[0] . '=' . $this->get( 'type' ) . '&' . self::$query_vars[1] . '=1';
+
         switch( true ) {
           case ( empty( $wp_rewrite->permalink_structure ) ):
             // Do nothing.
