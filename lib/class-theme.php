@@ -51,20 +51,13 @@ namespace UsabilityDynamics\Cluster {
       public function __construct() {
         global $wp_cluster;
 
-        if( defined( 'WP_VENDOR_PATH' ) && is_dir( WP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'themes' ) ){
-          register_theme_directory( WP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'themes' );
-        }
-
         // $this->add_site_directories();
 
         // Get WP_Theme Instance.
         $this->active = wp_get_theme();
-        print_r( $this->active );die();
         $this->exists = $this->active->exists();
         $this->domain = $wp_cluster->domain;
         $this->site_name = $wp_cluster->site_name;
-
-        print_r( $this );
 
         add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
 

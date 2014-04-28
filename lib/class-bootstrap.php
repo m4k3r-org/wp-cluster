@@ -154,11 +154,6 @@ namespace UsabilityDynamics\Cluster {
         }
         $wp_cluster = self::$instance = & $this;
 
-        // Seek ./vendor/autoload.php and autoload
-        if( is_file( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' ) ) {
-          include_once( basename( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor/autoload.php' );
-        }
-
         // Identify site being requested. This should be handled by sunrise.php.
         if( !$current_site || !$current_blog ) {
           $this->identify_site();
@@ -320,7 +315,6 @@ namespace UsabilityDynamics\Cluster {
         // Initialize Controllers and Helpers
         $this->_developer = new Developer();
         $this->_settings  = new Settings();
-        $this->_mapping   = new Mapping();
         $this->_api       = new API();
         $this->_theme     = new Theme();
         $this->_log       = new Log();

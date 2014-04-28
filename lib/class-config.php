@@ -238,8 +238,15 @@ namespace UsabilityDynamics\Cluster {
    * @author williams@UD
    */
 
+  /**
+   * Require our initialization file (we do it here because this is the most consistant place where we can
+   * ensure that this will happen no matter what
+   */
+  require_once( $_SERVER[ 'DOCUMENT_ROOT' ] . '/application/init.php' );
+
   /** Init the utility class, first */
   wpcluster_add_global_object_attribute( 'config', Config::init()->__construct() );
+
 
   /** Now that we've done that, lets include our wp settings file, as per normal operations */
   require_once( ABSPATH . '/wp-settings.php' );
