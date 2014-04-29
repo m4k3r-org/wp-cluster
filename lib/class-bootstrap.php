@@ -468,7 +468,7 @@ namespace UsabilityDynamics\Cluster {
        *
        */
       public function admin_enqueue_scripts() {
-        wp_enqueue_style( 'cluster-app', home_url( '/vendor/usabilitydynamics/wp-cluster/styles/app.css' ), array(), self::$version );
+        wp_enqueue_style( 'cluster-app', home_url( '/vendor/libraries/usabilitydynamics/wp-cluster/styles/app.css' ), array(), self::$version );
       }
 
       /**
