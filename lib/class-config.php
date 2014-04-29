@@ -188,7 +188,7 @@ namespace UsabilityDynamics\Cluster {
           return;
         }
         /** Set some local variables */
-        $base_dir = dirname( dirname( dirname( dirname( $base_dir ) ) ) );
+        $base_dir = dirname( dirname( dirname( dirname( dirname( $base_dir ) ) ) ) );
         $this->config_folders[] = rtrim( $base_dir, '/' ) . '/application/etc/wp-config/' . ENVIRONMENT . '/';
         $this->config_folders[] = rtrim( $base_dir, '/' ) . '/application/etc/wp-config/';
         /** For these variables, make sure they exist */

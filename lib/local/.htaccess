@@ -177,16 +177,16 @@
 
   # Rewrite 'wp-includes' assets to simpler format
   RewriteCond %{ENV:REDIRECT_SUBDOMAIN} =""
-  RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-includes/js/(.*)$ /includes/scripts/$1 [R=301,L]
+  RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-includes/js/(.*)$ /assets/scripts/$1 [R=301,L]
   RewriteCond %{ENV:REDIRECT_SUBDOMAIN} =""
-  RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-includes/css/(.*)$ /includes/styles/$1 [R=301,L]
+  RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-includes/css/(.*)$ /assets/styles/$1 [R=301,L]
   RewriteCond %{ENV:REDIRECT_SUBDOMAIN} =""
-  RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-includes/images/(.*)$ /includes/images/$1 [R=301,L]
+  RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-includes/images/(.*)$ /assets/images/$1 [R=301,L]
 
   # Take simpler format, and rewrite it to complex on on back end
-  RewriteRule ^includes/scripts/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/js/$1 [E=SUBDOMAIN:rdr,L]
-  RewriteRule ^includes/styles/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/css/$1 [E=SUBDOMAIN:rdr,L]
-  RewriteRule ^includes/images/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/images/$1 [E=SUBDOMAIN:rdr,L]
+  RewriteRule ^assets/scripts/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/js/$1 [E=SUBDOMAIN:rdr,L]
+  RewriteRule ^assets/styles/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/css/$1 [E=SUBDOMAIN:rdr,L]
+  RewriteRule ^assets/images/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/images/$1 [E=SUBDOMAIN:rdr,L]
 
   # Rewrite 'wp-admin' assets to simpler format
   #RewriteCond %{ENV:REDIRECT_SUBDOMAIN} =""
