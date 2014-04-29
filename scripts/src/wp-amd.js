@@ -15,7 +15,7 @@ jQuery( document ).ready( function( $ ) {
 
     },
     onDestroy: function( e ) {
-      console.log( this.editor )
+      // console.log( this.editor )
     }
   } );
 
@@ -33,7 +33,7 @@ jQuery( document ).ready( function( $ ) {
 
     },
     onDestroy: function( e ) {
-      console.log( this.editor )
+      // console.log( this.editor )
     }
   } );
 

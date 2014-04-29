@@ -8,7 +8,7 @@
         var d = document.getElementById(args.link_id);
         d && d.parentNode.removeChild(d), $("head #wp_amd_style_preview_container").text(style);
     }
-    wp.customize(args.name, function(style) {
+    "object" == typeof wp && "function" == typeof wp.customize && wp.customize(args.name, function(style) {
         var intent;
         createStyleContainer(), style.bind(function(style) {
             window.clearTimeout(intent), intent = window.setTimeout(function() {
@@ -16,4 +16,4 @@
             }, 200);
         });
     });
-}(jQuery, wp_amd_themecustomizer);
+}(jQuery, "object" == typeof wp_amd_themecustomizer ? wp_amd_themecustomizer : {});
