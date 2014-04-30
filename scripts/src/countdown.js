@@ -19,7 +19,8 @@ define( 'countdown', [ '//cdnjs.cloudflare.com/ajax/libs/jquery-countdown/1.6.3/
       until: liftoffTime,
       format: jQuery(this).data('format') || 'dHMS',
       labels: [ 'Years', 'Months', 'Weeks', 'Days', 'Hour', 'Min', 'Sec' ],
-      labels1: [ 'Year', 'Month', 'Week', 'Day', 'Hour', 'Min', 'Sec' ]
+      labels1: [ 'Year', 'Month', 'Week', 'Day', 'Hour', 'Min', 'Sec' ],
+      padZeroes: true
     });
 
     return this;
