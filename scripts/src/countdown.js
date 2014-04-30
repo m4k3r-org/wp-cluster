@@ -7,17 +7,17 @@ define( 'countdown', [ '//cdnjs.cloudflare.com/ajax/libs/jquery-countdown/1.6.3/
 
   return function domReady() {
 
-    var _target = jQuery( this.getAttribute( 'data-target' ), this );
+    var _target = jQuery( jQuery(this).data('target'), this );
 
-    var liftoffTime = new Date();
+    var liftoffTime = new Date( 2014, 7, 30 );
 
-    liftoffTime.setDate( liftoffTime.getDate() + 25 );
+    liftoffTime.setDate( liftoffTime.getDate() );
 
     _target.hide().fadeIn( 'slow' );
 
     _target.countdown({
       until: liftoffTime,
-      format: this.getAttribute( 'data-format' ) || 'dHMS',
+      format: jQuery(this).data('format') || 'dHMS',
       labels: [ 'Years', 'Months', 'Weeks', 'Days', 'Hour', 'Min', 'Sec' ],
       labels1: [ 'Year', 'Month', 'Week', 'Day', 'Hour', 'Min', 'Sec' ]
     });
