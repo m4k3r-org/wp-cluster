@@ -9,7 +9,7 @@ define( 'countdown', [ '//cdnjs.cloudflare.com/ajax/libs/jquery-countdown/1.6.3/
 
     var _target = jQuery( jQuery(this).data('target'), this );
 
-    var liftoffTime = new Date( 2014, 7, 30 );
+    var liftoffTime = new Date( jQuery(this).data('date') );
 
     liftoffTime.setDate( liftoffTime.getDate() );
 
