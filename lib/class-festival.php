@@ -395,7 +395,7 @@ namespace UsabilityDynamics {
      * @return type
      */
     public function gallery_attributes( $current ) {
-      return preg_replace('/(id=\'gallery.+?\')/', '$1 data-requires="gallery-masonry"', $current);
+      return preg_replace('/(id=\'gallery.+?\')/', '$1 data-requires="udx.ui.gallery"', $current);
     }
 
     /**
