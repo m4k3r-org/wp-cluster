@@ -54,6 +54,7 @@ namespace UsabilityDynamics\AMD {
           //** Register assets and post_type */
           add_action( 'admin_init', array( &$this, 'admin_init' ) );
           add_action( 'admin_init', array( &$this, 'register_post_type' ) );
+          add_filter('redirect_canonical', array( $this, 'redirect_canonical') );
 
           switch( $this->get( 'type' ) ) {
             case 'style':
@@ -161,7 +162,25 @@ namespace UsabilityDynamics\AMD {
         ));
 
       }
-      
+
+      /**
+       * Prevent Trailing Slash Redirects on Assets
+       *
+       * @author potanin@UD
+       * @param $url
+       * @return bool
+       */
+      public function redirect_canonical( $url ) {
+        global $wp_query;
+
+        if( $wp_query->get( 'amd_is_asset' ) ) {
+          return false;
+        }
+
+        return $url;
+
+      }
+
       /**
        * Add Administrative Menus
        *
