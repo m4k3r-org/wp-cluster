@@ -254,11 +254,12 @@ namespace UsabilityDynamics\AMD {
        * register_admin_styles function.
        * adds styles to the admin page
        *
+       * Add action to denqueue or deregister scripts which cause conflicts and errors.
+       *
        * @access public
        * @return void
        */
       public function admin_scripts() {
-        //** Add action to denqueue or deregister scripts which cause conflicts and errors. */
         do_action( 'amd::admin_scripts::edit_page' );
         
         wp_register_script( 'wp-amd-ace', plugins_url( '/static/scripts/src/ace/ace.js', dirname( __DIR__ )), array(), $this->get( 'version' ), true );
@@ -297,7 +298,7 @@ namespace UsabilityDynamics\AMD {
 
         $messages = array(
           0 => false,
-          1 => sprintf( __( 'Global %s saved. <a href="%s" target="_blank">View in browser</a>.', get_wp_amd( 'domain' ) ), $this->get( 'type' ), home_url( apply_filters( 'wp-amd:' . $this->get( 'type' ) . ':path', 'assets/wp-amd.' . ( $this->get( 'type' ) === 'script' ? 'js' : 'css' ), $this ) ) ),
+          1 => sprintf( __( 'Global %s saved. <a href="%s" target="_blank">View in browser</a>.', get_wp_amd( 'domain' ) ), $this->get( 'type' ), home_url( apply_filters( 'wp-amd:' . $this->get( 'type' ) . ':path', 'assets/wp-amd.' .  $this->get( 'extension' ), $this ) ) ),
           5 => isset( $_GET[ 'revision' ] ) ? sprintf( __( '%s restored to revision from %s, <em>Save changes for the revision to take effect</em>', get_wp_amd( 'domain' ) ), ucfirst( $this->get( 'type' ) ), wp_post_revision_title( (int) $_GET[ 'revision' ], false ) ) : false
         );
         
@@ -350,7 +351,30 @@ namespace UsabilityDynamics\AMD {
           $post_id = wp_update_post( $post );
         }
 
+        $this->cache_asset( $value );
+
         return $post_id;
+
+      }
+
+      /**
+       * Cache Static Asset.
+       *
+       * @param $value
+       */
+      public function cache_asset( $value ) {
+
+        $_cache_path = trailingslashit( $this->get( 'disk_cache' ) ) . 'wp-amd-' . $this->get( 'type' ) . '.' . $this->get( 'extension' );
+
+        if( $this->get( 'disk_cache' ) && is_dir( $this->get( 'disk_cache' ) ) && ( !is_file( $_cache_path ) || is_writable( $_cache_path ) ) ) {
+
+          if( $value ) {
+            file_put_contents( $_cache_path, $value );
+          } else {
+            unlink( $_cache_path );
+          }
+
+        };
 
       }
       

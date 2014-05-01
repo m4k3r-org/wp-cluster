@@ -35,6 +35,7 @@ Visit project on GitHub: https://github.com/UsabilityDynamics/wp-amd
 == Changelog ==
 
 = 1.1.0 =
+* Added disk caching, with location configurable via "wp-amd:script:disk_cache" filter.
 * Added Metaboxes, Screen Options and Screen Help. (WIP)
 * Added filters that allow override of default asset locations. e.g. /assets/scripts/app.js instead of /assets/wp-amd.js
 * Added Twitter Bootstrap CSS and JS as available dependencies.

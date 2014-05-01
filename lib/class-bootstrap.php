@@ -63,7 +63,8 @@ namespace UsabilityDynamics\AMD {
             'assets' => array(
               'script' => array(
                 'type'          => 'script',
-                'disk_cache'    => apply_filters( 'wp-amd:script:disk_cache', true, $this ),
+                'disk_cache'    => apply_filters( 'wp-amd:script:disk_cache', false, $this ),
+                'extension'     => 'js',
                 'minify'        => false,
                 'admin_menu'    => true,
                 'load_in_head'  => false,
@@ -122,8 +123,9 @@ namespace UsabilityDynamics\AMD {
               'style'  => array(
                 'type'          => 'style',
                 'minify'        => false,
-                'disk_cache'    => apply_filters( 'wp-amd:script:disk_cache', true, $this ),
+                'disk_cache'    => apply_filters( 'wp-amd:script:disk_cache', false, $this ),
                 'permalink'     => apply_filters( 'wp-amd:style:path', 'assets/wp-amd.css', $this ),
+                'extension'     => 'css',
                 'admin_menu'    => true,
                 'load_in_head'  => true,
                 'dependencies'  => apply_filters( 'wp-amd:style:dependencies', array(
