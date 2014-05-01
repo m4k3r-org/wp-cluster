@@ -44,8 +44,8 @@ module.exports = function build( grunt ) {
           relativeUrls: true
         },
         files: {
-          'styles/wp-amd.css': [ 'styles/src/wp-amd.less' ],
-          'styles/wp.amd.editor.style.css': [ 'styles/src/wp.amd.editor.style.less' ]
+          'static/styles/wp-amd.css': [ 'static/styles/src/wp-amd.less' ],
+          'static/styles/wp.amd.editor.style.css': [ 'static/styles/src/wp.amd.editor.style.less' ]
         }
       },
       development: {
@@ -53,7 +53,7 @@ module.exports = function build( grunt ) {
           relativeUrls: true
         },
         files: {
-          'styles/wp-amd.dev.css': [ 'styles/src/wp-amd.less' ]
+          'static/styles/wp-amd.dev.css': [ 'static/styles/src/wp-amd.less' ]
         }
       }
     },
@@ -65,13 +65,13 @@ module.exports = function build( grunt ) {
       },
       less: {
         files: [
-          'styles/src/*.*'
+          'static/styles/src/*.*'
         ],
         tasks: [ 'less' ]
       },
       js: {
         files: [
-          'scripts/src/*.*'
+          'static/scripts/src/*.*'
         ],
         tasks: [ 'uglify' ]
       }
@@ -86,9 +86,9 @@ module.exports = function build( grunt ) {
         files: [
           {
             expand: true,
-            cwd: 'scripts/src',
+            cwd: 'static/scripts/src',
             src: [ '*.js' ],
-            dest: 'scripts'
+            dest: 'static/scripts'
           }
         ]
       },
@@ -100,9 +100,9 @@ module.exports = function build( grunt ) {
         files: [
           {
             expand: true,
-            cwd: 'scripts/src',
+            cwd: 'static/scripts/src',
             src: [ '*.js' ],
-            dest: 'scripts'
+            dest: 'static/scripts'
           }
         ]
       }

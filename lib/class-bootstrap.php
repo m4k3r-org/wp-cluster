@@ -5,7 +5,9 @@
  */
 namespace UsabilityDynamics\AMD {
 
-  if( !class_exists( '\UsabilityDynamics\AMD\Bootstrap' ) ) {
+  use UsabilityDynamics\Settings;
+
+  if( !class_exists( 'UsabilityDynamics\AMD\Bootstrap' ) ) {
 
     class Bootstrap {
 
@@ -22,10 +24,10 @@ namespace UsabilityDynamics\AMD {
        * Textdomain String
        *
        * @public
-       * @property text_domain
+       * @property domain
        * @var string
        */
-      public $text_domain = false;
+      public $domain = false;
 
       /**
        * Singleton Instance Reference.
@@ -44,28 +46,29 @@ namespace UsabilityDynamics\AMD {
        */
       private function __construct() {
         
-        $plugin_data = \get_file_data( ( dirname( __DIR__ ) . '/wp-amd.php' ), array(
+        $plugin_data = get_file_data( ( dirname( __DIR__ ) . '/wp-amd.php' ), array(
           'Name' => 'Plugin Name',
           'Version' => 'Version',
           'TextDomain' => 'Text Domain',
         ), 'plugin' );
         
         $this->version = trim( $plugin_data['Version'] );
-        $this->text_domain = trim( $plugin_data['TextDomain'] );
+        $this->domain = trim( $plugin_data['TextDomain'] );
         
-        $this->settings = new \UsabilityDynamics\Settings( array(
+        $this->settings = new Settings( array(
           'key'  => 'wp_amd',
           'data' => array(
             'version' => $this->version,
-            'text_domain' => $this->text_domain,
+            'domain' => $this->domain,
             'assets' => array(
               'script' => array(
-                'type' => 'script',
-                'minify' => false,
-                'admin_menu' => true,
-                'load_in_head' => false,
-                'permalink' => apply_filters( 'wp-amd:script:path', 'assets/wp-amd.js', $this ),
-                'dependencies' => apply_filters( 'wp-amd:script:dependencies', array(
+                'type'          => 'script',
+                'disk_cache'    => apply_filters( 'wp-amd:script:disk_cache', true, $this ),
+                'minify'        => false,
+                'admin_menu'    => true,
+                'load_in_head'  => false,
+                'permalink'     => apply_filters( 'wp-amd:script:path', 'assets/wp-amd.js', $this ),
+                'dependencies'  => apply_filters( 'wp-amd:script:dependencies', array(
                   'jquery'  => array(
                     'id'            => 'jquery',
                     'name'          => 'jQuery',
@@ -117,12 +120,13 @@ namespace UsabilityDynamics\AMD {
                 ), $this ),
               ),
               'style'  => array(
-                'type' => 'style',
-                'minify' => false,
-                'permalink' => apply_filters( 'wp-amd:style:path', 'assets/wp-amd.css', $this ),
-                'admin_menu' => true,
-                'load_in_head' => true,
-                'dependencies' => apply_filters( 'wp-amd:style:dependencies', array(
+                'type'          => 'style',
+                'minify'        => false,
+                'disk_cache'    => apply_filters( 'wp-amd:script:disk_cache', true, $this ),
+                'permalink'     => apply_filters( 'wp-amd:style:path', 'assets/wp-amd.css', $this ),
+                'admin_menu'    => true,
+                'load_in_head'  => true,
+                'dependencies'  => apply_filters( 'wp-amd:style:dependencies', array(
                   'twitter-bootstrap' => array(
                     'id'            => 'twitter-bootstrap',
                     'name'          => 'Twitter Bootstrap',

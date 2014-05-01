@@ -21,7 +21,7 @@ namespace UsabilityDynamics\AMD {
        *
        */
       function __construct( $args = array() ) {
-        
+
         parent::__construct( $args );
           
         //** Adds settings to customizer */
@@ -90,7 +90,7 @@ namespace UsabilityDynamics\AMD {
        * @author peshkov@UD
        */
       public function customize_live_preview() {
-        wp_enqueue_script( 'wp-amd-themecustomizer', WP_AMD_URL . 'scripts/wp.amd.customizer.style.js', array( 'jquery','customize-preview' ), '', true );
+        wp_enqueue_script( 'wp-amd-themecustomizer', plugins_url( '/static/scripts/wp.amd.customizer.style.js', __DIR__  ), array( 'jquery','customize-preview' ), '', true );
         wp_localize_script( 'wp-amd-themecustomizer', 'wp_amd_themecustomizer', array(
           'name' => $this->name,
           'link_id' => 'wp-amd-' . $this->get( 'type' ) . '-css',

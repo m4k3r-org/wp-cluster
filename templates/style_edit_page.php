@@ -7,7 +7,7 @@
   <div class="updated"><p><strong><?php echo $data[ 'msg' ]; ?></strong></p></div>
 <?php endif; ?>
 <div class="wrap">
-  <h2><?php _e( 'Style Editor', get_wp_amd( 'text_domain' ) ); ?></h2>
+  <h2><?php _e( 'Style Editor', get_wp_amd( 'domain' ) ); ?></h2>
   <form action="themes.php?page=amd-page-style" method="post" id="global-stylesheet-form">
     <?php wp_nonce_field( 'update_amd_style', 'update_amd_style_nonce' ); ?>
     <div class="metabox-holder has-right-sidebar">
