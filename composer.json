@@ -22,7 +22,7 @@
     "UsabilityDynamics/lib-wp-theme": "master",
     "UsabilityDynamics/lib-settings": "master",
     "UsabilityDynamics/lib-carrington": "master",
-    "UsabilityDynamics/wp-meta-box": "master"
+    "UsabilityDynamics/lib-meta-box": "master"
   },
   "autoload": {
     "classmap": [ "lib" ]
