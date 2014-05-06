@@ -33,10 +33,12 @@
 
 require_once( 'lib/class-bootstrap.php' );
 
-// add_theme_support( 'post-formats', array( 'video', 'gallery', 'image', 'audio' ) );
-// add_post_type_support( 'event', 'post-formats' );
-// set_post_format();
-
 // Define Data Structure
+// - add_post_type_support( 'event', 'post-formats' );
+// - set_post_format();
 
 // Define User Roles and Capabilities
+// add_user_role( );
+
+// Define Post Object Callbacks
+// - add_filter( 'wp-elastic:websiteLink', array( 'wpCloud\Vertical\EDM::Utility', 'get_image_urls' ) );

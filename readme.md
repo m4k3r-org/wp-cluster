@@ -26,12 +26,14 @@ The standard Post and Page post types are available as-is.
 * @ Age Restriction
 * @ Event Type
 * @ Event Tour
+* Location                (Valid physical address)
+* _location.latitude
+* _location.longitude
 * -> Artist(s)
 * -> Promoter(s)
 * -> Venue(s)
 * -> Child Event(s)
 * -> Parent Event
-* -> Location             (absolute physical address)
 
 ### Event Update (Future)
 

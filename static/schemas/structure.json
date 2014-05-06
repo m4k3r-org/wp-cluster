@@ -514,11 +514,11 @@
         "posts_per_page": -1
       }
     },
-    "stage": {
-      "name": "Stage",
+    "performance-stage": {
+      "name": "Performance Stage",
       "type": "taxonomy",
       "options": {
-        "taxonomy": "stage",
+        "taxonomy": "performance-stage",
         "type": "select",
         "args": {}
       }
@@ -534,11 +534,13 @@
     },
     "websiteLink": {
       "name": "Website URL",
+      "path": "links.official",
       "type": "text"
     },
     "socialLinks": {
       "name": "Social URL(s)",
       "description": "Recognizes Beartport, Facebook, Google, Twitter, Instagram, YouTube, SoundCloud, MixCloud",
+      "path": "links.social",
       "clone": true,
       "type": "text"
     },
@@ -566,35 +568,41 @@
     "headshotImage": {
       "name": "Headshot",
       "type": "image_advanced",
+      "path": "image.headshot",
       "desc": "Upload a high resolution headshot image.",
       "multiple": false
     },
     "portraitImage": {
       "name": "Portrait Image",
       "type": "image_advanced",
+      "path": "image.portrait",
       "desc": "Upload a high resolution portrait image.",
       "multiple": false
     },
     "landscapeImage": {
       "name": "Landscape Image",
       "type": "image_advanced",
+      "path": "image.landscape",
       "desc": "Upload a high resolution landscape image.",
       "multiple": false
     },
     "logoImage": {
       "name": "Logo Image",
       "type": "image_advanced",
+      "path": "image.logo",
       "desc": "Upload a high resolution white logo atop of a transparent background.",
       "multiple": false
     },
     "galleryImages": {
       "name": "Additional Images",
+      "path": "image.gallery",
       "type": "plupload_image",
       "desc": "Upload additional images to be displayed in a gallery format.",
       "multiple": false
     },
     "locationAddress": {
       "id": "locationAddress",
+      "path": "location.address",
       "name": "Address"
     },
     "locationMap": {
@@ -606,17 +614,28 @@
     },
     "ticketURL": {
       "id": "ticketURL",
+      "path": "url.ticket",
       "name": "Ticket URL",
       "desc": "The link for purchasing tickets",
+      "type": "url"
+    },
+    "rsvpURL": {
+      "id": "rsvpURL",
+      "path": "url.rsvp",
+      "name": "RSVP URL",
+      "desc": "The link for Event RSVP",
       "type": "url"
     }
   },
   "taxonomies": {
-    "stage": {
+    "performance-stage": {
       "name": "Stage"
     },
     "event-type": {
       "name": "Event Type"
+    },
+    "venue-type": {
+      "name": "Venue Type"
     }
   }
 }
