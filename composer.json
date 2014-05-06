@@ -20,5 +20,8 @@
     "composer/installers": "~1.0",
     "UsabilityDynamics/wp-flawless": "legacy-dev"
   },
-  "autoload": {}
+  "autoload": {},
+  "extra": {
+    "installer-name": "flawless_hddp"
+  }
 }
