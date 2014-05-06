@@ -1,5 +1,5 @@
 {
-  "name": "usabilitydynamics/wp-disco",
+  "name": "discodonniepresents/wp-disco",
   "version": "1.0.0",
   "type": "wordpress-theme",
   "description": "Festival Theme for the Drop Network",
@@ -18,7 +18,7 @@
   "minimum-stability": "dev",
   "require": {
     "composer/installers": "~1.0",
-    "UsabilityDynamics/wp-flawless": "legacy-dev"
+    "UsabilityDynamics/wp-flawless": "0.60.0"
   },
   "autoload": {},
   "extra": {
