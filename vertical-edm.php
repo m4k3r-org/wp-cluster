@@ -31,7 +31,7 @@
  * @author Andy Potanin <andy.potanin@usabilitydynamics.com>
  */
 
-if( class_exists( 'wpCloud\Vertical\EDM' ) ) {
-  new wpCloud\Vertical\EDM;
+if( class_exists( 'wpCloud\Vertical\EDM\Bootstrap' ) ) {
+  new wpCloud\Vertical\EDM\Bootstrap;
 }
 
