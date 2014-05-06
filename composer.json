@@ -1,0 +1,43 @@
+{
+  "name": "wpCloud/vertical-edm",
+  "type": "project",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://repository.usabilitydynamics.com"
+    }
+  ],
+  "config": {
+    "vendor-dir": "vendor/libraries",
+    "bin-dir": "vendor/bin",
+    "optimize-autoloader": true,
+    "autoloader-suffix": "VendorPackages"
+  },
+  "extra": {
+    "installer-paths": {
+      "application/vendor/{$name}": [
+        "type:wpcloud-application"
+      ],
+      "storage/vendor/{$name}": [
+        "type:wpcloud-storage"
+      ],
+      "vendor/libraries/{$name}": [
+        "type:wordpress-library"
+      ],
+      "vendor/modules/{$name}": [
+        "type:wordpress-muplugin",
+        "type:wordpress-plugin"
+      ],
+      "vendor/themes/{$name}": [
+        "type:wordpress-theme"
+      ]
+    }
+  },
+  "require": {},
+  "autoload": {
+    "classmap": [ "lib" ]
+  },
+  "scripts": {},
+  "minimum-stability": "dev",
+  "license": "GPLv2"
+}
