@@ -144,41 +144,41 @@ namespace UsabilityDynamics\Cluster {
         global $wp_cluster;
         return 'http://' . $wp_cluster->domain;
       }
-
+      
       /**
        * Fix DDP problem
        */
       public function template_directory_uri( $template_dir_uri, $template, $theme_root_uri ) {
-
+      
         if( strpos( $template_dir_uri, get_home_url() ) === 0 ) {
-          return $template_dir_uri;
+          return $template_dir_uri;    
         }
-
+    
         if( strpos( $template_dir_uri, 'http' ) === 0 ) {
-          return $template_dir_uri;
+          return $template_dir_uri;    
         }
-
-        return untrailingslashit( get_home_url() ) . '/' . $template_dir_uri;
+    
+        return untrailingslashit( get_home_url() ) . '/' . $template_dir_uri;    
       }
 
       /**
        * Fix DDP problem
        */
       public function stylesheet_directory_uri( $stylesheet_dir_uri, $stylesheet, $theme_root_uri ) {
-
+      
         if( strpos( $stylesheet_dir_uri, get_home_url() ) === 0 ) {
-          return $stylesheet_dir_uri;
+          return $stylesheet_dir_uri;    
         }
-
+      
         if( strpos( $stylesheet_dir_uri, 'http' ) === 0 ) {
-          return $stylesheet_dir_uri;
+          return $stylesheet_dir_uri;    
         }
-
-
-        return untrailingslashit( get_home_url() ) . '/' . $stylesheet_dir_uri;
-
+    
+          
+        return untrailingslashit( get_home_url() ) . '/' . $stylesheet_dir_uri;    
+              
       }
-
+      
       /**
        * Return URL Mapping Array
        *
@@ -460,26 +460,19 @@ namespace UsabilityDynamics\Cluster {
           if( defined( 'WP_BASE_DIR' ) ) {
             $_base = defined( 'WP_BASE_DIR' ) ? WP_BASE_DIR : ABSPATH;
           }
-
+          
           $_path = str_replace( '\\', '/', ( $plugin ? $plugin : $url ) );
           $_base = str_replace( '\\', '/', $_base );
-
+          
           $_annex = untrailingslashit( str_replace( $_base, '', $_path ) );
 
           // Not sure if should use site_url or home_url..
           $url = site_url( $_annex . $path );
 
         }
-
+        
         $url = str_replace( array( $wp_cluster->cluster_domain ), array( $wp_cluster->domain ), $url );
-
-        /**
-         * Replace any thing that has the modules directory followed by the full path to the web root for custom MU plugins
-         * http://baldrichfalcons.com/{static/storage/baldrichfalcons.com/modules}/sites/cluster-uds-io/modules/akismet/2.6.0
-         */
-        $modules_relative = str_ireplace( WP_BASE_DIR, '', WP_PLUGIN_DIR );
-        $url = str_ireplace( trim( $modules_relative, '/' ) . '/' . trim( WP_BASE_DIR, '/' ) . '/', '', $url );
-
+        
         return $url;
 
       }

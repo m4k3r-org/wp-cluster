@@ -51,6 +51,10 @@ namespace UsabilityDynamics\Cluster {
       public function __construct() {
         global $wp_cluster;
 
+        if( defined( 'WP_BASE_DIR' ) && is_dir( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'themes' ) ) {
+          //register_theme_directory( WP_BASE_DIR . DIRECTORY_SEPARATOR . 'themes' );
+        }
+
         // $this->add_site_directories();
 
         // Get WP_Theme Instance.
@@ -79,7 +83,7 @@ namespace UsabilityDynamics\Cluster {
       public function template_redirect() {
 
         if( !$this->exists ) {
-          self::fatal( 'Our apologies, but this site is not yet set up. Please check back soon.' );
+          self::fatal( 'Our apologies, but this site is yet set up. Please check back soon.' );
         }
 
       }

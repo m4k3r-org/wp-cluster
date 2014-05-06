@@ -32,7 +32,7 @@
     "usabilitydynamics/lib-saas": "master",
     "usabilitydynamics/lib-cdn": "master",
     "usabilitydynamics/lib-require": "master",
-    "usabilitydynamics/lib-rpc": "master"
+    "usabilitydynamics/lib-wp-rpc": "master"
   },
   "autoload": {
     "classmap": [

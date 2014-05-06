@@ -1,82 +1,203 @@
-# WP Cluster
+# Cluster Rewrites
 #
 # This file should be symbolically linked to Cluster Network root.
 #
-# @version 3.0.1
+# @version 3.0.0
 # @author potanin@UD
 
-# Required at beginning
+# Cluster Mimes BEGIN
+<IfModule mod_mime.c>
+  AddEncoding gzip                                    svgz
+  AddType audio/mp4                                   m4a f4a f4b
+  AddType audio/ogg                                   oga ogg
+  AddType application/javascript                      js
+  AddType application/json                            json
+  AddType video/mp4                                   mp4 m4v f4v f4p
+  AddType video/ogg                                   ogv
+  AddType video/webm                                  webm
+  AddType video/x-flv                                 flv
+  AddType application/font-woff                       woff
+  AddType application/vnd.ms-fontobject               eot
+  AddType application/x-font-ttf                      ttc ttf
+  AddType font/opentype                               otf
+  AddType application/octet-stream                    safariextz
+  AddType application/x-chrome-extension              crx
+  AddType application/x-opera-extension               oex
+  AddType application/x-shockwave-flash               swf
+  AddType application/x-web-app-manifest+json         webapp
+  AddType application/x-xpinstall                     xpi
+  AddType application/xml                             atom rdf rss xml
+  AddType image/webp                                  webp
+  AddType image/x-icon                                ico
+  AddType text/cache-manifest                         appcache manifest
+  AddType text/vtt                                    vtt
+  AddType text/x-component                            htc
+  AddType text/x-vcard                                vcf
+</IfModule>
+# Cluster Mimes END
+
+# Cluster Format BEGIN
+<IfModule mod_mime.c>
+  AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml .html .htm
+</IfModule>
+# Cluster Format END
+
+# Cluster Static and Media BEGIN
 <IfModule mod_rewrite.c>
 
-  RewriteEngine On
-  RewriteBase /
+  # Rewrite assets or media, if they don't exist
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(assets|media)/(.*)$ /static/storage/%{SERVER_NAME}/$1/$2 [L]
+
+  # Direct
+  # RewriteRule ^/storage/(.*)$ /static/%{REQUEST_URI} [NC,QSA,L]
+
+  # Rewrite other media URLs
+  RewriteRule ^system/files/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
+  RewriteRule ^system/media/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
+  RewriteRule ^files/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
+  RewriteRule ^uploads/(.*)$ /static/storage/%{SERVER_NAME}/media/$1 [L]
+
+  # Look to rewrite for the root specifically to index.html if it exists
+  # RewriteCond %{QUERY_STRING} ^.*cfct_action.*$
+  RewriteCond %{DOCUMENT_ROOT}/static/storage/%{SERVER_NAME}/static/index\.html -f
+  RewriteRule ^$ /static/storage/%{SERVER_NAME}/static/index.html [NC,QSA,L]
+  
+  # Look for files without an HTML extension
+  # TEMP Should fix in another method
+  #RewriteCond %{REQUEST_URI} ^[^\.]*$
+  #RewriteCond %{DOCUMENT_ROOT}/static/storage/%{SERVER_NAME}/static%{REQUEST_URI} -f
+  #RewriteRule ^(.*)$ /static/storage/%{SERVER_NAME}/static%{REQUEST_URI}.html [T=text/html,NC,QSA,L]
+  #RewriteRule ^(.*)$ /static/storage/%{SERVER_NAME}/static%{REQUEST_URI}.txt [T=text/html,NC,QSA,L]
+
+  # Rewrite static assets that exist in the storage directory
+  RewriteCond %{DOCUMENT_ROOT}/static/storage/%{SERVER_NAME}/static%{REQUEST_URI}.html -f
+  RewriteRule ^(.*)$ /static/storage/%{SERVER_NAME}/static%{REQUEST_URI}.html [NC,QSA,L]
 
 </IfModule>
+# Cluster Static and Media END
 
-# BEGIN Mimes
-<IfModule mod_mime.c>
-
-  AddEncoding gzip svgz
-  AddType audio/mp4 m4a f4a f4b
-  AddType audio/ogg oga ogg
-  AddType application/javascript js
-  AddType application/json json
-  AddType video/mp4 mp4 m4v f4v f4p
-  AddType video/ogg ogv
-  AddType video/webm webm
-  AddType video/x-flv flv
-  AddType application/font-woff woff
-  AddType application/vnd.ms-fontobject eot
-  AddType application/x-font-ttf ttc ttf
-  AddType font/opentype otf
-  AddType application/octet-stream safariextz
-  AddType application/x-chrome-extension crx
-  AddType application/x-opera-extension oex
-  AddType application/x-shockwave-flash swf
-  AddType application/x-web-app-manifest+json webapp
-  AddType application/x-xpinstall xpi
-  AddType application/xml atom rdf rss xml
-  AddType image/webp webp
-  AddType image/x-icon ico
-  AddType text/cache-manifest appcache manifest
-  AddType text/vtt vtt
-  AddType text/x-component htc
-  AddType text/x-vcard vcf
-
+# Cluster Modules BEGIN
+<IfModule mod_rewrite.c>
+  RewriteRule ^vendor/wordpress/core/wp-content/plugins/(.*)$ modules/$1 [R=301,L]
+  RewriteRule ^wp-content/plugins/(.*)$ modules/$1 [L]
 </IfModule>
-# END Mimes
+# Cluster Modules END
 
-# BEGIN Format
-<IfModule mod_mime.c>
-
-  AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml .html .htm
-
+# Cluster Theme BEGIN
+<IfModule mod_rewrite.c>
+  RewriteRule ^wp-content/themes/(.*)$ themes/$1 [L]
 </IfModule>
-# END Format
+# Cluster Theme END
 
-# BEGIN Security
+# Cluster Management BEGIN
+<IfModule mod_rewrite.c>
+  RewriteRule ^xmlrpc.php$ /vendor/wordpress/core/xmlrpc.php [L]
+  RewriteRule ^wp-comments-post.php$ /vendor/wordpress/core/wp-comments-post.php [L]
+  RewriteRule ^wp-admin(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
+  RewriteRule ^wp-includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
+  RewriteRule ^includes(.*)$ /vendor/wordpress/core/wp-includes/$1 [L]
+  RewriteRule ^wp-signup.php$ /vendor/wordpress/core/wp-signup.php$1 [L]
+  RewriteRule ^manage/login/$ /vendor/wordpress/core/wp-login.php [L]
+  RewriteRule ^manage/login$ /vendor/wordpress/core/wp-login.php [L]
+  RewriteRule ^manage/wp-login.php$ /manage/login [R=301,L] # /manage/wp-login.php => /manage/login?loggedout=true
+  RewriteRule ^manage/(.*)$ /vendor/wordpress/core/wp-admin/$1 [L]
+  RewriteRule ^manage$ /vendor/wordpress/core/wp-admin/ [R=401L]
+</IfModule>
+# Cluster Management END
+
+# Cluster API BEGIN
+<IfModule mod_rewrite.c>
+  RewriteRule ^api/status.json$ /manage/admin-ajax.php?action=cluster_uptime_status [L]
+</IfModule>
+# Cluster API END
+
+# Cluster Access Control BEGIN
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+</IfModule>
+# Cluster Access Control End
+
+# Cluster Security BEGIN
+<IfModule mod_rewrite.c>
+  RewriteRule ^node_modules/(.*)$ /index.php [L]
+  RewriteRule ^readme.md$ /index.php [L]
+  RewriteRule ^wp-cli.yml$ /index.php [L]
+  RewriteRule ^package.json$ /index.php [L]
+  RewriteRule ^gruntfile.js$ /index.php [L]
+  RewriteRule ^composer.json$ /index.php [L]
+  RewriteRule ^composer.lock$ /index.php [L]
+  RewriteRule ^wp-config.php$ /index.php [L]
+  RewriteRule ^w3tc-config/master.php$ /index.php [L]
+  RewriteRule ^w3tc-config/master-admin.php$ /index.php [L]
+  RewriteRule ^application/$ /index.php [L]
+  RewriteRule ^application/(config|defaults|lib)/(.*)$ /index.php [L]
+</IfModule>
 <FilesMatch "(^#.*#|\.(md|lock|yml|json|bak|config|dist|fla|inc|ini|log|psd|sh|sql|sw[op])|~)$">
-
   Order allow,deny
   Deny from all
   Satisfy All
-
 </FilesMatch>
-# END Security
+# Cluster Security END
+
+# Cluster Expires BEGIN
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresDefault                                      "access plus 1 month"
+  ExpiresByType text/css                              "access plus 1 year"
+  ExpiresByType application/json                      "access plus 0 seconds"
+  ExpiresByType application/xml                       "access plus 0 seconds"
+  ExpiresByType text/xml                              "access plus 0 seconds"
+  ExpiresByType image/x-icon                          "access plus 1 week"
+  ExpiresByType text/x-component                      "access plus 1 month"
+  ExpiresByType text/html                             "access plus 1 year"
+  ExpiresByType application/javascript                "access plus 1 year"
+  ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
+  ExpiresByType text/cache-manifest                   "access plus 0 seconds"
+  ExpiresByType audio/ogg                             "access plus 1 month"
+  ExpiresByType image/gif                             "access plus 1 month"
+  ExpiresByType image/jpeg                            "access plus 1 month"
+  ExpiresByType image/png                             "access plus 1 month"
+  ExpiresByType video/mp4                             "access plus 1 month"
+  ExpiresByType video/ogg                             "access plus 1 month"
+  ExpiresByType video/webm                            "access plus 1 month"
+  ExpiresByType application/atom+xml                  "access plus 1 hour"
+  ExpiresByType application/rss+xml                   "access plus 1 hour"
+  ExpiresByType application/font-woff                 "access plus 1 month"
+  ExpiresByType application/vnd.ms-fontobject         "access plus 1 month"
+  ExpiresByType application/x-font-ttf                "access plus 1 month"
+  ExpiresByType font/opentype                         "access plus 1 month"
+  ExpiresByType image/svg+xml                         "access plus 1 month"
+</IfModule>
+# Cluster Expires END
+
+# Cluster Cache BEGIN
+<IfModule mod_deflate.c>
+
+  <IfModule mod_headers.c>
+    Header append Vary User-Agent env=!dont-vary
+  </IfModule>
+
+  AddOutputFilterByType DEFLATE text/css text/x-component application/x-javascript application/javascript text/javascript text/x-js text/html text/richtext image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon application/json
+
+  # DEFLATE by extension
+  <IfModule mod_mime.c>
+    AddOutputFilter DEFLATE js css htm html xml
+  </IfModule>
+
+</IfModule>
+# Cluster Cache END
 
 # BEGIN W3TC CDN
 <FilesMatch "\.(ttf|ttc|otf|eot|woff|font.css)$">
-
-  <IfModule mod_headers.c>
+<IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin "*"
-  </IfModule>
-
+</IfModule>
 </FilesMatch>
 # END W3TC CDN
-
-# BEGIN Browser Optimization
+# BEGIN W3TC Browser Cache
 <IfModule mod_deflate.c>
-
     <IfModule mod_headers.c>
         Header append Vary User-Agent env=!dont-vary
     </IfModule>
@@ -85,141 +206,10 @@
         # DEFLATE by extension
         AddOutputFilter DEFLATE js css htm html xml
     </IfModule>
-
 </IfModule>
-# END Browser Optimization
+# END W3TC Browser Cache
 
-# BEGIN Static and Media
-<IfModule mod_rewrite.c>
-
-  # Experimental
-  # RewriteRule ^robots.txt$ /manage/admin-ajax.php?action=/robots.txt [QSA,L]
-
-  # Rewrite any of our content URLs to media, so that it is uniform
-  RewriteRule ^wp-content/uploads/(.*)$ /media/$1 [L]
-  RewriteRule ^system/files/(.*)$ /media/$1 [L]
-  RewriteRule ^system/media/(.*)$ /media/$1 [L]
-  RewriteRule ^files/(.*)$ /media/$1 [L]
-  RewriteRule ^uploads/(.*)$ /media/$1 [L]
-
-  # Now, we're going to look in the public directory to see if the file exists, and serve
-  # it if it does
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$
-  RewriteCond %{DOCUMENT_ROOT}/storage/public/%1/%2 -f
-  RewriteRule ^.*$ /storage/public/%1/%2 [L]
-
-  # Ok, now we're going to rewrite to static html files if they exist
-  # for the request
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$
-  RewriteCond %{DOCUMENT_ROOT}/storage/public/%1/%2.html -f
-  RewriteRule ^.*$ /storage/public/%1/%2.html [L]
-
-  # Look to rewrite for the root specifically to index.html if it exists,
-  # but only if we don't actually have a query string
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{DOCUMENT_ROOT}/storage/public/%{HTTP_HOST}/index\.html -f
-  RewriteCond %{QUERY_STRING} ^$
-  RewriteRule ^$ /storage/public/%{HTTP_HOST}/index.html [L]
-
-</IfModule>
-# END Static and Media
-
-# BEGIN Public API
-<IfModule mod_rewrite.c>
-
-  RewriteRule ^api/(.*).xml$ /manage/admin-ajax.php?action=/$1&format=xml    [QSA,L]
-  RewriteRule ^api/(.*).json$ /manage/admin-ajax.php?action=/$1&format=json   [QSA,L]
-  RewriteRule ^api/(.*)$ /manage/admin-ajax.php?action=/$1&format=json   [QSA,L]
-
-</IfModule>
-# END Public API
-
-# BEGIN Modules
-<IfModule mod_rewrite.c>
-
-  # Just do a standard rewrite for plugins to vendor conversion
-  RewriteRule ^wp-content/plugins/(.*)$ vendor/modules/$1 [L]
-
-</IfModule>
-# END Modules
-
-# BEGIN Theme
-<IfModule mod_rewrite.c>
-
-  # Just do a standard rewrite for wp-content to vendor conversion
-  RewriteRule ^wp-content/themes/(.*)$ vendor/themes/$1 [L]
-
-</IfModule>
-# END Theme
-
-# BEGIN Management
-<IfModule mod_rewrite.c>
-
-  # Redirect fully qualified links to actual masked ones
-  RewriteCond %{ENV:REDIRECT_SUBDOMAIN} =""
-  RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-admin/(.*)$ /manage/$1 [R=301,L]
-  RewriteCond %{ENV:REDIRECT_SUBDOMAIN} =""
-  RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-(login|signup)\.php$ /manage/$1 [R=301,L]
-
-  # Ensure that we're forwarding all manage requests to the right place
-  RewriteRule ^manage/(login|signup)/?(.*)$ /vendor/libraries/automattic/wordpress/wp-$1.php [E=SUBDOMAIN:rdr,L]
-  RewriteRule ^manage/?(.*)$ /vendor/libraries/automattic/wordpress/wp-admin/$1 [E=SUBDOMAIN:rdr,L]
-
-</IfModule>
-# END Management
-
-# BEGIN Assets
-<IfModule mod_rewrite.c>
-
-  # Rewrite 'wp-includes' assets to simpler format
-  RewriteCond %{ENV:REDIRECT_SUBDOMAIN} =""
-  RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-includes/js/(.*)$ /assets/scripts/$1 [R=301,L]
-  RewriteCond %{ENV:REDIRECT_SUBDOMAIN} =""
-  RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-includes/css/(.*)$ /assets/styles/$1 [R=301,L]
-  RewriteCond %{ENV:REDIRECT_SUBDOMAIN} =""
-  RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-includes/images/(.*)$ /assets/images/$1 [R=301,L]
-
-  # Take simpler format, and rewrite it to complex on on back end
-  RewriteRule ^assets/scripts/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/js/$1 [E=SUBDOMAIN:rdr,L]
-  RewriteRule ^assets/styles/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/css/$1 [E=SUBDOMAIN:rdr,L]
-  RewriteRule ^assets/images/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/images/$1 [E=SUBDOMAIN:rdr,L]
-
-  # Rewrite 'wp-admin' assets to simpler format
-  #RewriteCond %{ENV:REDIRECT_SUBDOMAIN} =""
-  #RewriteCond %{REQUEST_FILENAME} !^(.*)\.php$
-  ##RewriteCond %{REQUEST_URI} (?:/vendor/libraries/automattic/wordpress)?/wp-admin/(.*)
-  #RewriteCond %{DOCUMENT_ROOT}/vendor/libraries/automattic/wordpress/wp-admin/$1 -f
-  #RewriteRule ^(?:vendor/libraries/automattic/wordpress/)?wp-admin/(.*)$ /manage/$1 [R=301,L]
-
-  # Actually rewrite admin assets if they're there
-  #RewriteCond %{REQUEST_FILENAME} !-f
-  #RewriteCond %{REQUEST_FILENAME} !-d
-
-  # Rewrite admin assets if they're there
-  #RewriteCond %{REQUEST_FILENAME} !-f
-  #RewriteCond %{REQUEST_FILENAME} !-d
-  #RewriteCond %{REQUEST_URI} /wp-admin/(.*)
-  #RewriteCond %{DOCUMENT_ROOT}/vendor/libraries/automattic/wordpress/wp-admin/$1 -f
-  #RewriteRule ^wp-admin/(.*)$ /vendor/libraries/automattic/wordpress/wp-admin/$1 [E=SUBDOMAIN:rdr,L]
-
-</IfModule>
-# END Assets
-
-# BEGIN PHP-FPM
-<IfModule mod_proxy_fcgi.c>
-  <IfModule mod_rewrite.c>
-    RewriteCond %{REQUEST_FILENAME} ^.*\.php$
-    RewriteCond %{REQUEST_FILENAME} -f
-    RewriteRule ^(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/$1 [P,L]
-  </IfModule>
-</IfModule>
-# END PHP-FPM
-
-# BEGIN WordPress
+# WordPress BEGIN
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -228,4 +218,4 @@
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.php [L]
 </IfModule>
-# END WordPress
+# WordPress END

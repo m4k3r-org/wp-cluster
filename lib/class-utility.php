@@ -15,7 +15,7 @@ namespace UsabilityDynamics\Cluster {
      * @module Cluster
      */
     class Utility {
-
+    
       /**
        * Login Shortcode
        *
@@ -48,16 +48,16 @@ namespace UsabilityDynamics\Cluster {
        * Get Request Headers.
        *
        * @method requestHeaders
-       */
-      static public function requestHeaders()  {
-        $headers = '';
-        foreach ($_SERVER as $name => $value)  {
-         if (substr($name, 0, 5) == 'HTTP_')  {
-           $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
-         }
-        }
-        return (object) $headers;
-      }
+       */      
+      static public function requestHeaders()  { 
+        $headers = ''; 
+        foreach ($_SERVER as $name => $value)  { 
+         if (substr($name, 0, 5) == 'HTTP_')  { 
+           $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value; 
+         } 
+        } 
+        return (object) $headers; 
+      }       
 
       /**
        * Replace Default Sender Email
@@ -67,22 +67,22 @@ namespace UsabilityDynamics\Cluster {
        * @return mixed
        */
       static public function wp_mail_from( $from_email ) {
-
+  
         // Get the site domain and get rid of www.
-        $sitename = strtolower( $_SERVER[ 'SERVER_NAME' ] );
-
+        $sitename = strtolower( $_SERVER['SERVER_NAME'] );
+        
         if ( substr( $sitename, 0, 4 ) == 'www.' ) {
           $sitename = substr( $sitename, 4 );
         }
-
+  
         if( $from_email == 'wordpress@' . $sitename ) {
           return str_replace( 'wordpress', 'info', $from_email );
         }
-
+  
         return $from_email;
-
+  
       }
-
+  
       /**
        * Replace Default Sender Name
        *
@@ -91,14 +91,17 @@ namespace UsabilityDynamics\Cluster {
        * @return string
        */
       static public function wp_mail_from_name( $from_name ) {
-        global $current_site;
-
-        $from_name = str_replace( 'WordPress', $current_site->domain, $from_name );
-
+  
+        $searchParams = array(
+          //'index' => '...',
+          'type' => $type,
+          'body' => $query
+        );
+  
         return $from_name;
-
+  
       }
-
+          
       /**
      * Apply a method to multiple filters
      *
@@ -112,7 +115,7 @@ namespace UsabilityDynamics\Cluster {
       }
 
     }
-
+  
       /**
        * Root relative URLs
        *
@@ -127,40 +130,18 @@ namespace UsabilityDynamics\Cluster {
        */
       static public function relative_url( $input ) {
         return $input;
-
+  
         preg_match( '|https?://([^/]+)(/.*)|i', $input, $matches );
-
+  
         if( isset( $matches[ 1 ] ) && isset( $matches[ 2 ] ) && $matches[ 1 ] === $_SERVER[ 'SERVER_NAME' ] ) {
           return wp_make_link_relative( $input );
         } else {
           return $input;
         }
       }
-
-      /**
-       * Returns server hostname
-       *
-       * @return string
-       */
-      function get_host() {
-        static $host = null;
-
-        if ($host === null) {
-          if (!empty($_SERVER['HTTP_X_FORWARDED_HOST'])) {
-            $host = $_SERVER['HTTP_X_FORWARDED_HOST'];
-          } elseif (!empty($_SERVER['HTTP_HOST'])) {
-            // HTTP_HOST sometimes is not set causing warning
-            $host = $_SERVER['HTTP_HOST'];
-          } else {
-            $host = '';
-          }
-        }
-
-        return $host;
-      }
-
+        
     }
-
+    
   }
-
+  
 }
