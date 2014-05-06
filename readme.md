@@ -136,3 +136,9 @@ Categorical, unrestricted.
 
 ## Resources
 http://schema.org/NightClub
+
+Business Intelligence Plugin
+
+## Intelligence
+- Which artists are rending in a region?
+- Which likes are trending in a region?

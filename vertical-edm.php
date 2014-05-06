@@ -31,7 +31,7 @@
  * @author Andy Potanin <andy.potanin@usabilitydynamics.com>
  */
 
-require_once( 'lib/class-bootstrap.php' );
+// require_once( 'lib/class-bootstrap.php' );
 
 // Define Data Structure
 // - add_post_type_support( 'event', 'post-formats' );
