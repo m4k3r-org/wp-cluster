@@ -15,8 +15,8 @@
     "autoloader-suffix": "VendorPackages"
   },
   "require": {
-    "usabilitydynamics/utility": "master",
-    "usabilitydynamics/settings": "master"
+    "usabilitydynamics/lib-utility": "master",
+    "usabilitydynamics/lib-model": "master"
   },
   "autoload": {
     "classmap": [ "lib" ]
