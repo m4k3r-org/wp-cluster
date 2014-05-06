@@ -1,5 +1,76 @@
+/**
+ * WP-AMD Plugin Handler.
+ *
+ */
 jQuery( document ).ready( function( $ ) {
+  console.debug( 'wp-amd', 'Ready.' );
+
   var editor = {};
+
+  /**
+   *
+   * @author potanin@UD
+   * @param response
+   */
+  function ajaxCallback( response ) {
+    console.debug( 'wp-amd', 'The server responded', response );
+
+    var ajaxMessage = jQuery( 'h2 span.ajax-message' );
+
+    if( response.ok ) {
+      ajaxMessage.removeClass( 'success' ).addClass( 'error' );
+    } else {
+      ajaxMessage.removeClass( 'error' ).addClass( 'success' );
+    }
+
+    ajaxMessage.show().text( response.message || 'Unknown error.' ).fadeIn( 400, function onceDisplayed() {
+      console.debug( 'wp-amd', 'Callback message displayed.' );
+
+    });
+
+  }
+
+  /**
+   *
+   * author potanin@UD
+   * @returns {boolean}
+   */
+  function saveScript() {
+    console.debug( 'wp-amd', 'Saving script asset.' );
+
+    // JavaScript failure fallback.
+    $( '#global-javascript' ).val( editor.getValue() );
+
+    jQuery.post( ajaxurl, {
+      action: '/amd/asset',
+      type: 'script',
+      data: editor.getValue()
+    }, ajaxCallback );
+
+    return false;
+
+  }
+
+  /**
+   *
+   * @author potanin@UD
+   * @returns {boolean}
+   */
+  function saveStyle() {
+    console.debug( 'wp-amd', 'Saving CSS asset.' );
+
+    // JavaScript failure fallback.
+    $( '#global-stylesheet' ).val( editor.getValue() );
+
+    jQuery.post( ajaxurl, {
+      action: '/amd/asset',
+      type: 'style',
+      data: editor.getValue()
+    }, ajaxCallback );
+
+    return false;
+
+  }
 
   $( '#global-javascript' ).AceJavascriptEditor( {
     // overwrites the default
@@ -17,7 +88,7 @@ jQuery( document ).ready( function( $ ) {
     onDestroy: function( e ) {
       // console.log( this.editor )
     }
-  } );
+  });
 
   $( '#global-stylesheet' ).AceStylesheetEditor( {
     // overwrites the default
@@ -35,25 +106,13 @@ jQuery( document ).ready( function( $ ) {
     onDestroy: function( e ) {
       // console.log( this.editor )
     }
-  } );
+  });
 
-  $( '#global-javascript-form' ).submit( function() {
+  $( '#global-javascript-form' ).submit( saveScript );
 
-    var js = editor.getValue();
+  $( '#global-stylesheet-form' ).submit( saveStyle );
 
-    $( '#global-javascript' ).val( js );
-
-  } );
-
-  $( '#global-stylesheet-form' ).submit( function() {
-
-    var css = editor.getValue();
-
-    $( '#global-stylesheet' ).val( css );
-
-  } );
-
-} );
+});
 
 (function( $ ) {
 
@@ -117,7 +176,7 @@ jQuery( document ).ready( function( $ ) {
       // update the textarea when the content in the ace div changes
       this.editor.on( 'change', function() {
         self.synchronize.apply( self );
-      } );
+      });
       // trigger the initial resize event
       this.editor.resize( true );
       // execute callback if it exists
@@ -150,7 +209,7 @@ jQuery( document ).ready( function( $ ) {
       var self = this;
       this.$container.resizable( {handles: 's'} ).css( {position: 'relative', height: this.defaultHt, minHeight: '400px'} ).on( 'resize.aceEditorResize', function() {
         self.editor.resize( true );
-      } );
+      });
     },
 
     synchronize: function() {
@@ -163,7 +222,7 @@ jQuery( document ).ready( function( $ ) {
       if( !this.loaded ) return false;
       this.$editor.remove();
       this.editor.destroy();
-      this.$container.resizable( 'destroy' ).off( 'resize.aceEditorResize' ).css( {height: ''} );
+      this.$container.resizable( 'destroy' ).off( 'resize.aceEditorResize' ).css( {height: ''});
       this.$elem.show();
       this.loaded = false;
       if( this.onDestroy ) this.onDestroy.apply( this, arguments );
@@ -192,7 +251,7 @@ jQuery( document ).ready( function( $ ) {
       // update the textarea when the content in the ace div changes
       this.editor.on( 'change', function() {
         self.synchronize.apply( self );
-      } );
+      });
       // trigger the initial resize event
       this.editor.resize( true );
       // execute callback if it exists
@@ -222,7 +281,7 @@ jQuery( document ).ready( function( $ ) {
       var self = this;
       this.$container.resizable( {handles: 's'} ).css( {position: 'relative', height: this.defaultHt, minHeight: '400px'} ).on( 'resize.aceEditorResize', function() {
         self.editor.resize( true );
-      } );
+      });
     },
 
     synchronize: function() {
@@ -235,7 +294,7 @@ jQuery( document ).ready( function( $ ) {
       if( !this.loaded ) return false;
       this.$editor.remove();
       this.editor.destroy();
-      this.$container.resizable( 'destroy' ).off( 'resize.aceEditorResize' ).css( {height: ''} );
+      this.$container.resizable( 'destroy' ).off( 'resize.aceEditorResize' ).css( {height: ''});
       this.$elem.show();
       this.loaded = false;
       if( this.onDestroy ) this.onDestroy.apply( this, arguments );
@@ -262,7 +321,7 @@ jQuery( document ).ready( function( $ ) {
           container: false
         }, option );
         $( this ).data( 'AceEditor', new AceJavascriptEditor( config ) );
-      } );
+      });
       // else, throw jquery error
     } else {
       $.error( 'Method "' + option + '" does not exist on AceEditor!' );
@@ -286,7 +345,7 @@ jQuery( document ).ready( function( $ ) {
           container: false
         }, option );
         $( this ).data( 'AceEditor', new AceStylesheetEditor( config ) );
-      } );
+      });
       // else, throw jquery error
     } else {
       $.error( 'Method "' + option + '" does not exist on AceEditor!' );

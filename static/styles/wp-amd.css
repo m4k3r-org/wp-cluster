@@ -9,6 +9,22 @@
   font-size: 12px;
   font-family: Consolas, Monaco, Courier, monospace;
 }
+.wrap .ajax-message {
+  margin-left: 10px;
+  padding: 3px 10px 3px 10px;
+  font-size: 14px;
+  position: relative;
+  top: -2px;
+}
+.wrap .ajax-message.error {
+  background: #f5fcd2;
+  color: red;
+}
+.wrap .ajax-message.success {
+  background: #D7FFE4;
+  color: green;
+  border: 1px solid #b0e7b0;
+}
 body.appearance_page_amd-page-script ul.post-revisions .avatar,
 body.appearance_page_amd-page-style ul.post-revisions .avatar {
   display: none;

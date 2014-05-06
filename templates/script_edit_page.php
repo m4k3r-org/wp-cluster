@@ -9,7 +9,7 @@
   <div class="updated"><p><strong><?php echo $data[ 'msg' ]; ?></strong></p></div>
 <?php endif; ?>
 <div class="wrap">
-  <h2><?php _e( 'Script Editor', get_wp_amd( 'domain' ) ); ?></h2>
+  <h2><?php _e( 'Script Editor', get_wp_amd( 'domain' ) ); ?><span class="ajax-message"></span></h2>
   <form action="themes.php?page=amd-page-script" method="post" id="global-javascript-form">
     <?php wp_nonce_field( 'update_amd_script', 'update_amd_script_nonce' ); ?>
     <div class="metabox-holder has-right-sidebar">

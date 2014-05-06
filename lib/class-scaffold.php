@@ -54,16 +54,16 @@ namespace UsabilityDynamics\AMD {
           //** Register assets and post_type */
           add_action( 'admin_init', array( &$this, 'admin_init' ) );
           add_action( 'admin_init', array( &$this, 'register_post_type' ) );
-          add_filter('redirect_canonical', array( $this, 'redirect_canonical') );
+          add_filter( 'redirect_canonical', array( $this, 'redirect_canonical') );
 
           switch( $this->get( 'type' ) ) {
             case 'style':
               add_action( 'wp_print_styles', array( &$this, 'register_asset' ), 999 );
-              break;
+            break;
             case 'script':
             default:
               add_action( 'wp_enqueue_scripts', array( &$this, 'register_asset' ), 999 );
-              break;
+            break;
           }
           
           //** Determine if Admin Menu is enabled */
@@ -328,7 +328,7 @@ namespace UsabilityDynamics\AMD {
        * @internal param mixed $js
        * @return void
        */
-      public function save_asset( $value ) {
+      public function save_asset( $value = null ) {
 
         if( !$post = self::get_asset( $this->get( 'type' )  ) ) {
 

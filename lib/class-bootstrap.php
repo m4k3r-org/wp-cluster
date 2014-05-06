@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * WP-AMD Plugin.
  *
  */
 namespace UsabilityDynamics\AMD {
@@ -42,7 +42,7 @@ namespace UsabilityDynamics\AMD {
       public $option = array();
 
       /**
-       *
+       * Instantaite class.
        */
       private function __construct() {
         
@@ -52,9 +52,10 @@ namespace UsabilityDynamics\AMD {
           'TextDomain' => 'Text Domain',
         ), 'plugin' );
         
-        $this->version = trim( $plugin_data['Version'] );
-        $this->domain = trim( $plugin_data['TextDomain'] );
-        
+        $this->version  = trim( $plugin_data[ 'Version' ] );
+        $this->domain   = trim( $plugin_data[ 'TextDomain' ] );
+
+        // Initialize Settings.
         $this->settings = new Settings( array(
           'key'  => 'wp_amd',
           'data' => array(
@@ -154,10 +155,54 @@ namespace UsabilityDynamics\AMD {
             )
           )
         ));
-        
-        //** Init our scripts and styles classes */
+
+        // Initialize Style and Script classes.
         $this->style    = new Style( $this->get( 'assets.style' ) );
         $this->script   = new Script( $this->get( 'assets.script' ) );
+
+        // Set Dynamics.
+        $this->set( 'version',  $this->version );
+        $this->set( 'locale',   $this->domain );
+
+        // AJAX Update Handler.
+        add_action( 'wp_ajax_/amd/asset', array( $this, 'ajax_handler' ) );
+
+      }
+
+      /**
+       * Handle Administrative AJAX Actions
+       *
+       * @author potanin@UD
+       * @method ajax_handler
+       */
+      public function ajax_handler() {
+
+        $_data = $_POST[ 'data' ];
+        $_type = $_POST[ 'type' ];
+
+        if( !$_type || !method_exists( $this->{$_type}, 'save_asset' ) ) {
+
+          return wp_send_json(array(
+            'ok' => false,
+            'message' => __( 'Unexpected error occured.', $this->get( 'locale' ) )
+          ));
+
+        }
+
+        if( !is_wp_error( $_revision = $this->{$_type}->save_asset( $_data ) ) ) {
+
+          return wp_send_json(array(
+            'ok' => false,
+            'revision' => $_revision,
+            'message' => __( 'Asset saved successfully.', $this->get( 'locale' ) )
+          ));
+
+        }
+
+        return wp_send_json(array(
+          'ok' => false,
+          'message' => __( 'Unable to save asset.', $this->get( 'locale' ) )
+        ));
 
       }
 

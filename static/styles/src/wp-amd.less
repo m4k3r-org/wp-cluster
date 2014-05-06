@@ -11,6 +11,30 @@
   font-family: Consolas, Monaco, Courier, monospace
 }
 
+.wrap {
+
+  .ajax-message {
+    margin-left: 10px;
+    padding: 3px 10px 3px 10px;
+    font-size: 14px;
+    position: relative;
+    top: -2px;
+  }
+
+  .ajax-message.error {
+    background: #f5fcd2;
+    color: red;
+  }
+
+  // @todo Should use native WP colors, but I'm in a hurry right now. -potanin@UD
+  .ajax-message.success {
+    background: #D7FFE4;
+    color: green;
+    border: 1px solid rgb(176, 231, 176);
+  }
+
+}
+
 body.appearance_page_amd-page-script,
 body.appearance_page_amd-page-style {
 

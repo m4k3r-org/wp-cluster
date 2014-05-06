@@ -1,4 +1,29 @@
 jQuery(document).ready(function($) {
+    function ajaxCallback(response) {
+        console.debug("wp-amd", "The server responded", response);
+        var ajaxMessage = jQuery("h2 span.ajax-message");
+        response.ok ? ajaxMessage.removeClass("success").addClass("error") : ajaxMessage.removeClass("error").addClass("success"), 
+        ajaxMessage.show().text(response.message || "Unknown error.").fadeIn(400, function() {
+            console.debug("wp-amd", "Callback message displayed.");
+        });
+    }
+    function saveScript() {
+        return console.debug("wp-amd", "Saving script asset."), $("#global-javascript").val(editor.getValue()), 
+        jQuery.post(ajaxurl, {
+            action: "/amd/asset",
+            type: "script",
+            data: editor.getValue()
+        }, ajaxCallback), !1;
+    }
+    function saveStyle() {
+        return console.debug("wp-amd", "Saving CSS asset."), $("#global-stylesheet").val(editor.getValue()), 
+        jQuery.post(ajaxurl, {
+            action: "/amd/asset",
+            type: "style",
+            data: editor.getValue()
+        }, ajaxCallback), !1;
+    }
+    console.debug("wp-amd", "Ready.");
     var editor = {};
     $("#global-javascript").AceJavascriptEditor({
         setEditorContent: function() {
@@ -20,13 +45,7 @@ jQuery(document).ready(function($) {
         },
         onLoaded: function() {},
         onDestroy: function() {}
-    }), $("#global-javascript-form").submit(function() {
-        var js = editor.getValue();
-        $("#global-javascript").val(js);
-    }), $("#global-stylesheet-form").submit(function() {
-        var css = editor.getValue();
-        $("#global-stylesheet").val(css);
-    });
+    }), $("#global-javascript-form").submit(saveScript), $("#global-stylesheet-form").submit(saveStyle);
 }), function($) {
     var AceJavascriptEditor = function(config) {
         $.extend(this, config), this.$elem = this.element, this.element = this.$elem.attr("id"), 

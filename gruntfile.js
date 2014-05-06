@@ -9,26 +9,30 @@ module.exports = function build( grunt ) {
 
   grunt.initConfig( {
 
-    pkg: grunt.file.readJSON( 'composer.json' ),
+    package: grunt.file.readJSON( 'composer.json' ),
 
-    // Generate Locale Files.
-    makepot: {
-      target: {
-        options: {
-          domainPath: 'static/languages',
-          mainFile: 'wp-amd.php',
-          potFilename: 'wp-amd.pot',
-          type: 'wp-plugin'
-        }
+    // Locale.
+    pot: {
+      options:{
+        package_name: 'wp-amd',
+        package_version: '<%= package.version %>',
+        text_domain: 'wp-amd',
+        dest: 'static/languages/',
+        keywords: [ 'gettext', 'ngettext:1,2' ]
+      },
+      files:{
+        src:  [ '**/*.php', 'lib/*.php' ],
+        expand: true
       }
     },
-
+    
+    // Documentation.
     yuidoc: {
       compile: {
-        name: '<%= pkg.name %>',
-        description: '<%= pkg.description %>',
-        version: '<%= pkg.version %>',
-        url: '<%= pkg.homepage %>',
+        name: '<%= package.name %>',
+        description: '<%= package.description %>',
+        version: '<%= package.version %>',
+        url: '<%= package.homepage %>',
         options: {
           paths: 'lib',
           outdir: 'static/codex/'
@@ -132,34 +136,8 @@ module.exports = function build( grunt ) {
 
     clean: {
       all: [
-        "composer.lock",
-        "scripts/app.js",
-        "scripts/contact-form-7.js",
-        "scripts/foobox.js",
-        "scripts/require.js",
-        "scripts/utility.js",
-        "components/*",
-        "vendor/*",
-        "styles/*.css",
-        "scripts/emitter",
-        "scripts/event",
-        "scripts/indexof",
-        "scripts/ui",
-        "scripts/utility"
-      ],
-      "update": [
-        "composer.lock",
-        "vendor/*"
+        "composer.lock"
       ]
-    },
-
-    symlink: {
-
-      explicit: {
-        dest: 'vendor/usabilitydynamics',
-        src: '/vendor/usabilitydynamics'
-      }
-
     },
 
     shell: {
@@ -181,16 +159,16 @@ module.exports = function build( grunt ) {
   grunt.loadNpmTasks( 'grunt-contrib-less' );
   grunt.loadNpmTasks( 'grunt-contrib-concat' );
   grunt.loadNpmTasks( 'grunt-contrib-clean' );
-  grunt.loadNpmTasks( 'grunt-wp-i18n' );
+  grunt.loadNpmTasks( 'grunt-pot' );
 
   // Register tasks
   grunt.registerTask( 'default', [ 'markdown', 'less' , 'yuidoc', 'uglify' ] );
 
   // Build Distribution
-  grunt.registerTask( 'distribution', [] );
+  grunt.registerTask( 'distribution', [ 'pot' ] );
 
   // Update Environment
-  grunt.registerTask( 'update', [ "clean:update", "shell:update" ] );
+  grunt.registerTask( 'update', [ "clean", "shell:update" ] );
 
   // Clean, preparing for update
   grunt.registerTask( 'clean', [  ] );
