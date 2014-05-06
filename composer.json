@@ -22,8 +22,8 @@
     "UsabilityDynamics/lib-settings": "master",
     "UsabilityDynamics/lib-carrington": "master",
     "UsabilityDynamics/lib-wp-shortcode": "master",
+    "UsabilityDynamics/lib-meta-box": "master",
     "UsabilityDynamics/wp-menufication": "master",
-    "UsabilityDynamics/wp-meta-box": "master",
     "UsabilityDynamics/wp-amd": "master"
   },
   "autoload": {
