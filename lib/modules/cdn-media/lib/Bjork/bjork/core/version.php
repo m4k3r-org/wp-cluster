@@ -1,1 +1,0 @@
-<?php return array(0, 22, 0, 'alpha', 0); ?>

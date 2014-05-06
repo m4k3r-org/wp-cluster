@@ -4,25 +4,25 @@
  *
  *
  *
- * @version 0.0.3
+ * @version 3.0.0
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @module Flawless
+ * @package Flawless
 */
 
-  //** Bail out if page is being loaded directly and Flawless does not exist */
-  if( !function_exists( 'get_header' ) ) {
+  //** Bail out if page is being loaded directly and flawless_theme does not exist */
+  if(!function_exists('get_header')) {
     die();
   }
 
 ?>
 
-<?php get_template_part( 'templates/header',  'archive' ) ?>
+<?php get_header( 'archive' ) ?>
 
-<?php get_template_part( 'templates/attention', 'archive' ); ?>
+<?php get_template_part('attention', 'archive'); ?>
 
 <div class="<?php flawless_wrapper_class(); ?>">
 
-  <?php flawless_widget_area( 'left_sidebar' ); ?>
+  <?php flawless_widget_area('left_sidebar'); ?>
 
   <div class="<?php flawless_block_class( 'main cfct-block' ); ?>">
     <div class="<?php flawless_module_class( 'archive-hentry' ); ?>">
@@ -42,15 +42,15 @@
       </header>
 
       <div class="loop loop-blog post-listing clearfix">
-      <?php get_template_part( 'templates/loop', 'blog' ); ?>
+      <?php get_template_part( 'loop', 'blog' ); ?>
       </div>
 
     </div> <?php /* .archive-hentry */ ?>
 
   </div> <?php /* .main.cfct-block */ ?>
 
-  <?php flawless_widget_area( 'right_sidebar' ); ?>
+  <?php flawless_widget_area('right_sidebar'); ?>
 
 </div> <!-- #content -->
 
-<?php get_template_part( 'templates/footer', 'archive' ); ?>
+<?php get_footer(); ?>

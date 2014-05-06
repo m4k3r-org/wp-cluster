@@ -5,18 +5,19 @@
  *
  * @version 0.60.0
  * @author Usability Dynamics, Inc. <info@usabilitydynamics.com>
- * @module Flawless
+ * @package Flawless
 */
 
-  //** Bail out if page is being loaded directly and Flawless does not exist */
+  //** Bail out if page is being loaded directly and flawless_theme does not exist */
   if( !function_exists( 'get_header' ) ) {
     die();
   }
+
 ?>
 
-<?php get_template_part( 'templates/header',  'page' ); ?>
+<?php get_header( 'page' ); ?>
 
-<?php get_template_part( 'templates/attention', 'page' ); ?>
+<?php get_template_part( 'attention', 'page' ); ?>
 
 <div class="<?php flawless_wrapper_class(); ?>">
 
@@ -33,7 +34,7 @@
         <?php flawless_page_title(); ?>
       </header>
 
-      <?php get_template_part( 'templates/entry-meta', 'header' ); ?>
+      <?php get_template_part( 'entry-meta', 'header' ); ?>
 
       <div class="entry-content clearfix">
       <?php the_content( 'More Info' ); ?>
@@ -41,7 +42,7 @@
 
       <?php comments_template(); ?>
 
-      <?php get_template_part( 'templates/entry-meta', 'footer' ); ?>
+      <?php get_template_part( 'entry-meta', 'footer' ); ?>
 
     </div><!-- flawless_module_class() -->
 
@@ -53,4 +54,4 @@
 
 </div>
 
-<?php get_template_part( 'templates/footer', 'page' ); ?>
+<?php get_footer(); ?>

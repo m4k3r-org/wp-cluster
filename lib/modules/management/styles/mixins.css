@@ -1,5 +1,0 @@
-ParseError: Unrecognised input in /Users/potanin/Products/flawless/core/modules/management/styles/mixins.less on line 553, column 7:
-552     .spanX (@index) when (@index > 0) {
-553       (~".span@{index}") { .span(@index);
-554       }
-
