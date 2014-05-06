@@ -31,7 +31,10 @@
  * @author Andy Potanin <andy.potanin@usabilitydynamics.com>
  */
 
-// require_once( 'lib/class-bootstrap.php' );
+require_once( 'lib/class-edm.php' );
+require_once( 'lib/class-edm-api.php' );
+require_once( 'lib/class-edm-bootstrap.php' );
+require_once( 'lib/class-edm-utility.php' );
 
 // Define Data Structure
 // - add_post_type_support( 'event', 'post-formats' );
