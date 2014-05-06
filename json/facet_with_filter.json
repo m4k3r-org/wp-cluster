@@ -1,0 +1,107 @@
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "field": {
+            "_type": "hdp_event"
+          }
+        },
+        {
+          "field": {
+            "_id": "*"
+          }
+        },
+        {
+          "field": {
+            "_all": "*"
+          }
+        },
+        {
+          "field": {
+            "genre": "Electro House"
+          }
+        }
+      ]
+    }
+  },
+  "facets": {
+    "Artist": {
+      "_label": "Artist",
+      "terms": {
+        "field": "terms.artist",
+        "size": 25
+      }
+    },
+    "Venue": {
+      "_label": "Venue",
+      "terms": {
+        "field": "terms.venue",
+        "size": 25
+      }
+    },
+    "Promoter": {
+      "_label": "Promoter",
+      "terms": {
+        "field": "terms.promoter",
+        "size": 25
+      }
+    },
+    "Tour": {
+      "_label": "Tour",
+      "terms": {
+        "field": "terms.tour",
+        "size": 25
+      }
+    },
+    "Event Type": {
+      "_label": "Event Type",
+      "terms": {
+        "field": "terms.type"
+      }
+    },
+    "Genre": {
+      "_label": "Genre",
+      "terms": {
+        "field": "terms.genre"
+      }
+    },
+    "Age Limit": {
+      "_label": "Age Limit",
+      "terms": {
+        "field": "terms.age_limit",
+        "order": "term"
+      }
+    },
+    "Date": {
+      "_label": "Event Month",
+      "date_histogram": {
+        "field": "time",
+        "interval": "month",
+        "value_script": "doc['time'].value"
+      }
+    },
+    "City": {
+      "_label": "City",
+      "terms": {
+        "field": "terms.city",
+        "all_terms": true,
+        "size": 50
+      }
+    },
+    "State": {
+      "_label": "State",
+      "terms": {
+        "field": "venue.location.state",
+        "size": "5"
+      }
+    }
+  },
+  "partial_fields": {
+    "$_output": {
+      "exclude": [
+        "_*"
+      ]
+    }
+  }
+}

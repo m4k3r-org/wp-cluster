@@ -1,0 +1,293 @@
+{
+	"schema": {
+		"_id": {
+			"store": "yes",
+			"path": "id",
+			"index": "not_analyzed"
+		},
+		"_timestamp": {
+			"enabled": true,
+			"path": "_meta.modified",
+			"format": "yyyy/MM/dd HH:mm:ss"
+		},
+		"properties": {
+			"id": {
+				"type": "integer",
+				"store": "yes",
+				"index": "no"
+			},
+			"title": {
+				"type": "string",
+				"store": "yes",
+				"index": "analyzed"
+			},
+			"summary": {
+				"type": "string",
+				"store": "yes",
+				"index": "analyzed"
+			},
+			"time": {
+				"type": "date",
+				"format": "yyyy/MM/dd HH:mm:ss",
+				"store": "yes"
+			},
+			"thumbnail": {
+				"store": "yes",
+				"type": "string",
+				"index": "not_analyzed"
+			},
+			"url": {
+				"store": "yes",
+				"type": "string",
+				"index": "not_analyzed"
+			},
+			"purchase": {
+				"store": "yes",
+				"type": "string",
+				"index": "not_analyzed"
+			},
+			"venue": {
+				"type": "nested",
+				"include_in_parent": true,
+				"properties": {
+					"id": {
+						"type": "integer",
+						"store": "yes",
+						"index": "no"
+					},
+					"name": {
+						"type": "string",
+						"store": "yes",
+						"index": "analyzed"
+					},
+					"url": {
+						"type": "string",
+						"store": "yes",
+						"index": "no"
+					},
+					"summary": {
+						"type": "string",
+						"store": "yes",
+						"index": "analyzed"
+					},
+					"address": {
+						"type": "string",
+						"store": "yes",
+						"index": "analyzed"
+					},
+					"location": {
+						"type": "object",
+						"dynamic": false,
+						"properties": {
+							"@type": {
+								"type": "string",
+								"index": "not_analyzed",
+								"store": "yes"
+							},
+							"@precision": {
+								"type": "string",
+								"index": "not_analyzed",
+								"store": "yes"
+							},
+							"city": {
+								"type": "string",
+								"index": "not_analyzed",
+								"store": "yes"
+							},
+							"county": {
+								"type": "string",
+								"index": "not_analyzed",
+								"store": "yes"
+							},
+							"state": {
+								"type": "string",
+								"index": "not_analyzed",
+								"store": "yes"
+							},
+							"state_code": {
+								"type": "string",
+								"index": "not_analyzed",
+								"store": "yes"
+							},
+							"country": {
+								"type": "string",
+								"index": "not_analyzed",
+								"store": "yes"
+							},
+							"country_code": {
+								"type": "string",
+								"index": "not_analyzed",
+								"store": "yes"
+							},
+							"coordinates": {
+								"type": "geo_point",
+								"lat_lon": true
+							}
+						}
+					}
+				}
+			},
+			"artists": {
+				"properties": {
+					"id": {
+						"type": "integer",
+						"store": "yes",
+						"index": "no"
+					},
+					"name": {
+						"type": "string",
+						"store": "yes",
+						"index": "analyzed"
+					},
+					"url": {
+						"type": "string",
+						"store": "yes",
+						"index": "no"
+					},
+					"summary": {
+						"type": "string",
+						"store": "yes",
+						"index": "analyzed"
+					}
+				}
+			},
+			"terms": {
+				"properties": {
+					"genre": {
+						"type": "string",
+						"index": "not_analyzed"
+					},
+					"artist": {
+						"type": "string",
+						"index": "not_analyzed"
+					},
+					"venue": {
+						"type": "string",
+						"index": "analyzed",
+						"analyzer": "keyword",
+						"search_analyzer": "keyword",
+						"store": "yes"
+					},
+					"age_limit": {
+						"type": "string",
+						"index": "not_analyzed"
+					},
+					"promoter": {
+						"type": "string",
+						"index": "not_analyzed"
+					},
+					"city": {
+						"type": "string",
+						"index": "not_analyzed"
+					},
+					"state": {
+						"type": "string",
+						"index": "not_analyzed"
+					},
+					"type": {
+						"type": "string",
+						"index": "not_analyzed"
+					},
+					"tour": {
+						"type": "string",
+						"index": "not_analyzed"
+					}
+				}
+			},
+			"_meta": {
+				"type": "object",
+				"properties": {
+					"published": {
+						"type": "date",
+						"format": "yyyy/MM/dd HH:mm:ss",
+						"store": "yes"
+					},
+					"modified": {
+						"type": "date",
+						"format": "yyyy/MM/dd HH:mm:ss",
+						"store": "yes"
+					},
+					"status": {
+						"type": "string",
+						"index": "no",
+						"store": "yes"
+					}
+				}
+			}
+		}
+	},
+  "views": {},
+  "facets": {
+    "Artist": {
+      "_label": "Artist",
+      "_description": "Find an artist.",
+      "terms": {
+        "field": "terms.artist",
+        "size": 25
+      }
+    },
+    "Venue": {
+      "_label": "Venue",
+      "terms": {
+        "field": "terms.venue",
+        "size": 25
+      }
+    },
+    "Promoter": {
+      "_label": "Promoter",
+      "terms": {
+        "field": "terms.promoter",
+        "size": 25
+      }
+    },
+    "Tour": {
+      "_label": "Tour",
+      "terms": {
+        "field": "terms.tour",
+        "size": 25
+      }
+    },
+    "Event Type": {
+      "_label": "Event Type",
+      "terms": {
+        "field": "terms.type"
+      }
+    },
+    "Genre": {
+      "_label": "Genre",
+      "terms": {
+        "field": "terms.genre"
+      }
+    },
+    "Age Limit": {
+      "_label": "Age Limit",
+      "terms": {
+        "field": "terms.age_limit",
+        "order": "term"
+      }
+    },
+    "City": {
+      "_label": "City",
+      "terms": {
+        "field": "terms.city",
+        "all_terms": true,
+        "size": 25
+      }
+    },
+    "State": {
+      "_label": "State",
+      "terms": {
+        "field": "venue.location.state",
+        "size": "5"
+      }
+    }
+  },
+  "defaults": {
+    "sort": {
+      "time": {
+        "order": "asc"
+      }
+    }
+  },
+	"meta": {}
+}
