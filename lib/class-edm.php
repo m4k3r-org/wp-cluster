@@ -5,7 +5,6 @@
  */
 namespace wpCloud\Vertical {
 
-
   class EDM {
 
     /**
@@ -18,6 +17,21 @@ namespace wpCloud\Vertical {
     public $version = '2.0.4';
 
     function __construct() {
+
+      // require_once( 'lib/class-edm.php' );
+      // require_once( 'lib/class-edm-api.php' );
+      // require_once( 'lib/class-edm-bootstrap.php' );
+      // require_once( 'lib/class-edm-utility.php' );
+
+      // Define Data Structure
+      // - add_post_type_support( 'event', 'post-formats' );
+      // - set_post_format();
+
+      // Define User Roles and Capabilities
+      // add_user_role( );
+
+      // Define Post Object Callbacks
+      // - add_filter( 'wp-elastic:websiteLink', array( 'wpCloud\Vertical\EDM::Utility', 'get_image_urls' ) );
 
       // migrated out of wp-festival
       $file = WP_BASE_DIR . '/static/schemas/default.settings.json';
@@ -63,7 +77,6 @@ namespace wpCloud\Vertical {
       include( __DIR__ . '/templates/welcome.php' );
     }
 
-
     /**
      * System Upgrade
      *
@@ -88,7 +101,6 @@ namespace wpCloud\Vertical {
       wp_die( '<h1>Updated</h1><p>Updated from ' . $_old_version  . ' to ' . self::$version . '.</p>' );
 
     }
-
 
     /**
      * Load Network Plugins
@@ -137,7 +149,6 @@ namespace wpCloud\Vertical {
 
       return $mimes;
     }
-
 
     /**
      * Apply a method to multiple filters

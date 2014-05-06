@@ -5,8 +5,6 @@
  */
 namespace wpCloud\Vertical\EDM {
 
-  add_action( 'network_admin_menu', 'wpCloud\Modules\Intelligence::admin_menu', 20 );
-
   class Intelligence {
 
     /**
@@ -56,6 +54,5 @@ namespace wpCloud\Vertical\EDM {
     }
 
   }
-
 
 }

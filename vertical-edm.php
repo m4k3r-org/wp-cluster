@@ -2,13 +2,13 @@
 /**
  * Plugin Name: EDM Vertical
  * Text Domain: edm-vertical
- * Plugin URI: http://UsabilityDynamics.com/plugins/edm-vertical/
+ * Plugin URI: http://wpCloud.io
  * Description: EDM Vertical for wpCloud.io
  * Author: Usability Dynamics, Inc
  * Version: 1.1.0
  * Network: true
  * Vertical: true
- * Author URI: http://UsabilityDynamics.com
+ * Author URI: http://wpCloud.io
  *
  * Copyright 2011-2014  Usability Dynamics, Inc.   (email : info@UsabilityDynamics.com)
  *
@@ -31,17 +31,7 @@
  * @author Andy Potanin <andy.potanin@usabilitydynamics.com>
  */
 
-require_once( 'lib/class-edm.php' );
-require_once( 'lib/class-edm-api.php' );
-require_once( 'lib/class-edm-bootstrap.php' );
-require_once( 'lib/class-edm-utility.php' );
+if( class_exists( 'wpCloud\Vertical\EDM' ) ) {
+  new wpCloud\Vertical\EDM;
+}
 
-// Define Data Structure
-// - add_post_type_support( 'event', 'post-formats' );
-// - set_post_format();
-
-// Define User Roles and Capabilities
-// add_user_role( );
-
-// Define Post Object Callbacks
-// - add_filter( 'wp-elastic:websiteLink', array( 'wpCloud\Vertical\EDM::Utility', 'get_image_urls' ) );

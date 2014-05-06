@@ -16,6 +16,8 @@ namespace wpCloud\Vertical\EDM {
       API::define( '/venue',             array( 'wpCloud\Vertical\API',     'getVenue' ) );
       API::define( '/system/upgrade',    array( 'wpCloud\Vertical\API',     'systemUpgrade' ) );
 
+      add_action( 'network_admin_menu', 'wpCloud\Modules\Intelligence::admin_menu', 20 );
+
       // register_theme_directory( WP_CONTENT_DIR . '/themes' );
       // register_theme_directory( WP_VENDOR_PATH . '/themes' );
 
