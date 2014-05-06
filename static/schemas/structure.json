@@ -1,106 +1,8 @@
 {
+  "type": "structure",
+  "kind": [ "edm" ],
   "version": "1.0.0",
   "types": {
-    "PerformanceEvent": {
-      "data": {
-        "capability_type": "page",
-        "label": "Performances",
-        "labels": {
-          "add_new": "New Performance",
-          "add_new_item": "Create New Performances",
-          "all_items": "All Performances",
-          "edit_item": "Edit Performances",
-          "menu_name": "Performances",
-          "name": "Performances",
-          "not_found": "No days found.",
-          "not_found_in_trash": "No Performances in Trash",
-          "search_items": "Search Performances",
-          "singular_name": "Performances",
-          "update_item": "Update Performances",
-          "view_item": "View Performances"
-        },
-        "description": "A performance of an artist.",
-        "exclude_from_search": true,
-        "has_archive": false,
-        "hierarchical": false,
-        "menu_icon": false,
-        "menu_position": 3,
-        "public": false,
-        "publicly_queryable": false,
-        "show_in_admin_bar": false,
-        "show_in_menu": true,
-        "show_in_nav_menus": false,
-        "show_ui": true,
-        "supports": [
-          "title",
-          "editor",
-          "revisions"
-        ],
-        "can_export": true
-      },
-      "taxonomies": [],
-      "meta": {
-        "information": {
-          "fields": [
-            "relatedArtists",
-            "startDateTime",
-            "endDateTime"
-          ]
-        }
-      }
-    },
-    "DayEvent": {
-      "data": {
-        "capability_type": "page",
-        "label": "Days",
-        "labels": {
-          "add_new": "New Day",
-          "add_new_item": "Create New Day",
-          "all_items": "All Days",
-          "edit_item": "Edit Day",
-          "menu_name": "Days",
-          "name": "Days",
-          "not_found": "No days found.",
-          "not_found_in_trash": "No Days in Trash",
-          "search_items": "Search Day",
-          "singular_name": "Day",
-          "update_item": "Update Day",
-          "view_item": "View Day"
-        },
-        "description": "A performance of an artist.",
-        "exclude_from_search": true,
-        "has_archive": false,
-        "hierarchical": false,
-        "menu_icon": false,
-        "menu_position": 3,
-        "public": false,
-        "publicly_queryable": false,
-        "show_in_admin_bar": false,
-        "show_in_menu": true,
-        "show_in_nav_menus": false,
-        "show_ui": true,
-        "supports": [
-          "title",
-          "editor",
-          "revisions"
-        ],
-        "can_export": true
-      },
-      "taxonomies": [],
-      "meta": {
-        "information": {
-          "fields": [
-            "eventDate"
-          ]
-        },
-        "location": {
-          "fields": [
-            "locationAddress",
-            "locationMap"
-          ]
-        }
-      }
-    },
     "Event": {
       "data": {
         "capability_type": "page",
@@ -120,24 +22,28 @@
           "update_item": "Update Artist",
           "view_item": "View Artist"
         },
-        "description": "Artist",
-        "exclude_from_search": true,
-        "has_archive": false,
-        "hierarchical": false,
+        "description": "Event",
+        "exclude_from_search": false,
+        "has_archive": true,
+        "hierarchical": true,
         "menu_icon": false,
         "menu_position": 5,
-        "public": false,
-        "publicly_queryable": false,
-        "show_in_admin_bar": false,
+        "public": true,
+        "publicly_queryable": true,
+        "show_in_admin_bar": true,
         "show_in_menu": true,
-        "show_in_nav_menus": false,
+        "show_in_nav_menus": true,
         "show_ui": true,
         "supports": [
           "title"
         ],
         "can_export": true
       },
-      "taxonomies": [],
+      "taxonomies": [
+        "category",
+        "tag",
+        "event-type"
+      ],
       "meta": {
         "information": {
           "fields": [
@@ -219,10 +125,366 @@
         },
         "view": {
           "title": "Page View Settings",
+          "fields": []
+        }
+      }
+    },
+    "PerformanceEvent": {
+      "data": {
+        "capability_type": "page",
+        "label": "Performances",
+        "labels": {
+          "add_new": "New Performance",
+          "add_new_item": "Create New Performances",
+          "all_items": "All Performances",
+          "edit_item": "Edit Performances",
+          "menu_name": "Performances",
+          "name": "Performances",
+          "not_found": "No days found.",
+          "not_found_in_trash": "No Performances in Trash",
+          "search_items": "Search Performances",
+          "singular_name": "Performances",
+          "update_item": "Update Performances",
+          "view_item": "View Performances"
+        },
+        "description": "A performance of an artist.",
+        "exclude_from_search": true,
+        "has_archive": false,
+        "hierarchical": false,
+        "menu_icon": false,
+        "menu_position": 3,
+        "public": false,
+        "publicly_queryable": false,
+        "show_in_admin_bar": false,
+        "show_in_menu": true,
+        "show_in_nav_menus": false,
+        "show_ui": true,
+        "supports": [
+          "title",
+          "editor",
+          "revisions"
+        ],
+        "can_export": true
+      },
+      "taxonomies": [],
+      "meta": {
+        "information": {
           "fields": [
-            "viewHeroHeight",
-            "viewHeroAlignment"
+            "relatedArtists",
+            "startDateTime",
+            "endDateTime"
           ]
+        }
+      }
+    },
+    "Offer": {
+      "data": {
+        "capability_type": "page",
+        "label": "Offers",
+        "labels": {
+          "add_new": "New Performance",
+          "add_new_item": "Create New Performances",
+          "all_items": "All Performances",
+          "edit_item": "Edit Performances",
+          "menu_name": "Performances",
+          "name": "Performances",
+          "not_found": "No days found.",
+          "not_found_in_trash": "No Performances in Trash",
+          "search_items": "Search Performances",
+          "singular_name": "Performances",
+          "update_item": "Update Performances",
+          "view_item": "View Performances"
+        },
+        "description": "An offer for an event.",
+        "exclude_from_search": true,
+        "has_archive": false,
+        "hierarchical": false,
+        "menu_icon": false,
+        "menu_position": 40,
+        "public": false,
+        "publicly_queryable": false,
+        "show_in_admin_bar": false,
+        "show_in_menu": true,
+        "show_in_nav_menus": false,
+        "show_ui": false,
+        "supports": [
+          "title",
+          "revisions"
+        ],
+        "can_export": true
+      },
+      "taxonomies": [],
+      "meta": {
+        "information": {
+          "fields": [
+            "relatedEvent",
+            "startDateTime",
+            "endDateTime"
+          ]
+        }
+      }
+    },
+    "PhotoGallery": {
+      "data": {
+        "capability_type": "page",
+        "label": "Photo Gallery",
+        "labels": {
+          "add_new": "New Photo Gallery",
+          "add_new_item": "Add New Photo Gallery",
+          "all_items": "All Photo Galleries",
+          "edit_item": "Edit Photo Gallery",
+          "menu_name": "Photo Galleries",
+          "name": "Photo Gallery",
+          "not_found": "No Photo Galleries found",
+          "not_found_in_trash": "No Photo Galleries in Trash",
+          "parent_item_colon": "Parent Photo Gallery:",
+          "search_items": "Search Photo Galleries",
+          "singular_name": "Photo Gallery",
+          "update_item": "Update Photo Gallery",
+          "view_item": "View Photo Gallery"
+        },
+        "description": "Photo Gallery",
+        "exclude_from_search": true,
+        "has_archive": false,
+        "menu_position": 50,
+        "hierarchical": false,
+        "menu_icon": false,
+        "public": true,
+        "publicly_queryable": true,
+        "query_var": "photos",
+        "rewrite": {
+          "feeds": false,
+          "pages": true,
+          "slug": "photos",
+          "with_front": true
+        },
+        "show_in_admin_bar": true,
+        "show_in_menu": true,
+        "show_in_nav_menus": true,
+        "show_ui": true,
+        "supports": [
+          "title",
+          "revisions",
+          "editor"
+        ],
+        "can_export": true
+      },
+      "taxonomies": [
+        "category",
+        "tag"
+      ],
+      "meta": {
+        "links": {
+          "fields": []
+        },
+        "images": {
+          "fields": [
+            "landscapeImage"
+          ]
+        },
+        "view": {
+          "title": "Page View Settings",
+          "fields": []
+        }
+      }
+    },
+    "VideoGallery": {
+      "data": {
+        "capability_type": "page",
+        "label": "Video Gallery",
+        "labels": {
+          "add_new": "New Video Gallery",
+          "add_new_item": "Add New Video Gallery",
+          "all_items": "All Video Galleries",
+          "edit_item": "Edit Video Gallery",
+          "menu_name": "Video Galleries",
+          "name": "Video Gallery",
+          "not_found": "No Video Galleries found",
+          "not_found_in_trash": "No Video Galleries in Trash",
+          "parent_item_colon": "Parent Video Gallery:",
+          "search_items": "Search Video Galleries",
+          "singular_name": "Video Gallery",
+          "update_item": "Update Video Gallery",
+          "view_item": "View Video Gallery"
+        },
+        "description": "Video Gallery",
+        "exclude_from_search": true,
+        "has_archive": false,
+        "menu_position": 60,
+        "hierarchical": false,
+        "menu_icon": false,
+        "public": true,
+        "publicly_queryable": true,
+        "query_var": "videos",
+        "rewrite": {
+          "feeds": true,
+          "pages": true,
+          "slug": "videos",
+          "with_front": true
+        },
+        "show_in_admin_bar": true,
+        "show_in_menu": true,
+        "show_in_nav_menus": true,
+        "show_ui": true,
+        "supports": [
+          "title",
+          "revisions",
+          "editor"
+        ],
+        "can_export": true
+      },
+      "taxonomies": [
+        "category",
+        "tag"
+      ],
+      "meta": {
+        "links": {
+          "fields": []
+        },
+        "images": {
+          "fields": [
+            "landscapeImage"
+          ]
+        },
+        "view": {
+          "title": "Page View Settings",
+          "fields": []
+        }
+      }
+    },
+    "Venue": {
+      "data": {
+        "capability_type": "page",
+        "label": "Venue",
+        "labels": {
+          "add_new": "New Venue",
+          "add_new_item": "Add New Venue",
+          "all_items": "All Venues",
+          "edit_item": "Edit Venue",
+          "menu_name": "Venues",
+          "name": "Venue",
+          "not_found": "No Venues found",
+          "not_found_in_trash": "No Venues in Trash",
+          "parent_item_colon": "Parent Venue:",
+          "search_items": "Search Venues",
+          "singular_name": "Venue",
+          "update_item": "Update Venue",
+          "view_item": "View Venue"
+        },
+        "description": "Venue",
+        "exclude_from_search": true,
+        "has_archive": false,
+        "menu_position": 2,
+        "hierarchical": false,
+        "menu_icon": false,
+        "public": true,
+        "publicly_queryable": true,
+        "query_var": "venue",
+        "rewrite": {
+          "feeds": false,
+          "pages": true,
+          "slug": "venue",
+          "with_front": true
+        },
+        "show_in_admin_bar": true,
+        "show_in_menu": true,
+        "show_in_nav_menus": true,
+        "show_ui": true,
+        "supports": [
+          "title",
+          "revisions",
+          "editor"
+        ],
+        "can_export": true
+      },
+      "taxonomies": [],
+      "meta": {
+        "links": {
+          "fields": [
+            "socialLinks",
+            "websiteLink"
+          ]
+        },
+        "images": {
+          "fields": [
+            "headshotImage",
+            "portraitImage",
+            "landscapeImage",
+            "logoImage",
+            "galleryImages"
+          ]
+        },
+        "view": {
+          "title": "Page View Settings",
+          "fields": []
+        }
+      }
+    },
+    "Promoter": {
+      "data": {
+        "capability_type": "page",
+        "label": "Promoter",
+        "labels": {
+          "add_new": "New Promoter",
+          "add_new_item": "Add New Promoter",
+          "all_items": "All Promoters",
+          "edit_item": "Edit Promoter",
+          "menu_name": "Promoters",
+          "name": "Promoter",
+          "not_found": "No Promoters found",
+          "not_found_in_trash": "No Promoters in Trash",
+          "parent_item_colon": "Parent Promoter:",
+          "search_items": "Search Promoters",
+          "singular_name": "Promoter",
+          "update_item": "Update Promoter",
+          "view_item": "View Promoter"
+        },
+        "description": "Promoter",
+        "exclude_from_search": true,
+        "has_archive": false,
+        "menu_position": 70,
+        "hierarchical": false,
+        "menu_icon": false,
+        "public": true,
+        "publicly_queryable": true,
+        "query_var": "promoter",
+        "rewrite": {
+          "feeds": false,
+          "pages": true,
+          "slug": "promoter",
+          "with_front": true
+        },
+        "show_in_admin_bar": true,
+        "show_in_menu": true,
+        "show_in_nav_menus": true,
+        "show_ui": true,
+        "supports": [
+          "title",
+          "revisions",
+          "editor"
+        ],
+        "can_export": true
+      },
+      "taxonomies": [],
+      "meta": {
+        "links": {
+          "fields": [
+            "socialLinks",
+            "websiteLink"
+          ]
+        },
+        "images": {
+          "fields": [
+            "headshotImage",
+            "portraitImage",
+            "landscapeImage",
+            "logoImage",
+            "galleryImages"
+          ]
+        },
+        "view": {
+          "title": "Page View Settings",
+          "fields": []
         }
       }
     }
@@ -347,34 +609,14 @@
       "name": "Ticket URL",
       "desc": "The link for purchasing tickets",
       "type": "url"
-    },
-    "viewHeroHeight": {
-      "id": "viewHeroHeight",
-      "name": "Box (Hero) Height",
-      "desc": "Default height is 400px. Leave field empty to have default value."
-    },
-    "viewHeroAlignment": {
-      "id": "viewHeroAlignment",
-      "name": "Image Alignment",
-      "type": "select",
-      "std": "center bottom",
-      "desc": "Background Image Alignment of Hero",
-      "options": {
-        "left top": "top left",
-        "center top": "top center",
-        "right top": "top right",
-        "left center": "center left",
-        "center center": "center center",
-        "right center": "center right",
-        "left bottom": "bottom left",
-        "center bottom": "bottom center",
-        "right bottom": "bottom right"
-      }
     }
   },
   "taxonomies": {
     "stage": {
       "name": "Stage"
+    },
+    "event-type": {
+      "name": "Event Type"
     }
   }
 }

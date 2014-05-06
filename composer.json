@@ -1,6 +1,7 @@
 {
   "name": "wpCloud/lib-vertical-edm",
-  "type": "project",
+  "type": "library",
+  "version": "0.1.0",
   "repositories": [
     {
       "type": "composer",
@@ -12,6 +13,13 @@
     "bin-dir": "vendor/bin",
     "optimize-autoloader": true,
     "autoloader-suffix": "VendorPackages"
+  },
+  "require": {
+    "usabilitydynamics/utility": "master",
+    "usabilitydynamics/settings": "master"
+  },
+  "autoload": {
+    "classmap": [ "lib" ]
   },
   "extra": {
     "installer-paths": {
@@ -32,10 +40,6 @@
         "type:wordpress-theme"
       ]
     }
-  },
-  "require": {},
-  "autoload": {
-    "classmap": [ "lib" ]
   },
   "scripts": {},
   "minimum-stability": "dev",

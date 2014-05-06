@@ -32,3 +32,11 @@
  */
 
 require_once( 'lib/class-bootstrap.php' );
+
+// add_theme_support( 'post-formats', array( 'video', 'gallery', 'image', 'audio' ) );
+// add_post_type_support( 'event', 'post-formats' );
+// set_post_format();
+
+// Define Data Structure
+
+// Define User Roles and Capabilities
