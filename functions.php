@@ -8,6 +8,10 @@
  * @subpackage Flawless
  * @package Flawless
  */
+
+// wp_clean_themes_cache();
+// die('flawless-hddp');
+
 include_once( untrailingslashit( TEMPLATEPATH ) . '/core-assets/class_ud.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_saas.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_functions.php' );
@@ -787,6 +791,7 @@ class hddp extends Flawless_F {
   static function template_redirect() {
     global $post, $flawless;
 
+    //die( '<pre>' . print_r( wp_get_theme(), true ) . '</pre>' );
     /** Modify our HTML  for the mobile nav bar */
     $flawless[ 'mobile_navbar' ][ 'html' ][ 'left' ] = hdp_share_button( true, true ) . $flawless[ 'mobile_navbar' ][ 'html' ][ 'left' ];
 
@@ -1220,6 +1225,9 @@ class hddp extends Flawless_F {
 
   /**
    * New Elastic Search Results
+   *
+   * @param $atts
+   *
    * @return type
    */
   function elasticsearch_results( $atts ) {
@@ -2014,72 +2022,6 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
   }
 
   /**
-   * Facets for ElasticFilter
-   *
-   * @shortcode elastic_filter
-   * @author potanin@UD
-   */
-//  static function shortcode_elastic_results($args = false, $content = '') {
-//    global $flawless;
-//
-//    $args = shortcode_atts( array(
-//      'url' => 'https://cloud.usabilitydynamics.com:443',
-//      'account_id' => '',
-//      'access_key' => '',
-//      'per_page' => 10,
-//      'debug' => false,
-//      'profile' => 'false',
-//      'index' => ''
-//    ), $args );
-//
-//    foreach ((array) array_filter($args) as $key => $value) {
-//      $elastic[] = "{$key}: '{$value}'";
-//    }
-//
-//    $elastic = implode(', ', (array) $elastic);
-//
-//    ob_start();
-//    include 'templates/elastic_results.php';
-//    return ob_get_clean();
-//  }
-
-  /**
-   * Facets for ElasticFilter
-   *
-   * @shortcode elastic_filter
-   * @author potanin@UD
-   */
-//  static function shortcode_elastic_facets( $args = false, $content = '' ) {
-//    global $flawless;
-//
-//    $args = shortcode_atts( array( 'debug' => 'false', 'profile' => 'false' ), $args );
-//
-//    $elastic = array( "url: 'https://cloud.usabilitydynamics.com:443'" );
-//
-//    foreach( (array) array_filter( $args ) as $key => $value ) {
-//      $elastic[] = "{$key}: '{$value}'";
-//    }
-//    $elastic = implode( ', ', (array) $elastic );
-//
-//    ob_start();
-//    include 'templates/elastic_facets.php';
-//    return ob_get_clean();
-//  }
-
-  /**
-   * {unknown}
-   *
-   * @param bool $args
-   * @param string $content
-   * @return string
-   */
-//  static function shortcode_elastic_popup_filter( $args = false, $content = '' ) {
-//    ob_start();
-//    include 'templates/elastic_popup_filter.php';
-//    return ob_get_clean();
-//  }
-
-  /**
    * Dummy shortcode.
    * Returns empty string.
    * It's used by self::shortcode_hddp_gallery()
@@ -2435,8 +2377,12 @@ if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'fi
   /**
    * Filter to replace the [caption] shortcode text with HTML5 compliant code
    *
+   * @param      $val
+   * @param      $attr
+   * @param null $content
+   *
    * @return text HTML content describing embedded figure
-   **/
+   */
   function img_caption_shortcode($val, $attr, $content = null) {
     extract( shortcode_atts( array(
       'id'    => '',
