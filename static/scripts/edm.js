@@ -1,3 +1,1 @@
-define( 'edm', function() {
-
-});
+define("edm",function(){});

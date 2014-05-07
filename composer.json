@@ -1,6 +1,6 @@
 {
   "name": "wpCloud/wp-vertical-edm",
-  "type": "muplugin-muplugin",
+  "type": "library",
   "version": "0.1.0",
   "repositories": [
     {
@@ -23,6 +23,15 @@
   },
   "extra": {
     "installer-paths": {
+      "application/vendor/{$name}": [
+        "type:wpcloud-application"
+      ],
+      "storage/vendor/{$name}": [
+        "type:wpcloud-storage"
+      ],
+      "vendor/libraries/{$name}": [
+        "type:wordpress-library"
+      ],
       "vendor/modules/{$name}": [
         "type:wordpress-muplugin",
         "type:wordpress-plugin"

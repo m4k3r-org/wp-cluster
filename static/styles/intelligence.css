@@ -1,49 +1,40 @@
 h2 {
   display: none;
 }
-
 li.title {
   font-size: 1.4em;
 }
-
 li.common-query {
   text-decoration: underline;
   cursor: pointer;
 }
-
 .hidden {
   display: none;
 }
-
 .common-queries {
-  border-bottom: 1px solid rgb(206, 206, 206);
+  border-bottom: 1px solid #cecece;
   padding-bottom: 1em;
   margin-bottom: 1em;
 }
-
 .intelligence-panel,
 .intelligence-filters {
   min-height: 300px;
 }
-
 .intelligence-panel {
   width: 100%;
   padding-right: 1em;
   display: table-cell;
 }
-
 .intelligence-filters {
   width: 250px;
   min-width: 250px;
   max-width: 250px;
   display: table-cell;
 }
-
 .result-map,
 .result-piegraph {
   margin-bottom: 1em;
 }
-
 .result-map {
   display: block;
   width: 100%;
@@ -52,7 +43,6 @@ li.common-query {
   border: 1px solid #DADADA;
   background-color: #FFF;
 }
-
 .result-piegraph {
   display: inline-block;
   width: 45%;
@@ -60,7 +50,6 @@ li.common-query {
   margin: 0 10px 10px 0;
   border: 1px solid #DADADA;
 }
-
 .result-table {
   display: inline-block;
   width: 45%;
@@ -68,14 +57,13 @@ li.common-query {
   border: 1px solid #DADADA;
   margin: 0 10px 10px 0;
 }
-
 .intelligence-debug .query-debug {
   display: inline-block;
   white-space: pre-wrap;
   height: 300px;
-  background-color: rgb(41, 41, 41);
+  background-color: #292929;
   overflow: scroll;
-  color: rgb(243, 243, 105);
+  color: #f3f369;
   padding: 10px;
   width: 45%;
   margin: 0;
