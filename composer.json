@@ -1,5 +1,5 @@
 {
-  "name": "usabilitydynamics/wp-festival",
+  "name": "discodonniepresents/wp-festival",
   "version": "0.2.0",
   "type": "wordpress-theme",
   "description": "Festival Theme for the Drop Network",
@@ -22,8 +22,8 @@
     "UsabilityDynamics/lib-settings": "master",
     "UsabilityDynamics/lib-carrington": "master",
     "UsabilityDynamics/lib-wp-shortcode": "master",
+    "UsabilityDynamics/lib-meta-box": "master",
     "UsabilityDynamics/wp-menufication": "master",
-    "UsabilityDynamics/wp-meta-box": "master",
     "UsabilityDynamics/wp-amd": "master"
   },
   "autoload": {
