@@ -58,12 +58,12 @@ namespace UsabilityDynamics\Cluster {
         // $this->add_site_directories();
 
         // Get WP_Theme Instance.
-        $this->active = wp_get_theme();
-        $this->exists = $this->active->exists();
-        $this->domain = $wp_cluster->domain;
-        $this->site_name = $wp_cluster->site_name;
+        $this->active     = wp_get_theme();
+        $this->exists     = $this->active->exists();
+        $this->domain     = $wp_cluster->domain;
+        $this->site_name  = $wp_cluster->site_name;
 
-        add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
+        add_action( 'template_redirect', array( $this, 'template_redirect' ), 100 );
 
       }
 
@@ -82,7 +82,7 @@ namespace UsabilityDynamics\Cluster {
        */
       public function template_redirect() {
 
-        if( !$this->exists ) {
+        if( !wp_get_theme()->exists() ) {
           self::fatal( 'Our apologies, but this site is yet set up. Please check back soon.' );
         }
 

@@ -389,7 +389,7 @@ namespace UsabilityDynamics\Cluster {
       private function _interfaces() {
 
         // Render Toolbar.
-        add_action( 'wp_before_admin_bar_render', array( &$this, 'toolbar' ), 10 );
+        // add_action( 'wp_before_admin_bar_render', array( &$this, 'toolbar' ), 10 );
 
       }
 
@@ -421,9 +421,6 @@ namespace UsabilityDynamics\Cluster {
        */
       public function toolbar() {
         global $wp_admin_bar;
-
-        $wp_admin_bar->remove_menu( 'wp-logo' );
-        $wp_admin_bar->remove_menu( 'comments' );
 
         $wp_admin_bar->add_menu(array(
           'id'    => 'cluster',
