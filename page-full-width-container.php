@@ -17,7 +17,7 @@
 
 get_template_part( 'templates/header', get_post_type() );
 ?>
-<main id="main" class="main full-width" role="main">
+<main id="main" class="main" role="main">
   <?php wp_festival()->section( 'above-content' ); ?>
   <div class="container-fluid container">
     <div class="row">
