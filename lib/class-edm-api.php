@@ -19,7 +19,7 @@ namespace wpCloud\Vertical\EDM {
       /**
        * Perform System Upgrade
        *
-       * @url http://discodonniepresents.com/api/system/upgrade
+       * @url http://discodonniepresents.com/api/v1/system/upgrade
        */
       static public function systemUpgrade() {
 
@@ -58,13 +58,15 @@ namespace wpCloud\Vertical\EDM {
           $_results[ $plugin ] = Utility::install_plugin( $plugin );
         }
 
+        // wp_clean_plugins_cache();
+        // wp_clean_themes_cache();
+
         // delete_site_transient( 'theme_roots' );
 
         // update_option( 'upload_path', '/storage/public/' . $current_blog->domain );
         // update_option( 'template_root', '/vendor/themes' );
         // update_option( 'stylesheet_root', '/vendor/themes' );
 
-        // wp_clean_themes_cache();
 
         // @todo Flush transients.
 
@@ -84,12 +86,103 @@ namespace wpCloud\Vertical\EDM {
 
       }
 
+      /**
+       * List Sites
+       *
+       * * @url http://discodonniepresents.com/api/v1/sites
+       * * @url http://discodonniepresents.com/api/v1/sites
+       */
+      static public function listSites() {
+        global $wpdb, $current_site, $current_blog;
+
+        if( !current_user_can( 'manage_options' ) ) {
+          return;
+        }
+
+        $_sites = array();
+
+
+        foreach( (array) $wpdb->get_results( "SELECT * FROM {$wpdb->blogs} WHERE site_id = {$current_blog->site_id} " ) as $site ) {
+
+          switch_to_blog( $site->blog_id );
+
+          $_sites[] = array(
+            '_id' => $site->blog_id,
+            'details' => get_blog_details(),
+            'theme' => array(
+              'template' => get_option( 'template' ),
+              'stylesheet' => get_option( 'stylesheet' ),
+              'template_root' => get_option( 'template_root' )
+            )
+          );
+
+          restore_current_blog();
+
+        }
+
+        wp_send_json(array(
+          'ok' => true,
+          'data' => $_sites
+        ));
+
+      }
+
+      /**
+       * List Defined API Routes
+       *
+       * http://discodonniepresents.com/api/v1/routes
+       */
+      static public function listRoutes() {
+
+        if( !current_user_can( 'read' ) ) {
+          return;
+        }
+
+        wp_send_json(array(
+          'ok' => true,
+          'routes' => API::routes()
+        ));
+
+      }
+
+      /**
+       * Install a Specific Plugin.
+       *
+       * http://umesouthpadre.com/v1/install/plugin
+       * http://umesouthpadre.com/v1/install/plugin&name=wp-property
+       */
+      static public function pluginInstall() {
+
+        if( !current_user_can( 'install_plugins' ) || !current_user_can( 'activate_plugins' ) ) {
+          return;
+        }
+
+        $args = Utility::parse_args( $_GET, array(
+          'name' => '',
+          'version' => ''
+        ));
+
+        $_result = Utility::install_plugin( $args->name );
+
+        wp_send_json(array(
+          'ok' => !is_wp_error( $_result->result ) ? true : false,
+          'data' => $_result
+        ));
+
+      }
+
+      /**
+       *
+       * http://umesouthpadre.com/manage/admin-ajax.php?action=/v1/site
+       *
+       */
       static public function getSite() {
         global $wpdb, $current_site, $current_blog, $wp_post_types, $_wp_post_type_features, $wp_plugin_paths, $wp_theme_directories, $_wp_theme_features;
 
         if( !current_user_can( 'manage_options' ) ) {
           return;
         }
+
         include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
         $activePlugins = array();
@@ -110,10 +203,13 @@ namespace wpCloud\Vertical\EDM {
             'site' => $current_blog,
             'is_multisite' => is_multisite(),
             'urls' => array(
+              'admin_url' => admin_url( 'wp-ajax.php' ),
+              'admin_url:relative' => admin_url( 'wp-ajax.php', 'relative' ),
+              'wp_logout_url' => wp_logout_url(),
+              'wp_admin_css_uri' => wp_admin_css_uri(),
               'home_url' => get_home_url(),
               'login_url' => wp_login_url(),
               'site_url' => get_site_url(),
-              'admin_url' => get_admin_url(),
               'includes_url' => includes_url(),
               'content_url' => content_url(),
               'plugins_url' => plugins_url(),

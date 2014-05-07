@@ -7,7 +7,18 @@ namespace wpCloud\Vertical\EDM {
 
   class Utility extends \UsabilityDynamics\Utility {
 
-    public static function install_plugin( $name ) {
+    /**
+     * Install Plugin from Repository.
+     *
+     * @todo Check if already installed before installing.
+     * @param $name
+     * @return object
+     */
+    public static function install_plugin( $name = false ) {
+
+      if( !$name ) {
+        return (object) array( 'meta' => array(), 'result' => array() );
+      }
 
       include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
       include_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
@@ -23,7 +34,7 @@ namespace wpCloud\Vertical\EDM {
       // $upgrader->run( array() );
       $upgrader->install( $api->download_link );
 
-      return $upgrader->skin->result;
+      return (object) array( 'meta' => $api, 'result' => $upgrader->skin->result );
 
     }
 
