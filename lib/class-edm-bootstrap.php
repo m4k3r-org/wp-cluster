@@ -114,9 +114,6 @@ namespace wpCloud\Vertical\EDM {
     public function muplugins_loaded() {
       global $wp_theme_directories;
 
-      if( defined( 'WP_THEME_DIR' ) ) {
-        register_theme_directory( WP_THEME_DIR );
-      }
 
       // die( '<pre>' . print_r( $wp_theme_directories, true ) . '</pre>' );
 
