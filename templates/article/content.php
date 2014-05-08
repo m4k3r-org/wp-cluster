@@ -17,6 +17,15 @@
   <?php /* Disable category meta on single post for now.
   <span class="category"><label><?php _e( 'Category', wp_festival( 'domain' ) ); ?>:</label><?php the_category(', '); ?></span>
   //*/ ?>
+  <?php /*
+  <span class="share">
+    <ul>
+      <li><a target="_blank" href="http://www.facebook.com/sharer.php?u=<?php the_permalink();?>" class="facebook_share"><img alt="Share on Facebook" class="ssba" title="Facebook" src="http://edm.cluster.veneer.io/modules/simple-share-buttons-adder/buttons/somacro/facebook.png"></a></li>
+      <li><a target="_blank" href="http://twitter.com/home/?status=<?php the_title();?>%20<?php the_permalink();?>" class="twitter_share"><img alt="Tweet about this on Twitter" class="ssba" title="Twitter" src="http://edm.cluster.veneer.io/modules/simple-share-buttons-adder/buttons/somacro/twitter.png"></a></li>
+      <li><a target="_blank" href="https://plusone.google.com/_/+1/confirm?hl=en&url=<?php the_permalink();?>" class="google_share"><img alt="Share on Google+" class="ssba" title="Google+" src="http://edm.cluster.veneer.io/modules/simple-share-buttons-adder/buttons/somacro/google.png"></a></li>
+    </ul>
+  </span>
+  */ ?>
 </section>
 
 <?php if( $img = wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '854', 'height' => '480', 'default' => false, 'crop' => true ) ) ): ?>
