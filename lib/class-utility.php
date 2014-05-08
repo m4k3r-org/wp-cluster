@@ -360,6 +360,7 @@ namespace UsabilityDynamics\Festival {
         'size'    => 'full', // Get image by predefined image_size. If width and height are set - it's ignored.
         'width'   => '', // Custom size
         'height'  => '', // Custom size
+        'crop'    => false,
         'type'    => 'post', // Post or Attachment. Available values: 'post', 'attachment'
         // Optionals:
         'default' => true, // Use default image if images doesn't exist or not.
@@ -381,7 +382,7 @@ namespace UsabilityDynamics\Festival {
       }
 
       if( !empty( $args->width ) && !empty( $args->height ) ) {
-        $_attachment = \UsabilityDynamics\Utility::get_image_link_with_custom_size( $attachment_id, $args->width, $args->height );
+        $_attachment = \UsabilityDynamics\Utility::get_image_link_with_custom_size( $attachment_id, $args->width, $args->height, $args->crop );
       } else {
         if( $args->size == 'full' ) {
           $_attachment          = wp_get_attachment_image_src( $attachment_id, $args->size );

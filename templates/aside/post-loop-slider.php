@@ -36,7 +36,7 @@ extract( $data = wp_festival()->extend( array(
                         <div class="row">
                     <?php endif; ?>
                     <div class="col-md-4 col-sm-4">
-                      <?php $img = wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '738', 'height' => '350' ) ); ?>
+                      <?php $img = wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '640', 'height' => '360', 'crop' => true ) ); ?>
                       <?php if( !empty( $img ) ) : ?>
                         <a href="<?php the_permalink(); ?>"><img class="img-responsive" src="<?php echo $img; ?>" alt="" /></a>
                       <?php endif; ?>
