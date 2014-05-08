@@ -17,6 +17,7 @@
   <?php /* Disable category meta on single post for now.
   <span class="category"><label><?php _e( 'Category', wp_festival( 'domain' ) ); ?>:</label><?php the_category(', '); ?></span>
   //*/ ?>
+  <?php echo get_template_part( 'templates/aside/share-buttons' ); ?>
 </section>
 
 <?php if( $img = wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '854', 'height' => '480', 'default' => false, 'crop' => true ) ) ): ?>
