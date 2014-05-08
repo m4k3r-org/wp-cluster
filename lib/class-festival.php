@@ -355,8 +355,8 @@ namespace UsabilityDynamics {
       add_action( 'widgets_init', array( $this, 'widgets' ), 100 );
 
       // Initializes Wordpress Menufication
-      if( class_exists( '\Menufication' ) ) {
-        $this->menufication = \Menufication::getInstance();
+      if( class_exists( '\Menufication' ) && class_exists( '\UsabilityDynamics\Festival\Menufication' ) ) {
+        $this->menufication = Festival\Menufication::getInstance();
       }
 
       // Remove URL from comments form
