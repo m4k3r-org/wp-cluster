@@ -147,7 +147,7 @@
        */
       get: function (path, data, successcb, errorcb) {
         var XHR = getXmlHttp();
-        XHR.open('GET', getPath(path), true);
+        XHR.open('GET', getPath(path)+'?'+data, true);
         setHeaders( XHR, headers );
         XHR.onload = function(e) {
           if ( e.target.readyState === 4 ) {
@@ -158,7 +158,7 @@
             }
           }
         };
-        return XHR.send(data);
+        return XHR.send(null);
       },
 
       /**
