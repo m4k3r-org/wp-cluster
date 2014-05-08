@@ -30,23 +30,25 @@
 
 <form data-bind="elasticFilter:{
   per_page: 100,
-  period_field: 'startDate',
-  sort_by: 'startDate',
+  period_field: 'start_date',
+  sort_by: 'start_date',
   type: 'event',
+  location_field: 'venues.address.geo',
   facets: {
     'artists.name': 'Artist',
     'venues.address.region': 'State',
     'venues.address.locality': 'City',
     'venues.name': 'Venue',
-    //'hdp_promoter_name': 'Promoter', no information in object for this
+    'promoters.name': 'Promoter',
     //'hdp_tour_name': 'Tour', no information in object for this
-    'eventType.en-us': 'Type',
+    'event_type.en-us': 'Type',
     'genre.en-us': 'Genre',
     'ageRestriction': 'Age Limit'
   },
   return_fields: [
-    'startDate',
+    'start_date',
     'description.en-us',
+    'summary.en-us',
     'venues.address.locality',
     'venues.address.region',
     'url',
