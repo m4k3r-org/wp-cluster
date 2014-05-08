@@ -19,7 +19,7 @@
   //*/ ?>
 </section>
 
-<?php if( $img = wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '1140', 'height' => '350', 'default' => false ) ) ): ?>
+<?php if( $img = wp_festival()->get_image_link_by_post_id( get_the_ID(), array( 'width' => '854', 'height' => '480', 'default' => false, 'crop' => true ) ) ): ?>
   <section class="article-image">
     <img class="img-responsive" src="<?php echo $img; ?>" alt="" />
   </section>
