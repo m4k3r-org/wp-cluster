@@ -2,7 +2,7 @@
  * Gallery masonry
  *
  */
-define( 'gallery-masonry', [ 'jquery.masonry', 'jquery.colorbox' ], function() {
+define( 'gallery-masonry', [ 'jquery.masonry', 'jquery.fancybox' ], function() {
   console.debug( 'masonry', 'loaded' );
 
   return function domReady() {
@@ -18,7 +18,7 @@ define( 'gallery-masonry', [ 'jquery.masonry', 'jquery.colorbox' ], function() {
       }
 
       if ( jQuery( _this ).parents('.use-colorbox').length ) {
-        jQuery(".gallery-icon a", jQuery(_this)).colorbox({rel:'gallery',maxWidth:"95%",maxHeight:"95%"});
+        jQuery(".gallery-icon a", jQuery(_this)).fancybox();
       }
     }
 

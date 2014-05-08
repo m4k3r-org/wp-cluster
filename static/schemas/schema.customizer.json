@@ -61,7 +61,7 @@
       "label": "l10n.sticky_bar_logo",
       "section": "festival_bg_images",
       "control": "background-image",
-      "selector": "#header nav.navbar-top .navbar-brand a"
+      "selector": "#header nav.navbar-top .navbar-brand a, #menufication-top, #menufication-non-css3-top"
     },
     {
       "key": "404_page",
