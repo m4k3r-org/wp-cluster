@@ -470,9 +470,7 @@ class hddp extends Flawless_F {
     add_action( 'admin_init', array( 'hddp', 'admin_init' ) );
 
     add_action( 'template_redirect', array( 'hddp', 'template_redirect' ) );
-    add_action( 'template_redirect', array( 'hddp', 'dynamic_filter_shortcode_handler' ) );
 
-    /** Saving and deleting posts from QA table */
     add_action( 'save_post', array( 'hddp', 'save_post' ), 1, 2 );
 
     add_filter( 'the_category', function ( $c ) {
@@ -541,6 +539,21 @@ class hddp extends Flawless_F {
     } );
 
     add_filter( 'img_caption_shortcode', array( 'hddp', 'img_caption_shortcode' ), 10, 3 );
+
+    wp_enqueue_style( 'google-droing-sans', 'http://fonts.googleapis.com/css?family=Droid+Sans', array() );
+
+    //** New Elastic Search Shortcodes */
+    add_shortcode( 'elasticsearch_results', array( 'hddp', 'elasticsearch_results' ) );
+    add_shortcode( 'elasticsearch_facets', array( 'hddp', 'elasticsearch_facets' ) );
+
+    // Used on home, vieo and gallery pages.
+    add_shortcode( 'hdp_custom_loop', array( 'hddp', 'shortcode_hdp_custom_loop' ) );
+
+    // Used a lot.
+    add_shortcode( 'hddp_gallery', array( 'hddp', 'shortcode_hddp_gallery' ) );
+
+    // Used in Attachments' post_content
+    add_shortcode( 'hddp_url', array( 'hddp', 'shortcode_hddp_url' ) );
 
   }
 
@@ -657,31 +670,6 @@ class hddp extends Flawless_F {
   }
 
   /**
-   * Handle addition of shortcode and listener
-   *
-   * @todo Replace with wp_elastic()->query()
-   * @action template_redirect (10)
-   * @author potanin@UD
-   */
-  static function dynamic_filter_shortcode_handler() {
-    global $post;
-
-    //** New Elastic Search Shortcodes */
-    add_shortcode( 'elasticsearch_results', array( 'hddp', 'elasticsearch_results' ) );
-    add_shortcode( 'elasticsearch_facets', array( 'hddp', 'elasticsearch_facets' ) );
-
-    // Used on home, vieo and gallery pages.
-    add_shortcode( 'hdp_custom_loop', array( 'hddp', 'shortcode_hdp_custom_loop' ) );
-
-    // Used a lot.
-    add_shortcode( 'hddp_gallery', array( 'hddp', 'shortcode_hddp_gallery' ) );
-
-    // Used in Attachments' post_content
-    add_shortcode( 'hddp_url', array( 'hddp', 'shortcode_hddp_url' ) );
-
-  }
-
-  /**
    * New Elastic Search Facets
    *
    * @param type $atts
@@ -721,11 +709,6 @@ class hddp extends Flawless_F {
     return ob_get_clean();
 
   }
-
-  /**
-   *
-   * @global type $post
-   */
 
   /**
    * Geo-locates and event based on venue address and updates the event meta.
@@ -934,119 +917,6 @@ class hddp extends Flawless_F {
     if( is_array( $html ) ) {
       echo '<ul class="flawless_post_type_options wp-tab-panel"><li>' . implode( '</li><li>', $html ) . '</li></ul>';
     }
-
-  }
-
-  /**
-   * Renders JS for Event Search
-   *
-   * =USAGE=
-   * [dynamic_filter post_title="label=Post Title,filter=input" hdp_artist="label=Artist,filter=dropdown" city="label=City,filter=dropdown" raw_html="label=Raw HTML,display=false"]
-   *
-   * @shortcode dynamic_filter
-   * @author potanin@UD
-   */
-  static function shortcode_dynamic_filter( $args = false, $content = '' ) {
-    global $flawless;
-
-    /** Setup the shortcode attributes first */
-    $shortcode_attributes = array(
-      'post_type'      => 'hdp_event',
-      'filter_dom_id'  => 'dynamic_filter',
-      'filter_element' => '#df_sidebar_filters', 'sorter_element' => "<div></div>",
-      'per_page'       => (int) hddp::$hdp_posts_per_page, );
-
-    /** Now setup our attributes */
-    $attributes = array();
-
-    foreach( $args as $key => $arg ) {
-      if( !in_array( $key, array_keys( $shortcode_attributes ) ) ) {
-        $attributes[ $key ] = $arg;
-      }
-    }
-
-    /** Now get the shortcode atts by combining with the defaults */
-    $args = shortcode_atts( $shortcode_attributes, $args );
-
-    /** Now loop through our different things, and split by comma */
-    foreach( $attributes as $key => &$att ) {
-      $att = Flawless_F::split_shortcode_att( $att );
-      /** Check the att for the default value */
-      if( in_array( 'default_value', array_keys( $att ) ) ) {
-        /** We know we have a default value */
-        $filter_query = array( $key => $att[ 'default_value' ] );
-      }
-    }
-
-    /** Ensure per page is numeric */
-    $args[ 'per_page' ] = (int) $args[ 'per_page' ];
-
-    /** Setup our debug options */
-    $debug = false; //array( 'dom_detail' => true, 'filter_detail' => false, 'filter_ux' => false, 'attribute_detail' => false, 'supported' => false, 'procedurals' => false, 'helpers' => false );
-
-    wp_enqueue_script( 'jquery-ud-dynamic_filter' );
-
-    /* We require attributes. If none passed, display message for administrator */
-    if( empty( $attributes ) ) {
-      return current_user_can( 'manage_options' ) ? __( 'Dynamic Filter Error: You have not specified any attributes' ) : '';
-    }
-
-    /** Add on the raw_html to ensure it is shown */
-    $attributes[ 'raw_html' ] = array( 'display' => true );
-    /** Get our post type object */
-    $post_type_object = get_post_type_object( $args[ 'post_type' ] );
-    $filter_config    = array(
-      'attributes' => $attributes,
-      'ajax'       => array(
-        'url'  => admin_url( 'admin-ajax.php' ) . ( isset( $_REQUEST[ 'force_update' ] ) ? '?force_update=1' : '' ),
-        'args' => array( 'action' => 'ud_df_post_query', 'post_type' => $args[ 'post_type' ] )
-      ),
-      'ux'         => array(
-        'filter'       => $args[ 'filter_element' ],
-        'sorter'       => $args[ 'sorter_element' ],
-        'filter_label' => '<span></span>',
-      ),
-      'classes'    => array(
-        'wrappers' => array(
-          'results_wrapper' => 'hdp_results',
-          'results'         => 'hdp_results_items',
-          'element'         => 'df_top_wrapper ' . $args[ 'post_type' ],
-        ),
-        'results'  => array( 'row' => 'hdp_results_item' )
-      ),
-      'settings'   => array(
-        'dom_limit'  => 9999,
-        'per_page'   => $args[ 'per_page' ],
-        'unique_tag' => 'id',
-        'debug'      => $debug,
-        'messages'   => array(
-          'no_results' => sprintf( __( 'No %s Found.', HDDP ), $post_type_object->labels->name ),
-          'load_more'  => sprintf( __( '
-<div class="df_load_status">
-	<span>Displaying {1}</span> of {2} %s
-</div><a class="btn"><span>Show <em>{3}</em> More</span></a>', HDDP ), $post_type_object->labels->name ),
-        )
-      )
-    );
-
-    /** Add on our filter query if we have one */
-    if( isset( $filter_query ) ) {
-      $filter_config[ 'ajax' ][ 'args' ][ 'filter_query' ] = $filter_query;
-    }
-    /** Build/return our html */
-    $html[ ] = $content;
-
-    flawless_render_in_footer( '
-<script type="text/javascript">
-if( typeof jQuery.prototype.dynamic_filter === "function" ) { var ' . $args[ 'filter_dom_id' ] . '; jQuery(document).ready(function(){ ' . $args[ 'filter_dom_id' ] . ' = jQuery("#' . $args[ 'filter_dom_id' ] . '").dynamic_filter(jQuery.parseJSON( ' . json_encode( json_encode( $filter_config ) ) . ' ))}); }
-</script>'
-    );
-
-    if( $debug && current_user_can( 'manage_options' ) ) {
-      $html[ ] = '<pre class="flawless_toggable_debug">$filter_config debug: ' . print_r( $filter_config, true ) . '</pre>';
-    }
-
-    return implode( '', (array) $html );
 
   }
 
