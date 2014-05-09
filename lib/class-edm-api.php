@@ -29,8 +29,6 @@ namespace wpCloud\Vertical\EDM {
           return;
         }
 
-        $_sites = $wpdb->get_results( "SELECT * FROM {$wpdb->blogs} WHERE site_id = {$current_blog->site_id} " );
-
         $activePlugins = array(
           'gravityforms',
           'brightcove-video-cloud',
@@ -51,45 +49,13 @@ namespace wpCloud\Vertical\EDM {
           'wpml-translation-management'
         );
 
-        include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
-        include_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
-        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-        foreach( (array) $_sites as $site ) {
-
-          switch_to_blog( $site->blog_id );
-
-          // Fix Event Post Type
-          $wpdb->query( "UPDATE {$wpdb->posts} SET post_type = replace(post_type, 'hdp_event', 'event');" );
-          restore_current_blog();
-
-        }
-
         $_results = array();
+
+        delete_site_transient( 'update_plugins' );
 
         foreach( $activePlugins as $plugin ) {
           $_results[ $plugin ] = Utility::install_plugin( $plugin );
         }
-
-        // wp_clean_plugins_cache();
-        // wp_clean_themes_cache();
-
-        // delete_site_transient( 'theme_roots' );
-
-        // update_option( 'upload_path', '/storage/public/' . $current_blog->domain );
-        // update_option( 'template_root', '/vendor/themes' );
-        // update_option( 'stylesheet_root', '/vendor/themes' );
-
-
-        // @todo Flush transients.
-
-        // @todo Flush whatever-the-fuck caches themes / theme locations.
-
-        // @todo Register and re-activate plugins, after plugin path has changed from modules to vendor/modules.
-
-        // @todo Register and network re-enable themes, after theme path has changed from themes to vendor/themes.
-
-        // @todo Re-activate themes given location change.
 
         // Remove the stupid "upgrade" directory.
         if( is_dir( $_SERVER[ 'DOCUMENT_ROOT' ] . '/upgrade' ) ) {
