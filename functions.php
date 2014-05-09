@@ -11,7 +11,6 @@
 
 // wp_clean_themes_cache();
 // die('flawless-hddp');
-
 include_once( untrailingslashit( TEMPLATEPATH ) . '/core-assets/class_ud.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_saas.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_functions.php' );
@@ -281,10 +280,13 @@ class hddp extends Flawless_F {
     remove_theme_support( 'frontend-editor' );
     remove_theme_support( 'custom-skins' );
 
-    add_theme_support( 'post-foramts' );
-    add_theme_support( 'html5', array( 'search-form', 'gallery' ) );
+    UsabilityDynamics\Feature\Flag::set( 'hddp-flawless' );
 
-    global $_wp_theme_features;
+    // Enable post-foramts and html5 only if Feature Flags match.
+    if( UsabilityDynamics\Feature\Flag::get( 'ddp::2014', 'edm' ) ) {
+      add_theme_support( 'post-foramts' );
+      add_theme_support( 'html5', array( 'search-form', 'gallery' ) );
+    }
 
     remove_custom_background();
     remove_custom_image_header();
