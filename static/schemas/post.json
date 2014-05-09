@@ -10,7 +10,7 @@
             "relatedArtists",
             "relatedEvents",
             "relatedTours",
-            "relatedVenus"
+            "relatedVenues"
           ]
         }
       }
@@ -53,13 +53,13 @@
         "posts_per_page": -1
       }
     },
-    "relatedVenus": {
-      "name": "Related Venus",
+    "relatedVenues": {
+      "name": "Related Venues",
       "type": "post",
       "post_type": "venue",
       "field_type": "select_advanced",
       "multiple": true,
-      "placeholder": "Select Venus",
+      "placeholder": "Select Venues",
       "query_args": {
         "post_status": "publish",
         "posts_per_page": -1

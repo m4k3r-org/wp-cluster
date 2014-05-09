@@ -43,83 +43,96 @@
         "can_export": true
       },
       "taxonomies": [
+        "age-restriction",
+        "music-genre",
+        "event-type",
         "tag",
         "category"
       ],
       "meta": {
         "information": {
           "fields": [
-            "startDateTime",
-            "endDateTime",
-            "ticketURL",
-            "rsvpURL",
-            "relatedTour",
+            "start-date",
+            "end-date",
+            "ticket-url",
+            "rsvp-url",
+            "related-genre",
+            "related-event-type",
+            "related-age-restriction"
 
-            "relatedGenre",
-            "relatedEventType",
-            "relatedAgeRestriction",
-
-            "featuredArtists",
-            "relatedArtists",
-            "relatedPromoters",
-            "relatedVenus"
+          ]
+        },
+        "related": {
+          "fields": [
+            "related-tour",
+            "related-featured-artists",
+            "related-artists",
+            "related-promoters",
+            "related-venues"
           ]
         },
         "Images": {
           "fields": [
-            "posterImages"
+            "poster-images"
           ]
         }
       }
     }
   },
   "meta": {
-    "startDateTime": {
+    "start-date": {
       "name": "Starts",
       "type": "datetime",
-      "desc": "Date and time this event begins."
+      "desc": "Date and time this event begins.",
+      "js_options": {}
     },
-    "endDateTime": {
+    "end-date": {
       "name": "Ends",
       "type": "datetime",
       "desc": "Date and time this event ends."
     },
-    "ticketURL": {
-      "id": "ticketURL",
+    "ticket-url": {
+      "id": "ticket-url",
       "name": "Tickets URL",
       "desc": "The link for purchasing tickets",
       "type": "url"
     },
-    "rsvpURL": {
-      "id": "rsvpURL",
+    "rsvp-url": {
+      "id": "rsvp-url",
       "name": "RSVP URL",
       "type": "url"
     },
-    "featuredEventType": {
-      "name": "Featured Artists",
-      "type": "post",
-      "post_type": "artist",
-      "field_type": "select_advanced",
-      "multiple": true,
-      "placeholder": "Select Artists",
-      "query_args": {
-        "post_status": "publish",
-        "posts_per_page": -1
+    "related-genre": {
+      "name": "Genre",
+      "id": "music-genre-taxonomy",
+      "type": "taxonomy",
+      "options": {
+        "taxonomy": "music-genre",
+        "type": "checkbox_list",
+        "args": {}
       }
     },
-    "relatedAgeRestriction": {
+    "related-age-restriction": {
       "name": "Age Restriction",
-      "type": "post",
-      "post_type": "artist",
-      "field_type": "select_advanced",
-      "multiple": true,
-      "placeholder": "Select Artists",
-      "query_args": {
-        "post_status": "publish",
-        "posts_per_page": -1
+      "id": "age-restriction-taxonomy",
+      "type": "taxonomy",
+      "options": {
+        "taxonomy": "age-restriction",
+        "type": "checkbox_list",
+        "args": {}
       }
     },
-    "featuredArtists": {
+    "related-event-type": {
+      "name": "Type",
+      "id": "event-type-taxonomy",
+      "type": "taxonomy",
+      "options": {
+        "taxonomy": "event-type",
+        "type": "checkbox_list",
+        "args": {}
+      }
+    },
+    "related-featured-artists": {
       "name": "Featured Artists",
       "type": "post",
       "post_type": "artist",
@@ -131,8 +144,8 @@
         "posts_per_page": -1
       }
     },
-    "relatedArtists": {
-      "name": "Related Artists",
+    "related-artists": {
+      "name": "Artists",
       "type": "post",
       "post_type": "artist",
       "field_type": "select_advanced",
@@ -143,35 +156,35 @@
         "posts_per_page": -1
       }
     },
-    "relatedPromoters": {
-      "name": "Related Promoters",
+    "related-promoters": {
+      "name": "Promoter",
       "type": "post",
       "post_type": "promoter",
       "field_type": "select_advanced",
-      "multiple": true,
+      "multiple": false,
       "placeholder": "Select Promoters",
       "query_args": {
         "post_status": "publish",
         "posts_per_page": -1
       }
     },
-    "relatedVenus": {
-      "name": "Related Venus",
+    "related-venues": {
+      "name": "Venue",
       "type": "post",
       "post_type": "venue",
       "field_type": "select_advanced",
-      "multiple": true,
-      "placeholder": "Select Venus",
+      "multiple": false,
+      "placeholder": "Select Venues",
       "query_args": {
         "post_status": "publish",
         "posts_per_page": -1
       }
     },
-    "relatedTour": {
-      "name": "Related Event Tour",
+    "related-tour": {
+      "name": "Tour",
       "type": "post",
       "post_type": "tour",
-      "field_type": "select",
+      "field_type": "checkbox_list",
       "multiple": false,
       "placeholder": "Select Tour",
       "query_args": {
@@ -179,26 +192,40 @@
         "posts_per_page": -1
       }
     },
-    "posterImages": {
+    "poster-images": {
       "name": "Poster Images",
       "type": "plupload_image"
     }
   },
   "taxonomies": {
-    "eventType": {
-      "name": "Event Type"
+    "event-type": {
+      "label": "Event Type"
     },
-    "genre": {
-      "name": "Genre"
+    "music-genre": {
+      "label": "Genre",
+      "hierarchical": true,
+      "show_admin_column": true,
+      "query_var": true,
+      "show_ui": false,
+      "rewrite": {
+        "slug" : "genre"
+      }
     },
     "category": {
-      "name": "Category"
+      "label": "Category"
     },
     "tag": {
-      "name": "Tag"
+      "label": "Tag"
     },
-    "ageRestriction": {
-      "name": "Age Restriction"
+    "age-restriction": {
+      "label": "Age Restriction",
+      "hierarchical": true,
+      "show_admin_column": true,
+      "query_var": true,
+      "show_ui": false,
+      "rewrite": {
+        "slug" : "age"
+      }
     }
   }
 }

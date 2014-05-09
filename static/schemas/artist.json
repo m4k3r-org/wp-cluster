@@ -49,7 +49,9 @@
         ],
         "can_export": true
       },
-      "taxonomies": [ "genre" ],
+      "taxonomies": [
+        "category"
+      ],
       "meta": {
         "links": {
           "fields": [
