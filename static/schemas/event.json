@@ -1,6 +1,8 @@
 {
+  "id": "event",
+  "type": "schema",
   "title": "Event",
-  "revision": 1,
+  "revision": 2,
   "schema": "http://api.wpelastic.io/schema/v1/event",
   "types": {
     "Event": {
@@ -36,8 +38,10 @@
         "show_ui": true,
         "supports": [
           "title",
-          "post-formats",
           "editor",
+          "thumbnail",
+          "comments",
+          "post-formats",
           "revisions"
         ],
         "can_export": true
@@ -55,20 +59,24 @@
             "start-date",
             "end-date",
             "ticket-url",
-            "rsvp-url",
-            "related-genre",
-            "related-event-type",
-            "related-age-restriction"
-
+            "rsvp-url"
+          ]
+        },
+        "event_meta": {
+          "fields": [
+            "term-music-genre",
+            "term-event-type",
+            "term-age-restriction"
           ]
         },
         "related": {
           "fields": [
             "related-tour",
-            "related-featured-artists",
-            "related-artists",
             "related-promoters",
-            "related-venues"
+            "related-venues",
+            "divider",
+            "related-featured-artists",
+            "related-artists"
           ]
         },
         "Images": {
@@ -83,18 +91,20 @@
     "start-date": {
       "name": "Starts",
       "type": "datetime",
-      "desc": "Date and time this event begins.",
-      "js_options": {}
+      "_desc": "Date and time this event begins.",
+      "js_options": {},
+      "options": {
+      }
     },
     "end-date": {
       "name": "Ends",
       "type": "datetime",
-      "desc": "Date and time this event ends."
+      "_desc": "Date and time this event ends."
     },
     "ticket-url": {
       "id": "ticket-url",
       "name": "Tickets URL",
-      "desc": "The link for purchasing tickets",
+      "_desc": "The link for purchasing tickets",
       "type": "url"
     },
     "rsvp-url": {
@@ -102,9 +112,9 @@
       "name": "RSVP URL",
       "type": "url"
     },
-    "related-genre": {
+    "term-music-genre": {
       "name": "Genre",
-      "id": "music-genre-taxonomy",
+      "id": "term-music-genre",
       "type": "taxonomy",
       "options": {
         "taxonomy": "music-genre",
@@ -112,9 +122,9 @@
         "args": {}
       }
     },
-    "related-age-restriction": {
+    "term-age-restriction": {
       "name": "Age Restriction",
-      "id": "age-restriction-taxonomy",
+      "id": "term-age-restriction",
       "type": "taxonomy",
       "options": {
         "taxonomy": "age-restriction",
@@ -122,9 +132,9 @@
         "args": {}
       }
     },
-    "related-event-type": {
+    "term-event-type": {
       "name": "Type",
-      "id": "event-type-taxonomy",
+      "id": "term-event-type",
       "type": "taxonomy",
       "options": {
         "taxonomy": "event-type",
@@ -136,6 +146,7 @@
       "name": "Featured Artists",
       "type": "post",
       "post_type": "artist",
+      "_desc": "Featured lineup.",
       "field_type": "select_advanced",
       "multiple": true,
       "placeholder": "Select Artists",
@@ -177,7 +188,7 @@
       "placeholder": "Select Venues",
       "query_args": {
         "post_status": "publish",
-        "posts_per_page": -1
+        "posts_per_page": 20
       }
     },
     "related-tour": {
@@ -192,6 +203,9 @@
         "posts_per_page": -1
       }
     },
+    "divider": {
+      "type": "divider"
+    },
     "poster-images": {
       "name": "Poster Images",
       "type": "plupload_image"
@@ -199,23 +213,31 @@
   },
   "taxonomies": {
     "event-type": {
-      "label": "Event Type"
+      "label": "Type",
+      "hierarchical": false,
+      "show_admin_column": true,
+      "query_var": true,
+      "sort": true,
+      "show_in_nav_menus": false,
+      "show_ui": true,
+      "rewrite": {
+        "slug" : "event-type"
+      }
     },
     "music-genre": {
       "label": "Genre",
-      "hierarchical": true,
+      "hierarchical": false,
       "show_admin_column": true,
       "query_var": true,
-      "show_ui": false,
+      "sort": true,
+      "show_in_nav_menus": true,
+      "show_tagcloud": false,
+      "show_ui": true,
       "rewrite": {
-        "slug" : "genre"
+        "slug" : "genre",
+        "hierarchical" : true,
+        "with_front": true
       }
-    },
-    "category": {
-      "label": "Category"
-    },
-    "tag": {
-      "label": "Tag"
     },
     "age-restriction": {
       "label": "Age Restriction",
