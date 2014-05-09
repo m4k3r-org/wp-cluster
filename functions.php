@@ -1664,7 +1664,7 @@ class flawless_theme extends Flawless_F {
 
               if( strpos( $file_name, $type ) ) {
 
-                $file_data = @get_file_data( $data[ 'url' ] . '/' . $file_name, $flawless[ 'default_header' ][ 'style' ], 'flawless_style_assets' );
+                $file_data = @get_file_data( $data[ 'path' ] . '/' . $file_name, $flawless[ 'default_header' ][ 'style' ], 'flawless_style_assets' );
 
                 switch ( $data[ 'scope' ] ) {
 
