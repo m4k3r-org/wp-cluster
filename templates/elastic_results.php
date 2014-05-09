@@ -14,7 +14,7 @@
         </div>
 
         <!-- Header Row -->
-        <ul id="hdp_results_header_event" class="hdp_results_header clearfix"  data-bind="visible: documents().length">
+        <ul id="hdp_results_header_event" class="hdp_results_header clearfix" data-bind="visible: documents().length">
           <li class="hdp_event_time">Date</li>
           <li class="hdp_event_name">Name</li>
           <li class="hdp_event_city">City</li>
@@ -118,7 +118,7 @@
 
     	<li class="hdp_event_flyer">
     	  <a href="#" data-bind="attr: { href: $data.body.url } " class="events_flyer_wrapper">
-    	    <img class="fixed_size attachment-events_flyer_thumb" src="<?php echo get_template_directory_uri() ?>/img/1x1-pixel.png" data-field="thumbnail" data-bind="attr: { 'src': $data.body.thumbnail }" />
+    	    <img class="fixed_size attachment-events_flyer_thumb" src="<?php echo get_template_directory_uri() ?>/img/1x1-pixel.png" data-field="thumbnail" data-bind="attr: { 'src': $data.body.thumbnail }"/>
     	  </a>
     	</li>
 
@@ -167,7 +167,7 @@
             <ul class="hdp_photo clearfix">
               <li class="hdp_photo_thumbnail">
                 <a data-bind="attr: {href: $data.url, title: 'Photos from '+$data.title}">
-                  <img data-bind="attr: {alt: $data.title, src: $data.thumbnail}" />
+                  <img data-bind="attr: {alt: $data.title, src: $data.thumbnail}"/>
                 </a>
               </li>
               <li class="hdp_photo_title">

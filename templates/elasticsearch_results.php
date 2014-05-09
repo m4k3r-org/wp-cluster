@@ -49,7 +49,7 @@
                 <ul class="hdp_event_expanded clearfix">
                   <li class="hdp_event_flyer">
                     <a data-bind="attr: {href:fields.url}">
-                      <img data-bind="attr: {src:fields['image.poster.thumbnail']}" class="fixed_size attachment-events_flyer_thumb" />
+                      <img data-bind="attr: {src:fields['image.poster.thumbnail']}" class="fixed_size attachment-events_flyer_thumb"/>
                     </a>
                   </li>
                   <li class="hdp_event_title">

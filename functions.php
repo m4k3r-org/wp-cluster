@@ -667,9 +667,8 @@ class hddp extends Flawless_F {
     global $post;
 
     //** New Elastic Search Shortcodes */
-    add_shortcode( 'elasticsearch_results', array('hddp', 'elasticsearch_results') );
-    add_shortcode( 'elasticsearch_facets', array('hddp', 'elasticsearch_facets') );
-
+    add_shortcode( 'elasticsearch_results', array( 'hddp', 'elasticsearch_results' ) );
+    add_shortcode( 'elasticsearch_facets', array( 'hddp', 'elasticsearch_facets' ) );
 
     // Used on home, vieo and gallery pages.
     add_shortcode( 'hdp_custom_loop', array( 'hddp', 'shortcode_hdp_custom_loop' ) );
@@ -684,19 +683,22 @@ class hddp extends Flawless_F {
 
   /**
    * New Elastic Search Facets
+   *
    * @param type $atts
+   *
    * @return type
    */
   public static function elasticsearch_facets( $atts ) {
-    extract( shortcode_atts(array(
-      'id' => 'none',
+    extract( shortcode_atts( array(
+      'id'     => 'none',
       'action' => 'elasticsearch_query',
-      'type' => '',
-      'size' => 10
+      'type'   => '',
+      'size'   => 10
     ), $atts ) );
 
     ob_start();
     include 'templates/elasticsearch_facets.php';
+
     return ob_get_clean();
   }
 
@@ -709,12 +711,13 @@ class hddp extends Flawless_F {
    */
   public static function elasticsearch_results( $atts ) {
 
-    extract( shortcode_atts(array(
+    extract( shortcode_atts( array(
       'id' => 'none'
     ), $atts ) );
 
     ob_start();
     include 'templates/elasticsearch_results.php';
+
     return ob_get_clean();
 
   }

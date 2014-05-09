@@ -49,19 +49,19 @@
     <span class="df_filter_label">Date Range</span>
     <ul class="df_filter_inputs_list">
       <li>
-        <input type="text" name="date_range[gte]" />
+        <input type="text" name="date_range[gte]"/>
       </li>
       <li>
-        <input type="text" name="date_range[lte]" />
+        <input type="text" name="date_range[lte]"/>
       </li>
     </ul>
   </div>
   <script type="text/javascript">
-    jQuery(document).ready(function(){
-      jQuery('[name^="date_range"]').datepicker({
+    jQuery( document ).ready( function() {
+      jQuery( '[name^="date_range"]' ).datepicker( {
         dateFormat: 'yy-mm-dd'
-      });
-    });
+      } );
+    } );
   </script>
   <div class="clearfix"></div>
 </form>

@@ -1,4 +1,4 @@
-<li id="df_id_<?php echo $hit_data['_id']; ?>" class="hdp_results_item">
+<li id="df_id_<?php echo $hit_data[ '_id' ]; ?>" class="hdp_results_item">
   <ul class="df_result_data">
     <li class="df_list_item">
       <ul>

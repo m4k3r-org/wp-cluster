@@ -8,7 +8,7 @@
 
       <div class="df_filter_inputs_list_wrapper">
         <span class="df_filter_label" data-bind="">Search</span>
-        <input data-bind="value: query.full_text" />
+        <input data-bind="value: query.full_text"/>
       </div>
 
       <div data-bind="template: { name: facet_template, afterRender: facet_after_render, foreach: facets }"></div>

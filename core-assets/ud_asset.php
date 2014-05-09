@@ -18,6 +18,7 @@ if( !class_exists( 'UD_Asset' ) ) {
 
     /**
      * The list of assets.
+     *
      * @var type
      */
     private $assets = array();
@@ -25,20 +26,21 @@ if( !class_exists( 'UD_Asset' ) ) {
     /**
      * Recompile assets in any case.
      * If false $this->monitor is used
+     *
      * @var boolean
      */
     private $recompute = false;
 
-
     /**
      * Recompile assets only if input data was modified and if $this->recompute false
+     *
      * @var boolean
      */
     private $monitor = false;
 
-
     /**
      * Pathes to all required libraries
+     *
      * @var array
      */
     private $pathes = array(
@@ -46,13 +48,12 @@ if( !class_exists( 'UD_Asset' ) ) {
       'lessc' => false, // Less PHP library. See https://github.com/leafo/lessphp
     );
 
-
     /**
      * Prefix is used in dynamic asset's permalink
+     *
      * @var string
      */
     private $prefix = 'ud';
-
 
     /**
      * Constructor.
@@ -60,6 +61,7 @@ if( !class_exists( 'UD_Asset' ) ) {
      * Should be called before init, because it adds specific hooks
      *
      * @param mixed $args
+     *
      * @author peshkov@UD
      */
     function __construct( $args = array() ) {
@@ -83,7 +85,7 @@ if( !class_exists( 'UD_Asset' ) ) {
             break;
           case 'pathes':
             if( is_array( $v ) ) {
-              foreach(  $v as $lib => $path ) {
+              foreach( $v as $lib => $path ) {
                 if( file_exists( $path ) && in_array( $lib, array( 'jsmin', 'lessc' ) ) ) {
                   $this->pathes[ $lib ] = $path;
                 }
@@ -104,7 +106,6 @@ if( !class_exists( 'UD_Asset' ) ) {
 
     }
 
-
     /**
      * Get the list of all assets
      *
@@ -114,7 +115,6 @@ if( !class_exists( 'UD_Asset' ) ) {
       return $this->assets;
     }
 
-
     /**
      * Sets assets
      *
@@ -122,16 +122,16 @@ if( !class_exists( 'UD_Asset' ) ) {
      */
     function set_assets( $assets ) {
       $this->assets = array();
-      $permalink = ( '' != get_option( 'permalink_structure' ) ) ? true : false;
+      $permalink    = ( '' != get_option( 'permalink_structure' ) ) ? true : false;
 
       foreach( $assets as $k => $v ) {
         $v = array_merge( array(
-          'file' => false,
-          'type' => false,
-          'scope' => 'default', // Available data: 'default','cdn'
-          'url' => false,
+          'file'            => false,
+          'type'            => false,
+          'scope'           => 'default', // Available data: 'default','cdn'
+          'url'             => false,
           'compile_options' => false
-        ), (array)$v );
+        ), (array) $v );
 
         switch( $v[ 'scope' ] ) {
 
@@ -164,11 +164,11 @@ if( !class_exists( 'UD_Asset' ) ) {
 
     }
 
-
     /**
      * Get URL for asset
      *
      * @param string $asset
+     *
      * @author peshkov@UD
      */
     function get_dynamic_asset_url( $asset ) {
@@ -176,15 +176,16 @@ if( !class_exists( 'UD_Asset' ) ) {
       if( is_array( $this->assets[ $asset ] ) ) {
         $url = $this->assets[ $asset ][ 'url' ];
       }
+
       return $url;
     }
-
 
     /**
      * Returns compiled asset's data.
      * On error it will return false.
      *
      * @param string $asset
+     *
      * @return string. Compiled data.
      * @author peshkov@UD
      */
@@ -192,18 +193,18 @@ if( !class_exists( 'UD_Asset' ) ) {
 
       $args = wp_parse_args( $args, array(
         'recompute' => $this->recompute,
-        'monitor' => $this->monitor,
+        'monitor'   => $this->monitor,
       ) );
 
       if( empty( $this->assets[ $asset ] ) ) {
         return new WP_Error( __METHOD__, 'Asset doesn\'t exist' );
       }
 
-      $data = false;
-      $_asset = $this->assets[ $asset ];
+      $data      = false;
+      $_asset    = $this->assets[ $asset ];
       $mime_type = '';
 
-      switch ( $_asset[ 'type' ] ) {
+      switch( $_asset[ 'type' ] ) {
         case 'css':
           $mime_type = 'text/css';
           break;
@@ -211,7 +212,7 @@ if( !class_exists( 'UD_Asset' ) ) {
           $mime_type = 'text/javascript';
           break;
         default:
-          return new WP_Error( __METHOD__, "Type '{$_asset[ 'type' ]}' is not supported" );
+          return new WP_Error( __METHOD__, "Type '{$_asset['type']}' is not supported" );
           break;
       }
 
@@ -228,7 +229,7 @@ if( !class_exists( 'UD_Asset' ) ) {
             if( is_wp_error( $result ) ) {
               return $result;
             }
-          } else if ( !$_asset[ 'compile_options' ] && !file_exists( $_asset[ 'file' ] ) ) {
+          } else if( !$_asset[ 'compile_options' ] && !file_exists( $_asset[ 'file' ] ) ) {
             return new WP_Error( __METHOD__, 'Asset doesn\'t exist and can not be compiled.' );
           }
 
@@ -238,8 +239,8 @@ if( !class_exists( 'UD_Asset' ) ) {
           }
 
           $data = array(
-            'data' => file_get_contents( $_asset[ 'file' ] ),
-            'updated' => filemtime( $_asset[ 'file' ] ),
+            'data'      => file_get_contents( $_asset[ 'file' ] ),
+            'updated'   => filemtime( $_asset[ 'file' ] ),
             'mime_type' => $mime_type,
           );
 
@@ -259,38 +260,39 @@ if( !class_exists( 'UD_Asset' ) ) {
 
     }
 
-
     /**
      * Recompiles all assets
      *
-     * @param boolean $hard. Recompute all assets or just recompile modified ones
+     * @param boolean $hard . Recompute all assets or just recompile modified ones
+     *
      * @author peshkov@Ud
      */
     function recompile_all_assets( $hard = false ) {
       foreach( $this->assets as $asset => $data ) {
         $this->compile_asset( $asset, array(
           'recompute' => $hard ? true : false,
-          'monitor' => true,
+          'monitor'   => true,
         ) );
       }
     }
-
 
     /**
      * Compiles assets ( css, js )
      *
      * @see WPP_Config::get_assets();
+     *
      * @param string $asset
-     * @param array $args
+     * @param array  $args
+     *
      * @return type
      * @author odokienko@UD
      * @author peshkov@UD
      */
-    function compile_asset ( $asset, $args = array() ){
+    function compile_asset( $asset, $args = array() ) {
 
       $args = wp_parse_args( $args, array(
         'recompute' => $this->recompute,
-        'monitor' => $this->monitor,
+        'monitor'   => $this->monitor,
       ) );
 
       if( empty( $this->assets[ $asset ] ) ) {
@@ -304,7 +306,7 @@ if( !class_exists( 'UD_Asset' ) ) {
       }
 
       $options = array_merge( $_asset[ 'compile_options' ], array(
-        'output' => $_asset[ 'file' ],
+        'output'    => $_asset[ 'file' ],
         'recompute' => $args[ 'recompute' ]
       ) );
 
@@ -328,7 +330,6 @@ if( !class_exists( 'UD_Asset' ) ) {
       return $result;
     }
 
-
     /**
      * Builds CSS via LessPHP
      *
@@ -347,12 +348,12 @@ if( !class_exists( 'UD_Asset' ) ) {
       }
 
       $args = wp_parse_args( $args, array(
-        'input' => '',
-        'output' => '',
+        'input'     => '',
+        'output'    => '',
         'formatter' => 'lessjs', // lessjs|compressed|classic
         'recompute' => $this->recompute,
         'variables' => array(),
-      ));
+      ) );
 
       if( !$args[ 'input' ] || !$args[ 'output' ] ) {
         return new WP_Error( __METHOD__, 'Missed Arguments' );
@@ -360,28 +361,28 @@ if( !class_exists( 'UD_Asset' ) ) {
 
       try {
 
-        $transient_key = MD5( (string)$args[ 'input' ] . (string)$args[ 'output' ] );
+        $transient_key = MD5( (string) $args[ 'input' ] . (string) $args[ 'output' ] );
 
-        if( is_file( $args[ 'output' ] ) && !$args['recompute'] && $transient = get_transient( 'wpp::less::' . $transient_key ) ) {
+        if( is_file( $args[ 'output' ] ) && !$args[ 'recompute' ] && $transient = get_transient( 'wpp::less::' . $transient_key ) ) {
           //** Probably we don't need to recompile less. Let's check to be sure */
           //** Check if we have the same arguments to be sure that all compiled files and variables are the same. */
           $dif1 = array_diff_assoc( $args[ 'variables' ], $transient[ 'variables' ] );
           $dif2 = array_diff_assoc( $transient[ 'variables' ], $args[ 'variables' ] );
           //** Get the latest time of files changes */
           $max_fmt = 0;
-          foreach( (array)$transient[ 'files' ] as $lfile ) {
+          foreach( (array) $transient[ 'files' ] as $lfile ) {
             if( !file_exists( $lfile ) ) {
               $max_fmt = 0;
               break;
             }
-            $fmt = filemtime( $lfile );
+            $fmt     = filemtime( $lfile );
             $max_fmt = $max_fmt < $fmt ? $fmt : $max_fmt;
           }
 
           if( empty( $dif1 ) && empty( $dif2 ) && $max_fmt && filemtime( $args[ 'output' ] ) > $max_fmt ) {
             return array(
-              'output' => $args[ 'output' ],
-              'size' => $this->_get_filesize( $args[ 'output' ] ),
+              'output'  => $args[ 'output' ],
+              'size'    => $this->_get_filesize( $args[ 'output' ] ),
               'updated' => filemtime( $args[ 'output' ] )
             );
           }
@@ -395,9 +396,9 @@ if( !class_exists( 'UD_Asset' ) ) {
 
         if( isset( $cache[ 'compiled' ] ) && is_writable( dirname( $args[ 'output' ] ) ) && file_put_contents( $args[ 'output' ], $cache[ 'compiled' ] ) ) {
           //** Set transient which is needed to determine if we need to recompile less file */
-          set_transient( 'wpp::less::' . $transient_key , array(
+          set_transient( 'wpp::less::' . $transient_key, array(
             'variables' => $args[ 'variables' ],
-            'files' => array_keys( (array)$cache[ 'files' ] ),
+            'files'     => array_keys( (array) $cache[ 'files' ] ),
           ) );
         } else {
           throw new Exception( 'No file created.' );
@@ -408,13 +409,12 @@ if( !class_exists( 'UD_Asset' ) ) {
       }
 
       return array(
-        'output' => $args[ 'output' ],
-        'size' => $this->_get_filesize( $args[ 'output' ] ),
+        'output'  => $args[ 'output' ],
+        'size'    => $this->_get_filesize( $args[ 'output' ] ),
         'updated' => filemtime( $args[ 'output' ] ),
       );
 
     }
-
 
     /**
      * Process Uncompressed JavaScript File and Create Minified Version
@@ -424,10 +424,10 @@ if( !class_exists( 'UD_Asset' ) ) {
     function compile_js( $args = '' ) {
 
       $args = array_filter( wp_parse_args( $args, array(
-        'input' => array(),
-        'output' => '',
+        'input'     => array(),
+        'output'    => '',
         'recompute' => $this->recompute,
-        'monitor' => $this->monitor,
+        'monitor'   => $this->monitor,
       ) ) );
 
       $js = array();
@@ -436,16 +436,16 @@ if( !class_exists( 'UD_Asset' ) ) {
         if( !file_exists( $path ) ) {
           continue;
         }
-        $js[ basename( $path ) ] = file_get_contents( $path );
+        $js[ basename( $path ) ]                = file_get_contents( $path );
         $args[ 'updated' ][ basename( $path ) ] = filemtime( $path );
       }
 
-      if( is_file( $args[ 'output' ] ) && !$args['recompute'] && ( filemtime( $args[ 'output' ] ) >= max( $args[ 'updated' ] ) ) ) {
+      if( is_file( $args[ 'output' ] ) && !$args[ 'recompute' ] && ( filemtime( $args[ 'output' ] ) >= max( $args[ 'updated' ] ) ) ) {
         return array(
-          'output' => $args[ 'output' ],
-          'size' => $this->_get_filesize( $args[ 'output' ] ),
+          'output'  => $args[ 'output' ],
+          'size'    => $this->_get_filesize( $args[ 'output' ] ),
           'updated' => filemtime( $args[ 'output' ] )
-       );
+        );
       }
 
       $js = implode( '', (array) $js );
@@ -461,13 +461,12 @@ if( !class_exists( 'UD_Asset' ) ) {
       }
 
       return array(
-        'output' => $args[ 'output' ],
+        'output'  => $args[ 'output' ],
         'size'    => $this->_get_filesize( $args[ 'output' ] ),
         'updated' => filemtime( $args[ 'output' ] ),
       );
 
     }
-
 
     /**
      * Minify JavaScript
@@ -485,7 +484,7 @@ if( !class_exists( 'UD_Asset' ) ) {
 
       $args = wp_parse_args( $args, array(
         'engine' => 'jsmin'
-      ));
+      ) );
 
       switch( $args[ 'engine' ] ) {
 
@@ -493,7 +492,7 @@ if( !class_exists( 'UD_Asset' ) ) {
 
           if( class_exists( 'W3_Plugin' ) && file_exists( WP_PLUGIN_DIR . '/w3-total-cache/lib/Minify/JSMin.php' ) ) {
             include_once WP_PLUGIN_DIR . '/w3-total-cache/lib/Minify/JSMin.php';
-          } elseif ( !empty( $this->pathes[ 'jsmin' ] ) ) {
+          } elseif( !empty( $this->pathes[ 'jsmin' ] ) ) {
             include_once $this->pathes[ 'jsmin' ];
           }
 
@@ -503,12 +502,12 @@ if( !class_exists( 'UD_Asset' ) ) {
 
           $data = JSMin::minify( $data );
 
-        break;
+          break;
 
         case 'google_closure':
 
           $_post = wp_remote_post( 'http://closure-compiler.appspot.com/compile', array(
-            'body' => wp_parse_args( $args[ 'params' ], array( 'js_code' => $data, 'compilation_level' => 'SIMPLE_OPTIMIZATIONS', 'output_format' => 'json', 'output_info' => 'compiled_code' ) ) )
+              'body' => wp_parse_args( $args[ 'params' ], array( 'js_code' => $data, 'compilation_level' => 'SIMPLE_OPTIMIZATIONS', 'output_format' => 'json', 'output_info' => 'compiled_code' ) ) )
           );
 
           if( is_wp_error( $_post ) ) {
@@ -520,7 +519,7 @@ if( !class_exists( 'UD_Asset' ) ) {
           /** Check if we have success response from google closure, if not - we try to use jsmin library */
           $data = $response->compiledCode ? $response->compiledCode : $this->minify_js( $data, array( 'engine' => 'jsmin' ) );
 
-        break;
+          break;
 
       }
 
@@ -528,19 +527,18 @@ if( !class_exists( 'UD_Asset' ) ) {
 
     }
 
-
     /**
-    * Rewrite Rules - called only on flush.
-    *
-    * @action rewrite_rules_array ( 20 )
-    * @author peshkov@UD
-    */
+     * Rewrite Rules - called only on flush.
+     *
+     * @action rewrite_rules_array ( 20 )
+     * @author peshkov@UD
+     */
     public function _rewrite_rules( $rules ) {
       //* Add rewrite rule for assets */
       $rules = array( "{$this->prefix}_asset/(.+?)/?$" => "index.php?{$this->prefix}_asset=\$matches[1]" ) + $rules;
+
       return $rules;
     }
-
 
     /**
      * Returns Frontend Data Model and Scripts. Fallback when a file cannot be saved to disk.
@@ -549,9 +547,9 @@ if( !class_exists( 'UD_Asset' ) ) {
      * @author odokienko@UD
      */
     public function _parse_request( $query ) {
-      if (!empty( $query->query_vars[ "{$this->prefix}_asset" ] ) ){
+      if( !empty( $query->query_vars[ "{$this->prefix}_asset" ] ) ) {
         $result = $this->get_dynamic_asset( $query->query_vars[ "{$this->prefix}_asset" ] );
-        if ( !is_wp_error( $result ) && is_array( $result ) ){
+        if( !is_wp_error( $result ) && is_array( $result ) ) {
           header( 'Content-Length: ' . strlen( $result[ 'data' ] ) );
           header( 'Last-Modified: ' . gmdate( 'D, d M Y H:i:s', $result[ 'updated' ] ) . ' GMT' );
           header( 'ETag: ' . md5( $result[ 'updated' ] ) );
@@ -559,23 +557,25 @@ if( !class_exists( 'UD_Asset' ) ) {
           header( 'Content-Type: ' . $result[ 'mime_type' ] );
           header( 'X-Content-Type-Options: nosniff' );
           die( $result[ 'data' ] );
-        } elseif ( is_wp_error( $result ) ) {
+        } elseif( is_wp_error( $result ) ) {
           do_action( 'ud::asset::error', $result );
         }
         die();
       }
     }
 
-
     /**
      * Get filesize of a file.
      */
     private function _get_filesize( $file ) {
-      if( !is_file( $file ) ) { return ''; }
+      if( !is_file( $file ) ) {
+        return '';
+      }
       $bytes = filesize( $file );
-      $s = array( 'b', 'Kb', 'Mb', 'Gb' );
-      $e = floor( log( $bytes ) / log( 1024 ));
-      return sprintf( '%.2f ' . $s[$e], !empty($bytes)?( $bytes / pow( 1024, floor( $e ) ) ):false);
+      $s     = array( 'b', 'Kb', 'Mb', 'Gb' );
+      $e     = floor( log( $bytes ) / log( 1024 ) );
+
+      return sprintf( '%.2f ' . $s[ $e ], !empty( $bytes ) ? ( $bytes / pow( 1024, floor( $e ) ) ) : false );
     }
 
   }
