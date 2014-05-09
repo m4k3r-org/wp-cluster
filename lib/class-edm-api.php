@@ -65,7 +65,6 @@ namespace wpCloud\Vertical\EDM {
 
         }
 
-
         $_results = array();
 
         foreach( $activePlugins as $plugin ) {
@@ -91,6 +90,11 @@ namespace wpCloud\Vertical\EDM {
         // @todo Register and network re-enable themes, after theme path has changed from themes to vendor/themes.
 
         // @todo Re-activate themes given location change.
+
+        // Remove the stupid "upgrade" directory.
+        if( is_dir( $_SERVER[ 'DOCUMENT_ROOT' ] . '/upgrade' ) ) {
+          @rmdir( $_SERVER[ 'DOCUMENT_ROOT' ] . '/upgrade' );
+        }
 
         wp_send_json(array(
           'ok' => true,
