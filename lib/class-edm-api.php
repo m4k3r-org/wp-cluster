@@ -22,15 +22,14 @@ namespace wpCloud\Vertical\EDM {
        * @url http://discodonniepresents.com/api/v1/system/upgrade
        */
       static public function systemUpgrade() {
+        global $wpdb, $current_site, $current_blog;
 
         if( !current_user_can( 'manage_options' ) ) {
           wp_send_json(array( 'ok' => false, 'message' => __( 'Invalid capabilities.' ) ));
           return;
         }
 
-        include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
-        include_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
-        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        $_sites = $wpdb->get_results( "SELECT * FROM {$wpdb->blogs} WHERE site_id = {$current_blog->site_id} " );
 
         $activePlugins = array(
           'gravityforms',
@@ -51,6 +50,21 @@ namespace wpCloud\Vertical\EDM {
           'sitepress-multilingual-cms',
           'wpml-translation-management'
         );
+
+        include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
+        include_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
+        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+        foreach( (array) $_sites as $site ) {
+
+          switch_to_blog( $site->blog_id );
+
+          // Fix Event Post Type
+          $wpdb->query( "UPDATE {$wpdb->posts} SET post_type = replace(post_type, 'hdp_event', 'event');" );
+          restore_current_blog();
+
+        }
+
 
         $_results = array();
 
