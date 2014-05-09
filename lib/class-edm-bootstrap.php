@@ -27,23 +27,45 @@ namespace wpCloud\Vertical\EDM {
     /**
      * System Ready.
      *
+     * @url http://discodonniepresents.com/api/network/v1/sites
+     * @url http://discodonniepresents.com/api/network/v1/routes
+     * @url http://discodonniepresents.com/api/network/v1/upgrade
+     * @url http://discodonniepresents.com/api/network/v1/install
+     * @url http://discodonniepresents.com/api/site/v1/meta
+     *
      */
     public function plugins_loaded() {
 
-      // Define EDM API Endpoints.
-      API::define( '/v1/artists',            array( 'wpCloud\Vertical\EDM\API',     'getArtists' ) );
-      API::define( '/v1/artist',             array( 'wpCloud\Vertical\EDM\API',     'getArtist' ) );
-      API::define( '/v1/venues',             array( 'wpCloud\Vertical\EDM\API',     'getVenues' ) );
-      API::define( '/v1/venue',              array( 'wpCloud\Vertical\EDM\API',     'getVenue' ) );
-      API::define( '/v1/sites',              array( 'wpCloud\Vertical\EDM\API',     'listSites' ) );
-      API::define( '/v1/site',               array( 'wpCloud\Vertical\EDM\API',     'getSite' ) );
-      API::define( '/v1/routes',             array( 'wpCloud\Vertical\EDM\API',     'listRoutes' ) );
-      API::define( '/v1/system/upgrade',     array( 'wpCloud\Vertical\EDM\API',     'systemUpgrade' ) );
+      // List Sites.
+      API::define( '/network/v1/sites', array(
+        'scopes' => array( 'read' ),
+        'handler' => array( 'wpCloud\Vertical\EDM\API', 'listSites' )
+      ));
 
       // System API
-      API::define( '/v1/install/plugin',     array( 'wpCloud\Vertical\EDM\API',     'pluginInstall' ), array(
+      API::define( '/network/v1/routes', array(
         'parameters' => array( 'name', 'version' ),
-        'scopes' => array( 'install_plugins', 'activate_plugins' )
+        'scopes' => array( 'read' ),
+        'handler' => array( 'wpCloud\Vertical\EDM\API', 'listRoutes' )
+      ));
+
+      // System API
+      API::define( '/network/v1/upgrade', array(
+        'parameters' => array( 'version' ),
+        'scopes' => array( 'install_plugins', 'activate_plugins' ),
+        'handler' => array( 'wpCloud\Vertical\EDM\API', 'systemUpgrade' )
+      ));
+
+      API::define( '/network/v1/install', array(
+        'parameters' => array( 'name', 'version' ),
+        'scopes' => array( 'install_plugins', 'activate_plugins' ),
+        'handler' => array( 'wpCloud\Vertical\EDM\API', 'pluginInstall' )
+      ));
+
+      // Single Site.
+      API::define( '/site/v1/meta', array(
+        'scopes' => array( 'manage_options' ),
+        'handler' => array( 'wpCloud\Vertical\EDM\API', 'getSite' )
       ));
 
     }

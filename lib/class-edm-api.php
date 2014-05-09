@@ -284,14 +284,6 @@ namespace wpCloud\Vertical\EDM {
 
       }
 
-      static public function getArtists() {}
-
-      static public function getArtist() {}
-
-      static public function getVenues() {}
-
-      static public function getVenue() {}
-
       /**
        * Google Merchant product feed.
        *
