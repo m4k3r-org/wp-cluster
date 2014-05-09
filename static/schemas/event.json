@@ -95,16 +95,6 @@
       "name": "RSVP URL",
       "type": "url"
     },
-    "relatedGenre": {
-      "id": "genre",
-      "name": "Genre",
-      "type": "taxonomy",
-      "taxonomy": "genre",
-      "options": {
-        "taxonomy": "genre",
-        "type": "checkbox_list"
-      }
-    },
     "featuredEventType": {
       "name": "Featured Artists",
       "type": "post",
