@@ -35,12 +35,6 @@ namespace wpCloud\Vertical\EDM {
       API::define( '/v1/artist',             array( 'wpCloud\Vertical\EDM\API',     'getArtist' ) );
       API::define( '/v1/venues',             array( 'wpCloud\Vertical\EDM\API',     'getVenues' ) );
       API::define( '/v1/venue',              array( 'wpCloud\Vertical\EDM\API',     'getVenue' ) );
-      API::define( '/v1/system/upgrade',     array( 'wpCloud\Vertical\EDM\API',     'systemUpgrade' ) );
-      // System API
-      API::define( '/v1/install/plugin',     array( 'wpCloud\Vertical\EDM\API',     'pluginInstall' ), array(
-        'parameters' => array( 'name', 'version' ),
-        'scopes' => array( 'install_plugins', 'activate_plugins' )
-      ));
 
     }
 
