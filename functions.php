@@ -281,6 +281,11 @@ class hddp extends Flawless_F {
     remove_theme_support( 'frontend-editor' );
     remove_theme_support( 'custom-skins' );
 
+    add_theme_support( 'post-foramts' );
+    add_theme_support( 'html5', array( 'search-form', 'gallery' ) );
+
+    global $_wp_theme_features;
+
     remove_custom_background();
     remove_custom_image_header();
 
