@@ -12,6 +12,10 @@ var hddp = jQuery.extend( true, {
   'loaded': false
 }, typeof hddp === 'object' ? hddp : {} );
 
+//jQuery( 'div.header.container' ).headroom();
+
+
+
 /**
  * Primary Initialization
  *
@@ -139,6 +143,19 @@ hddp.log = function() {
  * @author potanin@UD
  */
 jQuery( document ).ready( function() {
+
+  new Headroom(document.querySelector( 'div.general_header_wrapper' ), {
+    tolerance: 5,
+    offset : 300,
+    classes: {
+      "initial": "animated",
+      "pinned": "slideInDown",
+      "unpinned": "slideOutUp",
+      "top": "headroom--top",
+      "notTop": "headroom--not-top"
+    }
+  }).init();
+
   jQuery( document ).trigger( 'hddp::initialize' );
   jQuery( document ).trigger( 'hddp::dom_update' );
 

@@ -291,9 +291,14 @@ if( !function_exists( 'hdp_get_image_link_with_custom_size' ) ) {
    * Returns Image link (url) with custom size.
    * Generates images with custom sizes if they don't exist.
    *
+   * @param      $attachment_id
+   * @param      $width
+   * @param      $height
+   * @param bool $crop
+   *
    * @global     $wpdb
    *
-   * @param type $atts
+   * @internal param \type $atts
    *
    * @return string
    * @author peshkov@UD

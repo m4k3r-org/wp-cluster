@@ -323,8 +323,10 @@ class hddp extends Flawless_F {
     wp_register_script( 'jquery-flexslider-1.8', get_stylesheet_directory_uri() . '/js/jquery.flexslider.1.8.js', array( 'jquery' ), '1.8', true );
     wp_register_script( 'jquery-flexslider', get_stylesheet_directory_uri() . '/js/jquery.flexslider.js', array( 'jquery' ), '2.2.2', true );
     wp_register_script( 'jquery-cookie', get_stylesheet_directory_uri() . '/js/jquery.cookie.js', array( 'jquery' ), '1.7.3', false );
+    wp_register_script( 'headroom', '//cdn.jsdelivr.net/headroomjs/0.5.0/headroom.min.js', array( 'jquery' ), '0.5.0' );
+    wp_register_script( 'jquery-headroom', '//cdn.jsdelivr.net/headroomjs/0.5.0/jQuery.headroom.min.js', array( 'jquery', 'headroom' ), '0.5.0' );
 
-    wp_register_script( 'hddp-frontend-js', get_stylesheet_directory_uri() . '/js/hddp.frontend.js', array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-cookie', 'flawless-frontend' ), HDDP_Version, true );
+    wp_register_script( 'hddp-frontend-js', get_stylesheet_directory_uri() . '/js/hddp.frontend.js', array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-headroom', 'flawless-frontend' ), HDDP_Version, true );
     wp_register_script( 'hddp-backend-js', get_stylesheet_directory_uri() . '/js/hddp.backend.js', array( 'jquery-ui-tabs', 'flawless-admin-global', 'jquery-ud-execute_triggers' ), HDDP_Version, true );
     wp_register_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?sensor=true' );
 
@@ -367,22 +369,6 @@ class hddp extends Flawless_F {
       cfct_build_deregister_module( 'cfct_module_loop_subpages' );
       cfct_build_deregister_module( 'cfct_module_plain_text' );
     } );
-
-    add_filter( 'elasticsearch_indexer_build_document', function ( $doc, $post ) {
-      $doc[ 'event_date_time' ]         = date( 'c', strtotime( get_post_meta( $post->ID, 'hdp_event_date', 1 ) . ' ' . get_post_meta( $post->ID, 'hdp_event_time', 1 ) ) );
-      $doc[ 'event_date_human_format' ] = date( 'F j, Y', strtotime( get_post_meta( $post->ID, 'hdp_event_date', 1 ) . ' ' . get_post_meta( $post->ID, 'hdp_event_time', 1 ) ) );
-      $lat                              = get_post_meta( $post->ID, 'latitude', 1 );
-      $lon                              = get_post_meta( $post->ID, 'longitude', 1 );
-      $doc[ 'location' ]                = array(
-        'lat' => (float) ( !empty( $lat ) ? $lat : 0 ),
-        'lon' => (float) ( !empty( $lon ) ? $lon : 0 )
-      );
-      $doc[ 'raw' ]                     = get_event( $post->ID );
-      $doc[ 'permalink' ]               = get_permalink( $post->ID );
-      $doc[ 'image_url' ]               = flawless_image_link( $doc[ 'raw' ][ 'event_poster_id' ], 'events_flyer_thumb' );
-
-      return $doc;
-    }, 10, 2 );
 
     flawless_set_color_scheme( 'skin-default.css' );
 
@@ -540,7 +526,8 @@ class hddp extends Flawless_F {
 
     add_filter( 'img_caption_shortcode', array( 'hddp', 'img_caption_shortcode' ), 10, 3 );
 
-    wp_enqueue_style( 'google-droing-sans', 'http://fonts.googleapis.com/css?family=Droid+Sans', array() );
+    wp_enqueue_style( 'google-droing-sans', '//fonts.googleapis.com/css?family=Droid+Sans', array() );
+    wp_enqueue_style( 'animate', get_stylesheet_directory_uri() . '/css/animate.css' );
 
     //** New Elastic Search Shortcodes */
     add_shortcode( 'elasticsearch_results', array( 'hddp', 'elasticsearch_results' ) );

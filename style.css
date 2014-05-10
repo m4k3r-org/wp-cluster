@@ -225,8 +225,6 @@
     margin-bottom: 0;
     border: 0;
     width: 100%;
-    position: fixed;
-    z-index: 9999;
   }
 
   .container.header {
@@ -2904,7 +2902,7 @@
 @media ( max-width: 1199px ) {
 
   div.content_container {
-    padding-top: 130px;
+    padding-top: 150px;
   }
 
   body .container {
@@ -2932,7 +2930,7 @@
 @media ( min-width: 1200px ) {
 
   div.content_container {
-    padding-top: 130px;
+    padding-top: 150px;
   }
 
   /* HDP GALLERY */
@@ -3328,4 +3326,17 @@ form.jqtransformdone.elastic_form label {
 
 .fancybox-opened {
   z-index: 99999;
+}
+
+div.general_header_wrapper {
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  left: 0;
+  top: 0;
+  transition: all 4s ease-in-out;
+}
+
+body.admin-bar div.general_header_wrapper {
+  top: 30px;
 }
