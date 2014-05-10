@@ -25,12 +25,13 @@
           "view_item": "View Event"
         },
         "description": "Event",
+        "can_export": true,
         "exclude_from_search": false,
         "has_archive": true,
         "hierarchical": true,
         "menu_icon": "dashicons-calendar",
         "menu_position": 20,
-        "public": false,
+        "public": true,
         "publicly_queryable": true,
         "show_in_admin_bar": true,
         "show_in_menu": true,
@@ -43,30 +44,29 @@
           "comments",
           "post-formats",
           "revisions"
-        ],
-        "can_export": true
+        ]
       },
       "taxonomies": [
-        "age-restriction",
-        "music-genre",
-        "event-type",
-        "tag",
-        "category"
+        "age_restriction",
+        "genre",
+        "event-type"
       ],
       "meta": {
         "information": {
           "fields": [
-            "start-date",
-            "end-date",
-            "ticket-url",
-            "rsvp-url"
+            "start_date",
+            "end_date",
+            "url.ticket",
+            "url.rsvp"
           ]
         },
         "event_meta": {
           "fields": [
-            "term-music-genre",
-            "term-event-type",
-            "term-age-restriction"
+            "term.category",
+            "terms.tag",
+            "term.genre",
+            "term.event_type",
+            "term.age_restriction"
           ]
         },
         "related": {
@@ -75,7 +75,7 @@
             "related-promoters",
             "related-venues",
             "divider",
-            "related-featured-artists",
+            "artists.featured",
             "related-artists"
           ]
         },
@@ -88,53 +88,81 @@
     }
   },
   "meta": {
-    "start-date": {
+    "start_date": {
       "name": "Starts",
       "type": "datetime",
       "_desc": "Date and time this event begins.",
+      "std": "2014-05-06 00:00",
       "js_options": {},
       "options": {
+
       }
     },
-    "end-date": {
+    "end_date": {
       "name": "Ends",
       "type": "datetime",
       "_desc": "Date and time this event ends."
     },
-    "ticket-url": {
-      "id": "ticket-url",
+    "url.ticket": {
+      "id": "url.ticket",
       "name": "Tickets URL",
       "_desc": "The link for purchasing tickets",
       "type": "url"
     },
-    "rsvp-url": {
-      "id": "rsvp-url",
+    "url.rsvp": {
+      "id": "url.rsvp",
       "name": "RSVP URL",
       "type": "url"
     },
-    "term-music-genre": {
+    "terms.tag": {
+      "id": "terms.tag",
+      "name": "Tags",
+      "multiple": true,
+      "type": "taxonomy",
+      "options": {
+        "taxonomy": "post_tag",
+        "type": "select_advanced",
+        "args": {
+          "orderby": "count"
+        }
+      }
+    },
+    "term.category": {
+      "id": "term.category",
+      "name": "Category",
+      "multiple": true,
+      "type": "taxonomy",
+      "options": {
+        "taxonomy": "category",
+        "type": "select_advanced",
+        "args": {
+          "orderby": "count"
+        }
+      }
+    },
+    "term.genre": {
       "name": "Genre",
-      "id": "term-music-genre",
+      "id": "term.genre",
       "type": "taxonomy",
       "options": {
-        "taxonomy": "music-genre",
+        "taxonomy": "genre",
         "type": "checkbox_list",
         "args": {}
       }
     },
-    "term-age-restriction": {
+    "term.age_restriction": {
       "name": "Age Restriction",
-      "id": "term-age-restriction",
+      "id": "term.age_restriction",
       "type": "taxonomy",
       "options": {
-        "taxonomy": "age-restriction",
+        "taxonomy": "age_restriction",
         "type": "checkbox_list",
         "args": {}
       }
     },
-    "term-event-type": {
+    "term.event_type": {
       "name": "Type",
-      "id": "term-event-type",
+      "id": "term.event_type",
       "type": "taxonomy",
       "options": {
         "taxonomy": "event-type",
@@ -142,23 +170,12 @@
         "args": {}
       }
     },
-    "related-featured-artists": {
-      "name": "Featured Artists",
-      "type": "post",
-      "post_type": "artist",
-      "_desc": "Featured lineup.",
-      "field_type": "select_advanced",
-      "multiple": true,
-      "placeholder": "Select Artists",
-      "query_args": {
-        "post_status": "publish",
-        "posts_per_page": -1
-      }
-    },
     "related-artists": {
+      "id": "artists",
       "name": "Artists",
       "type": "post",
       "post_type": "artist",
+      "_desc": "Lineup.",
       "field_type": "select_advanced",
       "multiple": true,
       "placeholder": "Select Artists",
@@ -168,6 +185,7 @@
       }
     },
     "related-promoters": {
+      "id": "promoters",
       "name": "Promoter",
       "type": "post",
       "post_type": "promoter",
@@ -180,6 +198,7 @@
       }
     },
     "related-venues": {
+      "id": "venues",
       "name": "Venue",
       "type": "post",
       "post_type": "venue",
@@ -192,6 +211,8 @@
       }
     },
     "related-tour": {
+      "id": "tours",
+
       "name": "Tour",
       "type": "post",
       "post_type": "tour",
@@ -224,7 +245,7 @@
         "slug" : "event-type"
       }
     },
-    "music-genre": {
+    "genre": {
       "label": "Genre",
       "hierarchical": false,
       "show_admin_column": true,
@@ -239,7 +260,7 @@
         "with_front": true
       }
     },
-    "age-restriction": {
+    "age_restriction": {
       "label": "Age Restriction",
       "hierarchical": true,
       "show_admin_column": true,
