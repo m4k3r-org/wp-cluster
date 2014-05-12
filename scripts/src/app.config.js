@@ -41,29 +41,34 @@ require({
       "enableMultiple": "",
       "is_user_logged_in": ""
     },
-    ajaxurl: window.ajaxurl = "http://umesouthpadre.com/manage/admin-ajax.php"
-  }),
+    ajaxurl: window.ajaxurl = "http://" + window.location.hostname + "/manage/admin-ajax.php"
+  } ),
   paths: {
     'jquery': [ 'http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.0.min' ],
-    'jquery.migrate': [ 'http://umesouthpadre.com/wp-includes/js/jquery/jquery-migrate.min' ],
-    'jquery.menufication': [ 'http://umesouthpadre.com/vendor/usabilitydynamics/wp-menufication/scripts/jquery.menufication.min' ],
-    'menufication-setup': [ '/vendor/usabilitydynamics/wp-menufication/scripts/menufication-setup' ],
-    'jquery.ui.widget': [ 'http://umesouthpadre.com/wp-includes/js/jquery/ui/jquery.ui.widget.min' ],
-    'jquery.ui.accordion': [ 'http://umesouthpadre.com/wp-includes/js/jquery/ui/jquery.ui.accordion.min' ],
-    'admin-bar': [ 'http://discodonniepresents.com/wp-includes/js/admin-bar.min' ],
-    'jquery.flexslider' : [ 'http://umesouthpadre.com/assets/scripts/jquery.flexslider' ],
+    'jquery.migrate': [ '/wp-includes/js/jquery/jquery-migrate.min' ],
+    'jquery.ui.widget': [ '/wp-includes/js/jquery/ui/jquery.ui.widget.min' ],
+    'jquery.ui.accordion': [ '/wp-includes/js/jquery/ui/jquery.ui.accordion.min' ],
+    'admin-bar': [ '/wp-includes/js/admin-bar.min' ],
+    'jquery.flexslider' : [ '/assets/scripts/jquery.flexslider' ],
     'jquery.socialstream' : [ '/vendor/usabilitydynamics/wp-festival/lib/modules/social-stream/scripts/jquery.social.stream.1.5.5.custom' ],
     'jquery.socialstream.wall' : [ '/vendor/usabilitydynamics/wp-festival/lib/modules/social-stream/scripts/jquery.social.stream.wall.1.3' ],
-    'jquery.masonry' : [ 'http://umesouthpadre.com/wp-includes/js/jquery/jquery.masonry.min' ],
-    'jquery.colorbox' : [ 'http://umesouthpadre.com/assets/scripts/jquery.colorbox' ]
+    'jquery.masonry' : [ '/wp-includes/js/jquery/jquery.masonry.min' ],
+    'jquery.colorbox' : [ '/assets/scripts/jquery.colorbox' ],
+    /* Menufication files */
+    'jquery.menufication': [ '/vendor/usabilitydynamics/wp-menufication/scripts/jquery.menufication.min' ],
+    'menufication-setup': [ '/vendor/usabilitydynamics/wp-menufication/scripts/menufication-setup' ],
+    'menufication.advanced': [ '/vendor/usabilitydynamics/wp-festival/scripts/menufication.advanced' ]
   },
   deps: [ 'jquery', 'app.bootstrap' ],
   shim: {
     'menufication-setup': {
-      deps: [ 'jquery', 'jquery.menufication' ]
+      deps: [ 'jquery', 'jquery.menufication', 'menufication.advanced' ]
     },
     'jquery.menufication': {
       deps: [ 'jquery' ]
+    },
+    'menufication.advanced': {
+      deps: [ 'jquery.menufication' ]
     },
     'jquery.flexslider': {
       deps: [ 'jquery' ]
@@ -84,7 +89,7 @@ require({
  * Bootstraps Application, requiring <head> scripts
  *
  */
-define( 'app.bootstrap', [ 'jquery.menufication', 'menufication-setup' ], function() {
+define( 'app.bootstrap', [ 'menufication-setup' ], function() {
   console.debug( 'app.bootstrap', 'loaded' );
 
   window._gaq = window._gaq || [];
@@ -93,7 +98,7 @@ define( 'app.bootstrap', [ 'jquery.menufication', 'menufication-setup' ], functi
 
   window._gaq.push(
     [ '_setAllowLinker', true ],
-    [ '_setDomainName', 'umesouthpadre.com' ],
+    [ '_setDomainName', window.location.hostname ],
     [ '_setCustomVar', 3, 'year', '2013', 3 ],
     [ '_trackPageview' ]
   );

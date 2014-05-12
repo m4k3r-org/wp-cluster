@@ -1,0 +1,1 @@
+define("menufication.advanced",["jquery.menufication"],function(){console.log("menufication.advanced","loaded")});
