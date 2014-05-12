@@ -16,9 +16,7 @@ require({
     analytics: window.analytics = {},
     wp_menufication: window.wp_menufication = {
       "element": "#wp_menufication",
-      "enable_menufication": "on", 
-//      "headerLogo": "http://umesouthpadre.com/media/2014/01/020a9ba2dd708c48353fe9bc3f4aecb190.png",
-//      "headerLogoLink": "http://umesouthpadre.com/",
+      "enable_menufication": "on",
       "menuLogo": "",
       "menuText": "",
       "triggerWidth": "770",
@@ -62,7 +60,7 @@ require({
   deps: [ 'jquery', 'app.bootstrap' ],
   shim: {
     'menufication-setup': {
-      deps: [ 'jquery' ]
+      deps: [ 'jquery', 'jquery.menufication' ]
     },
     'jquery.menufication': {
       deps: [ 'jquery' ]

@@ -16,10 +16,12 @@ namespace UsabilityDynamics\Festival {
    */
   class Menufication extends \Menufication {
 
+    /**
+     * Constructor
+     */
     public function __construct() {
       parent::__construct();
       
-      //@todo: finish
     }
     
     /**
@@ -31,6 +33,16 @@ namespace UsabilityDynamics\Festival {
       }
       return self::$instance;
     }
+    
+    /**
+     * Replace original method with dummy one.
+     * Note: we don't need to print menufication scripts because they
+     * already reigistered and called by requirejs
+     * So just get rid of extra javascript files
+     * 
+     * @see scripts/src/app.config.js
+     */
+    public function add_js() {}
 
   }
 
