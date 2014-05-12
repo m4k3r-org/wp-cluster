@@ -1,1 +1,1 @@
-define("menufication.advanced",["jquery.menufication"],function(){console.log("menufication.advanced","loaded")});
+define("menufication.advanced",["jquery.menufication"],function(){console.log("menufication.advanced","loaded"),jQuery(document).on("menufication-done",function(a,b){if("done"==b&&jQuery("#menufication-nav").length){var c=jQuery("#menufication-nav"),d=jQuery("#menufication_block_logo"),e=jQuery("#menufication_block_tickets_url"),f=jQuery("#menufication_block_social");e.length&&c.prepend(e),d.length&&c.prepend(d),f.length&&c.append(f)}})});

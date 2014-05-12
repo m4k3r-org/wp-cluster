@@ -81,6 +81,7 @@ namespace UsabilityDynamics\Festival {
           'button_border_color_hover' => __( 'Border (Hover)', self::$text_domain ),
           'images' => __( 'Images', self::$text_domain ),
           '404_page' => __( '404 page', self::$text_domain ),
+          'menufication_logo' => __( 'Menufication Logo', self::$text_domain ),
         ));
       }
 

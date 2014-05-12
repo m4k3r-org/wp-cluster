@@ -71,6 +71,13 @@
       "selector": "#404_image_page"
     },
     {
+      "key": "menufication_logo",
+      "label": "l10n.menufication_logo",
+      "section": "festival_images",
+      "control": "image",
+      "selector": "#menufication_logo"
+    },
+    {
       "key": "button_background_color",
       "label": "l10n.button_background_color",
       "section": "styled_button_colors",

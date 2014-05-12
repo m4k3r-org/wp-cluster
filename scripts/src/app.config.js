@@ -19,7 +19,7 @@ require({
       "enable_menufication": "on",
       "menuLogo": "",
       "menuText": "",
-      "triggerWidth": "770",
+      "triggerWidth": "1770",
       "addHomeLink": null, "addHomeText": "",
       "addSearchField": null, "hideDefaultMenu": "on",
       "onlyMobile": null, "direction": "left",

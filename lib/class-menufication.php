@@ -22,6 +22,7 @@ namespace UsabilityDynamics\Festival {
     public function __construct() {
       parent::__construct();
       
+      add_action( 'wp_footer', array( $this, 'render_html' ), 100 );
     }
     
     /**
@@ -43,6 +44,20 @@ namespace UsabilityDynamics\Festival {
      * @see scripts/src/app.config.js
      */
     public function add_js() {}
+    
+    /**
+     * Renders all our addtional elements
+     * to the hidden block in footer.
+     * They are handled by javascript and 
+     * being moved to 'menufication' menu on initialization.
+     *
+     * @see scripts/src/menufication.advanced.js
+     */
+    public function render_html() {
+      echo "<div style=\"display:none !important;\">";
+      get_template_part( 'templates/nav/menufication' );
+      echo "</div>";
+    }
 
   }
 
