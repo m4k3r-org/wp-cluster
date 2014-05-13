@@ -86,7 +86,7 @@
       "label": "l10n.menu_borders",
       "section": "menufication",
       "control": "border-color",
-      "selector": "#menufication-nav ul, #menufication-nav ul li, #menufication_block_social ul li"
+      "selector": "#menufication-nav ul, #menufication-nav ul li, #menufication_block_social ul li, #menufication-nav ul > li > ul li, #menufication-non-css3-nav li, #menufication-nav ul > li.open > ul"
     },
     {
       "key": "menufication_colors",
@@ -124,11 +124,25 @@
       "selector": "#menufication_block_tickets_url a"
     },
     {
+      "key": "menufication_btn_color_hover",
+      "label": "l10n.button_color_hover",
+      "section": "menufication",
+      "control": "color",
+      "selector": "#menufication_block_tickets_url a:hover"
+    },
+    {
       "key": "menufication_btn_bg",
       "label": "l10n.button_background",
       "section": "menufication",
       "control": "background-color",
       "selector": "#menufication_block_tickets_url a"
+    },
+    {
+      "key": "menufication_btn_bg_hover",
+      "label": "l10n.button_background_hover",
+      "section": "menufication",
+      "control": "background-color",
+      "selector": "#menufication_block_tickets_url a:hover"
     },
     {
       "key": "menufication_btn_border",

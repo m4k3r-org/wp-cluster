@@ -46,7 +46,7 @@ namespace UsabilityDynamics\Festival {
     public function add_js() {}
     
     /**
-     * Renders all our addtional elements
+     * Renders all our additional elements
      * to the hidden block in footer.
      * They are handled by javascript and 
      * being moved to 'menufication' menu on initialization.

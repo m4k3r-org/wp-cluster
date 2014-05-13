@@ -89,10 +89,12 @@ namespace UsabilityDynamics\Festival {
           'background' => __( 'Background', self::$text_domain ),
           'button_color' => __( 'Button Color', self::$text_domain ),
           'button_background' => __( 'Button Background', self::$text_domain ),
+          'button_background_hover' => __( 'Button Hover Background', self::$text_domain ),
           'background' => __( 'Background', self::$text_domain ),
           'bbutton_border_color' => __( 'Button Border Color', self::$text_domain ),
           'menufication_toggle_button_color' => __( 'Toggle Button Color', self::$text_domain ),
           'menufication_toggle_button_hover_color' => __( 'Toggle Button Hover Color', self::$text_domain ),
+          'button_color_hover' => __( 'Button Hover Color', self::$text_domain ),
         ));
       }
 
