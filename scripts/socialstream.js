@@ -1,1 +1,1 @@
-define("socialstream",["jquery.socialstream","jquery.socialstream.wall"],function(){return console.debug("socialstream","loaded"),function(){return console.debug("socialstream","dom ready"),socialStreamInit(jQuery(this)),this}});
+define("socialstream",["jquery.socialstream","jquery.socialstream.wall","jquery.fancybox","jquery.fancybox-media"],function(){return console.debug("socialstream","loaded"),function(){return console.debug("socialstream","dom ready"),socialStreamInit(jQuery(this)),jQuery(".section-image a, .section-thumb a").fancybox({helpers:{media:!0}}),this}});

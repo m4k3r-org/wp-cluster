@@ -18,13 +18,17 @@
       "title": "l10n.styled_button_colors",
       "priority": 45
     },
+    "menufication": {
+      "title": "l10n.menufication",
+      "priority": 50
+    },
     "festival_bg_images": {
       "title": "l10n.background_images",
-      "priority": 50
+      "priority": 55
     },
     "festival_images": {
       "title": "l10n.images",
-      "priority": 55
+      "priority": 60
     }
   },
   "settings": [
@@ -69,6 +73,90 @@
       "section": "festival_images",
       "control": "image",
       "selector": "#404_image_page"
+    },
+    {
+      "key": "menufication_bg",
+      "label": "l10n.background",
+      "section": "menufication",
+      "control": "background-color",
+      "selector": "#menufication-top, #menufication-non-css3-top, #menufication-scroll-container, #menufication_block_social ul li a:hover, #menufication_block_social ul li:hover"
+    },
+    {
+      "key": "menufication_borders",
+      "label": "l10n.menu_borders",
+      "section": "menufication",
+      "control": "border-color",
+      "selector": "#menufication-nav ul, #menufication-nav ul li, #menufication_block_social ul li, #menufication-nav ul > li > ul li, #menufication-non-css3-nav li, #menufication-nav ul > li.open > ul"
+    },
+    {
+      "key": "menufication_colors",
+      "label": "l10n.font_colors",
+      "section": "menufication",
+      "control": "color",
+      "selector": "#menufication-nav ul li a, #menufication_block_social ul li a, #menufication_block_social ul li a:hover"
+    },
+    {
+      "key": "menufication_colors_hover",
+      "label": "l10n.font_colors_hover",
+      "section": "menufication",
+      "control": "color",
+      "selector": "#menufication-nav ul li a:hover, #menufication_block_social ul li:hover a"
+    },
+    {
+      "key": "menufication_toggle_button_color",
+      "label": "l10n.menufication_toggle_button_color",
+      "section": "menufication",
+      "control": "border-color",
+      "selector": "#menufication-top #menufication-btn:before, #menufication-non-css3-top #menufication-non-css3-btn:before"
+    },
+    {
+      "key": "menufication_toggle_button_hover_color",
+      "label": "l10n.menufication_toggle_button_hover_color",
+      "section": "menufication",
+      "control": "border-color",
+      "selector": "#menufication-top #menufication-btn:hover:before, #menufication-non-css3-top #menufication-non-css3-btn:hover:before"
+    },
+    {
+      "key": "menufication_btn_color",
+      "label": "l10n.button_color",
+      "section": "menufication",
+      "control": "color",
+      "selector": "#menufication_block_tickets_url a"
+    },
+    {
+      "key": "menufication_btn_color_hover",
+      "label": "l10n.button_color_hover",
+      "section": "menufication",
+      "control": "color",
+      "selector": "#menufication_block_tickets_url a:hover"
+    },
+    {
+      "key": "menufication_btn_bg",
+      "label": "l10n.button_background",
+      "section": "menufication",
+      "control": "background-color",
+      "selector": "#menufication_block_tickets_url a"
+    },
+    {
+      "key": "menufication_btn_bg_hover",
+      "label": "l10n.button_background_hover",
+      "section": "menufication",
+      "control": "background-color",
+      "selector": "#menufication_block_tickets_url a:hover"
+    },
+    {
+      "key": "menufication_btn_border",
+      "label": "l10n.bbutton_border_color",
+      "section": "menufication",
+      "control": "border-color",
+      "selector": "#menufication_block_tickets_url a"
+    },
+    {
+      "key": "menufication_logo",
+      "label": "l10n.logo",
+      "section": "menufication",
+      "control": "image",
+      "selector": "#menufication_logo"
     },
     {
       "key": "button_background_color",

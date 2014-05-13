@@ -846,7 +846,6 @@
   }
 }
 
-
 // Fix for double Menufication loading
 #menufication-inner-wrap {
   
@@ -861,6 +860,142 @@
       padding-top: 0 !important;
     }
   
+  }
+
+}
+
+#menufication_block_logo {
+  text-align: center;
+  margin-bottom: 20px;
+  
+  a {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    
+    img {
+      width: 100%;
+      max-width: 100%;
+    }
+    
+  }
+}
+
+#menufication_block_tickets_url {
+  text-align: center;
+  margin-bottom: 30px;
+  
+  a {
+    text-transform: uppercase;
+    font-size: 150%;
+    padding: 5px 38px;
+    font-weight: 400;
+  }
+  
+}
+
+#menufication-nav > ul {
+  margin-bottom: 0;
+  border-top: 1px solid #000;
+  
+  li > a > em.icon {
+    float: right;
+    margin-right: 15px;
+  }
+}
+
+#menufication_block_social { 
+
+  ul.nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100% !important;
+    border-bottom: 1px solid #000;
+
+    li.menu-item {
+      display: block;
+      float: left;
+      padding-left: 1px;
+      margin: 0;
+      width: auto !important;
+      border-bottom: 0;
+      border-right: 1px solid;
+      
+      &:first-child {
+        margin-left: 8px;
+      }
+      
+      &:last-child {
+        padding-right: 1px;
+        border-right: 0;
+      }
+      
+      [class^="icon-"], [class*=" icon-"] {
+        font-size: 22px;
+        line-height: 50px;
+      }
+      
+      &:hover {
+        background-color: none;
+      }
+
+      a {
+        display: inline-block;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        text-decoration: none;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        padding: 20px 0 !important;
+        display: block;
+        margin-bottom: 0;
+        line-height: 50px;
+        overflow: hidden;
+        
+        &:hover {
+          background-color: none;
+        }
+        
+        &:before {
+          font-family: 'edm';
+          font-size: 22px;
+          line-height: 25px;
+          display: block;
+          width: 60px;
+          height: 60px;
+        }
+
+        &[href *="facebook.com"]:before {
+          content: "\e697";
+        }
+
+        &[href *="twitter.com"]:before {
+          content: "\e696";
+        }
+
+        &[href *="instagram.com"]:before {
+          content: "\e750";
+        }
+
+        &[href *="youtu.be"]:before,
+        &[href *="youtube.com"]:before {
+          content: "\e74d";
+        }
+
+        &[href *="google.com"]:before {
+          content: "\e6c1";
+        }
+
+        &[href *="eventbrite.com"]:before {
+          content: "\e6c2";
+        }
+
+      }
+
+    }
+
   }
 
 }

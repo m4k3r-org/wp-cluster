@@ -408,8 +408,8 @@ namespace UsabilityDynamics {
      */
     public function customizer() {
       //** Add Global JS and CSS handlers ( wp-amd ) */
-      if( defined( 'WP_VENDOR_PATH' ) && file_exists( WP_VENDOR_PATH . '/usabilitydynamics/wp-amd/wp-amd.php' ) ) {
-        include_once( WP_VENDOR_PATH . '/usabilitydynamics/wp-amd/wp-amd.php' );
+      if( defined( 'WP_VENDOR_DIR' ) && file_exists( WP_VENDOR_DIR . '/usabilitydynamics/wp-amd/wp-amd.php' ) ) {
+        include_once( WP_VENDOR_DIR . '/usabilitydynamics/wp-amd/wp-amd.php' );
       }
       if( class_exists( '\UsabilityDynamics\Festival\Customizer' ) ) {
         \UsabilityDynamics\Festival\Customizer::define( array(
