@@ -277,19 +277,19 @@ class hddp extends Flawless_F {
     remove_theme_support( 'frontend-editor' );
     remove_theme_support( 'custom-skins' );
 
-    UsabilityDynamics\Feature\Flag::set( 'hddp-flawless' );
-
-    // Enable post-foramts and html5 only if Feature Flags match.
-    if( UsabilityDynamics\Feature\Flag::get( 'ddp::2014', 'edm' ) ) {
-
-      // add_theme_support( 'post-formats', array( 'video' ));
-
-      add_theme_support( 'html5', array(
-        'search-form',
-        'gallery'
-      ) );
-
-    }
+//    UsabilityDynamics\Feature\Flag::set( 'hddp-flawless' );
+//
+//    // Enable post-foramts and html5 only if Feature Flags match.
+//    if( UsabilityDynamics\Feature\Flag::get( 'ddp::2014', 'edm' ) ) {
+//
+//      // add_theme_support( 'post-formats', array( 'video' ));
+//
+//      add_theme_support( 'html5', array(
+//        'search-form',
+//        'gallery'
+//      ) );
+//
+//    }
 
     remove_theme_support( 'custom-background' );
     remove_theme_support( 'custom-header' );
@@ -337,7 +337,7 @@ class hddp extends Flawless_F {
     wp_register_script( 'jquery-fitvids', get_stylesheet_directory_uri() . '/js/jquery.fitvids.js', array( 'jquery' ), HDDP_Version, true );
 
     //** DDP Elastic */
-    wp_register_script( 'jquery-ddp-elastic-suggest', get_stylesheet_directory_uri() . '/js/jquery.elasticSearch.js', array( 'jquery' ), HDDP_Version, true );
+    wp_register_script( 'jquery-ddp-elastic-suggest', get_stylesheet_directory_uri() . '/js/jquery.elasticSearch.js', array( 'jquery', 'jquery-cookie' ), HDDP_Version, true );
     wp_register_script( 'elastic-dsl', get_stylesheet_directory_uri() . '/js/elastic.dsl.js', array(), HDDP_Version, true );
     wp_register_script( 'xmlhttpclient', get_stylesheet_directory_uri() . '/js/xmlhttpclient.js', array(), HDDP_Version, true );
 

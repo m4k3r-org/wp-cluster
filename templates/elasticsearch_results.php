@@ -41,7 +41,7 @@
             <ul>
               <li>
                 <ul class="hdp_event_collapsed clearfix">
-                  <li data-bind="html:fields.start_date" class="hdp_event_date"></li>
+                  <li data-bind="html:moment(fields.start_date[0]).format('LL')" class="hdp_event_date"></li>
                   <li data-bind="html:fields['description.en-us']" class="hdp_event_title"></li>
                   <li data-bind="html:fields['venues.address.locality']" class="hdp_event_city"></li>
                   <li data-bind="html:fields['venues.address.region']" class="hdp_event_state"></li>
@@ -55,7 +55,7 @@
                   <li class="hdp_event_title">
                     <a data-bind="html:fields['description.en-us'],attr: {href:fields.url}"></a>
                   </li>
-                  <li class="hdp_event_date" data-bind="html:'<span>Date:</span> '+fields.start_date"></li>
+                  <li class="hdp_event_date" data-bind="html:'<span>Date:</span> '+moment(fields.start_date[0]).format('LLLL')"></li>
                   <li class="hdp_event_venue" data-bind="html:'<span>Venue:</span> '+fields['venues.name']"></li>
                   <li class="hdp_event_artists" data-bind="html:'<span>Artists:</span> '+fields['artists.name']"></li>
                   <li class="hdp_event_description"><p data-bind="html:fields['summary.en-us']"></p></li>
