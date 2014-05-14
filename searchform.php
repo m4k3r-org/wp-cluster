@@ -52,7 +52,9 @@ global $flawless;
     _body.elasticSearch({
       debug: true,
       endpoint: 'http://api.discodonniepresents.com/',
-      access_key: 'zkfs-dixy-eejh-wkgg-xzos-gmsy-odvj-owwn'
+      headers: {
+        'x-access-key': 'zkfs-dixy-eejh-wkgg-xzos-gmsy-odvj-owwn'
+      }
     });
 
   });
