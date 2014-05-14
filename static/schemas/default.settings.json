@@ -15,5 +15,8 @@
         "application_id": "179093732296058"
       }
     }
+  },
+  "scripts": {
+    "print" : "true"
   }
 }
