@@ -47,75 +47,72 @@
         ]
       },
       "taxonomies": [
-        "age_restriction",
+        "age-limit",
         "genre",
         "event-type"
       ],
       "meta": {
         "information": {
           "fields": [
-            "start_date",
-            "end_date",
-            "url.ticket",
-            "url.rsvp"
+            "dateStart",
+            "dateEnd",
+            "urlTicket",
+            "urlRsvp"
           ]
         },
         "event_meta": {
           "fields": [
-            "term.category",
-            "terms.tag",
-            "term.genre",
-            "term.event_type",
-            "term.age_restriction"
+            "termCategory",
+            "termTag",
+            "termGenre",
+            "termEventType",
+            "termAgeLimit"
           ]
         },
         "related": {
           "fields": [
-            "related-tour",
-            "related-promoters",
-            "related-venues",
-            "divider",
-            "artists.featured",
-            "related-artists"
+            "relatedTour",
+            "relatedPromoters",
+            "relatedVenues",
+            "relatedArtists"
           ]
         },
-        "Images": {
+        "images": {
           "fields": [
-            "poster-images"
+            "posterImages"
           ]
         }
       }
     }
   },
   "meta": {
-    "start_date": {
+    "dateStart": {
       "name": "Starts",
       "type": "datetime",
       "_desc": "Date and time this event begins.",
       "std": "2014-05-06 00:00",
       "js_options": {},
       "options": {
-
       }
     },
-    "end_date": {
+    "dateEnd": {
       "name": "Ends",
       "type": "datetime",
       "_desc": "Date and time this event ends."
     },
-    "url.ticket": {
-      "id": "url.ticket",
+    "urlTicket": {
+      "id": "urlTicket",
       "name": "Tickets URL",
       "_desc": "The link for purchasing tickets",
       "type": "url"
     },
-    "url.rsvp": {
-      "id": "url.rsvp",
+    "urlRsvp": {
+      "id": "urlRsvp",
       "name": "RSVP URL",
       "type": "url"
     },
-    "terms.tag": {
-      "id": "terms.tag",
+    "termTag": {
+      "id": "termTag",
       "name": "Tags",
       "multiple": true,
       "type": "taxonomy",
@@ -127,8 +124,8 @@
         }
       }
     },
-    "term.category": {
-      "id": "term.category",
+    "termCategory": {
+      "id": "termCategory",
       "name": "Category",
       "multiple": true,
       "type": "taxonomy",
@@ -140,9 +137,9 @@
         }
       }
     },
-    "term.genre": {
+    "termGenre": {
       "name": "Genre",
-      "id": "term.genre",
+      "id": "termGenre",
       "type": "taxonomy",
       "options": {
         "taxonomy": "genre",
@@ -150,19 +147,19 @@
         "args": {}
       }
     },
-    "term.age_restriction": {
-      "name": "Age Restriction",
-      "id": "term.age_restriction",
+    "termAgeLimit": {
+      "name": "Age Limit",
+      "id": "termAgeLimit",
       "type": "taxonomy",
       "options": {
-        "taxonomy": "age_restriction",
+        "taxonomy": "age-limit",
         "type": "checkbox_list",
         "args": {}
       }
     },
-    "term.event_type": {
+    "termEventType": {
       "name": "Type",
-      "id": "term.event_type",
+      "id": "termEventType",
       "type": "taxonomy",
       "options": {
         "taxonomy": "event-type",
@@ -170,7 +167,7 @@
         "args": {}
       }
     },
-    "related-artists": {
+    "relatedArtists": {
       "id": "artists",
       "name": "Artists",
       "type": "post",
@@ -184,7 +181,7 @@
         "posts_per_page": -1
       }
     },
-    "related-promoters": {
+    "relatedPromoters": {
       "id": "promoters",
       "name": "Promoter",
       "type": "post",
@@ -197,7 +194,7 @@
         "posts_per_page": -1
       }
     },
-    "related-venues": {
+    "relatedVenues": {
       "id": "venues",
       "name": "Venue",
       "type": "post",
@@ -210,7 +207,7 @@
         "posts_per_page": 20
       }
     },
-    "related-tour": {
+    "relatedTour": {
       "id": "tours",
 
       "name": "Tour",
@@ -227,7 +224,7 @@
     "divider": {
       "type": "divider"
     },
-    "poster-images": {
+    "posterImages": {
       "name": "Poster Images",
       "type": "plupload_image"
     }
@@ -260,14 +257,15 @@
         "with_front": true
       }
     },
-    "age_restriction": {
-      "label": "Age Restriction",
-      "hierarchical": true,
+    "age-limit": {
+      "label": "Age Limit",
+      "hierarchical": false,
       "show_admin_column": true,
+      "show_in_nav_menus": true,
       "query_var": true,
-      "show_ui": false,
+      "show_ui": true,
       "rewrite": {
-        "slug" : "age"
+        "slug" : "age-limit"
       }
     }
   }
