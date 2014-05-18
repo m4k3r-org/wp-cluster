@@ -590,7 +590,7 @@
                 case 'upcoming':
 
                   period.range[this.settings.period_field] = {
-                     gte:'now'
+                     gte:'now-1d'
                   };
 
                   filter['bool']['must'].push( period );
@@ -600,7 +600,7 @@
                 case 'past':
 
                   period.range[this.settings.period_field] = {
-                     lte:'now'
+                     lte:'now-1d'
                   };
 
                   filter['bool']['must'].push( period );
