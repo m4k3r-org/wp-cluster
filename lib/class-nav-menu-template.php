@@ -2,6 +2,7 @@
 /**
  * Navigation Menu template functions
  *
+ * @todo MUST BE REMOVED. CLASS HAS BEEN MOVED TO LIB-WP-THEME LIBRARY.
  * @version 0.1.0
  * @author Usability Dynamics
  * @namespace UsabilityDynamics
