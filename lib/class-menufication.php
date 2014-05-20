@@ -22,6 +22,7 @@ namespace UsabilityDynamics\Festival {
     public function __construct() {
       parent::__construct();
       
+      add_filter( 'udx:theme:script:config', array( $this, 'add_configuration' ) );
       add_action( 'wp_footer', array( $this, 'render_html' ), 100 );
     }
     
@@ -33,6 +34,59 @@ namespace UsabilityDynamics\Festival {
         self::$instance = new self;
       }
       return self::$instance;
+    }
+    
+    /**
+     * Configuration parameters for menufication initialization
+     * used in scripts/app.main.js
+     * 
+     * @filter udx:theme:script:config
+     * @see \UsabilityDynamics\Theme\Scaffold::_print_scripts()
+     */
+    public function add_configuration( $config ) {
+      global $post;
+      
+      /** Determine if we should disable menufication for the current page */
+      $triggerWidth = "770";
+      $disabled_menus = get_post_meta( $post->ID, 'disabledNavMenu' );
+      if( !empty( $disabled_menus ) && in_array( 'menufication', $disabled_menus ) ) {
+        $triggerWidth = "1";
+      }
+      
+      $config[ 'menufication' ] = array( 
+        "element"             => "#wp_menufication",
+        "menuLogo"            => "",
+        "menuText"            => "",
+        "triggerWidth"        => $triggerWidth,
+        "addHomeLink"         => null, 
+        "addHomeText"         => "",
+        "addSearchField"      => null, 
+        "hideDefaultMenu"     => "on",
+        "onlyMobile"          => null, 
+        "direction"           => "left",
+        "theme"               => "dark",
+        "disableCSS"          => "on",
+        "childMenuSupport"    => "on",
+        "childMenuSelector"   => "sub-menu, children",
+        "activeClassSelector" => "current-menu-item, current-page-item, active",
+        "enableSwipe"         => "on",
+        "doCapitalization"    => null, 
+        "supportAndroidAbove" => "3.5",
+        "disableSlideScaling" => null, 
+        "toggleElement"       => "",
+        "customMenuElement"   => "",
+        "customFixedHeader"   => "",
+        "addToFixedHolder"    => "",
+        "page_menu_support"   => null, 
+        "wrapTagsInList"      => "",
+        "allowedTags"         => "DIV, NAV, UL, OL, LI, A, P, H1, H2, H3, H4, SPAN, FORM, INPUT, SEARCH",
+        "customCSS"           => "",
+        "is_page_menu"        => "",
+        "enableMultiple"      => "",
+        "is_user_logged_in"   => ""
+      );
+      
+      return $config;
     }
     
     /**
