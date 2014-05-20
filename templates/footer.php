@@ -9,10 +9,17 @@
  * @module festival  
  * @since festival 0.1.0
  */
+
+global $post;
+/* Determine if 'footer' section has been disabled for the current page */
+$disabled_sections = get_post_meta( $post->ID, 'disabledSections' );
+
 ?>
-  <footer class="footer">
-    <?php wp_festival()->section( 'footer' ); ?>
-  </footer>
-  <?php wp_footer(); ?>
+    <?php if( empty( $disabled_sections ) || !in_array( 'footer', $disabled_sections ) ) : ?>
+    <footer class="footer">
+      <?php wp_festival()->section( 'footer' ); ?>
+    </footer>
+    <?php endif; ?>
+    <?php wp_footer(); ?>
   </body>
 </html>
