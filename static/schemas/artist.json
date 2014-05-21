@@ -1,7 +1,10 @@
 {
+  "id": "artist",
+  "type": "schema",
   "title": "Artist",
   "revision": 1,
   "schema": "http://api.wpelastic.io/schema/v1/artist",
+  "extends": "http://schema.org/MusicGroup",
   "types": {
     "Artist": {
       "data": {
@@ -44,20 +47,17 @@
         "supports": [
           "title",
           "revisions",
-          "editor",
-          "thumbnail"
+          "editor"
         ],
         "can_export": true
       },
       "taxonomies": [
-        "category"
       ],
       "meta": {
         "links": {
           "fields": [
             "officialLink",
-            "socialLinks",
-            "mediaLinks"
+            "socialLinks"
           ]
         },
         "images": {
@@ -65,7 +65,7 @@
             "headshotImage",
             "portraitImage",
             "landscapeImage",
-            "logoImage",
+            "logo",
             "additionalImages"
           ]
         }
@@ -83,46 +83,32 @@
       "clone": true,
       "type": "text"
     },
-    "mediaLinks": {
-      "name": "Media URL(s)",
-      "description": "Media Links",
-      "clone": true,
-      "type": "text"
-    },
     "headshotImage": {
       "name": "Headshot",
       "type": "image_advanced",
-      "desc": "Upload a high resolution headshot image.",
-      "multiple": false
+      "desc": "Upload a high resolution headshot image."
     },
     "portraitImage": {
       "name": "Portrait Image",
       "type": "image_advanced",
-      "desc": "Upload a high resolution portrait image.",
-      "multiple": false
+      "desc": "Upload a high resolution portrait image."
     },
     "landscapeImage": {
       "name": "Landscape Image",
       "type": "image_advanced",
-      "desc": "Upload a high resolution landscape image.",
-      "multiple": false
+      "desc": "Upload a high resolution landscape image."
     },
-    "logoImage": {
+    "logo": {
       "name": "Logo Image",
       "type": "image_advanced",
-      "desc": "Upload a high resolution white logo atop of a transparent background.",
-      "multiple": false
+      "desc": "Upload a high resolution white logo atop of a transparent background."
     },
     "additionalImages": {
       "name": "Additional Images",
-      "type": "plupload_image",
-      "desc": "Upload additional images to be displayed in a gallery format.",
-      "multiple": false
+      "type": "image_advanced",
+      "desc": "Additional images to be displayed in a gallery format."
     }
   },
   "taxonomies": {
-    "genre": {
-      "name": "Artist Genre"
-    }
   }
 }

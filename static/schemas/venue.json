@@ -3,7 +3,7 @@
   "revision": 1,
   "schema": "http://api.wpelastic.io/schema/v1/venue",
   "types": {
-    "Venue": {
+    "venue": {
       "data": {
         "capability_type": "page",
         "label": "Venue",
@@ -22,166 +22,92 @@
           "update_item": "Update Venue",
           "view_item": "View Venue"
         },
-        "desc": "Venue",
+        "description": "Venue",
+        "can_export": true,
         "exclude_from_search": false,
         "has_archive": true,
         "hierarchical": false,
-        "menu_icon": "dashicons-nametag",
+        "menu_icon": "dashicons-media-spreadsheet",
         "menu_position": 20,
         "public": true,
         "publicly_queryable": true,
-        "query_var": "venue",
-        "rewrite": {
-          "feeds": true,
-          "pages": true,
-          "slug": "venues",
-          "with_front": true
-        },
         "show_in_admin_bar": true,
         "show_in_menu": true,
-        "show_in_nav_menus": true,
+        "show_in_nav_menus": false,
         "show_ui": true,
         "supports": [
-          "title", "revisions", "editor"
-        ],
-        "can_export": true
+          "title",
+          "editor",
+          "revisions"
+        ]
       },
       "taxonomies": [
-        "venue-type",
-        "city",
+        "country",
         "state",
-        "country"
+        "city"
       ],
       "meta": {
         "links": {
           "fields": [
-            "official-link",
-            "social-links"
-          ]
-        },
-        "meta": {
-          "fields": [
-            "test-slider",
-            "term-venue-type",
-            "test-user",
-            "test-button"
+            "officialLink",
+            "socialLinks"
           ]
         },
         "location": {
           "fields": [
-            "location-address",
-            "location-google-map",
-            "term-city",
-            "term-state",
-            "term-country"
+            "locationAddress",
+            "locationGoogleMap",
+            "termCountry",
+            "termState",
+            "termCity"
           ]
         },
         "images": {
           "fields": [
-            "image-featured",
-            "image-logo",
-            "image-additional"
+            "imageLogo",
+            "imagesAdditional"
           ]
         }
       }
     }
   },
   "meta": {
-    "official-link": {
-      "id": "links-official",
-      "field_name": "links-official",
+    "officialLink": {
       "name": "Official URL",
-      "type": "url"
+      "type": "text"
     },
-    "social-links": {
-      "id": "links-social",
-      "field_name": "links-social",
+    "socialLinks": {
       "name": "Social URL(s)",
-      "desc": "Recognizes Beartport, Facebook, Google, Twitter, Instagram, YouTube, SoundCloud, MixCloud",
+      "description": "Recognizes Beartport, Facebook, Google, Twitter, Instagram, YouTube, SoundCloud, MixCloud",
       "clone": true,
-      "clone-group": "social-group",
-      "type": "url"
+      "type": "text"
     },
-    "image-logo": {
-      "id": "image-logo",
-      "field_name": "image-logo",
-      "name": "Logo",
-      "type": "image_advanced",
-      "desc": "Upload a high resolution white logo atop of a transparent background.",
-      "multiple": false
+    "locationAddress": {
+      "id": "locationAddress",
+      "field_name": "locationAddress",
+      "name": "Address",
+      "type": "text",
+      "std": ""
     },
-    "image-featured": {
-      "id": "_thumbnail_id",
-      "field_name": "_thumbnail_id",
-      "name": "Featured",
-      "type": "image_advanced",
-      "desc": "Upload featured thumbnail image. If multiple attachments exist, the first will be used on the front-end.",
-      "multiple": false
-    },
-    "image-additional": {
-      "id": "image-additional",
-      "field_name": "image-additional",
-      "name": "Additional",
-      "type": "plupload_image",
-      "desc": "Upload additional images to be displayed in a gallery format.",
-      "multiple": false
-    },
-    "test-slider": {
-      "name": "Slider",
-      "id": "test-slider",
-      "field_name": "test-slider",
-      "type": "slider",
-      "prefix": "$",
-      "suffix": " USD",
-      "js_options": {
-        "min": 10,
-        "max": 255,
-        "step": 5
+    "locationGoogleMap": {
+      "id": "locationGoogleMap",
+      "field_name": "locationGoogleMap",
+      "name": "Location",
+      "type": "map",
+      "std": "",
+      "style": "width: 100%; height: 240px",
+      "address_field": "locationAddress",
+      "attributes": {
+        "data-option": "do:stuff",
+        "data-type": "google-map",
+        "data-requires": "udx.ui.meta-box"
       },
-      "clone": true
-    },
-    "term-venue-type": {
-      "id": "term-venue-type",
-      "name": "Venue",
-      "multiple": true,
-      "type": "taxonomy",
-      "native_meta_box": false,
       "options": {
-        "taxonomy": "venue-type",
-        "type": "select_advanced",
-        "args": {
-          "orderby": "count"
-        }
+        "find_address": false
       }
     },
-    "term-city": {
-      "id": "term-city",
-      "name": "City",
-      "type": "taxonomy",
-      "native_meta_box": false,
-      "options": {
-        "taxonomy": "city",
-        "type": "select_advanced",
-        "args": {
-          "orderby": "count"
-        }
-      }
-    },
-    "term-state": {
-      "id": "term-state",
-      "name": "State",
-      "type": "taxonomy",
-      "native_meta_box": false,
-      "options": {
-        "taxonomy": "state",
-        "type": "select_advanced",
-        "args": {
-          "orderby": "count"
-        }
-      }
-    },
-    "term-country": {
-      "id": "term-country",
+    "termCountry": {
+      "id": "termCountry",
       "name": "Country",
       "type": "taxonomy",
       "native_meta_box": false,
@@ -193,78 +119,52 @@
         }
       }
     },
-    "location-address": {
-      "id": "location-address",
-      "field_name": "location-address",
-      "name": "Address",
-      "type": "text",
-      "std": ""
-    },
-    "location-google-map": {
-      "id": "location-map",
-      "field_name": "location-map",
-      "name": "Location",
-      "type": "map",
-      "std": "",
-      "style": "width: 100%; height: 240px",
-      "address_field": "location-address",
-      "attributes": {
-        "data-option": "do:stuff",
-        "data-type": "google-map",
-        "data-requires": "udx.ui.meta-box"
-      },
+    "termState": {
+      "id": "termState",
+      "name": "State",
+      "type": "taxonomy",
+      "native_meta_box": false,
       "options": {
-        "find_address": false
+        "taxonomy": "state",
+        "type": "select_advanced",
+        "args": {
+          "orderby": "count"
+        }
       }
     },
-    "test-user": {
-      "name": "Users",
-      "id": "test-users",
-      "field_name": "test-users",
-      "type": "user",
-      "field_type": "select_advanced",
-      "multiple": true,
-      "required": true,
-      "js_options": {},
-      "query_args": {
-        "role": "editor"
+    "termCity": {
+      "id": "termCity",
+      "name": "City",
+      "type": "taxonomy",
+      "native_meta_box": false,
+      "options": {
+        "taxonomy": "city",
+        "type": "select_advanced",
+        "args": {
+          "orderby": "count"
+        }
       }
     },
-    "test-button": {
-      "id": "test-button",
-      "type": "button",
-      "desc": "Upload a high resolution headshot image.",
-
-      "js_options": {
-        "some": "setting"
-      },
-      "name": "Super Button",
-      "options": "some-thing"
+    "imageLogo": {
+      "id": "imageLogo",
+      "field_name": "imageLogo",
+      "name": "Logo",
+      "type": "image_advanced",
+      "desc": "Upload a high resolution white logo atop of a transparent background.",
+      "multiple": false
     },
-    "better-include": {
-      "name": "Your images",
-      "id": "img",
-      "type": "plupload_image"
+    "imagesAdditional": {
+      "id": "imagesAdditional",
+      "field_name": "imagesAdditional",
+      "name": "Additional Images",
+      "type": "plupload_image",
+      "desc": "Upload additional images to be displayed in a gallery format.",
+      "multiple": false
     }
   },
   "taxonomies": {
-    "venue-type": {
-      "name": "Venue Type",
-      "hierarchical": true,
-      "show_admin_column": true,
-      "query_var": true,
-      "sort": true,
-      "show_in_nav_menus": true,
-      "show_tagcloud": false,
-      "show_ui": true,
-      "rewrite": {
-        "slug": "venue-type",
-        "hierarchical": true,
-        "with_front": true
-      }
-    },
-    "city": {
-      "name": "City",
+    "country": {
+      "name": "Country",
       "hierarchical": false,
       "show_admin_column": true,
       "query_var": true,
@@ -273,7 +173,7 @@
       "show_tagcloud": false,
       "show_ui": true,
       "rewrite": {
-        "slug": "city",
+        "slug": "country",
         "hierarchical": true,
         "with_front": true
       }
@@ -292,10 +192,9 @@
         "hierarchical": true,
         "with_front": true
       }
-
     },
-    "country": {
-      "name": "Country",
+    "city": {
+      "name": "City",
       "hierarchical": false,
       "show_admin_column": true,
       "query_var": true,
@@ -304,7 +203,7 @@
       "show_tagcloud": false,
       "show_ui": true,
       "rewrite": {
-        "slug": "country",
+        "slug": "city",
         "hierarchical": true,
         "with_front": true
       }

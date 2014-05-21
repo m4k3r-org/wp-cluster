@@ -3,7 +3,7 @@
   "revision": 1,
   "schema": "http://api.wpelastic.io/schema/v1/event",
   "types": {
-    "Post": {
+    "post": {
       "meta": {
         "information": {
           "fields": [

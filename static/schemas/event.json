@@ -1,11 +1,12 @@
 {
   "id": "event",
-  "type": "schema",
   "title": "Event",
-  "revision": 2,
   "schema": "http://api.wpelastic.io/schema/v1/event",
+  "revision": 2,
   "types": {
-    "Event": {
+    "event": {
+      "type": "schema",
+      "schema": "http://api.wpelastic.io/schema/v1/event",
       "data": {
         "capability_type": "page",
         "label": "Event",
@@ -28,7 +29,7 @@
         "can_export": true,
         "exclude_from_search": false,
         "has_archive": true,
-        "hierarchical": true,
+        "hierarchical": false,
         "menu_icon": "dashicons-calendar",
         "menu_position": 20,
         "public": true,
@@ -40,10 +41,10 @@
         "supports": [
           "title",
           "editor",
-          "thumbnail",
           "comments",
           "post-formats",
-          "revisions"
+          "revisions",
+          "excerpt"
         ]
       },
       "taxonomies": [
@@ -60,26 +61,17 @@
             "urlRsvp"
           ]
         },
-        "event_meta": {
-          "fields": [
-            "termCategory",
-            "termTag",
-            "termGenre",
-            "termEventType",
-            "termAgeLimit"
-          ]
-        },
         "related": {
           "fields": [
             "relatedTour",
             "relatedPromoters",
-            "relatedVenues",
+            "relatedVenue",
             "relatedArtists"
           ]
         },
         "images": {
           "fields": [
-            "posterImages"
+            "posterImage"
           ]
         }
       }
@@ -111,62 +103,6 @@
       "name": "RSVP URL",
       "type": "url"
     },
-    "termTag": {
-      "id": "termTag",
-      "name": "Tags",
-      "multiple": true,
-      "type": "taxonomy",
-      "options": {
-        "taxonomy": "post_tag",
-        "type": "select_advanced",
-        "args": {
-          "orderby": "count"
-        }
-      }
-    },
-    "termCategory": {
-      "id": "termCategory",
-      "name": "Category",
-      "multiple": true,
-      "type": "taxonomy",
-      "options": {
-        "taxonomy": "category",
-        "type": "select_advanced",
-        "args": {
-          "orderby": "count"
-        }
-      }
-    },
-    "termGenre": {
-      "name": "Genre",
-      "id": "termGenre",
-      "type": "taxonomy",
-      "options": {
-        "taxonomy": "genre",
-        "type": "checkbox_list",
-        "args": {}
-      }
-    },
-    "termAgeLimit": {
-      "name": "Age Limit",
-      "id": "termAgeLimit",
-      "type": "taxonomy",
-      "options": {
-        "taxonomy": "age-limit",
-        "type": "checkbox_list",
-        "args": {}
-      }
-    },
-    "termEventType": {
-      "name": "Type",
-      "id": "termEventType",
-      "type": "taxonomy",
-      "options": {
-        "taxonomy": "event-type",
-        "type": "checkbox_list",
-        "args": {}
-      }
-    },
     "relatedArtists": {
       "id": "artists",
       "name": "Artists",
@@ -187,29 +123,28 @@
       "type": "post",
       "post_type": "promoter",
       "field_type": "select_advanced",
-      "multiple": false,
+      "multiple": true,
       "placeholder": "Select Promoters",
       "query_args": {
         "post_status": "publish",
         "posts_per_page": -1
       }
     },
-    "relatedVenues": {
-      "id": "venues",
+    "relatedVenue": {
+      "id": "venue",
       "name": "Venue",
       "type": "post",
       "post_type": "venue",
       "field_type": "select_advanced",
       "multiple": false,
-      "placeholder": "Select Venues",
+      "placeholder": "Select Venue",
       "query_args": {
         "post_status": "publish",
-        "posts_per_page": 20
+        "posts_per_page": -1
       }
     },
     "relatedTour": {
-      "id": "tours",
-
+      "id": "tour",
       "name": "Tour",
       "type": "post",
       "post_type": "tour",
@@ -224,22 +159,25 @@
     "divider": {
       "type": "divider"
     },
-    "posterImages": {
-      "name": "Poster Images",
-      "type": "plupload_image"
+    "posterImage": {
+      "name": "Poster Image",
+      "type": "image_advanced",
+      "desc": "Upload a high resolution image for the poster."
     }
   },
   "taxonomies": {
-    "event-type": {
-      "label": "Type",
+    "age-limit": {
+      "label": "Age Limit",
       "hierarchical": false,
       "show_admin_column": true,
       "query_var": true,
       "sort": true,
-      "show_in_nav_menus": false,
+      "show_in_nav_menus": true,
       "show_ui": true,
       "rewrite": {
-        "slug" : "event-type"
+        "slug" : "age-limit",
+        "hierarchical" : false,
+        "with_front": true
       }
     },
     "genre": {
@@ -249,23 +187,25 @@
       "query_var": true,
       "sort": true,
       "show_in_nav_menus": true,
-      "show_tagcloud": false,
       "show_ui": true,
       "rewrite": {
         "slug" : "genre",
-        "hierarchical" : true,
+        "hierarchical" : false,
         "with_front": true
       }
     },
-    "age-limit": {
-      "label": "Age Limit",
+    "event-type": {
+      "label": "Type",
       "hierarchical": false,
       "show_admin_column": true,
-      "show_in_nav_menus": true,
       "query_var": true,
+      "sort": true,
+      "show_in_nav_menus": true,
       "show_ui": true,
       "rewrite": {
-        "slug" : "age-limit"
+        "slug" : "event-type",
+        "hierarchical" : true,
+        "with_front": true
       }
     }
   }
