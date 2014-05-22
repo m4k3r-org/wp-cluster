@@ -843,6 +843,47 @@ li.comment {
 }
 
 /* ==============
+ PAGINATION
+============== */
+
+.paging-navigation {
+
+  .pagination {
+    width: 100%;
+    display: block;
+  
+    .page-numbers {
+      display: none;
+      padding: 10px 20px;
+      border: 1px solid #E5E5E5;
+      box-shadow: 0 0 2px #DFDFDF;
+      background-color: #fff;
+      color: #555555;
+      text-transform: uppercase;
+      
+      &:hover,
+      &:active {
+        text-decoration: none;
+        box-shadow: 0 0 10px #DFDFDF;
+      }
+      
+      &.prev {
+        display: block;
+        float: left;
+      }
+      
+      &.next {
+        display: block;
+        float: right;
+      }
+      
+    }
+  
+  }
+
+}
+
+/* ==============
  SHARE BUTTONS ON SINGLE PAGE
 ============== */
 

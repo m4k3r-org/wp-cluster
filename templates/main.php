@@ -23,10 +23,11 @@
                 <div <?php echo post_class(); ?>>
                   <?php get_template_part( 'templates/aside/title' ); ?>
                   <section id="content" class="container-inner">
-                  <?php while( have_posts() ) : the_post(); ?>
-                    <?php get_template_part( 'templates/article/content', wp_festival()->get_query_template() ); ?>
-                  <?php endwhile; ?>
-                  <section>
+                    <?php while( have_posts() ) : the_post(); ?>
+                      <?php get_template_part( 'templates/article/content', wp_festival()->get_query_template() ); ?>
+                    <?php endwhile; ?>
+                    <?php wp_festival()->page_navigation(); ?>
+                  </section>
                 </div>
               <?php endif; ?>
 
