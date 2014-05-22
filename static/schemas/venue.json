@@ -3,7 +3,7 @@
   "revision": 1,
   "schema": "http://api.wpelastic.io/schema/v1/venue",
   "types": {
-    "venue": {
+    "Venue": {
       "data": {
         "capability_type": "page",
         "label": "Venue",
@@ -42,9 +42,9 @@
         ]
       },
       "taxonomies": [
-        "country",
+        "city",
         "state",
-        "city"
+        "country"
       ],
       "meta": {
         "links": {
@@ -163,8 +163,8 @@
     }
   },
   "taxonomies": {
-    "country": {
-      "name": "Country",
+    "city": {
+      "name": "City",
       "hierarchical": false,
       "show_admin_column": true,
       "query_var": true,
@@ -173,7 +173,7 @@
       "show_tagcloud": false,
       "show_ui": true,
       "rewrite": {
-        "slug": "country",
+        "slug": "city",
         "hierarchical": true,
         "with_front": true
       }
@@ -193,8 +193,8 @@
         "with_front": true
       }
     },
-    "city": {
-      "name": "City",
+    "country": {
+      "name": "Country",
       "hierarchical": false,
       "show_admin_column": true,
       "query_var": true,
@@ -203,7 +203,7 @@
       "show_tagcloud": false,
       "show_ui": true,
       "rewrite": {
-        "slug": "city",
+        "slug": "country",
         "hierarchical": true,
         "with_front": true
       }

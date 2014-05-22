@@ -5,7 +5,7 @@
   "revision": 1,
   "schema": "http://api.wpelastic.io/schema/v1/promoter",
   "types": {
-    "promoter": {
+    "Promoter": {
       "data": {
         "capability_type": "page",
         "label": "Promoter",

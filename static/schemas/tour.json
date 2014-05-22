@@ -5,7 +5,7 @@
   "revision": 1,
   "schema": "http://api.wpelastic.io/schema/v1/tour",
   "types": {
-    "tour": {
+    "Tour": {
       "data": {
         "capability_type": "page",
         "label": "Tour",

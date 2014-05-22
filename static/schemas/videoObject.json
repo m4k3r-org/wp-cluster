@@ -5,7 +5,7 @@
   "revision": 1,
   "schema": "http://api.wpelastic.io/schema/v1/videoObject",
   "types": {
-    "videoObject": {
+    "VideoObject": {
       "data": {
         "capability_type": "page",
         "label": "Video",

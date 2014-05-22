@@ -1,12 +1,11 @@
 {
   "id": "event",
   "title": "Event",
+  "type": "schema",
   "schema": "http://api.wpelastic.io/schema/v1/event",
   "revision": 2,
   "types": {
-    "event": {
-      "type": "schema",
-      "schema": "http://api.wpelastic.io/schema/v1/event",
+    "Event": {
       "data": {
         "capability_type": "page",
         "label": "Event",
