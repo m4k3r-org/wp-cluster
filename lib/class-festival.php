@@ -174,6 +174,7 @@ namespace UsabilityDynamics {
         'cdn.udx.io'        => array(
           'jquery'
         ),
+        /*
         'infinite-scroll'   => array(
           'type'           => 'scroll',
           'footer_widgets' => false,
@@ -183,6 +184,7 @@ namespace UsabilityDynamics {
           'posts_per_page' => false,
           'footer'         => false,
         ) 
+        //*/
       ));
 
       // Head Tags.
