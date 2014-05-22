@@ -22,7 +22,7 @@
               <?php if( have_posts() ) : ?>
                 <div <?php echo post_class(); ?>>
                   <?php get_template_part( 'templates/aside/title' ); ?>
-                  <section class="container-inner">
+                  <section id="content" class="container-inner">
                   <?php while( have_posts() ) : the_post(); ?>
                     <?php get_template_part( 'templates/article/content', wp_festival()->get_query_template() ); ?>
                   <?php endwhile; ?>

@@ -173,7 +173,16 @@ namespace UsabilityDynamics {
         ),
         'cdn.udx.io'        => array(
           'jquery'
-        )
+        ),
+        'infinite-scroll'   => array(
+          'type'           => 'scroll',
+          'footer_widgets' => false,
+          'container'      => 'content',
+          'wrapper'        => true,
+          'render'         => array( $this, 'get_infinite_template_part' ),
+          'posts_per_page' => false,
+          'footer'         => false,
+        ) 
       ));
 
       // Head Tags.
@@ -368,6 +377,15 @@ namespace UsabilityDynamics {
       // Auto-wrap videos with container to make them responsive
       add_filter('embed_oembed_html', array( $this, 'wrap_video' ), 99, 4);
 
+    }
+    
+    /**
+     * It's used by Jetpack Infinite Loop
+     * @see: http://jetpack.me/support/infinite-scroll/
+     */
+    public function get_infinite_template_part() {
+      the_post();
+      get_template_part( 'templates/article/content', $this->get_query_template() );
     }
 
     /**
