@@ -1,4 +1,8 @@
 <form data-bind="elasticFilter:{
+  middle_timepoint: {
+    gte: 'now-1d',
+    lte: 'now-1d'
+  },
   per_page: 100,
   period_field: 'start_date',
   sort_by: 'start_date',
