@@ -42,6 +42,7 @@
         ]
       },
       "taxonomies": [
+        "venue-type",
         "city",
         "state",
         "country"
@@ -205,6 +206,20 @@
       "rewrite": {
         "slug": "country",
         "hierarchical": true,
+        "with_front": true
+      }
+    },
+    "venue-type": {
+      "label": "Type",
+      "hierarchical": false,
+      "show_admin_column": true,
+      "query_var": true,
+      "sort": true,
+      "show_in_nav_menus": true,
+      "show_ui": true,
+      "rewrite": {
+        "slug" : "venue-type",
+        "hierarchical" : true,
         "with_front": true
       }
     }

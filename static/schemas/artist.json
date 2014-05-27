@@ -52,6 +52,7 @@
         "can_export": true
       },
       "taxonomies": [
+        "genre"
       ],
       "meta": {
         "links": {
@@ -110,5 +111,19 @@
     }
   },
   "taxonomies": {
+    "genre": {
+      "label": "Genre",
+      "hierarchical": false,
+      "show_admin_column": true,
+      "query_var": true,
+      "sort": true,
+      "show_in_nav_menus": true,
+      "show_ui": true,
+      "rewrite": {
+        "slug" : "genre",
+        "hierarchical" : false,
+        "with_front": true
+      }
+    }
   }
 }
