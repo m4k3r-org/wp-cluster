@@ -37,8 +37,11 @@ namespace UsabilityDynamics\AMD {
           'dependencies' => array(),
           'admin_menu' => true,
           'post_type' => false,
-        ) );
-        
+        ));
+
+        // $this->args['permalink'] = '/' . $this->args['permalink'];
+
+        //die( '<pre>' . print_r( $this->args['permalink'], true ) . '</pre>' );
         //** Add hooks only if type is allowed */
         if( in_array( $this->get( 'type' ), array( 'script', 'style' ) ) ) {
         
@@ -52,8 +55,8 @@ namespace UsabilityDynamics\AMD {
           add_filter( 'template_include', array( __CLASS__, 'return_asset' ), 1, 1 );
           
           //** Register assets and post_type */
+          add_action( 'init', array( &$this, 'register_post_type' ) );
           add_action( 'admin_init', array( &$this, 'admin_init' ) );
-          add_action( 'admin_init', array( &$this, 'register_post_type' ) );
           add_filter( 'redirect_canonical', array( $this, 'redirect_canonical') );
 
           switch( $this->get( 'type' ) ) {
@@ -262,10 +265,11 @@ namespace UsabilityDynamics\AMD {
       public function admin_scripts() {
         do_action( 'amd::admin_scripts::edit_page' );
         
-        wp_register_script( 'wp-amd-ace', plugins_url( '/static/scripts/src/ace/ace.js', dirname( __DIR__ )), array(), $this->get( 'version' ), true );
-        wp_enqueue_style( 'wp-amd-admin-styles', plugins_url( '/static/styles/wp-amd.css', dirname( __DIR__ ) ) );
-        wp_enqueue_script( 'wp-amd-admin-scripts', plugins_url( '/static/scripts/wp-amd.js', dirname( __DIR__ ) ), array( 'wp-amd-ace', 'jquery-ui-resizable' ), $this->get( 'version' ), true );
+        wp_register_script( 'wp-amd-ace', plugins_url( '/static/scripts/src/ace/ace.js', __DIR__ ), array(), $this->get( 'version' ), true );
+        wp_enqueue_style( 'wp-amd-admin-styles', plugins_url( '/static/styles/wp-amd.css', __DIR__ ) );
+        wp_enqueue_script( 'wp-amd-admin-scripts', plugins_url( '/static/scripts/wp-amd.js',  __DIR__ ), array( 'wp-amd-ace', 'jquery-ui-resizable' ), $this->get( 'version' ), true );
         wp_enqueue_script( 'wp-amd-admin-scripts' );
+
       }
       
       /**
@@ -273,7 +277,6 @@ namespace UsabilityDynamics\AMD {
        */
       public function admin_edit_page() {
         $msg = 0;
-
 
         // the form has been submited save the options
         if( !empty( $_POST ) && check_admin_referer( 'update_amd_' . $this->get( 'type' ), 'update_amd_' . $this->get( 'type' ) . '_nonce' ) ) {
@@ -461,7 +464,9 @@ namespace UsabilityDynamics\AMD {
           unset( $args[ 'numberposts' ] );
         }
 
-        wp_list_post_revisions( $post[ 'ID' ], $args );
+        if( isset( $post[ 'ID' ] ) ) {
+          wp_list_post_revisions( $post[ 'ID' ], $args );
+        }
 
       }
 
@@ -545,8 +550,9 @@ namespace UsabilityDynamics\AMD {
        * @internal param \UsabilityDynamics\AMD\type $current
        * @return type
        */
-      public function update_option_rewrite_rules( $rules ) {
-        $rules['^' . $this->get( 'permalink' )] = 'index.php?' . self::$query_vars[0] . '=' . $this->get( 'type' ) . '&' . self::$query_vars[1] . '=1';
+      public function update_option_rewrite_rules( $rules = array() ) {
+        $new_rules = array( '' . $this->get( 'permalink' ) . '$' => 'index.php?' . self::$query_vars[0] . '=' . $this->get( 'type' ) . '&' . self::$query_vars[1] . '=1' );
+        $rules =  array_merge_recursive( (array) $new_rules, (array) $rules );
         return $rules;
       }
       
