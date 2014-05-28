@@ -15,6 +15,10 @@
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_saas.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_functions.php' );
 
+@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/entity.php' );
+@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/event.php' );
+@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/venue.php' );
+
 // UD_Tests::http_methods( 'http://' );
 
 /* Define Child Theme Version */
