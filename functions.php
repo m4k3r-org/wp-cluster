@@ -53,7 +53,6 @@ class hddp extends Flawless_F {
       'hdp_tour',
       'hdp_age_limit',
       'hdp_genre',
-      'hdp_venue',
       'hdp_promoter',
       'hdp_type',
       'hdp_city',
@@ -77,7 +76,6 @@ class hddp extends Flawless_F {
       'hdp_tour',
       'hdp_age_limit',
       'hdp_genre',
-      'hdp_venue',
       'hdp_promoter',
       'hdp_type',
       'hdp_credit',
@@ -95,7 +93,6 @@ class hddp extends Flawless_F {
       'hdp_tour',
       'hdp_age_limit',
       'hdp_genre',
-      'hdp_venue',
       'hdp_promoter',
       'hdp_type',
       'hdp_credit',
@@ -151,12 +148,6 @@ class hddp extends Flawless_F {
       'label'     => 'Genre',
       'type'      => 'taxonomy',
       'summarize' => 215,
-
-    ),
-    'hdp_venue'             => array(
-      'label'     => 'Venue',
-      'type'      => 'taxonomy',
-      'summarize' => 120,
 
     ),
     'hdp_promoter'          => array(

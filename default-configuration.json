@@ -46,7 +46,6 @@
         "hdp_state": "",
         "hdp_tour": "",
         "hdp_type": "",
-        "hdp_venue": "",
         "post_tag": "enabled"
       },
       "widget_areas": {
@@ -80,7 +79,6 @@
         "hdp_state": "",
         "hdp_tour": "",
         "hdp_type": "",
-        "hdp_venue": "",
         "post_tag": ""
       },
       "rewrite_slug": null
@@ -102,7 +100,6 @@
         "hdp_state": "enabled",
         "hdp_tour": "enabled",
         "hdp_type": "enabled",
-        "hdp_venue": "enabled",
         "post_tag": ""
       },
       "flawless_post_type": "true",
@@ -127,7 +124,6 @@
         "hdp_state": "enabled",
         "hdp_tour": "",
         "hdp_type": "enabled",
-        "hdp_venue": "enabled",
         "post_tag": ""
       },
       "flawless_post_type": "true",
@@ -153,7 +149,6 @@
         "hdp_state": "enabled",
         "hdp_tour": "enabled",
         "hdp_type": "enabled",
-        "hdp_venue": "enabled",
         "post_tag": ""
       },
       "flawless_post_type": "true",
@@ -258,19 +253,6 @@
       },
       "flawless_taxonomy": "true",
       "rewrite_tag": "%hdp_genre%",
-      "hierarchical": "false",
-      "exclude_from_search": "false"
-    },
-    "hdp_venue": {
-      "label": "Venue",
-      "allow_term_thumbnail": "true",
-      "widget_areas": {
-        "left_sidebar": [
-          "global_sidebar"
-        ]
-      },
-      "flawless_taxonomy": "true",
-      "rewrite_tag": "%hdp_venue%",
       "hierarchical": "false",
       "exclude_from_search": "false"
     },
@@ -605,7 +587,6 @@
             "hdp_state": "",
             "hdp_tour": "",
             "hdp_type": "",
-            "hdp_venue": "",
             "post_tag": "enabled"
           },
           "widget_areas": {
@@ -646,7 +627,6 @@
             "hdp_state": "",
             "hdp_tour": "",
             "hdp_type": "",
-            "hdp_venue": "",
             "post_tag": ""
           },
           "rewrite_slug": null
@@ -675,7 +655,6 @@
             "hdp_state": "enabled",
             "hdp_tour": "enabled",
             "hdp_type": "enabled",
-            "hdp_venue": "enabled",
             "post_tag": ""
           },
           "flawless_post_type": "true",
@@ -703,7 +682,6 @@
             "hdp_state": "enabled",
             "hdp_tour": "",
             "hdp_type": "enabled",
-            "hdp_venue": "enabled",
             "post_tag": ""
           },
           "flawless_post_type": "true",
@@ -732,7 +710,6 @@
             "hdp_state": "enabled",
             "hdp_tour": "enabled",
             "hdp_type": "enabled",
-            "hdp_venue": "enabled",
             "post_tag": ""
           },
           "flawless_post_type": "true",
@@ -894,26 +871,6 @@
         "widget_areas": {
           "left_sidebar": [
             "flawless_widget_area_38"
-          ]
-        }
-      },
-      "hdp_venue": {
-        "settings": {
-          "label": "Venue",
-          "allow_term_thumbnail": "true",
-          "widget_areas": {
-            "left_sidebar": [
-              "global_sidebar"
-            ]
-          },
-          "flawless_taxonomy": "true",
-          "rewrite_tag": "%hdp_venue%",
-          "hierarchical": "false",
-          "exclude_from_search": "false"
-        },
-        "widget_areas": {
-          "left_sidebar": [
-            "global_sidebar"
           ]
         }
       },

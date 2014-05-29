@@ -1,8 +1,10 @@
 <?php get_header(); ?>
 
-<?php get_template_part( 'attention', 'post' ); ?>
+<?php get_template_part( 'attention', 'event' ); ?>
 
 <?php $event = new \DiscoDonniePresents\Event( get_the_ID() ); the_post(); ?>
+
+<?php //echo '<pre>'; print_r( $event ); echo '</pre>'; ?>
 
 <div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" itemscope itemtype="http://schema.org/Event">
 
@@ -10,9 +12,7 @@
     <div class="cfct-module" style="padding: 0; margin: 0;">
 
     <div class="visible-desktop dd_featured_image_wrap <?php echo $event->meta('posterImage') ? 'have_image' : 'no_image'; ?>">
-      <a href="<?php echo $image_url; ?>">
       <?php echo wp_get_attachment_image( $event->meta('posterImage'), $size = 'sidebar_poster' ); ?>
-      </a>
     </div>
 
     <ul class="dd_side_panel_nav">

@@ -109,7 +109,7 @@ namespace DiscoDonniePresents {
           } elseif ( !count( $this->_meta[ $key ] ) ) {
             return false;
           }
-          return $this->_meta[ $key ][0];
+          return maybe_unserialize( $this->_meta[ $key ][0] );
         }
 
         $this->_meta[ $key ] = array( $value );

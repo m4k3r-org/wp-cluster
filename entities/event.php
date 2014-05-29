@@ -34,14 +34,16 @@ namespace DiscoDonniePresents {
        *
        * @param type $id
        */
-      public function __construct( $id = null ) {
+      public function __construct( $id = null, $preload = true ) {
         parent::__construct( $id );
 
-        $this->_venue   = $this->load_venue();
+        if ( $preload ) {
+          $this->_venue   = $this->load_venue();
 
-        $this->_artists = $this->load_artists();
+          $this->_artists = $this->load_artists();
 
-        $this->_tour    = $this->load_tour();
+          $this->_tour    = $this->load_tour();
+        }
 
         $this->apply_formatting();
       }
@@ -50,8 +52,8 @@ namespace DiscoDonniePresents {
        *
        * @return \DiscoDonniePresents\Venue
        */
-      private function load_venue() {
-        return new Venue( $this->meta('venue') );
+      public function load_venue() {
+        return new Venue( $this->meta('venue'), false );
       }
 
       /**
@@ -107,7 +109,13 @@ namespace DiscoDonniePresents {
        */
       public function artists( $format = 'link', $separator = ', ' ) {
 
-        if ( empty( $this->_artists ) ) return false;
+        if ( empty( $this->_artists ) ) {
+
+          $this->_artists = $this->load_artists();
+
+          if ( empty( $this->_artists ) ) return false;
+
+        }
 
         switch( $format ) {
 

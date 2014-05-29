@@ -1120,6 +1120,10 @@
     padding-bottom: 30px;
   }
 
+  .single-venue .hentry .hentry {
+    padding-bottom: 0px;
+  }
+
   /*====[SINGLE PAGE: EVENT]=========================*/
   #section_event_details .entry-thumbnail {
     margin: 5px 0;
