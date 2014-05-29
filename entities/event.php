@@ -92,6 +92,11 @@ namespace DiscoDonniePresents {
        * @return type
        */
       public function venue() {
+
+        if ( empty( $this->_venue ) ) {
+          $this->_venue   = $this->load_venue();
+        }
+
         return $this->_venue;
       }
 

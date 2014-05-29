@@ -1,29 +1,14 @@
 <?php
-/*
- * Loop Archive/Taxonomy Template for Event "hdp_event"
- *
- * @todo Add back in lazy loader for images. The lazyload script has to be re-initialized when DF is done loading. - potanin@UD 5/22/12
- */
 
-
-//echo '<pre>';
-//print_r( $event );
-//echo '</pre>';
-
-//echo '<pre>';
-//print_r( $venue );
-//echo '</pre>';
-
-$header_date = date( 'F j, Y', strtotime( $event->meta('dateStart') ) );
 $permalink = get_permalink( $event->post('ID') ); ?>
 
 <li <?php post_class(); ?>>
 
 	<ul class="hdp_event_collapsed clearfix">
-		<li class="hdp_event_date"><?php echo $header_date; ?></li>
+		<li class="hdp_event_date"><?php echo date( 'F j, Y', strtotime( $event->meta('dateStart') ) ); ?></li>
 		<li class="hdp_event_title"><?php echo $event->post('post_title'); ?></li>
-		<li class="hdp_event_city"><?php echo $venue->taxonomies('city'); ?></li>
-		<li class="hdp_event_state"><?php echo $venue->taxonomies('state'); ?></li>
+		<li class="hdp_event_city"><?php echo $event->venue()->taxonomies('city'); ?></li>
+		<li class="hdp_event_state"><?php echo $event->venue()->taxonomies('state'); ?></li>
 	</ul>
 
 	<ul class="hdp_event_expanded clearfix">
@@ -31,10 +16,10 @@ $permalink = get_permalink( $event->post('ID') ); ?>
 		<li class="hdp_event_title"><a href="<?php echo $permalink; ?>"><?php echo $event->post('post_title'); ?></a></li>
 		<li class="hdp_event_date"><span>Date:</span> <?php echo $event->meta('eventDateHuman'); ?></li>
 		<li class="hdp_event_venue"><span>Venue:</span>
-      <a href="<?php echo get_permalink( $venue->post( 'ID' ) ); ?>">
-        <?php echo $venue->post( 'post_title' ); ?>
+      <a href="<?php echo get_permalink( $event->venue()->post( 'ID' ) ); ?>">
+        <?php echo $event->venue()->post( 'post_title' ); ?>
       </a><br />
-      <?php echo $venue->taxonomies( 'city' ); ?>, <?php echo $venue->taxonomies( 'state' ); ?>
+      <?php echo $event->venue()->taxonomies( 'city' ); ?>, <?php echo $event->venue()->taxonomies( 'state' ); ?>
     </li>
 		<li class="hdp_event_artists"><span>Artists:</span> <?php echo $event->artists(); ?></li>
 		<li class="hdp_event_description"><p><?php echo $event->post('post_excerpt'); ?></p></li>

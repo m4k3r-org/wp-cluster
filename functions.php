@@ -50,7 +50,6 @@ class hddp extends Flawless_F {
       'hdp_event_date',
       'hdp_event_time',
       'hdp_artist',
-      'hdp_tour',
       'hdp_age_limit',
       'hdp_genre',
       'hdp_promoter',
@@ -73,7 +72,6 @@ class hddp extends Flawless_F {
       'hdp_event_date',
       'hdp_event_time',
       'hdp_artist',
-      'hdp_tour',
       'hdp_age_limit',
       'hdp_genre',
       'hdp_promoter',
@@ -90,7 +88,6 @@ class hddp extends Flawless_F {
       'hdp_event_date',
       'hdp_event_time',
       'hdp_artist',
-      'hdp_tour',
       'hdp_age_limit',
       'hdp_genre',
       'hdp_promoter',
@@ -130,12 +127,6 @@ class hddp extends Flawless_F {
       'label'     => 'Artist',
       'type'      => 'taxonomy',
       'summarize' => 225,
-
-    ),
-    'hdp_tour'              => array(
-      'label'     => 'Tour',
-      'type'      => 'taxonomy',
-      'summarize' => 220,
 
     ),
     'hdp_age_limit'         => array(
