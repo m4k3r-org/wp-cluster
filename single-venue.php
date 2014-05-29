@@ -120,10 +120,18 @@
 
       </div>
 
+      <?php if( $venue->meta('geo_located') ) { ?>
+        <div id="section_map" class="inner not-for-iphone not-for-ipad">
+          <div id="event_location" style="height: 400px; width: 100%;"></div>
+        </div>
+      <?php } ?>
+
     </div>
 
   </div>
 
 </div>
+
+<?php echo '<script type="text/javascript">var hdp_current_venue = jQuery.parseJSON( ' . json_encode( json_encode( $venue ) ) . ' ); </script>'; ?>
 
 <?php get_footer(); ?>

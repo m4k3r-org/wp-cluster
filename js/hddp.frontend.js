@@ -56,6 +56,33 @@ jQuery( document ).bind( 'hddp::initialize', function() {
 
   }
 
+  if( typeof hdp_current_venue === 'object' && hdp_current_venue._meta.geo_located && typeof google === 'object' && typeof google.maps === 'object' ) {
+
+    /**
+     * Single Event location map
+     */
+    jQuery( document ).ready( function() {
+
+      hdp_current_venue.mappos = new google.maps.LatLng( hdp_current_venue._meta.latitude, hdp_current_venue._meta.longitude );
+      hdp_current_venue.map = new google.maps.Map( document.getElementById( 'event_location' ), {
+        scaleControl: true,
+        center: hdp_current_venue.mappos,
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      } );
+
+      hdp_current_venue.marker = new google.maps.Marker( { map: hdp_current_venue.map, position: hdp_current_venue.map.getCenter() } );
+      jQuery( document ).on( 'tabsactivate', function( event, ui ) {
+        if( ui.newPanel[0].id == 'section_map' ) {
+          google.maps.event.trigger( hdp_current_venue.map, 'resize' );
+          hdp_current_venue.map.setCenter( hdp_current_venue.mappos );
+        }
+      } );
+
+    } );
+
+  }
+
   /* Attach to our filter button */
   jQuery( '#filter_wrapper .btn_show_filter' ).live( 'click', function( e ) {
 
