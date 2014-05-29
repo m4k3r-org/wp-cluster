@@ -2,9 +2,7 @@
 
 <?php get_template_part( 'attention', 'post' ); ?>
 
-<?php $event = new \DiscoDonniePresents\Event( get_the_ID() ); ?>
-
-<?php echo '<pre>'; print_r( $event ); echo '</pre>'; ?>
+<?php $event = new \DiscoDonniePresents\Event( get_the_ID() ); the_post(); ?>
 
 <div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" itemscope itemtype="http://schema.org/Event">
 
@@ -102,23 +100,21 @@
             <span class="event_meta_label"><i class="hdp_type icon-dd"></i> <?php _e('Type'); ?></span>
             <span class="event_meta_value"><?php echo $event->taxonomies( 'event-type' ); ?></span>
 
+            <span class="event_meta_label"><i class="hdp_genre icon-dd"></i> <?php _e('Genre'); ?></span>
+            <span class="event_meta_value"><?php echo $event->genre(); ?></span>
+
+            <span class="event_meta_label"><i class="hdp_tour icon-dd"></i> <?php _e('Tour'); ?></span>
+            <span class="event_meta_value">
+              <a href="<?php echo get_permalink( $event->tour()->post( 'ID' ) ); ?>">
+                <?php echo $event->tour()->post( 'post_title' ); ?>
+              </a>
+            </span>
+
+            <span class="event_meta_label"><i class="hdp_artist icon-dd"></i> <?php _e('Artist'); ?></span>
+            <span class="event_meta_value"><?php echo $event->artists(); ?></span>
+
           </div>
-        <?php
-        ksort( $event[ 'summary' ] );
-        for( $i = 1; $i <= 2; $i++ ) {
-          ?>
-          <div class="span6">
 
-            <?php foreach( (array) $event[ 'summary' ] as $key => $row ) {
-
-              if( (int) $i . '00' <= (int) $key && (int) $key <= (int) $i . '99' ) {
-                ?>
-                <span class="event_meta_label" data-attribute="<?php echo $row[ 'slug' ]; ?>"><i class="<?php echo $row[ 'slug' ]; ?> icon-dd"></i> <?php echo $row[ 'label' ]; ?></span>
-                <span class="event_meta_value"><?php echo $row[ 'value' ]; ?></span> <?php
-              }
-            } ?>
-            </div> <?php
-        } ?>
         </div>
 
         <hr class="dotted"/>
@@ -127,7 +123,7 @@
 
           <?php the_content( 'More Info' ); ?>
 
-          <?php if( $event[ 'images' ] ) { ?>
+          <?php /*Not supported yet*/ if( 0 /*$event[ 'images' ]*/ ) { ?>
             <div class="gallery gallery-columns-0">
           <?php foreach( $event[ 'images' ] as $image ) {
             $image_url = wp_get_attachment_image_src( $image->ID, 'full' );
@@ -141,13 +137,13 @@
 
       </div>
 
-      <?php if( post_type_supports( $event[ 'post_type' ], 'comments' ) && $event[ 'comment_status' ] == 'open' ) { ?>
+      <?php if( post_type_supports( $event->type(), 'comments' ) && $event->post('comment_status') == 'open' ) { ?>
         <div id="section_comments" class="inner">
         <?php comments_template(); ?>
       </div>
       <?php } ?>
 
-      <?php if( $event[ 'geo_located' ] ) { ?>
+      <?php if( $event->venue()->meta('locationGoogleMap') ) { ?>
         <div id="section_map" class="inner not-for-iphone not-for-ipad">
         <div id="event_location" style="height: 400px; width: 100%;"></div>
       </div>
@@ -162,7 +158,6 @@
 
 </div>
 
-<?php if( $event[ 'json' ] ) {
-  echo '<script type="text/javascript">var hdp_current_event = jQuery.parseJSON( ' . json_encode( json_encode( $event[ 'json' ] ) ) . ' ); </script>';
-} ?>
-<?php get_footer() ?>
+<?php echo '<script type="text/javascript">var hdp_current_event = jQuery.parseJSON( ' . json_encode( json_encode( $event ) ) . ' ); </script>'; ?>
+
+<?php get_footer(); ?>

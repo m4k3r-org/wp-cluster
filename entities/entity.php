@@ -97,8 +97,20 @@ namespace DiscoDonniePresents {
        * @param type $key
        * @return type
        */
-      public function meta( $key, $value = null ) {
-        if ( !$value ) return $this->_meta[ $key ][0];
+      public function meta( $key = null, $value = null ) {
+
+        if ( !$key ) {
+          return $this->_meta;
+        }
+
+        if ( !$value ) {
+          if ( count( $this->_meta[ $key ] ) > 1 ) {
+            return $this->_meta[ $key ];
+          } elseif ( !count( $this->_meta[ $key ] ) ) {
+            return false;
+          }
+          return $this->_meta[ $key ][0];
+        }
 
         $this->_meta[ $key ] = array( $value );
       }
@@ -117,6 +129,13 @@ namespace DiscoDonniePresents {
         return $this->_post->{$field};
       }
 
+      /**
+       *
+       * @param type $slug
+       * @param type $format
+       * @param type $separator
+       * @return boolean
+       */
       public function taxonomies( $slug, $format = 'link', $separator = ', ' ) {
 
         if ( empty( $this->_taxonomies[ $slug ] ) ) return false;
@@ -125,13 +144,13 @@ namespace DiscoDonniePresents {
 
           case 'link':
 
-            $links = array();
+            return $this->termsToString( $slug, $this->_taxonomies[ $slug ], $separator );
 
-            foreach( $this->_taxonomies[ $slug ] as $term ) {
-              $links[] = '<a href="'.get_term_link( $term->slug, $slug ).'">'.$term->name.'</a>';
-            }
+            break;
 
-            return implode( $separator, $links );
+          case 'raw':
+
+            return $this->_taxonomies[ $slug ];
 
             break;
 
@@ -140,6 +159,21 @@ namespace DiscoDonniePresents {
         }
 
         return false;
+      }
+
+      /**
+       *
+       */
+      protected function termsToString( $slug, $terms, $separator ) {
+        $links = array();
+
+        if ( empty( $terms ) ) return false;
+
+        foreach( $terms as $term ) {
+          $links[] = '<a href="'.get_term_link( $term->slug, $slug ).'">'.$term->name.'</a>';
+        }
+
+        return implode( $separator, $links );
       }
 
       /**

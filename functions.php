@@ -18,6 +18,8 @@
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/entity.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/event.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/venue.php' );
+@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/artist.php' );
+@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/tour.php' );
 
 // UD_Tests::http_methods( 'http://' );
 
@@ -430,7 +432,7 @@ class hddp extends Flawless_F {
       'attributes'                => $attributes,
       'manage_options'            => 'manage_options',
       'page_template'             => array( '_template-all-events.php' ),
-      'event_related_post_types'  => array( 'hdp_event', 'hdp_video', 'hdp_photo_gallery' ),
+      'event_related_post_types'  => array( 'event', 'hdp_video', 'hdp_photo_gallery' ),
       'dynamic_filter_post_types' => array( 'hdp_photo_gallery', 'hdp_event', 'hdp_video' )
     ), get_option( 'hddp_options' ) );
 
@@ -562,17 +564,14 @@ class hddp extends Flawless_F {
     $flawless[ 'mobile_navbar' ][ 'html' ][ 'left' ] = hdp_share_button( true, true ) . $flawless[ 'mobile_navbar' ][ 'html' ][ 'left' ];
 
     add_filter( 'single_template', function ( $template ) {
-      global $post, $hddp;
 
-      if( !in_array( $post->post_type, (array) $hddp[ 'event_related_post_types' ] ) ) {
-        return $template;
+      if ( is_singular('event') ) {
+        add_filter( 'body_class', function ( $classes ) {
+          return array_merge( $classes, array( 'single_event_page' ) );
+        } );
       }
 
-      add_filter( 'body_class', function ( $classes ) {
-        return array_merge( $classes, array( 'single_event_page' ) );
-      } );
-
-      return $template = locate_template( (array) $hddp[ 'page_template' ] );
+      return $template;
 
     } );
 

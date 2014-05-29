@@ -29,14 +29,14 @@ jQuery( document ).bind( 'hddp::initialize', function() {
     jQuery( '.dd_fixed_panel_wrapper, .tabbed-content' ).tabs();
   }
 
-  if( typeof hdp_current_event === 'object' && hdp_current_event.geo_located === 'true' && typeof google === 'object' && typeof google.maps === 'object' ) {
+  if( typeof hdp_current_event === 'object' && hdp_current_event._venue._meta.geo_located && typeof google === 'object' && typeof google.maps === 'object' ) {
 
     /**
      * Single Event location map
      */
     jQuery( document ).ready( function() {
 
-      hdp_current_event.mappos = new google.maps.LatLng( hdp_current_event.latitude, hdp_current_event.longitude );
+      hdp_current_event.mappos = new google.maps.LatLng( hdp_current_event._venue._meta.latitude, hdp_current_event._venue._meta.longitude );
       hdp_current_event.map = new google.maps.Map( document.getElementById( 'event_location' ), {
         scaleControl: true,
         center: hdp_current_event.mappos,
