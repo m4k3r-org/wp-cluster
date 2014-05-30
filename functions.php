@@ -22,6 +22,7 @@
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/tour.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/imagegallery.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/video.php' );
+@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/promoter.php' );
 
 // UD_Tests::http_methods( 'http://' );
 

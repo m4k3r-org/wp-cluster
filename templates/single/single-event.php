@@ -4,7 +4,7 @@
 
 <?php $event = new \DiscoDonniePresents\Event( get_the_ID() ); the_post(); ?>
 
-<?php //echo '<pre>'; print_r( $event ); echo '</pre>'; ?>
+<?php echo '<pre>'; print_r( $event ); echo '</pre>'; ?>
 
 <div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" itemscope itemtype="http://schema.org/Event">
 
