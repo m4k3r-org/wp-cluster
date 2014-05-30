@@ -34,37 +34,14 @@ namespace DiscoDonniePresents {
 
       /**
        *
-       */
-      private function load_events() {
-
-        $_events = array();
-
-        $query = new \WP_Query( array(
-          'post_type' => 'event',
-          'posts_per_page' => -1,
-          'meta_key' => 'venue',
-          'meta_value' => $this->_id
-        ) );
-
-        if ( !is_wp_error( $query ) && !empty( $query->posts ) ) {
-
-          foreach( $query->posts as $event ) {
-            $_events[] = new Event( $event->ID, false );
-          }
-
-          return $_events;
-
-        }
-
-        return false;
-
-      }
-
-      /**
-       *
        * @return type
        */
-      public function events() {
+      public function events( $args = array() ) {
+
+        if ( empty( $this->_events ) ) {
+          $this->_events = $this->load_events( $args );
+        }
+
         return $this->_events;
       }
 

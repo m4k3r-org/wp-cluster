@@ -3,7 +3,7 @@
 <?php get_template_part( 'attention', 'tour' ); ?>
 
 <?php
-  $artist = new \DiscoDonniePresents\Artist( get_the_ID() ); the_post();
+  $artist = new \DiscoDonniePresents\Artist( get_the_ID(), false ); the_post();
   //echo '<pre>'; print_r( $artist->meta() ); echo '</pre>';
 ?>
 
@@ -25,7 +25,7 @@
       <li class="visible-desktop link">
         <a href="#section_event">
           <i class="icon-hdp_event icon-dd"></i> <?php _e('Events'); ?>
-          <span class="comment_count"><?php echo count( $artist->events() ); ?></span>
+          <span class="comment_count"><?php echo count( $artist->events( array( 'period' => 'upcoming' ) ) ); ?></span>
         </a>
       </li>
 

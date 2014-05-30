@@ -163,6 +163,65 @@ namespace DiscoDonniePresents {
 
       /**
        *
+       * @param type $options
+       * @return \DiscoDonniePresents\Event|boolean
+       */
+      public function load_events( $options = array() ) {
+
+        switch( $options['period'] ) {
+          case 'upcoming':
+            $period = array(
+                'key' => 'dateStart',
+                'value' => date( 'Y-m-d H:i' ),
+                'compare' => '>=',
+                'type' => 'DATE'
+            );
+            break;
+          case 'past':
+            $period = array(
+                'key' => 'dateStart',
+                'value' => date( 'Y-m-d H:i' ),
+                'compare' => '<',
+                'type' => 'DATE'
+            );
+            break;
+          default:
+            $period = array();
+            break;
+        }
+
+        $args = wp_parse_args( $args, array(
+          'post_type' => 'event',
+          'posts_per_page' => -1,
+          'meta_query' => array(
+              array(
+                  'key' => $this->_type,
+                  'value' => $this->_id
+              ),
+              $period
+          )
+        ) );
+
+        $_events = array();
+
+        $query = new \WP_Query( $args );
+
+        if ( !is_wp_error( $query ) && !empty( $query->posts ) ) {
+
+          foreach( $query->posts as $event ) {
+            $_events[] = new Event( $event->ID, false );
+          }
+
+          return $_events;
+
+        }
+
+        return false;
+
+      }
+
+      /**
+       *
        */
       protected function termsToString( $slug, $terms, $separator ) {
         $links = array();
