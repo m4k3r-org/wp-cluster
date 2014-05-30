@@ -1120,7 +1120,9 @@
     padding-bottom: 30px;
   }
 
-  .single-venue .hentry .hentry {
+  .single-venue .hentry .hentry,
+  .single-tour .hentry .hentry,
+  .single-artist .hentry .hentry {
     padding-bottom: 0px;
   }
 
