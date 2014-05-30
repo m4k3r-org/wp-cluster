@@ -50,7 +50,7 @@
           <span class="event_credit">
             <?php
               /**
-               * @todo print_credit not defined for now
+               * @todo Add credit
                */
               //echo $event[ 'attributes' ][ 'print_credit' ]; ?>
           </span>

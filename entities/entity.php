@@ -168,6 +168,7 @@ namespace DiscoDonniePresents {
       public function load_images() {
 
         $args = array(
+            'post_mime_type' => 'image',
             'post_type' => 'attachment',
             'posts_per_page' => -1,
             'post_parent' => $this->_id,
