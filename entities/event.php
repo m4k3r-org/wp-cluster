@@ -16,6 +16,12 @@ namespace DiscoDonniePresents {
        *
        * @var type
        */
+      public $_meta_key = 'event';
+
+      /**
+       *
+       * @var type
+       */
       public $_venue;
 
       /**
@@ -64,7 +70,7 @@ namespace DiscoDonniePresents {
         if ( $artists = $this->meta('artists') ) {
 
           foreach( (array)$artists as $artist_id ) {
-            $_artists[] = new Artist( $artist_id );
+            $_artists[] = new Artist( $artist_id, false );
           }
 
         }
@@ -72,6 +78,10 @@ namespace DiscoDonniePresents {
         return $_artists;
       }
 
+      /**
+       *
+       * @return \DiscoDonniePresents\Tour
+       */
       private function load_tour() {
         return new Tour( $this->meta('tour') );
       }

@@ -16,6 +16,12 @@ namespace DiscoDonniePresents {
        *
        * @var type
        */
+      public $_meta_key = 'venue';
+
+      /**
+       *
+       * @var type
+       */
       public $_events;
 
       /**
@@ -30,19 +36,6 @@ namespace DiscoDonniePresents {
         }
 
         $this->transform();
-      }
-
-      /**
-       *
-       * @return type
-       */
-      public function events( $args = array() ) {
-
-        if ( empty( $this->_events ) ) {
-          $this->_events = $this->load_events( $args );
-        }
-
-        return $this->_events;
       }
 
       /**

@@ -10,7 +10,13 @@ namespace DiscoDonniePresents {
        *
        * @var type
        */
-      public $_type = 'artists';
+      public $_type = 'artist';
+
+      /**
+       *
+       * @var type 
+       */
+      public $_meta_key = 'artists';
 
       /**
        *
@@ -30,23 +36,6 @@ namespace DiscoDonniePresents {
         }
 
       }
-
-      /**
-       *
-       * @param type $args
-       * @return type
-       */
-      public function events( $args = array() ) {
-
-        if ( empty( $this->_events ) ) {
-          $this->_events = $this->load_events( $args );
-        }
-
-        return $this->_events;
-      }
-
     }
-
   }
-
 }

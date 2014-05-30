@@ -20,6 +20,7 @@
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/venue.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/artist.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/tour.php' );
+@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/imagegallery.php' );
 
 // UD_Tests::http_methods( 'http://' );
 

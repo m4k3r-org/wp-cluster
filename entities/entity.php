@@ -195,7 +195,7 @@ namespace DiscoDonniePresents {
           'posts_per_page' => -1,
           'meta_query' => array(
               array(
-                  'key' => $this->_type,
+                  'key' => $this->_meta_key,
                   'value' => $this->_id
               ),
               $period
@@ -218,6 +218,20 @@ namespace DiscoDonniePresents {
 
         return false;
 
+      }
+
+      /**
+       *
+       * @param type $args
+       * @return type
+       */
+      public function events( $args = array() ) {
+
+        if ( empty( $this->_events ) ) {
+          $this->_events = $this->load_events( $args );
+        }
+
+        return $this->_events;
       }
 
       /**
