@@ -22,20 +22,15 @@
         <li class="visible-desktop link"><a href="#section_comments"><i class="icon-comments-blue icon-dd"></i> Comments</a></li>
       <?php } ?>
 
-      <?php if( $event->venue()->meta('locationGoogleMap') ) { ?>
+      <?php if( $imageGallery->event()->venue()->meta('locationGoogleMap') ) { ?>
         <li class="visible-desktop link"><a href="#section_map"><i class="hdp_venue icon-dd"></i> Location Map</a></li>
       <?php } ?>
 
     </ul>
 
     <ul class="dd_side_panel_actions">
-      <?php $time = strtotime( date( 'Y-m-d', current_time( 'timestamp' ) ) . ' 00:00:01 +3 hour' );
-      if( $event->meta('urlTicket') && strtotime( $event->meta('dateStart') ) > $time ) { ?>
-        <li class=""><a class="btn btn-blue" href="<?php echo $event->meta('urlTicket'); ?>" <?php if ($event->meta( 'disable_cross_domain_tracking' ) !== 'true') { ?>onclick="_gaq.push(['_link', '<?php echo $event->meta('urlTicket'); ?>']); return false;"<?php } ?>>Buy Tickets</a></li>
-      <?php } ?>
-
-      <?php if( $event->meta('urlRsvp') ) { ?>
-        <li class=""><a class="btn btn-purple" href="<?php echo $event->meta('urlRsvp'); ?>">RSVP On Facebook</a></li>
+      <?php if( $imageGallery->meta('isBasedOnUrl') ) { ?>
+        <li class=""><a class="btn btn-purple" href="<?php echo $imageGallery->meta('isBasedOnUrl'); ?>">View on Facebook</a></li>
       <?php } ?>
     </ul>
 
@@ -51,7 +46,7 @@
       <header class="entry-title-wrapper">
         <?php flawless_breadcrumbs(); ?>
         <?php flawless_page_title(); ?>
-        <p class="event_tagline"><?php echo $event->post('post_excerpt'); ?>
+        <p class="event_tagline"><?php echo $imageGallery->post('post_excerpt'); ?>
           <span class="event_credit">
             <?php
               /**
@@ -65,32 +60,32 @@
       <hr class="dotted"/>
 
       <div class="poster-iphone hidden-desktop">
-        <?php echo wp_get_attachment_image( $event->meta('posterImage'), $size = 'sidebar_poster' ); ?>
+        <?php echo wp_get_attachment_image( $imageGallery->meta('primaryImageOfPage'), $size = 'sidebar_poster' ); ?>
       </div>
 
       <hr class="dotted hidden-desktop"/>
 
-      <div id="section_event_details" class="inner">
+      <div id="section_gallery_details" class="inner">
 
         <div class="event_meta_wrapper row-fluid">
 
           <div class="span6">
 
             <span class="event_meta_label"><i class="hdp_event_date icon-dd"></i> <?php _e('Date'); ?></span>
-            <span class="event_meta_value"><?php echo $event->meta('eventDateHuman'); ?></span>
+            <span class="event_meta_value"><?php echo $imageGallery->event()->meta('eventDateHuman'); ?></span>
 
             <span class="event_meta_label"><i class="hdp_event_time icon-dd"></i> <?php _e('Time'); ?></span>
-            <span class="event_meta_value"><?php echo $event->meta('eventTimeHuman'); ?></span>
+            <span class="event_meta_value"><?php echo $imageGallery->event()->meta('eventTimeHuman'); ?></span>
 
             <span class="event_meta_label"><i class="hdp_age_limit icon-dd"></i> <?php _e('Age Limit'); ?></span>
-            <span class="event_meta_value"><?php echo $event->taxonomies( 'age-limit' ); ?></span>
+            <span class="event_meta_value"><?php echo $imageGallery->event()->taxonomies( 'age-limit' ); ?></span>
 
             <span class="event_meta_label"><i class="hdp_venue icon-dd"></i> <?php _e('Venue'); ?></span>
             <span class="event_meta_value">
-              <a href="<?php echo get_permalink( $event->venue()->post( 'ID' ) ); ?>">
-                <?php echo $event->venue()->post( 'post_title' ); ?>
+              <a href="<?php echo get_permalink( $imageGallery->event()->venue()->post( 'ID' ) ); ?>">
+                <?php echo $imageGallery->event()->venue()->post( 'post_title' ); ?>
               </a><br />
-              <?php echo $event->venue()->taxonomies( 'city' ); ?>, <?php echo $event->venue()->taxonomies( 'state' ); ?>
+              <?php echo $imageGallery->event()->venue()->taxonomies( 'city' ); ?>, <?php echo $imageGallery->event()->venue()->taxonomies( 'state' ); ?>
             </span>
 
           </div>
@@ -98,20 +93,20 @@
           <div class="span6">
 
             <span class="event_meta_label"><i class="hdp_type icon-dd"></i> <?php _e('Type'); ?></span>
-            <span class="event_meta_value"><?php echo $event->taxonomies( 'event-type' ); ?></span>
+            <span class="event_meta_value"><?php echo $imageGallery->event()->taxonomies( 'event-type' ); ?></span>
 
             <span class="event_meta_label"><i class="hdp_genre icon-dd"></i> <?php _e('Genre'); ?></span>
-            <span class="event_meta_value"><?php echo $event->genre(); ?></span>
+            <span class="event_meta_value"><?php echo $imageGallery->event()->genre(); ?></span>
 
             <span class="event_meta_label"><i class="hdp_tour icon-dd"></i> <?php _e('Tour'); ?></span>
             <span class="event_meta_value">
-              <a href="<?php echo get_permalink( $event->tour()->post( 'ID' ) ); ?>">
-                <?php echo $event->tour()->post( 'post_title' ); ?>
+              <a href="<?php echo get_permalink( $imageGallery->event()->tour()->post( 'ID' ) ); ?>">
+                <?php echo $imageGallery->event()->tour()->post( 'post_title' ); ?>
               </a>
             </span>
 
             <span class="event_meta_label"><i class="hdp_artist icon-dd"></i> <?php _e('Artist'); ?></span>
-            <span class="event_meta_value"><?php echo $event->artists(); ?></span>
+            <span class="event_meta_value"><?php echo $imageGallery->event()->artists(); ?></span>
 
           </div>
 
@@ -123,27 +118,25 @@
 
           <?php the_content( 'More Info' ); ?>
 
-          <?php /*Not supported yet*/ if( 0 /*$event[ 'images' ]*/ ) { ?>
-            <div class="gallery gallery-columns-0">
-          <?php foreach( $event[ 'images' ] as $image ) {
+          <div class="gallery gallery-columns-0">
+          <?php foreach( (array)$imageGallery->images() as $image ) {
             $image_url = wp_get_attachment_image_src( $image->ID, 'full' );
             $image_url = $image_url[ '0' ]; ?>
             <div class="gallery-item"><a href="<?php echo $image_url; ?>" rel="gallery"><?php echo wp_get_attachment_image( $image->ID, 'gallery' ); ?></a></div>
           <?php } ?>
           </div>
-          <?php } ?>
 
         </div>
 
       </div>
 
-      <?php if( post_type_supports( $event->type(), 'comments' ) && $event->post('comment_status') == 'open' ) { ?>
+      <?php if( post_type_supports( $imageGallery->type(), 'comments' ) && $imageGallery->post('comment_status') == 'open' ) { ?>
         <div id="section_comments" class="inner">
         <?php comments_template(); ?>
       </div>
       <?php } ?>
 
-      <?php if( $event->venue()->meta('locationGoogleMap') ) { ?>
+      <?php if( $imageGallery->event()->venue()->meta('locationGoogleMap') ) { ?>
         <div id="section_map" class="inner not-for-iphone not-for-ipad">
         <div id="event_location" style="height: 400px; width: 100%;"></div>
       </div>
@@ -158,6 +151,6 @@
 
 </div>
 
-<?php echo '<script type="text/javascript">var hdp_current_event = jQuery.parseJSON( ' . json_encode( json_encode( $event ) ) . ' ); </script>'; ?>
+<?php echo '<script type="text/javascript">var hdp_current_event = jQuery.parseJSON( ' . json_encode( json_encode( $imageGallery->event() ) ) . ' ); </script>'; ?>
 
 <?php get_footer(); ?>

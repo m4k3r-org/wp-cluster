@@ -114,6 +114,10 @@ namespace DiscoDonniePresents {
        * @return type
        */
       public function tour() {
+        if ( empty( $this->_tour ) ) {
+          $this->_tour = $this->load_tour();
+        }
+
         return $this->_tour;
       }
 
@@ -158,6 +162,12 @@ namespace DiscoDonniePresents {
        */
       public function genre() {
         $_genre = array();
+
+        if ( empty( $this->_artists ) ) {
+
+          $this->_artists = $this->load_artists();
+
+        }
 
         foreach( $this->_artists as $artist ) {
           if ( $artist->taxonomies( 'genre', 'raw' ) ) {

@@ -415,7 +415,7 @@ class hddp extends Flawless_F {
       'attributes'                => $attributes,
       'manage_options'            => 'manage_options',
       'page_template'             => array( '_template-all-events.php' ),
-      'event_related_post_types'  => array( 'event', 'hdp_video', 'hdp_photo_gallery' ),
+      'event_related_post_types'  => array( 'event', 'hdp_video', 'imagegallery' ),
       'dynamic_filter_post_types' => array( 'hdp_photo_gallery', 'hdp_event', 'hdp_video' )
     ), get_option( 'hddp_options' ) );
 
@@ -548,7 +548,7 @@ class hddp extends Flawless_F {
 
     add_filter( 'single_template', function ( $template ) {
 
-      if ( is_singular('event') ) {
+      if ( is_singular('event') || is_singular('imagegallery') ) {
         add_filter( 'body_class', function ( $classes ) {
           return array_merge( $classes, array( 'single_event_page' ) );
         } );

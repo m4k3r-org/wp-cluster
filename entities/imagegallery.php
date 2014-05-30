@@ -33,6 +33,8 @@ namespace DiscoDonniePresents {
 
         if ( $preload ) {
           $this->_event = $this->load_event();
+
+          $this->_images = $this->load_images();
         }
 
       }
@@ -57,6 +59,20 @@ namespace DiscoDonniePresents {
         }
 
         return $this->_event;
+      }
+
+      /**
+       *
+       * @return type
+       */
+      public function images() {
+
+        if ( empty( $this->_images ) ) {
+          $this->_images = $this->load_images();
+        }
+
+        return $this->_images;
+
       }
 
     }

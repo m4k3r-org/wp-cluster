@@ -163,6 +163,23 @@ namespace DiscoDonniePresents {
 
       /**
        *
+       * @return type
+       */
+      public function load_images() {
+
+        $args = array(
+            'post_type' => 'attachment',
+            'posts_per_page' => -1,
+            'post_parent' => $this->_id,
+            'exclude' => get_post_thumbnail_id( $this->_id )
+        );
+
+        return get_posts($args);
+
+      }
+
+      /**
+       *
        * @param type $options
        * @return \DiscoDonniePresents\Event|boolean
        */
