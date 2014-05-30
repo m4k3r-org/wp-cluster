@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<?php get_template_part( 'attention', 'tour' ); ?>
+<?php get_template_part( 'attention', 'artist' ); ?>
 
 <?php
   $artist = new \DiscoDonniePresents\Artist( get_the_ID(), false ); the_post();

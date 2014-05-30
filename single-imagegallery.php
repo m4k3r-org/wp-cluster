@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<?php get_template_part( 'attention', 'event' ); ?>
+<?php get_template_part( 'attention', 'imagegallery' ); ?>
 
 <?php $imageGallery = new \DiscoDonniePresents\ImageGallery( get_the_ID(), false ); the_post(); ?>
 

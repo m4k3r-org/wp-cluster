@@ -21,6 +21,7 @@
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/artist.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/tour.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/imagegallery.php' );
+@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/video.php' );
 
 // UD_Tests::http_methods( 'http://' );
 
@@ -548,7 +549,7 @@ class hddp extends Flawless_F {
 
     add_filter( 'single_template', function ( $template ) {
 
-      if ( is_singular('event') || is_singular('imagegallery') ) {
+      if ( is_singular('event') || is_singular('imagegallery') || is_singular('videoobject') ) {
         add_filter( 'body_class', function ( $classes ) {
           return array_merge( $classes, array( 'single_event_page' ) );
         } );
