@@ -58,6 +58,11 @@
             "event",
             "creator"
           ]
+        },
+        "images": {
+          "fields": [
+            "primaryImageOfPage"
+          ]
         }
       }
     }
@@ -94,5 +99,10 @@
         "posts_per_page": -1
       }
     },
+    "primaryImageOfPage": {
+      "name": "Primary Image",
+      "type": "image_advanced",
+      "desc": "Upload or choose a high resolution primary image."
+    }
   }
 }
