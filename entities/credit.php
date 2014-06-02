@@ -87,7 +87,15 @@ namespace DiscoDonniePresents {
 
         $query = get_posts( $args );
 
-        return $query;
+        $_photos = array();
+
+        if ( !empty( $query ) ) {
+          foreach( $query as $_photo ) {
+            $_photos[] = new ImageGallery( $_photo->ID, false );
+          }
+        }
+
+        return $_photos;
 
       }
 
@@ -109,7 +117,15 @@ namespace DiscoDonniePresents {
 
         $query = get_posts( $args );
 
-        return $query;
+        $_videos = array();
+
+        if ( !empty( $query ) ) {
+          foreach( $query as $_video ) {
+            $_videos[] = new ImageGallery( $_video->ID, false );
+          }
+        }
+
+        return $_videos;
 
       }
     }

@@ -4,7 +4,7 @@
 
 <?php
   $credit = new \DiscoDonniePresents\Credit( get_the_ID(), false ); the_post();
-  echo '<pre>'; print_r( $credit ); echo '</pre>';
+//  echo '<pre>'; print_r( $credit ); echo '</pre>';
 ?>
 
 <?php $image = wp_get_attachment_image( $credit->meta('logo'), $size = 'sidebar_poster' ); ?>
@@ -23,14 +23,14 @@
       <li class="visible-desktop link first ui-tabs-selected"><a href="#section_credit_details"><i class="icon-info-blue icon-dd"></i> Info</a></li>
 
       <li class="visible-desktop link">
-        <a href="#section_photos">
+        <a href="#section_hdp_photo_gallery">
           <i class="icon-hdp_photo_gallery icon-dd"></i> <?php _e('Photos'); ?>
           <span class="comment_count"><?php echo count( $credit->photos() ); ?></span>
         </a>
       </li>
 
       <li class="visible-desktop link">
-        <a href="#section_videos">
+        <a href="#section_hdp_video">
           <i class="icon-hdp_video icon-dd"></i> <?php _e('Videos'); ?>
           <span class="comment_count"><?php echo count( $credit->videos() ); ?></span>
         </a>
@@ -86,17 +86,57 @@
 
       </div>
 
-      <div id="section_photos">
+      <div id="section_hdp_photo_gallery">
         <h1><?php echo $credit->post('post_title'); ?> <?php _e('Photos'); ?></h1>
 
+        <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_photo_gallery">
+          <div class="df_element hdp_results clearfix">
+            <ul class="df_element hdp_results_items">
 
+              <?php if ( $credit->photos() ): ?>
+
+              <?php
+                foreach( $credit->photos() as $photo ) {
+                  include( locate_template('templates/loop/imagegallery.php') );
+                }
+              ?>
+
+              <?php else: ?>
+
+              <li><?php _e( 'No photos found' ); ?></li>
+
+              <?php endif; ?>
+
+            </ul>
+          </div>
+        </div>
 
       </div>
 
-      <div id="section_videos">
-        <h1><?php echo $credit->post('post_title'); ?> <?php _e('Photos'); ?></h1>
+      <div id="section_hdp_video">
+        <h1><?php echo $credit->post('post_title'); ?> <?php _e('Videos'); ?></h1>
 
+        <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_video">
+          <div class="df_element hdp_results clearfix">
+            <ul class="df_element hdp_results_items">
 
+              <?php if ( $credit->videos() ): ?>
+
+              <?php
+                foreach( $credit->videos() as $video ) {
+                  include( locate_template('templates/loop/videoobject.php') );
+                }
+              ?>
+
+              <?php else: ?>
+
+              <li><?php _e( 'No videos found' ); ?></li>
+
+              <?php endif; ?>
+
+            </ul>
+          </div>
+        </div>
 
       </div>
 
