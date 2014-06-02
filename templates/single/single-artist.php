@@ -83,7 +83,7 @@
 
               <?php
                 foreach( $artist->events() as $event ) {
-                  include( locate_template('loop-event.php') );
+                  include( locate_template('templates/loop/event.php') );
                 }
               ?>
 

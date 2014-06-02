@@ -4,7 +4,7 @@
 
 <?php $event = new \DiscoDonniePresents\Event( get_the_ID() ); the_post(); ?>
 
-<?php echo '<pre>'; print_r( $event ); echo '</pre>'; ?>
+<?php //echo '<pre>'; print_r( $event ); echo '</pre>'; ?>
 
 <div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" itemscope itemtype="http://schema.org/Event">
 
@@ -51,15 +51,7 @@
       <header class="entry-title-wrapper">
         <?php flawless_breadcrumbs(); ?>
         <?php flawless_page_title(); ?>
-        <p class="event_tagline"><?php echo $event->post('post_excerpt'); ?>
-          <span class="event_credit">
-            <?php
-              /**
-               * @todo print_credit not defined for now
-               */
-              //echo $event[ 'attributes' ][ 'print_credit' ]; ?>
-          </span>
-        </p>
+        <p class="event_tagline"><?php echo $event->post('post_excerpt'); ?></p>
       </header>
 
       <hr class="dotted"/>
