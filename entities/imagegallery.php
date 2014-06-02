@@ -26,6 +26,18 @@ namespace DiscoDonniePresents {
 
       /**
        *
+       * @var type
+       */
+      public $_images;
+
+      /**
+       *
+       * @var type
+       */
+      public $_credit;
+
+      /**
+       *
        * @param type $id
        */
       public function __construct($id = null, $preload = true) {
@@ -35,6 +47,8 @@ namespace DiscoDonniePresents {
           $this->_event = $this->load_event();
 
           $this->_images = $this->load_images();
+
+          $this->_credit = $this->load_credit();
         }
 
       }
@@ -44,7 +58,14 @@ namespace DiscoDonniePresents {
        * @return type
        */
       public function load_event() {
-        return $this->_event = new Event( $this->meta( 'event' ), false );
+        return new Event( $this->meta( 'event' ), false );
+      }
+
+      /**
+       *
+       */
+      public function load_credit() {
+        return new Credit( $this->meta( 'creator' ), false );
       }
 
       /**
@@ -52,13 +73,27 @@ namespace DiscoDonniePresents {
        * @param type $args
        * @return type
        */
-      public function event( $args = array() ) {
+      public function event() {
 
         if ( empty( $this->_event ) ) {
           $this->_event = $this->load_event();
         }
 
         return $this->_event;
+      }
+
+      /**
+       *
+       * @param type $args
+       * @return type
+       */
+      public function credit() {
+
+        if ( empty( $this->_credit ) ) {
+          $this->_credit = $this->load_credit();
+        }
+
+        return $this->_credit;
       }
 
       /**

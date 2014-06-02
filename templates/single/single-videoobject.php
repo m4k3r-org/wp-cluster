@@ -48,11 +48,7 @@
         <?php flawless_page_title(); ?>
         <p class="event_tagline"><?php echo $video->post('post_excerpt'); ?>
           <span class="event_credit">
-            <?php
-              /**
-               * @todo Add credit
-               */
-              //echo $event[ 'attributes' ][ 'print_credit' ]; ?>
+            <?php _e('Videos by'); ?> <a href="<?php echo get_permalink( $video->credit()->post('ID') ); ?>" target="_blank"><?php echo $video->credit()->post('post_title'); ?></a>
           </span>
         </p>
       </header>

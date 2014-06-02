@@ -26,6 +26,12 @@ namespace DiscoDonniePresents {
 
       /**
        *
+       * @var type
+       */
+      public $_credit;
+
+      /**
+       *
        * @param type $id
        */
       public function __construct($id = null, $preload = true) {
@@ -33,8 +39,31 @@ namespace DiscoDonniePresents {
 
         if ( $preload ) {
           $this->_event = $this->load_event();
+
+          $this->_credit = $this->load_credit();
         }
 
+      }
+
+      /**
+       *
+       */
+      public function load_credit() {
+        return new Credit( $this->meta( 'creator' ), false );
+      }
+
+      /**
+       *
+       * @param type $args
+       * @return type
+       */
+      public function credit() {
+
+        if ( empty( $this->_credit ) ) {
+          $this->_credit = $this->load_credit();
+        }
+
+        return $this->_credit;
       }
 
       /**
