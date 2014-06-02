@@ -38,6 +38,18 @@ namespace DiscoDonniePresents {
 
       /**
        *
+       * @var type
+       */
+      public $_photo;
+
+      /**
+       *
+       * @var type
+       */
+      public $_video;
+
+      /**
+       *
        * @param type $id
        */
       public function __construct( $id = null, $preload = true ) {
@@ -49,6 +61,10 @@ namespace DiscoDonniePresents {
           $this->_artists = $this->load_artists();
 
           $this->_tour    = $this->load_tour();
+
+          $this->_photo   = $this->load_photo();
+
+          $this->_video   = $this->load_video();
         }
 
         $this->apply_formatting();
@@ -60,6 +76,42 @@ namespace DiscoDonniePresents {
        */
       public function load_venue() {
         return new Venue( $this->meta('venue'), false );
+      }
+
+      /**
+       *
+       */
+      public function load_photo() {
+
+        $photo = get_posts( array(
+            'post_type' => 'imagegallery',
+            'meta_key' => 'event',
+            'meta_value' => $this->_id,
+            'posts_per_page' => 1
+        ) );
+
+        if ( !empty( $photo ) ) return new ImageGallery( $photo[0]->ID, false );
+
+        return false;
+
+      }
+
+      /**
+       *
+       */
+      public function load_video() {
+
+        $video = get_posts( array(
+            'post_type' => 'videoobject',
+            'meta_key' => 'event',
+            'meta_value' => $this->_id,
+            'posts_per_page' => 1
+        ) );
+
+        if ( !empty( $video ) ) return new Video( $video[0]->ID, false );
+
+        return false;
+
       }
 
       /**
@@ -119,6 +171,30 @@ namespace DiscoDonniePresents {
         }
 
         return $this->_tour;
+      }
+
+      /**
+       *
+       * @return type
+       */
+      public function photo() {
+        if ( empty( $this->_photo ) ) {
+          $this->_photo = $this->load_photo();
+        }
+
+        return $this->_photo;
+      }
+
+      /**
+       *
+       * @return type
+       */
+      public function video() {
+        if ( empty( $this->_video ) ) {
+          $this->_video = $this->load_video();
+        }
+
+        return $this->_video;
       }
 
       /**

@@ -130,13 +130,13 @@
       </div>
 
       <?php if( post_type_supports( $event->type(), 'comments' ) && $event->post('comment_status') == 'open' ) { ?>
-        <div id="section_comments" class="inner">
+      <div id="section_comments" class="inner">
         <?php comments_template(); ?>
       </div>
       <?php } ?>
 
       <?php if( $event->venue()->meta('locationGoogleMap') ) { ?>
-        <div id="section_map" class="inner not-for-iphone not-for-ipad">
+      <div id="section_map" class="inner not-for-iphone not-for-ipad">
         <div id="event_location" style="height: 400px; width: 100%;"></div>
       </div>
       <?php } ?>

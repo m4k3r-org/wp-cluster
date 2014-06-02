@@ -29,6 +29,20 @@
         </a>
       </li>
 
+      <li class="visible-desktop link">
+        <a href="#section_hdp_photo_gallery">
+          <i class="icon-hdp_photo_gallery icon-dd"></i> <?php _e('Photos'); ?>
+          <span class="comment_count"><?php echo count( $venue->photos() ); ?></span>
+        </a>
+      </li>
+
+      <li class="visible-desktop link">
+        <a href="#section_hdp_video">
+          <i class="icon-hdp_video icon-dd"></i> <?php _e('Videos'); ?>
+          <span class="comment_count"><?php echo count( $venue->videos() ); ?></span>
+        </a>
+      </li>
+
       <?php if( $venue->meta('geo_located') ) { ?>
        <li class="visible-desktop link"><a href="#section_map"><i class="hdp_venue icon-dd"></i> Location Map</a></li>
       <?php } ?>
@@ -111,6 +125,60 @@
                   include( locate_template('templates/loop/event.php') );
                 }
               ?>
+
+              <?php endif; ?>
+
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="section_hdp_photo_gallery">
+        <h1><?php echo $venue->post('post_title'); ?> <?php _e('Photos'); ?></h1>
+
+        <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_photo_gallery">
+          <div class="df_element hdp_results clearfix">
+            <ul class="df_element hdp_results_items">
+
+              <?php if ( $venue->photos() ): ?>
+
+              <?php
+                foreach( $venue->photos() as $photo ) {
+                  include( locate_template('templates/loop/imagegallery.php') );
+                }
+              ?>
+
+              <?php else: ?>
+
+              <li><?php _e( 'No photos found' ); ?></li>
+
+              <?php endif; ?>
+
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="section_hdp_video">
+        <h1><?php echo $venue->post('post_title'); ?> <?php _e('Videos'); ?></h1>
+
+        <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_video">
+          <div class="df_element hdp_results clearfix">
+            <ul class="df_element hdp_results_items">
+
+              <?php if ( $venue->videos() ): ?>
+
+              <?php
+                foreach( $venue->videos() as $video ) {
+                  include( locate_template('templates/loop/videoobject.php') );
+                }
+              ?>
+
+              <?php else: ?>
+
+              <li><?php _e( 'No videos found' ); ?></li>
 
               <?php endif; ?>
 

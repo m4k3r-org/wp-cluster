@@ -41,6 +41,52 @@ namespace DiscoDonniePresents {
       /**
        *
        */
+      public function photos() {
+
+        if ( empty( $this->_events ) ) {
+          $this->_events = $this->load_events();
+        }
+
+        if ( empty( $this->_events ) ) return array();
+
+        $_photos = array();
+
+        foreach( $this->_events as $_event ) {
+          if ( $_photo = $_event->photo() ) {
+            $_photos[] = $_photo;
+          }
+        }
+
+        return $_photos;
+
+      }
+
+      /**
+       *
+       */
+      public function videos() {
+
+        if ( empty( $this->_events ) ) {
+          $this->_events = $this->load_events();
+        }
+
+        if ( empty( $this->_events ) ) return array();
+
+        $_videos = array();
+
+        foreach( $this->_events as $_event ) {
+          if ( $_video = $_event->video() ) {
+            $_videos[] = $_video;
+          }
+        }
+
+        return $_videos;
+
+      }
+
+      /**
+       *
+       */
       private function transform() {
 
         if ( $this->meta('locationGoogleMap') ) {
