@@ -12,6 +12,16 @@ namespace DiscoDonniePresents {
      */
     class EventTaxonomy extends Taxonomy {
 
+      public function __construct($id = false, $taxonomy = false) {
+        parent::__construct($id, $taxonomy);
+
+        $this->load_data();
+
+        echo '<pre>';
+        print_r( $this );
+        echo '</pre>';
+      }
+
       /**
        *
        * @var type
@@ -33,26 +43,18 @@ namespace DiscoDonniePresents {
       /**
        *
        */
-      public function events() {
+      public function load_data() {
 
         $_objects = get_posts(array(
-            'post_type' => 'event',
-            'posts_per_page' => -1,
-            'tax_query' => array(
-              array(
-                'taxonomy' => $this->_term->taxonomy,
-                'field' => 'slug',
-                'terms' => $this->_term->slug
-              )
-            ),
-//            'meta_query' => array(
-//              array(
-//                'key' => 'dateStart',
-//                'value' => date( 'Y-m-d H:i' ),
-//                'compare' => '>=',
-//                'type' => 'DATE'
-//              )
-//            )
+          'post_type' => 'event',
+          'posts_per_page' => -1,
+          'tax_query' => array(
+            array(
+              'taxonomy' => $this->_term->taxonomy,
+              'field' => 'slug',
+              'terms' => $this->_term->slug
+            )
+          )
         ));
 
         if ( !empty( $_objects ) ) {
@@ -65,17 +67,44 @@ namespace DiscoDonniePresents {
 
         }
 
+        if ( !empty( $this->_events ) ) {
+
+          foreach( $this->_events as $_event ) {
+
+            if ( $_photo = $_event->photo() ) {
+              $this->_photos[] = $_photo;
+            }
+
+            if ( $_video = $_event->video() ) {
+              $this->_videos[] = $_video;
+            }
+
+          }
+
+        }
+
       }
 
       /**
        *
        */
-      public function photos() {}
+      public function events() {
+        return $this->_events;
+      }
 
       /**
        *
        */
-      public function videos() {}
+      public function photos() {
+        return $this->_photos;
+      }
+
+      /**
+       *
+       */
+      public function videos() {
+        return $this->_videos;
+      }
 
     }
 
