@@ -16,10 +16,6 @@ namespace DiscoDonniePresents {
         parent::__construct($id, $taxonomy);
 
         $this->load_data();
-
-        echo '<pre>';
-        print_r( $this );
-        echo '</pre>';
       }
 
       /**
