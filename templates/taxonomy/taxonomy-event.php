@@ -95,6 +95,10 @@
                 }
               ?>
 
+              <?php else: ?>
+
+              <li><?php _e( 'No events found' ); ?></li>
+
               <?php endif; ?>
 
             </ul>

@@ -2,7 +2,7 @@
 
 <?php get_template_part( 'attention', 'taxonomy' ); ?>
 
-<?php $term = new \DiscoDonniePresents\VenueTaxonomy(); ?>
+<?php $term = new \DiscoDonniePresents\ArtistTaxonomy(); ?>
 
 <div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>">
 
