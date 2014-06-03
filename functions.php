@@ -24,6 +24,7 @@
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/video.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/promoter.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/credit.php' );
+@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/event-taxonomy.php' );
 
 // UD_Tests::http_methods( 'http://' );
 

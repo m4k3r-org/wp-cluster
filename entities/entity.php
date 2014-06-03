@@ -315,12 +315,6 @@ namespace DiscoDonniePresents {
       public $_taxonomy;
 
       /**
-       *
-       * @var type
-       */
-      public $_entities;
-
-      /**
        * Init
        */
       public function __construct( $id = false, $taxonomy = false ) {
@@ -334,28 +328,8 @@ namespace DiscoDonniePresents {
         }
 
         $this->_taxonomy = get_taxonomy( $this->_term->taxonomy );
-
-        $this->_entities = $this->load_entities();
-
-      }
-
-      /**
-       *
-       */
-      private function load_entities() {
-
-        if ( !$this->_taxonomy ) return false;
-
-        foreach ( $this->_taxonomy->object_type as $_post_type ) {
-          echo '<pre>';
-          print_r( $_post_type );
-          echo '</pre>';
-        }
-
       }
 
     }
-
   }
-
 }
