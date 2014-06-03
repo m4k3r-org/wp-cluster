@@ -2,8 +2,14 @@
 
 namespace DiscoDonniePresents {
 
+  /**
+   * Prevent re-declaration
+   */
   if ( !class_exists( 'DiscoDonniePresents\Entity' ) ) {
 
+    /**
+     * Post Object Util
+     */
     class Entity {
 
       /**
@@ -31,7 +37,7 @@ namespace DiscoDonniePresents {
       public $_taxonomies;
 
       /**
-       *
+       * Init
        * @param type $id
        */
       public function __construct( $id = null ) {
@@ -51,7 +57,7 @@ namespace DiscoDonniePresents {
       }
 
       /**
-       *
+       * Load post data
        * @return type
        */
       private function load_post() {
@@ -59,7 +65,7 @@ namespace DiscoDonniePresents {
       }
 
       /**
-       *
+       * Load meta data
        * @return type
        */
       private function load_meta() {
@@ -67,7 +73,7 @@ namespace DiscoDonniePresents {
       }
 
       /**
-       *
+       * Load taxonomies
        * @return boolean
        */
       private function load_taxonomies() {
@@ -116,21 +122,24 @@ namespace DiscoDonniePresents {
       }
 
       /**
-       *
+       * Return type of current object
+       * @return type
        */
       public function type() {
         return $this->_type;
       }
 
       /**
-       *
+       * Return post data by field
+       * @param type $field
+       * @return type
        */
       public function post( $field ) {
         return $this->_post->{$field};
       }
 
       /**
-       *
+       * Return taxonomies by parameters
        * @param type $slug
        * @param type $format
        * @param type $separator
@@ -162,7 +171,7 @@ namespace DiscoDonniePresents {
       }
 
       /**
-       *
+       * Load images for current object
        * @return type
        */
       public function load_images() {
@@ -180,7 +189,7 @@ namespace DiscoDonniePresents {
       }
 
       /**
-       *
+       * Load events for current meta if exist
        * @param type $options
        * @return \DiscoDonniePresents\Event|boolean
        */
@@ -239,7 +248,7 @@ namespace DiscoDonniePresents {
       }
 
       /**
-       *
+       * Return events if exist
        * @param type $args
        * @return type
        */
@@ -253,7 +262,11 @@ namespace DiscoDonniePresents {
       }
 
       /**
-       *
+       * Convert terms to string and return
+       * @param type $slug
+       * @param type $terms
+       * @param type $separator
+       * @return boolean
        */
       protected function termsToString( $slug, $terms, $separator ) {
         $links = array();
@@ -272,6 +285,72 @@ namespace DiscoDonniePresents {
        * @param type $param
        */
       public function toElastic($param) {
+
+      }
+
+    }
+
+  }
+
+  /**
+   * Prevent re-declaration
+   */
+  if ( !class_exists( 'DiscoDonniePresents\Taxonomy' ) ) {
+
+    /**
+     * Taxonomy object util
+     */
+    class Taxonomy {
+
+      /**
+       *
+       * @var type
+       */
+      public $_term;
+
+      /**
+       *
+       * @var type
+       */
+      public $_taxonomy;
+
+      /**
+       *
+       * @var type
+       */
+      public $_entities;
+
+      /**
+       * Init
+       */
+      public function __construct( $id = false, $taxonomy = false ) {
+
+        if ( !is_tax() ) return;
+
+        if ( !$id || !$taxonomy ) {
+          $this->_term = get_queried_object();
+        } else {
+          $this->_term = get_term_by( 'id', $id, $taxonomy );
+        }
+
+        $this->_taxonomy = get_taxonomy( $this->_term->taxonomy );
+
+        $this->_entities = $this->load_entities();
+
+      }
+
+      /**
+       *
+       */
+      private function load_entities() {
+
+        if ( !$this->_taxonomy ) return false;
+
+        foreach ( $this->_taxonomy->object_type as $_post_type ) {
+          echo '<pre>';
+          print_r( $_post_type );
+          echo '</pre>';
+        }
 
       }
 
