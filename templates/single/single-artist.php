@@ -25,7 +25,7 @@
       <li class="visible-desktop link">
         <a href="#section_event">
           <i class="icon-hdp_event icon-dd"></i> <?php _e('Events'); ?>
-          <span class="comment_count"><?php echo count( $artist->events( array( 'period' => 'upcoming' ) ) ); ?></span>
+          <span class="comment_count"><?php echo count( $artist->events() ); ?></span>
         </a>
       </li>
 

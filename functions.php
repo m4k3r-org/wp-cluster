@@ -25,6 +25,7 @@
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/promoter.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/credit.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/event-taxonomy.php' );
+@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/venue-taxonomy.php' );
 
 // UD_Tests::http_methods( 'http://' );
 
