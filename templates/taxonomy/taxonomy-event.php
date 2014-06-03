@@ -2,7 +2,9 @@
 
 <?php get_template_part( 'attention', 'taxonomy' ); ?>
 
-<?php $term = new \DiscoDonniePresents\EventTaxonomy(); $term->events(); ?>
+<?php $term = new \DiscoDonniePresents\EventTaxonomy(); echo '<pre>';
+print_r( $term->photos() );
+echo '</pre>'; ?>
 
 <div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>">
 
