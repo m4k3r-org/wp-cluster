@@ -2,9 +2,7 @@
 
 <?php get_template_part( 'attention', 'taxonomy' ); ?>
 
-<?php $term = new \DiscoDonniePresents\EventTaxonomy(); echo '<pre>';
-print_r( $term->photos() );
-echo '</pre>'; ?>
+<?php $term = new \DiscoDonniePresents\EventTaxonomy(); ?>
 
 <div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>">
 
@@ -18,21 +16,21 @@ echo '</pre>'; ?>
       <li class="visible-desktop link">
         <a href="#section_event">
           <i class="icon-hdp_event icon-dd"></i> <?php _e('Events'); ?>
-          <span class="comment_count"><?php echo count( $venue->events( array( 'period' => 'upcoming' ) ) ); ?></span>
+          <span class="comment_count"><?php echo count( $term->events() ); ?></span>
         </a>
       </li>
 
       <li class="visible-desktop link">
         <a href="#section_hdp_photo_gallery">
           <i class="icon-hdp_photo_gallery icon-dd"></i> <?php _e('Photos'); ?>
-          <span class="comment_count"><?php echo count( $venue->photos() ); ?></span>
+          <span class="comment_count"><?php echo count( $term->photos() ); ?></span>
         </a>
       </li>
 
       <li class="visible-desktop link">
         <a href="#section_hdp_video">
           <i class="icon-hdp_video icon-dd"></i> <?php _e('Videos'); ?>
-          <span class="comment_count"><?php echo count( $venue->videos() ); ?></span>
+          <span class="comment_count"><?php echo count( $term->videos() ); ?></span>
         </a>
       </li>
 
@@ -69,55 +67,95 @@ echo '</pre>'; ?>
             </div>
             <hr class="dotted visible-desktop" style="margin-top:5px;"/>
           <?php
-          }
-
-          /** Go through the meta, and print it out */
-          if( isset( $meta[ 'formatted_address' ] ) && is_array( $meta[ 'formatted_address' ] ) && isset( $meta[ 'formatted_address' ][ 0 ] ) && !empty( $meta[ 'formatted_address' ][ 0 ] ) ) {
-            ?>
-            <div class="tax_address">
-              <span>Address:</span>
-              <?php echo $meta[ 'formatted_address' ][ 0 ]; ?>
-            </div> <?php
-          }
-
-          /** Do the loop */
-          $found = false;
-          $map = array(
-            'hdp_website_url'     => 'Official Website',
-            'hdp_facebook_url'    => 'on Facebook',
-            'hdp_twitter_url'     => 'on Twitter',
-            'hdp_google_plus_url' => 'on Google Plus',
-            'hdp_youtube_url'     => 'on YouTube',
-          );
-          foreach ($map as $slug => $text){
-          if( !is_array( $meta ) ) continue;
-          if( !in_array( $slug, array_keys( $meta ) ) ) continue;
-          if( !is_array( $meta[ $slug ] ) || !isset( $meta[ $slug ][ 0 ] ) || trim( $meta[ $slug ][ 0 ] ) == '' ) continue;
-
-          if (!$found){
-          ?>
-          <ul class="tax_meta"> <?php
-            $found = true;
-            } ?>
-
-            <li class="<?php echo $slug; ?>"><a href="<?php echo addcslashes( trim( $meta[ $slug ][ 0 ] ), '"' ); ?>" target="_blank"><?php echo $term->name; ?> <?php echo $text; ?></a></li> <?php
-            }
-            if ($found) {
-            ?>
-            </ul> <?php
-        } ?>
+          } ?>
 
         </div>
 
       </div>
 
-      <?php foreach( (array) $found_content as $post_type => $data ) { ?>
-        <div id="section_<?php echo $post_type; ?>">
-          <h1><?php echo $term->name; ?> <?php echo $post_types_objects[ $post_type ]->labels->name; ?></h1>
+      <div id="section_event">
+        <h1><?php echo $term->_term->name; ?> <?php _e('Events'); ?></h1>
 
-          <?php echo do_shortcode( "[hdp_custom_loop do_shortcode=false post_type={$post_type} per_page=0 {$taxonomy->name}={$term->term_id}] " ); ?>
+        <ul id="hdp_results_header_event" class="hdp_results_header clearfix">
+          <li class="hdp_event_time">Date</li>
+          <li class="hdp_event_name">Name</li>
+          <li class="hdp_event_city">City</li>
+          <li class="hdp_event_state">State</li>
+        </ul>
+
+        <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_event">
+          <div class="df_element hdp_results clearfix">
+            <ul class="df_element hdp_results_items">
+
+              <?php if ( $term->events() ): ?>
+
+              <?php
+                foreach( $term->events() as $event ) {
+                  include( locate_template('templates/loop/event.php') );
+                }
+              ?>
+
+              <?php endif; ?>
+
+            </ul>
+          </div>
         </div>
-      <?php } ?>
+
+      </div>
+
+      <div id="section_hdp_photo_gallery">
+        <h1><?php echo $term->_term->name; ?> <?php _e('Photos'); ?></h1>
+
+        <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_photo_gallery">
+          <div class="df_element hdp_results clearfix">
+            <ul class="df_element hdp_results_items">
+
+              <?php if ( $term->photos() ): ?>
+
+              <?php
+                foreach( $term->photos() as $photo ) {
+                  include( locate_template('templates/loop/imagegallery.php') );
+                }
+              ?>
+
+              <?php else: ?>
+
+              <li><?php _e( 'No photos found' ); ?></li>
+
+              <?php endif; ?>
+
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="section_hdp_video">
+        <h1><?php echo $term->_term->name; ?> <?php _e('Videos'); ?></h1>
+
+        <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_video">
+          <div class="df_element hdp_results clearfix">
+            <ul class="df_element hdp_results_items">
+
+              <?php if ( $term->videos() ): ?>
+
+              <?php
+                foreach( $term->videos() as $video ) {
+                  include( locate_template('templates/loop/videoobject.php') );
+                }
+              ?>
+
+              <?php else: ?>
+
+              <li><?php _e( 'No videos found' ); ?></li>
+
+              <?php endif; ?>
+
+            </ul>
+          </div>
+        </div>
+
+      </div>
 
 
     </div>
