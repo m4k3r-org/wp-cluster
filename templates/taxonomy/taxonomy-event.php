@@ -49,7 +49,7 @@
 
         <header class="entry-title-wrapper term-title-wrapper">
           <?php flawless_breadcrumbs(); ?>
-          <h1 class="entry-title"><?php echo $term->name; ?></h1>
+          <h1 class="entry-title"><?php echo $term->_term->name; ?></h1>
         </header>
 
         <div class="entry-content clearfix">
