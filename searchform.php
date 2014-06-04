@@ -53,7 +53,7 @@ global $flawless;
       debug: true,
       endpoint: 'http://api.discodonniepresents.com/',
       headers: {
-        'x-access-key': 'zkfs-dixy-eejh-wkgg-xzos-gmsy-odvj-owwn'
+        'x-access-key': 'qccj-nxwm-etsk-niuu-lpbx-pern-pwea-xfbu'
       }
     });
 

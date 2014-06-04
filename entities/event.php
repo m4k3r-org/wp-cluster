@@ -34,6 +34,12 @@ namespace DiscoDonniePresents {
        *
        * @var type
        */
+      public $_promoters;
+
+      /**
+       *
+       * @var type
+       */
       public $_tour;
 
       /**
@@ -65,6 +71,8 @@ namespace DiscoDonniePresents {
           $this->_photo   = $this->load_photo();
 
           $this->_video   = $this->load_video();
+
+          $this->_promoters = $this->load_promoters();
         }
 
         $this->apply_formatting();
@@ -128,6 +136,22 @@ namespace DiscoDonniePresents {
         }
 
         return $_artists;
+      }
+
+      /**
+       *
+       */
+      private function load_promoters() {
+        $_promoters = array();
+        if ( $promoters = $this->meta('promoters') ) {
+
+          foreach( (array)$promoters as $promoter_id ) {
+            $_promoters[] = new Promoter( $promoter_id, false );
+          }
+
+        }
+
+        return $_promoters;
       }
 
       /**
@@ -256,6 +280,76 @@ namespace DiscoDonniePresents {
         }
 
         return $this->termsToString( 'genre', $_genre, ', ' );
+
+      }
+
+      /**
+       *
+       * @return type
+       */
+      public function toElasticFormat() {
+
+        $_object = array();
+
+        $photo = wp_get_attachment_image_src( $this->meta('posterImage'), 'full' );
+        $poster = wp_get_attachment_image_src( $this->meta('posterImage'), 'sidebar_poster' );
+
+        $_object[ 'summary' ] = $this->post( 'post_title' );
+        $_object[ 'url' ]     = get_permalink( $this->_id );
+        $_object[ 'description' ] = $this->post( 'post_excerpt' );
+        $_object[ 'start_date' ] = date( 'c', strtotime( $this->meta('dateStart') ) );
+        $_object[ 'end_date' ] = date( 'c', strtotime( $this->meta('dateEnd') ) );
+        $_object[ 'event_type' ] = $this->taxonomies( 'event-type', 'elasticsearch' );
+        $_object[ 'age_restriction' ] = $this->taxonomies( 'age-limit', 'elasticsearch' );
+        $_object[ 'photo' ] = $photo[0];
+        $_object[ 'tickets' ] = $this->meta('urlTicket');
+        $_object[ 'image' ] = array(
+            'poster' => $poster[0]
+        );
+
+        $_object[ 'artists' ] = array();
+
+        foreach( $this->_artists as $_artist ) {
+          $_object[ 'artists' ][] = array(
+              'name' => $_artist->post('post_title'),
+              'url' => get_permalink( $_artist->post('ID') ),
+              'genre' => $_artist->taxonomies( 'genre', 'elasticsearch' ) ? $_artist->taxonomies( 'genre', 'elasticsearch' ) : array()
+          );
+        }
+
+        $_object[ 'promoters' ] = array();
+
+        foreach( $this->_promoters as $_promoter ) {
+          $_object[ 'promoters' ][] = array(
+              'name' => $_promoter->post('post_title'),
+              'url' => get_permalink( $_promoter->post('ID') )
+          );
+        }
+
+        $city = $this->venue()->taxonomies('city', 'elasticsearch');
+        $state = $this->venue()->taxonomies('state', 'elasticsearch');
+        $country = $this->venue()->taxonomies('country', 'elasticsearch');
+        $_object[ 'venue' ] = array(
+          'name' => $this->venue()->post( 'post_title' ),
+          'url' => get_permalink( $this->venue()->post( 'ID' ) ),
+          'address' => array(
+            'full' => $this->venue()->meta( 'locationAddress' ),
+            'city' => $city[0],
+            'state' => $state[0],
+            'country' => $country[0],
+            'geo' => array(
+              'lat' => $this->venue()->meta('latitude'),
+              'lon' => $this->venue()->meta('longitude')
+            )
+          )
+        );
+
+        $_object[ 'tour' ] = array(
+          'name' => $this->tour()->post('post_title'),
+          'url' => get_permalink( $this->tour()->post('ID') )
+        );
+
+        return $_object;
 
       }
 

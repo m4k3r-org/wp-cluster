@@ -7,27 +7,27 @@
   period_field: 'start_date',
   sort_by: 'start_date',
   type: 'event',
-  location_field: 'venues.address.geo',
+  location_field: 'venue.address.geo',
   facets: {
     'artists.name': 'Artist',
-    'venues.address.region': 'State',
-    'venues.address.locality': 'City',
-    'venues.name': 'Venue',
+    'venue.address.state': 'State',
+    'venue.address.city': 'City',
+    'venue.name': 'Venue',
     'promoters.name': 'Promoter',
-    //'hdp_tour_name': 'Tour', no information in object for this
-    'event_type.en-us': 'Type',
-    'genre.en-us': 'Genre',
-    'ageRestriction': 'Age Limit'
+    'tour.name': 'Tour',
+    'event_type': 'Type',
+    'artists.genre': 'Genre',
+    'age_restriction': 'Age Limit'
   },
   return_fields: [
     'start_date',
-    'description.en-us',
-    'summary.en-us',
-    'venues.address.locality',
-    'venues.address.region',
+    'description',
+    'summary',
+    'venue.address.city',
+    'venue.address.state',
     'url',
-    'image.poster.thumbnail',
-    'venues.name',
+    'image.poster',
+    'venue.name',
     'artists.name',
     'tickets'
   ]}" class="elastic_form">

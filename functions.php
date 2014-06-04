@@ -41,6 +41,8 @@ add_action( 'flawless::theme_setup::after', array( 'hddp', 'theme_setup' ) );
 add_action( 'flawless::init_upper', array( 'hddp', 'init_upper' ) );
 add_action( 'flawless::init_lower', array( 'hddp', 'init_lower' ) );
 
+add_filter( 'elasticsearch_indexer_build_document', array( 'hddp', 'build_elastic_document' ), 10, 2 );
+
 /**
  * Functionality for Theme
  * Adding Admin Notices: $hddp[ 'runtime' ][ 'notices' ][ 'error'][] = 'This is a notice';
@@ -1247,6 +1249,19 @@ class hddp extends Flawless_F {
     }
 
     return $content;
+  }
+
+  public function build_elastic_document( $document, $post ) {
+
+    $_entities = array(
+        'event' => '\DiscoDonniePresents\Event'
+    );
+
+    $class = $_entities[$post->post_type];
+
+    $document = new $class( $post->ID );
+
+    return $document->toElasticFormat();
   }
 
 }

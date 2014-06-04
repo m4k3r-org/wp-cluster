@@ -163,6 +163,18 @@ namespace DiscoDonniePresents {
 
             break;
 
+          case 'elasticsearch':
+
+            $_return = array();
+
+            foreach( $this->_taxonomies[ $slug ] as $_term ) {
+              $_return[] = $_term->name;
+            }
+
+            return $_return;
+
+            break;
+
           default: break;
 
         }
@@ -281,11 +293,12 @@ namespace DiscoDonniePresents {
       }
 
       /**
-       *
+       * To Elastic Format
+       * Need to extend by child class
        * @param type $param
        */
-      public function toElastic($param) {
-
+      public function toElasticFormat() {
+        return $this->_post;
       }
 
     }

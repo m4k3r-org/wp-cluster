@@ -42,23 +42,23 @@
               <li>
                 <ul class="hdp_event_collapsed clearfix">
                   <li data-bind="html:moment(fields.start_date[0]).format('LL')" class="hdp_event_date"></li>
-                  <li data-bind="html:fields['description.en-us']" class="hdp_event_title"></li>
-                  <li data-bind="html:fields['venues.address.locality']" class="hdp_event_city"></li>
-                  <li data-bind="html:fields['venues.address.region']" class="hdp_event_state"></li>
+                  <li data-bind="html:fields['summary']" class="hdp_event_title"></li>
+                  <li data-bind="html:fields['venue.address.city']" class="hdp_event_city"></li>
+                  <li data-bind="html:fields['venue.address.state']" class="hdp_event_state"></li>
                 </ul>
                 <ul class="hdp_event_expanded clearfix">
                   <li class="hdp_event_flyer">
                     <a data-bind="attr: {href:fields.url}">
-                      <img data-bind="attr: {src:fields['image.poster.thumbnail']}" class="fixed_size attachment-events_flyer_thumb"/>
+                      <img data-bind="attr: {src:fields['image.poster']}" class="fixed_size attachment-events_flyer_thumb"/>
                     </a>
                   </li>
                   <li class="hdp_event_title">
-                    <a data-bind="html:fields['description.en-us'],attr: {href:fields.url}"></a>
+                    <a data-bind="html:fields['summary'],attr: {href:fields.url}"></a>
                   </li>
                   <li class="hdp_event_date" data-bind="html:'<span>Date:</span> '+moment(fields.start_date[0]).format('LLLL')"></li>
-                  <li class="hdp_event_venue" data-bind="html:'<span>Venue:</span> '+fields['venues.name']"></li>
+                  <li class="hdp_event_venue" data-bind="html:'<span>Venue:</span> '+fields['venue.name']"></li>
                   <li class="hdp_event_artists" data-bind="html:'<span>Artists:</span> '+fields['artists.name']"></li>
-                  <li class="hdp_event_description"><p data-bind="html:fields['summary.en-us']"></p></li>
+                  <li class="hdp_event_description"><p data-bind="html:fields['description']"></p></li>
                   <li class="hdp_event_information">
                     <a class="btn" data-bind="attr: {href:fields.tickets}"><span>Buy Tickets</span></a>
                     <a class="btn" data-bind="attr: {href:fields.url}"><span>More Info</span></a>
