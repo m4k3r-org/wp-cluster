@@ -10,7 +10,7 @@
 <div class="hdp_sort clearfix" id="hdp_sort_event">
   <div data-bind="elasticSortControl:{}" class="hdp_results_sorter_distance df_element df_sorter <?php echo $id; ?>" id="hdp_results_sorter">
     <span class="hdp_sort_text">Sort By:</span>
-    <div class="df_element df_sortable_button df_sortable_active" data-type="event_date_time" data-direction="asc">Date</div>
+    <div class="df_element df_sortable_button df_sortable_active" data-type="start_date" data-direction="asc">Date</div>
     <div class="df_element df_sortable_button" data-type="distance" data-direction="desc">Distance</div>
   </div>
 </div>
