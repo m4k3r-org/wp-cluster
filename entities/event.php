@@ -284,7 +284,7 @@ namespace DiscoDonniePresents {
       }
 
       /**
-       *
+       * ElasticSearch object of Event item
        * @return type
        */
       public function toElasticFormat() {
@@ -338,8 +338,8 @@ namespace DiscoDonniePresents {
             'state' => $state[0],
             'country' => $country[0],
             'geo' => array(
-              'lat' => $this->venue()->meta('latitude'),
-              'lon' => $this->venue()->meta('longitude')
+              'lat' => (float)$this->venue()->meta('latitude'),
+              'lon' => (float)$this->venue()->meta('longitude')
             )
           )
         );
