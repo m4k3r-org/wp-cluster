@@ -40,12 +40,13 @@
   },
   "require": {
     "php": ">=5.3",
-    "matthiasmullie/minify": "master",
     "zaininnari/html-minifier": "master",
-    "siteorigin/panels": "master",
     "usabilitydynamics/lib-installer": "master",
     "usabilitydynamics/lib-layout-engine": "master",
     "usabilitydynamics/lib-ui": "master"
+  },
+  "require-deev": {
+    "siteorigin/panels": "master"
   },
   "repository": {
     "type": "git",
