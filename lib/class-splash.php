@@ -51,6 +51,7 @@ namespace UsabilityDynamics\Theme {
       add_action( 'wp_loaded', array( $this, 'loaded' ), 5, 0 );
 
       add_action( 'admin_print_scripts', array( $this, 'admin_print_scripts' ) );
+      add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 20, 0 );
       add_action( 'the_post', array( $this, 'the_post' ), 20, 0 );
       add_action( 'wp_print_styles', array( $this, 'wp_print_styles' ), 20, 0 );
@@ -58,18 +59,29 @@ namespace UsabilityDynamics\Theme {
       add_action( 'wp_head', array( $this, 'wp_head' ), 20, 0 );
       add_action( 'wp_print_footer_scripts', array( $this, 'wp_print_footer_scripts' ), 20, 0 );
 
-      add_action( 'shutdown', array( $this, 'shutdown' ), 100 );
+      add_action( 'template_redirect', array( $this, 'template_redirect' ), 100 );
 
       if( file_exists( dirname( __DIR__ ) . '/vendor/libraries/autoload.php' ) ) {
         include_once( dirname( __DIR__ ) . '/vendor/libraries/autoload.php' );
       }
 
-      if( class_exists( 'zz\Html\HTMLMinify' ) ) {
-        ob_start( array( $this, 'minify' ) );
-      }
+    }
+
+    private function save_settings() {
+
+      if(!isset($_POST['_sopanels_home_nonce']) || !wp_verify_nonce($_POST['_sopanels_home_nonce'], 'save')) return;
+      if ( empty($_POST['panels_js_complete']) ) return;
+      if(!current_user_can('edit_theme_options')) return;
+
+      $_data = siteorigin_panels_get_panels_data_from_post( $_POST );
+
+      // @todo Save error/home whatever into correct theme mod location.
+      set_theme_mod( 'sop:splash-home', $_data );
+
+      exit( wp_safe_redirect( admin_url( 'edit.php?post_type=page&page=splash-home-editor&updated=true' ) ) );
 
     }
-    
+
     public function wp_head() {
       echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
       echo '<meta property="fb:admins" content="632804651"/>';
@@ -127,8 +139,8 @@ namespace UsabilityDynamics\Theme {
       add_filter('siteorigin_panels_row_style_attributes', array( $this, '_panels_row_style_attributes' ), 20, 2 );
       add_filter('siteorigin_panels_row_attributes', array( $this, '_panels_row_attributes' ), 20, 2 );
 
-      remove_action( 'wp_head', 'siteorigin_panels_print_inline_css', 12 );
-      remove_action( 'wp_footer', 'siteorigin_panels_print_inline_css' );
+      // remove_action( 'wp_head', 'siteorigin_panels_print_inline_css', 12 );
+      // remove_action( 'wp_footer', 'siteorigin_panels_print_inline_css' );
 
     }
 
@@ -137,7 +149,7 @@ namespace UsabilityDynamics\Theme {
      *
      * @return string
      */
-    function minify( &$buffer ) {
+    public function optimize( &$buffer ) {
 
       $buffer = \zz\Html\HTMLMinify::minify( $buffer, array(
         'optimizationLevel' => 1,
@@ -175,13 +187,8 @@ namespace UsabilityDynamics\Theme {
 
     function _panels_row_style_fields($fields) {
 
-      $fields['top_border'] = array(
-        'name' => __('Top Border Color', 'wp-splash'),
-        'type' => 'color',
-      );
-
-      $fields['bottom_border'] = array(
-        'name' => __('Bottom Border Color', 'wp-splash'),
+      $fields['color'] = array(
+        'name' => __('Text Color', 'wp-splash'),
         'type' => 'color',
       );
 
@@ -193,11 +200,6 @@ namespace UsabilityDynamics\Theme {
       $fields['background_image'] = array(
         'name' => __('Background Image', 'wp-splash'),
         'type' => 'media',
-      );
-
-      $fields['background_image_repeat'] = array(
-        'name' => __('Repeat Background Image', 'wp-splash'),
-        'type' => 'checkbox',
       );
 
       $fields['no_margin'] = array(
@@ -270,21 +272,6 @@ namespace UsabilityDynamics\Theme {
       $this->save_settings();
     }
 
-    private function save_settings() {
-
-      if(!isset($_POST['_sopanels_home_nonce']) || !wp_verify_nonce($_POST['_sopanels_home_nonce'], 'save')) return;
-      if ( empty($_POST['panels_js_complete']) ) return;
-      if(!current_user_can('edit_theme_options')) return;
-
-      $_data = siteorigin_panels_get_panels_data_from_post( $_POST );
-
-      // @todo Save error/home whatever into correct theme mod location.
-      set_theme_mod( 'sop:splash-home', $_data );
-
-      exit( wp_safe_redirect( admin_url( 'edit.php?post_type=page&page=splash-home-editor&updated=true' ) ) );
-
-    }
-
     public function editor() {
       global $wp_meta_boxes;
 
@@ -293,6 +280,11 @@ namespace UsabilityDynamics\Theme {
       }
 
       include( dirname( __DIR__ ) . '/static/templates/splash-editor.php' );
+
+    }
+
+    public function admin_print_styles() {
+      wp_enqueue_style( 'ud-layout', content_url( 'vendor/libraries/usabilitydynamics/lib-layout-engine/static/styles/post-editor.css') );
 
     }
 
@@ -327,9 +319,7 @@ namespace UsabilityDynamics\Theme {
      *
      */
     public function loaded() {
-      wp_register_style( 'app', content_url( 'themes/wp-splash/static/styles/app.css' ), array( 'twitter-bootstrap' ), Splash::$version, 'all' );
-      wp_register_style( 'twitter-bootstrap', 'http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css', array(), Splash::$version, 'all' );
-
+      wp_register_style( 'app', content_url( 'themes/wp-splash/static/styles/app.css' ), array(), Splash::$version, 'all' );
       wp_register_script( 'udx-requires', '//cdn.udx.io/udx.requires.js', array(), '3.1.2', true );
       wp_register_script( 'app',  content_url( 'themes/wp-splash/static/scripts/app.js' ), array( 'udx-requires' ), Splash::$version, true );
     }
@@ -346,7 +336,6 @@ namespace UsabilityDynamics\Theme {
       wp_enqueue_script( 'app');
     }
 
-
     /**
      *
      * SiteOrigin Panel only needs to be laoded on the backend since templates are saved into regular post content.
@@ -360,7 +349,11 @@ namespace UsabilityDynamics\Theme {
       // echo siteorigin_panels_print_inline_css();
     }
 
-    public function shutdown() {
+    public function template_redirect() {
+
+      if( class_exists( 'zz\Html\HTMLMinify' ) && !is_user_logged_in() ) {
+        ob_start( array( $this, 'optimize' ) );
+      }
 
     }
 

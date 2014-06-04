@@ -1,39 +1,22 @@
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(http://themes.googleusercontent.com/static/fonts/opensans/v8/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
-}
+// Get some Bootstrap essentials for scafflding.
+@import (less) "https://raw.githubusercontent.com/twbs/bootstrap/master/less/variables.less";
+@import (less) "https://raw.githubusercontent.com/twbs/bootstrap/master/less/mixins.less";
+@import (less) "https://raw.githubusercontent.com/twbs/bootstrap/master/less/normalize.less";
+@import (less) "https://raw.githubusercontent.com/twbs/bootstrap/master/less/glyphicons.less";
+@import (less) "https://raw.githubusercontent.com/twbs/bootstrap/master/less/scaffolding.less";
+@import (less) "https://raw.githubusercontent.com/twbs/bootstrap/master/less/type.less";
+@import (less) "https://raw.githubusercontent.com/twbs/bootstrap/master/less/grid.less";
+@import (less) "https://raw.githubusercontent.com/twbs/bootstrap/master/less/utilities.less";
+@import (less) "https://raw.githubusercontent.com/twbs/bootstrap/master/less/responsive-utilities.less";
 
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Roboto Regular'), local('Roboto-Regular'), url(http://themes.googleusercontent.com/static/fonts/roboto/v11/CrYjSnGjrRCn0pd9VQsnFOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
-}
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 500;
-  src: local('Roboto Medium'), local('Roboto-Medium'), url(http://themes.googleusercontent.com/static/fonts/roboto/v11/RxZJdnzeo3R5zSexge8UUbO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
-}
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Roboto Bold'), local('Roboto-Bold'), url(http://themes.googleusercontent.com/static/fonts/roboto/v11/d-6IYplOFocCacKzxwXSOLO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
-}
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 900;
-  src: local('Roboto Black'), local('Roboto-Black'), url(http://themes.googleusercontent.com/static/fonts/roboto/v11/mnpfi9pxYH-Go5UiibESIrO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
-}
+// Get some fonts.
+@import (less) "http://fonts.googleapis.com/css?family=Open+Sans";
+@import (less) "http://fonts.googleapis.com/css?family=Roboto:400,700,900,500";
 
+// Custom Styles.
 body {
   background: #181818;
   min-height: 500px;
-  color: #FFF;
 
   article.container {
     display: none;
@@ -59,53 +42,8 @@ body {
 
   }
 
-  .panel-grid {
-    zoom: 1;
-  }
-
-  .panel-grid:before {
-    content: '';
-    display: block;
-  }
-
-  .panel-grid:after {
-    clear: both;
-    content: '';
-    display: table;
-  }
-
-  .panel-grid-cell {
-    -ms-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    min-height: 1em;
-    padding: 0 17px;
-  }
-
-  .panel-grid-cell .panel {
-    min-height: 1em;
-    zoom: 1;
-  }
-
-  .panel-grid-cell .panel:before {
-    content: '';
-    display: block;
-  }
-
-  .panel-grid-cell .panel:after {
-    clear: both;
-    content: '';
-    display: table;
-  }
-
-  .panel-grid-cell .panel.panel-last-child {
-    margin-bottom: 0;
-  }
-
-  .panel-grid-cell .widget-title {
-    margin-top: 0;
-  }
+  // Fetch some default styles from a module.
+  @import (less) "https://raw.githubusercontent.com/UsabilityDynamics/siteorigin-panels/master/css/front.css";
 
 }
 
