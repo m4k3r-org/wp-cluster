@@ -17,15 +17,15 @@ module.exports = function( grunt ) {
       dev: {
         options: {
           name: 'app',
-          baseUrl: 'scripts/src',
-          out: "scripts/app.js"
+          baseUrl: 'static/scripts/src',
+          out: "static/scripts/app.js"
         }
       },
       build: {
         options: {
           name: 'app',
-          baseUrl: 'scripts/src',
-          out: "scripts/app.dev.js",
+          baseUrl: 'static/scripts/src',
+          out: "static/scripts/app.js",
           uglify: {
             beautify: true,
             max_line_length: 1000,
@@ -52,22 +52,14 @@ module.exports = function( grunt ) {
     less: {
       production: {
         options: {
+          compress: true,
           yuicompress: true,
-          relativeUrls: true
+          relativeUrls: true,
+          modifyVars: {}
         },
         files: {
-          'styles/app.css': [
-            'styles/src/app.less'
-          ]
-        }
-      },
-      development: {
-        options: {
-          relativeUrls: true
-        },
-        files: {
-          'styles/app.dev.css': [
-            'styles/src/app.less'
+          'static/styles/app.css': [
+            'static/styles//src/app.less'
           ]
         }
       },
@@ -76,8 +68,8 @@ module.exports = function( grunt ) {
           relativeUrls: true
         },
         files: {
-          'styles/editor-style.css': [
-            'styles/src/editor-style.less'
+          'static/styles//editor-style.css': [
+            'static/styles//src/editor-style.less'
           ]
         }
       }
@@ -86,19 +78,8 @@ module.exports = function( grunt ) {
     uglify: {
       production: {
         files: {
-          'scripts/app.js': [
-            'scripts/src/app.js'
-          ]
-        }
-      },
-      development: {
-        options: {
-          mangle: false,
-          beautify: true
-        },
-        files: {
-          'scripts/app.dev.js': [
-            'scripts/src/app.js'
+          'static/scripts/app.js': [
+            'static/scripts/src/app.js'
           ]
         }
       }
@@ -112,13 +93,13 @@ module.exports = function( grunt ) {
       less: {
         files: [
           'style.css',
-          'styles/src/*.less'
+          'static/styles/src/*.less'
         ],
         tasks: [ 'less' ]
       },
       js: {
         files: [
-          'scripts/src/*.js'
+          'static/scripts/src/*.js'
         ],
         tasks: [ 'uglify' ]
       }
@@ -160,10 +141,8 @@ module.exports = function( grunt ) {
 
   // Build Assets
   grunt.registerTask( 'default', [
-    //'yuidoc',
-    //'markdown',
     'less',
-    'requirejs'
+    'uglify'
   ]);
 
   grunt.registerTask( 'distribution', [
