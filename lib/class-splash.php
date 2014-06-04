@@ -60,10 +60,93 @@ namespace UsabilityDynamics\Theme {
       add_action( 'wp_print_footer_scripts', array( $this, 'wp_print_footer_scripts' ), 20, 0 );
 
       add_action( 'template_redirect', array( $this, 'template_redirect' ), 100 );
+      add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 100 );
 
       if( file_exists( dirname( __DIR__ ) . '/vendor/libraries/autoload.php' ) ) {
         include_once( dirname( __DIR__ ) . '/vendor/libraries/autoload.php' );
       }
+
+    }
+
+    public function after_setup_theme() {
+
+      // This theme uses wp_nav_menu() in one location.
+      register_nav_menu( array(
+        'footer-icons' => __( 'Footer Icons', 'wpp' )
+      ));
+      register_nav_menu( array(
+        'header-icons' => __( 'Header Icons', 'wpp' )
+      ));
+
+      set_post_thumbnail_size(402, 301, true);
+
+      add_theme_support( 'html5', array(
+        'search-form', 'comment-form', 'comment-list', 'gallery', 'caption'
+      ) );
+
+      add_theme_support( 'post-thumbnails' );
+
+      add_theme_support( 'featured-content', array(
+        'featured_content_filter' => 'twentyfourteen_get_featured_posts',
+        'max_posts' => 6,
+      ));
+
+      add_theme_support( 'custom-background', array(
+        'default-color' => 'e8e8e8',
+        //'default-image' => '',,
+        'default-repeat'         => 'no-repeat',
+        //'default-position-x'     => 'center',
+        //'default-attachment'     => 'scroll',
+        'wp-head-callback'       =>  array( $this, 'render_background' ),
+        //'admin-head-callback'    => '',
+        //'admin-preview-callback' => '',
+      ) );
+
+    }
+
+    public function render_background() {
+
+      // $background is the saved custom image, or the default image.
+      $background = set_url_scheme( get_background_image() );
+
+      // $color is the saved custom color.
+      // A default has to be specified in style.css. It will not be printed here.
+      $color = get_background_color();
+
+      if ( $color === get_theme_support( 'custom-background', 'default-color' ) ) {
+        $color = false;
+      }
+
+      if ( ! $background && ! $color )
+        return;
+
+      $style = $color ? "background-color: #$color;" : '';
+
+      if ( $background ) {
+        $image = " background-image: url('$background');";
+
+        $repeat = get_theme_mod( 'background_repeat', get_theme_support( 'custom-background', 'default-repeat' ) );
+        if ( ! in_array( $repeat, array( 'no-repeat', 'repeat-x', 'repeat-y', 'repeat' ) ) )
+          $repeat = 'repeat';
+        $repeat = " background-repeat: $repeat;";
+
+        $position = get_theme_mod( 'background_position_x', get_theme_support( 'custom-background', 'default-position-x' ) );
+        if ( ! in_array( $position, array( 'center', 'right', 'left' ) ) )
+          $position = 'left';
+        $position = " background-position: top $position;";
+
+        $attachment = get_theme_mod( 'background_attachment', get_theme_support( 'custom-background', 'default-attachment' ) );
+        if ( ! in_array( $attachment, array( 'fixed', 'scroll' ) ) )
+          $attachment = 'scroll';
+        $attachment = " background-attachment: $attachment;";
+
+        $style .= $image . $repeat . $position . $attachment;
+      }
+      ?>
+      <style type="text/css" id="custom-background-css">
+        body { <?php echo trim( $style ); ?> }
+      </style>
+    <?php
 
     }
 
@@ -138,13 +221,28 @@ namespace UsabilityDynamics\Theme {
       add_filter('siteorigin_panels_row_style_fields', array( $this, '_panels_row_style_fields' ) );
       add_filter('siteorigin_panels_row_style_attributes', array( $this, '_panels_row_style_attributes' ), 20, 2 );
       add_filter('siteorigin_panels_row_attributes', array( $this, '_panels_row_attributes' ), 20, 2 );
+      add_filter('siteorigin_panels_row_cell_attributes', array( $this, '_panels_row_cell_attributes' ), 20, 2 );
 
-      // remove_action( 'wp_head', 'siteorigin_panels_print_inline_css', 12 );
-      // remove_action( 'wp_footer', 'siteorigin_panels_print_inline_css' );
+      //remove_action( 'wp_head', 'siteorigin_panels_print_inline_css', 12 );
+      //remove_action( 'wp_footer', 'siteorigin_panels_print_inline_css' );
 
     }
 
     /**
+     *
+     * "panel-grid-cell" is a column
+     *
+     * @param $args
+     * @param $data
+     *
+     * @return mixed
+     */
+    public function _panels_row_cell_attributes( $args, $data ) {
+      // $args[ 'class' ] = $args[ 'class' ] . ' column';
+      return $args;
+    }
+
+      /**
      * @param $buffer
      *
      * @return string
@@ -168,7 +266,7 @@ namespace UsabilityDynamics\Theme {
      */
     function _panels_settings($settings){
       $settings['home-page'] = false;
-      $settings['margin-bottom'] = 35;
+      $settings['margin-bottom'] = 30;
       $settings['responsive'] = true;
       return $settings;
     }
@@ -180,6 +278,7 @@ namespace UsabilityDynamics\Theme {
      * @return mixed
      */
     function _panels_row_styles($styles) {
+      $styles['visible-lg'] = __('Large devices', 'wp-splash');
       $styles['wide-grey'] = __('Wide Grey', 'wp-splash');
       $styles['sexy-blue'] = __('Sexy Blue', 'wp-splash');
       return $styles;
@@ -202,8 +301,8 @@ namespace UsabilityDynamics\Theme {
         'type' => 'media',
       );
 
-      $fields['no_margin'] = array(
-        'name' => __('No Bottom Margin', 'wp-splash'),
+      $fields['center_text'] = array(
+        'name' => __('Center Text', 'wp-splash'),
         'type' => 'checkbox',
       );
 
@@ -212,9 +311,10 @@ namespace UsabilityDynamics\Theme {
 
     function _panels_row_attributes($attr, $row) {
 
-      if(!empty($row['style']['no_margin'])) {
-        if(empty($attr['style'])) $attr['style'] = '';
-        $attr['style'] .= 'margin-bottom: 0px;';
+      $attr[ 'class' ] = $attr[ 'class' ] . ' row';
+
+      if(!empty($row['style']['center_text'])) {
+        $attr[ 'class' ] = $attr[ 'class' ] . ' text-center';
       }
 
       return $attr;
@@ -244,7 +344,7 @@ namespace UsabilityDynamics\Theme {
     public function the_content( $wp_query ) {
 
       if( is_front_page() ) {
-        return siteorigin_panels_render( null, true, get_theme_mod( 'sop:splash-home' ) );
+        return siteorigin_panels_render( null, false, get_theme_mod( 'sop:splash-home' ) );
       }
 
       if( is_404() ) {
@@ -264,7 +364,7 @@ namespace UsabilityDynamics\Theme {
       remove_menu_page( 'edit.php?post_type=event' );
       remove_menu_page( 'edit.php?post_type=tour' );
       remove_menu_page( 'edit.php?post_type=venue' );
-      remove_menu_page( 'upload.php' );
+      //remove_menu_page( 'upload.php' );
       remove_menu_page( 'users.php' );
       remove_menu_page( 'edit-comments.php' );
       remove_menu_page( 'tools.php' );
@@ -284,6 +384,8 @@ namespace UsabilityDynamics\Theme {
     }
 
     public function admin_print_styles() {
+
+      /// Will move out of here when Laout Library is self-sufficient
       wp_enqueue_style( 'ud-layout', content_url( 'vendor/libraries/usabilitydynamics/lib-layout-engine/static/styles/post-editor.css') );
 
     }
@@ -331,7 +433,7 @@ namespace UsabilityDynamics\Theme {
      * @method wp_enqueue_scripts
      */
     public function wp_enqueue_scripts() {
-      wp_deregister_style( 'siteorigin-panels-front' );
+      //wp_deregister_style( 'siteorigin-panels-front' );
       wp_enqueue_style( 'app');
       wp_enqueue_script( 'app');
     }
