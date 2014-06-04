@@ -1,4 +1,3 @@
-
 {
   "name": "usabilitydynamics/wp-splash",
   "version": "0.1.0",
@@ -18,7 +17,10 @@
     "theme"
   ],
   "require": {
-    "usabilitydynamics/lib-requires": "master",
+    "php": ">=5.3",
+    "siteorigin/panels": "master",
+    "usabilitydynamics/lib-installer": "master",
+    "usabilitydynamics/lib-layout-engine": "master",
     "usabilitydynamics/lib-ui": "master"
   },
   "repository": {
@@ -31,5 +33,8 @@
       "url": "http://repository.usabilitydynamics.com"
     }
   ],
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+  "extra": {
+    "installer-name": "wp-splash"
+  }
 }
