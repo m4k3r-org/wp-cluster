@@ -119,6 +119,7 @@ namespace DiscoDonniePresents {
 
         $photo = wp_get_attachment_image_src( $this->meta('primaryImageOfPage'), 'full' );
         $poster = wp_get_attachment_image_src( $this->meta('primaryImageOfPage'), 'sidebar_poster' );
+        $small = wp_get_attachment_image_src( $this->meta('primaryImageOfPage'), 'hd_small' );
 
         $_object[ 'summary' ] = $this->post('post_title');
         $_object[ 'url' ] = get_permalink( $this->_id );
@@ -127,7 +128,8 @@ namespace DiscoDonniePresents {
         $_object[ 'event_date' ] = date( 'c', strtotime( $this->event()->meta('dateStart') ) );
         $_object[ 'event_type' ] = $this->event()->taxonomies( 'event-type', 'elasticsearch' );
         $_object[ 'image' ] = array(
-          'poster' => $poster[0]
+          'poster' => $poster[0],
+          'small'  => $small[0]
         );
 
         $_object[ 'artists' ] = array();

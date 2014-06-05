@@ -1907,10 +1907,16 @@
     height: 310px;
   }
 
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper .df_input {
+    width: 100%;
+  }
+
   #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_state"],
   #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_photo_gallery_state"],
   #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_type"],
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_photo_gallery_type"] {
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_photo_gallery_type"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[facet="State"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[facet="Event Type"] {
     float: left;
     width: 49%;
     margin-right: 2%;
@@ -1919,7 +1925,9 @@
   #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_city"],
   #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_photo_gallery_city"],
   #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_promoter"],
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_photo_gallery_promoter"] {
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_photo_gallery_promoter"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[facet="City"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[facet="Promoters"] {
     float: right;
     width: 49%;
   }
@@ -1931,6 +1939,10 @@
 
   #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper {
     margin-bottom: 16px;
+  }
+
+  #dynamic_filter[dynamic_filter="hdp_photo_gallery"] {
+    min-height: 400px;
   }
 
   #dynamic_filter[dynamic_filter="hdp_video"] .df_load_more,

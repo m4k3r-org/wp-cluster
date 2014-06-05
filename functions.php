@@ -529,6 +529,7 @@ class hddp extends Flawless_F {
     //** New Elastic Search Shortcodes */
     add_shortcode( 'elasticsearch_results', array( 'hddp', 'elasticsearch_results' ) );
     add_shortcode( 'elasticsearch_facets', array( 'hddp', 'elasticsearch_facets' ) );
+    add_shortcode( 'elasticsearch_media', array( 'hddp', 'elasticsearch_media' ) );
 
     // Used on home, vieo and gallery pages.
     add_shortcode( 'hdp_custom_loop', array( 'hddp', 'shortcode_hdp_custom_loop' ) );
@@ -1260,7 +1261,7 @@ class hddp extends Flawless_F {
   }
 
   /**
-   *
+   * Used to build document before sending to ES server
    * @param class $document
    * @param type $post
    * @return type
@@ -1279,6 +1280,21 @@ class hddp extends Flawless_F {
     return $document->toElasticFormat();
   }
 
+  /**
+   * Used for photos/videos media pages with elasticsearch implementation
+   */
+  static function elasticsearch_media( $args ) {
+
+    $args = shortcode_atts( array(
+        'post_type' => ''
+    ), $args );
+
+    ob_start();
+
+    include 'templates/elastic/'.$args['post_type'].'.php';
+
+    return ob_get_clean();
+
+  }
+
 }
-
-
