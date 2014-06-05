@@ -1251,10 +1251,17 @@ class hddp extends Flawless_F {
     return $content;
   }
 
+  /**
+   *
+   * @param class $document
+   * @param type $post
+   * @return type
+   */
   public function build_elastic_document( $document, $post ) {
 
     $_entities = array(
-        'event' => '\DiscoDonniePresents\Event'
+      'event' => '\DiscoDonniePresents\Event',
+      'imagegallery' => '\DiscoDonniePresents\ImageGallery'
     );
 
     $class = $_entities[$post->post_type];

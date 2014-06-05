@@ -249,7 +249,51 @@ namespace DiscoDonniePresents {
 
             break;
 
-          default: break;
+          default:
+
+            return $this->_artists;
+
+            break;
+
+        }
+
+        return false;
+
+      }
+
+      /**
+       *
+       * @return type
+       */
+      public function promoters( $format = 'link', $separator = ', ' ) {
+
+        if ( empty( $this->_promoters ) ) {
+
+          $this->_promoters = $this->load_promoters();
+
+          if ( empty( $this->_promoters ) ) return false;
+
+        }
+
+        switch( $format ) {
+
+          case 'link':
+
+            $_titles = array();
+
+            foreach( $this->_promoters as $promoter ) {
+              $_titles[] = '<a href="'.get_permalink( $promoter->post('ID') ).'">'.$promoter->post('post_title').'</a>';
+            }
+
+            return implode( $separator, $_titles );
+
+            break;
+
+          default:
+
+            return $this->_promoters;
+
+            break;
 
         }
 
