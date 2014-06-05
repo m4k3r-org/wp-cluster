@@ -38,6 +38,8 @@ namespace UsabilityDynamics\Theme {
      */
     public static $text_domain = 'Splash';
 
+    public static $_errors = null;
+
     /**
      * Class Initializer
      *
@@ -53,7 +55,7 @@ namespace UsabilityDynamics\Theme {
       add_action( 'admin_print_scripts', array( $this, 'admin_print_scripts' ) );
       add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 20, 0 );
-      add_action( 'the_post', array( $this, 'the_post' ), 20, 0 );
+      //add_action( 'the_post', array( $this, 'the_post' ), 20, 0 );
       add_action( 'wp_print_styles', array( $this, 'wp_print_styles' ), 20, 0 );
 
       add_action( 'wp_head', array( $this, 'wp_head' ), 20, 0 );
@@ -71,10 +73,11 @@ namespace UsabilityDynamics\Theme {
     public function after_setup_theme() {
 
       // This theme uses wp_nav_menu() in one location.
-      register_nav_menu( array(
+      register_nav_menus( array(
         'footer-icons' => __( 'Footer Icons', 'wpp' )
       ));
-      register_nav_menu( array(
+
+      register_nav_menus( array(
         'header-icons' => __( 'Header Icons', 'wpp' )
       ));
 
@@ -185,19 +188,46 @@ namespace UsabilityDynamics\Theme {
 
     public function admin_init() {
 
-      if( is_wp_error( validate_plugin( 'siteorigin-panels/siteorigin-panels.php' ) ) ) {
-        wp_die( 'siteorigin invalid, cant use theme' );
-      }
+      try {
 
-      if( !is_plugin_active( 'siteorigin-panels/siteorigin-panels.php' ) ) {
+        if( !is_plugin_active( 'siteorigin-panels/siteorigin-panels.php' ) ) {
 
-        if( is_wp_error( activate_plugin( 'siteorigin-panels/siteorigin-panels.php' ) ) ) {
-          wp_die( 'cannot activate siteorigin' );
+          if( is_wp_error( validate_plugin( 'siteorigin-panels/siteorigin-panels.php' ) ) ) {
+            $_errors[] = new \WP_Error( 'siteorigin not found, please download and activate for theme to work well' );
+          } else {
+
+            if( is_wp_error( activate_plugin( 'siteorigin-panels/siteorigin-panels.php' ) ) ) {
+              $_errors[] = new \WP_Error( 'cannot activate siteorigin' );
+            }
+
+          }
+
         }
 
+        if( !is_plugin_active( 'wp-amd/wp-amd.php' ) ) {
+
+          if( is_wp_error( validate_plugin( 'wp-amd/wp-amd.php' ) ) ) {
+            $_errors[] = new \WP_Error( 'wp-amd/ not found, please download and activate for theme to work well' );
+          } else {
+
+            if( is_wp_error( activate_plugin( 'wp-amd/wp-amd.php' ) ) ) {
+              $_errors[] = new \WP_Error( 'cannot activate wp-amd' );
+            }
+
+          }
+
+        }
+
+        remove_action( 'siteorigin_panels_before_interface', 'siteorigin_panels_update_notice' );
+
+      } catch( Exception $exception ) {
+        $_errors[] = new \WP_Error( $exception->getMessage() );
       }
 
-      remove_action( 'siteorigin_panels_before_interface', 'siteorigin_panels_update_notice' );
+      // do something with any errors, such as display on backend
+      if( $_errors ) {
+        wp_die( '<pre>' . print_r( $_errors, true ) . '</pre>' );
+      }
 
     }
 
@@ -206,7 +236,6 @@ namespace UsabilityDynamics\Theme {
      *
      */
     public function init() {
-
       if( !class_exists( 'UsabilityDynamics\LayoutEngine\Core' ) ) {
         wp_die( 'UsabilityDynamics\LayoutEngine\Core not found.' );
       }
@@ -216,6 +245,7 @@ namespace UsabilityDynamics\Theme {
       }
 
       add_filter('the_content', array( $this, 'the_content' ) );
+      add_filter('content_url', array( $this, 'content_url' ), 20, 2 );
       add_filter('siteorigin_panels_settings', array( $this, '_panels_settings' ) );
       add_filter('siteorigin_panels_row_styles', array( $this, '_panels_row_styles' ) );
       add_filter('siteorigin_panels_row_style_fields', array( $this, '_panels_row_style_fields' ) );
@@ -238,11 +268,11 @@ namespace UsabilityDynamics\Theme {
      * @return mixed
      */
     public function _panels_row_cell_attributes( $args, $data ) {
-      // $args[ 'class' ] = $args[ 'class' ] . ' column';
+      $args[ 'class' ] = $args[ 'class' ] . ' column';
       return $args;
     }
 
-      /**
+    /**
      * @param $buffer
      *
      * @return string
@@ -266,7 +296,7 @@ namespace UsabilityDynamics\Theme {
      */
     function _panels_settings($settings){
       $settings['home-page'] = false;
-      $settings['margin-bottom'] = 30;
+      $settings['margin-bottom'] = 0;
       $settings['responsive'] = true;
       return $settings;
     }
@@ -279,12 +309,21 @@ namespace UsabilityDynamics\Theme {
      */
     function _panels_row_styles($styles) {
       $styles['visible-lg'] = __('Large devices', 'wp-splash');
-      $styles['wide-grey'] = __('Wide Grey', 'wp-splash');
-      $styles['sexy-blue'] = __('Sexy Blue', 'wp-splash');
+      $styles['hidden'] = __('Hidden', 'wp-splash');
       return $styles;
     }
 
     function _panels_row_style_fields($fields) {
+
+      $fields['row_title'] = array(
+        'name' => __('Title', 'wp-splash'),
+        'type' => 'text',
+      );
+
+      $fields['scroll_reveal'] = array(
+        'name' => __('Scroll Reveal', 'wp-splash'),
+        'type' => 'text',
+      );
 
       $fields['color'] = array(
         'name' => __('Text Color', 'wp-splash'),
@@ -323,8 +362,15 @@ namespace UsabilityDynamics\Theme {
     function _panels_row_style_attributes($attr, $style) {
       $attr['style'] = '';
 
-      if(!empty($style['top_border'])) $attr['style'] .= 'border-top: 1px solid '.$style['top_border'].'; ';
-      if(!empty($style['bottom_border'])) $attr['style'] .= 'border-bottom: 1px solid '.$style['bottom_border'].'; ';
+      if(!empty($style['scroll_reveal'])) {
+        $attr['data-scroll-reveal'] = $style['scroll_reveal'];
+      }
+
+      if(!empty($style['row_title'])) $attr['data-title'] .= $style['row_title'];
+
+      if(!empty($style['visible-lg'])) $attr['style'] .= '';
+      if(!empty($style['hidden'])) $attr['style'] .= 'display:none';
+
       if(!empty($style['background'])) $attr['style'] .= 'background-color: '.$style['background'].'; ';
       if(!empty($style['background_image'])) $attr['style'] .= 'background-image: url('.esc_url($style['background_image']).'); ';
       if(!empty($style['background_image_repeat'])) $attr['style'] .= 'background-repeat: repeat; ';
@@ -343,33 +389,60 @@ namespace UsabilityDynamics\Theme {
      */
     public function the_content( $wp_query ) {
 
-      if( is_front_page() ) {
-        return siteorigin_panels_render( null, false, get_theme_mod( 'sop:splash-home' ) );
+      // @note CSS being included for now, later on wwill figure out how to make it part of app.css
+
+      if( is_front_page() && !is_null( get_theme_mod( 'sop:splash-home', null ) ) ) {
+        return '<section class="container-fluid">' . siteorigin_panels_render( null, true, get_theme_mod( 'sop:splash-home') ) . '</section>';
       }
 
-      if( is_404() ) {
-        return siteorigin_panels_render( null, true, get_theme_mod( 'sop:splash-404' ) );
+      if( is_404() && !is_null( get_theme_mod( 'sop:splash-404', null ) ) ) {
+        return '<section class="container-fluid">' . siteorigin_panels_render( null, true, get_theme_mod( 'sop:splash-404' ) ) . '</section>';
       }
+
+    }
+
+    /**
+     *
+     * Fix so content_url( 'themes/wp-splash/static/scripts/app.js' ) can be used to get theme files.
+     *
+     * @param        $url
+     * @param string $path
+     *
+     * @return mixed
+     *
+     */
+    public function content_url( $url, $path = '' ) {
+
+      // @temp hardcoded, use get_template_directory_uri() to figure out correct URL that should be replaced.
+
+      $url = str_replace( 'themes/wp-splash/static/', 'vendor/usabilitydynamics/wp-splash/static/', $url );
+      $url = str_replace( 'themes/wp-splash/vendor/', 'vendor/usabilitydynamics/wp-splash/vendor/', $url );
+
+      return $url;
 
     }
 
     public function admin_menu() {
 
-      add_pages_page( __( 'Site Home' ), __( 'Site Home' ), 'edit_theme_options', 'splash-home-editor', array( $this, 'editor' ) );
-      add_pages_page( __( '404 Page' ), __( '404 Page' ), 'edit_theme_options', 'splash-error-editor', array( $this, 'editor' ) );
-      add_pages_page( __( 'Login Page' ), __( 'Login Page' ), 'edit_theme_options', 'splash-error-editor', array( $this, 'editor' ) );
+      // Add Home Page.
+      if( get_option( 'show_on_front' ) !== 'page' ) {
+        add_pages_page( __( 'Site Home' ), __( 'Site Home' ), 'edit_theme_options', 'splash-home-editor', array( $this, 'editor' ) );
+      }
+
+      // add_pages_page( __( '404 Page' ), __( '404 Page' ), 'edit_theme_options', 'splash-error-editor', array( $this, 'editor' ) );
+      // add_pages_page( __( 'Login Page' ), __( 'Login Page' ), 'edit_theme_options', 'splash-error-editor', array( $this, 'editor' ) );
 
       remove_menu_page( 'edit.php' );
       remove_menu_page( 'edit.php?post_type=artist' );
       remove_menu_page( 'edit.php?post_type=event' );
       remove_menu_page( 'edit.php?post_type=tour' );
       remove_menu_page( 'edit.php?post_type=venue' );
-      //remove_menu_page( 'upload.php' );
       remove_menu_page( 'users.php' );
       remove_menu_page( 'edit-comments.php' );
       remove_menu_page( 'tools.php' );
 
       $this->save_settings();
+
     }
 
     public function editor() {
@@ -383,10 +456,14 @@ namespace UsabilityDynamics\Theme {
 
     }
 
+    /**
+     * http://2015.dayafter.com/vendor/usabilitydynamics/wp-splash/static/styles/app.css
+     * http://2015.dayafter.com/vendor/usabilitydynamics/wp-splash/static/scripts/app.js
+     */
     public function admin_print_styles() {
 
       /// Will move out of here when Laout Library is self-sufficient
-      wp_enqueue_style( 'ud-layout', content_url( 'vendor/libraries/usabilitydynamics/lib-layout-engine/static/styles/post-editor.css') );
+      wp_enqueue_style( 'ud-layout', content_url( 'themes/wp-splash/vendor/libraries/usabilitydynamics/lib-layout-engine/static/styles/post-editor.css') );
 
     }
 
@@ -423,7 +500,7 @@ namespace UsabilityDynamics\Theme {
     public function loaded() {
       wp_register_style( 'app', content_url( 'themes/wp-splash/static/styles/app.css' ), array(), Splash::$version, 'all' );
       wp_register_script( 'udx-requires', '//cdn.udx.io/udx.requires.js', array(), '3.1.2', true );
-      wp_register_script( 'app',  content_url( 'themes/wp-splash/static/scripts/app.js' ), array( 'udx-requires' ), Splash::$version, true );
+      wp_register_script( 'app',  content_url( 'themes/wp-splash/static/scripts/src/app.js' ), array( 'udx-requires' ), Splash::$version, true );
     }
 
     /**
@@ -451,6 +528,11 @@ namespace UsabilityDynamics\Theme {
       // echo siteorigin_panels_print_inline_css();
     }
 
+    /**
+     *
+     * @todo Add redirection to 404 page if "Splash" page has not yet been setup on a new theme activation.
+     *
+     */
     public function template_redirect() {
 
       if( class_exists( 'zz\Html\HTMLMinify' ) && !is_user_logged_in() ) {
