@@ -27,7 +27,7 @@ namespace UsabilityDynamics\Theme {
      * @property version
      * @var string
      */
-    public static $version = '0.1.0';
+    public static $version = '1.1.2';
 
     /**
      * Textdomain String
@@ -70,18 +70,21 @@ namespace UsabilityDynamics\Theme {
 
     }
 
+    /**
+     *
+     */
     public function after_setup_theme() {
 
       // This theme uses wp_nav_menu() in one location.
       register_nav_menus( array(
         'footer-icons' => __( 'Footer Icons', 'wpp' )
-      ));
+      ) );
 
       register_nav_menus( array(
         'header-icons' => __( 'Header Icons', 'wpp' )
-      ));
+      ) );
 
-      set_post_thumbnail_size(402, 301, true);
+      set_post_thumbnail_size( 402, 301, true );
 
       add_theme_support( 'html5', array(
         'search-form', 'comment-form', 'comment-list', 'gallery', 'caption'
@@ -91,22 +94,25 @@ namespace UsabilityDynamics\Theme {
 
       add_theme_support( 'featured-content', array(
         'featured_content_filter' => 'twentyfourteen_get_featured_posts',
-        'max_posts' => 6,
-      ));
+        'max_posts'               => 6,
+      ) );
 
       add_theme_support( 'custom-background', array(
-        'default-color' => 'e8e8e8',
+        'default-color'    => 'e8e8e8',
         //'default-image' => '',,
-        'default-repeat'         => 'no-repeat',
+        'default-repeat'   => 'no-repeat',
         //'default-position-x'     => 'center',
         //'default-attachment'     => 'scroll',
-        'wp-head-callback'       =>  array( $this, 'render_background' ),
+        'wp-head-callback' => array( $this, 'render_background' ),
         //'admin-head-callback'    => '',
         //'admin-preview-callback' => '',
       ) );
 
     }
 
+    /**
+     *
+     */
     public function render_background() {
 
       // $background is the saved custom image, or the default image.
@@ -116,30 +122,30 @@ namespace UsabilityDynamics\Theme {
       // A default has to be specified in style.css. It will not be printed here.
       $color = get_background_color();
 
-      if ( $color === get_theme_support( 'custom-background', 'default-color' ) ) {
+      if( $color === get_theme_support( 'custom-background', 'default-color' ) ) {
         $color = false;
       }
 
-      if ( ! $background && ! $color )
+      if( !$background && !$color )
         return;
 
       $style = $color ? "background-color: #$color;" : '';
 
-      if ( $background ) {
+      if( $background ) {
         $image = " background-image: url('$background');";
 
         $repeat = get_theme_mod( 'background_repeat', get_theme_support( 'custom-background', 'default-repeat' ) );
-        if ( ! in_array( $repeat, array( 'no-repeat', 'repeat-x', 'repeat-y', 'repeat' ) ) )
+        if( !in_array( $repeat, array( 'no-repeat', 'repeat-x', 'repeat-y', 'repeat' ) ) )
           $repeat = 'repeat';
         $repeat = " background-repeat: $repeat;";
 
         $position = get_theme_mod( 'background_position_x', get_theme_support( 'custom-background', 'default-position-x' ) );
-        if ( ! in_array( $position, array( 'center', 'right', 'left' ) ) )
+        if( !in_array( $position, array( 'center', 'right', 'left' ) ) )
           $position = 'left';
         $position = " background-position: top $position;";
 
         $attachment = get_theme_mod( 'background_attachment', get_theme_support( 'custom-background', 'default-attachment' ) );
-        if ( ! in_array( $attachment, array( 'fixed', 'scroll' ) ) )
+        if( !in_array( $attachment, array( 'fixed', 'scroll' ) ) )
           $attachment = 'scroll';
         $attachment = " background-attachment: $attachment;";
 
@@ -147,17 +153,22 @@ namespace UsabilityDynamics\Theme {
       }
       ?>
       <style type="text/css" id="custom-background-css">
-        body { <?php echo trim( $style ); ?> }
+        body {
+        <?php echo trim( $style ); ?>
+        }
       </style>
     <?php
 
     }
 
+    /**
+     *
+     */
     private function save_settings() {
 
-      if(!isset($_POST['_sopanels_home_nonce']) || !wp_verify_nonce($_POST['_sopanels_home_nonce'], 'save')) return;
-      if ( empty($_POST['panels_js_complete']) ) return;
-      if(!current_user_can('edit_theme_options')) return;
+      if( !isset( $_POST[ '_sopanels_home_nonce' ] ) || !wp_verify_nonce( $_POST[ '_sopanels_home_nonce' ], 'save' ) ) return;
+      if( empty( $_POST[ 'panels_js_complete' ] ) ) return;
+      if( !current_user_can( 'edit_theme_options' ) ) return;
 
       $_data = siteorigin_panels_get_panels_data_from_post( $_POST );
 
@@ -168,6 +179,9 @@ namespace UsabilityDynamics\Theme {
 
     }
 
+    /**
+     *
+     */
     public function wp_head() {
       echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
       echo '<meta property="fb:admins" content="632804651"/>';
@@ -186,6 +200,9 @@ namespace UsabilityDynamics\Theme {
       echo '<meta name="twitter:creator" content="@tdapanama"/>';
     }
 
+    /**
+     *
+     */
     public function admin_init() {
 
       try {
@@ -193,11 +210,11 @@ namespace UsabilityDynamics\Theme {
         if( !is_plugin_active( 'siteorigin-panels/siteorigin-panels.php' ) ) {
 
           if( is_wp_error( validate_plugin( 'siteorigin-panels/siteorigin-panels.php' ) ) ) {
-            $_errors[] = new \WP_Error( 'siteorigin not found, please download and activate for theme to work well' );
+            $_errors[ ] = new \WP_Error( 'siteorigin not found, please download and activate for theme to work well' );
           } else {
 
             if( is_wp_error( activate_plugin( 'siteorigin-panels/siteorigin-panels.php' ) ) ) {
-              $_errors[] = new \WP_Error( 'cannot activate siteorigin' );
+              $_errors[ ] = new \WP_Error( 'cannot activate siteorigin' );
             }
 
           }
@@ -207,11 +224,11 @@ namespace UsabilityDynamics\Theme {
         if( !is_plugin_active( 'wp-amd/wp-amd.php' ) ) {
 
           if( is_wp_error( validate_plugin( 'wp-amd/wp-amd.php' ) ) ) {
-            $_errors[] = new \WP_Error( 'wp-amd/ not found, please download and activate for theme to work well' );
+            $_errors[ ] = new \WP_Error( 'wp-amd/ not found, please download and activate for theme to work well' );
           } else {
 
             if( is_wp_error( activate_plugin( 'wp-amd/wp-amd.php' ) ) ) {
-              $_errors[] = new \WP_Error( 'cannot activate wp-amd' );
+              $_errors[ ] = new \WP_Error( 'cannot activate wp-amd' );
             }
 
           }
@@ -221,7 +238,7 @@ namespace UsabilityDynamics\Theme {
         remove_action( 'siteorigin_panels_before_interface', 'siteorigin_panels_update_notice' );
 
       } catch( Exception $exception ) {
-        $_errors[] = new \WP_Error( $exception->getMessage() );
+        $_errors[ ] = new \WP_Error( $exception->getMessage() );
       }
 
       // do something with any errors, such as display on backend
@@ -236,6 +253,7 @@ namespace UsabilityDynamics\Theme {
      *
      */
     public function init() {
+
       if( !class_exists( 'UsabilityDynamics\LayoutEngine\Core' ) ) {
         wp_die( 'UsabilityDynamics\LayoutEngine\Core not found.' );
       }
@@ -244,17 +262,43 @@ namespace UsabilityDynamics\Theme {
         wp_die( 'UsabilityDynamics\UI\Panel not found.' );
       }
 
-      add_filter('the_content', array( $this, 'the_content' ) );
-      add_filter('content_url', array( $this, 'content_url' ), 20, 2 );
-      add_filter('siteorigin_panels_settings', array( $this, '_panels_settings' ) );
-      add_filter('siteorigin_panels_row_styles', array( $this, '_panels_row_styles' ) );
-      add_filter('siteorigin_panels_row_style_fields', array( $this, '_panels_row_style_fields' ) );
-      add_filter('siteorigin_panels_row_style_attributes', array( $this, '_panels_row_style_attributes' ), 20, 2 );
-      add_filter('siteorigin_panels_row_attributes', array( $this, '_panels_row_attributes' ), 20, 2 );
-      add_filter('siteorigin_panels_row_cell_attributes', array( $this, '_panels_row_cell_attributes' ), 20, 2 );
+      add_filter( 'the_content',  array( $this, 'the_content' ) );
+      add_filter( 'content_url',  array( $this, 'content_url' ), 20, 2 );
+      // add_filter( 'body_class',   array( $this, 'body_class' ), 10 );
+
+      add_filter( 'siteorigin_panels_settings', array( $this, '_panels_settings' ) );
+      add_filter( 'siteorigin_panels_row_styles', array( $this, '_panels_row_styles' ) );
+      add_filter( 'siteorigin_panels_row_style_fields', array( $this, '_panels_row_style_fields' ) );
+      add_filter( 'siteorigin_panels_row_style_attributes', array( $this, '_panels_row_style_attributes' ), 20, 2 );
+      add_filter( 'siteorigin_panels_row_attributes', array( $this, '_panels_row_attributes' ), 20, 2 );
+      add_filter( 'siteorigin_panels_row_cell_attributes', array( $this, '_panels_row_cell_attributes' ), 20, 2 );
 
       //remove_action( 'wp_head', 'siteorigin_panels_print_inline_css', 12 );
       //remove_action( 'wp_footer', 'siteorigin_panels_print_inline_css' );
+
+    }
+
+    /**
+     * Modify Body Class
+     *
+     * @todo May need to set response "vary" header to force Varnish to cache mobile and desktop seperatly.
+     *
+     * @param array $classes
+     * @param null  $class
+     *
+     * @return array
+     */
+    public function body_class( $classes = array(), $class = null ) {
+
+      if( function_exists( 'wp_is_mobile' ) && wp_is_mobile() ) {
+        $classes[] = 'is_mobile';
+      }
+
+      if( function_exists( 'wp_is_mobile' ) && !wp_is_mobile() ) {
+        $classes[] = 'is_desktop';
+      }
+
+      return $classes;
 
     }
 
@@ -269,6 +313,7 @@ namespace UsabilityDynamics\Theme {
      */
     public function _panels_row_cell_attributes( $args, $data ) {
       $args[ 'class' ] = $args[ 'class' ] . ' column';
+
       return $args;
     }
 
@@ -280,10 +325,10 @@ namespace UsabilityDynamics\Theme {
     public function optimize( &$buffer ) {
 
       $buffer = \zz\Html\HTMLMinify::minify( $buffer, array(
-        'optimizationLevel' => 1,
+        'optimizationLevel'    => 1,
         'emptyElementAddSlash' => true,
-        'removeComment' => true
-      ));
+        'removeComment'        => true
+      ) );
 
       return $buffer;
     }
@@ -292,12 +337,14 @@ namespace UsabilityDynamics\Theme {
      * Configure the SiteOrigin page builder settings.
      *
      * @param $settings
+     *
      * @return mixed
      */
-    function _panels_settings($settings){
-      $settings['home-page'] = false;
-      $settings['margin-bottom'] = 0;
-      $settings['responsive'] = true;
+    public function _panels_settings( $settings ) {
+      $settings[ 'home-page' ]     = false;
+      $settings[ 'margin-bottom' ] = 0;
+      $settings[ 'responsive' ]    = true;
+
       return $settings;
     }
 
@@ -305,77 +352,96 @@ namespace UsabilityDynamics\Theme {
      * Add row styles.
      *
      * @param $styles
+     *
      * @return mixed
      */
-    function _panels_row_styles($styles) {
-      $styles['visible-lg'] = __('Large devices', 'wp-splash');
-      $styles['hidden'] = __('Hidden', 'wp-splash');
+    public function _panels_row_styles( $styles ) {
+      $styles[ 'visible-lg' ] = __( 'Large devices', 'wp-splash' );
+      $styles[ 'hidden' ]     = __( 'Hidden', 'wp-splash' );
+
       return $styles;
     }
 
-    function _panels_row_style_fields($fields) {
+    /**
+     * @param $fields
+     *
+     * @return mixed
+     */
+    public function _panels_row_style_fields( $fields ) {
 
-      $fields['row_title'] = array(
-        'name' => __('Title', 'wp-splash'),
+      $fields[ 'row_title' ] = array(
+        'name' => __( 'Title', 'wp-splash' ),
         'type' => 'text',
       );
 
-      $fields['scroll_reveal'] = array(
-        'name' => __('Scroll Reveal', 'wp-splash'),
+      $fields[ 'scroll_reveal' ] = array(
+        'name' => __( 'Scroll Reveal', 'wp-splash' ),
         'type' => 'text',
       );
 
-      $fields['color'] = array(
-        'name' => __('Text Color', 'wp-splash'),
+      $fields[ 'color' ] = array(
+        'name' => __( 'Text Color', 'wp-splash' ),
         'type' => 'color',
       );
 
-      $fields['background'] = array(
-        'name' => __('Background Color', 'wp-splash'),
+      $fields[ 'background' ] = array(
+        'name' => __( 'Background Color', 'wp-splash' ),
         'type' => 'color',
       );
 
-      $fields['background_image'] = array(
-        'name' => __('Background Image', 'wp-splash'),
+      $fields[ 'background_image' ] = array(
+        'name' => __( 'Background Image', 'wp-splash' ),
         'type' => 'media',
       );
 
-      $fields['center_text'] = array(
-        'name' => __('Center Text', 'wp-splash'),
+      $fields[ 'center_text' ] = array(
+        'name' => __( 'Center Text', 'wp-splash' ),
         'type' => 'checkbox',
       );
 
       return $fields;
     }
 
-    function _panels_row_attributes($attr, $row) {
+    /**
+     * @param $attr
+     * @param $row
+     *
+     * @return mixed
+     */
+    public function _panels_row_attributes( $attr, $row ) {
 
       $attr[ 'class' ] = $attr[ 'class' ] . ' row';
 
-      if(!empty($row['style']['center_text'])) {
+      if( !empty( $row[ 'style' ][ 'center_text' ] ) ) {
         $attr[ 'class' ] = $attr[ 'class' ] . ' text-center';
       }
 
       return $attr;
     }
 
-    function _panels_row_style_attributes($attr, $style) {
-      $attr['style'] = '';
+    /**
+     * @param $attr
+     * @param $style
+     *
+     * @return mixed
+     */
+    public function _panels_row_style_attributes( $attr, $style ) {
+      $attr[ 'style' ] = '';
 
-      if(!empty($style['scroll_reveal'])) {
-        $attr['data-scroll-reveal'] = $style['scroll_reveal'];
+      if( !empty( $style[ 'scroll_reveal' ] ) ) {
+        $attr[ 'data-scroll-reveal' ] = $style[ 'scroll_reveal' ];
       }
 
-      if(!empty($style['row_title'])) $attr['data-title'] .= $style['row_title'];
+      if( !empty( $style[ 'row_title' ] ) ) $attr[ 'data-title' ] .= $style[ 'row_title' ];
 
-      if(!empty($style['visible-lg'])) $attr['style'] .= '';
-      if(!empty($style['hidden'])) $attr['style'] .= 'display:none';
+      if( !empty( $style[ 'visible-lg' ] ) ) $attr[ 'style' ] .= '';
+      if( !empty( $style[ 'hidden' ] ) ) $attr[ 'style' ] .= 'display:none';
 
-      if(!empty($style['background'])) $attr['style'] .= 'background-color: '.$style['background'].'; ';
-      if(!empty($style['background_image'])) $attr['style'] .= 'background-image: url('.esc_url($style['background_image']).'); ';
-      if(!empty($style['background_image_repeat'])) $attr['style'] .= 'background-repeat: repeat; ';
+      if( !empty( $style[ 'background' ] ) ) $attr[ 'style' ] .= 'background-color: ' . $style[ 'background' ] . '; ';
+      if( !empty( $style[ 'background_image' ] ) ) $attr[ 'style' ] .= 'background-image: url(' . esc_url( $style[ 'background_image' ] ) . '); ';
+      if( !empty( $style[ 'background_image_repeat' ] ) ) $attr[ 'style' ] .= 'background-repeat: repeat; ';
 
-      if(empty($attr['style'])) unset($attr['style']);
+      if( empty( $attr[ 'style' ] ) ) unset( $attr[ 'style' ] );
 
       return $attr;
     }
@@ -385,6 +451,7 @@ namespace UsabilityDynamics\Theme {
      * * Enqueue CSS
      *
      * @param $wp_query
+     *
      * @return string
      */
     public function the_content( $wp_query ) {
@@ -392,7 +459,7 @@ namespace UsabilityDynamics\Theme {
       // @note CSS being included for now, later on wwill figure out how to make it part of app.css
 
       if( is_front_page() && !is_null( get_theme_mod( 'sop:splash-home', null ) ) ) {
-        return '<section class="container-fluid">' . siteorigin_panels_render( null, true, get_theme_mod( 'sop:splash-home') ) . '</section>';
+        return '<section class="container-fluid">' . siteorigin_panels_render( null, true, get_theme_mod( 'sop:splash-home' ) ) . '</section>';
       }
 
       if( is_404() && !is_null( get_theme_mod( 'sop:splash-404', null ) ) ) {
@@ -422,6 +489,9 @@ namespace UsabilityDynamics\Theme {
 
     }
 
+    /**
+     *
+     */
     public function admin_menu() {
 
       // Add Home Page.
@@ -445,6 +515,9 @@ namespace UsabilityDynamics\Theme {
 
     }
 
+    /**
+     *
+     */
     public function editor() {
       global $wp_meta_boxes;
 
@@ -463,21 +536,24 @@ namespace UsabilityDynamics\Theme {
     public function admin_print_styles() {
 
       /// Will move out of here when Laout Library is self-sufficient
-      wp_enqueue_style( 'ud-layout', content_url( 'themes/wp-splash/vendor/libraries/usabilitydynamics/lib-layout-engine/static/styles/post-editor.css') );
+      wp_enqueue_style( 'ud-layout', content_url( 'themes/wp-splash/vendor/libraries/usabilitydynamics/lib-layout-engine/static/styles/post-editor.css' ) );
 
     }
 
+    /**
+     *
+     */
     public function admin_print_scripts() {
 
       if( get_current_screen()->base === 'pages_page_splash-home-editor' ) {
         $panels_data = get_theme_mod( 'sop:splash-home', null );
 
-        if( is_null( $panels_data  ) ) {
-          $layouts = apply_filters( 'siteorigin_panels_prebuilt_layouts', array() );
-          $panels_data = !empty($layouts['default_home']) ? $layouts['default_home'] : current($layouts);
+        if( is_null( $panels_data ) ) {
+          $layouts     = apply_filters( 'siteorigin_panels_prebuilt_layouts', array() );
+          $panels_data = !empty( $layouts[ 'default_home' ] ) ? $layouts[ 'default_home' ] : current( $layouts );
         }
 
-        $panels_data = apply_filters( 'siteorigin_panels_data', $panels_data, 'home');
+        $panels_data = apply_filters( 'siteorigin_panels_data', $panels_data, 'home' );
 
       }
 
@@ -500,7 +576,7 @@ namespace UsabilityDynamics\Theme {
     public function loaded() {
       wp_register_style( 'app', content_url( 'themes/wp-splash/static/styles/app.css' ), array(), Splash::$version, 'all' );
       wp_register_script( 'udx-requires', '//cdn.udx.io/udx.requires.js', array(), '3.1.2', true );
-      wp_register_script( 'app',  content_url( 'themes/wp-splash/static/scripts/src/app.js' ), array( 'udx-requires' ), Splash::$version, true );
+      wp_register_script( 'app', content_url( 'themes/wp-splash/static/scripts/app.js' ), array( 'udx-requires' ), Splash::$version, true );
     }
 
     /**
@@ -511,8 +587,8 @@ namespace UsabilityDynamics\Theme {
      */
     public function wp_enqueue_scripts() {
       //wp_deregister_style( 'siteorigin-panels-front' );
-      wp_enqueue_style( 'app');
-      wp_enqueue_script( 'app');
+      wp_enqueue_style( 'app' );
+      wp_enqueue_script( 'app' );
     }
 
     /**
@@ -524,6 +600,9 @@ namespace UsabilityDynamics\Theme {
       // echo '<script data-main="/themes/wp-splash/static/scripts/app" src="//cdn.udx.io/udx.requires.js"></script>';
     }
 
+    /**
+     *
+     */
     public function wp_print_styles() {
       // echo siteorigin_panels_print_inline_css();
     }

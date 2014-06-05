@@ -59,7 +59,7 @@ module.exports = function( grunt ) {
         },
         files: {
           'static/styles/app.css': [
-            'static/styles//src/app.less'
+            'static/styles/src/app.less'
           ]
         }
       },
@@ -68,8 +68,8 @@ module.exports = function( grunt ) {
           relativeUrls: true
         },
         files: {
-          'static/styles//editor-style.css': [
-            'static/styles//src/editor-style.less'
+          'static/styles/editor-style.css': [
+            'static/styles/src/editor-style.less'
           ]
         }
       }
