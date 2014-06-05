@@ -15,18 +15,20 @@ global $flawless;
     <label class="screen-reader-text" for="df_q"><?php _e( 'Search for:' ); ?></label>
     <input class="search_input_field" data-bind="elasticSuggest:{
       document_type:{
-        hdp_event:'Events',
-        post:'Articles'
+        event:'Events',
+        imagegallery:'Galleries'
       },
-      custom_query: {
-        filter: {
-          range: {
-            event_date_time: {
-              gte: 'now'
-            }
-          }
-        }
-      }
+      search_fields:['summary'],
+      return_fields:['summary','url']
+//      custom_query: {
+//        filter: {
+//          range: {
+//            event_date_time: {
+//              gte: 'now'
+//            }
+//          }
+//        }
+//      }
     }" placeholder="<?php echo $flawless[ 'header' ][ 'search_input_placeholder' ] ? $flawless[ 'header' ][ 'search_input_placeholder' ] : sprintf( __( 'Search %1s', 'flawless' ), get_bloginfo( 'name' ) ); ?>"/>
     <img class="loader" data-bind="visible:autocompletion.loading" src="<?php echo get_template_directory_uri() ?>/img/ajax-loader.gif"/>
   </div>
@@ -36,7 +38,7 @@ global $flawless;
     <li data-bind="attr:{class:'ac_label '+_type+'_icon'}" class="ac_label"><h5 data-bind="visible:label=_type,html: $root.autocompletion.types()[_type]"></h5></li>
     <!-- /ko -->
     <li class="ac_item">
-      <a data-bind="attr:{href:fields.permalink},html: fields.post_title"></a>
+      <a data-bind="attr:{href:fields.url},html: fields.summary"></a>
     </li>
   </ul>
 

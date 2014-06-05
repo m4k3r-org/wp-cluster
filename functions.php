@@ -1038,11 +1038,19 @@ class hddp extends Flawless_F {
    *
    * @todo Utizlie wp_elastic() results.
    */
-  static public function shortcode_hdp_custom_loop( $args = false, $content = '' ) {
+  static public function shortcode_hdp_custom_loop( $args ) {
 
-    $args = shortcode_atts( array(), $args );
+    ob_start();
 
-    return '<pre>' . print_r( $args, true ) . '</pre>';
+    $args = shortcode_atts( array(
+        'post_type' => ''
+    ), $args );
+
+    echo '<pre>';
+    print_r( $args );
+    echo '</pre>';
+
+    return ob_get_clean();
   }
 
   /**
