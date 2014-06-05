@@ -2,7 +2,11 @@
 /**
  *
  *
+ * @todo Use Settings API to render messages.
  */
+
+//echo 'WP_AMD_DIR: ' . WP_AMD_DIR;
+//echo includes_url( 'plugins/wp-amd/static/scripts/wp-amd.js' );
 
 ?>
 <?php if( !empty( $data[ 'msg' ] ) ) : ?>
@@ -16,16 +20,17 @@
 
       <div class="inner-sidebar">
         <?php do_meta_boxes( get_current_screen()->id, 'side', $data ); ?>
-      </div> <!-- .inner-sidebar -->
+      </div>
 
       <div id="post-body">
         <div id="post-body-content">
-          <div id="global-editor-shell">
-          <textarea style="width:100%; height: 360px; resize: none;" id="global-javascript" class="wp-editor-area" name="content"><?php echo $data[ 'post_content' ]; ?></textarea>
+          <div id="global-editor-shell" class="wp-amd-editor-shell">
+            <textarea id="global-javascript" class="wp-editor-area" data-editor-status="not-ready" name="content"><?php echo $data[ 'post_content' ]; ?></textarea>
+            <label for="global-javascript"></label>
           </div>
-        </div> <!-- #post-body-content -->
-      </div> <!-- #post-body -->
+        </div>
+      </div>
 
-    </div> <!-- .metabox-holder -->
+    </div>
   </form>
-</div> <!-- .wrap -->
+</div>

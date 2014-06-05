@@ -2,119 +2,17 @@
  * WP-AMD Plugin Handler.
  *
  */
-jQuery( document ).ready( function( $ ) {
-  console.debug( 'wp-amd', 'Ready.' );
-
-  var editor = {};
-
-  /**
-   *
-   * @author potanin@UD
-   * @param response
-   */
-  function ajaxCallback( response ) {
-    console.debug( 'wp-amd', 'The server responded', response );
-
-    var ajaxMessage = jQuery( 'h2 span.ajax-message' );
-
-    if( response.ok ) {
-      ajaxMessage.removeClass( 'success' ).addClass( 'error' );
-    } else {
-      ajaxMessage.removeClass( 'error' ).addClass( 'success' );
-    }
-
-    ajaxMessage.show().text( response.message || 'Unknown error.' ).fadeIn( 400, function onceDisplayed() {
-      console.debug( 'wp-amd', 'Callback message displayed.' );
-
-    });
-
-  }
-
-  /**
-   *
-   * author potanin@UD
-   * @returns {boolean}
-   */
-  function saveScript() {
-    console.debug( 'wp-amd', 'Saving script asset.' );
-
-    // JavaScript failure fallback.
-    $( '#global-javascript' ).val( editor.getValue() );
-
-    jQuery.post( ajaxurl, {
-      action: '/amd/asset',
-      type: 'script',
-      data: editor.getValue()
-    }, ajaxCallback );
-
-    return false;
-
-  }
-
-  /**
-   *
-   * @author potanin@UD
-   * @returns {boolean}
-   */
-  function saveStyle() {
-    console.debug( 'wp-amd', 'Saving CSS asset.' );
-
-    // JavaScript failure fallback.
-    $( '#global-stylesheet' ).val( editor.getValue() );
-
-    jQuery.post( ajaxurl, {
-      action: '/amd/asset',
-      type: 'style',
-      data: editor.getValue()
-    }, ajaxCallback );
-
-    return false;
-
-  }
-
-  $( '#global-javascript' ).AceJavascriptEditor( {
-    // overwrites the default
-    setEditorContent: function() {
-      var value = this.$elem.val();
-      editor = this.editor;
-      this.editor.getSession().setValue( value );
-    },
-    onInit: function() {
-      this.load();
-    },
-    onLoaded: function() {
-
-    },
-    onDestroy: function( e ) {
-      // console.log( this.editor )
-    }
-  });
-
-  $( '#global-stylesheet' ).AceStylesheetEditor( {
-    // overwrites the default
-    setEditorContent: function() {
-      var value = this.$elem.val();
-      editor = this.editor;
-      this.editor.getSession().setValue( value );
-    },
-    onInit: function() {
-      this.load();
-    },
-    onLoaded: function() {
-
-    },
-    onDestroy: function( e ) {
-      // console.log( this.editor )
-    }
-  });
-
-  $( '#global-javascript-form' ).submit( saveScript );
-
-  $( '#global-stylesheet-form' ).submit( saveStyle );
-
-});
-
 (function( $ ) {
+
+  /**
+   * Console Debug
+   *
+   */
+  function debug() {
+    if( 'function' === typeof console.debug ) {
+      console.debug.apply( console, arguments );
+    }
+  }
 
   var AceSettings = AceSettings || {};
 
@@ -131,10 +29,12 @@ jQuery( document ).ready( function( $ ) {
     this.$container = this.container ? $( this.container ) : this.$elem.parent();
     this.contWd = this.$container.width();
     this.loaded = false;
+
     // if tinymce shows up, assume we have visual mode enabled on this page
     this.tinymce = !!window.tinymce;
 
     if( this.onInit ) this.onInit.call( this );
+
   };
 
   var AceStylesheetEditor = function( config ) {
@@ -305,52 +205,179 @@ jQuery( document ).ready( function( $ ) {
   // jquery plugin for ace editor
   // gives us an entry point for method calls if needed in the future
   $.fn.AceJavascriptEditor = function( option, value ) {
-    var option = option || null;
+    debug( 'wp-amd', 'AceJavascriptEditor' );
+
+    option = option || null;
+
     var data = $( this ).data( 'AceEditor' );
+
     // if data exists (has been instantiated) and calling a public method
     if( data && typeof option == 'string' && data[option] ) {
       data[option]( value || null );
       // if no data, then instantiate the plugin
     } else if( !data ) {
       return this.each( function() {
-        var config = $.extend( {
+
+        $( this ).data( 'AceEditor', new AceJavascriptEditor( $.extend({
           element: $( this ),
           aceId: 'ace-editor',
           theme: 'wordpress',
           defaultHt: '600px',
           container: false
-        }, option );
-        $( this ).data( 'AceEditor', new AceJavascriptEditor( config ) );
+        }, option ) ) );
+
+
+        $( this ).attr( 'data-editor-status', 'ready' );
+
       });
       // else, throw jquery error
     } else {
       $.error( 'Method "' + option + '" does not exist on AceEditor!' );
     }
+
   };
 
   $.fn.AceStylesheetEditor = function( option, value ) {
-    var option = option || null;
+    debug( 'wp-amd', 'AceStylesheetEditor' );
+
+    option = option || null;
     var data = $( this ).data( 'AceEditor' );
+
     // if data exists (has been instantiated) and calling a public method
     if( data && typeof option == 'string' && data[option] ) {
       data[option]( value || null );
       // if no data, then instantiate the plugin
     } else if( !data ) {
       return this.each( function() {
-        var config = $.extend( {
+
+        $( this ).data( 'AceEditor', new AceStylesheetEditor( $.extend({
           element: $( this ),
           aceId: 'ace-editor',
           theme: 'wordpress',
           defaultHt: '600px',
           container: false
-        }, option );
-        $( this ).data( 'AceEditor', new AceStylesheetEditor( config ) );
+        }, option ) ) );
+
+        $( this ).attr( 'data-editor-status', 'ready' );
+
       });
       // else, throw jquery error
     } else {
       $.error( 'Method "' + option + '" does not exist on AceEditor!' );
     }
+
   };
+
+  jQuery( document ).ready( function( $ ) {
+    console.debug( 'wp-amd', 'Ready.' );
+
+    var editor = {};
+
+    /**
+     *
+     * @author potanin@UD
+     * @param response
+     */
+    function ajaxCallback( response ) {
+      debug( 'wp-amd', 'The server responded', response );
+
+      var ajaxMessage = jQuery( 'h2 span.ajax-message' );
+
+      if( response.ok ) {
+        ajaxMessage.removeClass( 'success' ).addClass( 'error' );
+      } else {
+        ajaxMessage.removeClass( 'error' ).addClass( 'success' );
+      }
+
+      ajaxMessage.show().text( response.message || 'Unknown error.' ).fadeIn( 400, function onceDisplayed() {
+        debug( 'wp-amd', 'Callback message displayed.' );
+      });
+
+    }
+
+    /**
+     *
+     * author potanin@UD
+     * @returns {boolean}
+     */
+    function saveScript() {
+      debug( 'wp-amd', 'Saving script asset.' );
+
+      // JavaScript failure fallback.
+      $( '#global-javascript' ).val( editor.getValue() );
+
+      jQuery.post( ajaxurl, {
+        action: '/amd/asset',
+        type: 'script',
+        data: editor.getValue()
+      }, ajaxCallback );
+
+      return false;
+
+    }
+
+    /**
+     *
+     * @author potanin@UD
+     * @returns {boolean}
+     */
+    function saveStyle() {
+      debug( 'wp-amd', 'Saving CSS asset.' );
+
+      // JavaScript failure fallback.
+      $( '#global-stylesheet' ).val( editor.getValue() );
+
+      jQuery.post( ajaxurl, {
+        action: '/amd/asset',
+        type: 'style',
+        data: editor.getValue()
+      }, ajaxCallback );
+
+      return false;
+
+    }
+
+    $( '#global-javascript' ).AceJavascriptEditor({
+      // overwrites the default
+      setEditorContent: function() {
+        var value = this.$elem.val();
+        editor = this.editor;
+        this.editor.getSession().setValue( value );
+      },
+      onInit: function() {
+        this.load();
+      },
+      onLoaded: function() {
+
+      },
+      onDestroy: function( e ) {
+        // console.log( this.editor )
+      }
+    });
+
+    $( '#global-stylesheet' ).AceStylesheetEditor( {
+      // overwrites the default
+      setEditorContent: function() {
+        var value = this.$elem.val();
+        editor = this.editor;
+        this.editor.getSession().setValue( value );
+      },
+      onInit: function() {
+        this.load();
+      },
+      onLoaded: function() {
+
+      },
+      onDestroy: function( e ) {
+        // console.log( this.editor )
+      }
+    });
+
+    $( '#global-javascript-form' ).submit( saveScript );
+
+    $( '#global-stylesheet-form' ).submit( saveStyle );
+
+  });
 
 })( jQuery );
 

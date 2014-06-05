@@ -1,52 +1,7 @@
-jQuery(document).ready(function($) {
-    function ajaxCallback(response) {
-        console.debug("wp-amd", "The server responded", response);
-        var ajaxMessage = jQuery("h2 span.ajax-message");
-        response.ok ? ajaxMessage.removeClass("success").addClass("error") : ajaxMessage.removeClass("error").addClass("success"), 
-        ajaxMessage.show().text(response.message || "Unknown error.").fadeIn(400, function() {
-            console.debug("wp-amd", "Callback message displayed.");
-        });
+!function($) {
+    function debug() {
+        "function" == typeof console.debug && console.debug.apply(console, arguments);
     }
-    function saveScript() {
-        return console.debug("wp-amd", "Saving script asset."), $("#global-javascript").val(editor.getValue()), 
-        jQuery.post(ajaxurl, {
-            action: "/amd/asset",
-            type: "script",
-            data: editor.getValue()
-        }, ajaxCallback), !1;
-    }
-    function saveStyle() {
-        return console.debug("wp-amd", "Saving CSS asset."), $("#global-stylesheet").val(editor.getValue()), 
-        jQuery.post(ajaxurl, {
-            action: "/amd/asset",
-            type: "style",
-            data: editor.getValue()
-        }, ajaxCallback), !1;
-    }
-    console.debug("wp-amd", "Ready.");
-    var editor = {};
-    $("#global-javascript").AceJavascriptEditor({
-        setEditorContent: function() {
-            var value = this.$elem.val();
-            editor = this.editor, this.editor.getSession().setValue(value);
-        },
-        onInit: function() {
-            this.load();
-        },
-        onLoaded: function() {},
-        onDestroy: function() {}
-    }), $("#global-stylesheet").AceStylesheetEditor({
-        setEditorContent: function() {
-            var value = this.$elem.val();
-            editor = this.editor, this.editor.getSession().setValue(value);
-        },
-        onInit: function() {
-            this.load();
-        },
-        onLoaded: function() {},
-        onDestroy: function() {}
-    }), $("#global-javascript-form").submit(saveScript), $("#global-stylesheet-form").submit(saveStyle);
-}), function($) {
     var AceJavascriptEditor = function(config) {
         $.extend(this, config), this.$elem = this.element, this.element = this.$elem.attr("id"), 
         this.$container = this.container ? $(this.container) : this.$elem.parent(), this.contWd = this.$container.width(), 
@@ -151,34 +106,82 @@ jQuery(document).ready(function($) {
             }), this.$elem.show(), this.loaded = !1, void (this.onDestroy && this.onDestroy.apply(this, arguments))) : !1;
         }
     }, $.fn.AceJavascriptEditor = function(option, value) {
-        var option = option || null, data = $(this).data("AceEditor");
+        debug("wp-amd", "AceJavascriptEditor"), option = option || null;
+        var data = $(this).data("AceEditor");
         if (data && "string" == typeof option && data[option]) data[option](value || null); else {
             if (!data) return this.each(function() {
-                var config = $.extend({
+                $(this).data("AceEditor", new AceJavascriptEditor($.extend({
                     element: $(this),
                     aceId: "ace-editor",
                     theme: "wordpress",
                     defaultHt: "600px",
                     container: !1
-                }, option);
-                $(this).data("AceEditor", new AceJavascriptEditor(config));
+                }, option))), $(this).attr("data-editor-status", "ready");
             });
             $.error('Method "' + option + '" does not exist on AceEditor!');
         }
     }, $.fn.AceStylesheetEditor = function(option, value) {
-        var option = option || null, data = $(this).data("AceEditor");
+        debug("wp-amd", "AceStylesheetEditor"), option = option || null;
+        var data = $(this).data("AceEditor");
         if (data && "string" == typeof option && data[option]) data[option](value || null); else {
             if (!data) return this.each(function() {
-                var config = $.extend({
+                $(this).data("AceEditor", new AceStylesheetEditor($.extend({
                     element: $(this),
                     aceId: "ace-editor",
                     theme: "wordpress",
                     defaultHt: "600px",
                     container: !1
-                }, option);
-                $(this).data("AceEditor", new AceStylesheetEditor(config));
+                }, option))), $(this).attr("data-editor-status", "ready");
             });
             $.error('Method "' + option + '" does not exist on AceEditor!');
         }
-    };
+    }, jQuery(document).ready(function($) {
+        function ajaxCallback(response) {
+            debug("wp-amd", "The server responded", response);
+            var ajaxMessage = jQuery("h2 span.ajax-message");
+            response.ok ? ajaxMessage.removeClass("success").addClass("error") : ajaxMessage.removeClass("error").addClass("success"), 
+            ajaxMessage.show().text(response.message || "Unknown error.").fadeIn(400, function() {
+                debug("wp-amd", "Callback message displayed.");
+            });
+        }
+        function saveScript() {
+            return debug("wp-amd", "Saving script asset."), $("#global-javascript").val(editor.getValue()), 
+            jQuery.post(ajaxurl, {
+                action: "/amd/asset",
+                type: "script",
+                data: editor.getValue()
+            }, ajaxCallback), !1;
+        }
+        function saveStyle() {
+            return debug("wp-amd", "Saving CSS asset."), $("#global-stylesheet").val(editor.getValue()), 
+            jQuery.post(ajaxurl, {
+                action: "/amd/asset",
+                type: "style",
+                data: editor.getValue()
+            }, ajaxCallback), !1;
+        }
+        console.debug("wp-amd", "Ready.");
+        var editor = {};
+        $("#global-javascript").AceJavascriptEditor({
+            setEditorContent: function() {
+                var value = this.$elem.val();
+                editor = this.editor, this.editor.getSession().setValue(value);
+            },
+            onInit: function() {
+                this.load();
+            },
+            onLoaded: function() {},
+            onDestroy: function() {}
+        }), $("#global-stylesheet").AceStylesheetEditor({
+            setEditorContent: function() {
+                var value = this.$elem.val();
+                editor = this.editor, this.editor.getSession().setValue(value);
+            },
+            onInit: function() {
+                this.load();
+            },
+            onLoaded: function() {},
+            onDestroy: function() {}
+        }), $("#global-javascript-form").submit(saveScript), $("#global-stylesheet-form").submit(saveStyle);
+    });
 }(jQuery);

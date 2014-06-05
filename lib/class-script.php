@@ -17,10 +17,12 @@ namespace UsabilityDynamics\AMD {
       /**
        * Constructor
        *
+       * @param array $args
+       * @param null  $context
        */
-      public function __construct( $args = array() ) {
+      public function __construct( $args = array(), $context = null ) {
       
-        parent::__construct( $args );
+        parent::__construct( $args, $context );
         
       }
       

@@ -1,6 +1,7 @@
 <?php
 /**
- * 
+ *
+ * @todo Use Settings API to render messages.
  */
 ?>
 <?php if( !empty( $data[ 'msg' ] ) ) : ?>
@@ -18,8 +19,9 @@
 
       <div id="post-body">
         <div id="post-body-content">
-          <div id="global-editor-shell">
-          <textarea style="width:100%; height: 360px; resize: none;" id="global-stylesheet" class="wp-editor-area" name="content"><?php echo $data[ 'post_content' ]; ?></textarea>
+          <div id="global-editor-shell" class="wp-amd-editor-shell">
+            <textarea id="global-stylesheet" class="wp-editor-area" data-editor-status="not-ready" name="content"><?php echo $data[ 'post_content' ]; ?></textarea>
+            <label for="global-stylesheet"></label>
           </div>
         </div> <!-- #post-body-content -->
       </div> <!-- #post-body -->

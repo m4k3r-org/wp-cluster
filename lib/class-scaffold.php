@@ -26,10 +26,10 @@ namespace UsabilityDynamics\AMD {
        * Must be called in child constructor firstly!
        *
        */
-      public function __construct( $args = array() ) {
+      public function __construct( $args = array(), $context = null ) {
       
         $this->args = wp_parse_args( $args, array(
-          'version' => '1.0', 
+          'version' => null,
           'type' => '', // style, script
           'minify' => false,
           'load_in_head' => true,
@@ -39,9 +39,13 @@ namespace UsabilityDynamics\AMD {
           'post_type' => false,
         ));
 
+        // If context is provided (e.g. instance of wp-amd bootstrap), get settings from it.
+        if( is_object( $context ) && method_exists( $context, 'get' ) ) {
+          $this->args[ 'version' ] = $context->get( 'version' );
+        }
+
         // $this->args['permalink'] = '/' . $this->args['permalink'];
 
-        //die( '<pre>' . print_r( $this->args['permalink'], true ) . '</pre>' );
         //** Add hooks only if type is allowed */
         if( in_array( $this->get( 'type' ), array( 'script', 'style' ) ) ) {
         
@@ -311,7 +315,7 @@ namespace UsabilityDynamics\AMD {
         $data[ 'post_content' ] = isset( $data[ 'post_content' ] ) ? $data[ 'post_content' ] : '';
         
 
-        $template = WP_AMD_DIR . 'templates/' . $this->get( 'type' ) . '_edit_page.php';
+        $template = WP_AMD_DIR . 'static/templates/' . $this->get( 'type' ) . '-edit-page.php';
         
         if( file_exists( $template ) ) {
           include( $template );

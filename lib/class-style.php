@@ -19,8 +19,10 @@ namespace UsabilityDynamics\AMD {
       /**
        * Constructor
        *
+       * @param array $args
+       * @param null  $context
        */
-      function __construct( $args = array() ) {
+      function __construct( $args = array(), $context = null ) {
 
         parent::__construct( $args );
           
@@ -37,11 +39,19 @@ namespace UsabilityDynamics\AMD {
         add_filter( 'customize_value_' . $this->name, array( $this, 'customize_value' ) );
         
       }
-      
+
+      /**
+       * @param $value
+       */
       public function customize_update( $value ) {
         $this->save_asset( $value );
       }
-      
+
+      /**
+       * @param $default
+       *
+       * @return string
+       */
       public function customize_value( $default ) {
         $post = $this->get_asset( $this->get( 'type' ) );
         return !empty( $post[ 'post_content' ] ) ? $post[ 'post_content' ] : '';
@@ -90,11 +100,8 @@ namespace UsabilityDynamics\AMD {
        * @author peshkov@UD
        */
       public function customize_live_preview() {
-        wp_enqueue_script( 'wp-amd-themecustomizer', plugins_url( '/static/scripts/wp.amd.customizer.style.js', __DIR__  ), array( 'jquery','customize-preview' ), '', true );
-        wp_localize_script( 'wp-amd-themecustomizer', 'wp_amd_themecustomizer', array(
-          'name' => $this->name,
-          'link_id' => 'wp-amd-' . $this->get( 'type' ) . '-css',
-        ) );
+        wp_enqueue_script( 'wp-amd-themecustomizer', plugins_url( '/static/scripts/wp.amd.customizer.style.js', dirname( __DIR__  ) ), array( 'jquery','customize-preview' ), '', true );
+        wp_localize_script( 'wp-amd-themecustomizer', 'wp_amd_themecustomizer', array( 'name' => $this->name, 'link_id' => 'wp-amd-' . $this->get( 'type' ) . '-css' ));
       }
     
     }

@@ -156,16 +156,55 @@ namespace UsabilityDynamics\AMD {
           )
         ));
 
-        // Initialize Style and Script classes.
-        $this->style    = new Style( $this->get( 'assets.style' ) );
-        $this->script   = new Script( $this->get( 'assets.script' ) );
-
         // Set Dynamics.
         $this->set( 'version',  $this->version );
         $this->set( 'locale',   $this->domain );
 
+        // Initialize Style and Script classes.
+        $this->style    = new Style( $this->get( 'assets.style' ), $this );
+        $this->script   = new Script( $this->get( 'assets.script' ), $this );
+
         // AJAX Update Handler.
         add_action( 'wp_ajax_/amd/asset', array( $this, 'ajax_handler' ) );
+
+        // Handle dynamic URL identification for plugin assets.
+        add_filter( 'includes_url', array( $this, 'includes_url' ), 20, 2 );
+        add_filter( 'plugins_url', array( $this, 'plugins_url' ), 20, 2 );
+
+      }
+
+      /**
+       * Modify includes_url() to find valid location for AMD includes assets.
+       *
+       * @since 1.1.1
+       * @author potanin@UD
+
+       * @param string $url
+       * @param string $path
+       *
+       * @return string
+       */
+      public function plugins_url( $url = '', $path = '' ) {
+
+        return $url;
+
+      }
+
+      /**
+       * Modify includes_url() to find valid location for AMD includes assets.
+       *
+       * @since 1.1.1
+       * @author potanin@UD
+       * @param string $url
+       * @param string $path
+       *
+       * @return string
+       */
+      public function includes_url( $url = '', $path = '' ) {
+
+
+
+        return $url;
 
       }
 
