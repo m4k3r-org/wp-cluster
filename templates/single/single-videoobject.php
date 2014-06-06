@@ -2,7 +2,7 @@
 
 <?php get_template_part( 'attention', 'video' ); ?>
 
-<?php $video = new \DiscoDonniePresents\Video( get_the_ID(), false ); the_post(); ?>
+<?php $video = new \DiscoDonniePresents\VideoObject( get_the_ID(), false ); the_post(); ?>
 
 <?php //echo '<pre>'; print_r( $video ); echo '</pre>'; ?>
 

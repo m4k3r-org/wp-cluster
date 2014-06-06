@@ -21,7 +21,7 @@
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/artist.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/tour.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/imagegallery.php' );
-@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/video.php' );
+@include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/videoobject.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/promoter.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/credit.php' );
 @include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/event-taxonomy.php' );
@@ -1270,8 +1270,11 @@ class hddp extends Flawless_F {
 
     $_entities = array(
       'event' => '\DiscoDonniePresents\Event',
-      'imagegallery' => '\DiscoDonniePresents\ImageGallery'
+      'imagegallery' => '\DiscoDonniePresents\ImageGallery',
+      'videoobject' => '\DiscoDonniePresents\VideoObject'
     );
+
+    if ( empty( $_entities[$post->post_type] ) ) return $document;
 
     $class = $_entities[$post->post_type];
 

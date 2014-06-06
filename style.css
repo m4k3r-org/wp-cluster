@@ -1941,7 +1941,8 @@
     margin-bottom: 16px;
   }
 
-  #dynamic_filter[dynamic_filter="hdp_photo_gallery"] {
+  #dynamic_filter[dynamic_filter="hdp_photo_gallery"],
+  #dynamic_filter[dynamic_filter="hdp_video"]{
     min-height: 400px;
   }
 

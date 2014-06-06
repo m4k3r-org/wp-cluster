@@ -116,7 +116,7 @@ namespace DiscoDonniePresents {
             'posts_per_page' => 1
         ) );
 
-        if ( !empty( $video ) ) return new Video( $video[0]->ID, false );
+        if ( !empty( $video ) ) return new VideoObject( $video[0]->ID, false );
 
         return false;
 
