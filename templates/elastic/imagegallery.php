@@ -2,6 +2,7 @@
   type: 'imagegallery',
   period: false,
   sort_by: 'event_date',
+  sort_dir: 'desc',
   per_page: 6,
   return_fields: [
     'summary',
