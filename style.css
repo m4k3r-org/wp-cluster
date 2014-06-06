@@ -1388,7 +1388,7 @@
   }
 
   #hdp_filter_events .df_element[data-type="upcoming"],
-  .hdp_sort .df_sorter div[data-type="event_date_time"] {
+  .hdp_sort .df_sorter div[data-type="start_date"] {
     -webkit-border-radius: 0 4px 4px 0;
     -moz-border-radius: 0 4px 4px 0;
     border-radius: 0 4px 4px 0;

@@ -776,10 +776,12 @@
                  * Update facets
                  */
                 viewModel.filter.facets([]);
-                $.each( data.facets, function( key, value ) {
-                  value.key = key;
-                  viewModel.filter.facets.push(value);
-                });
+                if ( typeof data.facets !== 'undefined' ) {
+                  $.each( data.facets, function( key, value ) {
+                    value.key = key;
+                    viewModel.filter.facets.push(value);
+                  });
+                }
 
                 /**
                  * Hide loader indicator

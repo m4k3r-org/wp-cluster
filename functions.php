@@ -527,7 +527,6 @@ class hddp extends Flawless_F {
     wp_enqueue_style( 'animate', get_stylesheet_directory_uri() . '/css/animate.css' );
 
     //** New Elastic Search Shortcodes */
-    add_shortcode( 'elasticsearch_results', array( 'hddp', 'elasticsearch_results' ) );
     add_shortcode( 'elasticsearch_facets', array( 'hddp', 'elasticsearch_facets' ) );
     add_shortcode( 'elasticsearch_media', array( 'hddp', 'elasticsearch_media' ) );
 
@@ -659,37 +658,15 @@ class hddp extends Flawless_F {
    * @return type
    */
   public static function elasticsearch_facets( $atts ) {
-    extract( shortcode_atts( array(
-      'id'     => 'none',
-      'action' => 'elasticsearch_query',
-      'type'   => '',
-      'size'   => 10
-    ), $atts ) );
+
+    $args = shortcode_atts( array(
+        'post_type' => ''
+    ), $atts );
 
     ob_start();
-    include 'templates/elasticsearch_facets.php';
+    include 'templates/elastic/'.$args['post_type'].'_facets.php';
 
     return ob_get_clean();
-  }
-
-  /**
-   * New Elastic Search Results
-   *
-   * @param $atts
-   *
-   * @return type
-   */
-  public static function elasticsearch_results( $atts ) {
-
-    extract( shortcode_atts( array(
-      'id' => 'none'
-    ), $atts ) );
-
-    ob_start();
-    include 'templates/elasticsearch_results.php';
-
-    return ob_get_clean();
-
   }
 
   /**
@@ -1040,16 +1017,14 @@ class hddp extends Flawless_F {
    * @todo Utizlie wp_elastic() results.
    */
   static public function shortcode_hdp_custom_loop( $args ) {
+    $args = shortcode_atts( array(
+      'post_type' => '',
+      'per_page' => 25
+    ), $args );
 
     ob_start();
 
-    $args = shortcode_atts( array(
-        'post_type' => ''
-    ), $args );
-
-    echo '<pre>';
-    print_r( $args );
-    echo '</pre>';
+    include 'templates/elastic/loop/'.$args['post_type'].'.php';
 
     return ob_get_clean();
   }
