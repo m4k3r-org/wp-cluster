@@ -16,7 +16,8 @@ global $flawless;
     <input class="search_input_field" data-bind="elasticSuggest:{
       document_type:{
         event:'Events',
-        imagegallery:'Galleries'
+        imagegallery:'Galleries',
+        videoobject:'Videos'
       },
       search_fields:['summary'],
       return_fields:['summary','url']
