@@ -47,7 +47,7 @@
 <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_photo_gallery">
   <div class="df_element hdp_results clearfix">
     <!-- ko if: filter.documents().length -->
-    <ul data-bind="foreach: filter.documents" class="df_element hdp_results_items">
+    <ul data-bind="foreach: filter.documents" class="df_element hdp_results_items clearfix">
 
       <li class="hdp_results_item" data-bind="attr: {df_id_: _id}">
         <ul class="df_result_data">
@@ -74,11 +74,14 @@
     </ul>
     <!-- /ko -->
 
-    <!-- <div class="hdp_results_message" style="display: block;">
-      <div class="df_load_status">
-        <span>Displaying <?php echo $per_page; ?></span> of <?php echo $total[ 0 ]; ?> Events <a class="btn" href="/events"><span>Show All</span></a>
+    <div class="hdp_results_message clearfix" style="display: block;">
+      <div class="df_load_status left">
+        Displaying <span class="df_current_count" data-bind="html:filter.count">0</span> of <span data-bind="html:filter.total"></span> Galleries
       </div>
-    </div> -->
+      <a class="btn" data-bind="visible:filter.has_more_documents,filterShowMoreControl:{count:6}">
+        <span>Show <em data-bind="html:filter.moreCount" class="df_more_count"></em> More</span>
+      </a>
+    </div>
 
   </div>
 </div>
