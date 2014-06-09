@@ -43,7 +43,13 @@
           "comments",
           "revisions",
           "excerpt"
-        ]
+        ],
+        "rewrite": {
+          "feeds": true,
+          "pages": true,
+          "slug": "photo",
+          "with_front": true
+        }
       },
       "taxonomies": [
       ],
