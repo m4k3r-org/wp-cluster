@@ -25,14 +25,14 @@
       <li class="visible-desktop link">
         <a href="#section_hdp_photo_gallery">
           <i class="icon-hdp_photo_gallery icon-dd"></i> <?php _e('Photos'); ?>
-          <span class="comment_count"><?php echo count( $credit->photos() ); ?></span>
+          <span class="comment_count" data-bind="html:photos.total"></span>
         </a>
       </li>
 
       <li class="visible-desktop link">
         <a href="#section_hdp_video">
           <i class="icon-hdp_video icon-dd"></i> <?php _e('Videos'); ?>
-          <span class="comment_count"><?php echo count( $credit->videos() ); ?></span>
+          <span class="comment_count" data-bind="html:videos.total"></span>
         </a>
       </li>
 
@@ -89,54 +89,28 @@
       <div id="section_hdp_photo_gallery">
         <h1><?php echo $credit->post('post_title'); ?> <?php _e('Photos'); ?></h1>
 
-        <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_photo_gallery">
-          <div class="df_element hdp_results clearfix">
-            <ul class="df_element hdp_results_items">
+        <form data-scope="photos" data-bind="elasticFilter:{
+          middle_timepoint: { gte: 'now-1d', lte: 'now-1d' },
+          per_page: 6, period: false, period_field: 'event_date', sort_by: 'event_date', type: 'imagegallery', location_field: 'venue.address.geo',
+          custom_query: { filter: { bool: { must: [{ term: { 'credit.name': '<?php echo $credit->post('post_title'); ?>'}}]}}},
+          return_fields: [ 'summary', 'url', 'image.small', 'event_date', 'venue.address.state', 'venue.address.city']}" class="elastic_form">
+        </form>
 
-              <?php if ( $credit->photos() ): ?>
-
-              <?php
-                foreach( $credit->photos() as $photo ) {
-                  include( locate_template('templates/loop/imagegallery.php') );
-                }
-              ?>
-
-              <?php else: ?>
-
-              <li><?php _e( 'No photos found' ); ?></li>
-
-              <?php endif; ?>
-
-            </ul>
-          </div>
-        </div>
+        <?php include locate_template('templates/elastic/loop/imagegallery.php'); ?>
 
       </div>
 
       <div id="section_hdp_video">
         <h1><?php echo $credit->post('post_title'); ?> <?php _e('Videos'); ?></h1>
 
-        <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_video">
-          <div class="df_element hdp_results clearfix">
-            <ul class="df_element hdp_results_items">
+        <form data-scope="videos" data-bind="elasticFilter:{
+          middle_timepoint: { gte: 'now-1d', lte: 'now-1d' },
+          per_page: 6, period: false, period_field: 'event_date', sort_by: 'event_date', type: 'videoobject', location_field: 'venue.address.geo',
+          custom_query: { filter: { bool: { must: [{ term: { 'credit.name': '<?php echo $credit->post('post_title'); ?>'}}]}}},
+          return_fields: [ 'summary', 'url', 'image.small', 'event_date', 'venue.address.state', 'venue.address.city']}" class="elastic_form">
+        </form>
 
-              <?php if ( $credit->videos() ): ?>
-
-              <?php
-                foreach( $credit->videos() as $video ) {
-                  include( locate_template('templates/loop/videoobject.php') );
-                }
-              ?>
-
-              <?php else: ?>
-
-              <li><?php _e( 'No videos found' ); ?></li>
-
-              <?php endif; ?>
-
-            </ul>
-          </div>
-        </div>
+        <?php include locate_template('templates/elastic/loop/videoobject.php'); ?>
 
       </div>
 
