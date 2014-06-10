@@ -1,35 +1,13 @@
-<form style="margin: 0;" data-bind="elasticFilter:{
-  middle_timepoint: {
-    gte: 'now-1d',
-    lte: 'now-1d'
-  },
-  per_page: <?php echo $args['per_page'] ?>,
-  period_field: 'start_date',
-  sort_by: 'start_date',
-  type: 'event',
-  return_fields: [
-    'start_date',
-    'description',
-    'summary',
-    'venue.address.city',
-    'venue.address.state',
-    'url',
-    'image.poster',
-    'venue.name',
-    'artists.name',
-    'tickets'
-  ]}" class="elastic_form"></form>
-
-  <ul class="hdp_results_header clearfix" id="hdp_results_header_event">
+<ul class="hdp_results_header clearfix" id="hdp_results_header_event">
   <li class="hdp_event_time">Date</li>
   <li class="hdp_event_name">Name</li>
   <li class="hdp_event_city">City</li>
   <li class="hdp_event_state">State</li>
 </ul>
 
-<div style="margin-bottom: 30px;" id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_event">
+<div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_event">
   <div class="df_element hdp_results clearfix">
-    <!-- ko if: !filter.documents().length -->
+    <!-- ko if: !events.documents().length -->
     <ul class="df_element hdp_results_items">
       <li class="hdp_results_item">
         <ul class="hdp_event_collapsed clearfix">
@@ -38,8 +16,8 @@
       </li>
     </ul>
     <!-- /ko -->
-    <!-- ko if: filter.documents().length -->
-    <ul data-bind="foreach: filter.documents" class="df_element hdp_results_items">
+    <!-- ko if: events.documents().length -->
+    <ul data-bind="foreach: events.documents" class="df_element hdp_results_items">
       <li data-bind="attr: {id: _id}" class="hdp_results_item">
         <ul class="df_result_data">
           <li class="df_list_item">
@@ -76,6 +54,13 @@
       </li>
     </ul>
     <!-- /ko -->
-
+    <div class="df_element df_load_more">
+      <div class="df_load_status">
+        Displaying <span class="df_current_count" data-bind="html:events.count">0</span> of <span data-bind="html:events.total"></span> Events
+      </div>
+      <a class="btn" data-scope="events" data-bind="visible:events.has_more_documents,filterShowMoreControl:{count:15}">
+        <span>Show <em data-bind="html:events.moreCount" class="df_more_count"></em> More</span>
+      </a>
+    </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
-<div class="hdp_filter <?php echo $id; ?>" id="hdp_filter_events">
-  <div data-bind="elasticTimeControl:{}" class="hdp_filter_event_past hidden-phone" id="hdp_filter_event">
+<div class="hdp_filter" id="hdp_filter_events">
+  <div data-scope="events" data-bind="elasticTimeControl:{}" class="hdp_filter_event_past hidden-phone" id="hdp_filter_event">
     <span class="hdp_filter_text">Display:</span>
     <div data-type="upcoming" data-direction="asc" class="df_element df_sortable_button df_sortable_upcoming df_sortable_active">Upcoming</div>
     <div data-type="past" data-direction="desc" class="df_element df_sortable_button df_sortable_past">Past</div>
@@ -8,7 +8,7 @@
 </div>
 
 <div class="hdp_sort clearfix" id="hdp_sort_event">
-  <div data-bind="elasticSortControl:{}" class="hdp_results_sorter_distance df_element df_sorter <?php echo $id; ?>" id="hdp_results_sorter">
+  <div data-scope="events" data-bind="elasticSortControl:{}" class="hdp_results_sorter_distance df_element df_sorter" id="hdp_results_sorter">
     <span class="hdp_sort_text">Sort By:</span>
     <div class="df_element df_sortable_button df_sortable_active" data-type="start_date" data-direction="asc">Date</div>
     <div class="df_element df_sortable_button" data-type="distance" data-direction="desc">Distance</div>
@@ -22,9 +22,10 @@
   <li class="hdp_event_state">State</li>
 </ul>
 
-<div id="dynamic_filter" class="<?php echo $id; ?> dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_event">
+<div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_event">
   <div class="df_element hdp_results clearfix">
-    <!-- ko if: !filter.documents().length -->
+
+    <!-- ko if: !events.documents().length -->
     <ul class="df_element hdp_results_items">
       <li class="hdp_results_item">
         <ul class="hdp_event_collapsed clearfix">
@@ -33,9 +34,10 @@
       </li>
     </ul>
     <!-- /ko -->
-    <!-- ko if: filter.documents().length -->
-    <ul data-bind="foreach: filter.documents" class="df_element hdp_results_items">
-      <li data-bind="attr: {id: _id}" class="hdp_results_item">
+
+    <!-- ko if: events.documents().length -->
+    <ul data-bind="foreach: events.documents" class="df_element hdp_results_items">
+      <li data-bind="attr: {event_id: _id}" class="hdp_results_item">
         <ul class="df_result_data">
           <li class="df_list_item">
             <ul>
@@ -71,13 +73,15 @@
       </li>
     </ul>
     <!-- /ko -->
-    <div class="df_element df_load_more">
-      <div class="df_load_status">
-        Displaying <span class="df_current_count" data-bind="html:filter.count">0</span> of <span data-bind="html:filter.total"></span> Events
+
+    <div class="hdp_results_message clearfix" style="display: block;">
+      <div class="df_load_status left">
+        Displaying <span class="df_current_count" data-bind="html:events.count">0</span> of <span data-bind="html:events.total"></span> Videos
       </div>
-      <a class="btn" data-bind="visible:filter.has_more_documents,filterShowMoreControl:{count:100}">
-        <span>Show <em data-bind="html:filter.moreCount" class="df_more_count"></em> More</span>
+      <a class="btn" data-scope="events" data-bind="visible:events.has_more_documents,filterShowMoreControl:{count:100}">
+        <span>Show <em data-bind="html:events.moreCount" class="df_more_count"></em> More</span>
       </a>
     </div>
+
   </div>
 </div>

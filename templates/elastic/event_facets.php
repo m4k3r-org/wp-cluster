@@ -1,4 +1,4 @@
-<form data-bind="elasticFilter:{
+<form data-scope="events" data-bind="elasticFilter:{
   middle_timepoint: {
     gte: 'now-1d',
     lte: 'now-1d'
@@ -32,9 +32,9 @@
     'tickets'
   ]}" class="elastic_form">
 
-  <div data-bind="foreach: filter.facets" class="facets-list inputs-container">
+  <div data-bind="foreach: events.facets" class="facets-list inputs-container">
     <div class="df_filter_inputs_list_wrapper">
-      <span class="df_filter_label" data-bind="html: $root.filter.facetLabels()[key]"></span>
+      <span class="df_filter_label" data-bind="html: $root.events.facetLabels()[key]"></span>
       <ul class="df_filter_inputs_list">
         <li class="df_filter_value_wrapper">
           <label class="df_input">

@@ -1,4 +1,4 @@
-<form id="filter_wrapper" data-bind="elasticFilter:{
+<form data-scope="videos" id="filter_wrapper" data-bind="elasticFilter:{
   type: 'videoobject',
   period: false,
   sort_by: 'event_date',
@@ -24,9 +24,9 @@
   <a class="btn btn_show_filter clearfix" href="#"><span>Filter</span></a>
   <div id="df_sidebar_filters_wrap" style="visibility:hidden;">
     <div id="df_sidebar_filters">
-      <div data-bind="foreach: filter.facets" class="facets-list inputs-container">
-        <div class="df_filter_inputs_list_wrapper" data-bind="attr: {facet:$root.filter.facetLabels()[key]}">
-          <span class="df_filter_label" data-bind="html: $root.filter.facetLabels()[key]"></span>
+      <div data-bind="foreach: videos.facets" class="facets-list inputs-container">
+        <div class="df_filter_inputs_list_wrapper" data-bind="attr: {facet:$root.videos.facetLabels()[key]}">
+          <span class="df_filter_label" data-bind="html: $root.videos.facetLabels()[key]"></span>
           <ul class="df_filter_inputs_list">
             <li class="df_filter_value_wrapper">
               <label class="df_input">
@@ -47,8 +47,8 @@
 
 <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_video">
   <div class="df_element hdp_results clearfix">
-    <!-- ko if: filter.documents().length -->
-    <ul data-bind="foreach: filter.documents" class="df_element hdp_results_items clearfix">
+    <!-- ko if: videos.documents().length -->
+    <ul data-bind="foreach: videos.documents" class="df_element hdp_results_items clearfix">
 
       <li class="hdp_results_item" data-bind="attr: {df_id_: _id}">
         <ul class="df_result_data">
@@ -77,10 +77,10 @@
 
     <div class="hdp_results_message clearfix" style="display: block;">
       <div class="df_load_status left">
-        Displaying <span class="df_current_count" data-bind="html:filter.count">0</span> of <span data-bind="html:filter.total"></span> Videos
+        Displaying <span class="df_current_count" data-bind="html:videos.count">0</span> of <span data-bind="html:videos.total"></span> Videos
       </div>
-      <a class="btn" data-bind="visible:filter.has_more_documents,filterShowMoreControl:{count:6}">
-        <span>Show <em data-bind="html:filter.moreCount" class="df_more_count"></em> More</span>
+      <a class="btn" data-scope="videos" data-bind="visible:videos.has_more_documents,filterShowMoreControl:{count:6}">
+        <span>Show <em data-bind="html:videos.moreCount" class="df_more_count"></em> More</span>
       </a>
     </div>
 
