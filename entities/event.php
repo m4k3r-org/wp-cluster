@@ -373,8 +373,10 @@ namespace DiscoDonniePresents {
         $city = $this->venue()->taxonomies('city', 'elasticsearch');
         $state = $this->venue()->taxonomies('state', 'elasticsearch');
         $country = $this->venue()->taxonomies('country', 'elasticsearch');
+        $type = $this->venue()->taxonomies('venue-type', 'elasticsearch');
         $_object[ 'venue' ] = array(
           'name' => $this->venue()->post( 'post_title' ),
+          'type' => $type[0],
           'url' => get_permalink( $this->venue()->post( 'ID' ) ),
           'address' => array(
             'full' => $this->venue()->meta( 'locationAddress' ),
