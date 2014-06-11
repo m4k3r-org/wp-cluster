@@ -4,7 +4,6 @@
 
 <?php
   $artist = new \DiscoDonniePresents\Artist( get_the_ID(), false ); the_post();
-  //echo '<pre>'; print_r( $artist->meta() ); echo '</pre>';
 ?>
 
 <?php $image = wp_get_attachment_image( $artist->meta('logo'), $size = 'sidebar_poster' ); ?>

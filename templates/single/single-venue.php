@@ -4,7 +4,6 @@
 
 <?php
   $venue = new \DiscoDonniePresents\Venue( get_the_ID(), false ); the_post();
-  //echo '<pre>'; print_r( $venue->meta() ); echo '</pre>';
 ?>
 
 <?php $image = wp_get_attachment_image( $venue->meta('imageLogo'), $size = 'sidebar_poster' ); ?>

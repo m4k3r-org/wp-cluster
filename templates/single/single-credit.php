@@ -4,7 +4,6 @@
 
 <?php
   $credit = new \DiscoDonniePresents\Credit( get_the_ID(), false ); the_post();
-//  echo '<pre>'; print_r( $credit ); echo '</pre>';
 ?>
 
 <?php $image = wp_get_attachment_image( $credit->meta('logo'), $size = 'sidebar_poster' ); ?>

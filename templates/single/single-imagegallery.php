@@ -4,8 +4,6 @@
 
 <?php $imageGallery = new \DiscoDonniePresents\ImageGallery( get_the_ID(), false ); the_post(); ?>
 
-<?php //echo '<pre>'; print_r( $imageGallery ); echo '</pre>'; ?>
-
 <div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" itemscope itemtype="http://schema.org/Event">
 
   <div class="cfct-block sidebar-left span4 first">

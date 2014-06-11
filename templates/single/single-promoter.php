@@ -4,7 +4,6 @@
 
 <?php
   $promoter = new \DiscoDonniePresents\Promoter( get_the_ID(), false ); the_post();
-  //echo '<pre>'; print_r( $promoter->meta() ); echo '</pre>';
 ?>
 
 <?php $image = wp_get_attachment_image( $promoter->meta('logoImage'), $size = 'sidebar_poster' ); ?>

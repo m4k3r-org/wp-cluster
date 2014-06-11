@@ -4,8 +4,6 @@
 
 <?php $event = new \DiscoDonniePresents\Event( get_the_ID() ); the_post(); ?>
 
-<?php //echo '<pre>'; print_r( $event ); echo '</pre>'; ?>
-
 <div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" itemscope itemtype="http://schema.org/Event">
 
   <div class="cfct-block sidebar-left span4 first">
@@ -114,16 +112,6 @@
         <div class="entry-content clearfix">
 
           <?php the_content( 'More Info' ); ?>
-
-          <?php /*Not supported yet*/ if( 0 /*$event[ 'images' ]*/ ) { ?>
-            <div class="gallery gallery-columns-0">
-          <?php foreach( $event[ 'images' ] as $image ) {
-            $image_url = wp_get_attachment_image_src( $image->ID, 'full' );
-            $image_url = $image_url[ '0' ]; ?>
-            <div class="gallery-item"><a href="<?php echo $image_url; ?>" rel="gallery"><?php echo wp_get_attachment_image( $image->ID, 'gallery' ); ?></a></div>
-          <?php } ?>
-          </div>
-          <?php } ?>
 
         </div>
 
