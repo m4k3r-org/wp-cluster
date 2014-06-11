@@ -12,12 +12,6 @@ namespace DiscoDonniePresents {
      */
     class ArtistTaxonomy extends Taxonomy {
 
-      public function __construct($id = false, $taxonomy = false) {
-        parent::__construct($id, $taxonomy);
-
-        $this->load_data();
-      }
-
       /**
        *
        * @var type
@@ -35,6 +29,28 @@ namespace DiscoDonniePresents {
        * @var type
        */
       public $_videos;
+
+      /**
+       *
+       * @var type
+       */
+      public $_taxToElasticField = array(
+          'genre' => 'artists.genre'
+      );
+
+      /**
+       *
+       * @param type $id
+       * @param type $taxonomy
+       */
+      public function __construct($id = false, $taxonomy = false) {
+        parent::__construct($id, $taxonomy);
+
+        /**
+         * Do not use for now
+         */
+        //$this->load_data();
+      }
 
       /**
        *

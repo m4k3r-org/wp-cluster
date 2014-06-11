@@ -343,6 +343,38 @@ namespace DiscoDonniePresents {
         $this->_taxonomy = get_taxonomy( $this->_term->taxonomy );
       }
 
+      /**
+       *
+       * @return type
+       */
+      public function getField() {
+        return $this->_taxToElasticField[ $this->term()->taxonomy ];
+      }
+
+      /**
+       *
+       * @return type
+       */
+      public function getValue() {
+        return $this->term()->name;
+      }
+
+      /**
+       *
+       * @return type
+       */
+      public function term() {
+        return $this->_term;
+      }
+
+      /**
+       *
+       * @return type
+       */
+      public function taxonomy() {
+        return $this->_taxonomy;
+      }
+
     }
   }
 }
