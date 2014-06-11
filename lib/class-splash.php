@@ -183,6 +183,8 @@ namespace UsabilityDynamics\Theme {
      *
      */
     public function wp_head() {
+      /** This shouldn't be hard coded, need to update this with proper meta */
+      return;
       echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
       echo '<meta property="fb:admins" content="632804651"/>';
       echo '<meta property="fb:app_id" content="680492461962274"/>';
@@ -450,11 +452,11 @@ namespace UsabilityDynamics\Theme {
      *
      * * Enqueue CSS
      *
-     * @param $wp_query
+     * @param $content
      *
      * @return string
      */
-    public function the_content( $wp_query ) {
+    public function the_content( $content ) {
 
       // @note CSS being included for now, later on wwill figure out how to make it part of app.css
 
@@ -465,6 +467,9 @@ namespace UsabilityDynamics\Theme {
       if( is_404() && !is_null( get_theme_mod( 'sop:splash-404', null ) ) ) {
         return '<section class="container-fluid">' . siteorigin_panels_render( null, true, get_theme_mod( 'sop:splash-404' ) ) . '</section>';
       }
+      
+      /** By default we do want to return */
+      return '<section class="container-fluid">' . $content . '</section>';
 
     }
 
