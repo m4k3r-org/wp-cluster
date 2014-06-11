@@ -143,6 +143,8 @@
          */
         this._filter_model = function( scope ) {
 
+          var self = this;
+
           /**
            *
            */
@@ -172,6 +174,20 @@
            * Human facet labels
            */
           this.facetLabels = ko.observable({});
+
+          /**
+           * Filtered docs count
+           */
+          this.count = ko.computed(function() {
+            return self.documents().length;
+          });
+
+          /**
+           * Determine whether filter has more documents to show oe not
+           */
+          this.has_more_documents = ko.computed(function() {
+            return self.total() > self.count();
+          });
         };
 
         /**
@@ -814,38 +830,6 @@
           },
 
           /**
-           *
-           * @param {type} viewModel
-           * @param {type} scope
-           */
-          _prepareViewModel: function( viewModel, scope ) {
-            if ( !scope.length ) {
-              _console.error( 'Scope is not defined. Define unique value as a scope using data-scope attribute.', scope );
-              return;
-            }
-            if ( typeof viewModel[scope] === 'undefined' ) {
-              _console.error( 'This Scope is not defined during init.', scope );
-              return;
-            }
-
-            /**
-             * Filtered docs count
-             */
-            viewModel[scope].count = ko.computed(function() {
-              return viewModel[scope].documents().length;
-            });
-
-            /**
-             * Determine whether filter has more documents to show oe not
-             */
-            viewModel[scope].has_more_documents = ko.computed(function() {
-              return viewModel[scope].total() > viewModel[scope].count();
-            });
-
-            return scope;
-          },
-
-          /**
            * Initialize elasticFilter binding
            */
           init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
@@ -870,15 +854,14 @@
             /**
              * Define Scope
              */
-            var scope = Filter._prepareViewModel( viewModel, form.data( 'scope' ) );
-
-            if ( typeof Filter[scope] === 'undefined' ) {
-              Filter[scope] = {};
-            }
+            var scope = form.data( 'scope' );
 
             /**
              * Define settings
              */
+            if ( typeof Filter[scope] === 'undefined' ) {
+              Filter[scope] = {};
+            }
             Filter[scope]                  = $.extend( new Filter.settings, valueAccessor() );
             Filter.loader                  = $( Filter[scope].loader_selector );
             Filter[scope].form             = form;
