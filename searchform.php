@@ -18,7 +18,8 @@ global $flawless;
         event:'Events',
         imagegallery:'Galleries',
         videoobject:'Videos',
-        artist:'Artists'
+        artist:'Artists',
+        promoter:'Promoters'
       },
       search_fields:['summary'],
       return_fields:['summary','url']
