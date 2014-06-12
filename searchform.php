@@ -20,7 +20,8 @@ global $flawless;
         videoobject:'Videos',
         artist:'Artists',
         promoter:'Promoters',
-        tour:'Tours'
+        tour:'Tours',
+        venue:'Venues'
       },
       search_fields:['summary'],
       return_fields:['summary','url']

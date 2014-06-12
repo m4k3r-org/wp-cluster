@@ -1249,7 +1249,8 @@ class hddp extends Flawless_F {
       'videoobject' => '\DiscoDonniePresents\VideoObject',
       'artist' => '\DiscoDonniePresents\Artist',
       'promoter' => '\DiscoDonniePresents\Promoter',
-      'tour' => '\DiscoDonniePresents\Tour'
+      'tour' => '\DiscoDonniePresents\Tour',
+      'venue' => '\DiscoDonniePresents\Venue'
     );
 
     if ( empty( $_entities[$post->post_type] ) ) return $document;

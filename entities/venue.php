@@ -102,6 +102,38 @@ namespace DiscoDonniePresents {
 
       }
 
+      /**
+       *
+       * @return type
+       */
+      public function toElasticFormat() {
+
+        $_object = array();
+
+        $photo = wp_get_attachment_image_src( $this->meta('imageLogo'), 'full' );
+        $city = $this->taxonomies('city', 'elasticsearch');
+        $state = $this->taxonomies('state', 'elasticsearch');
+        $country = $this->taxonomies('country', 'elasticsearch');
+
+        $_object[ 'summary' ] = $this->post( 'post_title' );
+        $_object[ 'type' ]    = $this->taxonomies('venue-type', 'elasticsearch') ? $this->taxonomies('venue-type', 'elasticsearch') : array();
+        $_object[ 'url' ]     = get_permalink( $this->post( 'ID' ) );
+        $_object[ 'logo' ]    = $photo[0];
+        $_object[ 'address' ] = array(
+          'full' => $this->meta( 'locationAddress' ),
+          'city' => $city[0],
+          'state' => $state[0],
+          'country' => $country[0],
+          'geo' => array(
+            'lat' => (float)$this->meta('latitude'),
+            'lon' => (float)$this->meta('longitude')
+          )
+        );
+
+        return $_object;
+
+      }
+
     }
 
   }
