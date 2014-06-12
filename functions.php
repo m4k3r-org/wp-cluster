@@ -1246,7 +1246,8 @@ class hddp extends Flawless_F {
     $_entities = array(
       'event' => '\DiscoDonniePresents\Event',
       'imagegallery' => '\DiscoDonniePresents\ImageGallery',
-      'videoobject' => '\DiscoDonniePresents\VideoObject'
+      'videoobject' => '\DiscoDonniePresents\VideoObject',
+      'artist' => '\DiscoDonniePresents\Artist'
     );
 
     if ( empty( $_entities[$post->post_type] ) ) return $document;

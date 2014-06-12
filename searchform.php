@@ -17,7 +17,8 @@ global $flawless;
       document_type:{
         event:'Events',
         imagegallery:'Galleries',
-        videoobject:'Videos'
+        videoobject:'Videos',
+        artist:'Artists'
       },
       search_fields:['summary'],
       return_fields:['summary','url']
