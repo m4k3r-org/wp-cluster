@@ -19,7 +19,8 @@ global $flawless;
         imagegallery:'Galleries',
         videoobject:'Videos',
         artist:'Artists',
-        promoter:'Promoters'
+        promoter:'Promoters',
+        tour:'Tours'
       },
       search_fields:['summary'],
       return_fields:['summary','url']

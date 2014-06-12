@@ -37,6 +37,24 @@ namespace DiscoDonniePresents {
 
       }
 
+      /**
+       *
+       * @return type
+       */
+      public function toElasticFormat() {
+
+        $_object = array();
+
+        $photo = wp_get_attachment_image_src( $this->meta('posterImage'), 'full' );
+
+        $_object[ 'summary' ] = $this->post( 'post_title' );
+        $_object[ 'url' ]     = get_permalink( $this->_id );
+        $_object[ 'logo' ]    = $photo[0];
+
+        return $_object;
+
+      }
+
     }
   }
 }
