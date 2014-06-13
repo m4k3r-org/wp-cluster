@@ -332,7 +332,7 @@ namespace DiscoDonniePresents {
        */
       public function __construct( $id = false, $taxonomy = false ) {
 
-        if ( !is_tax() ) return;
+        //if ( !is_tax() ) return;
 
         if ( !$id || !$taxonomy ) {
           $this->_term = get_queried_object();
@@ -341,6 +341,14 @@ namespace DiscoDonniePresents {
         }
 
         $this->_taxonomy = get_taxonomy( $this->_term->taxonomy );
+      }
+
+      /**
+       *
+       * @return type
+       */
+      public function getUrl() {
+        return get_term_link( $this->term()->slug, $this->term()->taxonomy );
       }
 
       /**
@@ -361,6 +369,20 @@ namespace DiscoDonniePresents {
 
       /**
        *
+       */
+      public function getID() {
+        return $this->term()->term_id;
+      }
+
+      /**
+       *
+       */
+      public function getType() {
+        return $this->term()->taxonomy;
+      }
+
+      /**
+       *
        * @return type
        */
       public function term() {
@@ -373,6 +395,20 @@ namespace DiscoDonniePresents {
        */
       public function taxonomy() {
         return $this->_taxonomy;
+      }
+
+      /**
+       *
+       */
+      public function toElasticFormat() {
+
+        $_object = array();
+
+        $_object['summary'] = $this->getValue();
+        $_object['url']     = $this->getUrl();
+
+        return $_object;
+
       }
 
     }

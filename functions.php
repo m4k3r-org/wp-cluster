@@ -140,7 +140,55 @@ class hddp extends Flawless_F {
 
     flawless_set_color_scheme( 'skin-default.css' );
 
-    flush_rewrite_rules();
+    /**
+     * If Plugin exists add custom index handler for taxonomies
+     */
+    if ( class_exists('\elasticsearch\Indexer') ) {
+      add_action( 'wp_ajax_elasticsearch_index_taxonomies', array( __CLASS__, "es_index_taxonomies" ) );
+    }
+
+  }
+
+  /**
+   *
+   */
+  function es_index_taxonomies() {
+
+    $taxonomies = \elasticsearch\Config::taxonomies();
+
+    if ( empty( $taxonomies ) ) die( \json_encode(array('success'=>0,'message'=>'No indexable taxonomies')) );
+
+    foreach( (array)$taxonomies as $_tax ) {
+
+      $_terms = get_terms($_tax);
+
+      if ( !empty( $_terms ) && is_array( $_terms ) ) {
+
+        ob_start();
+
+        foreach( $_terms as $_term ) {
+
+          $_term_object = new \DiscoDonniePresents\Taxonomy( $_term->term_id, $_term->taxonomy );
+
+          $type = \elasticsearch\Indexer::_index(true)->getType( $_term_object->getType() );
+
+          $type->addDocument( new \Elastica\Document( $_term_object->getID(), $_term_object->toElasticFormat() ) );
+
+          echo '<pre>';
+          print_r( $_term_object->toElasticFormat() );
+          echo '</pre>';
+
+          ob_flush();
+
+        }
+
+        ob_end_clean();
+
+      }
+
+    }
+
+    die();
 
   }
 

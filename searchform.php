@@ -21,7 +21,10 @@ global $flawless;
         artist:'Artists',
         promoter:'Promoters',
         tour:'Tours',
-        venue:'Venues'
+        venue:'Venues',
+        city:'City',
+        'venue-type':'Venue Type',
+        state:'State'
       },
       search_fields:['summary'],
       return_fields:['summary','url']
