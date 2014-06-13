@@ -3360,3 +3360,44 @@ div.general_header_wrapper {
 body.admin-bar div.general_header_wrapper {
   top: 30px;
 }
+
+#autocompletion .icon {
+  background: url("img/global.sprite.png") no-repeat transparent;
+  display: block;
+  float: left;
+  height: 20px;
+  margin-right: 8px;
+  margin-top: 8px;
+  width: 20px;
+}
+
+#autocompletion .event_icon .icon {
+  background-position: -36px -4px;
+}
+#autocompletion .event-type_icon .icon {
+  background-position: -96px -4px;
+}
+#autocompletion .imagegallery_icon .icon {
+  background-position: -36px -4px;
+}
+#autocompletion .venue_icon .icon {
+  background-position: -66px -64px;
+}
+#autocompletion .videoobject_icon .icon {
+  background-position: -36px -4px;
+}
+#autocompletion .tour_icon .icon {
+  background-position: -97px -33px;
+}
+#autocompletion .city_icon .icon {
+  background-position: -66px -64px;
+}
+#autocompletion .state_icon .icon {
+  background-position: -66px -64px;
+}
+#autocompletion .artist_icon .icon {
+  background-position: -66px -4px;
+}
+#autocompletion .promoter_icon .icon {
+  background-position: -96px -64px;
+}

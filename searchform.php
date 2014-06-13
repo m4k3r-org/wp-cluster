@@ -42,9 +42,9 @@ global $flawless;
     <img class="loader" data-bind="visible:autocompletion.loading" src="<?php echo get_template_directory_uri() ?>/img/ajax-loader.gif"/>
   </div>
 
-  <ul data-bind="enable:label=true,visible:autocompletion.visible,foreach: autocompletion.documents">
+  <ul data-bind="enable:label=true,visible:autocompletion.visible,foreach:autocompletion.documents">
     <!-- ko if: _type != label -->
-    <li data-bind="attr:{class:'ac_label '+_type+'_icon'}" class="ac_label"><h5 data-bind="visible:label=_type,html: $root.autocompletion.types()[_type]"></h5></li>
+    <li data-bind="attr:{class:'ac_label '+_type+'_icon'}" class="ac_label"><i class="icon"></i><h5 data-bind="visible:label=_type,html: $root.autocompletion.types()[_type]"></h5></li>
     <!-- /ko -->
     <li class="ac_item">
       <a data-bind="attr:{href:fields.url},html: fields.summary"></a>
