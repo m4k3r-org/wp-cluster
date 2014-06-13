@@ -14,6 +14,7 @@ global $flawless;
   <div class="search_inner_wrapper">
     <label class="screen-reader-text" for="df_q"><?php _e( 'Search for:' ); ?></label>
     <input class="search_input_field" data-bind="elasticSuggest:{
+      size:50,
       document_type:{
         event:'Events',
         imagegallery:'Galleries',
@@ -23,7 +24,7 @@ global $flawless;
         tour:'Tours',
         venue:'Venues',
         city:'City',
-        'venue-type':'Venue Type',
+        'event-type':'Type',
         state:'State'
       },
       search_fields:['summary'],
