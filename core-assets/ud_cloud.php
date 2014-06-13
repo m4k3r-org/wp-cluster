@@ -212,7 +212,7 @@ if( !class_exists( 'UD_Cloud' ) ) {
      * @since 1.0.0
      * @author potanin@UD
      */
-    static function log( $data ) {
+    static function log( $data = '', $args = array() ) {
 
       if( defined( 'WP_DEBUG' ) && WP_DEBUG && is_wp_error( $data ) ) {
         wp_die( '<h1>Debug Log</h1><pre>' . print_r( $data, true ) . '</pre>' );
