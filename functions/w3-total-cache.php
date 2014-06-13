@@ -1,7 +1,7 @@
 <?php
 
 
-if(!W3TC) {
+if( !defined( 'W3TC' ) || !W3TC ) {
   return;
 }
 
@@ -20,14 +20,14 @@ class Flawless_W3TC {
 
 
   function flawless_init() {
-  
-    add_action('wp_ajax_flawless_delete_option_clearcache', array('flawless_theme', 'delete_option_clearcache'));    
+
+    add_action('wp_ajax_flawless_delete_option_clearcache', array('flawless_theme', 'delete_option_clearcache'));
 
     //** Add 'Clear W3 Total Cache' notice */
-    add_action('admin_notices', array('flawless_theme', 'show_clear_W3_total_cache_notice'));    
-    
+    add_action('admin_notices', array('flawless_theme', 'show_clear_W3_total_cache_notice'));
+
   }
-  
+
 
   /**
    * Add minified=true argument to jQuery to avoid W3TC from combining / minifying it
@@ -43,8 +43,8 @@ class Flawless_W3TC {
     return $default;
 
   }
-  
-  
+
+
 
   /*
    * Adds option for showing notice on Theme Settings updating
@@ -99,7 +99,7 @@ class Flawless_W3TC {
           delete_option('flawless_theme_clear_cache_notice');
       }
   }
-  
+
 
     /*
    * Ajax function. Deletes 'flawless_theme_clear_cache_notice' option,
@@ -109,6 +109,6 @@ class Flawless_W3TC {
     delete_option('flawless_theme_clear_cache_notice');
     echo json_encode(array('status'=>'success'));
     exit();
-  }  
+  }
 
 }

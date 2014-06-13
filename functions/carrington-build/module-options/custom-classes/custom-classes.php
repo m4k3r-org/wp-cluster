@@ -9,7 +9,7 @@
  * @package Carrington Build
  */
 class cfct_module_option_custom_classes extends cfct_module_option {
-	
+
 	public function __construct() {
 		parent::__construct('Set CSS Classes', 'custom-classes');
 		add_filter('cfct-build-module-class', array($this, 'apply_classes'), 10, 2);
@@ -34,11 +34,11 @@ class cfct_module_option_custom_classes extends cfct_module_option {
 		return $class;
 	}
 
-	public function form($data, $module_type) {
+	public function form($data) {
 		$dropdown_opts = apply_filters('cfct-module-predefined-class-options', cfct_class_groups('wrapper'));
 		$predefined_classes = array();
 		$input_class = (empty($dropdown_opts) ? 'no-button' : null);
-		
+
 		$value = null;
 		if (!isset($data['custom-css'])) {
 			$data['custom-css'] = array();
@@ -46,9 +46,9 @@ class cfct_module_option_custom_classes extends cfct_module_option {
 		if (!empty($data['custom-css'])) {
 			$value = implode(' ', array_map('esc_attr', $data['custom-css']));
 		}
-		
+
 		$html = '
-				<label for="">CSS Classes:</label> 
+				<label for="">CSS Classes:</label>
 				<div class="cfct-select-menu-wrapper">
 					<input type="text" class="'.$input_class.'" name="'.$this->get_field_name('custom-css').'" id="'.$this->get_field_id('custom-css').'" value="'.$value.'"  autocomplete="off" />';
 		if (is_array($dropdown_opts) && !empty($dropdown_opts)) {
@@ -69,23 +69,23 @@ class cfct_module_option_custom_classes extends cfct_module_option {
 			';
 		return $html;
 	}
-	
+
 	public function admin_js() {
 		$js = '
-// Module Extra: Custom CSS			
+// Module Extra: Custom CSS
 	// show/hide the pre-defined css list from toggle button
 	$("#'.$this->get_field_id('class-list-toggle').'").live("click", function() {
 		var tgt = $(this).siblings("div.cfct-select-menu");
-		
+
 		// check to see if any pre-defined class names need toggling before opening the drawer
 		if (tgt.is(":hidden")) {
 			toggle_css_module_options_list_use();
 		}
-		
+
 		tgt.toggle();
 		return false;
 	});
-	
+
 	// show the pre-defined css list when input is focused
 	$("#'.$this->get_field_id('custom-css').'").live("click", function(e) {
 		var tgt = $(this).siblings("div.cfct-select-menu");
@@ -95,11 +95,11 @@ class cfct_module_option_custom_classes extends cfct_module_option {
 		}
 		return false;
 	});
-	
+
 	$("#'.$this->get_field_id('custom-css').'").live("keyup", function() {
 		setTimeout(toggle_css_module_options_list_use, 200);
 	});
-	
+
 	// catch a click in the popup and close the flyout
 	$("#cfct-popup").live("click", function(){
 		$("#'.$this->get_field_id('class-list-menu').':visible").hide();
@@ -128,28 +128,28 @@ class cfct_module_option_custom_classes extends cfct_module_option {
 		}
 		return false;
 	});
-	
+
 	$("#'.$this->get_field_id('class-list-menu').'").live("click", function() {
 		return false;
-	});	
+	});
 			';
 		return $js;
 	}
-	
+
 	public function update($new_data, $old_data) {
 		$ret = array();
-		
+
 		$classes = explode(' ', $new_data['custom-css']);
 		if (is_array($classes)) {
 			foreach($classes as $class) {
 				$ret['custom-css'][] = sanitize_title_with_dashes(trim(strip_tags($class)));
 			}
 		}
-		
+
 		return $ret;
 	}
 }
 
 cfct_module_register_extra('cfct_module_option_custom_classes');
-	
+
 ?>

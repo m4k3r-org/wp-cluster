@@ -18,17 +18,17 @@ class Flawless_BuddyPress {
    *
    * @author potanin@UD
    */
-  function flawless_theme_setup($located_template) {
+  static function flawless_theme_setup($located_template) {
     global $bp, $flawless;
 
     if( !is_object($bp) ) {
       return;
-    }    
-    
+    }
+
     add_theme_support( 'bbpress' );
 
     add_filter('bp_get_the_topic_post_content', array( 'flawless_shortcodes','do_code_shortcode'),0);
-    add_filter('bp_get_the_topic_post_content', array( 'flawless_shortcodes','do_code_shortcode'),100);    
+    add_filter('bp_get_the_topic_post_content', array( 'flawless_shortcodes','do_code_shortcode'),100);
 
     //** TEMPORARY SETTINGS */
     $flawless[ 'buddypress' ][ 'hide_group_search' ] = 'true';
@@ -438,7 +438,7 @@ class Flawless_BuddyPress {
     }
 
     $notices[] = '<div class="alert fade in"><a class="close" data-dismiss="alert" href="#">&times;</a>' . $content . '</div>';
-    
+
     return $notices;
 
   }

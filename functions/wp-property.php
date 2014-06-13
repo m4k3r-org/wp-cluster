@@ -24,7 +24,7 @@ class flawless_wpp_extensions {
    * @action flawless_theme_setup ( 10 )
    * @since Flawless 0.2.3
    */
-  function flawless_theme_setup() {
+  static function flawless_theme_setup() {
 
     add_action( 'flawless::init_lower', array( 'flawless_wpp_extensions', 'flawless_init' ) );
 
@@ -54,12 +54,12 @@ class flawless_wpp_extensions {
 
     /* {check for necessity} */
     add_filter( 'flawless_exclude_sidebar', array( 'flawless_wpp_extensions', 'flawless_exclude_sidebar' ), 10, 2 );
-        
-    add_filter( 'wpp::class::wpp_search_button', function( $curr ) { 
+
+    add_filter( 'wpp::class::wpp_search_button', function( $curr ) {
       return $curr . ' btn btn-success';
     });
-    
-    add_filter( 'wpp::label::search', function( $curr ) { 
+
+    add_filter( 'wpp::label::search', function( $curr ) {
       return 'Search Properties';
     });
 

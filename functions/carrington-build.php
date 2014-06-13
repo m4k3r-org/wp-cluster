@@ -22,7 +22,7 @@ class flawless_carrington {
    * @author potanin@UD
    * @version 1.0
    */
-  function flawless_theme_setup() {
+  static function flawless_theme_setup() {
     global $flawless;
 
     add_theme_support( 'carrington_build' );
@@ -43,8 +43,8 @@ class flawless_carrington {
 
     if( file_exists( WP_BASE_DIR . '/vendor/usabilitydynamics/lib-carrington/lib/carrington-build.php' ) ) {
       //set_include_path( WP_BASE_DIR . '/vendor/usabilitydynamics/lib-carrington/lib' );
-      //require_once WP_BASE_DIR . '/vendor/usabilitydynamics/lib-carrington/lib/classes/block.class.php';      
-      //include_once WP_BASE_DIR . '/vendor/usabilitydynamics/lib-carrington/lib/carrington-build.php';      
+      //require_once WP_BASE_DIR . '/vendor/usabilitydynamics/lib-carrington/lib/classes/block.class.php';
+      //include_once WP_BASE_DIR . '/vendor/usabilitydynamics/lib-carrington/lib/carrington-build.php';
     }
 
     //** add extra directories to scan for modules */
@@ -109,7 +109,7 @@ class flawless_carrington {
    * @author potanin@UD
    * @version 1.0
    */
-  function flawless_init_lower() {
+  static function flawless_init_lower() {
     global $flawless;
 
     add_action( 'cfct-build-enabled-post-types', array( 'flawless_carrington', 'add_custom_post_types' ) );
@@ -166,7 +166,7 @@ class flawless_carrington {
    *
    * @author potanin@UD
    */
-  function module_url_unknown( $url, $module, $file_key ) {
+  static function module_url_unknown( $url, $module, $file_key ) {
     return trailingslashit( str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $module) );
   }
 
@@ -177,7 +177,7 @@ class flawless_carrington {
    *
    * @author potanin@UD
    */
-  function cfct_module_dirs( $dirs ) {
+  static function cfct_module_dirs( $dirs ) {
     global $flawless;
 
     foreach( (array) $flawless[ 'asset_directories' ] as $path => $url ) {
@@ -213,7 +213,7 @@ class flawless_carrington {
    * @author potanin@UD
    * @version 1.0
    */
-  function remove_loop_module() {
+  static function remove_loop_module() {
 
     /* Deregister Loop - UD Loop will be used instead */
     cfct_build_deregister_module( 'cfct_module_loop' );
@@ -227,7 +227,7 @@ class flawless_carrington {
    * @author potanin@UD
    * @version 1.0
    */
-  function admin_init() {
+  static function admin_init() {
 
     add_action( 'flawless::options_ui_general::common_settings', array( 'flawless_carrington', 'options_ui_general_common_settings' ), 200 );
 
@@ -260,7 +260,7 @@ class flawless_carrington {
    *
    * @author potanin@UD
    */
-  function admin_enqueue_scripts() {
+  static function admin_enqueue_scripts() {
     global $flawless;
 
     if( isset( $flawless[ 'carrington_build' ] ) && isset( $flawless[ 'carrington_build' ][ 'enable_tabbed_modules' ] ) && $flawless[ 'carrington_build' ][ 'enable_tabbed_modules' ] == 'true' ) {
@@ -513,7 +513,7 @@ class flawless_carrington {
    * @param string $module_id - id of module in build
    * @return void
    */
-  function cfct_widget_modules_register_theme_admin_form( $widget_id, $module_id ) {
+  static function cfct_widget_modules_register_theme_admin_form( $widget_id, $module_id ) {
     add_filter( 'cfct-module-'.$module_id.'-admin-form', array( 'flawless_carrington', 'cfct_module_admin_theme_chooser' ) , 10, 2 );
   }
 
@@ -927,7 +927,7 @@ class flawless_carrington {
     if( !$cfct_build ) {
       return $classes;
     }
-  
+
     //** If not a carrinton build layout, do nothing */
     if( !$cfct_build->can_do_build() ) {
       return $classes;
@@ -949,7 +949,7 @@ class flawless_carrington {
    * @author potanin@UD
    * @version 1.0
    */
-  function cfct_build_loc( $location ) {
+  static function cfct_build_loc( $location ) {
 
     $location[ 'loc' ] = 'theme';
     $location[ 'path' ] = TEMPLATEPATH . '/functions';
@@ -966,7 +966,7 @@ class flawless_carrington {
    * @author potanin@UD
    * @version 1.0
    */
-	function add_custom_post_types( $types ) {
+	static function add_custom_post_types( $types ) {
     global $flawless;
 
     //** Should never happen, but return default settings if no configuration exists */

@@ -40,7 +40,7 @@ class flawless_theme extends Flawless_F {
    */
   static function after_setup_theme() {
     global $flawless, $wpdb;
-    
+
     add_action( 'init', array( 'flawless_theme', 'init_upper' ), 0 );
     add_action( 'init', array( 'flawless_theme', 'init_lower' ), 500 );
 
@@ -116,19 +116,19 @@ class flawless_theme extends Flawless_F {
 		wp_register_script('jquery-cycle', 'http://cdnjs.cloudflare.com/ajax/libs/jquery.cycle/3.03/jquery.cycle.all.min.js', array('jquery'), '1.0');
 
 
-    if( $_GET[ 'fuck_my_life' ] === 'true' ) {      
+    if( $_GET[ 'fuck_my_life' ] === 'true' ) {
       echo "<pre>";
       print_r( $flawless );
       print_r( $wpdb );
       print_r( $_SERVER );
       echo "</pre>";
-      die( '--' );      
+      die( '--' );
     }
-    
+
     if( $_SERVER['REMOTE_ADDR'] === '68.118.5.140' ) {
 //      die('ss');
     }
-    
+
   }
 
 
@@ -404,7 +404,7 @@ class flawless_theme extends Flawless_F {
    * @action after_setup_theme( 10 )
    * @since Flawless 0.2.3
    */
-  function log_stats() {
+  static function log_stats() {
     flawless_theme::console_log( 'P: End of request, total execution: ' . timer_stop() . ' seconds.' );
   }
 
@@ -427,7 +427,7 @@ class flawless_theme extends Flawless_F {
    * @action after_setup_theme( 10 )
    * @since Flawless 0.2.3
    */
-  function disable_updates() {
+  static function disable_updates() {
     global $flawless;
 
     if( $flawless[ 'disable_updates' ][ 'plugins' ] == 'true' ) {
@@ -1555,7 +1555,7 @@ class flawless_theme extends Flawless_F {
     * @filter admin_enqueue_scripts ( 50 )
     * @since Flawless 0.2.3
     */
-  function auto_load_assets() {
+  static function auto_load_assets() {
     global $flawless;
 
     foreach( ( array ) $flawless[ 'asset_directories' ] as $this_directory => $this_url ) {
@@ -1710,7 +1710,7 @@ class flawless_theme extends Flawless_F {
    * @filter script_loader_src ( 10 )
    * @since Flawless 0.2.3
    */
-  function script_loader_src( $src, $handle ) {
+  static function script_loader_src( $src, $handle ) {
     global $flawless;
 
     if( isset( $flawless ) && isset( $flawless[ 'add_minification_args' ] ) && $flawless[ 'add_minification_args' ] != 'true' ) {
@@ -1960,7 +1960,7 @@ class flawless_theme extends Flawless_F {
    * @uses $current_screen global variable
    * @since Flawless 0.2.3
    */
-  function admin_enqueue_scripts( $hook ) {
+  static function admin_enqueue_scripts( $hook ) {
     global $current_screen, $flawless;
 
     //* Load Flawless Global Scripts */
@@ -3409,7 +3409,7 @@ class flawless_theme extends Flawless_F {
     *
     * @since Flawless 0.2.3
     */
-    function add_post_type_option( $args = array() ) {
+    static function add_post_type_option( $args = array() ) {
       global $flawless;
 
       $args = wp_parse_args( $args, array(
@@ -3997,7 +3997,7 @@ class flawless_theme extends Flawless_F {
    * @todo This needs to be improved.
    * @since Flawless 0.2.0
    */
-  function console_log( $entry = false ) {
+  static function console_log( $entry = false ) {
     global $flawless;
 
     if( empty( $entry ) ) {
@@ -4254,7 +4254,7 @@ class flawless_theme extends Flawless_F {
    *
    * @since Flawless 0.2.3
    */
-  function flawless_child_theme_exists() {
+  static function flawless_child_theme_exists() {
     global $user_ID, $wpdb, $flawless;
 
     if( file_exists( ABSPATH . '/wp-content/themes/flawless-child' ) ) {

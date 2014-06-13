@@ -17,7 +17,7 @@ class flawless_front_end_editor {
    * {}
    *
    */
-  function available_theme_features( $features ) {
+  static function available_theme_features( $features ) {
     $features[ 'frontend-editor' ] = true;
     return $features;
   }

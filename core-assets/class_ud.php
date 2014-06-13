@@ -159,7 +159,7 @@ class Flawless_F {
    *
    * @author potanin@UD
    */
-  function depluralize($word) {
+  static function depluralize($word) {
     $rules = array( 'ss' => false, 'os' => 'o', 'ies' => 'y', 'xes' => 'x', 'oes' => 'o', 'ies' => 'y', 'ves' => 'f', 's' => '' );
 
     foreach( array_keys($rules) as $key) {
@@ -194,7 +194,7 @@ class Flawless_F {
    *
    * @author potanin@UD
    */
-  function format_bytes($bytes, $precision = 2) {
+  static function format_bytes($bytes, $precision = 2) {
     $kilobyte = 1024;
     $megabyte = $kilobyte * 1024;
     $gigabyte = $megabyte * 1024;
@@ -661,7 +661,7 @@ class Flawless_F {
    *
    * @version 1.6
    */
-  function save_mod_rewrite_rules( $args = array() ) {
+  static function save_mod_rewrite_rules( $args = array() ) {
     global $wp_rewrite;
 
    	$home = get_option( 'home' );

@@ -4,7 +4,7 @@
  * Version: 1.0
  * Description: Widgets for the Flawless theme.
  * Author: Usability Dynamics, Inc.
- * Theme Feature: header-business-card 
+ * Theme Feature: header-business-card
  *
  */
 
@@ -14,12 +14,12 @@ add_filter('flawless::available_theme_features', array('flawless_business_card',
 
 class flawless_business_card {
 
-  function flawless_theme_setup() {
+  static function flawless_theme_setup() {
     add_action('flawless::init_lower', array('flawless_business_card', 'init_lower'));
   }
 
 
-  function init_lower() {
+  static function init_lower() {
 
     if( !current_theme_supports( 'header-business-card' ) ) {
       return;
@@ -51,7 +51,7 @@ class flawless_business_card {
    * {}
    *
    */
-  function available_theme_features( $features ) {
+  static function available_theme_features( $features ) {
     $features[ 'header-business-card' ] = true;
     return $features;
   }

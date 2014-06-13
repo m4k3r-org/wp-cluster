@@ -31,7 +31,7 @@ class flawless_my_account_module {
    *
    * @author potanin@UD
    */
-  function init() {
+  static function init() {
     global $flawless;
 
     flawless_theme::console_log( 'P: Executed: flawless_my_account_module::init();' );

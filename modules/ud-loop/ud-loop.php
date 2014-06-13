@@ -771,7 +771,7 @@ if (!class_exists('ud_cfct_module_loop') && class_exists('cfct_build_module')) {
      *
      * @return null
      */
-    public function text() {
+    public function text($data) {
     	return null;
     }
 

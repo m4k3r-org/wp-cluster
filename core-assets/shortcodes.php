@@ -32,7 +32,7 @@ class flawless_shortcodes {
    *
    * @since 0.2.5
    */
-  function init() {
+  static function init() {
     global $shortcode_tags;
 
     //** Load list-attachments shortcode if the List Attachments Shortcode plugin does not exist */
