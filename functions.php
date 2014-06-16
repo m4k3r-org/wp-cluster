@@ -39,6 +39,8 @@ add_action( 'flawless::init_lower', array( 'hddp', 'init_lower' ) );
 
 add_filter( 'elasticsearch_indexer_build_document', array( 'hddp', 'build_elastic_document' ), 10, 2 );
 
+add_action( 'admin_menu', array( 'hddp', "es_menu" ), 11 );
+
 /**
  * Functionality for Theme
  *
@@ -144,12 +146,24 @@ class hddp extends Flawless_F {
      * If Plugin exists add custom index handler for taxonomies
      */
     if ( class_exists('\elasticsearch\Indexer') ) {
-      add_action( 'wp_ajax_elasticsearch_index_taxonomies', array( __CLASS__, "es_index_taxonomies" ) );
       add_action( 'create_term', array( __CLASS__, "es_index_term" ), 10, 3 );
       add_action( 'edited_term', array( __CLASS__, "es_index_term" ), 10, 3 );
       add_action( 'delete_term', array( __CLASS__, "es_delete_term" ), 10, 4 );
     }
 
+  }
+
+  /**
+   *
+   * @global type $wp_admin_bar
+   * @return type
+   */
+  static function es_menu( $wp_admin_bar ) {
+
+    if ( !is_super_admin() || !is_admin_bar_showing() )
+        return;
+
+    add_submenu_page( 'elastic_search', 'Index Tax', 'Index Taxonomies', 'manage_options', 'index_taxonomies', array( __CLASS__, 'es_index_taxonomies' ) );
   }
 
   /**
@@ -210,25 +224,21 @@ class hddp extends Flawless_F {
 
       if ( !empty( $_terms ) && is_array( $_terms ) ) {
 
-        ob_start();
-
         foreach( $_terms as $_term ) {
 
           $_term_object = new \DiscoDonniePresents\Taxonomy( $_term->term_id, $_term->taxonomy );
 
           $type = \elasticsearch\Indexer::_index(true)->getType( $_term_object->getType() );
 
-          $type->addDocument( new \Elastica\Document( $_term_object->getID(), $_term_object->toElasticFormat() ) );
+          $type->addDocument( new \Elastica\Document( $_term_object->getID(), $elastic_term = $_term_object->toElasticFormat() ) );
 
           echo '<pre>';
-          print_r( $_term_object->toElasticFormat() );
+          print_r( $elastic_term['summary'] );
           echo '</pre>';
 
-          ob_flush();
+          flush();
 
         }
-
-        ob_end_clean();
 
       }
 
