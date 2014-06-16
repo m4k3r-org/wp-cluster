@@ -1317,10 +1317,6 @@
         });
         _console.log( scopes );
 
-        /**
-         * Apply view model
-         * @todo: load scopes dynamicaly
-         */
         ko.applyBindings( new viewModel( scopes ), self[0] );
 
         return self;

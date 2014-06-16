@@ -145,14 +145,60 @@ class hddp extends Flawless_F {
      */
     if ( class_exists('\elasticsearch\Indexer') ) {
       add_action( 'wp_ajax_elasticsearch_index_taxonomies', array( __CLASS__, "es_index_taxonomies" ) );
+      add_action( 'create_term', array( __CLASS__, "es_index_term" ), 10, 3 );
+      add_action( 'edited_term', array( __CLASS__, "es_index_term" ), 10, 3 );
+      add_action( 'delete_term', array( __CLASS__, "es_delete_term" ), 10, 4 );
     }
 
   }
 
   /**
    *
+   * @param type $term
+   * @param type $tt_id
+   * @param type $taxonomy
+   * @param type $deleted_term
    */
-  function es_index_taxonomies() {
+  static function es_delete_term( $term_id, $tt_id, $taxonomy, $deleted_term ) {
+
+    $taxonomies = \elasticsearch\Config::taxonomies();
+
+    if ( !in_array( $taxonomy, $taxonomies ) ) return;
+
+    $type = \elasticsearch\Indexer::_index(true)->getType( $taxonomy );
+
+    try{
+			$type->deleteById( $term_id );
+		}catch(\Elastica\Exception\NotFoundException $ex){
+			// ignore
+		}
+
+  }
+
+  /**
+   *
+   * @param type $term_id
+   * @param type $tt_id
+   * @param type $taxonomy
+   */
+  static function es_index_term( $term_id, $tt_id, $taxonomy ) {
+
+    $taxonomies = \elasticsearch\Config::taxonomies();
+
+    if ( !in_array( $taxonomy, $taxonomies ) ) return;
+
+    $_term_object = new \DiscoDonniePresents\Taxonomy( $term_id, $taxonomy );
+
+    $type = \elasticsearch\Indexer::_index(true)->getType( $_term_object->getType() );
+
+    $type->addDocument( new \Elastica\Document( $_term_object->getID(), $_term_object->toElasticFormat() ) );
+
+  }
+
+  /**
+   *
+   */
+  static function es_index_taxonomies() {
 
     $taxonomies = \elasticsearch\Config::taxonomies();
 
