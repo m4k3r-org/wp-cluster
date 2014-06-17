@@ -58,7 +58,7 @@
       </a>
 
       <?php echo $flawless[ 'mobile_navbar' ][ 'html' ]; ?>
-      <div id="autocompletion">
+      <div id="autocompletion" class="mobile">
         <input data-suggest="mobile" data-bind="elasticSuggest:{
           size:50,
           document_type:{
@@ -76,7 +76,7 @@
           search_fields:['summary'],
           return_fields:['summary','url']
         }" placeholder="Search" />
-
+        <div class="clearfix"></div>
         <ul data-bind="enable:label=true,visible:mobile.visible,foreach:mobile.documents">
           <!-- ko if: _type != label -->
           <li data-bind="attr:{class:'ac_label '+_type+'_icon'}" class="ac_label"><i class="icon"></i><h5 data-bind="visible:label=_type,html: $root.mobile.types()[_type]"></h5></li>

@@ -308,6 +308,7 @@
 
   .navbar-inner {
     background-image: url(img/mobilenavbar.jpg);
+    background-repeat: repeat;
     background-color: #18272E;
   }
 
@@ -379,6 +380,15 @@
   /**** Autocompletion **/
   #autocompletion {
     width: 380px;
+  }
+
+  #autocompletion.mobile {
+    margin-top:5px;
+    width: 100%;
+  }
+
+  #autocompletion.mobile input {
+    float: right;
   }
 
   #autocompletion .loader {
@@ -2696,6 +2706,10 @@
  *
  */
 @media ( max-width: 480px ) {
+
+  #autocompletion.mobile input {
+    width: 98%;
+  }
 
   div.content_container {
     padding-top: 0px;
