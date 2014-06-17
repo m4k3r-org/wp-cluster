@@ -159,10 +159,6 @@ class hddp extends Flawless_F {
    * @return type
    */
   static function es_menu( $wp_admin_bar ) {
-
-    if ( !is_super_admin() || !is_admin_bar_showing() )
-        return;
-
     add_submenu_page( 'elastic_search', 'Index Tax', 'Index Taxonomies', 'manage_options', 'index_taxonomies', array( __CLASS__, 'es_index_taxonomies' ) );
   }
 
