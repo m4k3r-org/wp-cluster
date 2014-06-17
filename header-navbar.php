@@ -58,8 +58,34 @@
       </a>
 
       <?php echo $flawless[ 'mobile_navbar' ][ 'html' ]; ?>
+      <div id="autocompletion">
+        <input data-suggest="mobile" data-bind="elasticSuggest:{
+          size:50,
+          document_type:{
+            event:'Events',
+            imagegallery:'Galleries',
+            videoobject:'Videos',
+            artist:'Artists',
+            promoter:'Promoters',
+            tour:'Tours',
+            venue:'Venues',
+            city:'City',
+            'event-type':'Type',
+            state:'State'
+          },
+          search_fields:['summary'],
+          return_fields:['summary','url']
+        }" placeholder="Search" />
 
-      <?php //get_search_form(); ?>
+        <ul data-bind="enable:label=true,visible:mobile.visible,foreach:mobile.documents">
+          <!-- ko if: _type != label -->
+          <li data-bind="attr:{class:'ac_label '+_type+'_icon'}" class="ac_label"><i class="icon"></i><h5 data-bind="visible:label=_type,html: $root.mobile.types()[_type]"></h5></li>
+          <!-- /ko -->
+          <li class="ac_item">
+            <a data-bind="attr:{href:fields.url},html: fields.summary"></a>
+          </li>
+        </ul>
+      </div>
 
     </div>
 
