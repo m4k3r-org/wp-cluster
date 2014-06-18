@@ -2707,10 +2707,6 @@
  */
 @media ( max-width: 480px ) {
 
-  #autocompletion.mobile input {
-    width: 98%;
-  }
-
   div.content_container {
     padding-top: 0px;
   }
@@ -2805,8 +2801,58 @@
  *
  */
 @media ( max-width: 767px ) {
+
+  #autocompletion.mobile input {
+    width: 98%;
+  }
+  
   div.content_container {
     padding-top: 0px;
+  }
+
+  /*====[Photos / Videos]====================================*/
+  #dynamic_filter[dynamic_filter="hdp_photo_gallery"] .hdp_results .hdp_results_item,
+  #dynamic_filter[dynamic_filter="hdp_video"] .hdp_results .hdp_results_item,
+  .hdp_results_photo.hdp_results_item {
+    width: 100%;
+    margin: 1% 1% 3% 1%;
+  }
+}
+
+@media ( max-width: 600px ) {
+
+  /*====[Photos / Videos]====================================*/
+  #dynamic_filter[dynamic_filter="hdp_photo_gallery"] .hdp_results .hdp_results_item,
+  #dynamic_filter[dynamic_filter="hdp_video"] .hdp_results .hdp_results_item,
+  .hdp_results_photo.hdp_results_item {
+    width: 100%;
+    margin: 1% 1% 3% 1%;
+  }
+
+  .hdp_results .hdp_results_item .hdp_photo_title, .hdp_results .hdp_results_item .hdp_video_title {
+    clear: both;
+    margin-left: 0;
+  }
+
+  .hdp_results .hdp_results_item .hdp_photo_date, .hdp_results .hdp_results_item .hdp_video_date {
+    margin-left: 0;
+  }
+
+  .hdp_results .hdp_results_item .hdp_photo_location, .hdp_results .hdp_results_item .hdp_video_location {
+    margin-left: 0;
+  }
+
+  .hdp_results .hdp_results_item .hdp_photo_thumbnail, .hdp_results .hdp_results_item .hdp_video_thumbnail {
+    float: none;
+  }
+
+  .hdp_results .hdp_results_item .hdp_photo_thumbnail a, .hdp_results .hdp_results_item .hdp_video_thumbnail a {
+    display: block;
+    width: 100%;
+  }
+
+  .hdp_results .hdp_results_item .hdp_photo_thumbnail a img, .hdp_results .hdp_results_item .hdp_video_thumbnail a img {
+    width: 100%;
   }
 }
 
