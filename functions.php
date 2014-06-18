@@ -149,21 +149,29 @@ class hddp extends Flawless_F {
       add_action( 'create_term', array( __CLASS__, "es_index_term" ), 10, 3 );
       add_action( 'edited_term', array( __CLASS__, "es_index_term" ), 10, 3 );
       add_action( 'delete_term', array( __CLASS__, "es_delete_term" ), 10, 4 );
+      add_action( 'wp_ajax_reindex_taxonomies', array( __CLASS__, "es_index_taxonomies" ) );
     }
 
   }
 
   /**
-   *
+   * Add custom menu item
    * @global type $wp_admin_bar
    * @return type
    */
   static function es_menu( $wp_admin_bar ) {
-    add_submenu_page( 'elastic_search', 'Index Tax', 'Index Taxonomies', 'manage_options', 'index_taxonomies', array( __CLASS__, 'es_index_taxonomies' ) );
+    add_submenu_page( 'elastic_search', 'Index Tax', 'Index Taxonomies', 'manage_options', 'index_taxonomies', array( __CLASS__, 'es_index_taxonomies_ui' ) );
   }
 
   /**
-   *
+   * Render reindex tax UI
+   */
+  static function es_index_taxonomies_ui() {
+    include_once 'templates/admin.taxonomy_index.php';
+  }
+
+  /**
+   * Delete term from es
    * @param type $term
    * @param type $tt_id
    * @param type $taxonomy
@@ -186,7 +194,7 @@ class hddp extends Flawless_F {
   }
 
   /**
-   *
+   * index term
    * @param type $term_id
    * @param type $tt_id
    * @param type $taxonomy
@@ -206,13 +214,15 @@ class hddp extends Flawless_F {
   }
 
   /**
-   *
+   * Reindex all terms
    */
   static function es_index_taxonomies() {
 
     $taxonomies = \elasticsearch\Config::taxonomies();
 
     if ( empty( $taxonomies ) ) die( \json_encode(array('success'=>0,'message'=>'No indexable taxonomies')) );
+
+    $i = 0;
 
     foreach( (array)$taxonomies as $_tax ) {
 
@@ -228,11 +238,7 @@ class hddp extends Flawless_F {
 
           $type->addDocument( new \Elastica\Document( $_term_object->getID(), $elastic_term = $_term_object->toElasticFormat() ) );
 
-          echo '<pre>';
-          print_r( $elastic_term['summary'] );
-          echo '</pre>';
-
-          flush();
+          $i++;
 
         }
 
@@ -240,7 +246,7 @@ class hddp extends Flawless_F {
 
     }
 
-    die();
+    die( \json_encode(array('success'=>1,'message'=>'Done '.$i.' items')) );
 
   }
 
