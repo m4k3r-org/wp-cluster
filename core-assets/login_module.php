@@ -49,7 +49,7 @@ class flawless_my_account_module {
     /** Theme Settings */
     add_action( 'flawless::options_ui_general::common_settings', array( 'flawless_my_account_module', 'options_ui_general_common_settings' ), 100 );
 
-    if( $flawless[ 'login_module' ][ 'disbale_wp_login_access' ]  == 'true' ) {
+    if( isset($flawless[ 'login_module' ][ 'disbale_wp_login_access' ]) && $flawless[ 'login_module' ][ 'disbale_wp_login_access' ]  == 'true' ) {
       add_action( 'login_init', array( 'flawless_my_account_module', 'login_init' ) , 5 );
     }
 

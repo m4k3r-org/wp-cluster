@@ -115,20 +115,6 @@ class flawless_theme extends Flawless_F {
 
 		wp_register_script('jquery-cycle', 'http://cdnjs.cloudflare.com/ajax/libs/jquery.cycle/3.03/jquery.cycle.all.min.js', array('jquery'), '1.0');
 
-
-    if( $_GET[ 'fuck_my_life' ] === 'true' ) {
-      echo "<pre>";
-      print_r( $flawless );
-      print_r( $wpdb );
-      print_r( $_SERVER );
-      echo "</pre>";
-      die( '--' );
-    }
-
-    if( $_SERVER['REMOTE_ADDR'] === '68.118.5.140' ) {
-//      die('ss');
-    }
-
   }
 
 
@@ -430,18 +416,18 @@ class flawless_theme extends Flawless_F {
   static function disable_updates() {
     global $flawless;
 
-    if( $flawless[ 'disable_updates' ][ 'plugins' ] == 'true' ) {
+    if( isset( $flawless[ 'disable_updates' ][ 'plugins' ] ) && $flawless[ 'disable_updates' ][ 'plugins' ] == 'true' ) {
       remove_action( 'load-update-core.php', 'wp_update_plugins' );
       add_filter( 'pre_site_transient_update_plugins', create_function( '', "return null;" ));
       wp_clear_scheduled_hook( 'wp_update_plugins' );
     }
 
-    if( $flawless[ 'disable_updates' ][ 'core' ] == 'true' ) {
+    if( isset( $flawless[ 'disable_updates' ][ 'core' ] ) && $flawless[ 'disable_updates' ][ 'core' ] == 'true' ) {
       add_filter( 'pre_site_transient_update_core', create_function( '', "return null;" ));
       wp_clear_scheduled_hook( 'wp_version_check' );
     }
 
-    if( $flawless[ 'disable_updates' ][ 'theme' ] == 'true' ) {
+    if( isset( $flawless[ 'disable_updates' ][ 'theme' ] ) && $flawless[ 'disable_updates' ][ 'theme' ] == 'true' ) {
       remove_action( 'load-update-core.php', 'wp_update_themes' );
       add_filter( 'pre_site_transient_update_themes', create_function( '', "return null;" ));
       wp_clear_scheduled_hook( 'wp_update_themes' );
@@ -1118,7 +1104,7 @@ class flawless_theme extends Flawless_F {
           'supports' => array( 'title', 'editor' )
         ));
 
-        if( $data[ 'allow_term_thumbnail' ] ) {
+        if( !empty( $data[ 'allow_term_thumbnail' ] ) ) {
           add_post_type_support( '_tp_' . $type, 'thumbnail' );
           add_filter( 'manage_edit-' . $type . '_columns', create_function( '$c', ' return flawless_theme::array_insert_after( $c, "cb", array( "term_thumbnail" => "" ) ); ' ) );
           add_filter( 'manage_' . $type . '_custom_column', function( $null, $column, $term_id ) {
@@ -1129,14 +1115,14 @@ class flawless_theme extends Flawless_F {
       }
 
       //** Save our custom settings to global taxononmy object */
-      $wp_taxonomies[ $type ]->hierarchical = $data[ 'hierarchical' ] == 'true' ? true : false;
-      $wp_taxonomies[ $type ]->exclude_from_search = $data[ 'exclude_from_search' ] == 'true' ? true : false;
+      $wp_taxonomies[ $type ]->hierarchical = isset( $data[ 'hierarchical' ] ) && $data[ 'hierarchical' ] == 'true' ? true : false;
+      $wp_taxonomies[ $type ]->exclude_from_search = isset( $data[ 'exclude_from_search' ] ) && $data[ 'exclude_from_search' ] == 'true' ? true : false;
       //$wp_taxonomies[ $type ]->show_tagcloud = $data[ 'show_tagcloud' ] == 'true' ? true : false;
 
       $wp_taxonomies[ $type ]->label= $data[ 'label' ] ? $data[ 'label' ] : $wp_taxonomies[ $type ]->label;
 
       //** Automatically try to get singular form if not set ( experimental ) */
-      $wp_taxonomies[ $type ]->labels->singular_name = $data[ 'singular_label' ] ? $data[ 'singular_label' ] : self::depluralize( $data[ 'label' ] );
+      $wp_taxonomies[ $type ]->labels->singular_name = isset( $data[ 'singular_label' ] ) && $data[ 'singular_label' ] ? $data[ 'singular_label' ] : self::depluralize( $data[ 'label' ] );
       $wp_taxonomies[ $type ]->labels->name = $data[ 'label' ] ? $data[ 'label' ] : $wp_taxonomies[ $type ]->label;
 
       //** Set singular labels */
@@ -1222,19 +1208,19 @@ class flawless_theme extends Flawless_F {
         add_post_type_support( $type, 'page-attributes' );
       }
 
-      if( $flawless[ 'post_types' ][ $type ][ 'disable_comments' ] == 'true' ) {
+      if( isset( $flawless[ 'post_types' ][ $type ][ 'disable_comments' ] ) && $flawless[ 'post_types' ][ $type ][ 'disable_comments' ] == 'true' ) {
         remove_post_type_support( $type, 'comments' );
       }
 
-      if( $flawless[ 'post_types' ][ $type ][ 'custom_fields' ] != 'true' ) {
+      if( isset( $flawless[ 'post_types' ][ $type ][ 'custom_fields' ] ) && $flawless[ 'post_types' ][ $type ][ 'custom_fields' ] != 'true' ) {
         remove_post_type_support( $type, 'custom-fields' );
       }
 
-      if( $flawless[ 'post_types' ][ $type ][ 'disable_author' ] == 'true' ) {
+      if( isset( $flawless[ 'post_types' ][ $type ][ 'disable_author' ] ) && $flawless[ 'post_types' ][ $type ][ 'disable_author' ] == 'true' ) {
         remove_post_type_support( $type, 'author' );
       }
 
-      if( $flawless[ 'post_types' ][ $type ][ 'exclude_from_search' ] == 'true' ) {
+      if( isset( $flawless[ 'post_types' ][ $type ][ 'exclude_from_search' ] ) && $flawless[ 'post_types' ][ $type ][ 'exclude_from_search' ] == 'true' ) {
         $wp_post_types[ $type ]->exclude_from_search = true;
       }
 
@@ -1287,7 +1273,7 @@ class flawless_theme extends Flawless_F {
       }
 
       //** Disable post type, and do work-around for built-in types since they are hardcoded into menu.*/
-      if( $flawless[ 'post_types' ][ $type ][ 'disabled' ] == 'true' ) {
+      if( isset( $flawless[ 'post_types' ][ $type ][ 'disabled' ] ) && $flawless[ 'post_types' ][ $type ][ 'disabled' ] == 'true' ) {
         switch ( $type ) {
           case 'post':
             add_action( 'admin_menu', create_function( '', 'global $menu; unset( $menu[5] );' ));
@@ -1325,8 +1311,8 @@ class flawless_theme extends Flawless_F {
 
     define( 'HEADER_TEXTCOLOR', '000' );
     define( 'HEADER_IMAGE', apply_filters( 'flawless::header_image', '' ) );
-    define( 'HEADER_IMAGE_WIDTH', apply_filters( 'flawless::header_image_width',  $flawless[ 'header_image_width' ] ? $flawless[ 'header_image_width' ]  : 1090 ));
-    define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'flawless::header_image_height',  $flawless[ 'header_image_height' ] ? $flawless[ 'header_image_height' ] : 314 ));
+    define( 'HEADER_IMAGE_WIDTH', apply_filters( 'flawless::header_image_width',  isset($flawless[ 'header_image_width' ]) ? $flawless[ 'header_image_width' ]  : 1090 ));
+    define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'flawless::header_image_height',  isset($flawless[ 'header_image_height' ]) ? $flawless[ 'header_image_height' ] : 314 ));
 
     add_custom_background( array( 'flawless_theme', 'custom_background' ),'',array( 'flawless_theme', 'admin_image_div_callback' ));
     add_custom_image_header( false, array( 'flawless_theme','flawless_admin_header_style' ), array( 'flawless_theme','flawless_admin_header_image' ));
@@ -1355,30 +1341,32 @@ class flawless_theme extends Flawless_F {
     }
 
     //** Remove any explicitly disabled Features */
-    foreach( (array) $flawless[ 'disabled_theme_features' ] as $feature => $not_false ) {
+    if ( !empty( $flawless[ 'disabled_theme_features' ] ) ) {
+      foreach( (array) $flawless[ 'disabled_theme_features' ] as $feature => $not_false ) {
 
-      if( $not_false !== 'false' ) {
-        return;
-      }
+        if( $not_false !== 'false' ) {
+          return;
+        }
 
-      remove_theme_support( $feature );
+        remove_theme_support( $feature );
 
-      if ( in_array( $feature, array( 'custom-background', 'custom-header', 'editor-style', 'widgets', 'menus' ) ) ) {
+        if ( in_array( $feature, array( 'custom-background', 'custom-header', 'editor-style', 'widgets', 'menus' ) ) ) {
 
-        switch ($feature ) {
+          switch ($feature ) {
 
-          case 'custom-background':
-            remove_custom_background();
-          break;
+            case 'custom-background':
+              remove_custom_background();
+            break;
 
-          case 'custom-header':
-            remove_custom_image_header();
-          break;
+            case 'custom-header':
+              remove_custom_image_header();
+            break;
+
+          }
 
         }
 
       }
-
     }
 
 
