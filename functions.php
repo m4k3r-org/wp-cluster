@@ -1937,7 +1937,7 @@ class flawless_theme extends Flawless_F {
    *
    * @since 0.2.3
    */
-  function admin_print_footer_scripts( $hook ) {
+  static function admin_print_footer_scripts( $hook ) {
     global $flawless;
     echo '<script type="text/javascript">var flawless = jQuery.extend( true, jQuery.parseJSON( ' . json_encode( json_encode( $flawless ) ) . ' ), typeof flawless === "object" ? flawless : {} );</script>';
   }
@@ -3029,16 +3029,16 @@ class flawless_theme extends Flawless_F {
 
     foreach( (array) $flawless[ 'taxonomies' ] as $taxonomy => $data ) {
 
-      if ( false === strpos( $permalink, $data[ 'rewrite_tag'] ) ) {
+      if ( isset( $data[ 'rewrite_tag'] ) && false === strpos( $permalink, $data[ 'rewrite_tag'] ) ) {
         continue;
       }
 
       $terms = get_the_terms( $post->ID, $taxonomy );
       if ( empty( $terms ) ) {
-        $permalink = str_replace( $data[ 'rewrite_tag'], $taxonomy, $permalink );
+        $permalink = str_replace( !empty( $data[ 'rewrite_tag'] ) ? $data[ 'rewrite_tag'] : '', $taxonomy, $permalink );
       } else {
         $first_term = array_shift( $terms );
-        $permalink = str_replace( $data[ 'rewrite_tag'], $first_term->slug, $permalink );
+        $permalink = str_replace( !empty( $data[ 'rewrite_tag'] ) ? $data[ 'rewrite_tag'] : '', $first_term->slug, $permalink );
       }
 
     }
@@ -4031,10 +4031,10 @@ class flawless_theme extends Flawless_F {
   *
   * @version 0.25.0
   */
-  function render_console_log() {
+  static function render_console_log() {
     global $flawless;
 
-    if( $flawless[ 'developer_mode' ] != 'true' ) {
+    if( !isset( $flawless[ 'developer_mode' ] ) || $flawless[ 'developer_mode' ] != 'true' ) {
       return;
     }
 
