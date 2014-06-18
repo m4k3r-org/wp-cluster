@@ -256,7 +256,7 @@ class hddp extends Flawless_F {
    */
   static function es_remap_all() {
 
-    $results = [];
+    $results = array();
 
     foreach( (array)json_decode( file_get_contents( get_stylesheet_directory().'/json/elasticsearch-mapping.json' ), true ) as $_type => $data ) {
 
