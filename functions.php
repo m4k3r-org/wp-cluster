@@ -150,6 +150,7 @@ class hddp extends Flawless_F {
       add_action( 'edited_term', array( __CLASS__, "es_index_term" ), 10, 3 );
       add_action( 'delete_term', array( __CLASS__, "es_delete_term" ), 10, 4 );
       add_action( 'wp_ajax_reindex_taxonomies', array( __CLASS__, "es_index_taxonomies" ) );
+      add_action( 'wp_ajax_remap_all', array( __CLASS__, "es_remap_all" ) );
     }
 
   }
@@ -160,14 +161,14 @@ class hddp extends Flawless_F {
    * @return type
    */
   static function es_menu( $wp_admin_bar ) {
-    add_submenu_page( 'elastic_search', 'Index Tax', 'Index Taxonomies', 'manage_options', 'index_taxonomies', array( __CLASS__, 'es_index_taxonomies_ui' ) );
+    add_submenu_page( 'elastic_search', 'Additional ElasticSearch Options', 'Advanced [DDP]', 'manage_options', 'es_options', array( __CLASS__, 'es_options_ui' ) );
   }
 
   /**
    * Render reindex tax UI
    */
-  static function es_index_taxonomies_ui() {
-    include_once 'templates/admin.taxonomy_index.php';
+  static function es_options_ui() {
+    include_once 'templates/admin.elastic_management.php';
   }
 
   /**
@@ -247,6 +248,40 @@ class hddp extends Flawless_F {
     }
 
     die( \json_encode(array('success'=>1,'message'=>'Done '.$i.' items')) );
+
+  }
+
+  /**
+   *
+   */
+  static function es_remap_all() {
+
+    $results = [];
+
+    foreach( (array)json_decode( file_get_contents( get_stylesheet_directory().'/json/elasticsearch-mapping.json' ), true ) as $_type => $data ) {
+
+      $type = \elasticsearch\Indexer::_index(false)->getType( $_type );
+
+      try {
+
+        $mapping = new \Elastica\Type\Mapping($type);
+        $mapping->setProperties( $data['properties'] );
+
+        $results[$_type] = $mapping->send()->getData();
+
+      } catch ( \Elastica\Exception\ClientException $ex ) {
+        $results[$_type] = $ex->getMessage();
+      } catch ( \Elastica\Exception\InvalidException $ex ) {
+        $results[$_type] = $ex->getMessage();
+      } catch ( \Exception $ex ) {
+        $results[$_type] = $ex->getMessage();
+      }
+
+      sleep(1);
+
+    }
+
+    die( \json_encode(array('success'=>1, 'results'=>$results)) );
 
   }
 
