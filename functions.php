@@ -271,7 +271,7 @@ class flawless_theme extends Flawless_F {
     }
 
     //** Has to be run every time for custom taxonomy URLs to work, when permalinks are used. */
-    if( $_REQUEST[ 'flush_rewrite_rules' ] == 'true' ) {
+    if( isset( $_REQUEST[ 'flush_rewrite_rules' ] ) && $_REQUEST[ 'flush_rewrite_rules' ] == 'true' ) {
       flush_rewrite_rules();
     } elseif( $flawless[ 'using_permalinks' ] ) {
       flush_rewrite_rules();
@@ -512,9 +512,9 @@ class flawless_theme extends Flawless_F {
 
       //** Register this widget area with some basic information */
       register_sidebar( array(
-        'name' => $wa_data[ 'label' ],
-        'description' => $wa_data[ 'description' ],
-        'class' => $wa_data[ 'class' ],
+        'name' => isset( $wa_data[ 'label' ] ) ? $wa_data[ 'label' ] : '',
+        'description' => isset( $wa_data[ 'description' ] ) ? $wa_data[ 'description' ] : '',
+        'class' => isset( $wa_data[ 'class' ] ) ? $wa_data[ 'class' ] : '',
         'id' => $sidebar_id,
         'before_widget' => '<div id="%1$s"  class="flawless_widget theme_widget widget  %2$s">',
         'after_widget' => '</div>',
@@ -550,7 +550,7 @@ class flawless_theme extends Flawless_F {
         ));
       }
 
-      if( post_type_supports( $post_type, 'author' ) && $post_type_data[ 'disable_author' ] != 'true' ) {
+      if( post_type_supports( $post_type, 'author' ) && isset( $post_type_data[ 'disable_author' ] ) && $post_type_data[ 'disable_author' ] != 'true' ) {
         flawless_theme::add_post_type_option( array(
           'post_type' => $post_type,
           'position' => 100,
@@ -560,19 +560,21 @@ class flawless_theme extends Flawless_F {
       }
 
       //** Load used widget areas into array */
-      foreach( ( array ) $post_type_data[ 'widget_areas' ] as $was_slug => $these_widget_areas ) {
+      if ( isset( $post_type_data[ 'widget_areas' ] ) ) {
+        foreach( ( array ) $post_type_data[ 'widget_areas' ] as $was_slug => $these_widget_areas ) {
 
-        flawless_theme::add_post_type_option( array(
-          'post_type' => $post_type,
-          'position' => 200,
-          'meta_key' => 'disable_' . $was_slug,
-          'label' => sprintf( __( 'Disable %1s.' , 'flawless' ), $flawless[ 'widget_area_sections' ][$was_slug][ 'label' ] )
-        ));
+          flawless_theme::add_post_type_option( array(
+            'post_type' => $post_type,
+            'position' => 200,
+            'meta_key' => 'disable_' . $was_slug,
+            'label' => sprintf( __( 'Disable %1s.' , 'flawless' ), $flawless[ 'widget_area_sections' ][$was_slug][ 'label' ] )
+          ));
 
-        $views[ 'post_types' ][$post_type][ 'widget_areas' ][$was_slug] = array_filter( ( array ) $these_widget_areas );
+          $views[ 'post_types' ][$post_type][ 'widget_areas' ][$was_slug] = array_filter( ( array ) $these_widget_areas );
 
-        $widget_areas[ 'used' ] = array_merge( ( array ) $widget_areas[ 'used' ], ( array ) $these_widget_areas );
+          $widget_areas[ 'used' ] = array_merge( isset( $widget_areas[ 'used' ] ) ? ( array ) $widget_areas[ 'used' ] : array(), ( array ) $these_widget_areas );
 
+        }
       }
 
     }
