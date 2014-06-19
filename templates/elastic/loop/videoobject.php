@@ -42,7 +42,7 @@
         Displaying <span class="df_current_count" data-bind="html:videos.count">0</span> of <span data-bind="html:videos.total"></span> Galleries
       </div>
       <a class="btn" data-scope="videos" data-bind="visible:videos.has_more_documents,filterShowMoreControl:{count:6}">
-        <span>Show <em data-bind="html:videos.moreCount" class="df_more_count"></em> More</span>
+        <span>Show More</span>
       </a>
     </div>
 

@@ -79,7 +79,7 @@
         Displaying <span class="df_current_count" data-bind="html:events.count">0</span> of <span data-bind="html:events.total"></span> Events
       </div>
       <a class="btn" data-scope="events" data-bind="visible:events.has_more_documents,filterShowMoreControl:{count:100}">
-        <span>Show <em data-bind="html:events.moreCount" class="df_more_count"></em> More</span>
+        <span>Show More</span>
       </a>
     </div>
 
