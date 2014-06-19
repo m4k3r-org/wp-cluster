@@ -581,7 +581,11 @@
     overflow: hidden;
   }
 
-  .archive .ef_results_sorter, .archive #hdp_sort_event #hdp_results_sorter, .archive #hdp_filter_events #hdp_filter_event {
+  .archive .ef_results_sorter,
+  .archive #hdp_sort_event #hdp_results_sorter,
+  .archive #hdp_filter_events #hdp_filter_event,
+  .single #hdp_filter_events #hdp_filter_event,
+  .single #hdp_sort_event #hdp_results_sorter {
     top: -68px;
   }
 
