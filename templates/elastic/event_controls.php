@@ -1,9 +1,9 @@
 <div class="hdp_filter" id="hdp_filter_events">
   <div data-scope="events" data-bind="elasticTimeControl:{}" class="hdp_filter_event_past hidden-phone" id="hdp_filter_event">
     <span class="hdp_filter_text">Display:</span>
-    <div data-type="upcoming" data-direction="asc" class="df_element df_sortable_button df_sortable_upcoming">Upcoming</div>
+    <div data-type="upcoming" data-direction="asc" class="df_element df_sortable_button df_sortable_upcoming df_sortable_active">Upcoming</div>
     <div data-type="past" data-direction="desc" class="df_element df_sortable_button df_sortable_past">Past</div>
-    <div data-type="all" data-direction="desc" class="df_element df_sortable_button df_sortable_all df_sortable_active">All</div>
+    <div data-type="all" data-direction="desc" class="df_element df_sortable_button df_sortable_all">All</div>
   </div>
 </div>
 

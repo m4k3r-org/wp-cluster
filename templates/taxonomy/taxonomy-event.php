@@ -78,7 +78,7 @@
 
         <form data-scope="events" data-bind="elasticFilter:{
           middle_timepoint: { gte: 'now-1d', lte: 'now-1d' },
-          per_page: 15, period: false, period_field: 'start_date', sort_by: 'start_date', type: 'event', location_field: 'venue.address.geo',
+          per_page: 15, period: 'upcoming', period_field: 'start_date', sort_by: 'start_date', type: 'event', location_field: 'venue.address.geo',
           custom_query: { filter: { bool: { must: [{ term: { '<?php echo $term->getField(); ?>': '<?php echo $term->getValue(); ?>'}}]}}},
           return_fields: ['start_date','description','summary','venue.address.city','venue.address.state','url','image.poster','venue.name','artists.name','tickets']}" class="elastic_form">
         </form>
