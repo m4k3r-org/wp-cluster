@@ -212,6 +212,37 @@ jQuery( document ).ready( function() {
     }
   });
 
+  //** Events keyboard navigation */
+  jQuery(document).keydown(function(e){
+
+    var expanded = jQuery( '.hdp_event_expanded:visible' );
+
+    if ( expanded.length ) {
+      switch( e.keyCode ) {
+
+        //** Left */
+        case 37:
+          var el = expanded.parents('.hdp_results_item').prev().find('.hdp_event_collapsed');
+          el.click();
+          break;
+
+        //** Right */
+        case 39:
+          var el = expanded.parents('.hdp_results_item').next().find('.hdp_event_collapsed');
+          el.click();
+          break;
+      }
+
+      if ( el.next().length ) {
+        jQuery('html').animate({
+            scrollTop: el.next().offset().top - 150
+        }, 250);
+      }
+    }
+
+  });
+  //** #Events keyboard navigation */
+
 } );
 
 jQuery( window ).on( 'load', function() {
