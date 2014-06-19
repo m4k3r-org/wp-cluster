@@ -58,7 +58,10 @@
       </a>
 
       <?php echo $flawless[ 'mobile_navbar' ][ 'html' ]; ?>
-      <div id="autocompletion" class="mobile">
+
+    </div>
+
+    <div id="autocompletion" class="mobile">
         <input data-suggest="mobile" data-bind="elasticSuggest:{
           size:50,
           document_type:{
@@ -86,8 +89,6 @@
           </li>
         </ul>
       </div>
-
-    </div>
 
   </div>
 </div>
