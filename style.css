@@ -427,7 +427,12 @@
 
   #autocompletion ul li.ac_item {
     border-bottom: 1px solid #D5E6EB;
-    padding-top: 10px;
+    padding: 0px;
+  }
+
+  #autocompletion ul li.ac_item a {
+    display: block;
+    padding: 10px 14px;
   }
 
   #autocompletion ul li.ac_item:hover {
