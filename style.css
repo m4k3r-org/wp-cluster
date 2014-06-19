@@ -253,7 +253,6 @@
 
   ul#menu-mobile-navbar {
     position: relative;
-    top: 5px;
   }
 
   .navbar .btn-navbar {
@@ -290,7 +289,7 @@
   }
 
   .navbar .nav > li {
-    border-bottom: 1px solid #30444A;
+    border-bottom: 1px solid #a0a0a0;
   }
 
   .navbar .nav > li > a {
@@ -299,6 +298,7 @@
   }
 
   .navbar .nav > li > a, .navbar .dropdown-menu a {
+    color: white;
     padding: 10px 5px;
   }
 
