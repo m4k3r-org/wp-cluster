@@ -93,10 +93,8 @@ class hddp extends Flawless_F {
     wp_register_script( 'jquery-flexslider-1.8', get_stylesheet_directory_uri() . '/js/jquery.flexslider.1.8.js', array( 'jquery' ), '1.8', true );
     wp_register_script( 'jquery-flexslider', get_stylesheet_directory_uri() . '/js/jquery.flexslider.js', array( 'jquery' ), '2.2.2', true );
     wp_register_script( 'jquery-cookie', get_stylesheet_directory_uri() . '/js/jquery.cookie.js', array( 'jquery' ), '1.7.3', false );
-    wp_register_script( 'headroom', '//cdn.jsdelivr.net/headroomjs/0.5.0/headroom.min.js', array( 'jquery' ), '0.5.0' );
-    wp_register_script( 'jquery-headroom', '//cdn.jsdelivr.net/headroomjs/0.5.0/jQuery.headroom.min.js', array( 'jquery', 'headroom' ), '0.5.0' );
 
-    wp_register_script( 'hddp-frontend-js', get_stylesheet_directory_uri() . '/js/hddp.frontend.js', array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'jquery-headroom', 'flawless-frontend' ), HDDP_Version, true );
+    wp_register_script( 'hddp-frontend-js', get_stylesheet_directory_uri() . '/js/hddp.frontend.js', array( 'jquery', 'jquery-jqtransform', 'jquery-flexslider', 'flawless-frontend' ), HDDP_Version, true );
     wp_register_script( 'hddp-backend-js', get_stylesheet_directory_uri() . '/js/hddp.backend.js', array( 'jquery-ui-tabs', 'flawless-admin-global', 'jquery-ud-execute_triggers' ), HDDP_Version, true );
     wp_register_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?sensor=true' );
 
