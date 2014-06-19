@@ -87,11 +87,15 @@
 
           <div class="span6">
 
-            <span class="event_meta_label"><i class="hdp_type icon-dd"></i> <?php _e('Type'); ?></span>
-            <span class="event_meta_value"><?php echo $event->taxonomies( 'event-type' ); ?></span>
+            <?php $event_type = $event->taxonomies( 'event-type' ); if ( !empty( $event_type ) ): ?>
+              <span class="event_meta_label"><i class="hdp_type icon-dd"></i> <?php _e('Type'); ?></span>
+              <span class="event_meta_value"><?php echo $event_type; ?></span>
+            <?php endif; ?>
 
-            <span class="event_meta_label"><i class="hdp_genre icon-dd"></i> <?php _e('Genre'); ?></span>
-            <span class="event_meta_value"><?php echo $event->genre(); ?></span>
+            <?php if ( $event->genre() ): ?>
+              <span class="event_meta_label"><i class="hdp_genre icon-dd"></i> <?php _e('Genre'); ?></span>
+              <span class="event_meta_value"><?php echo $event->genre(); ?></span>
+            <?php endif; ?>
 
             <span class="event_meta_label"><i class="hdp_tour icon-dd"></i> <?php _e('Tour'); ?></span>
             <span class="event_meta_value">
@@ -100,8 +104,10 @@
               </a>
             </span>
 
-            <span class="event_meta_label"><i class="hdp_artist icon-dd"></i> <?php _e('Artist'); ?></span>
-            <span class="event_meta_value"><?php echo $event->artists(); ?></span>
+            <?php if ( $event->artists() ): ?>
+              <span class="event_meta_label"><i class="hdp_artist icon-dd"></i> <?php _e('Artist'); ?></span>
+              <span class="event_meta_value"><?php echo $event->artists(); ?></span>
+            <?php endif; ?>
 
           </div>
 

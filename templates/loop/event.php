@@ -21,7 +21,9 @@ $permalink = get_permalink( $event->post('ID') ); ?>
       </a><br />
       <?php echo $event->venue()->taxonomies( 'city' ); ?>, <?php echo $event->venue()->taxonomies( 'state' ); ?>
     </li>
-		<li class="hdp_event_artists"><span>Artists:</span> <?php echo $event->artists(); ?></li>
+    <?php if ( $event->artists() ): ?>
+      <li class="hdp_event_artists"><span>Artists:</span> <?php echo $event->artists(); ?></li>
+    <?php endif; ?>
 		<li class="hdp_event_description"><p><?php echo $event->post('post_excerpt'); ?></p></li>
 		<li class="hdp_event_information">
 		  <?php $time = strtotime( date( 'Y-m-d', current_time( 'timestamp' ) ) . ' 00:00:01 +3 hour' );
