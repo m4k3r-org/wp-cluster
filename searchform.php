@@ -28,7 +28,30 @@ global $flawless;
         state:'State'
       },
       search_fields:['summary'],
-      return_fields:['summary','url']
+      return_fields:['summary','url'],
+      //** Makes return only upcoming events */
+      custom_query: {
+        filter: {
+          or: [
+            {
+              range: {
+                start_date: {
+                  gte: 'now-1d'
+                }
+              }
+            },
+            {
+              not: {
+                filter: {
+                  exists: {
+                    field: 'start_date'
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
     }" placeholder="<?php echo $flawless[ 'header' ][ 'search_input_placeholder' ] ? $flawless[ 'header' ][ 'search_input_placeholder' ] : sprintf( __( 'Search %1s', 'flawless' ), get_bloginfo( 'name' ) ); ?>"/>
     <img class="loader" data-bind="visible:desktop.loading" src="<?php echo get_template_directory_uri() ?>/img/ajax-loader.gif"/>
   </div>

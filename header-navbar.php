@@ -77,7 +77,30 @@
             state:'State'
           },
           search_fields:['summary'],
-          return_fields:['summary','url']
+          return_fields:['summary','url'],
+          //** Makes return only upcoming events */
+          custom_query: {
+            filter: {
+              or: [
+                {
+                  range: {
+                    start_date: {
+                      gte: 'now-1d'
+                    }
+                  }
+                },
+                {
+                  not: {
+                    filter: {
+                      exists: {
+                        field: 'start_date'
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
         }" placeholder="Search" />
         <div class="clearfix"></div>
         <ul data-bind="enable:label=true,visible:mobile.visible,foreach:mobile.documents">
