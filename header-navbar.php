@@ -76,7 +76,6 @@
             'event-type':'Type',
             state:'State'
           },
-          search_fields:['summary'],
           return_fields:['summary','url'],
           //** Makes return only upcoming events */
           custom_query: {
