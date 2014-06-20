@@ -62,6 +62,7 @@
     </div>
 
     <div id="autocompletion" class="mobile">
+      <div style="position:relative;">
         <input data-suggest="mobile" data-bind="elasticSuggest:{
           size:50,
           document_type:{
@@ -103,6 +104,7 @@
         }" placeholder="Search" />
         <img class="loader" data-bind="visible:mobile.loading" src="<?php echo get_template_directory_uri() ?>/img/ajax-loader.gif"/>
         <img class="cancel" data-bind="visible:!mobile.loading(),click:mobile.clear" src="<?php echo get_stylesheet_directory_uri() ?>/img/cancel.png"/>
+      </div>
         <div class="clearfix"></div>
         <ul data-bind="enable:label=true,visible:mobile.visible,foreach:mobile.documents">
           <!-- ko if: _type != label -->

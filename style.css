@@ -404,11 +404,12 @@
   }
 
   #autocompletion.mobile input {
+    border: 1px solid #103B49;
     display: block;
-    left: 5px;
+    left: 0;
     position: absolute;
-    right: 5px;
-    width: calc(100% - 20px);
+    right: 0;
+    width: calc(100% - 10px);
   }
 
   #autocompletion .loader {
@@ -419,14 +420,14 @@
 
   #autocompletion.mobile .loader {
     position: absolute;
-    right: 11px;
-    top: 57px;
+    right: 8px;
+    top: 7px;
   }
 
   #autocompletion.mobile .cancel {
     position: absolute;
-    right: 11px;
-    top: 56px;
+    right: 7px;
+    top: 6px;
   }
 
   #autocompletion ul {
