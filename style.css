@@ -1584,7 +1584,7 @@
 
   ul.hdp_results_header li.hdp_event_name,
   .hdp_results ul.hdp_event_collapsed li.hdp_event_title {
-    width: 39%; /* changed by 1% to look nice on phones*/
+    width: 36%; /* changed by 1% to look nice on phones*/
   }
 
   ul.hdp_results_header li.hdp_event_city,
@@ -1594,7 +1594,7 @@
 
   ul.hdp_results_header li.hdp_event_state,
   .hdp_results ul.hdp_event_collapsed li.hdp_event_state {
-    width: 7%; /* changed by 1% to look nice on phones*/
+    width: 10%; /* changed by 1% to look nice on phones*/
   }
 
   .hdp_results ul.hdp_event_expanded {
