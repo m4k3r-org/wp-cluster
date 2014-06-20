@@ -417,6 +417,18 @@
     top: 8px;
   }
 
+  #autocompletion.mobile .loader {
+    position: absolute;
+    right: 11px;
+    top: 57px;
+  }
+
+  #autocompletion.mobile .cancel {
+    position: absolute;
+    right: 11px;
+    top: 56px;
+  }
+
   #autocompletion ul {
     background: #F5F9FA;
     border: 1px solid #24687C;

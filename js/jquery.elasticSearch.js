@@ -139,6 +139,14 @@
           this.visible = ko.computed(function() {
             return self.documents().length && !self.loading();
           });
+
+          /**
+           * Clear search input
+           */
+          this.clear = function() {
+            _console.log( 'Clear', self );
+            $('[data-suggest="'+self.scope+'"]').val('').keyup().change();
+          };
         };
 
         /**
