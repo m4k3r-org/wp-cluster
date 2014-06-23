@@ -264,6 +264,9 @@ class hddp extends Flawless_F {
 
         $mapping = new \Elastica\Type\Mapping($type);
         $mapping->setProperties( $data['properties'] );
+        if ( !empty( $data['_all'] ) ) {
+          $mapping->setParam( '_all', $data['_all'] );
+        }
 
         $results[$_type] = $mapping->send()->getData();
 
