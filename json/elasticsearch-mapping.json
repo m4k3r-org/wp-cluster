@@ -584,9 +584,7 @@
       },
       "start_date": {
         "type": "date",
-        "format": "dateOptionalTime",
-        "index": "no",
-        "include_in_all": false
+        "format": "dateOptionalTime"
       },
       "summary": {
         "type": "string",
