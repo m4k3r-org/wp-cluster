@@ -54,7 +54,8 @@ global $flawless;
         }
       }
     }" placeholder="<?php echo $flawless[ 'header' ][ 'search_input_placeholder' ] ? $flawless[ 'header' ][ 'search_input_placeholder' ] : sprintf( __( 'Search %1s', 'flawless' ), get_bloginfo( 'name' ) ); ?>"/>
-    <img class="loader" data-bind="visible:desktop.loading" src="<?php echo get_template_directory_uri() ?>/img/ajax-loader.gif"/>
+    <img class="loader" data-bind="visible:desktop.loading" src="<?php echo get_template_directory_uri() ?>/img/ajax-loader.gif" />
+    <img class="cancel" data-bind="visible:!desktop.loading()&&desktop.has_text(),click:desktop.clear" src="<?php echo get_stylesheet_directory_uri() ?>/img/cancel.png" />
   </div>
 
 

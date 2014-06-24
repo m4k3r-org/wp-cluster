@@ -431,6 +431,13 @@
     cursor: pointer;
   }
 
+  #autocompletion .cancel {
+    position: absolute;
+    right: 7px;
+    top: 6px;
+    cursor: pointer;
+  }
+
   .autocompletion ul {
     background: #F5F9FA;
     border: 1px solid #24687C;
