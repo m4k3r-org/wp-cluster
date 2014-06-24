@@ -112,6 +112,11 @@
           this.scope = scope;
 
           /**
+           * Manual notifier
+           */
+          this._notify = ko.observable();
+
+          /**
            * Documents Collection
            */
           this.documents = ko.observableArray( [] );
@@ -141,10 +146,20 @@
           });
 
           /**
+           * Whether has text in input or not
+           */
+          this.has_text = ko.computed(function() {
+            $('[data-suggest="'+self.scope+'"]').one('keyup', function(){
+              self._notify.notifySubscribers();
+            });
+            self._notify();
+            return $('[data-suggest="'+self.scope+'"]').val().length;
+          });
+
+          /**
            * Clear search input
            */
           this.clear = function() {
-            _console.log( 'Clear', self );
             $('[data-suggest="'+self.scope+'"]').val('').keyup().change();
           };
         };

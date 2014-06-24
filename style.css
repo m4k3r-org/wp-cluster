@@ -428,6 +428,7 @@
     position: absolute;
     right: 11px;
     top: 6px;
+    cursor: pointer;
   }
 
   #autocompletion ul {
