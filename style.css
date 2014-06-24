@@ -382,13 +382,13 @@
     width: 380px;
   }
 
-  #autocompletion.mobile {
+  #autocompletion_mobile {
     margin-top:5px;
     width: 100%;
     height: 33px;
   }
 
-  #autocompletion.mobile ul {
+  #autocompletion_mobile ul {
     background: none repeat scroll 0 0 #f5f9fa;
     border: 1px solid #24687c;
     border-radius: 0px;
@@ -403,7 +403,7 @@
     width: auto;
   }
 
-  #autocompletion.mobile input {
+  #autocompletion_mobile input {
     border: 1px solid #103B49;
     display: block;
     left: 5px;
@@ -418,20 +418,20 @@
     top: 8px;
   }
 
-  #autocompletion.mobile .loader {
+  #autocompletion_mobile .loader {
     position: absolute;
     right: 12px;
     top: 7px;
   }
 
-  #autocompletion.mobile .cancel {
+  #autocompletion_mobile .cancel {
     position: absolute;
     right: 11px;
     top: 6px;
     cursor: pointer;
   }
 
-  #autocompletion ul {
+  .autocompletion ul {
     background: #F5F9FA;
     border: 1px solid #24687C;
     border-radius: 3px;
@@ -444,14 +444,14 @@
     width: 100%;
   }
 
-  #autocompletion ul li {
+  .autocompletion ul li {
     padding-bottom: 10px;
     padding-left: 14px;
     padding-right: 14px;
     transition: .5s all;
   }
 
-  #autocompletion ul li h5 {
+  .autocompletion ul li h5 {
     margin: 0;
     color: #29393C;
     text-shadow: none;
@@ -459,17 +459,17 @@
     padding-top: 10px;
   }
 
-  #autocompletion ul li.ac_item {
+  .autocompletion ul li.ac_item {
     border-bottom: 1px solid #D5E6EB;
     padding: 0px;
   }
 
-  #autocompletion ul li.ac_item a {
+  .autocompletion ul li.ac_item a {
     display: block;
     padding: 10px 14px;
   }
 
-  #autocompletion ul li.ac_item:hover {
+  .autocompletion ul li.ac_item:hover {
     background: white;
   }
 
@@ -3460,7 +3460,7 @@ body.admin-bar div.general_header_wrapper {
   top: 30px;
 }
 
-#autocompletion .icon {
+.autocompletion .icon {
   background: url("img/global.sprite.png") no-repeat transparent;
   display: block;
   float: left;
@@ -3470,33 +3470,33 @@ body.admin-bar div.general_header_wrapper {
   width: 20px;
 }
 
-#autocompletion .event_icon .icon {
+.autocompletion .event_icon .icon {
   background-position: -36px -4px;
 }
-#autocompletion .event-type_icon .icon {
+.autocompletion .event-type_icon .icon {
   background-position: -96px -4px;
 }
-#autocompletion .imagegallery_icon .icon {
+.autocompletion .imagegallery_icon .icon {
   background-position: -36px -4px;
 }
-#autocompletion .venue_icon .icon {
+.autocompletion .venue_icon .icon {
   background-position: -66px -64px;
 }
-#autocompletion .videoobject_icon .icon {
+.autocompletion .videoobject_icon .icon {
   background-position: -36px -4px;
 }
-#autocompletion .tour_icon .icon {
+.autocompletion .tour_icon .icon {
   background-position: -97px -33px;
 }
-#autocompletion .city_icon .icon {
+.autocompletion .city_icon .icon {
   background-position: -66px -64px;
 }
-#autocompletion .state_icon .icon {
+.autocompletion .state_icon .icon {
   background-position: -66px -64px;
 }
-#autocompletion .artist_icon .icon {
+.autocompletion .artist_icon .icon {
   background-position: -66px -4px;
 }
-#autocompletion .promoter_icon .icon {
+.autocompletion .promoter_icon .icon {
   background-position: -96px -64px;
 }

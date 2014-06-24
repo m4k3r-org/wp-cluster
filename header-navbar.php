@@ -61,9 +61,11 @@
 
     </div>
 
-    <div id="autocompletion" class="mobile">
+    <div id="autocompletion_mobile" class="mobile autocompletion">
       <div style="position:relative;">
         <input data-suggest="mobile" data-bind="elasticSuggest:{
+          selector: '#autocompletion_mobile',
+          timeout: 1,
           size:50,
           document_type:{
             event:'Events',
@@ -106,13 +108,20 @@
         <img class="cancel" data-bind="visible:!mobile.loading()&&mobile.has_text(),click:mobile.clear" src="<?php echo get_stylesheet_directory_uri() ?>/img/cancel.png"/>
       </div>
         <div class="clearfix"></div>
-        <ul data-bind="enable:label=true,visible:mobile.visible,foreach:mobile.documents">
-          <!-- ko if: _type != label -->
-          <li data-bind="attr:{class:'ac_label '+_type+'_icon'}" class="ac_label"><i class="icon"></i><h5 data-bind="visible:label=_type,html: $root.mobile.types()[_type]"></h5></li>
+        <ul data-bind="enable:label=true,visible:mobile.visible">
+          <!-- ko if:mobile.documents().length -->
+            <!-- ko foreach:mobile.documents -->
+              <!-- ko if: _type != label -->
+              <li data-bind="attr:{class:'ac_label '+_type+'_icon'}" class="ac_label"><i class="icon"></i><h5 data-bind="visible:label=_type,html: $root.mobile.types()[_type]"></h5></li>
+              <!-- /ko -->
+              <li class="ac_item">
+                <a data-bind="attr:{href:fields.url},html: fields.summary"></a>
+              </li>
+            <!-- /ko -->
           <!-- /ko -->
-          <li class="ac_item">
-            <a data-bind="attr:{href:fields.url},html: fields.summary"></a>
-          </li>
+          <!-- ko if:mobile.documents().length == 0 -->
+            <li class="ac_item"><a href="#">Nothing found</a></li>
+          <!-- /ko -->
         </ul>
       </div>
 

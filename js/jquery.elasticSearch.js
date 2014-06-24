@@ -139,13 +139,6 @@
           });
 
           /**
-           * Autocompletion visibility
-           */
-          this.visible = ko.computed(function() {
-            return self.documents().length && !self.loading();
-          });
-
-          /**
            * Whether has text in input or not
            */
           this.has_text = ko.computed(function() {
@@ -154,6 +147,14 @@
             });
             self._notify();
             return $('[data-suggest="'+self.scope+'"]').val().length;
+          });
+
+          /**
+           * Autocompletion visibility
+           * @todo: get rid of hardcoded 3
+           */
+          this.visible = ko.computed(function() {
+            return self.has_text() && $('[data-suggest="'+self.scope+'"]').val().length >= 3; //&& !self.loading();
           });
 
           /**
@@ -475,10 +476,11 @@
             /**
              * Control dropdown visibility
              */
-            $('html').on('click', function(){
+            $('html').on('click', function() {
               viewModel[scope].documents([]);
+              $('[data-suggest="'+scope+'"]').val('').keyup().change();
             });
-            $(Suggest[scope].selector).on('click', function(e){
+            $( Suggest[scope].selector ).on('click', function(e) {
               e.stopPropagation();
             });
           }

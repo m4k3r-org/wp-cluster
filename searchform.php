@@ -10,10 +10,12 @@ global $flawless;
 
 ?>
 
-<form id="autocompletion">
+<form id="autocompletion" class="autocompletion">
   <div class="search_inner_wrapper">
     <label class="screen-reader-text" for="df_q"><?php _e( 'Search for:' ); ?></label>
     <input data-suggest="desktop" class="search_input_field" data-bind="elasticSuggest:{
+      selector:'#autocompletion',
+      timeout: 1,
       size:50,
       document_type:{
         event:'Events',
@@ -55,13 +57,21 @@ global $flawless;
     <img class="loader" data-bind="visible:desktop.loading" src="<?php echo get_template_directory_uri() ?>/img/ajax-loader.gif"/>
   </div>
 
-  <ul data-bind="enable:label=true,visible:desktop.visible,foreach:desktop.documents">
-    <!-- ko if: _type != label -->
-    <li data-bind="attr:{class:'ac_label '+_type+'_icon'}" class="ac_label"><i class="icon"></i><h5 data-bind="visible:label=_type,html: $root.desktop.types()[_type]"></h5></li>
+
+  <ul data-bind="enable:label=true,visible:desktop.visible">
+    <!-- ko if:desktop.documents().length -->
+      <!-- ko foreach:desktop.documents -->
+        <!-- ko if: _type != label -->
+        <li data-bind="attr:{class:'ac_label '+_type+'_icon'}" class="ac_label"><i class="icon"></i><h5 data-bind="visible:label=_type,html: $root.desktop.types()[_type]"></h5></li>
+        <!-- /ko -->
+        <li class="ac_item">
+          <a data-bind="attr:{href:fields.url},html: fields.summary"></a>
+        </li>
+      <!-- /ko -->
     <!-- /ko -->
-    <li class="ac_item">
-      <a data-bind="attr:{href:fields.url},html: fields.summary"></a>
-    </li>
+    <!-- ko if:desktop.documents().length == 0 -->
+      <li class="ac_item"><a href="#">Nothing found</a></li>
+    <!-- /ko -->
   </ul>
 
 </form>
