@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/usabilitydynamics/wp-amd.png?label=ready&title=Ready)](https://waffle.io/usabilitydynamics/wp-amd)
 This WordPress plugin allows you to:
 
 * Edit global CSS on the back-end or fron-end (in real-time).
