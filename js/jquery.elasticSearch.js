@@ -1,7 +1,7 @@
 /**
  * jQuery ElasticSearch Filter Implementation
  *
- * @version 2.6
+ * @version 2.7
  *
  * Copyright © 2012 Usability Dynamics, Inc. (usabilitydynamics.com)
  *
