@@ -34,10 +34,11 @@
     "grunt-requirejs": "*",
     "grunt-shell": "~0.5.0",
     "grunt-spritefiles": "0.0.2",
-    "grunt-wp-version": "~0.1.0",
     "grunt-spritesmith": "~1.21.2",
     "grunt-tinypng": "~0.5.1",
-    "mocha": "^1.20.1"
+    "grunt-wp-version": "~0.1.0",
+    "mocha": "^1.20.1",
+    "should": "^4.0.4"
   },
   "keywords": [
     "wordpress",
