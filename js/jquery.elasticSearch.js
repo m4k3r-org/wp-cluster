@@ -1323,9 +1323,12 @@
             type = '';
           }
 
-          if ( client )
-            client.get( api._index+'/'+type+'/'+api._controllers.search, 'source='+encodeURIComponent(JSON.stringify( query )), success, error );
-          else _console.error( 'API Search Error', 'Client is undefined' );
+          if ( client ) {
+            if ( typeof this.ejs_xhr !== 'undefined' ) this.ejs_xhr.abort();
+            this.ejs_xhr = client.get( api._index+'/'+type+'/'+api._controllers.search, 'source='+encodeURIComponent(JSON.stringify( query )), success, error );
+          } else {
+            _console.error( 'API Search Error', 'Client is undefined' );
+          }
 
           return api;
         }

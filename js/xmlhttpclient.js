@@ -158,7 +158,8 @@
             }
           }
         };
-        return XHR.send(null);
+        XHR.send(null);
+        return XHR;
       },
 
       /**
@@ -182,7 +183,8 @@
             }
           }
         };
-        return XHR.send(data);
+        XHR.send(data);
+        return XHR;
       },
 
       /**
@@ -206,7 +208,8 @@
             }
           }
         };
-        return XHR.send(data);
+        XHR.send(data);
+        return XHR;
       },
 
       /**
@@ -230,7 +233,8 @@
             }
           }
         };
-        return XHR.send(data);
+        XHR.send(data);
+        return XHR;
       },
 
       /**
@@ -268,7 +272,8 @@
             }
           }
         };
-        return XHR.send(data);
+        XHR.send(data);
+        return XHR;
       }
     };
   };
