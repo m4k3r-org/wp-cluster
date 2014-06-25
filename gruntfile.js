@@ -7,6 +7,13 @@
  */
 module.exports = function( grunt ) {
 
+  // Automatically Load Tasks.
+  require( 'load-grunt-tasks' )( grunt, {
+    pattern: 'grunt-*',
+    config: './package.json',
+    scope: 'devDependencies'
+  });
+  
   grunt.initConfig({
 
     // LESS Compilation.
@@ -201,24 +208,6 @@ module.exports = function( grunt ) {
     }
 
   });
-
-  // Load tasks
-  grunt.loadNpmTasks( 'grunt-component' );
-  grunt.loadNpmTasks( 'grunt-tinypng' );
-  grunt.loadNpmTasks( 'grunt-spritesmith' );
-  grunt.loadNpmTasks( 'grunt-component-build' );
-  grunt.loadNpmTasks( 'grunt-requirejs' );
-  grunt.loadNpmTasks( 'grunt-markdown' );
-  grunt.loadNpmTasks( 'grunt-mocha-cli' );
-  grunt.loadNpmTasks( 'grunt-spritefiles' );
-  grunt.loadNpmTasks( 'grunt-contrib-symlink' );
-  grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
-  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-  grunt.loadNpmTasks( 'grunt-contrib-watch' );
-  grunt.loadNpmTasks( 'grunt-contrib-less' );
-  grunt.loadNpmTasks( 'grunt-contrib-concat' );
-  grunt.loadNpmTasks( 'grunt-contrib-clean' );
-  grunt.loadNpmTasks( 'grunt-shell' );
 
   // Build Assets
   grunt.registerTask( 'default', [ 'yuidoc', 'uglify', 'markdown', 'less' ] );
