@@ -480,6 +480,12 @@
     background: white;
   }
 
+  .autocompletion ul li.ac_item i {
+    color: #a4a6a7;
+    font-style: normal;
+    font-size: 11px;
+  }
+
   @media ( max-width: 1199px ) {
     #autocompletion {
       width: 260px;

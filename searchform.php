@@ -29,8 +29,7 @@ global $flawless;
         'event-type':'Type',
         state:'State'
       },
-      return_fields:['summary','url'],
-      //** Makes return only upcoming events */
+      return_fields:['summary','url', 'venue.address.city', 'address.city', 'venue.address.state', 'address.state', 'start_date', 'event_date'],
       custom_query: {
         filter: {
           or: [
@@ -63,10 +62,30 @@ global $flawless;
     <!-- ko if:desktop.documents().length -->
       <!-- ko foreach:desktop.documents -->
         <!-- ko if: _type != label -->
-        <li data-bind="attr:{class:'ac_label '+_type+'_icon'}" class="ac_label"><i class="icon"></i><h5 data-bind="visible:label=_type,html: $root.desktop.types()[_type]"></h5></li>
+          <li data-bind="attr:{class:'ac_label '+_type+'_icon'}" class="ac_label"><i class="icon"></i><h5 data-bind="visible:label=_type,html: $root.desktop.types()[_type]"></h5></li>
         <!-- /ko -->
         <li class="ac_item">
-          <a data-bind="attr:{href:fields.url},html: fields.summary"></a>
+          <a data-bind="attr:{href:fields.url}">
+            <!-- ko text:fields.summary --><!-- /ko -->
+
+            <!-- ko if:fields.event_date -->
+            <br /><i data-bind="if:(fields['venue.address.city']&&fields['venue.address.state'])">
+              <!-- ko text:fields['venue.address.city'] --><!-- /ko -->, <!-- ko text:fields['venue.address.state'] --><!-- /ko --> on <!-- ko text:moment(fields.event_date[0]).format('LL') --><!-- /ko -->
+            </i>
+            <!-- /ko -->
+
+            <!-- ko if:fields.start_date -->
+            <br /><i data-bind="if:(fields['venue.address.city']&&fields['venue.address.state'])">
+              <!-- ko text:fields['venue.address.city'] --><!-- /ko -->, <!-- ko text:fields['venue.address.state'] --><!-- /ko --> on <!-- ko text:moment(fields.start_date[0]).format('LL') --><!-- /ko -->
+            </i>
+            <!-- /ko -->
+
+            <!-- ko if:fields['address.city'] -->
+            <br /><i data-bind="if:(fields['address.city']&&fields['address.state'])">
+              <!-- ko text:fields['address.city'] --><!-- /ko -->, <!-- ko text:fields['address.state'] --><!-- /ko -->
+            </i>
+            <!-- /ko -->
+          </a>
         </li>
       <!-- /ko -->
     <!-- /ko -->

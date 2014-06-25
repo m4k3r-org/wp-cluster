@@ -77,7 +77,7 @@ class hddp extends Flawless_F {
   static function init_upper() {
     global $wpdb, $flawless;
 
-    wp_register_script( 'knockout', get_stylesheet_directory_uri() . '/js/knockout.js', array(), '2.1', true );
+    wp_register_script( 'knockout', get_stylesheet_directory_uri() . '/js/knockout.js', array(), '3.1.0', true );
     wp_register_script( 'jquery-ud-form_helper', get_stylesheet_directory_uri() . '/js/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1.3', true );
     wp_register_script( 'jquery-ud-smart_buttons', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.smart_buttons/0.6/jquery.ud.smart_buttons.js', array( 'jquery-ui-core' ), '0.6', true );
     wp_register_script( 'jquery-ud-social', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.social/0.3/jquery.ud.social.js', array( 'jquery-ui-core' ), '0.3', true );
