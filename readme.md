@@ -1,4 +1,5 @@
 [![Stories](https://badge.waffle.io/usabilitydynamics/wp-amd.png?label=ready&title=Ready)](https://waffle.io/usabilitydynamics/wp-amd)
+[![Dependency](https://gemnasium.com/UsabilityDynamics/wp-amd.svg)](https://gemnasium.com/UsabilityDynamics/wp-amd)
 [![Scrutinizer](http://img.shields.io/scrutinizer/g/UsabilityDynamics/wp-amd.svg)](httpshttps://scrutinizer-ci.com/g/UsabilityDynamics/wp-amd)
 
 This WordPress plugin allows you to:
