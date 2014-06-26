@@ -60,14 +60,10 @@
           "geo": {
             "properties": {
               "lat": {
-                "type": "double",
-                "index": "no",
-                "include_in_all": false
+                "type": "double"
               },
               "lon": {
-                "type": "double",
-                "index": "no",
-                "include_in_all": false
+                "type": "double"
               }
             }
           },
@@ -635,9 +631,7 @@
                 "include_in_all": false
               },
               "geo": {
-                "type": "geo_point",
-                "index": "no",
-                "include_in_all": false
+                "type": "geo_point"
               },
               "state": {
                 "type": "string",
