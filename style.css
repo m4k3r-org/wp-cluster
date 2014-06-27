@@ -403,6 +403,10 @@
     width: auto;
   }
 
+  .admin-bar #autocompletion_mobile ul {
+    top: 134px;
+  }
+
   #autocompletion_mobile input {
     border: 1px solid #103B49;
     display: block;
