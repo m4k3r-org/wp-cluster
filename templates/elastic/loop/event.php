@@ -24,7 +24,7 @@
             <ul>
               <li>
                 <ul class="hdp_event_collapsed clearfix">
-                  <li data-bind="html:moment(fields.start_date[0]).format('LL')" class="hdp_event_date"></li>
+                  <li data-bind="html:moment(fields.start_date[0]).format('MMMM DD, YYYY')" class="hdp_event_date"></li>
                   <li data-bind="html:fields['summary']" class="hdp_event_title"></li>
                   <li data-bind="html:fields['venue.address.city']" class="hdp_event_city"></li>
                   <li data-bind="html:fields['venue.address.state']" class="hdp_event_state"></li>

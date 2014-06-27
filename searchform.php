@@ -70,13 +70,13 @@ global $flawless;
 
             <!-- ko if:fields.event_date -->
             <br /><i data-bind="if:(fields['venue.address.city']&&fields['venue.address.state'])">
-              <!-- ko html:fields['venue.address.city'] --><!-- /ko -->, <!-- ko html:fields['venue.address.state'] --><!-- /ko --> on <!-- ko html:moment(fields.event_date[0]).format('LL') --><!-- /ko -->
+              <!-- ko html:fields['venue.address.city'] --><!-- /ko -->, <!-- ko html:fields['venue.address.state'] --><!-- /ko --> on <!-- ko html:moment(fields.event_date[0]).format('MMM Do, YYYY') --><!-- /ko -->
             </i>
             <!-- /ko -->
 
             <!-- ko if:fields.start_date -->
             <br /><i data-bind="if:(fields['venue.address.city']&&fields['venue.address.state'])">
-              <!-- ko html:fields['venue.address.city'] --><!-- /ko -->, <!-- ko html:fields['venue.address.state'] --><!-- /ko --> on <!-- ko html:moment(fields.start_date[0]).format('LL') --><!-- /ko -->
+              <!-- ko html:fields['venue.address.city'] --><!-- /ko -->, <!-- ko html:fields['venue.address.state'] --><!-- /ko --> on <!-- ko html:moment(fields.start_date[0]).format('MMM Do, YYYY') --><!-- /ko -->
             </i>
             <!-- /ko -->
 
