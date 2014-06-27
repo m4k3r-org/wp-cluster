@@ -29,6 +29,9 @@
     "usabilitydynamics/lib-settings": "master",
     "usabilitydynamics/lib-requires": "master"
   },
+  "require-dev": {
+    "usabilitydynamics/lib-wp-phpunit": "master"
+  },
   "autoload": {
     "classmap": [ "lib" ]
   }

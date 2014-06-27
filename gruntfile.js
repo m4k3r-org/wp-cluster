@@ -7,6 +7,13 @@
  */
 module.exports = function build( grunt ) {
 
+  // Automatically Load Tasks.
+  require( 'load-grunt-tasks' )( grunt, {
+    pattern: 'grunt-*',
+    config: './package.json',
+    scope: 'devDependencies'
+  });
+
   grunt.initConfig( {
 
     package: grunt.file.readJSON( 'composer.json' ),
@@ -147,19 +154,21 @@ module.exports = function build( grunt ) {
         },
         command: 'composer update --prefer-source'
       }
+    },
+    
+    // Runs PHPUnit Tests
+    phpunit: {
+      classes: {
+        dir: './test/php/classes/'
+      },
+      options: {
+        bin: './vendor/bin/phpunit',
+        configuration: './test/php/phpunit.xml'
+      }
     }
 
   });
-
-  // Load tasks
-  grunt.loadNpmTasks( 'grunt-markdown' );
-  grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
-  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-  grunt.loadNpmTasks( 'grunt-contrib-watch' );
-  grunt.loadNpmTasks( 'grunt-contrib-less' );
-  grunt.loadNpmTasks( 'grunt-contrib-concat' );
-  grunt.loadNpmTasks( 'grunt-contrib-clean' );
-  grunt.loadNpmTasks( 'grunt-pot' );
+  
 
   // Register tasks
   grunt.registerTask( 'default', [ 'markdown', 'less' , 'yuidoc', 'uglify' ] );
@@ -169,8 +178,8 @@ module.exports = function build( grunt ) {
 
   // Update Environment
   grunt.registerTask( 'update', [ "clean", "shell:update" ] );
-
-  // Clean, preparing for update
-  grunt.registerTask( 'clean', [  ] );
+  
+  // Run tests
+  grunt.registerTask( 'test', [ 'phpunit' ] );
 
 };
