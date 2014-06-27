@@ -141,6 +141,9 @@ module.exports = function build( grunt ) {
     },
 
     shell: {
+      coverageScrutinizer: {
+        command: 'php ocular.phar code-coverage:upload --access-token="'+ process.env.SCRUTINIZER_ACCESS_TOKEN + '" --format=php-clover coverage.clover'
+      },
       update: {
         options: {
           stdout: true
