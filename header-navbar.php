@@ -115,23 +115,23 @@
               <!-- /ko -->
               <li class="ac_item">
                 <a data-bind="attr:{href:fields.url}">
-                  <!-- ko text:fields.summary --><!-- /ko -->
+                  <!-- ko html:fields.summary --><!-- /ko -->
 
                   <!-- ko if:fields.event_date -->
                   <br /><i data-bind="if:(fields['venue.address.city']&&fields['venue.address.state'])">
-                    <!-- ko text:fields['venue.address.city'] --><!-- /ko -->, <!-- ko text:fields['venue.address.state'] --><!-- /ko --> on <!-- ko text:moment(fields.event_date[0]).format('LL') --><!-- /ko -->
+                    <!-- ko html:fields['venue.address.city'] --><!-- /ko -->, <!-- ko html:fields['venue.address.state'] --><!-- /ko --> on <!-- ko html:moment(fields.event_date[0]).format('LL') --><!-- /ko -->
                   </i>
                   <!-- /ko -->
 
                   <!-- ko if:fields.start_date -->
                   <br /><i data-bind="if:(fields['venue.address.city']&&fields['venue.address.state'])">
-                    <!-- ko text:fields['venue.address.city'] --><!-- /ko -->, <!-- ko text:fields['venue.address.state'] --><!-- /ko --> on <!-- ko text:moment(fields.start_date[0]).format('LL') --><!-- /ko -->
+                    <!-- ko html:fields['venue.address.city'] --><!-- /ko -->, <!-- ko html:fields['venue.address.state'] --><!-- /ko --> on <!-- ko html:moment(fields.start_date[0]).format('LL') --><!-- /ko -->
                   </i>
                   <!-- /ko -->
 
                   <!-- ko if:fields['address.city'] -->
                   <br /><i data-bind="if:(fields['address.city']&&fields['address.state'])">
-                    <!-- ko text:fields['address.city'] --><!-- /ko -->, <!-- ko text:fields['address.state'] --><!-- /ko -->
+                    <!-- ko html:fields['address.city'] --><!-- /ko -->, <!-- ko html:fields['address.state'] --><!-- /ko -->
                   </i>
                   <!-- /ko -->
                 </a>
