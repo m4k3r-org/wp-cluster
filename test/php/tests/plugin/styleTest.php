@@ -1,11 +1,18 @@
 <?php
 /**
- * Be sure plugin's core is loaded.
- *
- * @class BasicTest
+ * 
+ * @class StyleTest
  */
-class StyleTest extends AMD_WP_UnitTestCase {
+class StyleTest extends Post_AMD_WP_UnitTestCase {
 
-  function testTemp() {}
+  /**
+   *
+   */
+  function setAMDPostObject() {
+    if( !is_object( $this->instance->style ) || get_class( $this->instance->style ) != 'UsabilityDynamics\AMD\Style' ) {
+      $this->fail( 'Style object is not available.' );
+    }
+    $this->pobj = $this->instance->style;
+  }
   
 }

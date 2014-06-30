@@ -1,11 +1,18 @@
 <?php
 /**
- * Be sure plugin's core is loaded.
- *
- * @class BasicTest
+ * 
+ * @class ScriptTest
  */
-class ScriptTest extends AMD_WP_UnitTestCase {
+class ScriptTest extends Post_AMD_WP_UnitTestCase {
 
-  function testTemp() {}
+  /**
+   *
+   */
+  function setAMDPostObject() {
+    if( !is_object( $this->instance->script ) || get_class( $this->instance->script ) != 'UsabilityDynamics\AMD\Script' ) {
+      $this->fail( 'Script object is not available.' );
+    }
+    $this->pobj = $this->instance->script;
+  }
   
 }
