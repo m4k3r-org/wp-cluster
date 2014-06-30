@@ -12,7 +12,7 @@
 >
     <testsuites>
         <testsuite name="CircleCI Test Suite">
-            <directory>./classes</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
