@@ -9,7 +9,7 @@ define( 'TEST_ROOT_PATH', dirname( dirname( dirname( __FILE__ ) ) ) );
 // Be sure we have wp-test-config.php file installed
 $config = TEST_ROOT_PATH . '/wp-test-config.php';
 if( !file_exists( $config ) ) {
-  exit( "You should put and setup your wp-test-config.php in {$config}. Sample can be found in test/fixtures/wp-test-config-sample.php\n" );
+  exit( "You should put and setup your wp-test-config.php in {$config}. Sample can be found in test/php/fixtures/wp-test-config-sample.php\n" );
 }
 
 // Set correct path to Composer Autoload file
