@@ -38,7 +38,7 @@ class BasicTest extends WP_UnitTestCase {
    *
    * @group basic
    */   
-  function test_globals() {
+  function testGlobals() {
     global $test_foo;
     $test_foo = array( 'foo', 'bar', 'baz' );
 
@@ -57,7 +57,7 @@ class BasicTest extends WP_UnitTestCase {
    *
    * @group basic
    */   
-  function test_globals_bar() {
+  function testGlobalsBar() {
     global $test_bar;
     $test_bar = array( 'a', 'b', 'c' );
     $this->assertEquals( $test_bar, $GLOBALS[ 'test_bar' ] );

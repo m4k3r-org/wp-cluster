@@ -34,7 +34,6 @@ $dir = dirname( __FILE__ ) . '/includes/';
 if ( !empty( $dir ) && is_dir( $dir ) ) {
   if ( $dh = opendir( $dir ) ) {
     while ( ( $file = readdir( $dh ) ) !== false ) {
-      //exit( 'STEP' );
       if( !in_array( $file, array( '.', '..' ) ) && is_file( $dir . $file ) && 'php' == pathinfo( $dir . $file, PATHINFO_EXTENSION ) ) {
         include_once( $dir . $file );
       }
