@@ -17,8 +17,16 @@ class ScriptTest extends Post_AMD_WP_UnitTestCase {
   
   /**
    *
-   * @group post
+   */
+  function checkRegisteredAsset() {
+    global $wp_scripts;
+    
+  }
+  
+  /**
+   *
    * @group asset
+   * @group script
    */
   function testSpecificActions() {
     $this->assertGreaterThan( 0, has_filter( 'wp_enqueue_scripts', array( $this->asset, 'register_asset' ) ) );

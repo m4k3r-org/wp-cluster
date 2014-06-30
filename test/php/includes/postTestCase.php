@@ -34,6 +34,27 @@ class Post_AMD_WP_UnitTestCase extends AMD_WP_UnitTestCase {
   }
   
   /**
+   * Return sample data
+   */
+  function getSampleData( $path ) {
+    $content = '';
+    if( file_exists( $path ) ) {
+      $content = @file_get_contents( $path );
+    }
+    if( empty( $content ) ) {
+      $this->fail( 'Fixture data for testing is not available.' );
+    }
+    return $content;
+  }
+  
+  /**
+   * Rewrite the method in child class!
+   */
+  function checkRegisteredAsset() {
+    return null;
+  }
+  
+  /**
    *
    * @group asset
    */
@@ -85,25 +106,47 @@ class Post_AMD_WP_UnitTestCase extends AMD_WP_UnitTestCase {
   }
   
   /**
+   * Tests:
+   * - save asset
+   * - get asset
+   * - revision ID
    *
    * @group asset
    */
   function testAsset() {
-    $path = $this->root_dir . '/test/php/fixtures/sample.' . $this->asset->get( 'extension' );
-    if( file_exists( $path ) ) {
-      $content = @file_get_contents( $path );
-    }
-    if( empty( $content ) ) {
-      $this->fail( 'Fixture data for testing is not available.' );
-    }
     
-    //** Save Asset */
-    $this->assertGreaterThan( 0, $this->asset->save_asset( $content ) );
+    //** Get First Revision and save asset */
+    $data = $this->getSampleData( $this->root_dir . '/test/php/fixtures/sample-1rev.' . $this->asset->get( 'extension' ) );
+    $this->assertGreaterThan( 0, $this->asset->save_asset( $data ) );
+    
+    //** Get Second Revision and save asset */
+    $data2 = $this->getSampleData( $this->root_dir . '/test/php/fixtures/sample-2rev.' . $this->asset->get( 'extension' ) );
+    $this->assertGreaterThan( 0, $this->asset->save_asset( $data2 ) );
     
     //** Get Asset */
     $post = $this->asset->get_asset( $this->asset->get( 'type' ) );
     $this->assertTrue( is_array( $post ) );
-    $this->assertArrayHasKey( 'ID', (array)$post );
+    $post = (array)$post;
+    $this->assertArrayHasKey( 'ID', $post );
+    $this->assertArrayHasKey( 'post_content', $post );
+    
+    //** Check content */
+    $this->assertEquals( $data2, ( !empty( $post[ 'post_content' ] ) ? $post[ 'post_content' ] : false ) );
+    
+    //** Check latest version ID */
+    $this->assertEquals( 1, $this->asset->get_latest_version_id( $post[ 'ID' ] ) );
+    
+    //** Save 'dependencies' */
+    $this->assertTrue( is_array( $this->asset->get( 'dependencies' ) ) );
+    add_post_meta( $post[ 'ID' ], 'dependency', array_keys( (array)$this->asset->get( 'dependencies' ) ) ) or 
+      update_post_meta( $post[ 'ID' ], 'dependency', array_keys( (array)$this->asset->get( 'dependencies' ) ) );
+    
+    /** Register Asset */
+    //$this->asset->register_asset();
+    
+    //** Check Dependencies */
+    //$this->checkRegisteredAsset();
+    
   }
   
 }

@@ -17,6 +17,23 @@ class StyleTest extends Post_AMD_WP_UnitTestCase {
   
   /**
    *
+   */
+  function checkRegisteredAsset() {
+    global $wp_styles;
+    
+    $dependencies = (array)$this->asset->get( 'dependencies' );    
+    $style = !empty( $wp_styles[ 'wp-amd-script' ] ) ? $wp_styles[ 'wp-amd-script' ] : false;
+    
+    $this->assertTrue( !empty( $style ) );
+    
+    // Do nothing if asset does not exist or not use dependencies.
+    if( !empty( $style ) && !empty( $dependencies ) ) {
+      
+    }
+  }
+  
+  /**
+   *
    * @group asset
    * @group style
    */
