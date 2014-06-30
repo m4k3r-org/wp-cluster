@@ -148,6 +148,13 @@ module.exports = function build( grunt ) {
     },
 
     shell: {
+      coverageScrutinizer: {
+        command: 'php ocular.phar code-coverage:upload --access-token="'+ process.env.SCRUTINIZER_ACCESS_TOKEN + '" --format=php-clover coverage.clover'
+      },
+      // Expect "CODECLIMATE_REPO_TOKEN" to be set.
+      coverageCodeClimate: {
+        command: './vendor/bin/test-reporter'
+      },
       update: {
         options: {
           stdout: true
@@ -173,6 +180,15 @@ module.exports = function build( grunt ) {
   // Register tasks
   grunt.registerTask( 'default', [ 'markdown', 'less' , 'yuidoc', 'uglify' ] );
 
+  // Generate and send Code Coverage.
+  grunt.registerTask( 'codeCoverage', 'Generate and send Code Coverage.', function() {
+  
+    // Trigger Coverage Shell
+    grunt.task.run( 'shell:coverageScrutinizer' );
+    grunt.task.run( 'shell:coverageCodeClimate' );
+    
+  });
+  
   // Build Distribution
   grunt.registerTask( 'distribution', [ 'pot' ] );
 
