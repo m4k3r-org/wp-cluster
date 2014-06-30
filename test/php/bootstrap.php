@@ -2,14 +2,13 @@
 /**
  * PHP Unit Test Bootstrap
  */
-echo 'Loading Wordpress Environment...';
 
 // Set ROOT of current module
 define( 'TEST_ROOT_PATH', dirname( dirname( dirname( __FILE__ ) ) ) );
 
 // Be sure we have wp-test-config.php file installed
 $config = TEST_ROOT_PATH . '/wp-test-config.php';
-if( !file_exists( $config ) || !require_once( $config ) ) {
+if( !file_exists( $config ) ) {
   exit( "You should put and setup your wp-test-config.php in {$config}. Sample can be found in test/fixtures/wp-test-config-sample.php\n" );
 }
 
@@ -28,3 +27,5 @@ if( !class_exists( 'UsabilityDynamics\Test\Bootstrap' ) ) {
 UsabilityDynamics\Test\Bootstrap::get_instance( array(
   'config' => $config
 ) );
+
+echo 'Wordpress Environment loaded...';
