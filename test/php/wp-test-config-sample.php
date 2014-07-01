@@ -4,7 +4,7 @@
  * SET ABSPATH TO YOUR WORPDRESS ROOT DIRECTORY
  * Note,
  * you can use already existing wordpress core in 
- * /vendor/usabilitydynamics/lib-wp-phpunit/wordpress
+ * /vendor/automattic/wordpress/
  */
 define( 'ABSPATH', '' );
 
