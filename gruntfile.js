@@ -177,7 +177,12 @@ module.exports = function build( grunt ) {
       classes: {},
       options: {
         bin: './vendor/bin/phpunit',
+      }
+      local: {
         configuration: './test/php/phpunit.xml'
+      },
+      circleci: {
+        configuration: './test/php/phpunit-circle.xml'
       }
     }
 
@@ -202,6 +207,6 @@ module.exports = function build( grunt ) {
   grunt.registerTask( 'update', [ "clean", "shell:update" ] );
   
   // Run tests
-  grunt.registerTask( 'test', [ 'phpunit' ] );
+  grunt.registerTask( 'test', [ 'phpunit:circleci' ] );
 
 };
