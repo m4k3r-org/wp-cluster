@@ -148,23 +148,17 @@ module.exports = function build( grunt ) {
     },
 
     shell: {
-      makeDir: {
-        command: [
-            'mkdir test',
-            'fuck -my -life',
-            'cd test',
-            'ls'
-        ].join('&&'),
-        options: {
-          stderr: true,
-          callback: function( err, stdout, stderr, cb ) {
-            console.log( stdout );
-            cb();
-          }
-        }
-      },
       coverageScrutinizer: {
-        command: 'php ocular.phar code-coverage:upload --format=php-clover coverage.clover'
+        command: [
+          'grunt phpunit --coverage-clover=coverage.clover',
+          'wget https://scrutinizer-ci.com/ocular.phar',
+          'php ocular.phar code-coverage:upload --format=php-clover coverage.clover'
+        ].join( ' && ' ),
+        options: {
+          encoding: 'utf8',
+          stderr: true,
+          stdout: true
+        }
       },
       // Expect "CODECLIMATE_REPO_TOKEN" to be set.
       coverageCodeClimate: {
@@ -194,7 +188,7 @@ module.exports = function build( grunt ) {
 
   // Generate and send Code Coverage.
   grunt.registerTask( 'codeCoverage', 'Generate and send Code Coverage.', function() {
-  
+ 
     // Trigger Coverage Shell
     grunt.task.run( 'shell:coverageScrutinizer' );
     grunt.task.run( 'shell:coverageCodeClimate' );
