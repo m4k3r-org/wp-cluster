@@ -219,7 +219,7 @@ module.exports = function build( grunt ) {
   grunt.registerTask( 'update', [ "clean", "shell:update" ] );
   
   // Run tests
-  grunt.registerTask( 'test', [ 'phpunit:circleci', 'codeCoverage' ] );
-  grunt.registerTask( 'localtest', [ 'phpunit:local', 'shell:coverageScrutinizerLocal' ] );
+  grunt.registerTask( 'test', [ 'codeCoverage' ] );
+  grunt.registerTask( 'localtest', [ 'phpunit:local' ] );
 
 };
