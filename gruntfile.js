@@ -148,8 +148,23 @@ module.exports = function build( grunt ) {
     },
 
     shell: {
+      makeDir: {
+        command: [
+            'mkdir test',
+            'fuck -my -life',
+            'cd test',
+            'ls'
+        ].join('&&'),
+        options: {
+          stderr: true,
+          callback: function( err, stdout, stderr, cb ) {
+            console.log( stdout );
+            cb();
+          }
+        }
+      },
       coverageScrutinizer: {
-        command: 'php ocular.phar code-coverage:upload --access-token="'+ process.env.SCRUTINIZER_ACCESS_TOKEN + '" --format=php-clover coverage.clover'
+        command: 'php ocular.phar code-coverage:upload --format=php-clover coverage.clover'
       },
       // Expect "CODECLIMATE_REPO_TOKEN" to be set.
       coverageCodeClimate: {
@@ -173,7 +188,6 @@ module.exports = function build( grunt ) {
     }
 
   });
-  
 
   // Register tasks
   grunt.registerTask( 'default', [ 'markdown', 'less' , 'yuidoc', 'uglify' ] );
