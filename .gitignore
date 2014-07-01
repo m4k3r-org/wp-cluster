@@ -2,6 +2,7 @@ temp
 node_modules
 npm-debug.log
 vendor
+composer.lock
 
 wp-test-config.php
 
