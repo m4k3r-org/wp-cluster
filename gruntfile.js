@@ -148,9 +148,21 @@ module.exports = function build( grunt ) {
     },
 
     shell: {
+      coverageScrutinizerLocal: {
+        command: [
+          'grunt phpunit:local --coverage-clover=coverage.clover',
+          'wget https://scrutinizer-ci.com/ocular.phar',
+          'php ocular.phar code-coverage:upload --format=php-clover coverage.clover'
+        ].join( ' && ' ),
+        options: {
+          encoding: 'utf8',
+          stderr: true,
+          stdout: true
+        }
+      },
       coverageScrutinizer: {
         command: [
-          'grunt phpunit --coverage-clover=coverage.clover',
+          'grunt phpunit:circleci --coverage-clover=coverage.clover',
           'wget https://scrutinizer-ci.com/ocular.phar',
           'php ocular.phar code-coverage:upload --format=php-clover coverage.clover'
         ].join( ' && ' ),
@@ -193,10 +205,10 @@ module.exports = function build( grunt ) {
 
   // Generate and send Code Coverage.
   grunt.registerTask( 'codeCoverage', 'Generate and send Code Coverage.', function() {
- 
+
     // Trigger Coverage Shell
     grunt.task.run( 'shell:coverageScrutinizer' );
-    grunt.task.run( 'shell:coverageCodeClimate' );
+    //grunt.task.run( 'shell:coverageCodeClimate' );
     
   });
   
@@ -207,6 +219,7 @@ module.exports = function build( grunt ) {
   grunt.registerTask( 'update', [ "clean", "shell:update" ] );
   
   // Run tests
-  grunt.registerTask( 'test', [ 'phpunit:circleci' ] );
+  grunt.registerTask( 'test', [ 'phpunit:circleci', 'codeCoverage' ] );
+  grunt.registerTask( 'localtest', [ 'phpunit:local', 'shell:coverageScrutinizerLocal' ] );
 
 };
