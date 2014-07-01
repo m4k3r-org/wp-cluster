@@ -177,7 +177,7 @@ module.exports = function build( grunt ) {
       classes: {},
       options: {
         bin: './vendor/bin/phpunit',
-      }
+      },
       local: {
         configuration: './test/php/phpunit.xml'
       },
