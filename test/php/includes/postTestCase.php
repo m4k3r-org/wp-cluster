@@ -11,7 +11,7 @@ class Post_AMD_WP_UnitTestCase extends AMD_WP_UnitTestCase {
   protected $asset;
   
   /**
-   *
+   * Constructor
    */
   function setUp() {
 	  parent::setUp();
@@ -19,7 +19,7 @@ class Post_AMD_WP_UnitTestCase extends AMD_WP_UnitTestCase {
   }
   
   /**
-   *
+   * Destructor
    */
   function tearDown() {
 	  parent::tearDown();
@@ -27,6 +27,8 @@ class Post_AMD_WP_UnitTestCase extends AMD_WP_UnitTestCase {
   }
   
   /**
+   * Sets self::$asset variable.
+   *
    * Rewrite the method in child class!
    */
   function setAMDPostObject() {
@@ -50,9 +52,20 @@ class Post_AMD_WP_UnitTestCase extends AMD_WP_UnitTestCase {
   /**
    * Rewrite the method in child class!
    */
-  function checkRegisteredAsset() {
-    return null;
-  }
+  function checkRegisteredAsset() {}
+  
+  /**
+   * Checks specific actions.
+   *
+   * Rewrite the method in child class!
+   */
+  function proceedSpecificActions() {}
+  
+  /**
+   * 
+   * Rewrite the method in child class!
+   */
+  function checkDependencies() {}
   
   /**
    *
@@ -88,21 +101,24 @@ class Post_AMD_WP_UnitTestCase extends AMD_WP_UnitTestCase {
    *
    * @group asset
    */
-  function testGeneralActions() {
+  function testActions() {
     $this->assertGreaterThan( 0, has_filter( 'init', array( $this->asset, 'register_post_type' ) ) );
     $this->assertGreaterThan( 0, has_filter( 'admin_init', array( $this->asset, 'admin_init' ) ) );
     $this->assertGreaterThan( 0, has_filter( 'redirect_canonical', array( $this->asset, 'redirect_canonical' ) ) );
     $this->assertGreaterThan( 0, has_filter( 'pre_update_option_rewrite_rules', array( $this->asset, 'update_option_rewrite_rules' ) ) );
-    // @todo: It's being tested twice. Need to moved it out.
+    // @todo: It's being tested twice. Probably, need to moved it out.
     $this->assertGreaterThan( 0, has_filter( 'query_vars', array( 'UsabilityDynamics\AMD\Scaffold', 'query_vars' ) ) );
     $this->assertGreaterThan( 0, has_filter( 'template_include', array( 'UsabilityDynamics\AMD\Scaffold', 'return_asset' ) ) );
     
     //** Determine if Admin Menu is enabled */
     if( $this->asset->get( 'admin_menu' ) ) {
       $this->assertGreaterThan( 0, has_filter( 'admin_menu', array( $this->asset, 'add_admin_menu' ) ) );
-      // @todo: It's being tested twice. Need to moved it out.
+      // @todo: It's being tested twice. Probably, need to moved it out.
       $this->assertGreaterThan( 0, has_filter( 'get_edit_post_link', array( 'UsabilityDynamics\AMD\Scaffold', 'revision_post_link' ) ) );
     }
+    
+    //** Checks specific actions */
+    $this->proceedSpecificActions();
   }
   
   /**
@@ -141,11 +157,8 @@ class Post_AMD_WP_UnitTestCase extends AMD_WP_UnitTestCase {
     add_post_meta( $post[ 'ID' ], 'dependency', array_keys( (array)$this->asset->get( 'dependencies' ) ) ) or 
       update_post_meta( $post[ 'ID' ], 'dependency', array_keys( (array)$this->asset->get( 'dependencies' ) ) );
     
-    /** Register Asset */
-    //$this->asset->register_asset();
-    
     //** Check Dependencies */
-    //$this->checkRegisteredAsset();
+    $this->checkDependencies();
     
   }
   

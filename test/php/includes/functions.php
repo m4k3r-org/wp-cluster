@@ -17,3 +17,9 @@ function _unregister_post_type( $cpt_name ) {
     }
   }
 }
+
+function get_echo($callable, $args = array()) {
+  ob_start();
+  call_user_func_array($callable, $args);
+  return ob_get_clean();
+}

@@ -520,11 +520,11 @@ namespace UsabilityDynamics\AMD {
 
               switch( $this->get( 'type' ) ) {
                 case 'script':
-                  wp_register_script( $dependency, $all_deps[ $dependency ][ 'url' ], $_deps, $all_deps[ $dependency ][ 'version' ] ? $all_deps[ $dependency ][ 'version' ] : $this->get( 'version' ), true );
+                  wp_register_script( $dependency, $all_deps[ $dependency ][ 'url' ], $_deps, !empty( $all_deps[ $dependency ][ 'version' ] ) ? $all_deps[ $dependency ][ 'version' ] : $this->get( 'version' ), true );
                   array_push( $registered, $dependency );
                 break;
                 case 'style':
-                  wp_register_style( $dependency, $all_deps[ $dependency ][ 'url' ], $_deps, $all_deps[ $dependency ][ 'version' ] ? $all_deps[ $dependency ][ 'version' ] : $this->get( 'version' ) );
+                  wp_register_style( $dependency, $all_deps[ $dependency ][ 'url' ], $_deps, !empty( $all_deps[ $dependency ][ 'version' ] ) ? $all_deps[ $dependency ][ 'version' ] : $this->get( 'version' ) );
                   array_push( $registered, $dependency );
                 break;
                 default: break;

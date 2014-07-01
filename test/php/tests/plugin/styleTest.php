@@ -5,6 +5,8 @@
  */
 class StyleTest extends Post_AMD_WP_UnitTestCase {
 
+  var $old_wp_scripts;
+
   /**
    * Set fixture
    */
@@ -18,27 +20,36 @@ class StyleTest extends Post_AMD_WP_UnitTestCase {
   /**
    *
    */
-  function checkRegisteredAsset() {
-    global $wp_styles;
-    
-    $dependencies = (array)$this->asset->get( 'dependencies' );    
-    $style = !empty( $wp_styles[ 'wp-amd-script' ] ) ? $wp_styles[ 'wp-amd-script' ] : false;
-    
-    $this->assertTrue( !empty( $style ) );
-    
-    // Do nothing if asset does not exist or not use dependencies.
-    if( !empty( $style ) && !empty( $dependencies ) ) {
-      
-    }
+  function proceedSpecificActions() {
+    $this->assertGreaterThan( 0, has_filter( 'wp_print_styles', array( $this->asset, 'register_asset' ) ) );
   }
   
   /**
-   *
-   * @group asset
-   * @group style
+   * Checks loading of script and all dependencies
    */
-  function testSpecificActions() {
-    $this->assertGreaterThan( 0, has_filter( 'wp_print_styles', array( $this->asset, 'register_asset' ) ) );
+  function checkDependencies() {
+    $this->old_wp_styles = isset( $GLOBALS[ 'wp_styles' ] ) ? $GLOBALS[ 'wp_styles' ] : null;
+    remove_action( 'wp_default_styles', 'wp_default_styles' );
+    $GLOBALS['wp_styles'] = new WP_Styles();
+    $GLOBALS['wp_styles']->default_version = get_bloginfo( 'version' );
+    
+    $this->asset->register_asset();
+    
+    $result = get_echo( 'wp_print_styles' );
+    
+    //** Be sure all dependencies are loaded */
+    $dependencies = (array)$this->asset->get( 'dependencies' );
+    foreach( $dependencies as $dependency ) {
+      if( !empty( $dependency[ 'url' ] ) ) {
+        $this->assertContains( esc_url( $dependency[ 'url' ] ), $result );
+      }
+    }
+    
+    //** Be sure our style is loaded */
+    $this->assertContains( esc_url( $this->asset->get_asset_url() ), $result );
+    
+    $GLOBALS['wp_styles'] = $this->old_wp_styles;
+    add_action( 'wp_default_styles', 'wp_default_styles' );
   }
   
 }
