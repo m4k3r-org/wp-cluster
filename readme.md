@@ -1,8 +1,7 @@
-Issues: [![Issues - Ready](https://badge.waffle.io/usabilitydynamics/wp-crm.png?label=ready&title=Ready)](http://waffle.io/usabilitydynamics/wp-crm)
+[![Issues - Ready](https://badge.waffle.io/usabilitydynamics/wp-crm.png?label=ready&title=Ready)](http://waffle.io/usabilitydynamics/wp-crm)
 [![Issues - Backlog](https://badge.waffle.io/usabilitydynamics/wp-crm.png?label=backlog&title=Backlog)](http://waffle.io/usabilitydynamics/wp-crm/)
 [![Issues - Progress](https://badge.waffle.io/usabilitydynamics/wp-crm.png?label=in%20progress&title=Progress)](http://waffle.io/usabilitydynamics/wp-crm)
-
-Audits [![Scrutinizer Quality](http://img.shields.io/scrutinizer/g/UsabilityDynamics/wp-splash.svg)](https://scrutinizer-ci.com/g/UsabilityDynamics/wp-splash)
+[![Scrutinizer Quality](http://img.shields.io/scrutinizer/g/UsabilityDynamics/wp-splash.svg)](https://scrutinizer-ci.com/g/UsabilityDynamics/wp-splash)
 [![Scrutinizer Coverage](http://img.shields.io/scrutinizer/coverage/g/UsabilityDynamics/wp-splash.svg)](https://scrutinizer-ci.com/g/UsabilityDynamics/wp-splash)
 [![Dependencies](https://gemnasium.com/UsabilityDynamics/wp-splash.svg)](https://gemnasium.com/UsabilityDynamics/wp-splash)
 
