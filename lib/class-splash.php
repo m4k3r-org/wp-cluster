@@ -504,17 +504,25 @@ namespace UsabilityDynamics\Theme {
         add_pages_page( __( 'Site Home' ), __( 'Site Home' ), 'edit_theme_options', 'splash-home-editor', array( $this, 'editor' ) );
       }
 
-      // add_pages_page( __( '404 Page' ), __( '404 Page' ), 'edit_theme_options', 'splash-error-editor', array( $this, 'editor' ) );
-      // add_pages_page( __( 'Login Page' ), __( 'Login Page' ), 'edit_theme_options', 'splash-error-editor', array( $this, 'editor' ) );
+      if( get_theme_mod( 'admin:hide-post-menu', false ) ) {
+        remove_menu_page( 'edit.php' );
+        remove_menu_page( 'edit.php?post_type=artist' );
+        remove_menu_page( 'edit.php?post_type=event' );
+        remove_menu_page( 'edit.php?post_type=tour' );
+        remove_menu_page( 'edit.php?post_type=venue' );
+      }
 
-      remove_menu_page( 'edit.php' );
-      remove_menu_page( 'edit.php?post_type=artist' );
-      remove_menu_page( 'edit.php?post_type=event' );
-      remove_menu_page( 'edit.php?post_type=tour' );
-      remove_menu_page( 'edit.php?post_type=venue' );
-      remove_menu_page( 'users.php' );
-      remove_menu_page( 'edit-comments.php' );
-      remove_menu_page( 'tools.php' );
+      if( get_theme_mod( 'admin:hide-users-menu', false ) ) {
+        remove_menu_page( 'users.php' );
+      }
+
+      if( get_theme_mod( 'admin:hide-tools-menu', false ) ) {
+        remove_menu_page( 'tools.php' );
+      }
+
+      if( get_theme_mod( 'admin:hide-comments-menu', false ) ) {
+        remove_menu_page( 'edit-comments.php' );
+      }
 
       $this->save_settings();
 
