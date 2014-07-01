@@ -15,7 +15,7 @@ define( 'WPLANG', '' );
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_DISPLAY', true );
 
-//define( 'WP_TESTS_DOMAIN', 'http://unit-tests.ud-dev.com' );
+define( 'WP_TESTS_DOMAIN', 'http://unit-tests.ud-dev.com' );
 define( 'WP_TESTS_EMAIL', 'unittest@usabilitydynamics.com' );
 define( 'WP_TESTS_TITLE', 'PHPUnit Test Blog' );
 define( 'WP_TESTS_NETWORK_TITLE', 'PHPUnit Test Network' );
