@@ -23,7 +23,8 @@ dependencies:
 test:
 
   override:
-    - grunt test
+    - grunt testscrutinizer
+    - grunt testcodeclimate
     
 notify:
   webhooks:

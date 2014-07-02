@@ -148,18 +148,9 @@ module.exports = function build( grunt ) {
     },
 
     shell: {
-      coverageScrutinizerLocal: {
-        command: [
-          'grunt phpunit:local --coverage-clover=coverage.clover',
-          'wget https://scrutinizer-ci.com/ocular.phar',
-          'php ocular.phar code-coverage:upload --format=php-clover coverage.clover'
-        ].join( ' && ' ),
-        options: {
-          encoding: 'utf8',
-          stderr: true,
-          stdout: true
-        }
-      },
+      /**
+       * Runs PHPUnit test, creates code coverage and sends it to Scrutinizer
+       */
       coverageScrutinizer: {
         command: [
           'grunt phpunit:circleci --coverage-clover=coverage.clover',
@@ -172,9 +163,19 @@ module.exports = function build( grunt ) {
           stdout: true
         }
       },
-      // Expect "CODECLIMATE_REPO_TOKEN" to be set.
+      /**
+       * Runs PHPUnit test, creates code coverage and sends it to Code Climate
+       */
       coverageCodeClimate: {
-        command: './vendor/bin/test-reporter'
+        command: [
+          'grunt phpunit:circleci --coverage-clover build/logs/clover.xml',
+          'CODECLIMATE_REPO_TOKEN='+ process.env.CODECLIMATE_REPO_TOKEN + ' ./vendor/bin/test-reporter'
+        ].join( ' && ' ),
+        options: {
+          encoding: 'utf8',
+          stderr: true,
+          stdout: true
+        }
       },
       update: {
         options: {
@@ -202,15 +203,6 @@ module.exports = function build( grunt ) {
 
   // Register tasks
   grunt.registerTask( 'default', [ 'markdown', 'less' , 'yuidoc', 'uglify' ] );
-
-  // Generate and send Code Coverage.
-  grunt.registerTask( 'codeCoverage', 'Generate and send Code Coverage.', function() {
-
-    // Trigger Coverage Shell
-    grunt.task.run( 'shell:coverageScrutinizer' );
-    //grunt.task.run( 'shell:coverageCodeClimate' );
-    
-  });
   
   // Build Distribution
   grunt.registerTask( 'distribution', [ 'pot' ] );
@@ -218,8 +210,10 @@ module.exports = function build( grunt ) {
   // Update Environment
   grunt.registerTask( 'update', [ "clean", "shell:update" ] );
   
-  // Run tests
-  grunt.registerTask( 'test', [ 'codeCoverage' ] );
+  // Run coverage tests
+  grunt.registerTask( 'testscrutinizer', [ 'shell:coverageScrutinizer' ] );
+  grunt.registerTask( 'testcodeclimate', [ 'shell:coverageCodeClimate' ] );
+  
   grunt.registerTask( 'localtest', [ 'phpunit:local' ] );
 
 };
