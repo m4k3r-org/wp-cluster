@@ -14,7 +14,12 @@ database:
 
   override:
     - mysql -u ubuntu circle_test < ./test/php/db-setup.sql
+
+dependencies:
   
+  pre:
+    - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+    
 test:
 
   override:
