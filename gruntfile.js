@@ -7,6 +7,13 @@
  */
 module.exports = function build( grunt ) {
 
+  // Automatically Load Tasks.
+  require( 'load-grunt-tasks' )( grunt, {
+    pattern: 'grunt-*',
+    config: './package.json',
+    scope: 'devDependencies'
+  });
+
   grunt.initConfig( {
 
     package: grunt.file.readJSON( 'composer.json' ),
@@ -141,12 +148,34 @@ module.exports = function build( grunt ) {
     },
 
     shell: {
+      /**
+       * Runs PHPUnit test, creates code coverage and sends it to Scrutinizer
+       */
       coverageScrutinizer: {
-        command: 'php ocular.phar code-coverage:upload --access-token="'+ process.env.SCRUTINIZER_ACCESS_TOKEN + '" --format=php-clover coverage.clover'
+        command: [
+          'grunt phpunit:circleci --coverage-clover=coverage.clover',
+          'wget https://scrutinizer-ci.com/ocular.phar',
+          'php ocular.phar code-coverage:upload --format=php-clover coverage.clover'
+        ].join( ' && ' ),
+        options: {
+          encoding: 'utf8',
+          stderr: true,
+          stdout: true
+        }
       },
-      // Expect "CODECLIMATE_REPO_TOKEN" to be set.
+      /**
+       * Runs PHPUnit test, creates code coverage and sends it to Code Climate
+       */
       coverageCodeClimate: {
-        command: './vendor/bin/test-reporter'
+        command: [
+          'grunt phpunit:circleci --coverage-clover build/logs/clover.xml',
+          'CODECLIMATE_REPO_TOKEN='+ process.env.CODECLIMATE_REPO_TOKEN + ' ./vendor/bin/test-reporter'
+        ].join( ' && ' ),
+        options: {
+          encoding: 'utf8',
+          stderr: true,
+          stdout: true
+        }
       },
       update: {
         options: {
@@ -154,39 +183,37 @@ module.exports = function build( grunt ) {
         },
         command: 'composer update --prefer-source'
       }
+    },
+    
+    // Runs PHPUnit Tests
+    phpunit: {
+      classes: {},
+      options: {
+        bin: './vendor/bin/phpunit',
+      },
+      local: {
+        configuration: './test/php/phpunit.xml'
+      },
+      circleci: {
+        configuration: './test/php/phpunit-circle.xml'
+      }
     }
 
   });
 
-  // Load tasks
-  grunt.loadNpmTasks( 'grunt-markdown' );
-  grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
-  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-  grunt.loadNpmTasks( 'grunt-contrib-watch' );
-  grunt.loadNpmTasks( 'grunt-contrib-less' );
-  grunt.loadNpmTasks( 'grunt-contrib-concat' );
-  grunt.loadNpmTasks( 'grunt-contrib-clean' );
-  grunt.loadNpmTasks( 'grunt-pot' );
-
   // Register tasks
   grunt.registerTask( 'default', [ 'markdown', 'less' , 'yuidoc', 'uglify' ] );
-
-  // Generate and send Code Coverage.
-  grunt.registerTask( 'codeCoverage', 'Generate and send Code Coverage.', function() {
-  
-    // Trigger Coverage Shell
-    grunt.task.run( 'shell:coverageScrutinizer' );
-    grunt.task.run( 'shell:coverageCodeClimate' );
-    
-  });
   
   // Build Distribution
   grunt.registerTask( 'distribution', [ 'pot' ] );
 
   // Update Environment
   grunt.registerTask( 'update', [ "clean", "shell:update" ] );
-
-  // Clean, preparing for update
-  grunt.registerTask( 'clean', [  ] );
+  
+  // Run coverage tests
+  grunt.registerTask( 'testscrutinizer', [ 'shell:coverageScrutinizer' ] );
+  grunt.registerTask( 'testcodeclimate', [ 'shell:coverageCodeClimate' ] );
+  
+  grunt.registerTask( 'localtest', [ 'phpunit:local' ] );
 
 };
