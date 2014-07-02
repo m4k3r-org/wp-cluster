@@ -29,6 +29,10 @@
     "usabilitydynamics/lib-settings": "master",
     "usabilitydynamics/lib-requires": "master"
   },
+  "require-dev": {
+    "usabilitydynamics/lib-wp-phpunit": "master",
+    "codeclimate/php-test-reporter": "dev-master"
+  },
   "autoload": {
     "classmap": [ "lib" ]
   }

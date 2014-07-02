@@ -28,3 +28,11 @@ Visit on WordPress.org: http://wordpress.org/plugins/wp-amd/
 * Add Screen Options to Script Editor page.
 * Add Settings -> Assets options page.
 
+## PHPUnit Tests
+
+To run tests:
+* Copy test/php/wp-test-config-sample.php to root directory.
+* Rename file to wp-test-config.php
+* Setup required constants in config file.
+* Run 'npm install' in command line ( be sure node.js is installed, more details: http://nodejs.org/ )
+* Run 'grunt test' or 'grunt phpunit' in command line.
