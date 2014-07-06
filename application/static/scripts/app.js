@@ -1,0 +1,1 @@
+define("app",[],function(){typeof console.log=="function"&&console.log("Application loaded!")});

@@ -5,6 +5,7 @@ debug.log
 .ftpquota
 .idea
 cgi-bin
+application/static/codex/*
 node_modules
 cache
 vendor

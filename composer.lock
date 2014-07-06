@@ -1,10 +1,9 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
-        "This file is @generated automatically"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "baaef9e3e2b88364b57f8561efbbeeab",
+    "hash": "1194cd1211718ee7d2376b358bbb6c83",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -30,39 +29,17 @@
             }
         },
         {
-            "name": "buddypress/buddypress",
-            "version": "1.5.4",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/buddypress",
-                "reference": "tags/1.5.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/buddypress.1.5.4.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "buddypress"
-            }
-        },
-        {
             "name": "composer/installers",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "8e6a72a78f6cfd537fde3350720dfdc9ae3c5621"
+                "reference": "9eb391bcafef76503d0bd4e585756391efc8740f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/8e6a72a78f6cfd537fde3350720dfdc9ae3c5621",
-                "reference": "8e6a72a78f6cfd537fde3350720dfdc9ae3c5621",
+                "url": "https://api.github.com/repos/composer/installers/zipball/9eb391bcafef76503d0bd4e585756391efc8740f",
+                "reference": "9eb391bcafef76503d0bd4e585756391efc8740f",
                 "shasum": ""
             },
             "replace": {
@@ -138,194 +115,142 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-06-23 16:25:28"
+            "time": "2014-06-27 16:11:39"
         },
         {
-            "name": "slidedeck/slidedeck-pro",
-            "version": "1.4.5",
+            "name": "google/api-php-client",
+            "version": "0.6.7",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/slidedeck-pro-for-wordpress",
-                "reference": "1.4.5"
+                "url": "git@github.com:google/google-api-php-client.git",
+                "reference": "master"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/usabilitydynamics/slidedeck-pro-for-wordpress/archive/master.zip",
+                "url": "https://github.com/google/google-api-php-client/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "slidedeck-pro-for-wordpress"
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/Google"
+                ]
             }
         },
         {
-            "name": "usabilitydynamics.com/analytics",
-            "version": "master",
+            "name": "monolog/monolog",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-analytics.git",
-                "reference": "master"
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "8228d1ee833dbec710161ac179d1fb9ff6cd6f28"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/8228d1ee833dbec710161ac179d1fb9ff6cd6f28",
+                "reference": "8228d1ee833dbec710161ac179d1fb9ff6cd6f28",
+                "shasum": ""
             },
             "require": {
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
+                "php": ">=5.3.0",
+                "psr/log": "~1.0"
             },
-            "type": "wordpress-module",
+            "provide": {
+                "psr/log-implementation": "1.0.0"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "~2.4, >2.4.8",
+                "doctrine/couchdb": "~1.0@dev",
+                "graylog2/gelf-php": "~1.0",
+                "phpunit/phpunit": "~3.7.0",
+                "raven/raven": "~0.5",
+                "ruflin/elastica": "0.90.*"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
+                "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+                "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+                "ext-mongo": "Allow sending log messages to a MongoDB server",
+                "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+                "raven/raven": "Allow sending log messages to a Sentry server",
+                "rollbar/rollbar": "Allow sending log messages to Rollbar",
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
+            },
+            "type": "library",
             "extra": {
-                "installer-name": "analytics",
-                "for": {
-                    "usabilitydynamics/usabilitydynamics.com": "master"
+                "branch-alias": {
+                    "dev-master": "1.10.x-dev"
                 }
             },
-            "time": "2014-06-11 19:12:39"
-        },
-        {
-            "name": "usabilitydynamics.com/licensing",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-licensing.git",
-                "reference": "master"
-            },
-            "require": {
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-module",
-            "extra": {
-                "installer-name": "licensing",
-                "for": {
-                    "usabilitydynamics/usabilitydynamics.com": "master"
+            "autoload": {
+                "psr-4": {
+                    "Monolog\\": "src/Monolog"
                 }
             },
-            "time": "2014-06-11 18:34:56"
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
+            "homepage": "http://github.com/Seldaek/monolog",
+            "keywords": [
+                "log",
+                "logging",
+                "psr-3"
+            ],
+            "time": "2014-06-30 13:24:53"
         },
         {
-            "name": "usabilitydynamics.com/my-dashboard",
-            "version": "master",
+            "name": "psr/log",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-my-dashboard.git",
-                "reference": "master"
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "a78d6504ff5d4367497785ab2ade91db3a9fbe11"
             },
-            "require": {
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/a78d6504ff5d4367497785ab2ade91db3a9fbe11",
+                "reference": "a78d6504ff5d4367497785ab2ade91db3a9fbe11",
+                "shasum": ""
             },
-            "type": "wordpress-module",
+            "type": "library",
             "extra": {
-                "installer-name": "my-dashboard",
-                "for": {
-                    "usabilitydynamics/usabilitydynamics.com": "master"
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
                 }
             },
-            "time": "2014-06-12 20:16:23"
-        },
-        {
-            "name": "usabilitydynamics.com/repository",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-repository.git",
-                "reference": "master"
-            },
-            "require": {
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-module",
-            "extra": {
-                "installer-name": "repository",
-                "for": {
-                    "usabilitydynamics/usabilitydynamics.com": "master"
+            "autoload": {
+                "psr-0": {
+                    "Psr\\Log\\": ""
                 }
             },
-            "time": "2014-06-12 22:00:35"
-        },
-        {
-            "name": "usabilitydynamics.com/support",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-support.git",
-                "reference": "master"
-            },
-            "require": {
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-module",
-            "extra": {
-                "installer-name": "support",
-                "for": {
-                    "usabilitydynamics/usabilitydynamics.com": "master"
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
                 }
-            },
-            "time": "2014-06-11 18:35:38"
-        },
-        {
-            "name": "usabilitydynamics.com/updates",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-updates.git",
-                "reference": "master"
-            },
-            "require": {
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-module",
-            "extra": {
-                "installer-name": "updates",
-                "for": {
-                    "usabilitydynamics/usabilitydynamics.com": "master"
-                }
-            },
-            "time": "2014-06-11 19:13:32"
-        },
-        {
-            "name": "usabilitydynamics.com/wp-flawless-ud",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/usabilitydynamics-com-wp-flawless-ud.git",
-                "reference": "master"
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "usabilitydynamics/wp-flawless": "0.3.6"
-            },
-            "type": "wordpress-theme",
-            "extra": {
-                "installer-name": "wp-flawless-ud"
-            },
-            "time": "2014-06-12 19:58:21"
-        },
-        {
-            "name": "usabilitydynamics.com/xpath-tester",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-xpath-tester.git",
-                "reference": "master"
-            },
-            "require": {
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-module",
-            "extra": {
-                "installer-name": "xpath-tester",
-                "for": {
-                    "usabilitydynamics/usabilitydynamics.com": "master"
-                }
-            },
-            "time": "2014-06-11 18:39:10"
+            ],
+            "description": "Common interface for logging libraries",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2014-01-18 15:33:09"
         },
         {
             "name": "usabilitydynamics/lib-api",
@@ -356,59 +281,109 @@
             "time": "2014-06-03 15:01:06"
         },
         {
-            "name": "usabilitydynamics/lib-installer",
+            "name": "usabilitydynamics/lib-cdn",
             "version": "master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-installer",
+                "url": "git@github.com:UsabilityDynamics/lib-cdn",
                 "reference": "master"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-installer/archive/master.zip",
+                "url": "https://github.com/usabilitydynamics/lib-cdn/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
-                "composer-plugin-api": "1.0.0",
-                "composer/installers": "~1.0",
-                "php": ">=5.3"
+                "google/api-php-client": "0.6.7",
+                "usabilitydynamics/lib-utility": "*"
             },
-            "type": "composer-installer",
-            "extra": {
-                "class": [
-                    "UsabilityDynamics\\Installers\\ProductModule"
-                ],
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
+            "type": "library",
             "autoload": {
-                "psr-4": {
-                    "UsabilityDynamics\\Installers\\": "lib/"
-                }
+                "classmap": [
+                    "lib/class-cdn.php",
+                    "lib/class-gcs.php"
+                ]
             },
-            "license": [
-                "MIT"
-            ],
-            "time": "2014-06-03 00:40:50"
+            "time": "2014-01-28 12:29:32"
         },
         {
-            "name": "usabilitydynamics/lib-module",
+            "name": "usabilitydynamics/lib-features",
             "version": "master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-module",
+                "url": "git@github.com:UsabilityDynamics/lib-features",
                 "reference": "master"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-module/archive/master.zip",
+                "url": "https://github.com/usabilitydynamics/lib-features/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
-                "php": ">=5.3"
+                "usabilitydynamics/lib-utility": "master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ],
+                "files": [
+                    "lib/api/autoload.php"
+                ]
+            },
+            "time": "2014-05-22 09:25:00"
+        },
+        {
+            "name": "usabilitydynamics/lib-meta-box",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-meta-box",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/wp-meta-box/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "library",
+            "extra": {
+                "installer-name": "lib-meta-box"
+            },
+            "autoload": {
+                "classmap": [
+                    "inc/fields",
+                    "inc/common.php",
+                    "inc/field.php",
+                    "inc/helpers.php",
+                    "inc/meta-box.php"
+                ]
+            },
+            "time": "2014-06-03 12:04:11"
+        },
+        {
+            "name": "usabilitydynamics/lib-model",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-model",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-model/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-meta-box": "*",
+                "usabilitydynamics/lib-utility": "*"
             },
             "type": "library",
             "autoload": {
@@ -416,7 +391,32 @@
                     "lib"
                 ]
             },
-            "time": "2014-06-18 16:45:06"
+            "time": "2014-06-18 14:52:09"
+        },
+        {
+            "name": "usabilitydynamics/lib-requires",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-requires",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-requires/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-06-25 22:11:12"
         },
         {
             "name": "usabilitydynamics/lib-rpc",
@@ -442,6 +442,31 @@
                 ]
             },
             "time": "2014-04-30 00:09:45"
+        },
+        {
+            "name": "usabilitydynamics/lib-saas",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-saas",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-saas/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-05-06 14:29:59"
         },
         {
             "name": "usabilitydynamics/lib-settings",
@@ -551,100 +576,36 @@
                     "lib"
                 ]
             },
-            "time": "2014-06-02 12:50:32"
+            "time": "2014-06-25 21:24:06"
         },
         {
-            "name": "usabilitydynamics/wp-crm",
+            "name": "usabilitydynamics/wp-cluster",
             "version": "master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-crm",
+                "url": "git@github.com:UsabilityDynamics/wp-cluster",
                 "reference": "master"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/usabilitydynamics/wp-crm/archive/master.zip",
+                "url": "https://github.com/usabilitydynamics/wp-cluster/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
                 "composer/installers": "~1.0",
+                "monolog/monolog": "master",
                 "php": ">=5.3",
-                "usabilitydynamics/lib-settings": "master",
-                "usabilitydynamics/lib-ui": "master",
-                "usabilitydynamics/lib-utility": "master"
-            },
-            "type": "wordpress-plugin",
-            "time": "2014-03-03 13:56:33"
-        },
-        {
-            "name": "usabilitydynamics/wp-flawless",
-            "version": "0.3.6",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-flawless",
-                "reference": "0.3.6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/wp-flawless/archive/0.3.6.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3"
-            },
-            "type": "wordpress-theme",
-            "extra": {
-                "installer-name": "wp-flawless-0.3.6"
-            },
-            "autoload": {
-                "classmap": [
-
-                ]
-            }
-        },
-        {
-            "name": "usabilitydynamics/wp-invoice",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-invoice",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/wp-invoice/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-settings": "master",
-                "usabilitydynamics/lib-ui": "master",
-                "usabilitydynamics/lib-utility": "master"
-            },
-            "type": "wordpress-plugin",
-            "time": "2014-06-11 05:13:02"
-        },
-        {
-            "name": "usabilitydynamics/wp-simplify",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-simplify",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/wp-simplify/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
+                "usabilitydynamics/lib-api": "*",
+                "usabilitydynamics/lib-cdn": "*",
+                "usabilitydynamics/lib-model": "*",
+                "usabilitydynamics/lib-requires": "*",
+                "usabilitydynamics/lib-rpc": "*",
+                "usabilitydynamics/lib-saas": "*",
+                "usabilitydynamics/lib-settings": "*",
+                "usabilitydynamics/lib-ui": "*",
+                "usabilitydynamics/lib-utility": "*",
+                "usabilitydynamics/wp-elastic": "master"
             },
             "type": "wordpress-plugin",
             "autoload": {
@@ -652,7 +613,58 @@
                     "lib"
                 ]
             },
-            "time": "2014-04-29 11:55:17"
+            "time": "2014-06-04 10:07:48"
+        },
+        {
+            "name": "usabilitydynamics/wp-elastic",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-elastic",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/wp-elastic/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3",
+                "usabilitydynamics/lib-api": "master",
+                "usabilitydynamics/lib-features": "master",
+                "usabilitydynamics/lib-meta-box": "master",
+                "usabilitydynamics/lib-model": "master",
+                "usabilitydynamics/lib-settings": "master",
+                "usabilitydynamics/lib-ui": "master",
+                "usabilitydynamics/lib-utility": "master"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-paths": {
+                    "vendor/plugins/{$name}": [
+                        "type:wordpress-plugin"
+                    ],
+                    "vendor/extensions/{$name}": [
+                        "type:wordpress-module"
+                    ],
+                    "vendor/themes/{$name}": [
+                        "type:wordpress-theme"
+                    ]
+                },
+                "installer-name": "wp-elastic"
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ],
+                "files": [
+                    "lib/api/autoload.php"
+                ]
+            },
+            "description": "Improve WordPress search performance/accuracy and enable faceted search by leveraging an ElasticSearch server.",
+            "time": "2014-05-23 01:16:56"
         },
         {
             "name": "usabilitydynamics/wp-veneer",
@@ -697,95 +709,7 @@
                     "lib/class-search.php"
                 ]
             },
-            "time": "2014-06-11 05:03:05"
-        },
-        {
-            "name": "w3-edge/w3-total-cache",
-            "version": "0.9.4",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/w3-total-cache",
-                "reference": "tags/0.9.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/w3-total-cache.0.9.4.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "w3-total-cache"
-            }
-        },
-        {
-            "name": "woocommerce/api-manager",
-            "version": "1.3.3",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/woocommerce-api-manager",
-                "reference": "1.3.3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/woocommerce-api-manager/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "woocommerce-api-manager"
-            }
-        },
-        {
-            "name": "woothemes/woocommerce",
-            "version": "2.1.8",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/woocommerce",
-                "reference": "tags/2.1.8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/woocommerce.2.1.8.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "woocommerce"
-            }
-        },
-        {
-            "name": "yoast/wp-seo",
-            "version": "1.1.5",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/wordpress-seo",
-                "reference": "tags/1.1.5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/wordpress-seo.1.1.5.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "wp-seo"
-            }
+            "time": "2014-07-03 04:59:46"
         }
     ],
     "packages-dev": [

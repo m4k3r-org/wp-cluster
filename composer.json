@@ -30,6 +30,7 @@
       ]
     },
     "active-plugins": {
+      "w3-total-cache": "0.9.4"
     },
     "settings": {
       "wp_debug_display": false,
@@ -99,7 +100,9 @@
     }
   },
   "require": {
-    "automattic/wordpress": "3.9.1"
+    "automattic/wordpress": "3.9.1",
+    "usabilitydynamics/wp-cluster": "master",
+    "usabilitydynamics/wp-veneer": "master"
   },
   "autoload": {
     "classmap": [ 
@@ -107,15 +110,6 @@
     ],
     "files": [
       "application/bootstrap.php"
-    ]
-  },
-  "scripts": {
-    "pre-install-cmd": [
-      "npm install",
-      "grunt clean:symlinks --force"
-    ],
-    "post-install-cmd": [
-      "grunt install:standalone --force"
     ]
   },
   "minimum-stability": "dev",

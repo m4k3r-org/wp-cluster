@@ -5,7 +5,7 @@ WP-Site Master Repository
 This is the master repository from which all other WordPress sites Usability Dynamics creates is forked from. In
 addition to this, this repository will have 3 branches, depending on which type of site you're trying to use:
 
-* single - this is the default branch for a single site (i.e. usabilitydynaimcs.com)
+* master - this is the default branch for a standalone site (i.e. usabilitydynaimcs.com)
 * multisite - this is the default branch for a multisite implementation (i.e. TDB)
 * cluster - this is the default branch for a cluster (read: vertical) site (i.e. edm-cluster)
 

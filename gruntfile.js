@@ -7,12 +7,12 @@
  */
 module.exports = function( grunt ) {
 
-  // Automatically Load Tasks.
+  // Automatically Load Tasks
   require( 'load-grunt-tasks' )( grunt, {
     pattern: 'grunt-*',
     config: './package.json',
     scope: 'devDependencies'
-  });
+  } );
 
   // Build Configuration.
   grunt.initConfig({
@@ -62,7 +62,12 @@ module.exports = function( grunt ) {
         url: '<%= composer.homepage %>',
         version: '<%= composer.version %>',
         options: {
-          paths: [ 'vendor/plugins', 'vendor/libraries', 'vendor/themes' ],
+          paths: [ 
+            'application/lib',
+            'vendor/plugins', 
+            'vendor/libraries/usabilitydynamics'
+            // 'vendor/themes' 
+          ],
           outdir: 'application/static/codex/'
         }
       }
@@ -75,7 +80,7 @@ module.exports = function( grunt ) {
           {
             expand: true,
             src: 'readme.md',
-            dest: 'application/static/markdown',
+            dest: 'application/static',
             ext: '.html'
           }
         ],
@@ -93,13 +98,6 @@ module.exports = function( grunt ) {
 
     // Clean Directories.
     clean: {
-      build: [
-        'advanced-cache.php',
-        'db.php',
-        'object-cache.php',
-        'sunrise.php',
-        'vendor/libraries/automattic/wordpress/wp-config.php'
-      ],
       files: [
         '.environment',
         '.htaccess',
@@ -107,7 +105,8 @@ module.exports = function( grunt ) {
         'db.php',
         'object-cache.php',
         'sunrise.php',
-        'vendor/libraries/automattic/wordpress/wp-config.php'
+        'vendor/libraries/automattic/wordpress/wp-config.php',
+        'wp-cli.yml'
       ],
       symlinks: [
         '.htaccess',
@@ -115,7 +114,8 @@ module.exports = function( grunt ) {
         'db.php',
         'object-cache.php',
         'sunrise.php',
-        'vendor/libraries/automattic/wordpress/wp-config.php'
+        'vendor/libraries/automattic/wordpress/wp-config.php',
+        'wp-cli.yml'
       ],
       junk: [
         'cgi-bin',
@@ -177,21 +177,50 @@ module.exports = function( grunt ) {
 
     // Symbolic Links.
     symlink: {
-      build: {
-        files: {
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/plugins/wp-veneer/lib/class-config.php'
-        }
-      },
       standalone: {
         files: {
+          '.htaccess': 'vendor/plugins/wp-veneer/lib/local/.htaccess',
           'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/plugins/wp-veneer/lib/class-config.php'
         }
       },
-      network: {
+      cluster: {
         files: {
+          '.htaccess': 'vendor/plugins/wp-veneer/lib/local/.htaccess',
+          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/plugins/wp-veneer/lib/class-config.php',
           'db.php': 'vendor/plugins/wp-cluster/lib/class-database.php',
           'sunrise.php': 'vendor/plugins/wp-cluster/lib/class-sunrise.php',
+        }
+      },
+      production: {
+        files: {
+          'wp-cli.yml': 'application/static/etc/wp-cli.yml',
+          'advanced-cache.php': 'vendor/plugins/wp-veneer/lib/class-advanced-cache.php',
+          'object-cache.php': 'vendor/plugins/wp-veneer/lib/class-object-cache.php'
+        }
+      },
+      development: {
+        files: {
+          'wp-cli.yml': 'application/static/etc/wp-cli.yml'
+        }
+      },
+      staging: {},
+      local: {}
+    },
+
+    // Copying files (for Windows)
+    copy: {
+      standalone: {
+        files: {
+          '.htaccess': 'vendor/plugins/wp-veneer/lib/local/.htaccess',
           'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/plugins/wp-veneer/lib/class-config.php'
+        }
+      },
+      cluster: {
+        files: {
+          '.htaccess': 'vendor/plugins/wp-veneer/lib/local/.htaccess',
+          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/plugins/wp-veneer/lib/class-config.php',
+          'db.php': 'vendor/plugins/wp-cluster/lib/class-database.php',
+          'sunrise.php': 'vendor/plugins/wp-cluster/lib/class-sunrise.php',
         }
       },
       production: {
@@ -202,58 +231,15 @@ module.exports = function( grunt ) {
       },
       development: {
         files: {
-          'wp-cli.yml': 'application/static/wp-cli.yml',
-          'advanced-cache.php': 'vendor/plugins/wp-veneer/lib/class-advanced-cache.php',
-          'object-cache.php': 'vendor/plugins/wp-veneer/lib/class-object-cache.php'
+          'wp-cli.yml': 'application/static/etc/wp-cli.yml'
         }
       },
-      staging: {},
-      local: {}
-    },
-
-    // Copying files (for Windows)
-    copy: {
-      build: {
-        files: {
-          '.htaccess': 'vendor/plugins/wp-veneer/lib/local/.htaccess'
-        }
-      },
-      standalone: {
-        files: {
-          '.htaccess': 'vendor/plugins/wp-veneer/lib/local/.htaccess',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/plugins/wp-veneer/lib/class-config.php'
-        }
-      },
-      network: {
-        files: {
-          '.htaccess': 'vendor/plugins/wp-veneer/lib/local/.htaccess',
-          'db.php': 'vendor/plugins/wp-cluster/lib/class-database.php',
-          'sunrise.php': 'vendor/plugins/wp-cluster/lib/class-sunrise.php',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/plugins/wp-veneer/lib/class-config.php'
-        }
-      },
-      production: {
-        files: {
-          'advanced-cache.php': 'vendor/plugins/wp-veneer/lib/class-advanced-cache.php',
-          'object-cache.php': 'vendor/plugins/wp-veneer/lib/class-object-cache.php'
-        }
-      },
-      development: {},
       staging: {},
       local: {}
     },
 
     // Shell commands
     shell: {
-      optimize: {
-        options: { stdout: true },
-        command: 'composer update --optimize-autoloader  --no-interaction'
-      },
-      startProxy: {
-        options: { stdout: true },
-        command: 'haproxy -D -f '
-      },
-
       // This just configures the environment file
       configure: {
         options: {
@@ -273,129 +259,79 @@ module.exports = function( grunt ) {
         options: {
           ui: 'exports',
           timeout: 'exports',
-          require: [ 'should', 'request' ],
+          require: [ 
+            'should', 
+            'request' 
+          ],
           reporter: 'list'
         },
-        src: [ 'application/tests/api.js' ]
+        src: [
+        ]
       },
       audit: {
         options: {
           ui: 'exports',
           timeout: 'exports',
-          require: [ 'should', 'request' ],
+          require: [ 
+            'should', 
+            'request' 
+          ],
           reporter: 'list'
         },
-        src: [ 'application/tests/api.js' ]
+        src: [
+        ]
       }
     },
 
-    // Notification.
+    // Notifications
     notify: {
       options: {
-        title: "UsabilityDynamics.com",
+        title: "WP-Site Notifications",
         enabled: true,
-        max_jshint_notifications: 5,
-        image: 'application/static/images/ud-icon.png'
+        max_jshint_notifications: 5
       },
       pluginsInstalling: {
         options: {
-          title: 'UsabilityDynamics.com',
+          title: 'WP-Site',
           message: 'Starting to install plugins.'
         }
       },
       pluginsInstalled: {
         options: {
-          title: 'UsabilityDynamics.com',
+          title: 'WP-Site',
           message: 'All plugins have been installed.'
         }
       },
       watch: {
         options: {
-          title: 'Task Complete',  // optional
-          message: 'SASS and Uglify finished running'
+          title: 'WP-Site: Task Complete',
+          message: 'LESS and Uglify finished running'
         }
       },
       testSuccess: {
         options: {
-          title: 'UsabilityDynamics.com - Tests',
+          title: 'WP-Site: Tests',
           message: 'Tests completed, no issues.'
         }
       },
       audit: {
         options: {
-          title: 'UsabilityDynamics.com - Audits',
+          title: 'WP-Site: Audits',
           message: 'Audits completed, no issues.'
         }
       }
     }
 
-  });
-
-  grunt.task.loadTasks( 'application/tasks' );
-
-  // Default Task.
-  grunt.registerTask( 'default', [
-    'mochaTest',
-    'notify:testSuccess'
-  ]);
-
-  // Start Server.
-  grunt.registerTask( 'start', [
-    'shell:startProxy'
-  ]);
-
-  // Build Assets.
-  grunt.registerTask( 'build', [
-    'markdown',
-    'clean:build',
-    'copy:build',
-    'symlink:build',
-    'shell:optimize',
-    'notify:pluginsInstalling',
-    'installPlugins',
-    'notify:pluginsInstalled'
-  ]);
-
-  // Run Tests.
-  grunt.registerTask( 'test', [
-    'mochaTest',
-    'notify:testSuccess'
-  ]);
-
-  grunt.registerTask( 'test:visual', [
-    'phantomcss:desktop',
-    'notify:testSuccess'
-  ]);
+  } );
   
-  grunt.registerTask( 'audit', [
-    'mochaTest:audit',
-    'notify:audit'
-  ]);
+  // Pull in some NPM based tasks
+  grunt.loadNpmTasks( 'grunt-contrib-requirejs' );
+  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
+  grunt.loadNpmTasks( 'grunt-contrib-less' );
+  grunt.loadNpmTasks( 'grunt-contrib-watch' );
+  grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
 
-  // Install Site.
-  grunt.registerTask( 'install:standalone', [
-    'clean:files',
-    'clean:symlinks',
-    'markdown',
-    'yuidoc',
-    'symlink:standalone'
-  ]);
-
-  grunt.registerTask( 'install:network', [
-    'clean:files',
-    'clean:symlinks',
-    'markdown',
-    'yuidoc',
-    'symlink:network'
-  ]);
-
-  // Set Development or Production Environments.
-  grunt.registerTask( 'environment:development', [
-    'symlink:development'
-  ]);
-
-  grunt.registerTask( 'environment:production', [
-    'symlink:production'
-  ]);
-
+  // Automatically Load Tasks from application/tasks directory
+  grunt.task.loadTasks( 'application/tasks' );
+  
 };
