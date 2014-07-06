@@ -1,0 +1,123 @@
+{
+  "name": "usabilitydynamics/wp-site",
+  "version": "1.0.0",
+  "type": "project",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://repository.usabilitydynamics.com"
+    }
+  ],
+  "config": {
+    "vendor-dir": "vendor/libraries",
+    "bin-dir": "vendor/bin",
+    "optimize-autoloader": true,
+    "autoloader-suffix": "UsabilityDynamicsVendor"
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/libraries/{$name}": [
+        "type:wordpress-library"
+      ],
+      "vendor/modules/{$name}": [
+        "type:wordpress-module"
+      ],
+      "vendor/plugins/{$name}": [
+        "type:wordpress-plugin"
+      ],
+      "vendor/themes/{$name}": [
+        "type:wordpress-theme"
+      ]
+    },
+    "active-plugins": {
+    },
+    "settings": {
+      "wp_debug_display": false,
+      "wp_home": "http://path-to-site.com",
+      "wp_siteurl": "http://path-to-site.com",
+      "ud_corporate_path": "/application",
+      "ud_corporate_url": "/application",
+      "ud_corporate_version": "2.0.1",
+      "wp_system_directory": "/vendor/libraries/automattic/wordpress",
+      "wp_memory_limit": "512M",
+      "admin_cookie_path": "/manage",
+      "sitecookiepath": "/manage",
+      "wp_cache": true,
+      "wp_default_theme": "wp-flawless-0.3.6",
+      "wp_allow_multisite": false,
+      "multisite": false,
+      "subdomain_install": false,
+      "sunrise": "off",
+      "wp_ssl_port": 443,
+      "db_prefix": "wp_",
+      "db_name": "ud_production",
+      "db_user": "ud_production",
+      "db_password": "2?Nq&$ZpMv9F",
+      "db_host": "localhost",
+      "db_charset": "utf8",
+      "db_collate": "utf8_general_ci",
+      "corporate_db_name": "ud_production",
+      "corporate_db_user": "ud_production",
+      "corporate_db_password": "2?Nq&$ZpMv9F",
+      "corporate_db_host": "localhost",
+      "disallow_file_edit": false,
+      "disallow_file_mods": false,
+      "wp_post_revisions": 10,
+      "empty_trash_days": 7,
+      "force_ssl_admin": false,
+      "wp_base_dir": "/",
+      "wp_content_dir": "/",
+      "wp_veneer_storage": "storage",
+      "wp_veneer_public": "storage/public/www.usabilitydynamics.com",
+      "wp_veneer_theme_dir": "/storage/themes",
+      "w3tc_dir": "/vendor/plugins/w3-total-cache",
+      "wp_vendor_dir": "/vendor",
+      "wp_module_dir": "/vendor/modules",
+      "wpmu_plugin_dir": "/vendor/libraries",
+      "wpmu_plugin_url": "https://www.usabilitydynamics.com/application",
+      "wp_plugin_dir": "/vendor/plugins",
+      "wp_theme_dir": "/vendor/themes",
+      "wp_debug": true,
+      "wp_debug_log": false,
+      "wp_logs_dir": "/var/log",
+      "wp_logs_file": "www.usabilitydynamics.com.log",
+      "wp_logs_handler": "file",
+      "disable_wp_cron": "true",
+      "script_debug": false,
+      "savequeries": true,
+      "wp_use_themes": true,
+      "wplang": "en_US",
+      "auth_key": "-{jbnE83F|J2Wg]ALt||k&a6goHB7j6kH-LbLEm:IxjU]Wvpl(9w$_-j-{oLr-NE",
+      "secure_auth_key": "H-J9+{0&tDs+YU;P)e/E`Y&[7mcUFDV>M%]k*|x2:Df&I<4aT.>D;-bZ!Y:#W3ap",
+      "logged_in_key": "gn`Eh&)}q`@flKPG>v#j%#HPgL/M{>C/X<1mt*_C!/RS[0~KZ(96HfS.EeeRocO=",
+      "nonce_key": "^?:^[oE8kyA_iuF|Ol6,3tRy73]xV7$E{ Fum%{dZsm<*0V{P6yq(!x?h:OTK[cb",
+      "auth_salt": "m4-gBS|?&!}wz2w;(ec1|Ir2m4K&:h9pz6|71,R-&35v)#Ru vqa1A.#a+JJ$Z*q",
+      "secure_auth_salt": "d4nNsFoC1!l-dHoZ&5:6g!T@}>f[US6+*^&+P2^>MDaBK3XbN&aP|+d+>^_SQYaO",
+      "logged_in_salt": "@cD6Gk-9BPSi.f],caHP~cf&ZWKj*o-~VdfO=s5X}Y{`Vr9Oe0S4TmzVmqc0w=a8",
+      "nonce_salt": "ZJ!On[+s8+WQ1z-+FEoGqa4gBQk5<OyW;s^N$0D| #HKvJ+<Z1BD/LT)0=I++$Z;",
+      "secret_key": "SET-ME-IF-NEEDED"
+    }
+  },
+  "require": {
+    "automattic/wordpress": "3.9.1"
+  },
+  "autoload": {
+    "classmap": [ 
+      "application/lib" 
+    ],
+    "files": [
+      "application/bootstrap.php"
+    ]
+  },
+  "scripts": {
+    "pre-install-cmd": [
+      "npm install",
+      "grunt clean:symlinks --force"
+    ],
+    "post-install-cmd": [
+      "grunt install:standalone --force"
+    ]
+  },
+  "minimum-stability": "dev",
+  "license": "GPLv2"
+}

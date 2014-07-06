@@ -1,0 +1,807 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "baaef9e3e2b88364b57f8561efbbeeab",
+    "packages": [
+        {
+            "name": "automattic/wordpress",
+            "version": "3.9.1",
+            "source": {
+                "type": "svn",
+                "url": "http://core.svn.wordpress.org",
+                "reference": "tags/3.9.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://wordpress.org/wordpress-3.9.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3"
+            },
+            "type": "platform",
+            "extra": {
+                "installer-name": "wordpress-3.9.1"
+            }
+        },
+        {
+            "name": "buddypress/buddypress",
+            "version": "1.5.4",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/buddypress",
+                "reference": "tags/1.5.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/buddypress.1.5.4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "buddypress"
+            }
+        },
+        {
+            "name": "composer/installers",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "8e6a72a78f6cfd537fde3350720dfdc9ae3c5621"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/8e6a72a78f6cfd537fde3350720dfdc9ae3c5621",
+                "reference": "8e6a72a78f6cfd537fde3350720dfdc9ae3c5621",
+                "shasum": ""
+            },
+            "replace": {
+                "roundcube/plugin-installer": "*",
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Composer\\Installers\\Installer",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Composer\\Installers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "http://composer.github.com/installers/",
+            "keywords": [
+                "Craft",
+                "Dolibarr",
+                "Hurad",
+                "MODX Evo",
+                "OXID",
+                "WolfCMS",
+                "agl",
+                "annotatecms",
+                "bitrix",
+                "cakephp",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "drupal",
+                "elgg",
+                "fuelphp",
+                "installer",
+                "joomla",
+                "kohana",
+                "laravel",
+                "lithium",
+                "magento",
+                "mako",
+                "mediawiki",
+                "modulework",
+                "moodle",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "symfony",
+                "typo3",
+                "wordpress",
+                "zend",
+                "zikula"
+            ],
+            "time": "2014-06-23 16:25:28"
+        },
+        {
+            "name": "slidedeck/slidedeck-pro",
+            "version": "1.4.5",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/slidedeck-pro-for-wordpress",
+                "reference": "1.4.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/slidedeck-pro-for-wordpress/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "slidedeck-pro-for-wordpress"
+            }
+        },
+        {
+            "name": "usabilitydynamics.com/analytics",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-analytics.git",
+                "reference": "master"
+            },
+            "require": {
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-module",
+            "extra": {
+                "installer-name": "analytics",
+                "for": {
+                    "usabilitydynamics/usabilitydynamics.com": "master"
+                }
+            },
+            "time": "2014-06-11 19:12:39"
+        },
+        {
+            "name": "usabilitydynamics.com/licensing",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-licensing.git",
+                "reference": "master"
+            },
+            "require": {
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-module",
+            "extra": {
+                "installer-name": "licensing",
+                "for": {
+                    "usabilitydynamics/usabilitydynamics.com": "master"
+                }
+            },
+            "time": "2014-06-11 18:34:56"
+        },
+        {
+            "name": "usabilitydynamics.com/my-dashboard",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-my-dashboard.git",
+                "reference": "master"
+            },
+            "require": {
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-module",
+            "extra": {
+                "installer-name": "my-dashboard",
+                "for": {
+                    "usabilitydynamics/usabilitydynamics.com": "master"
+                }
+            },
+            "time": "2014-06-12 20:16:23"
+        },
+        {
+            "name": "usabilitydynamics.com/repository",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-repository.git",
+                "reference": "master"
+            },
+            "require": {
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-module",
+            "extra": {
+                "installer-name": "repository",
+                "for": {
+                    "usabilitydynamics/usabilitydynamics.com": "master"
+                }
+            },
+            "time": "2014-06-12 22:00:35"
+        },
+        {
+            "name": "usabilitydynamics.com/support",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-support.git",
+                "reference": "master"
+            },
+            "require": {
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-module",
+            "extra": {
+                "installer-name": "support",
+                "for": {
+                    "usabilitydynamics/usabilitydynamics.com": "master"
+                }
+            },
+            "time": "2014-06-11 18:35:38"
+        },
+        {
+            "name": "usabilitydynamics.com/updates",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-updates.git",
+                "reference": "master"
+            },
+            "require": {
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-module",
+            "extra": {
+                "installer-name": "updates",
+                "for": {
+                    "usabilitydynamics/usabilitydynamics.com": "master"
+                }
+            },
+            "time": "2014-06-11 19:13:32"
+        },
+        {
+            "name": "usabilitydynamics.com/wp-flawless-ud",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/usabilitydynamics-com-wp-flawless-ud.git",
+                "reference": "master"
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "usabilitydynamics/wp-flawless": "0.3.6"
+            },
+            "type": "wordpress-theme",
+            "extra": {
+                "installer-name": "wp-flawless-ud"
+            },
+            "time": "2014-06-12 19:58:21"
+        },
+        {
+            "name": "usabilitydynamics.com/xpath-tester",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/usabilitydynamics.com-xpath-tester.git",
+                "reference": "master"
+            },
+            "require": {
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-module",
+            "extra": {
+                "installer-name": "xpath-tester",
+                "for": {
+                    "usabilitydynamics/usabilitydynamics.com": "master"
+                }
+            },
+            "time": "2014-06-11 18:39:10"
+        },
+        {
+            "name": "usabilitydynamics/lib-api",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-api",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-api/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "time": "2014-06-03 15:01:06"
+        },
+        {
+            "name": "usabilitydynamics/lib-installer",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-installer",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-installer/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer-plugin-api": "1.0.0",
+                "composer/installers": "~1.0",
+                "php": ">=5.3"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": [
+                    "UsabilityDynamics\\Installers\\ProductModule"
+                ],
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "UsabilityDynamics\\Installers\\": "lib/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "time": "2014-06-03 00:40:50"
+        },
+        {
+            "name": "usabilitydynamics/lib-module",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-module",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/lib-module/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-06-18 16:45:06"
+        },
+        {
+            "name": "usabilitydynamics/lib-rpc",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-rpc",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/lib-rpc/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "component",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-04-30 00:09:45"
+        },
+        {
+            "name": "usabilitydynamics/lib-settings",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-settings",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-settings/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "*"
+            },
+            "require-dev": {
+                "justinrainbow/json-schema": "1.1.*"
+            },
+            "type": "library",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "scripts/settings.js"
+                    ],
+                    "templates": [
+                        "views/new-installation.xhtml"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-06-02 15:22:26"
+        },
+        {
+            "name": "usabilitydynamics/lib-ui",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-ui",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-ui/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "master"
+            },
+            "type": "library",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "scripts/ui.js",
+                        "scripts/ui.markdown.js",
+                        "scripts/ui.jquery-tabs.js"
+                    ],
+                    "styles": [
+                        "styles/ui.css",
+                        "styles/ui.less"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-06-03 13:46:45"
+        },
+        {
+            "name": "usabilitydynamics/lib-utility",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-utility",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-utility/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "library",
+            "extra": {
+                "installer-name": "lib-utility",
+                "component": {
+                    "name": "utility",
+                    "scripts": [
+                        "scripts/*.js"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-06-02 12:50:32"
+        },
+        {
+            "name": "usabilitydynamics/wp-crm",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-crm",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/wp-crm/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3",
+                "usabilitydynamics/lib-settings": "master",
+                "usabilitydynamics/lib-ui": "master",
+                "usabilitydynamics/lib-utility": "master"
+            },
+            "type": "wordpress-plugin",
+            "time": "2014-03-03 13:56:33"
+        },
+        {
+            "name": "usabilitydynamics/wp-flawless",
+            "version": "0.3.6",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-flawless",
+                "reference": "0.3.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/wp-flawless/archive/0.3.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3"
+            },
+            "type": "wordpress-theme",
+            "extra": {
+                "installer-name": "wp-flawless-0.3.6"
+            },
+            "autoload": {
+                "classmap": [
+
+                ]
+            }
+        },
+        {
+            "name": "usabilitydynamics/wp-invoice",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-invoice",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/wp-invoice/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3",
+                "usabilitydynamics/lib-settings": "master",
+                "usabilitydynamics/lib-ui": "master",
+                "usabilitydynamics/lib-utility": "master"
+            },
+            "type": "wordpress-plugin",
+            "time": "2014-06-11 05:13:02"
+        },
+        {
+            "name": "usabilitydynamics/wp-simplify",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-simplify",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/wp-simplify/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-04-29 11:55:17"
+        },
+        {
+            "name": "usabilitydynamics/wp-veneer",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-veneer",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/wp-veneer/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3",
+                "usabilitydynamics/lib-rpc": "master",
+                "usabilitydynamics/lib-settings": "master",
+                "usabilitydynamics/lib-ui": "master",
+                "usabilitydynamics/lib-utility": "master"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wp-veneer"
+            },
+            "autoload": {
+                "classmap": [
+                    "lib/class-api.php",
+                    "lib/class-bootstrap.php",
+                    "lib/class-w3.php",
+                    "lib/class-cache.php",
+                    "lib/class-documents.php",
+                    "lib/class-utility.php",
+                    "lib/class-rewrites.php",
+                    "lib/class-image.php",
+                    "lib/class-log.php",
+                    "lib/class-media.php",
+                    "lib/class-security.php",
+                    "lib/class-varnish.php",
+                    "lib/class-search.php"
+                ]
+            },
+            "time": "2014-06-11 05:03:05"
+        },
+        {
+            "name": "w3-edge/w3-total-cache",
+            "version": "0.9.4",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/w3-total-cache",
+                "reference": "tags/0.9.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/w3-total-cache.0.9.4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "w3-total-cache"
+            }
+        },
+        {
+            "name": "woocommerce/api-manager",
+            "version": "1.3.3",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/woocommerce-api-manager",
+                "reference": "1.3.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/woocommerce-api-manager/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "woocommerce-api-manager"
+            }
+        },
+        {
+            "name": "woothemes/woocommerce",
+            "version": "2.1.8",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/woocommerce",
+                "reference": "tags/2.1.8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/woocommerce.2.1.8.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "woocommerce"
+            }
+        },
+        {
+            "name": "yoast/wp-seo",
+            "version": "1.1.5",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/wordpress-seo",
+                "reference": "tags/1.1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/wordpress-seo.1.1.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wp-seo"
+            }
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": [
+
+    ],
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}
