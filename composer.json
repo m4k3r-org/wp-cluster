@@ -17,7 +17,7 @@
   },
   "extra": {
     "installer-paths": {
-      "vendor/libraries/{$name}": [
+      "vendor/libraries/{$vendor}/{$name}": [
         "type:wordpress-library"
       ],
       "vendor/modules/{$name}": [
