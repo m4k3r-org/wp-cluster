@@ -9,6 +9,7 @@ cgi-bin
 application/logs/*
 application/static/codex/*
 application/static/etc/wp-config/production
+storage
 storage/*
 node_modules
 cache
