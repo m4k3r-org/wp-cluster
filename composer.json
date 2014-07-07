@@ -44,8 +44,8 @@
         "wp_debug": true,
         "wp_debug_display": false,
         "wp_debug_log": true,
-        "wp_logs_dir": "/var/log",
-        "wp_logs_handler": "file",
+        "script_debug": false,
+        "savequeries": false,
         "wp_default_theme": "wp-splash",
         "auth_key": "CHANGE-ME",
         "secure_auth_key": "CHANGE-ME",
@@ -72,9 +72,7 @@
         "empty_trash_days": 7,
         "disable_wp_cron": true,
         "wp_use_themes": true,
-        "wplang": "en_US",
-        "wp_logs_handler": "file",
-        "wp_logs_file": "{wp_base_domain}.log"
+        "wplang": "en_US"
       },
       "paths": {
         "wp_content_dir": "{wp_base_dir}",
@@ -82,7 +80,7 @@
         "wp_veneer_storage": "storage",
         "wp_veneer_public": "{wp_veneer_storage}/public/{wp_base_domain}",
         "wp_veneer_theme_dir": "{wp_veneer_storage}/themes",
-        "wp_logs_dir": "{wp_veneer_storage}/logs",
+        "wp_logs_dir": "{wp_base_dir}/application/logs",
         "wp_vendor_dir": "{wp_base_dir}/vendor",
         "wp_vendor_url": "{wp_base_url}/vendor",
         "wp_plugin_dir": "{wp_vendor_dir}/plugins",
