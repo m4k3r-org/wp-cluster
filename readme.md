@@ -16,6 +16,19 @@ addition to this, this repository will have 3 branches, depending on which type 
 * Keep branches in sync better
 * No plethora of individual repositories where "one-off" changes are made and are not in sync with the master branches
 
+## Running Build
+
+We use grunt to run the build, here is the command that should be used:
+
+```shell
+You can use this grunt file to do the following:
+   * grunt install - installs and builds environment
+   * Arguments:
+      --environment={environment} - builds specific environment: (production**, development, staging, local)
+      --system={system} - build for a specific system: (linux**, windows
+      --type={type} - build for a specific site type: (standalone**, cluster, multisite)
+```
+
 ## Notes
 
 * Each directory has a corresponding 'readme.md' which gives a brief spiel on what the directory should be used for

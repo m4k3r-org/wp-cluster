@@ -115,9 +115,9 @@
       "application/lib"
     ],
     "files": [
-      "application/bootstrap.php",
       "vendor/modules/wp-cluster/wp-cluster.php",
       "vendor/modules/wp-veneer/wp-veneer.php",
+      "application/bootstrap.php"
     ]
   },
   "minimum-stability": "dev",
