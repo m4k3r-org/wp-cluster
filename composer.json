@@ -18,7 +18,7 @@
   "minimum-stability": "dev",
   "require": {
     "composer/installers": "~1.0",
-    "UsabilityDynamics/wp-flawless": "0.60.0"
+    "UsabilityDynamics/wp-flawless": "dev-legacy"
   },
   "autoload": {},
   "extra": {
