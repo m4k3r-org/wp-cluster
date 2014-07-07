@@ -820,7 +820,7 @@
                 "varnish",
                 "wordpress"
             ],
-            "time": "2014-07-07 05:02:21"
+            "time": "2014-07-07 08:04:11"
         },
         {
             "name": "usabilitydynamics/wp-splash",
@@ -907,7 +907,7 @@
                 "varnish",
                 "wordpress"
             ],
-            "time": "2014-07-07 05:03:41"
+            "time": "2014-07-07 08:04:12"
         }
     ],
     "packages-dev": [

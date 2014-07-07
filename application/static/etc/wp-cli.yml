@@ -1,0 +1,7 @@
+path: vendor/wordpress/core
+url: http://domain.tld
+user: admin
+password: password
+color: true
+disabled_commands:
+  - db drop
