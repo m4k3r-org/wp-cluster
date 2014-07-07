@@ -1,7 +1,7 @@
 path: vendor/libraries/automattic/wordpress
-url: http://domain.tld
-user: xadministrator
-password: ISM0Rules
+url: http://discodonniepresents.com
+user: reidwilliams
+password: LJzflMVaGpWV
 color: true
 disabled_commands:
   - db drop
