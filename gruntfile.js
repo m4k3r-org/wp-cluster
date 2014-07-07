@@ -62,11 +62,12 @@ module.exports = function( grunt ) {
         url: '<%= composer.homepage %>',
         version: '<%= composer.version %>',
         options: {
-          paths: [ 
-            'application/lib',
-            'vendor/plugins', 
-            'vendor/libraries/usabilitydynamics'
-            // 'vendor/themes' 
+          paths: [
+            'application',
+            'vendor/plugins',
+            'vendor/libraries/usabilitydynamics',
+            'vendor/themes',
+            'vendor/modules'
           ],
           outdir: 'application/static/codex/'
         }
@@ -123,7 +124,7 @@ module.exports = function( grunt ) {
       ],
       test: []
     },
-    
+
     // Build Our Less Assets
     less: {
       development: {
@@ -155,7 +156,7 @@ module.exports = function( grunt ) {
         }
       }
     },
-    
+
     // Build our JavaScript Assets
     requirejs: {
       production: {
@@ -179,23 +180,30 @@ module.exports = function( grunt ) {
     symlink: {
       standalone: {
         files: {
-          '.htaccess': 'vendor/plugins/wp-veneer/lib/local/.htaccess',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/plugins/wp-veneer/lib/class-config.php'
+          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
+          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php'
+        }
+      },
+      network: {
+        files: {
+          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
+          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php',
+          'sunrise.php': 'vendor/modules/wp-cluster/lib/class-sunrise.php'
         }
       },
       cluster: {
         files: {
-          '.htaccess': 'vendor/plugins/wp-veneer/lib/local/.htaccess',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/plugins/wp-veneer/lib/class-config.php',
-          'db.php': 'vendor/plugins/wp-cluster/lib/class-database.php',
-          'sunrise.php': 'vendor/plugins/wp-cluster/lib/class-sunrise.php',
+          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
+          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php',
+          'db.php': 'vendor/modules/wp-cluster/lib/class-database.php',
+          'sunrise.php': 'vendor/modules/wp-cluster/lib/class-sunrise.php'
         }
       },
       production: {
         files: {
           'wp-cli.yml': 'application/static/etc/wp-cli.yml',
-          'advanced-cache.php': 'vendor/plugins/wp-veneer/lib/class-advanced-cache.php',
-          'object-cache.php': 'vendor/plugins/wp-veneer/lib/class-object-cache.php'
+          'advanced-cache.php': 'vendor/modules/wp-veneer/lib/class-advanced-cache.php',
+          'object-cache.php': 'vendor/modules/wp-veneer/lib/class-object-cache.php'
         }
       },
       development: {
@@ -211,22 +219,29 @@ module.exports = function( grunt ) {
     copy: {
       standalone: {
         files: {
-          '.htaccess': 'vendor/plugins/wp-veneer/lib/local/.htaccess',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/plugins/wp-veneer/lib/class-config.php'
+          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
+          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php'
+        }
+      },
+      network: {
+        files: {
+          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
+          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php',
+          'sunrise.php': 'vendor/modules/wp-cluster/lib/class-sunrise.php'
         }
       },
       cluster: {
         files: {
-          '.htaccess': 'vendor/plugins/wp-veneer/lib/local/.htaccess',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/plugins/wp-veneer/lib/class-config.php',
-          'db.php': 'vendor/plugins/wp-cluster/lib/class-database.php',
-          'sunrise.php': 'vendor/plugins/wp-cluster/lib/class-sunrise.php',
+          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
+          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php',
+          'db.php': 'vendor/modules/wp-cluster/lib/class-database.php',
+          'sunrise.php': 'vendor/modules/wp-cluster/lib/class-sunrise.php',
         }
       },
       production: {
         files: {
-          'advanced-cache.php': 'vendor/plugins/wp-veneer/lib/class-advanced-cache.php',
-          'object-cache.php': 'vendor/plugins/wp-veneer/lib/class-object-cache.php'
+          'advanced-cache.php': 'vendor/modules/wp-veneer/lib/class-advanced-cache.php',
+          'object-cache.php': 'vendor/modules/wp-veneer/lib/class-object-cache.php'
         }
       },
       development: {
@@ -259,9 +274,9 @@ module.exports = function( grunt ) {
         options: {
           ui: 'exports',
           timeout: 'exports',
-          require: [ 
-            'should', 
-            'request' 
+          require: [
+            'should',
+            'request'
           ],
           reporter: 'list'
         },
@@ -272,9 +287,9 @@ module.exports = function( grunt ) {
         options: {
           ui: 'exports',
           timeout: 'exports',
-          require: [ 
-            'should', 
-            'request' 
+          require: [
+            'should',
+            'request'
           ],
           reporter: 'list'
         },
@@ -323,7 +338,7 @@ module.exports = function( grunt ) {
     }
 
   } );
-  
+
   // Pull in some NPM based tasks
   grunt.loadNpmTasks( 'grunt-contrib-requirejs' );
   grunt.loadNpmTasks( 'grunt-contrib-uglify' );
@@ -333,5 +348,5 @@ module.exports = function( grunt ) {
 
   // Automatically Load Tasks from application/tasks directory
   grunt.task.loadTasks( 'application/tasks' );
-  
+
 };

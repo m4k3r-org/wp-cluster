@@ -8,12 +8,12 @@ try {
   if( file_exists( 'local-debug.php' ) ){
     require_once( 'local-debug.php' );
   }
-  
+
   /** Make sure we have a proper wp-config file */
   if( !file_exists( 'vendor/libraries/automattic/wordpress/wp-config.php' ) ) {
     throw new Exception( 'Site not installed.' );
   }
-  
+
   /** Make sure we have our vendor libraries installed, and if we - include them */
   if( !file_exists( 'vendor/libraries/automattic/wordpress/wp-blog-header.php' ) ) {
     throw new Exception( 'Site vendor libraries not installed.' );
@@ -24,7 +24,9 @@ try {
 } catch( Exception $e ) {
 
   /** There was an issue, we need to bail */
-  echo( $e->getMessage() );
+  header( 'HTTP/1.1 500 Internal Server Error' );
+  echo '<h1>Site Error</h1>';
+  echo '<p>' . $e->getMessage() . '</p>';
   die();
-  
+
 }

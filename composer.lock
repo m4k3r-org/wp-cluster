@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "1194cd1211718ee7d2376b358bbb6c83",
+    "hash": "055ab92ca7b6e448d79e92578840f358",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -139,6 +139,45 @@
             }
         },
         {
+            "name": "matthiasmullie/minify",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasmullie/minify.git",
+                "reference": "7f17bcfc223f554cf30a464b6abea69a9a947061"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/7f17bcfc223f554cf30a464b6abea69a9a947061",
+                "reference": "7f17bcfc223f554cf30a464b6abea69a9a947061",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Mullie",
+                    "email": "minify@mullie.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CSS & JS minifier",
+            "homepage": "https://github.com/matthiasmullie/minify",
+            "time": "2013-12-01 22:51:43"
+        },
+        {
             "name": "monolog/monolog",
             "version": "dev-master",
             "source": {
@@ -210,6 +249,46 @@
             "time": "2014-06-30 13:24:53"
         },
         {
+            "name": "mrclay/minify",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mrclay/minify.git",
+                "reference": "fb3931f8cd54a637b2a42170c3a9a1c4da9e69a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mrclay/minify/zipball/fb3931f8cd54a637b2a42170c3a9a1c4da9e69a9",
+                "reference": "fb3931f8cd54a637b2a42170c3a9a1c4da9e69a9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.2.1"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "min/lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Stephen Clay",
+                    "email": "steve@mrclay.org",
+                    "homepage": "http://www.mrclay.org/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Minify is a PHP5 app that helps you follow several rules for client-side performance. It combines multiple CSS or Javascript files, removes unnecessary whitespace and comments, and serves them with gzip encoding and optimal client-side cache headers",
+            "homepage": "http://code.google.com/p/minify/",
+            "time": "2014-04-03 23:53:48"
+        },
+        {
             "name": "psr/log",
             "version": "dev-master",
             "source": {
@@ -251,6 +330,64 @@
                 "psr-3"
             ],
             "time": "2014-01-18 15:33:09"
+        },
+        {
+            "name": "siteorigin/panels",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/siteorigin-panels",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/siteorigin-panels/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "siteorigin-panels",
+                "main-file": "siteorigin-panels.php",
+                "text_domain": "siteorigin-panels"
+            },
+            "autoload": {
+                "classmap": [
+                    "widgets/basic.php",
+                    "widgets/widgets/testimonial/testimonial.php",
+                    "widgets/widgets/price-box/price-box.php",
+                    "widgets/widgets/list/list.php",
+                    "widgets/widgets/call-to-action/call-to-action.php",
+                    "widgets/widgets/button/button.php",
+                    "widgets/widgets/animated-image/animated-image.php",
+                    "widgets/lib/color.php"
+                ]
+            },
+            "license": [
+                "GPLv2"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Priday",
+                    "email": "support@siteorigin.com",
+                    "homepage": "http://siteorigin.com/",
+                    "role": "WordPress Developer"
+                }
+            ],
+            "description": "Build responsive page layouts using the widgets you know and love using this simple drag and drop page builder.",
+            "homepage": "http://siteorigin.com/page-builder/",
+            "keywords": [
+                "admin",
+                "builder",
+                "page-builder",
+                "responsive",
+                "wordpress"
+            ],
+            "time": "2014-06-04 16:34:03"
         },
         {
             "name": "usabilitydynamics/lib-api",
@@ -308,32 +445,75 @@
             "time": "2014-01-28 12:29:32"
         },
         {
-            "name": "usabilitydynamics/lib-features",
+            "name": "usabilitydynamics/lib-installer",
             "version": "master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-features",
+                "url": "git@github.com:UsabilityDynamics/lib-installer",
                 "reference": "master"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-features/archive/master.zip",
+                "url": "https://github.com/usabilitydynamics/lib-installer/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
-                "usabilitydynamics/lib-utility": "master"
+                "composer-plugin-api": "1.0.0",
+                "composer/installers": "~1.0",
+                "php": ">=5.3"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": [
+                    "UsabilityDynamics\\Installers\\ProductModule"
+                ],
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "UsabilityDynamics\\Installers\\": "lib/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "time": "2014-06-03 00:40:50"
+        },
+        {
+            "name": "usabilitydynamics/lib-layout-engine",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-layout-engine",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-layout-engine/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master",
+                "usabilitydynamics/lib-meta-box": "*",
+                "usabilitydynamics/lib-ui": "*",
+                "usabilitydynamics/lib-utility": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "usabilitydynamics/lib-carrington-build": "*"
             },
             "type": "library",
             "autoload": {
                 "classmap": [
                     "lib"
-                ],
-                "files": [
-                    "lib/api/autoload.php"
                 ]
             },
-            "time": "2014-05-22 09:25:00"
+            "time": "2014-06-04 15:44:17"
         },
         {
             "name": "usabilitydynamics/lib-meta-box",
@@ -596,75 +776,78 @@
                 "composer/installers": "~1.0",
                 "monolog/monolog": "master",
                 "php": ">=5.3",
-                "usabilitydynamics/lib-api": "*",
-                "usabilitydynamics/lib-cdn": "*",
-                "usabilitydynamics/lib-model": "*",
-                "usabilitydynamics/lib-requires": "*",
-                "usabilitydynamics/lib-rpc": "*",
-                "usabilitydynamics/lib-saas": "*",
-                "usabilitydynamics/lib-settings": "*",
-                "usabilitydynamics/lib-ui": "*",
-                "usabilitydynamics/lib-utility": "*",
-                "usabilitydynamics/wp-elastic": "master"
-            },
-            "type": "wordpress-plugin",
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "time": "2014-06-04 10:07:48"
-        },
-        {
-            "name": "usabilitydynamics/wp-elastic",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-elastic",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/wp-elastic/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
                 "usabilitydynamics/lib-api": "master",
-                "usabilitydynamics/lib-features": "master",
-                "usabilitydynamics/lib-meta-box": "master",
+                "usabilitydynamics/lib-cdn": "master",
+                "usabilitydynamics/lib-installer": "master",
                 "usabilitydynamics/lib-model": "master",
+                "usabilitydynamics/lib-requires": "master",
+                "usabilitydynamics/lib-rpc": "master",
+                "usabilitydynamics/lib-saas": "master",
                 "usabilitydynamics/lib-settings": "master",
                 "usabilitydynamics/lib-ui": "master",
                 "usabilitydynamics/lib-utility": "master"
             },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-paths": {
-                    "vendor/plugins/{$name}": [
-                        "type:wordpress-plugin"
-                    ],
-                    "vendor/extensions/{$name}": [
-                        "type:wordpress-module"
-                    ],
-                    "vendor/themes/{$name}": [
-                        "type:wordpress-theme"
-                    ]
-                },
-                "installer-name": "wp-elastic"
-            },
+            "type": "wordpress-module",
             "autoload": {
                 "classmap": [
-                    "lib"
-                ],
-                "files": [
-                    "lib/api/autoload.php"
+                    "lib/class-api.php",
+                    "lib/class-bootstrap.php",
+                    "lib/class-dashboard.php",
+                    "lib/class-database.php",
+                    "lib/class-developer.php",
+                    "lib/class-locale.php",
+                    "lib/class-plugins.php",
+                    "lib/class-settings.php",
+                    "lib/class-sunrise.php",
+                    "lib/class-theme.php",
+                    "lib/class-utility.php",
+                    "lib/class-views.php"
                 ]
             },
-            "description": "Improve WordPress search performance/accuracy and enable faceted search by leveraging an ElasticSearch server.",
-            "time": "2014-05-23 01:16:56"
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "homepage": "http://usabilitydynamics.com"
+                }
+            ],
+            "description": "WP-Cluster.",
+            "homepage": "https://github.com/usabilitydynamics/wp-cluster",
+            "keywords": [
+                "multisite",
+                "varnish",
+                "wordpress"
+            ],
+            "time": "2014-07-07 05:02:21"
+        },
+        {
+            "name": "usabilitydynamics/wp-splash",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-splash",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/wp-splash/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.3",
+                "siteorigin/panels": "master",
+                "usabilitydynamics/lib-installer": "master",
+                "usabilitydynamics/lib-layout-engine": "master",
+                "usabilitydynamics/lib-ui": "master"
+            },
+            "type": "wordpress-theme",
+            "extra": {
+                "installer-name": "wp-splash"
+            },
+            "time": "2014-07-01 13:17:37"
         },
         {
             "name": "usabilitydynamics/wp-veneer",
@@ -682,16 +865,16 @@
             },
             "require": {
                 "composer/installers": "~1.0",
+                "matthiasmullie/minify": "1.2.0",
+                "mrclay/minify": "master",
                 "php": ">=5.3",
-                "usabilitydynamics/lib-rpc": "master",
+                "usabilitydynamics/lib-api": "master",
+                "usabilitydynamics/lib-installer": "master",
                 "usabilitydynamics/lib-settings": "master",
                 "usabilitydynamics/lib-ui": "master",
                 "usabilitydynamics/lib-utility": "master"
             },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "wp-veneer"
-            },
+            "type": "wordpress-module",
             "autoload": {
                 "classmap": [
                     "lib/class-api.php",
@@ -709,7 +892,22 @@
                     "lib/class-search.php"
                 ]
             },
-            "time": "2014-07-03 04:59:46"
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "homepage": "http://usabilitydynamics.com"
+                }
+            ],
+            "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
+            "keywords": [
+                "multisite",
+                "varnish",
+                "wordpress"
+            ],
+            "time": "2014-07-07 05:03:41"
         }
     ],
     "packages-dev": [
@@ -722,9 +920,9 @@
     "stability-flags": [
 
     ],
-    "platform": [
-
-    ],
+    "platform": {
+        "php": ">=5.3"
+    },
     "platform-dev": [
 
     ]

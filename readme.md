@@ -7,7 +7,7 @@ addition to this, this repository will have 3 branches, depending on which type 
 
 * master - this is the default branch for a standalone site (i.e. usabilitydynaimcs.com)
 * multisite - this is the default branch for a multisite implementation (i.e. TDB)
-* cluster - this is the default branch for a cluster (read: vertical) site (i.e. edm-cluster)
+* cluster - this is the default branch for a cluster (read: vertical) site (i.e. edm-cluster) with multi-db support
 
 ## Why GitHub?
 
