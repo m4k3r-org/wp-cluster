@@ -117,7 +117,7 @@
     "files": [
       "application/bootstrap.php",
       "vendor/modules/wp-cluster/wp-cluster.php",
-      "vendor/modules/wp-veneer/wp-veneer.php"
+      "vendor/modules/wp-veneer/wp-veneer.php",
     ]
   },
   "minimum-stability": "dev",
