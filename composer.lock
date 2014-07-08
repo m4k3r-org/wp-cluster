@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "393c02e438eabf0caeb8bcb70d4103c5",
+    "hash": "c9720da8e14f2c3168cf1671a5ec72e1",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -1325,7 +1325,7 @@
             "autoload": {
                 "classmap": [
 
-                ]
+    ]
             },
             "time": "2014-06-18 15:00:16"
         },
@@ -1517,7 +1517,7 @@
                 "varnish",
                 "wordpress"
             ],
-            "time": "2014-07-07 23:00:48"
+            "time": "2014-07-07 23:04:24"
         },
         {
             "name": "wpcloud/wp-vertical-edm",
