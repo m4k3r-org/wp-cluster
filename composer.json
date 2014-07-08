@@ -31,7 +31,7 @@
         "type:wordpress-theme"
       ]
     },
-    "active-plugins": {
+    "plugins": {
       "w3-total-cache": "0.9.4"
     },
     "settings":{

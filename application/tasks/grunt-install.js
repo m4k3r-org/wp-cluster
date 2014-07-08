@@ -8,15 +8,31 @@ module.exports = function( grunt ) {
     var done = this.async();
     var async = require( 'async' );
     var composer = grunt.file.readJSON( 'composer.json' );
-    var exec = require('child_process').exec;
+    var exec = require( 'child_process' ).exec;
+    var plugins = [];
 
-    var cargo = async.queue(function (plugin, callback) {
+    /** Make sure we have a valid object */
+    if( typeof composer.extra[ 'plugins' ] != 'object' ){
+      return;
+    }
+
+    /** Create an array of the plugins */
+    for( var x in composer.extra[ 'plugins' ] ){
+      plugins.push( {
+        'name': x,
+        'version': composer.extra[ 'plugins' ][ x ]
+      } );
+    }
+
+    /** Ok, loop through the plugins installing them one at a time */
+    async.eachSeries( plugins, function( plugin, callback ){
       grunt.log.writeln( 'Installing plugin: ' + plugin.name );
+      var cmd = 'wp plugin install ' + plugin.name + ' --version=' + plugin.version + ' --path=vendor/libraries/automattic/wordpress';
+      grunt.log.writeln( 'Running command: ' + cmd );
+      exec( cmd, function(error, stdout, stderr) {
 
-      exec( 'wp plugin install ' + plugin.name + ' --version=' + plugin.version + ' --path=vendor/libraries/automattic/wordpress', function(error, stdout, stderr) {
-
-        // console.log('stdout: ' + stdout);
-        // console.log('stderr: ' + stderr);
+        //console.log('stdout: ' + stdout);
+        //console.log('stderr: ' + stderr);
 
         if (error !== null) {
           console.log('exec error: ' + error);
@@ -25,15 +41,10 @@ module.exports = function( grunt ) {
       } ).on( 'close', function() {
         grunt.log.writeln( 'Installed plugin: ' + plugin.name );
         callback();
-      })
-
-    }, 10 );
-
-    cargo.drain = done;
-
-    for( var name in composer.extra[ 'active-plugins' ] ) {
-      cargo.push({name: name, version: composer.extra[ 'active-plugins' ][ name ]});
-    }
+      } )
+    }, function( final ){
+      grunt.log.writeln( 'Finished installing plugins.' );
+    } );
 
   } );
 
@@ -45,7 +56,7 @@ module.exports = function( grunt ) {
     var system = grunt.option( 'system' ) || 'linux';
     var copy_type = system == 'windows' ? 'copy' : 'symlink';
     var site_type = grunt.option( 'type' ) || 'standalone';
-    
+
     // Run our clean routines
     grunt.task.run( [
       'clean:files',
@@ -60,22 +71,22 @@ module.exports = function( grunt ) {
 
     // Now run the shell script to configure .htaccess for the specific environment
     grunt.task.run( [ 'shell:configure:' + environment ] );
-    
+
     // Run the task for the site type
     grunt.task.run( [ copy_type + ':' + site_type ] );
-    
+
     // Build all of our docs/assets
     grunt.task.run( [
       'markdown',
       'yuidoc'
     ] );
-    
+
     // Compile our assets
     grunt.task.run( [
       'less:' + ( environment == 'production' ? 'production' : 'development' ),
       'requirejs:production'
     ] );
-    
+
     // Run our plugin install stuff
     grunt.task.run( [
       'notify:pluginsInstalling',
