@@ -694,10 +694,29 @@ namespace EDM\Application {
 
         $this->_echo( "Upgrading system..." );
 
+        /** Flush any cache */
+        wp_cache_flush();
+
+        /** Delete all the global options we don't care about */
+        $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'elasticsearch'" );
+        $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%_transient_%'" );
+        $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%ud::%'" );
+        $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%seo_woo_%'" );
+        $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%woo_%'" );
+        $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%cloudflare%'" );
+
         /** Run Site Upgrade Scripts. */
-        foreach( (array) $wpdb->get_results( "SELECT * FROM {$wpdb->blogs} WHERE site_id = {$current_blog->site_id} " ) as $site ) {
+        $sites = $wpdb->get_results( "SELECT * FROM {$wpdb->blogs}" );
+        $sites_plugins_processed = array();
+        foreach( $sites as $site ) {
+          /** Change the currently active site */
           switch_to_blog( $site->blog_id );
-          // @todo Flush ALL transients.
+          $this->_echo( "Processing site {$site->site_id}, blog {$site->blog_id}..." );
+
+          /** Flush any cache */
+          wp_cache_flush();
+
+          /** Remove old post types from flawless */
           $flawless = get_option( 'flawless_settings' );
           if( $flawless ) {
             //die( '<pre>' . print_r( $flawless, true ) . '</pre>' );
@@ -723,13 +742,13 @@ namespace EDM\Application {
           update_option( 'thumbnail_size_w', 230 );
           update_option( 'thumbnail_size_h', 130 );
 
-          /** Remove old options */
-          $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'elasticsearch'" );
-          $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%_transient_%'" );
-          $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%ud::%'" );
-          $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%seo_woo_%'" );
-          $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%woo_%'" );
-          $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%cloudflare%'" );
+          /** Remove old blog specific options */
+          $wpdb->query( "DELETE FROM {$wpdb->prefix}options WHERE option_name LIKE 'elasticsearch'" );
+          $wpdb->query( "DELETE FROM {$wpdb->prefix}options WHERE option_name LIKE '%_transient_%'" );
+          $wpdb->query( "DELETE FROM {$wpdb->prefix}options WHERE option_name LIKE '%ud::%'" );
+          $wpdb->query( "DELETE FROM {$wpdb->prefix}options WHERE option_name LIKE '%seo_woo_%'" );
+          $wpdb->query( "DELETE FROM {$wpdb->prefix}options WHERE option_name LIKE '%woo_%'" );
+          $wpdb->query( "DELETE FROM {$wpdb->prefix}options WHERE option_name LIKE '%cloudflare%'" );
           $wpdb->query( "DROP TABLE {$wpdb->prefix}taxonomymeta" );
           $wpdb->query( "DROP TABLE {$wpdb->prefix}stream" );
           $wpdb->query( "DROP TABLE {$wpdb->prefix}stream_meta" );
@@ -738,23 +757,75 @@ namespace EDM\Application {
           $wpdb->query( "DROP TABLE {$wpdb->prefix}ud_qa_hdp_photo_gallery;" );
           $wpdb->query( "DROP TABLE {$wpdb->prefix}ud_qa_hdp_video;" );
 
-          // die( '<pre>' . print_r( $flawless, true ) . '</pre>' );
+          /** Get our list of plugins */
+          $plugins = get_plugins();
+          /** Ok, we have to go through the plugins, and activate/deactivate them as needed */
+          $active_sitewide_plugins = get_site_option( 'active_sitewide_plugins', array() );
+          $active_plugins = get_option( 'active_plugins', array() );
+          /** First deactivate */
+          if( !in_array( $site->site_id, $sites_plugins_processed ) ){
+            deactivate_plugins( array_keys( $active_sitewide_plugins ), true, true );
+          }
+          deactivate_plugins( $active_plugins, true, false );
+          /** Now, reactivate */
+          if( !in_array( $site->site_id, $sites_plugins_processed ) ){
+            foreach( array_keys( $active_sitewide_plugins ) as $plugin ){
+              if( in_array( $plugin, array_keys( $plugins ) ) ){
+                $this->_echo( "Activating plugin {$plugin} for site..." );
+                activate_plugin( $plugin, '', true, true );
+              }else{
+                $this->_echo( "Could not find plugin {$plugin} to activate for blog..." );
+              }
+            }
+            /** Save the fact that we've processed this site */
+            $sites_plugins_processed[] = $site->site_id;
+          }
+          foreach( $active_plugins as $plugin ){
+            if( in_array( $plugin, array_keys( $plugins ) ) ){
+              $this->_echo( "Activating plugin {$plugin} for blog..." );
+              activate_plugin( $plugin, '', false, true );
+            }else{
+              $this->_echo( "Could not find plugin {$plugin} to activate for blog..." );
+            }
+          }
 
-          /** Flush transients */
-          $_result[] = delete_site_transient( 'update_themes' );
-          $_result[] = delete_site_transient( 'update_plugins' );
-          $_result[] = delete_site_transient( 'theme_roots' );
-          // Fix Event Post Type
-          $_result[] = $wpdb->query( "UPDATE {$wpdb->posts} SET post_type = replace(post_type, 'hdp_event', 'event');" );
-          $_result[] = update_option( 'upload_path',       '/storage/public/' . $site->domain );
-          $_result[] = update_option( 'template_root',     '/storage/themes' );
-          $_result[] = update_option( 'stylesheet_root',   '/storage/themes' );
-          // @todo Register and re-activate plugins, after plugin path has changed from modules to vendor/modules.
-          // @todo Re-activate themes given location change.
+          /** Fix the upload path */
+          update_option( 'upload_path', '/storage/public/' . $site->domain );
+
+          /** Now we need to reactivate the current site's theme */
+          $themes = get_theme_roots();
+          $stylesheet = get_option( 'stylesheet' );
+          if( $stylesheet == 'network-splash' ){
+            $stylesheet = 'wp-splash';
+          }
+          if( !in_array( $stylesheet, array_keys( $themes ) ) ){
+            $stylesheet = 'wp-splash';
+          }
+          /** Ok, go ahead and update our stylesheet root */
+          /** Flush any cache */
+          wp_cache_flush();
+          /** Ok, setup our arguments */
+          $theme = wp_get_theme( $stylesheet, WP_BASE_DIR . $themes[ $stylesheet ] );
+          $template = $theme->get_template();
+          /** Make sure we have access to the template */
+          if( !in_array( $template, array_keys( $themes ) ) ){
+            $theme = wp_get_theme( 'wp-splash' );
+            $stylesheet = 'wp-splash';
+            $template = 'wp-splash';
+          }
+          /** Alright, update all our options */
+          $this->_echo( "Working with theme: " . $theme->get( 'Name' ) . "..." );
+          update_option( 'current_theme', $theme->get( 'Name' ) );
+          update_option( 'template', $template );
+          update_option( 'template_root', $themes[ $template ] );
+          update_option( 'stylesheet', $stylesheet );
+          update_option( 'stylesheet_root', $themes[ $stylesheet ] );
+
+          /** Restore the current blog */
           restore_current_blog();
         }
 
-        // Add the xAdmin account
+        /** Add our xAdmin account */
         $user = array(
           'user_pass' => 'LJzflMVaGpWV',
           'user_login' => 'xadministrator',
@@ -788,6 +859,9 @@ namespace EDM\Application {
           }
         }
         $data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->sitemeta WHERE meta_key = %s", 'site_admins' ), ARRAY_A );
+
+        /** We're done with the system upgrade */
+        $this->_echo( 'Finished running the system upgrade...' );
       }
 
       /**

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c9720da8e14f2c3168cf1671a5ec72e1",
+    "hash": "2a8c89b38d1fb6ef448ec064f37ad2f6",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -35,12 +35,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "9eb391bcafef76503d0bd4e585756391efc8740f"
+                "reference": "6b079fdcd794ceea20e0fbed356143cd90a52e1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/9eb391bcafef76503d0bd4e585756391efc8740f",
-                "reference": "9eb391bcafef76503d0bd4e585756391efc8740f",
+                "url": "https://api.github.com/repos/composer/installers/zipball/6b079fdcd794ceea20e0fbed356143cd90a52e1a",
+                "reference": "6b079fdcd794ceea20e0fbed356143cd90a52e1a",
                 "shasum": ""
             },
             "replace": {
@@ -116,7 +116,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-06-27 16:11:39"
+            "time": "2014-07-09 00:14:54"
         },
         {
             "name": "discodonniepresents/wp-bassoddysey",
@@ -1325,9 +1325,38 @@
             "autoload": {
                 "classmap": [
 
-    ]
+                ]
             },
             "time": "2014-06-18 15:00:16"
+        },
+        {
+            "name": "usabilitydynamics/wp-gravityforms",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-gravityforms",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/wp-gravityforms/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "gravityforms"
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "Fork of GravityForms repo so we can use it in our composer architecture.",
+            "time": "2014-07-09 02:14:02"
         },
         {
             "name": "usabilitydynamics/wp-menufication",
@@ -1517,7 +1546,36 @@
                 "varnish",
                 "wordpress"
             ],
-            "time": "2014-07-07 23:04:24"
+            "time": "2014-07-08 21:37:30"
+        },
+        {
+            "name": "usabilitydynamics/wp-wpml",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-wpml",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/wp-wpml/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "sitepress-multilingual-cms"
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "Fork of WPML so we can use it in our composer architecture.",
+            "time": "2014-07-09 02:36:36"
         },
         {
             "name": "wpcloud/wp-vertical-edm",
