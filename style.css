@@ -9,6 +9,16 @@
  *
  */
 
+/** WPML Styling START **/
+#lang_sel_click a.lang_sel_sel {
+  background-color: #0F0E0E;
+  color: #FFF;
+}
+
+#lang_sel_click a.lang_sel_sel:hover {
+  color: #FFF;
+}
+/** WPML Styling END **/
 
 .flawless_toggable_debug {
   height: 10em;
