@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2a8c89b38d1fb6ef448ec064f37ad2f6",
+    "hash": "f5cccf07c52cdd5af5f07bda87e4ebc1",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -1546,7 +1546,7 @@
                 "varnish",
                 "wordpress"
             ],
-            "time": "2014-07-08 21:37:30"
+            "time": "2014-07-09 03:02:14"
         },
         {
             "name": "usabilitydynamics/wp-wpml",
@@ -1576,6 +1576,466 @@
             ],
             "description": "Fork of WPML so we can use it in our composer architecture.",
             "time": "2014-07-09 02:36:36"
+        },
+        {
+            "name": "wpackagist-plugin/akismet",
+            "version": "3.0.0",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/akismet/",
+                "reference": "tags/3.0.0-RC1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/akismet.3.0.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/akismet": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/akismet/"
+        },
+        {
+            "name": "wpackagist-plugin/brightcove-video-cloud",
+            "version": "1.1",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/brightcove-video-cloud/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/brightcove-video-cloud.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/brightcove-video-cloud": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/brightcove-video-cloud/"
+        },
+        {
+            "name": "wpackagist-plugin/customizer-everywhere",
+            "version": "0.1.2",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/customizer-everywhere/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/customizer-everywhere.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/customizer-everywhere": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/customizer-everywhere/"
+        },
+        {
+            "name": "wpackagist-plugin/debug-bar",
+            "version": "0.8.1",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/debug-bar/",
+                "reference": "tags/0.8.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/debug-bar.0.8.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/debug-bar": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/debug-bar/"
+        },
+        {
+            "name": "wpackagist-plugin/fantastic-elasticsearch",
+            "version": "2.1.0",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/fantastic-elasticsearch/",
+                "reference": "tags/2.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/fantastic-elasticsearch.2.1.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/fantastic-elasticsearch": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/fantastic-elasticsearch/"
+        },
+        {
+            "name": "wpackagist-plugin/google-analytics-for-wordpress",
+            "version": "4.3.5",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/google-analytics-for-wordpress/",
+                "reference": "tags/4.3.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/google-analytics-for-wordpress.4.3.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/google-analytics-for-wordpress": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/google-analytics-for-wordpress/"
+        },
+        {
+            "name": "wpackagist-plugin/jetpack",
+            "version": "3.0.2",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/jetpack/",
+                "reference": "tags/3.0.2b1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/jetpack.3.0.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/jetpack": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/jetpack/"
+        },
+        {
+            "name": "wpackagist-plugin/public-post-preview",
+            "version": "2.3",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/public-post-preview/",
+                "reference": "tags/2.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/public-post-preview.2.3.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/public-post-preview": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/public-post-preview/"
+        },
+        {
+            "name": "wpackagist-plugin/real-user-monitoring-by-pingdom",
+            "version": "1.0",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/real-user-monitoring-by-pingdom/",
+                "reference": "tags/1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/real-user-monitoring-by-pingdom.1.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/real-user-monitoring-by-pingdom": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/real-user-monitoring-by-pingdom/"
+        },
+        {
+            "name": "wpackagist-plugin/redirection",
+            "version": "2.3.4",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/redirection/",
+                "reference": "tags/2.3.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/redirection.2.3.4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/redirection": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/redirection/"
+        },
+        {
+            "name": "wpackagist-plugin/regenerate-thumbnails",
+            "version": "2.2.4",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/regenerate-thumbnails/",
+                "reference": "tags/2.2.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/regenerate-thumbnails.2.2.4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/regenerate-thumbnails": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/regenerate-thumbnails/"
+        },
+        {
+            "name": "wpackagist-plugin/video",
+            "version": "1.5.6",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/video/",
+                "reference": "tags/1.5.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/video.1.5.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/video": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/video/"
+        },
+        {
+            "name": "wpackagist-plugin/w3-total-cache",
+            "version": "0.9.4",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/w3-total-cache/",
+                "reference": "tags/0.9.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/w3-total-cache.0.9.4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/w3-total-cache": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/w3-total-cache/"
+        },
+        {
+            "name": "wpackagist-plugin/widget-css-classes",
+            "version": "1.2.6",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/widget-css-classes/",
+                "reference": "tags/1.2.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/widget-css-classes.1.2.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/widget-css-classes": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/widget-css-classes/"
+        },
+        {
+            "name": "wpackagist-plugin/widget-customizer",
+            "version": "0.15.1",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/widget-customizer/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/widget-customizer.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/widget-customizer": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/widget-customizer/"
+        },
+        {
+            "name": "wpackagist-plugin/wordpress-importer",
+            "version": "0.6.1",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/wordpress-importer/",
+                "reference": "tags/0.6.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/wordpress-importer.0.6.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/wordpress-importer": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/wordpress-importer/"
+        },
+        {
+            "name": "wpackagist-plugin/wordpress-seo",
+            "version": "1.5.3.3",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/wordpress-seo/",
+                "reference": "tags/1.5.3.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/wordpress-seo.1.5.3.3.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/wordpress-seo": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/wordpress-seo/"
+        },
+        {
+            "name": "wpackagist-plugin/wp-db-backup",
+            "version": "2.2.4",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/wp-db-backup/",
+                "reference": "tags/2.2.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/wp-db-backup.2.2.4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/wp-db-backup": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/wp-db-backup/"
+        },
+        {
+            "name": "wpackagist-plugin/wp-pagenavi",
+            "version": "2.85",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/wp-pagenavi/",
+                "reference": "tags/2.85"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/wp-pagenavi.2.85.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/wp-pagenavi": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/wp-pagenavi/"
+        },
+        {
+            "name": "wpackagist-plugin/wpmandrill",
+            "version": "1.33",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/wpmandrill/",
+                "reference": "tags/1.33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/wpmandrill.1.33.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/wpmandrill": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/wpmandrill/"
         },
         {
             "name": "wpcloud/wp-vertical-edm",

@@ -32,3 +32,29 @@ You can use this grunt file to do the following:
 ## Notes
 
 * Each directory has a corresponding 'readme.md' which gives a brief spiel on what the directory should be used for
+
+## Problems
+
+The following packages need to be installed:
+  Problem 1
+    - The requested package wpackagist-plugin/gravityformsmailchimp could not be found in any version, there may be a typo in the package name.
+  Problem 2
+    - The requested package wpackagist-plugin/gravityforms-multilingual could not be found in any version, there may be a typo in the package name.
+  Problem 3
+    - The requested package wpackagist-plugin/jf3-maintenance-mode could not be found in any version, there may be a typo in the package name.
+  Problem 4
+    - The requested package wpackagist-plugin/wp-admin-column-view-master could not be found in any version, there may be a typo in the package name.
+  Problem 5
+    - The requested package wpackagist-plugin/wpml-cms-nav could not be found in any version, there may be a typo in the package name.
+  Problem 6
+    - The requested package wpackagist-plugin/wpml-media could not be found in any version, there may be a typo in the package name.
+  Problem 7
+    - The requested package wpackagist-plugin/wpml-sticky-links could not be found in any version, there may be a typo in the package name.
+  Problem 8
+    - The requested package wpackagist-plugin/wpml-string-translation could not be found in any version, there may be a typo in the package name.
+  Problem 9
+    - The requested package wpackagist-plugin/wpml-translation-management could not be found in any version, there may be a typo in the package name.
+  Problem 10
+    - The requested package wpackagist-plugin/wp-rpc could not be found in any version, there may be a typo in the package name.
+  Problem 11
+    - The requested package wpackagist-plugin/wp-seo-addon could not be found in any version, there may be a typo in the package name.

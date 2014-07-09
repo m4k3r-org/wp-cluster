@@ -4,7 +4,8 @@ module.exports = function( grunt ) {
    * Installs plugins for WordPress, uses the 'wp' command line tool
    */
   grunt.registerTask( 'installPlugins', 'Install all plugins declared in composer.extra.', function( task ) {
-
+    grunt.log.writeln( 'installPlugins is depreciated, use http://wpackagist.org/ and composer instead' );
+    return;
     var done = this.async();
     var async = require( 'async' );
     var composer = grunt.file.readJSON( 'composer.json' );
