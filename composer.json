@@ -1,6 +1,7 @@
 {
   "name": "usabilitydynamics/wp-amd",
   "version": "0.1.0",
+  "type": "wordpress-plugin",
   "homepage": "https://github.com/UsabilityDynamics/wp-amd",
   "keywords": [
     "amd",
