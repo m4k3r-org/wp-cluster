@@ -774,7 +774,7 @@ namespace EDM\Application {
                 $this->_echo( "Activating plugin {$plugin} for site..." );
                 activate_plugin( $plugin, '', true, true );
               }else{
-                $this->_echo( "Could not find plugin {$plugin} to activate for blog..." );
+                $this->_echo( "Could not find plugin {$plugin} to activate for site..." );
               }
             }
             /** Save the fact that we've processed this site */

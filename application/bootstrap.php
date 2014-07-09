@@ -23,6 +23,17 @@ add_action( 'init', function(){
 } );
 
 /**
+ * Some quick hackish WPML fixes
+ */
+function wpml_shortcode_func(){
+  do_action('icl_language_selector');
+}
+
+if( function_exists( 'add_shortcode' )) {
+  add_shortcode( 'wpml_lang_selector', 'wpml_shortcode_func' );
+}
+
+/**
  * DDP Migration API endpoint
  *
  * @url http://discodonniepresents.com/api/v1/migrate-ddp

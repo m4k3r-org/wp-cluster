@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f5cccf07c52cdd5af5f07bda87e4ebc1",
+    "hash": "9e1e4f067b29caef1f033efbc5524266",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -35,12 +35,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "6b079fdcd794ceea20e0fbed356143cd90a52e1a"
+                "reference": "020fa1983597249bfcb947b485c5aac8e0e36652"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/6b079fdcd794ceea20e0fbed356143cd90a52e1a",
-                "reference": "6b079fdcd794ceea20e0fbed356143cd90a52e1a",
+                "url": "https://api.github.com/repos/composer/installers/zipball/020fa1983597249bfcb947b485c5aac8e0e36652",
+                "reference": "020fa1983597249bfcb947b485c5aac8e0e36652",
                 "shasum": ""
             },
             "replace": {
@@ -116,7 +116,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-07-09 00:14:54"
+            "time": "2014-07-09 14:29:42"
         },
         {
             "name": "discodonniepresents/wp-bassoddysey",
@@ -190,7 +190,7 @@
                 "GPL-2.0"
             ],
             "description": "Festival Theme for the Drop Network",
-            "time": "2014-07-07 12:23:20"
+            "time": "2014-07-09 18:31:26"
         },
         {
             "name": "discodonniepresents/wp-festival",
@@ -931,6 +931,31 @@
             "time": "2014-06-25 22:11:12"
         },
         {
+            "name": "usabilitydynamics/lib-rest",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-rest",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/lib-rest/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-05-06 07:23:43"
+        },
+        {
             "name": "usabilitydynamics/lib-rpc",
             "version": "master",
             "source": {
@@ -1183,7 +1208,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-07-02 12:48:39"
+            "time": "2014-07-09 19:02:02"
         },
         {
             "name": "usabilitydynamics/wp-cluster",
@@ -1359,6 +1384,34 @@
             "time": "2014-07-09 02:14:02"
         },
         {
+            "name": "usabilitydynamics/wp-jf3-maintenance-mode",
+            "version": "2.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-jf3-maintenance-mode",
+                "reference": "2.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/wp-jf3-maintenance-mode/archive/2.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "jf3-maintenance-mode"
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "Fork of jf3-maintenance-mode so we can use it in our composer architecture."
+        },
+        {
             "name": "usabilitydynamics/wp-menufication",
             "version": "master",
             "source": {
@@ -1435,6 +1488,72 @@
                 ]
             },
             "time": "2014-01-28 05:25:27"
+        },
+        {
+            "name": "usabilitydynamics/wp-rpc",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-rpc",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/wp-rpc/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3",
+                "usabilitydynamics/lib-api": "master",
+                "usabilitydynamics/lib-rest": "master",
+                "usabilitydynamics/lib-rpc": "master",
+                "usabilitydynamics/lib-settings": "master",
+                "usabilitydynamics/lib-ui": "master"
+            },
+            "type": "wordpress-plugin",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-07-09 19:07:03"
+        },
+        {
+            "name": "usabilitydynamics/wp-seo-addon",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-seo-addon",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/wp-seo-addon/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.3",
+                "usabilitydynamics/lib-settings": "master"
+            },
+            "type": "wordpress-plugin",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "homepage": "https://github.com/UsabilityDynamics/wp-seo-addon",
+            "keywords": [
+                "seo",
+                "wordpress",
+                "wp-seo"
+            ],
+            "time": "2014-07-09 19:05:08"
         },
         {
             "name": "usabilitydynamics/wp-simplify",
@@ -1550,15 +1669,15 @@
         },
         {
             "name": "usabilitydynamics/wp-wpml",
-            "version": "master",
+            "version": "3.1.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:UsabilityDynamics/wp-wpml",
-                "reference": "master"
+                "reference": "3.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-wpml/archive/master.zip",
+                "url": "https://github.com/UsabilityDynamics/wp-wpml/archive/3.1.6.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1574,8 +1693,35 @@
             "license": [
                 "GPL-3.0"
             ],
-            "description": "Fork of WPML so we can use it in our composer architecture.",
-            "time": "2014-07-09 02:36:36"
+            "description": "Fork of WPML so we can use it in our composer architecture."
+        },
+        {
+            "name": "usabilitydynamics/wp-wpml-translation-management",
+            "version": "1.9.5",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-wpml-translation-management",
+                "reference": "1.9.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/wp-wpml-translation-management/archive/1.9.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wpml-translation-management"
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "Fork of WPML Translation management so we can use it in our composer architecture."
         },
         {
             "name": "wpackagist-plugin/akismet",
@@ -1622,52 +1768,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "http://wordpress.org/plugins/brightcove-video-cloud/"
-        },
-        {
-            "name": "wpackagist-plugin/customizer-everywhere",
-            "version": "0.1.2",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/customizer-everywhere/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/customizer-everywhere.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/customizer-everywhere": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/customizer-everywhere/"
-        },
-        {
-            "name": "wpackagist-plugin/debug-bar",
-            "version": "0.8.1",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/debug-bar/",
-                "reference": "tags/0.8.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/debug-bar.0.8.1.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/debug-bar": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/debug-bar/"
         },
         {
             "name": "wpackagist-plugin/fantastic-elasticsearch",
@@ -1900,29 +2000,6 @@
             "homepage": "http://wordpress.org/plugins/widget-css-classes/"
         },
         {
-            "name": "wpackagist-plugin/widget-customizer",
-            "version": "0.15.1",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/widget-customizer/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/widget-customizer.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/widget-customizer": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/widget-customizer/"
-        },
-        {
             "name": "wpackagist-plugin/wordpress-importer",
             "version": "0.6.1",
             "source": {
@@ -1967,29 +2044,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "http://wordpress.org/plugins/wordpress-seo/"
-        },
-        {
-            "name": "wpackagist-plugin/wp-db-backup",
-            "version": "2.2.4",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/wp-db-backup/",
-                "reference": "tags/2.2.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/wp-db-backup.2.2.4.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/wp-db-backup": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/wp-db-backup/"
         },
         {
             "name": "wpackagist-plugin/wp-pagenavi",
