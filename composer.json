@@ -1,0 +1,22 @@
+{
+  "name": "wp-eventbrite",
+  "version": "0.0.1",
+  "type": "plugin",
+  "description": "Eventbrite Attendees Notifications",
+  "homepage": "",
+  "private": true,
+  "author": {
+    "name": "",
+    "url": ""
+  },
+  "license": "",
+  "license_url": "",
+  "tags": [ "eventbrite" ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DiscoDonniePresents/wp-eventbrite.git"
+  },
+  "require": {
+    ""
+  }
+}
