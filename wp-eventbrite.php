@@ -27,6 +27,31 @@
  *
  */
 
+if( !function_exists( 'get_wp_eventbrite' ) ) {
 
+  if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+    require_once ( __DIR__ . '/vendor/autoload.php' );
+  }
+
+  define( 'WP_EVENTBRITE_DIR', plugin_dir_path( __FILE__ ) );
+  define( 'WP_EVENTBRITE_URL', plugin_dir_url( __FILE__ ) );
+
+  /**
+   * Returns WP_Evenbrite object
+   *
+   * @author peshkov@UD
+   */
+  function get_wp_eventbrite( $key = false, $default = null ) {
+    if( class_exists( '\UsabilityDynamics\EB\Bootstrap' ) ) {
+      $instance = \UsabilityDynamics\EB\Bootstrap::get_instance();
+      return $key ? $instance->get( $key, $default ) : $instance;
+    }
+    return false;
+  }
+
+}
+
+// Initialize.
+get_wp_eventbrite();
 
 
