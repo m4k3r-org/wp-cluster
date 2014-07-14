@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9e1e4f067b29caef1f033efbc5524266",
+    "hash": "1da288ed352d4081f540e6dd71bc3b01",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -194,15 +194,15 @@
         },
         {
             "name": "discodonniepresents/wp-festival",
-            "version": "master",
+            "version": "dev-v2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:DiscoDonniePresents/wp-festival",
-                "reference": "master"
+                "reference": "v2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-festival/archive/master.zip",
+                "url": "https://github.com/DiscoDonniePresents/wp-festival/archive/v2.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -226,7 +226,7 @@
                 "GPL-2.0"
             ],
             "description": "Festival Theme for the Drop Network",
-            "time": "2014-06-25 01:28:33"
+            "time": "2014-07-14 05:04:30"
         },
         {
             "name": "discodonniepresents/wp-freaksbeatstreats",
@@ -1665,7 +1665,7 @@
                 "varnish",
                 "wordpress"
             ],
-            "time": "2014-07-09 03:02:14"
+            "time": "2014-07-14 05:15:49"
         },
         {
             "name": "usabilitydynamics/wp-wpml",
@@ -2150,6 +2150,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "usabilitydynamics/wp-flawless": 20,
+        "discodonniepresents/wp-festival": 20,
         "discodonniepresents/wp-disco": 20
     },
     "platform": {

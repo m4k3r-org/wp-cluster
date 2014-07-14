@@ -122,7 +122,7 @@
     "usabilitydynamics/wp-elastic": "master",
     "usabilitydynamics/wp-rpc": "master",
     "discodonniepresents/wp-spectacle": "master",
-    "discodonniepresents/wp-festival": "master",
+    "discodonniepresents/wp-festival": "dev-v2",
     "discodonniepresents/wp-disco": "dev-legacy",
     "discodonniepresents/wp-bassoddysey": "master",
     "discodonniepresents/wp-dayafter": "master",
