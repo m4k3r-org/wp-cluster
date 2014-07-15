@@ -45,25 +45,18 @@ namespace DiscoDonniePresents\Eventbrite {
        * Instantaite class.
        */
       private function __construct() {
-        
+
         $plugin_data = get_file_data( ( dirname( __DIR__ ) . '/wp-eventbrite.php' ), array(
           'Name' => 'Plugin Name',
           'Version' => 'Version',
           'TextDomain' => 'Text Domain',
         ), 'plugin' );
-        
+
         $this->version  = trim( $plugin_data[ 'Version' ] );
         $this->domain   = trim( $plugin_data[ 'TextDomain' ] );
 
-        //** Initialize Settings. */
-        $this->settings = new Settings( array(
-          'key'  => 'wp_eventbrite',
-          'data' => array()
-        ));
-
-        //** Set Dynamics. */
-        $this->set( 'version',  $this->version );
-        $this->set( 'domain',   $this->domain );
+        //** Init Settings */
+        $this->settings = $this->defineSettings();
         
         //** Load Core on 'after_setup_theme' */
         add_action( 'after_setup_theme', array( $this, 'load' ) );
@@ -77,7 +70,7 @@ namespace DiscoDonniePresents\Eventbrite {
        * @author peshkov@UD
        */
       public function load() {
-        new \DiscoDonniePresents\Eventbrite();
+        new \DiscoDonniePresents\Eventbrite\Core();
       }
       
       /**
@@ -106,6 +99,29 @@ namespace DiscoDonniePresents\Eventbrite {
        */
       public function get( $key = null, $default = null ) {
         return $this->settings->get( $key, $default );
+      }
+      
+      /**
+       * Initializes and returns Settings object
+       * 
+       * @return object UsabilityDynamics\Settings
+       */
+      private function defineSettings() {
+        //** Initialize Settings. */
+        $settings = new \UsabilityDynamics\Settings( array(
+          'key'  => 'wp_eventbrite',
+          'store'  => 'options'
+        ));
+        //** Merge with default data. */
+        $data = \UsabilityDynamics\Utility::extend( Utility::get_schema( 'default.settings' ), $settings->get(), array(
+          'version' => $this->version,
+          'domain' => $this->domain,
+        ) );
+        if( !empty( $data ) ) {
+          $settings->set( $data );
+        }
+        // Return Instance.
+        return $settings;
       }
 
     }

@@ -1,0 +1,37 @@
+{
+  "configuration": {
+    "main_menu": "themes.php",
+    "secondary_menu": {
+      "page_title": "WP-Evenbrite Settings",
+      "menu_title": "Settings",
+      "capability": "manage_options",
+      "menu_slug": "evenbrite_settings"
+    }
+  },
+  "menu": {
+    "api": {
+      "id": "api",
+      "name": "API",
+      "desc": "Evenbrite API settings"
+    }
+  },
+  "sections": {
+    "credentials": {
+      "id": "credentials",
+      "name": "Credentials",
+      "menu": "api"
+    }
+  },
+  "fields": [
+    {
+      "id": "configuration.api_credentials.app_key",
+      "name": "Application Key",
+      "section": "credentials"
+    },
+    {
+      "id": "configuration.api_credentials.user_key",
+      "name": "User Key",
+      "section": "credentials"
+    }
+  ]
+}

@@ -6,17 +6,29 @@
  * @author Usability Dynamics
  * @namespace DiscoDonniePresents
  */
-namespace DiscoDonniePresents {
+namespace DiscoDonniePresents\Eventbrite {
 
-  if( !class_exists( 'DiscoDonniePresents\Eventbrite' ) ) {
+  if( !class_exists( 'DiscoDonniePresents\Eventbrite\Core' ) ) {
 
     /**
      * Eventbrite Core
      *
      * @author Usability Dynamics
      */
-    class Eventbrite {
+    class Core {
 
+      /**
+       * Admin User Interface 
+       *
+       * @var object DiscoDonniePresents\Eventbrite\UI
+       */
+      public $ui = NULL;
+      
+      /**
+       * Bootstrap Singleton object
+       *
+       * @var object DiscoDonniePresents\Eventbrite\Bootstrap
+       */
       private $instance = NULL;
       
       /**
@@ -27,6 +39,9 @@ namespace DiscoDonniePresents {
       public function __construct() {
         //** Get our Bootstrap Singleton object */
         $this->instance =& get_wp_eventbrite();
+        
+        //** Init our Admin Interface */
+        $this->ui = new \UsabilityDynamics\UI\Settings( $this->instance->settings, Utility::get_schema( 'schema.ui' ) );
         
         add_action( 'admin_init', array( $this, 'admin_init' ) );
       }
