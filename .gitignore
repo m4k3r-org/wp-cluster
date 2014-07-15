@@ -1,5 +1,6 @@
 /.htaccess
 .idea
+webhook.php
 w3tc-config
 debug.log
 .environment
