@@ -49,6 +49,7 @@ test:
 
 notify:
   webhooks:
+    - url: "http://208.52.164.217/webhook.php"
     # - url: "http://domain.tld/path/to/webhook"
 
 general:
