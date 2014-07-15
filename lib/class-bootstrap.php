@@ -39,8 +39,6 @@ namespace DiscoDonniePresents\Eventbrite {
        */
       private static $instance = null;
 
-      public $option = array();
-
       /**
        * Instantaite class.
        */
@@ -56,7 +54,7 @@ namespace DiscoDonniePresents\Eventbrite {
         $this->domain   = trim( $plugin_data[ 'TextDomain' ] );
 
         //** Init Settings */
-        $this->settings = $this->defineSettings();
+        $this->settings = $this->define_settings();
         
         //** Load Core on 'after_setup_theme' */
         add_action( 'after_setup_theme', array( $this, 'load' ) );
@@ -70,7 +68,10 @@ namespace DiscoDonniePresents\Eventbrite {
        * @author peshkov@UD
        */
       public function load() {
-        new \DiscoDonniePresents\Eventbrite\Core();
+        //** Load Core */
+        new Core();
+        //** Load Modules ( Extensions ) */
+        new Organizers();
       }
       
       /**
@@ -106,7 +107,7 @@ namespace DiscoDonniePresents\Eventbrite {
        * 
        * @return object UsabilityDynamics\Settings
        */
-      private function defineSettings() {
+      private function define_settings() {
         //** Initialize Settings. */
         $settings = new \UsabilityDynamics\Settings( array(
           'key'  => 'wp_eventbrite',
