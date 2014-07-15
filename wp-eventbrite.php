@@ -42,8 +42,8 @@ if( !function_exists( 'get_wp_eventbrite' ) ) {
    * @author peshkov@UD
    */
   function get_wp_eventbrite( $key = false, $default = null ) {
-    if( class_exists( '\UsabilityDynamics\EB\Bootstrap' ) ) {
-      $instance = \UsabilityDynamics\EB\Bootstrap::get_instance();
+    if( class_exists( '\DiscoDonniePresents\Eventbrite\Bootstrap' ) ) {
+      $instance = \DiscoDonniePresents\Eventbrite\Bootstrap::get_instance();
       return $key ? $instance->get( $key, $default ) : $instance;
     }
     return false;

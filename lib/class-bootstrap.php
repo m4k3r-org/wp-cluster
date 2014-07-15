@@ -3,11 +3,11 @@
  * Bootstrap
  *
  */
-namespace UsabilityDynamics\EB {
+namespace DiscoDonniePresents\Eventbrite {
 
   use UsabilityDynamics\Settings;
 
-  if( !class_exists( 'UsabilityDynamics\EB\Bootstrap' ) ) {
+  if( !class_exists( 'DiscoDonniePresents\Eventbrite\Bootstrap' ) ) {
 
     class Bootstrap {
 
@@ -37,7 +37,7 @@ namespace UsabilityDynamics\EB {
        * @property $instance
        * @type {Object}
        */
-      public static $instance = null;
+      private static $instance = null;
 
       public $option = array();
 
@@ -46,7 +46,7 @@ namespace UsabilityDynamics\EB {
        */
       private function __construct() {
         
-        $plugin_data = get_file_data( ( dirname( __DIR__ ) . '/wp-amd.php' ), array(
+        $plugin_data = get_file_data( ( dirname( __DIR__ ) . '/wp-eventbrite.php' ), array(
           'Name' => 'Plugin Name',
           'Version' => 'Version',
           'TextDomain' => 'Text Domain',
@@ -55,18 +55,31 @@ namespace UsabilityDynamics\EB {
         $this->version  = trim( $plugin_data[ 'Version' ] );
         $this->domain   = trim( $plugin_data[ 'TextDomain' ] );
 
-        // Initialize Settings.
+        //** Initialize Settings. */
         $this->settings = new Settings( array(
           'key'  => 'wp_eventbrite',
           'data' => array()
         ));
 
-        // Set Dynamics.
+        //** Set Dynamics. */
         $this->set( 'version',  $this->version );
         $this->set( 'domain',   $this->domain );
-
+        
+        //** Load Core on 'after_setup_theme' */
+        add_action( 'after_setup_theme', array( $this, 'load' ) );
+        
       }
-
+      
+      /**
+       * Loads Plugin's functionality
+       *
+       * @action after_setup_theme
+       * @author peshkov@UD
+       */
+      public function load() {
+        new \DiscoDonniePresents\Eventbrite();
+      }
+      
       /**
        * Determine if instance already exists and Return Theme Instance
        *
