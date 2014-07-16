@@ -62,6 +62,12 @@ namespace DiscoDonniePresents\Eventbrite {
         //** Init Settings */
         $this->settings = $this->define_settings();
         
+        //** Init Eventbrite Client API */
+        $this->client = new Client( array(
+          'app_key' => $this->get( 'configuration.api_credentials.app_key', false ), 
+          'user_key' => $this->get( 'configuration.api_credentials.user_key', false ),
+        ) );
+        
       }
     
       /**

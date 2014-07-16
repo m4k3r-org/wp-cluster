@@ -1,6 +1,7 @@
 {
   "types": {
     "eventbrite_organizer": {
+      "key": "organizer",
       "data": {
         "capability_type": "page",
         "label": "Organizers",

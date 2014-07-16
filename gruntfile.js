@@ -7,23 +7,49 @@
  */
 module.exports = function build( grunt ) {
 
+  // Require Utility Modules.
+  var joinPath      = require( 'path' ).join;
+  var resolvePath   = require( 'path' ).resolve;
+  var findup        = require( 'findup-sync' );
+
   // Automatically Load Tasks.
   require( 'load-grunt-tasks' )( grunt, {
     pattern: 'grunt-*',
     config: './package.json',
     scope: 'devDependencies'
   });
+  
+  // Determine Paths.
+  var _paths = {
+    composer: findup( 'composer.json' ),
+    package: findup( 'package.json' ),
+    vendor: findup( 'vendor' ),
+    languages: findup( 'static/languages' ),
+    styles: findup( 'static/styles' ),
+    scripts: findup( 'static/scripts' ),
+    phpTests: findup( 'test/php' )
+  };
 
   grunt.initConfig({
     
-    // Compile LESS
+    // Compile LESS.
     less: {
-      options: {
-        yuicompress: true,
-        relativeUrls: true
-      },
-      files: {
-        'static/styles/admin.organizers.css': [ 'static/styles/src/admin.organizers.less' ]
+      production: {
+        options: {
+          yuicompress: true,
+          relativeUrls: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: joinPath( resolvePath( _paths.styles ), 'src' ),
+            src: [ '*.less' ],
+            dest: _paths.styles,
+            rename: function renameLess( dest, src ) {
+              return joinPath( dest, src.replace( '.less', '.css' ) );
+            }
+          }
+        ]
       }
     },
     

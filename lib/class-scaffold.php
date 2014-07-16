@@ -43,16 +43,6 @@ namespace DiscoDonniePresents\Eventbrite {
       public function __construct() {
         //** Get our Bootstrap Singleton object */
         $this->instance =& get_wp_eventbrite();
-        
-        //** Try to connect to Eventbrite API */
-        $app_key = $this->get( 'configuration.api_credentials.app_key', false );
-        $user_key = $this->get( 'configuration.api_credentials.user_key', false );
-        if( $app_key && $user_key ) {
-          $this->client = new Client( array(
-            'app_key' => $app_key, 
-            'user_key' => $user_key,
-          ) );
-        }
       }
       
       /**
@@ -60,6 +50,7 @@ namespace DiscoDonniePresents\Eventbrite {
        * 
        */
       public function get_template_part( $name, $data = array() ) {
+        
         if( is_array( $data ) ) {
           extract( $data );
         }

@@ -31,12 +31,20 @@ namespace DiscoDonniePresents\Eventbrite {
       }
       
       /**
+       * Update our settings after WP is loaded.
        *
+       * @author peshkov@UD
        */
       public function wp_loaded() {
-        //** Set our custom post types structure */
-        $this->instance->structure = \UsabilityDynamics\Model::get();
-        //echo "<pre>"; print_r( get_wp_eventbrite()->structure ); echo "</pre>"; die();
+        //** Set our model data */
+        $this->set( 'model.schema', $schema = \UsabilityDynamics\Model::getSchema() );
+        $this->set( 'model.structure', $structure = \UsabilityDynamics\Model::get() );
+        
+        $types = array();
+        foreach( (array)$schema[ 'types' ] as $type => $data ) {
+          $types[ $data[ 'key' ] ] = $type;
+        }
+        $this->set( 'post_type', $types );
       }
 
     }

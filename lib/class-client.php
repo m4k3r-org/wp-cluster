@@ -43,8 +43,7 @@ namespace DiscoDonniePresents\Eventbrite {
       }
       
       /**
-       *
-       *
+       * Returns Errors
        */
       public function get_errors() {
         return trim( implode( ', ', $this->errors ) );
