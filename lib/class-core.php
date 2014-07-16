@@ -1,7 +1,6 @@
 <?php
 /**
  * Evenbrite Core.
- * It's being loaded on 'after_setup_theme' action
  *
  * @author Usability Dynamics
  * @namespace DiscoDonniePresents
@@ -18,21 +17,26 @@ namespace DiscoDonniePresents\Eventbrite {
     class Core extends Scaffold {
       
       /**
-       * UI Settings object
-       *
-       * @var object \UsabilityDynamics\UI\Settings
-       */
-      public $ui = NULL;
-      
-      /**
        * Constructor
        *
        * @author peshkov@UD
        */
       public function __construct() {
         parent::__construct();
-        //** Setup Admin Interface */
-        $this->ui = new \UsabilityDynamics\UI\Settings( $this->instance->settings, Utility::get_schema( 'schema.ui' ) );
+        //** Register Custom Post Types, meta and set their taxonomies */
+        \UsabilityDynamics\Model::define( Utility::get_schema( 'schema.structure' ) );
+        
+        //** Hooks */
+        add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );
+      }
+      
+      /**
+       *
+       */
+      public function wp_loaded() {
+        //** Set our custom post types structure */
+        $this->instance->structure = \UsabilityDynamics\Model::get();
+        //echo "<pre>"; print_r( get_wp_eventbrite()->structure ); echo "</pre>"; die();
       }
 
     }

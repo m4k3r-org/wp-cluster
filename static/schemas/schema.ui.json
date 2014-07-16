@@ -15,7 +15,7 @@
     "api": {
       "id": "api",
       "name": "API",
-      "desc": "Evenbrite API settings"
+      "desc": "Eventbrite API settings"
     }
   },
   "sections": {

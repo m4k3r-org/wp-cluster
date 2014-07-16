@@ -17,6 +17,18 @@ namespace DiscoDonniePresents\Eventbrite {
     class Scaffold {
       
       /**
+       * Additional properties are stored here.
+       * It is using __get and __set methods
+       */
+      private $properties;
+      
+      /**
+       * API Client
+       *
+       */
+      public $client = NULL;
+      
+      /**
        * Bootstrap Singleton object
        *
        * @var object DiscoDonniePresents\Eventbrite\Bootstrap
@@ -31,6 +43,30 @@ namespace DiscoDonniePresents\Eventbrite {
       public function __construct() {
         //** Get our Bootstrap Singleton object */
         $this->instance =& get_wp_eventbrite();
+        
+        //** Try to connect to Eventbrite API */
+        $app_key = $this->get( 'configuration.api_credentials.app_key', false );
+        $user_key = $this->get( 'configuration.api_credentials.user_key', false );
+        if( $app_key && $user_key ) {
+          $this->client = new Client( array(
+            'app_key' => $app_key, 
+            'user_key' => $user_key,
+          ) );
+        }
+      }
+      
+      /**
+       * Renders template part.
+       * 
+       */
+      public function get_template_part( $name, $data = array() ) {
+        if( is_array( $data ) ) {
+          extract( $data );
+        }
+        $path = dirname( __DIR__ ) . '/static/views/' . $name . '.php';
+        if( file_exists( $path ) ) {
+          include( $path );
+        }
       }
       
       /**
@@ -51,6 +87,24 @@ namespace DiscoDonniePresents\Eventbrite {
        */
       public function get( $key = null, $default = null ) {
         return $this->instance->get( $key, $default );
+      }
+      
+      /**
+       * Store all custom properties in $this->properties
+       *
+       * @author peshkov@UD
+       */
+      public function __set( $name, $value ) {
+        $this->properties[ $name ] = $value; 
+      }
+      
+      /**
+       * Get custom properties
+       *
+       * @author peshkov@UD
+       */
+      public function __get($name)  { 
+        return isset ( $this->properties[ $name ] ) ? $this->properties[ $name ] : NULL; 
       }
 
     }

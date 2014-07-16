@@ -12,6 +12,12 @@ namespace DiscoDonniePresents\Eventbrite {
     class Bootstrap {
 
       /**
+       * Additional properties are stored here.
+       * It is using __get and __set methods
+       */
+      private $properties;
+    
+      /**
        * Core version.
        *
        * @static
@@ -56,9 +62,24 @@ namespace DiscoDonniePresents\Eventbrite {
         //** Init Settings */
         $this->settings = $this->define_settings();
         
-        //** Load Core on 'after_setup_theme' */
-        add_action( 'after_setup_theme', array( $this, 'load' ) );
-        
+      }
+    
+      /**
+       * Store all custom properties in $this->properties
+       *
+       * @author peshkov@UD
+       */
+      public function __set( $name, $value ) {
+        $this->properties[ $name ] = $value; 
+      }
+      
+      /**
+       * Get custom properties
+       *
+       * @author peshkov@UD
+       */
+      public function __get($name)  { 
+        return isset ( $this->properties[ $name ] ) ? $this->properties[ $name ] : NULL; 
       }
       
       /**
@@ -67,11 +88,11 @@ namespace DiscoDonniePresents\Eventbrite {
        * @action after_setup_theme
        * @author peshkov@UD
        */
-      public function load() {
-        //** Load Core */
+      private function load() {
+        //** Load Models ( custom post types, meta, taxonomies ), etc */
         new Core();
-        //** Load Modules ( Extensions ) */
-        new Organizers();
+        //** Load User Admin Interfaces */
+        new UI();
       }
       
       /**
@@ -79,7 +100,12 @@ namespace DiscoDonniePresents\Eventbrite {
        *
        */
       public static function get_instance( $args = array() ) {
-        return null === self::$instance ? self::$instance = new self() : self::$instance;
+        if( null === self::$instance ) {
+          self::$instance = new self();
+          //** Initialize UI and other additional functionality */
+          self::$instance->load();
+        }
+        return self::$instance;
       }
 
       /**
