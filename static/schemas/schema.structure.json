@@ -40,7 +40,8 @@
       "meta": {
         "general": {
           "fields": [
-            "unique_id",
+            "eventbrite_id",
+            "eventbrite_url",
             "related_users"
           ]
         }
@@ -48,7 +49,10 @@
     }
   },
   "meta": {
-    "unique_id": {
+    "eventbrite_id": {
+      "name": "Unique ID"
+    },
+    "eventbrite_url": {
       "name": "Unique ID"
     },
     "related_users": {

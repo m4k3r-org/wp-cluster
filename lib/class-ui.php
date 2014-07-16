@@ -120,6 +120,9 @@ namespace DiscoDonniePresents\Eventbrite {
             $data = array(
               'organizers' => Organizers::get_organizers(),
             );
+            
+            //echo "<pre>"; print_r( $data[ 'organizers' ] ); echo "</pre>";
+            
             $this->get_template_part( 'admin.organizers', $data );
             break;
           
