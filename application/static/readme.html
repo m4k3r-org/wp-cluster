@@ -112,22 +112,7 @@
     </style>
   </head>
   <body>  
-    <p>WP-Site Master Repository</p>
-<h2 id="about">About</h2>
-<p>This is the master repository from which all other WordPress sites Usability Dynamics creates is forked from. In
-addition to this, this repository will have 3 branches, depending on which type of site you&#39;re trying to use:</p>
-<ul>
-<li>master - this is the default branch for a standalone site (i.e. usabilitydynaimcs.com)</li>
-<li>multisite - this is the default branch for a multisite implementation (i.e. TDB)</li>
-<li>cluster - this is the default branch for a cluster (read: vertical) site (i.e. edm-cluster) with multi-db support</li>
-</ul>
-<h2 id="why-github-">Why GitHub?</h2>
-<ul>
-<li>Better synchronization across repositories</li>
-<li>Ability to do cross repository pull requests when updates are made</li>
-<li>Keep branches in sync better</li>
-<li>No plethora of individual repositories where &quot;one-off&quot; changes are made and are not in sync with the master branches</li>
-</ul>
+    <p>DiscoDonniePresents.com &amp; the EDM Cluster</p>
 <h2 id="running-build">Running Build</h2>
 <p>We use grunt to run the build, here is the command that should be used:</p>
 <pre><code class="lang-shell">You can use this grunt file to do the following:
@@ -138,32 +123,27 @@ addition to this, this repository will have 3 branches, depending on which type 
       --type={type} - build for a specific site type: (standalone**, cluster, multisite)</code></pre>
 <h2 id="notes">Notes</h2>
 <ul>
-<li>Each directory has a corresponding &#39;readme.md&#39; which gives a brief spiel on what the directory should be used for</li>
+<li>Each directory has a corresponding &#39;readme.md&#39; which gives a brief spiel on what the directory should be used for.</li>
+<li>The username should be &#39;reidwilliams&#39; for the local environment, and the password should be &#39;password&#39;</li>
+<li>Use <a href="http://umesouthpadre.com/">http://umesouthpadre.com/</a> as an example site that version 1 of the festival theme has been implemented</li>
 </ul>
-<h2 id="problems">Problems</h2>
-<p>The following packages need to be installed:
-  Problem 1</p>
-<pre><code>- The requested package wpackagist-plugin/gravityformsmailchimp could not be found in any version, there may be a typo in the package name.</code></pre>
-<p>  Problem 2</p>
-<pre><code>- The requested package wpackagist-plugin/gravityforms-multilingual could not be found in any version, there may be a typo in the package name.</code></pre>
-<p>  Problem 3</p>
-<pre><code>- The requested package wpackagist-plugin/jf3-maintenance-mode could not be found in any version, there may be a typo in the package name.</code></pre>
-<p>  Problem 4</p>
-<pre><code>- The requested package wpackagist-plugin/wp-admin-column-view-master could not be found in any version, there may be a typo in the package name.</code></pre>
-<p>  Problem 5</p>
-<pre><code>- The requested package wpackagist-plugin/wpml-cms-nav could not be found in any version, there may be a typo in the package name.</code></pre>
-<p>  Problem 6</p>
-<pre><code>- The requested package wpackagist-plugin/wpml-media could not be found in any version, there may be a typo in the package name.</code></pre>
-<p>  Problem 7</p>
-<pre><code>- The requested package wpackagist-plugin/wpml-sticky-links could not be found in any version, there may be a typo in the package name.</code></pre>
-<p>  Problem 8</p>
-<pre><code>- The requested package wpackagist-plugin/wpml-string-translation could not be found in any version, there may be a typo in the package name.</code></pre>
-<p>  Problem 9</p>
-<pre><code>- The requested package wpackagist-plugin/wpml-translation-management could not be found in any version, there may be a typo in the package name.</code></pre>
-<p>  Problem 10</p>
-<pre><code>- The requested package wpackagist-plugin/wp-rpc could not be found in any version, there may be a typo in the package name.</code></pre>
-<p>  Problem 11</p>
-<pre><code>- The requested package wpackagist-plugin/wp-seo-addon could not be found in any version, there may be a typo in the package name.</code></pre>
+<h2 id="setting-up-local-environment">Setting Up Local Environment</h2>
+<ol>
+<li>Make sure that both node and Composer are installed in your environment.<ul>
+<li>You should be able to run both &#39;npm&#39;, and &#39;composer&#39;.</li>
+</ul>
+</li>
+<li>Run &#39;npm install&#39; to install all the node modules required.</li>
+<li>Run &#39;composer install&#39; to install all of the PHP repositories and libraries required.</li>
+<li>Run &#39;grunt install&#39; in order to properly configure your environment.</li>
+<li>Create a file called &#39;application/etc/wp-config/system.php&#39;, in here define your config details specific to your environment<ul>
+<li>Do this as your normally would in a wp-config file (i.e. define( &#39;DB_HOST&#39;, &#39;localhost&#39; ) ).</li>
+</ul>
+</li>
+<li>Modify your hosts files to add the appropriate domains to your implementation.</li>
+<li>Import the &#39;application/static/fixtures/&#39; base SQL file.</li>
+<li>Navigate to the site. :)</li>
+</ol>
 
   </body>
 </html>

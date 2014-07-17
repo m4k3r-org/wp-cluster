@@ -117,7 +117,6 @@
     "usabilitydynamics/lib-api": "master",
     "wpcloud/wp-vertical-edm": "master",
     "usabilitydynamics/wp-flawless": "dev-legacy",
-    "usabilitydynamics/wp-preview": "master",
     "usabilitydynamics/wp-simplify": "master",
     "usabilitydynamics/wp-elastic": "master",
     "usabilitydynamics/wp-rpc": "master",

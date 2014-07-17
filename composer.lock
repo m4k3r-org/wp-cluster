@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1da288ed352d4081f540e6dd71bc3b01",
+    "hash": "8ced0ba072286f20615ac4ed92481208",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -217,6 +217,9 @@
                 "usabilitydynamics/wp-menufication": "master"
             },
             "type": "wordpress-theme",
+            "extra": {
+                "installer-name": "wp-festival-2.0.0"
+            },
             "autoload": {
                 "classmap": [
                     "lib"
@@ -226,7 +229,7 @@
                 "GPL-2.0"
             ],
             "description": "Festival Theme for the Drop Network",
-            "time": "2014-07-15 20:51:57"
+            "time": "2014-07-16 11:56:24"
         },
         {
             "name": "discodonniepresents/wp-freaksbeatstreats",
@@ -421,6 +424,42 @@
             }
         },
         {
+            "name": "hanamura/wp-model",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hanamura/wp-model.git",
+                "reference": "09c5611c616994d18414beb89ebb1981b86d43e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hanamura/wp-model/zipball/09c5611c616994d18414beb89ebb1981b86d43e6",
+                "reference": "09c5611c616994d18414beb89ebb1981b86d43e6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "WPModel": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taro Hanamura",
+                    "email": "m@hanamurataro.com"
+                }
+            ],
+            "description": "Missing functionalities from model objects of WordPress.",
+            "time": "2014-04-25 08:19:05"
+        },
+        {
             "name": "matthiasmullie/minify",
             "version": "1.2.0",
             "source": {
@@ -560,7 +599,7 @@
             ],
             "authors": [
                 {
-                    "name": "Stephen Clay",
+                    "name": "Steve Clay",
                     "email": "steve@mrclay.org",
                     "homepage": "http://www.mrclay.org/",
                     "role": "Developer"
@@ -889,21 +928,59 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-model/archive/master.zip",
+                "url": "https://github.com/UsabilityDynamics/lib-model/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
+                "hanamura/wp-model": "1.1.1",
                 "usabilitydynamics/lib-meta-box": "*",
                 "usabilitydynamics/lib-utility": "*"
             },
             "type": "library",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "static/scripts/udx.model.js",
+                        "static/scripts/udx.model.validation.js"
+                    ]
+                }
+            },
             "autoload": {
                 "classmap": [
                     "lib"
                 ]
             },
-            "time": "2014-06-18 14:52:09"
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "email": "andy.potanin@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Maxim Peshkov",
+                    "email": "maxim.peshkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anton Korotkov",
+                    "email": "anton.korotkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "http://github.com/usabilitydynamics/lib-models",
+            "keywords": [
+                "models",
+                "shema",
+                "validation"
+            ],
+            "time": "2014-07-17 15:38:22"
         },
         {
             "name": "usabilitydynamics/lib-requires",
@@ -1272,7 +1349,7 @@
                 "varnish",
                 "wordpress"
             ],
-            "time": "2014-07-07 23:00:01"
+            "time": "2014-07-17 18:30:43"
         },
         {
             "name": "usabilitydynamics/wp-elastic",
@@ -1461,35 +1538,6 @@
             "time": "2014-05-22 14:37:28"
         },
         {
-            "name": "usabilitydynamics/wp-preview",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-preview",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/wp-preview/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-settings": "master",
-                "usabilitydynamics/lib-ui": "master",
-                "usabilitydynamics/lib-utility": "master"
-            },
-            "type": "wordpress-plugin",
-            "autoload": {
-                "sourcemap": [
-                    "lib"
-                ]
-            },
-            "time": "2014-01-28 05:25:27"
-        },
-        {
             "name": "usabilitydynamics/wp-rpc",
             "version": "master",
             "source": {
@@ -1518,7 +1566,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-07-09 19:07:03"
+            "time": "2014-07-17 18:47:07"
         },
         {
             "name": "usabilitydynamics/wp-seo-addon",
