@@ -5,7 +5,7 @@
 [![Dependency Status](https://gemnasium.com/discodonniepresents/wp-disco.svg)](https://gemnasium.com/discodonniepresents/wp-disco)
 [![Scrutinizer Quality](http://img.shields.io/scrutinizer/g/discodonniepresents/wp-disco.svg)](https://scrutinizer-ci.com/g/discodonniepresents/wp-disco)
 [![Scrutinizer Coverage](http://img.shields.io/scrutinizer/coverage/g/discodonniepresents/wp-disco.svg)](https://scrutinizer-ci.com/g/discodonniepresents/wp-disco)
-[![CircleCI](https://circleci.com/gh/discodonniepresents/wp-disco.png?circle-token=dc5268ed8b79870f45b64fad741e68418a847bba)](https://circleci.com/gh/discodonniepresents/wp-disco)
+[![CircleCI](https://circleci.com/gh/DiscoDonniePresents/wp-disco.png?circle-token=dc5268ed8b79870f45b64fad741e68418a847bba)](https://circleci.com/gh/DiscoDonniePresents/wp-disco)
 
 ### To Do
 * Add 404 page handler that uses a custom WP page with a specified page template.
