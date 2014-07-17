@@ -38,6 +38,38 @@ namespace DiscoDonniePresents\Eventbrite {
         }
         return $posts;
       }
+      
+      /**
+       * Bulk Updater
+       *
+       * @param array $organizers data
+       * @return mixed
+       */
+      public static function bulk_update( $organizers ) {
+        try {
+          if( !is_array( $organizers ) ) {
+            throw new \Exception( __( 'Incorrect organizers data presented.', get_wp_eventbrite( 'domain' ) ) );
+          }
+          $invalid_post = false;
+          foreach( $organizers as $organizer_id => $data ) {
+            $post = Post::get( $organizer_id );
+            if( is_wp_error( $post ) ) {
+              $invalid_post = true;
+              continue;
+            }
+            foreach( $data as $key => $value ) {
+              $post->{$key} = $value;
+            }
+            $post->save();
+          }
+          if( $invalid_post ) {
+            throw new \Exception( __( 'Some of the organizers were(was) not updated due to incorrect ID presented.', get_wp_eventbrite( 'domain' ) ) );
+          }
+        } catch ( \Exception $e ) {
+          return new WP_Error( 'failed', $e->getMessage() );
+        }
+        return true;
+      }
     
       /**
        * Returns specific schema from file.
@@ -89,8 +121,6 @@ namespace DiscoDonniePresents\Eventbrite {
               wp_delete_post( $wp_organizer->ID, true );
             }
           }
-          
-          //echo "<pre>"; print_r( $organizers ); echo "</pre>"; die();
           
         } catch( \Exception $e ){
           return new WP_Error( 'failed', $e->getMessage() );

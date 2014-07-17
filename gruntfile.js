@@ -43,7 +43,7 @@ module.exports = function build( grunt ) {
           {
             expand: true,
             cwd: joinPath( resolvePath( _paths.styles ), 'src' ),
-            src: [ '*.less' ],
+            src: [ 'admin.global.less' ],
             dest: _paths.styles,
             rename: function renameLess( dest, src ) {
               return joinPath( dest, src.replace( '.less', '.css' ) );
@@ -74,18 +74,20 @@ module.exports = function build( grunt ) {
     
     // Minify Javascript
     uglify: {
-      options: {
-        mangle: false,
-        beautify: false
-      },
-      files: [
-        {
-          expand: true,
-          cwd: 'static/scripts/src',
-          src: [ '*.js' ],
-          dest: 'static/scripts'
-        }
-      ]
+      production: {
+        options: {
+          mangle: false,
+          beautify: false
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'static/scripts/src',
+            src: [ '*.js' ],
+            dest: 'static/scripts'
+          }
+        ]
+      }
     },
     
     clean: {

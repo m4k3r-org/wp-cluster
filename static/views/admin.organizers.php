@@ -14,7 +14,7 @@
   <?php endif; ?>
   <div class="settings-content">
     <form id="uis_form" action="" method="post" >
-      <?php wp_nonce_field( 'ui_settings' ); ?>
+      <?php wp_nonce_field( 'organizers_settings' ); ?>
       <table class="wp-list-table widefat fixed pages">
         <thead>
           <tr>
@@ -42,7 +42,12 @@
                 <td class="column-counter"><h4><?php echo $counter++; ?>.</h4></td>
                 <td class="column-title"><h4><?php echo $organizer->post_title; ?></h4></td>
                 <td class="column-overview"><?php  ?></td>
-                <td class="column-related_users"><?php  ?></td>
+                <td class="column-related_users"><?php  ?>
+                  <?php foreach( (array)$organizer->related_users as $user_id ) : ?>
+                    <?php $user = get_userdata( $user_id ); ?>
+                    <input type="hidden" class="select2" name="organizers[<?php echo $organizer->ID ?>][related_users][]" data-title="<?php echo $user->display_name; ?>" data-id="<?php echo $user->ID; ?>" data-login="<?php echo $user->user_login; ?>" value="<?php echo $user->ID; ?>"/>
+                  <?php endforeach; ?>
+                </td>
                 <td class="column-excerpt"><?php echo wp_trim_words( $organizer->post_content, 30, '...' ); ?></td>
               </tr>
             <?php endforeach; ?>
