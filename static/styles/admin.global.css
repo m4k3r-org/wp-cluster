@@ -620,6 +620,7 @@ table.wp-list-table td.column-counter {
 }
 table.wp-list-table .select2 {
   width: 70%;
+  margin: 1.33em 0;
 }
 /******************
  * Tabs
@@ -718,4 +719,26 @@ table.wp-list-table .select2 {
 .uisf-field .uisf-label {
   float: left;
   width: 175px;
+}
+/******************
+ * Icons
+*******************/
+.eb-plus-icon:before {
+  content: '\f132';
+  display: inline-block;
+  font: normal 28px/32px 'Dashicons';
+  vertical-align: middle;
+  outline: none;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 28px;
+  width: 28px;
+  padding: 0;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }

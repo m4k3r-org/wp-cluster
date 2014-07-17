@@ -94,7 +94,7 @@ namespace DiscoDonniePresents\Eventbrite {
             break;
             
           //** Save/Update Organizers data */
-          case ( $this->screens[ 'organizers' ] == $current_screen->id && isset( $_POST['_wpnonce'] ) || wp_verify_nonce( $_POST['_wpnonce'], 'ui_settings' ) && isset( $_POST[ 'organizers' ] ) ):
+          case ( $this->screens[ 'organizers' ] == $current_screen->id && isset( $_POST['_wpnonce'] ) && wp_verify_nonce( $_POST['_wpnonce'], 'organizers_settings' ) && isset( $_POST[ 'organizers' ] ) ):
             $r = Organizers::bulk_update( $_POST[ 'organizers' ] );
             if( is_wp_error( $r ) ) {
               array_push( $this->errors, $r->get_error_message() );
@@ -163,6 +163,9 @@ namespace DiscoDonniePresents\Eventbrite {
             $data = array(
               'organizers' => Organizers::get_organizers(),
             );
+            
+            //echo "<pre>"; print_r( $data[ 'organizers' ] ); echo "</pre>";
+            
             $this->get_template_part( 'admin.organizers', $data );
             break;
           

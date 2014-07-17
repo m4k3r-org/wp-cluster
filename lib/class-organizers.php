@@ -46,7 +46,7 @@ namespace DiscoDonniePresents\Eventbrite {
        * @return mixed
        */
       public static function bulk_update( $organizers ) {
-        try {
+        try {        
           if( !is_array( $organizers ) ) {
             throw new \Exception( __( 'Incorrect organizers data presented.', get_wp_eventbrite( 'domain' ) ) );
           }

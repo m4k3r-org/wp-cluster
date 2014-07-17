@@ -43,10 +43,15 @@
                 <td class="column-title"><h4><?php echo $organizer->post_title; ?></h4></td>
                 <td class="column-overview"><?php  ?></td>
                 <td class="column-related_users"><?php  ?>
-                  <?php foreach( (array)$organizer->related_users as $user_id ) : ?>
-                    <?php $user = get_userdata( $user_id ); ?>
-                    <input type="hidden" class="select2" name="organizers[<?php echo $organizer->ID ?>][related_users][]" data-title="<?php echo $user->display_name; ?>" data-id="<?php echo $user->ID; ?>" data-login="<?php echo $user->user_login; ?>" value="<?php echo $user->ID; ?>"/>
-                  <?php endforeach; ?>
+                  <ul class="">
+                    <?php foreach( (array)$organizer->related_users as $user_id ) : ?>
+                      <?php $user = get_userdata( $user_id ); ?>
+                      <li class="related-user-item">
+                        <input type="hidden" class="select2" name="organizers[<?php echo $organizer->ID ?>][related_users][]" data-title="<?php echo $user->display_name; ?>" data-id="<?php echo $user->ID; ?>" data-login="<?php echo $user->user_login; ?>" value="<?php echo $user->ID; ?>"/>
+                        <a href="javascript:;" class="add-select2" data-organizer_id="<?php echo $organizer->ID ?>" ><span class="eb-plus-icon"></span></a>
+                      </li>
+                    <?php endforeach; ?>
+                  </ul>
                 </td>
                 <td class="column-excerpt"><?php echo wp_trim_words( $organizer->post_content, 30, '...' ); ?></td>
               </tr>

@@ -24,7 +24,7 @@ namespace DiscoDonniePresents\Eventbrite {
        * @param array $l10n Locale data
        * @author peshkov@UD
        */
-      public function get_schema( $name = '', $l10n = array() ) {
+      public static function get_schema( $name = '', $l10n = array() ) {
         if( !empty( $name ) && file_exists( $file = dirname( __DIR__ ) . '/static/schemas/' . $name . '.json' ) ) {
           return (array)self::l10n_localize( json_decode( file_get_contents( $file ), true ), $l10n );
         }

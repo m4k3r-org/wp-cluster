@@ -42,7 +42,7 @@ namespace DiscoDonniePresents\Eventbrite {
        */
       public function __construct() {
         //** Get our Bootstrap Singleton object */
-        $this->instance =& get_wp_eventbrite();
+        $this->instance = get_wp_eventbrite();
       }
       
       /**

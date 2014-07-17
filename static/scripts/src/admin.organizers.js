@@ -4,6 +4,9 @@
  */
 ( function( $, i ) {
 
+  /**
+   *
+   */
   function usersFormatResult( data ) {
       var markup = "<table class='data-result'><tr>";
       markup += "<td class='data-info'>";
@@ -13,13 +16,34 @@
       return markup;
   }
 
+  /**
+   *
+   *
+   */
   function userFormatSelection( data ) {
       return data.title;
   }
-
-  $( document ).ready( function(){
+  
+  /**
+   *
+   */
+  function add_select( e ) {
+    var wrapper = e.parents( 'ul' ),
+        html = '';
+    html += '<li>';
+    html += '<input type="hidden" class="select2" name="organizers[' + e.data( 'organizer_id' ) + '][related_users][]" data-title="" data-id="" data-login="" value=""/>';
+    html += '<a href="javascript:;" class="remove-select2"><span class="eb-plus-icon"></span></a>';
+    html += '</li>';
     
-    $( ".select2" ).select2( {
+    wrapper.append( html );
+    init_select( $( wrapper.find( 'li:last-child .select2' ) ) );
+  }
+  
+  /**
+   *
+   */
+  function init_select( e ) {
+    $( e ).select2( {
       placeholder: i.l10n.select_user,
       minimumInputLength: 3,
       initSelection : function ( element, callback ) {
@@ -52,6 +76,23 @@
       formatSelection: userFormatSelection, // omitted for brevity, see the source of this page
       dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
       escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+    } );
+  }
+  
+  /**
+   *
+   */
+  $( document ).ready( function(){
+  
+    //** */
+    $( ".add-select2" ).click( function() {
+      add_select( $( this ) );
+      return false;
+    } );
+    
+    //** */
+    $( ".select2" ).each( function( i, e ) {
+      init_select( $( e ) );
     } );
   
   } );
