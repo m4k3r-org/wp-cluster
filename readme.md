@@ -3,7 +3,7 @@
 [![Issues - Backlog](https://badge.waffle.io/DiscoDonniePresents/wp-disco.png?label=backlog&title=Backlog)](http://waffle.io/discodonniepresents/wp-disco/)
 [![Issues - Active](https://badge.waffle.io/DiscoDonniePresents/wp-disco.png?label=in progress&title=Active)](http://waffle.io/discodonniepresents/wp-disco/)
 * * *
-[![Dependency Status](https://gemnasium.com/discodonniepresents/wp-disco.svg)](https://gemnasium.com/discodonniepresents/wp-disco)
+[![Dependency Status](https://gemnasium.com/f56b4e969b951926d6f5cb1a1e85d579.svg)](https://gemnasium.com/DiscoDonniePresents/wp-disco)
 [![Scrutinizer Quality](http://img.shields.io/scrutinizer/g/discodonniepresents/wp-disco.svg)](https://scrutinizer-ci.com/g/discodonniepresents/wp-disco)
 [![Scrutinizer Coverage](http://img.shields.io/scrutinizer/coverage/g/discodonniepresents/wp-disco.svg)](https://scrutinizer-ci.com/g/discodonniepresents/wp-disco)
 [![CircleCI](https://circleci.com/gh/DiscoDonniePresents/wp-disco.png?circle-token=dc5268ed8b79870f45b64fad741e68418a847bba)](https://circleci.com/gh/DiscoDonniePresents/wp-disco)
