@@ -1,3 +1,4 @@
+* * *
 [![Issues - Bug](https://badge.waffle.io/DiscoDonniePresents/wp-disco.png?label=bug&title=Bugs)](http://waffle.io/discodonniepresents/wp-disco)
 [![Issues - Backlog](https://badge.waffle.io/DiscoDonniePresents/wp-disco.png?label=backlog&title=Backlog)](http://waffle.io/discodonniepresents/wp-disco/)
 [![Issues - Active](https://badge.waffle.io/DiscoDonniePresents/wp-disco.png?label=in progress&title=Active)](http://waffle.io/discodonniepresents/wp-disco/)
