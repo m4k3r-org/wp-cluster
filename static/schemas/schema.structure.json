@@ -32,7 +32,9 @@
         "show_in_nav_menus": false,
         "show_ui": false,
         "supports": [
-          "title"
+          "title",
+          "editor",
+          "excerpt"
         ],
         "can_export": true
       },

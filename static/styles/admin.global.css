@@ -16,6 +16,16 @@ div.error label {
   line-height: 28px;
 }
 /******************
+ * Table
+*******************/
+table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+table th.column-counter,
+table td.column-counter {
+  width: 20px;
+}
+/******************
  * Tabs
 *******************/
 #tabs.ui-widget-content {

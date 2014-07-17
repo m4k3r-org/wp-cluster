@@ -25,9 +25,12 @@ namespace DiscoDonniePresents\Eventbrite {
       public static function get_organizers( $args = false ) {
         $args = wp_parse_args( $args, array(
           'post_type' => get_wp_eventbrite( 'post_type.organizer' ),
-          'posts_per_page' => -1
+          'posts_per_page' => -1,
+          'orderby' => 'title',
+          'order' => 'ASC',
         ) );
         $posts = get_posts( $args );
+        
         if( !empty( $posts ) && is_array( $posts ) ) {
           foreach( $posts as &$post ) {
             $post = Post::get( $post );
@@ -58,7 +61,7 @@ namespace DiscoDonniePresents\Eventbrite {
           foreach( $eb_organizers as $i ) {
             $post = false;
             foreach( $wp_organizers as $k => $wp_organizer ) {
-              if( $post->unique_id == $i->organizer->id ) {
+              if( $wp_organizer->eventbrite_id == $i->organizer->id ) {
                 $post = $wp_organizer;
                 unset( $wp_organizers[ $k ] );
                 break;
@@ -67,6 +70,7 @@ namespace DiscoDonniePresents\Eventbrite {
             if( !$post ) {
               $post = Post::get( false, get_wp_eventbrite( 'post_type.organizer' ) );
             }
+            
             //** Data */
             $post->post_title = ( !empty( $i->organizer->name ) ? $i->organizer->name : 'No Name. ID#' . $i->organizer->id );
             $post->post_excerpt = $i->organizer->description;
