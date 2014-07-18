@@ -26,6 +26,10 @@ namespace DiscoDonniePresents\Eventbrite {
         
         //** Set CRON Jobs */
         add_action( 'init', array( $this, 'set_crone_jobs' ) );
+        //add_action( 'wp_loaded', array( $this, 'maybe_send_attendees_notifications' ), 99 );
+        
+        //** Return CSV File is requested */
+        add_filter( "parse_request", array( $this, 'maybe_get_csv_file' ) );
         
         //** WP-CRM Actions */
         /** Add CRM notification fire action */
@@ -34,9 +38,7 @@ namespace DiscoDonniePresents\Eventbrite {
       }
       
       /**
-       * 
-       *
-       *
+       * Set CRONE Jobs
        */
       public function set_crone_jobs() {
         //** Adds attendees notifications cron job */
@@ -47,7 +49,30 @@ namespace DiscoDonniePresents\Eventbrite {
       }
       
       /**
+       * Returns CSV file if request is valid
        *
+       */
+      public function maybe_get_csv_file() {
+        if( !empty( $_REQUEST[ 'eventbrite-attendees' ] ) ) {
+          $uploads = wp_upload_dir();
+          $file = $uploads['basedir'] . '/eb/attendees/' . $_REQUEST[ 'eventbrite-attendees' ] . '.csv';
+          //die( $file );
+          if( file_exists( $file ) ) {
+            //** force download */
+            header( "Content-Type: application/force-download" );
+            header( "Content-Type: application/octet-stream" );
+            header( "Content-Type: application/download" );
+            //** disposition / encoding on response body */
+            header( "Content-Disposition: attachment; filename={$_REQUEST[ 'eventbrite-attendees' ]}.csv" );
+            header( "Content-Transfer-Encoding: binary" );
+            readfile( $file );
+            die();
+          }
+        }
+      }
+      
+      /**
+       * Send Attendees Notifications of ended events to related users.
        */
       public function maybe_send_attendees_notifications() {
         
@@ -98,27 +123,45 @@ namespace DiscoDonniePresents\Eventbrite {
         //** STEP 2. Send Attendees Notifications */
         
         foreach( $data as $i ) {
-          
           $attendees = '';
+          $list = array();
           foreach( $i->attendees as $attendee ) {
+            array_push( $list, array(
+             'first_name' => $attendee->first_name,
+             'last_name' => $attendee->last_name,
+             'email' => $attendee->email,
+            ) );
             $attendees .= $attendee->first_name . ' ' . $attendee->last_name . ' - ' . $attendee->email . ' ' . PHP_EOL;
+          }
+          
+          //** Save CSV file of attendees */
+          $uploads = wp_upload_dir();
+          $filename = '';
+          if ( wp_mkdir_p( $uploads['basedir'] . '/eb/attendees' ) ) {
+            $filename = md5( $i->event->id );
+            $fp = fopen( $uploads['basedir'] . '/eb/attendees/' . $filename . '.csv', 'w' );
+            foreach ( $list as $fields ) {
+              fputcsv( $fp, $fields );
+            }
+            fclose( $fp );
           }
           
           //** Prepare notification data */
           $notification = wp_parse_args( array(
             'trigger_action' => 'eventbrite_attendees_notification',
             'subject' => sprintf( __( '%s Attendees', $this->get( 'domain' ) ), $i->event->title ),
-            'message' => sprintf( __( 'Hello [display_name]%1$s%1$sThe following attendees visited event [event] yesterday:%1$s%1$s[attendees]', $this->get( 'domain' ) ), PHP_EOL ),
-            'crm_log_message' => __( 'Sent Attendees Notification', $this->get( 'domain' ) ),
+            'message' => sprintf( __( 'Hello [display_name]%1$s%1$sThe following attendees visited event [event] yesterday:%1$s%1$s[attendees]%1$s%1$sAlso you can download csv file [csv_file]', $this->get( 'domain' ) ), PHP_EOL ),
+            'crm_log_message' => sprintf( __( 'Sent %s Attendees Notification', $this->get( 'domain' ) ), $i->event->title ),
             'data' => array(
               'display_name' => '',
               'user_email' => '',
               'event' => "<a href=\"{$i->event->url}\">{$i->event->title}</a>",
-              'event_label' => $i->event->title,
+              'event_name' => $i->event->title,
               'event_url' => $i->event->url,
               'event_date' => $i->event->end_date,
               'event_logo' => $i->event->logo,
               'event_description' => $i->event->description,
+              'csv_file' => site_url( "?eventbrite-attendees={$filename}" ),
               'attendees' => $attendees,
             )
           ), $this->_get_notification_template );
