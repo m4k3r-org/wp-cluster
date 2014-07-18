@@ -1,12 +1,12 @@
 {
   "configuration": {
     "main_menu": {
-      "page_title": "WP-Eventbrite",
-      "menu_title": "WP-Eventbrite",
+      "page_title": "Eventbrite",
+      "menu_title": "Eventbrite",
       "menu_slug": "eventbrite_settings"
     },
     "secondary_menu": {
-      "page_title": "WP-Eventbrite Settings",
+      "page_title": "Eventbrite Settings",
       "menu_title": "Settings",
       "menu_slug": "eventbrite_settings"
     }

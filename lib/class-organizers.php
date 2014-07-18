@@ -21,6 +21,7 @@ namespace DiscoDonniePresents\Eventbrite {
       /**
        * Returns the list of all organizers
        *
+       * @return array List of UsabilityDynamics\Model\Post objects
        */
       public static function get_organizers( $args = false ) {
         $args = wp_parse_args( $args, array(
@@ -30,13 +31,36 @@ namespace DiscoDonniePresents\Eventbrite {
           'order' => 'ASC',
         ) );
         $posts = get_posts( $args );
-        
         if( !empty( $posts ) && is_array( $posts ) ) {
           foreach( $posts as &$post ) {
             $post = Post::get( $post );
           }
         }
         return $posts;
+      }
+      
+      /**
+       * Returns organizer object by Eventbrite ID
+       *
+       * @return UsabilityDynamics\Model\Post
+       */
+      public static function get_organizer_by_eventbrite_id( $eventbrite_id ) {
+        global $wpdb;
+        $result = $wpdb->get_col( "
+          SELECT `p`.`ID`
+            FROM `{$wpdb->posts}` as `p` INNER JOIN `{$wpdb->postmeta}` as `m`
+              ON `p`.`ID` = `m`.`post_id`
+            WHERE `p`.`post_type` = '" . get_wp_eventbrite( 'post_type.organizer' ) . "'
+              AND `m`.`meta_key` = 'eventbrite_id'
+              AND `m`.`meta_value` = '{$eventbrite_id}'
+        " );
+        if( !empty( $result ) ) {
+          $post = Post::get( $result[0] );
+          if( !is_wp_error( $post ) ) {
+            return $post;
+          }
+        }
+        return false;
       }
       
       /**

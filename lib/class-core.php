@@ -27,7 +27,7 @@ namespace DiscoDonniePresents\Eventbrite {
         \UsabilityDynamics\Model::define( Utility::get_schema( 'schema.structure' ) );
         
         //** Hooks */
-        add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );
+        add_action( 'wp_loaded', array( $this, 'wp_loaded' ), 0 );
       }
       
       /**

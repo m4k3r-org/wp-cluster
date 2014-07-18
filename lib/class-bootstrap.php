@@ -97,6 +97,8 @@ namespace DiscoDonniePresents\Eventbrite {
       private function load() {
         //** Load Models ( custom post types, meta, taxonomies ), etc */
         new Core();
+        //** Attendees Notifications */
+        new Notifications();
         //** Load User Admin Interfaces */
         new UI();
       }
