@@ -204,7 +204,7 @@ namespace DiscoDonniePresents\Eventbrite {
             break;
           
           case ( isset( $_REQUEST[ 'message' ] ) && $_REQUEST[ 'message' ] == 'updated' ):
-            $message = __( 'Organizers updated', $this->get( 'domain' ) );
+            $message = __( 'Organizers updated.', $this->get( 'domain' ) );
             break;
             
         }

@@ -1,6 +1,13 @@
 //@import "select2-bootstrap";
 @import "select2";
 
+.wp-core-ui .eventbrite-wrap .button, 
+.wp-core-ui .eventbrite-wrap .button-primary, 
+.wp-core-ui .eventbrite-wrap .button-secondary {
+  height: 32px;
+  line-height: 29px;
+}
+
 div.updated, div.error {
   padding: 10px 12px;
   
@@ -15,6 +22,19 @@ div.updated, div.error {
   
   label {
     line-height: 28px;
+  }
+  
+}
+
+.submit-wrapper {
+  padding: 10px 12px;
+  border: 1px solid #e5e5e5;
+  background-color: #f9f9f9;
+  margin: 15px 0;
+  
+  p {
+    margin: 0;
+    padding: 0;
   }
   
 }
@@ -44,15 +64,61 @@ table.wp-list-table {
   th, td {
   
     &.column-counter {
-      width: 20px;
+      width: 3%;
+    }
+    
+    &.column-title {
+      width: 30%;
+      
+      h4 {
+        font-size: 1.1em;
+      }
+    }
+    
+    &.column-overview {
+      width: 40%;
+      
+      label {
+        font-weight: bold;
+        vertical-align: inherit;
+        margin-right: 10px;
+        display: inline-block;
+      }
+      
     }
   
   }
   
   .select2 {
     width: 70%;
-    margin: 1.33em 0;
   }
+  
+  .column-related_users {
+  
+    ul {
+    
+      li.related-user-item {
+        margin: 0.5em 0;
+      
+        &:first-child {
+          margintop: 1.33em;
+        }
+        
+        &:last-child {
+          margin-bottom: 1.33em;
+        }
+        
+        .action {
+          display: none;
+        }
+      
+      }
+    
+    } 
+  
+  }
+  
+  
 
 }
 
@@ -189,8 +255,7 @@ table.wp-list-table {
  * Icons
 *******************/
 
-.eb-plus-icon:before {
-  content: '\f132';
+.eb-icon {
   display: inline-block;
   font: normal 28px/32px 'Dashicons';
   vertical-align: middle;
@@ -207,4 +272,22 @@ table.wp-list-table {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+.eb-plus-icon:before {
+  content: '\f132';
+}
+
+.eb-minus-icon:before {
+  content: '\f460';
+}
+
+.eb-plus-icon:before,
+.eb-minus-icon:before {
+  color: #9C9C9C;
+}
+
+a:hover .eb-plus-icon:before,
+a:hover .eb-minus-icon:before {
+  color: #787878;
 }

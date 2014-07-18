@@ -106,7 +106,7 @@ namespace DiscoDonniePresents\Eventbrite {
             //** Data */
             $post->post_title = ( !empty( $i->organizer->name ) ? $i->organizer->name : 'No Name. ID#' . $i->organizer->id );
             $post->post_excerpt = $i->organizer->description;
-            $post->post_content = $i->organizer->long_description;
+            $post->post_content = ( !empty( $i->organizer->long_description ) ? $i->organizer->long_description : __( 'No Description', get_wp_eventbrite( 'domain' ) ) );
             //** Meta */
             $post->eventbrite_url = $i->organizer->url;
             $post->eventbrite_id = $i->organizer->id;
