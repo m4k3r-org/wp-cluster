@@ -26,7 +26,7 @@ You can use this grunt file to do the following:
 2. Run 'npm install' to install all the node modules required.
 3. Run 'composer install' to install all of the PHP repositories and libraries required.
 4. Run 'grunt install' in order to properly configure your environment.
-5. Create a file called 'application/etc/wp-config/system.php', in here define your config details specific to your environment
+5. Create a file called 'application/static/etc/wp-config/system.php', in here define your config details specific to your environment
    * Do this as your normally would in a wp-config file (i.e. define( 'DB_HOST', 'localhost' ) ).
 6. Modify your hosts files to add the appropriate domains to your implementation.
 7. Import the 'application/static/fixtures/' base SQL file.
