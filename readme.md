@@ -31,3 +31,16 @@ You can use this grunt file to do the following:
 6. Modify your hosts files to add the appropriate domains to your implementation.
 7. Import the 'application/static/fixtures/' base SQL file.
 8. Navigate to the site. :)
+
+## Development Notes
+* If you put 'define( 'SCRIPT_DEBUG', true );' in your local config (system.php), it will use the JS assets which are not concatinated.
+  - This will help with debugging.
+  - You can still run 'grunt requirejs' to build an updated, minified file for exclusion, or 'grunt' to compile CSS + JS
+  - Generally, if you know that it's being used, bring it in as an AMD module, and remove any enqueue that you can, as upon build, you'll have all the script in one file.
+  - For now, continue to use components with composer for JS assets.
+* In wp-festival, if you remove the 'styles/app.css' file, each request to the CSS file will be dynamically generated on the fly.
+  - No need to run grunt watch
+  - ** Only for *nix right now, will work on Windows with some tweaks **
+  - Be sure to compile the grunt asset before a deployment
+* If you're working on 'wp-festival-2', you'll need to 'composer install', then remove 'vendor/libraries/autoload.php', as it conflicts
+  - You'll need to install the front end assets here while in development mode
