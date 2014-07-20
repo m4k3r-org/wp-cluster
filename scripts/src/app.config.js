@@ -12,9 +12,9 @@
  */
 
 (function( c ){
-  
+
   console.debug( 'app configuration', c );
-  
+
   require({
     baseUrl: '/assets/scripts',
     config: define( 'app.config', {
@@ -28,15 +28,15 @@
       'jquery.ui.widget': [ '/wp-includes/js/jquery/ui/jquery.ui.widget.min' ],
       'jquery.ui.accordion': [ '/wp-includes/js/jquery/ui/jquery.ui.accordion.min' ],
       'admin-bar': [ '/wp-includes/js/admin-bar.min' ],
-      'jquery.flexslider' : [ '/assets/scripts/jquery.flexslider' ],
-      'jquery.socialstream' : [ '/vendor/usabilitydynamics/wp-festival/lib/modules/social-stream/scripts/jquery.social.stream.1.5.5.custom' ],
-      'jquery.socialstream.wall' : [ '/vendor/usabilitydynamics/wp-festival/lib/modules/social-stream/scripts/jquery.social.stream.wall.1.3' ],
+      'jquery.flexslider' : [ '/vendor/themes/wp-festival/scripts/jquery.flexslider' ],
+      'jquery.socialstream' : [ '/vendor/themes/wp-festival/lib/modules/social-stream/scripts/jquery.social.stream.1.5.5.custom' ],
+      'jquery.socialstream.wall' : [ '/vendor/themes/wp-festival/lib/modules/social-stream/scripts/jquery.social.stream.wall.1.3' ],
       'jquery.masonry' : [ '/wp-includes/js/jquery/jquery.masonry.min' ],
-      'jquery.colorbox' : [ '/assets/scripts/jquery.colorbox' ],
+      'jquery.colorbox' : [ '/vendor/themes/wp-festival/scripts/jquery.colorbox' ],
       /* Menufication files */
-      'jquery.menufication': [ '/vendor/usabilitydynamics/wp-menufication/scripts/jquery.menufication.min' ],
-      'menufication-setup': [ '/vendor/usabilitydynamics/wp-menufication/scripts/menufication-setup' ],
-      'menufication.advanced': [ '/vendor/usabilitydynamics/wp-festival/scripts/menufication.advanced' ]
+      'jquery.menufication': [ '/vendor/plugins/wp-menufication/scripts/jquery.menufication.min' ],
+      'menufication-setup': [ '/vendor/plugins/wp-menufication/scripts/menufication-setup' ],
+      'menufication.advanced': [ '/vendor/themes/wp-festival/scripts/menufication.advanced' ]
     },
     deps: [ 'jquery', 'app.bootstrap' ],
     shim: {
@@ -112,7 +112,7 @@
     require( [ 'app.main', 'twitter.bootstrap', 'udx.wp.spa' ] );
 
   });
-  
+
 })( _theme_app_config );
- 
+
 
