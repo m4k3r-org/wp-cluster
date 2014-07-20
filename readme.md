@@ -46,3 +46,4 @@ You can use this grunt file to do the following:
   - You'll need to install the front end assets here while in development mode
 * Here are the latest hosts that are used with this network:
   - https://gist.github.com/jbrw1984/bc706cdb05dec4d46794
+* You can look at the current HTML mockups at: vendor/themes/wp-festival-2/static/mocks
