@@ -59,7 +59,8 @@
         "logged_in_salt": "?XqOsBrOJxy>zmc!}/w:Z ajt>Xt~3%34:-Ela/vG8~n.?u2cDYl+ZP^WF7HrR_6",
         "nonce_salt": "2]%rCV OEx#XNn&l:+9x--FM+!vSbRtsYIzQ<Za:+_8.a@d0rgzhb9k=ixGTh/pW",
         "secret_key": "N)6&-NfF%rC;.ic) Ua0BAyB;gT\\%L1i]PRmA9Pd7H!w1jO4qEo_sV@71!-[W}r&",
-        "force_ssl_admin": false
+        "force_ssl_admin": false,
+        "raygun_api_key": "haE1JqYmnVpzEKCsoxgn3g=="
       },
       "default": {
         "wp_memory_limit": "512M",
