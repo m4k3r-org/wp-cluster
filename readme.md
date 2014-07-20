@@ -32,8 +32,8 @@ You can use this grunt file to do the following:
 ### Production Deployment
 
 ```shell
-docker pull discodonniepresents/www.discodonniepresents.com:v2
-docker run -v /home/edm/public_html:/var/www discodonniepresents/www.discodonniepresents.com
+  docker pull discodonniepresents/www.discodonniepresents.com:latest
+  docker run -v /home/edm/public_html:/var/www:rw discodonniepresents/www.discodonniepresents.com:latest
 ```
 
 ## Notes

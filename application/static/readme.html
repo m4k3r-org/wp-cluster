@@ -114,6 +114,13 @@
   <body>  
     <p>DiscoDonniePresents.com &amp; the EDM Cluster</p>
 <h2 id="running-build">Running Build</h2>
+<p>Standard Linux Makefile is used for easy setup for local development as well as building a Docker container for distribution.</p>
+<pre><code class="lang-shell"># Install for Development
+make install</code></pre>
+<pre><code class="lang-shell"># Build for Produciton
+make build</code></pre>
+<pre><code class="lang-shell"># Build Docker Distribution Container
+make docker</code></pre>
 <p>We use grunt to run the build, here is the command that should be used:</p>
 <pre><code class="lang-shell">You can use this grunt file to do the following:
    * grunt install - installs and builds environment
@@ -121,6 +128,9 @@
       --environment={environment} - builds specific environment: (production**, development, staging, local)
       --system={system} - build for a specific system: (linux**, windows
       --type={type} - build for a specific site type: (standalone**, cluster, multisite)</code></pre>
+<h3 id="production-deployment">Production Deployment</h3>
+<pre><code class="lang-shell">  docker pull discodonniepresents/www.discodonniepresents.com:latest
+  docker run -v /home/edm/public_html:/var/www:rw discodonniepresents/www.discodonniepresents.com:latest</code></pre>
 <h2 id="notes">Notes</h2>
 <ul>
 <li>Each directory has a corresponding &#39;readme.md&#39; which gives a brief spiel on what the directory should be used for.</li>
@@ -144,6 +154,31 @@
 <li>Import the &#39;application/static/fixtures/&#39; base SQL file.</li>
 <li>Navigate to the site. :)</li>
 </ol>
+<h2 id="development-notes">Development Notes</h2>
+<ul>
+<li>If you put &#39;define( &#39;SCRIPT_DEBUG&#39;, true );&#39; in your local config (system.php), it will use the JS assets which are not concatinated.<ul>
+<li>This will help with debugging.</li>
+<li>You can still run &#39;grunt requirejs&#39; to build an updated, minified file for exclusion, or &#39;grunt&#39; to compile CSS + JS</li>
+<li>Generally, if you know that it&#39;s being used, bring it in as an AMD module, and remove any enqueue that you can, as upon build, you&#39;ll have all the script in one file.</li>
+<li>For now, continue to use components with composer for JS assets.</li>
+</ul>
+</li>
+<li>In wp-festival, if you remove the &#39;styles/app.css&#39; file, each request to the CSS file will be dynamically generated on the fly.<ul>
+<li>No need to run grunt watch</li>
+<li><strong> Only for *nix right now, will work on Windows with some tweaks </strong></li>
+<li>Be sure to compile the grunt asset before a deployment</li>
+</ul>
+</li>
+<li>If you&#39;re working on &#39;wp-festival-2&#39;, you&#39;ll need to &#39;composer install&#39;, then remove &#39;vendor/libraries/autoload.php&#39;, as it conflicts<ul>
+<li>You&#39;ll need to install the front end assets here while in development mode</li>
+</ul>
+</li>
+<li>Here are the latest hosts that are used with this network:<ul>
+<li><a href="https://gist.github.com/jbrw1984/bc706cdb05dec4d46794">https://gist.github.com/jbrw1984/bc706cdb05dec4d46794</a></li>
+</ul>
+</li>
+<li>You can look at the current HTML mockups at: vendor/themes/wp-festival-2/static/mocks</li>
+</ul>
 
   </body>
 </html>

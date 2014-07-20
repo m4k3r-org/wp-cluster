@@ -15,7 +15,7 @@ storage
 storage/*
 node_modules
 cache
-vendor
+vendor/**
 upgrade
 uploads
 advanced-cache.php
