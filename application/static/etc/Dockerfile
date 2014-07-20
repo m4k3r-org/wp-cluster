@@ -11,10 +11,10 @@ MAINTAINER    UsabilityDynamics, Inc. <info@usabilitydynamics.com>
 USER          root
 
 RUN           mkdir -p /var/www
-#RUN           git clone git@github.com:DiscoDonniePresents/www.discodonniepresents.com.git /var/www
-#RUN           npm install
-#RUN           composer install
-#RUN           grunt install --environment=cluster
+
+ADD           application   /var/www/application
+ADD           storage       /var/www/storage
+ADD           vendor        /var/www/vendor
 
 VOLUME        /var/www
 VOLUME        /var/www/storage

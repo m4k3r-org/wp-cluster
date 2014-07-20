@@ -11,8 +11,9 @@ default:
 
 # Build Docker Image for deployment
 docker:
-	cd application/static/etc && \
-	docker build -t $(NAME):$(VERSION) --rm . \
+	cp application/static/etc/Dockerfile ./Dockerfile
+	docker build -t $(NAME):$(VERSION) --rm .
+	unlink ./Dockerfile
 
 # Build Docker Image for deployment
 release:
@@ -21,12 +22,12 @@ release:
 
 # Build for Distribution
 build:
-	npm install --silent --production && \
-	composer install --prefer-dist && \
+	npm install --silent --production
+	application/bin/composer install --prefer-dist
 	grunt install --environment=production --system=linux --type=cluster
 
 # Install for Development
 install:
-	npm install --silent --development && \
-	composer install --prefer-source && \
+	npm install --silent --development
+	application/bin/composer install --prefer-source
 	grunt install --environment=development --type=cluster
