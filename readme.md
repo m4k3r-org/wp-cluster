@@ -44,3 +44,5 @@ You can use this grunt file to do the following:
   - Be sure to compile the grunt asset before a deployment
 * If you're working on 'wp-festival-2', you'll need to 'composer install', then remove 'vendor/libraries/autoload.php', as it conflicts
   - You'll need to install the front end assets here while in development mode
+* Here are the latest hosts that are used with this network:
+  - https://gist.github.com/jbrw1984/bc706cdb05dec4d46794
