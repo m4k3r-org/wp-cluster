@@ -11,9 +11,7 @@ default:
 
 # Build Docker Image for deployment
 docker:
-	cp application/static/etc/Dockerfile ./Dockerfile
 	docker build -t $(NAME):$(VERSION) --rm .
-	unlink ./Dockerfile
 
 # Build Docker Image for deployment
 release:
