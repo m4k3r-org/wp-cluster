@@ -46,7 +46,7 @@
         "db_host": "shaniqua",
         "wp_debug": true,
         "wp_debug_display": false,
-        "wp_debug_log": false,
+        "wp_debug_log": true,
         "script_debug": false,
         "savequeries": false,
         "wp_default_theme": "wp-splash",
