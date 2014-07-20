@@ -14,11 +14,11 @@
   ],
   "config": {
     "preferred-install": "source",
+    "github-protocols": [ "ssh" ],
     "vendor-dir": "vendor/libraries",
     "bin-dir": "vendor/bin",
     "component-dir": "vendor/components",
-    "optimize-autoloader": true,
-    "autoloader-suffix": "UsabilityDynamicsVendor"
+    "optimize-autoloader": true
   },
   "extra": {
     "installer-paths": {
