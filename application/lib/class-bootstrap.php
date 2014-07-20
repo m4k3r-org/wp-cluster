@@ -301,7 +301,7 @@ namespace EDM\Application {
      */
     public function login_enqueue_scripts() {
       echo implode( '', array(
-        '<link rel="stylesheet" id="network-styles" href="', self::application_url( '/styles/login.css' ), '" type="text/css" media="all" />'
+        '<link rel="stylesheet" id="network-styles" href="', self::application_url( '/static/styles/login.css' ), '" type="text/css" media="all" />'
       ));
     }
 
