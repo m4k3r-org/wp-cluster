@@ -133,10 +133,10 @@
 <li>You should be able to run both &#39;npm&#39;, and &#39;composer&#39;.</li>
 </ul>
 </li>
-<li>Run &#39;npm install&#39; to install all the node modules required.</li>
-<li>Run &#39;composer install&#39; to install all of the PHP repositories and libraries required.</li>
-<li>Run &#39;grunt install&#39; in order to properly configure your environment.</li>
-<li>Create a file called &#39;application/etc/wp-config/system.php&#39;, in here define your config details specific to your environment<ul>
+<li>Run <code>npm install --development</code> to install all the node modules required.</li>
+<li>Run <code>composer install --prefer-source</code> to install all of the PHP repositories and libraries required.</li>
+<li>Run <code>grunt install --type=cluster</code> in order to properly configure your environment.</li>
+<li>Create a file called &#39;application/static/etc/wp-config/system.php&#39;, in here define your config details specific to your environment<ul>
 <li>Do this as your normally would in a wp-config file (i.e. define( &#39;DB_HOST&#39;, &#39;localhost&#39; ) ).</li>
 </ul>
 </li>

@@ -23,9 +23,9 @@ You can use this grunt file to do the following:
 
 1. Make sure that both node and Composer are installed in your environment.
    * You should be able to run both 'npm', and 'composer'.
-2. Run 'npm install' to install all the node modules required.
-3. Run 'composer install' to install all of the PHP repositories and libraries required.
-4. Run 'grunt install' in order to properly configure your environment.
+2. Run `npm install --development` to install all the node modules required.
+3. Run `composer install --prefer-source` to install all of the PHP repositories and libraries required.
+4. Run `grunt install --type=cluster` in order to properly configure your environment.
 5. Create a file called 'application/static/etc/wp-config/system.php', in here define your config details specific to your environment
    * Do this as your normally would in a wp-config file (i.e. define( 'DB_HOST', 'localhost' ) ).
 6. Modify your hosts files to add the appropriate domains to your implementation.

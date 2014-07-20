@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "62cc43f6e6a0f3d69d0813a3765cea01",
+    "hash": "84215acd9d939847776d40e35a2e45f4",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -427,34 +427,26 @@
             },
             "type": "wordpress-theme",
             "extra": {
-                "installer-name": "wp-festival-2.0.0"
+                "installer-name": "wp-festival-2"
             },
             "autoload": {
                 "classmap": [
                     "lib"
                 ]
             },
-            "scripts": {
-                "pre-install-cmd": [
-                    "npm install --silent"
-                ],
-                "post-install-cmd": [
-                    "grunt deploy --force"
-                ]
-            },
             "license": [
                 "GPL-2.0"
             ],
             "description": "Festival Theme for the Drop Network",
-            "time": "2014-07-18 16:15:20"
+            "time": "2014-07-20 11:52:37"
         },
         {
-            "name": "discodonniepresents/wp-festival-1.2.0",
-            "version": "1.2.0",
+            "name": "discodonniepresents/wp-festival-v1",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:DiscoDonniePresents/wp-festival",
-                "reference": "1.2.0"
+                "reference": "1.2.1"
             },
             "dist": {
                 "type": "zip",
@@ -1675,7 +1667,7 @@
                     "lib/class-utility.php"
                 ]
             },
-            "time": "2014-05-20 16:41:19"
+            "time": "2014-07-20 05:10:20"
         },
         {
             "name": "usabilitydynamics/wp-amd",
