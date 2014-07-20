@@ -1,6 +1,22 @@
 DiscoDonniePresents.com & the EDM Cluster
 
 ## Running Build
+Standard Linux Makefile is used for easy setup for local development as well as building a Docker container for distribution.
+
+```shell
+# Install for Development
+make install
+```
+
+```shell
+# Build for Produciton
+make build
+```
+
+```shell
+# Build Docker Distribution Container
+make docker
+```
 
 We use grunt to run the build, here is the command that should be used:
 
