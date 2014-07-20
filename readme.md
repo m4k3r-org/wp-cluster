@@ -1,54 +1,29 @@
 DiscoDonniePresents.com & the EDM Cluster
 
-### Developing
+### Getting Started
 Standard Linux Makefile is used for easy setup for local development as well as building a Docker container for distribution.
+All below commands should be ran from the project root.
 
-Install for Development
-```shell
-make
-```
-
-Install for Local Development
-```shell
-make local
-```
-
-Build for Produciton
-```shell
-make build
-```
-
-Build Docker Distribution Container
-```shell
-make docker
-```
-
-We use grunt to run the build, here is the command that should be used:
-
-```shell
-You can use this grunt file to do the following:
-   * grunt install - installs and builds environment
-   * Arguments:
-      --environment={environment} - builds specific environment: (production**, development, staging, local)
-      --system={system} - build for a specific system: (linux**, windows
-      --type={type} - build for a specific site type: (standalone**, cluster, multisite)
-```
+* `make install` - Install for Development
+* `make build` - Build Docker image for distribution.
+* `make docker` - Create docker image.
+* `make release` - Release docker image.
+* `tail -f application/logs/*/*.log` - Monitor all logs.
 
 ### Production Deployment
+WIP
 
 ```shell
   docker pull discodonniepresents/www.discodonniepresents.com:latest
   docker run -v /home/edm/public_html:/var/www:rw discodonniepresents/www.discodonniepresents.com:latest
 ```
 
-## Notes
-
+### Notes
 * Each directory has a corresponding 'readme.md' which gives a brief spiel on what the directory should be used for.
 * The username should be 'reidwilliams' for the local environment, and the password should be 'password'
 * Use http://umesouthpadre.com/ as an example site that version 1 of the festival theme has been implemented
 
-## Setting Up Local Environment
-
+### Setting Up Local Environment
 1. Make sure that both node and Composer are installed in your environment.
    * You should be able to run both 'npm', and 'composer'.
 2. Run `npm install --development` to install all the node modules required.
@@ -60,7 +35,7 @@ You can use this grunt file to do the following:
 7. Import the 'application/static/fixtures/' base SQL file.
 8. Navigate to the site. :)
 
-## Development Notes
+### Development Notes
 * If you put 'define( 'SCRIPT_DEBUG', true );' in your local config (system.php), it will use the JS assets which are not concatinated.
   - This will help with debugging.
   - You can still run 'grunt requirejs' to build an updated, minified file for exclusion, or 'grunt' to compile CSS + JS
@@ -75,3 +50,13 @@ You can use this grunt file to do the following:
 * Here are the latest hosts that are used with this network:
   - https://gist.github.com/jbrw1984/bc706cdb05dec4d46794
 * You can look at the current HTML mockups at: vendor/themes/wp-festival-2/static/mocks
+
+We use grunt to run the build, here is the command that should be used:
+```shell
+You can use this grunt file to do the following:
+   * grunt install - installs and builds environment
+   * Arguments:
+      --environment={environment} - builds specific environment: (production**, development, staging, local)
+      --system={system} - build for a specific system: (linux**, windows
+      --type={type} - build for a specific site type: (standalone**, cluster, multisite)
+```

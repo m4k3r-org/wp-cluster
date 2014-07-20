@@ -110,7 +110,7 @@
     "php": ">=5.3",
     "composer/installers": "~1.0",
     "usabilitydynamics/lib-installer": "master",
-    "automattic/wordpress": "3.9.1",
+    "automattic/wordpress": "4.0-beta2",
     "usabilitydynamics/wp-cluster": "master",
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-splash": "master",
