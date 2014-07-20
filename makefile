@@ -20,12 +20,18 @@ release:
 
 # Build for Distribution
 build:
-	npm install --silent --production
+	npm install --production
 	application/bin/composer install --prefer-dist
 	grunt install --environment=production --system=linux --type=cluster
 
-# Install for Development
+# Install for Staging/Development
 install:
-	npm install --silent --development
+	npm install --development
 	application/bin/composer install --prefer-source
 	grunt install --environment=development --type=cluster
+
+# Install for Local Development
+local:
+	npm install --development
+	application/bin/composer install --prefer-source
+	grunt install --environment=local --type=cluster

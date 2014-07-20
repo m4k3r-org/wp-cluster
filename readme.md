@@ -5,7 +5,12 @@ Standard Linux Makefile is used for easy setup for local development as well as 
 
 ```shell
 # Install for Development
-make install
+make
+```
+
+```shell
+# Install for Local Development
+make local
 ```
 
 ```shell

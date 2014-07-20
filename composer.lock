@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "84215acd9d939847776d40e35a2e45f4",
+    "hash": "f039194160016135e73ae72e62596c09",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -438,7 +438,7 @@
                 "GPL-2.0"
             ],
             "description": "Festival Theme for the Drop Network",
-            "time": "2014-07-20 11:52:37"
+            "time": "2014-07-20 18:48:05"
         },
         {
             "name": "discodonniepresents/wp-festival-v1",
