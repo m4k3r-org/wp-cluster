@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8ced0ba072286f20615ac4ed92481208",
+    "hash": "62cc43f6e6a0f3d69d0813a3765cea01",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -27,6 +27,208 @@
             "type": "platform",
             "extra": {
                 "installer-name": "wordpress-3.9.1"
+            }
+        },
+        {
+            "name": "components/caroufredsel",
+            "version": "6.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gilbitron/carouFredSel",
+                "reference": "b19cb6ac571ac62e68b1982f680edb451558ed8b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/gilbitron/carouFredSel/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.carouFredSel-6.2.1.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/dotdotdot",
+            "version": "1.6.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BeSite/jQuery.dotdotdot",
+                "reference": "v1.6.14"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/BeSite/jQuery.dotdotdot/archive/v1.6.14.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "src/js/jquery.dotdotdot.min.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/iscroll",
+            "version": "5.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cubiq/iscroll",
+                "reference": "v5.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/cubiq/iscroll/archive/v5.1.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "build/iscroll.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/jquery",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jquery.git",
+                "reference": "099ad075783a6189f13c1e742e03f9cc95654a27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jquery/zipball/099ad075783a6189f13c1e742e03f9cc95654a27",
+                "reference": "099ad075783a6189f13c1e742e03f9cc95654a27",
+                "shasum": ""
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.js"
+                    ],
+                    "files": [
+                        "jquery.min.js",
+                        "jquery.min.map",
+                        "jquery-migrate.js",
+                        "jquery-migrate.min.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Resig",
+                    "email": "jeresig@gmail.com",
+                    "homepage": "http://ejohn.org/"
+                }
+            ],
+            "description": "jQuery JavaScript Library",
+            "homepage": "http://jquery.com",
+            "time": "2014-01-24 19:52:32"
+        },
+        {
+            "name": "components/knockout",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/knockout/knockout",
+                "reference": "v3.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/knockout/knockout/archive/v3.1.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "dist/knockout.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/masonry",
+            "version": "3.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/desandro/masonry",
+                "reference": "v3.1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/desandro/masonry/archive/v3.1.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "dist/masonry.pkgd.min.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/sticky",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2degrees/jquery.sticky",
+                "reference": "a0acf2cee5cbd9cdf34f9a37c0a17781f0265a9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/2degrees/jquery.sticky/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.sticky.js"
+                    ]
+                }
             }
         },
         {
@@ -207,6 +409,13 @@
                 "shasum": null
             },
             "require": {
+                "components/caroufredsel": "6.2.1",
+                "components/dotdotdot": "1.6.14",
+                "components/iscroll": "5.1.1",
+                "components/jquery": "2.1.0",
+                "components/knockout": "3.1.0",
+                "components/masonry": "3.1.5",
+                "components/sticky": "1.0.0",
                 "composer/installers": "~1.0",
                 "usabilitydynamics/lib-carrington": "master",
                 "usabilitydynamics/lib-meta-box": "master",
@@ -225,11 +434,57 @@
                     "lib"
                 ]
             },
+            "scripts": {
+                "pre-install-cmd": [
+                    "npm install --silent"
+                ],
+                "post-install-cmd": [
+                    "grunt deploy --force"
+                ]
+            },
             "license": [
                 "GPL-2.0"
             ],
             "description": "Festival Theme for the Drop Network",
-            "time": "2014-07-16 11:56:24"
+            "time": "2014-07-18 16:15:20"
+        },
+        {
+            "name": "discodonniepresents/wp-festival-1.2.0",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:DiscoDonniePresents/wp-festival",
+                "reference": "1.2.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/DiscoDonniePresents/wp-festival/archive/1.2.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "usabilitydynamics/lib-carrington": "master",
+                "usabilitydynamics/lib-meta-box": "master",
+                "usabilitydynamics/lib-settings": "master",
+                "usabilitydynamics/lib-wp-shortcode": "master",
+                "usabilitydynamics/lib-wp-theme": "master",
+                "usabilitydynamics/wp-amd": "master",
+                "usabilitydynamics/wp-menufication": "master"
+            },
+            "type": "wordpress-theme",
+            "extra": {
+                "installer-name": "wp-festival"
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "GPL-2.0"
+            ],
+            "description": "Festival Theme for the Drop Network"
         },
         {
             "name": "discodonniepresents/wp-freaksbeatstreats",
@@ -460,6 +715,80 @@
             "time": "2014-04-25 08:19:05"
         },
         {
+            "name": "kriswallsmith/assetic",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kriswallsmith/assetic.git",
+                "reference": "5bea57990f7ddbeb3d57e7ef96eae9ddd56c4297"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/5bea57990f7ddbeb3d57e7ef96eae9ddd56c4297",
+                "reference": "5bea57990f7ddbeb3d57e7ef96eae9ddd56c4297",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1",
+                "symfony/process": "~2.1"
+            },
+            "require-dev": {
+                "cssmin/cssmin": "*",
+                "joliclic/javascript-packer": "*",
+                "kamicane/packager": "*",
+                "leafo/lessphp": "*",
+                "leafo/scssphp": "*",
+                "leafo/scssphp-compass": "*",
+                "mrclay/minify": "*",
+                "patchwork/jsqueeze": "*",
+                "phpunit/phpunit": "~3.7",
+                "psr/log": "~1.0",
+                "ptachoire/cssembed": "*",
+                "twig/twig": "~1.6"
+            },
+            "suggest": {
+                "leafo/lessphp": "Assetic provides the integration with the lessphp LESS compiler",
+                "leafo/scssphp": "Assetic provides the integration with the scssphp SCSS compiler",
+                "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin",
+                "patchwork/jsqueeze": "Assetic provides the integration with the JSqueeze JavaScript compressor",
+                "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
+                "twig/twig": "Assetic provides the integration with the Twig templating engine"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Assetic": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                }
+            ],
+            "description": "Asset Management for PHP",
+            "homepage": "https://github.com/kriswallsmith/assetic",
+            "keywords": [
+                "assets",
+                "compression",
+                "minification"
+            ],
+            "time": "2014-07-08 11:30:40"
+        },
+        {
             "name": "matthiasmullie/minify",
             "version": "1.2.0",
             "source": {
@@ -504,12 +833,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "8228d1ee833dbec710161ac179d1fb9ff6cd6f28"
+                "reference": "61145103b6521d04c0386d1ea6899437df9d45e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/8228d1ee833dbec710161ac179d1fb9ff6cd6f28",
-                "reference": "8228d1ee833dbec710161ac179d1fb9ff6cd6f28",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/61145103b6521d04c0386d1ea6899437df9d45e2",
+                "reference": "61145103b6521d04c0386d1ea6899437df9d45e2",
                 "shasum": ""
             },
             "require": {
@@ -556,8 +885,7 @@
                 {
                     "name": "Jordi Boggiano",
                     "email": "j.boggiano@seld.be",
-                    "homepage": "http://seld.be",
-                    "role": "Developer"
+                    "homepage": "http://seld.be"
                 }
             ],
             "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
@@ -567,7 +895,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-06-30 13:24:53"
+            "time": "2014-07-19 19:11:34"
         },
         {
             "name": "mrclay/minify",
@@ -653,6 +981,51 @@
             "time": "2014-01-18 15:33:09"
         },
         {
+            "name": "robloach/component-installer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RobLoach/component-installer.git",
+                "reference": "225068e491c5059d006a7841257540979f082012"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/225068e491c5059d006a7841257540979f082012",
+                "reference": "225068e491c5059d006a7841257540979f082012",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "1.0.0",
+                "kriswallsmith/assetic": "1.*",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "composer/composer": "1.*"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "ComponentInstaller\\Installer"
+            },
+            "autoload": {
+                "psr-0": {
+                    "ComponentInstaller": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Loach",
+                    "email": "robloach@gmail.com",
+                    "homepage": "http://robloach.net"
+                }
+            ],
+            "description": "Allows installation of Components via Composer.",
+            "time": "2014-07-10 16:19:44"
+        },
+        {
             "name": "siteorigin/panels",
             "version": "master",
             "source": {
@@ -709,6 +1082,55 @@
                 "wordpress"
             ],
             "time": "2014-06-04 16:34:03"
+        },
+        {
+            "name": "symfony/process",
+            "version": "dev-master",
+            "target-dir": "Symfony/Component/Process",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Process.git",
+                "reference": "b3bb3b0e31de92bfe994389a841564aae73b1d23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/b3bb3b0e31de92bfe994389a841564aae73b1d23",
+                "reference": "b3bb3b0e31de92bfe994389a841564aae73b1d23",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Process\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-07-09 09:06:26"
         },
         {
             "name": "usabilitydynamics/lib-api",
@@ -1190,7 +1612,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-06-25 21:24:06"
+            "time": "2014-07-18 17:34:11"
         },
         {
             "name": "usabilitydynamics/lib-wp-shortcode",
