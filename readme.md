@@ -1,25 +1,25 @@
 DiscoDonniePresents.com & the EDM Cluster
 
-## Running Build
+### Developing
 Standard Linux Makefile is used for easy setup for local development as well as building a Docker container for distribution.
 
+Install for Development
 ```shell
-# Install for Development
 make
 ```
 
+Install for Local Development
 ```shell
-# Install for Local Development
 make local
 ```
 
+Build for Produciton
 ```shell
-# Build for Produciton
 make build
 ```
 
+Build Docker Distribution Container
 ```shell
-# Build Docker Distribution Container
 make docker
 ```
 

@@ -3,8 +3,9 @@
 ## docker build -t discodonniepresents/www.discodonniepresents.com:0.1.0 --rm .
 ##
 
-NAME 			= discodonniepresents/www.discodonniepresents.com
-VERSION 	= 0.1.0
+ORGANIATION  = discodonniepresents
+NAME 			   = discodonniepresents/www.discodonniepresents.com
+VERSION 	   = latest
 
 default:
 	make install
@@ -15,8 +16,8 @@ docker:
 
 # Build Docker Image for deployment
 release:
-	docker tag discodonniepresents/www.discodonniepresents.com discodonniepresents/www.discodonniepresents.com:0.1.0
-	docker push discodonniepresents/www.discodonniepresents.com:0.1.0
+	docker tag $(ORGANIATION)/$(NAME) $(ORGANIATION)/$(NAME):$(VERSION)
+	docker push $(ORGANIATION)/$(NAME):$(VERSION)
 
 # Build for Distribution
 build:
@@ -29,9 +30,3 @@ install:
 	npm install --development
 	application/bin/composer install --prefer-source
 	grunt install --environment=development --type=cluster
-
-# Install for Local Development
-local:
-	npm install --development
-	application/bin/composer install --prefer-source
-	grunt install --environment=local --type=cluster
