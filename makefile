@@ -1,6 +1,6 @@
 ## Build DDP Site/Network
 ##
-## 
+## docker build -t discodonniepresents/www.discodonniepresents.com:0.1.0 --rm .
 ##
 
 NAME 			= discodonniepresents/www.discodonniepresents.com
