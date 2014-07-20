@@ -1,6 +1,22 @@
 DiscoDonniePresents.com & the EDM Cluster
 
 ## Running Build
+Standard Linux Makefile is used for easy setup for local development as well as building a Docker container for distribution.
+
+```shell
+# Install for Development
+make install
+```
+
+```shell
+# Build for Produciton
+make build
+```
+
+```shell
+# Build Docker Distribution Container
+make docker
+```
 
 We use grunt to run the build, here is the command that should be used:
 
@@ -11,6 +27,13 @@ You can use this grunt file to do the following:
       --environment={environment} - builds specific environment: (production**, development, staging, local)
       --system={system} - build for a specific system: (linux**, windows
       --type={type} - build for a specific site type: (standalone**, cluster, multisite)
+```
+
+### Production Deployment
+
+```shell
+docker pull discodonniepresents/www.discodonniepresents.com:v2
+docker run -v /home/edm/public_html:/var/www discodonniepresents/www.discodonniepresents.com
 ```
 
 ## Notes
@@ -31,3 +54,19 @@ You can use this grunt file to do the following:
 6. Modify your hosts files to add the appropriate domains to your implementation.
 7. Import the 'application/static/fixtures/' base SQL file.
 8. Navigate to the site. :)
+
+## Development Notes
+* If you put 'define( 'SCRIPT_DEBUG', true );' in your local config (system.php), it will use the JS assets which are not concatinated.
+  - This will help with debugging.
+  - You can still run 'grunt requirejs' to build an updated, minified file for exclusion, or 'grunt' to compile CSS + JS
+  - Generally, if you know that it's being used, bring it in as an AMD module, and remove any enqueue that you can, as upon build, you'll have all the script in one file.
+  - For now, continue to use components with composer for JS assets.
+* In wp-festival, if you remove the 'styles/app.css' file, each request to the CSS file will be dynamically generated on the fly.
+  - No need to run grunt watch
+  - ** Only for *nix right now, will work on Windows with some tweaks **
+  - Be sure to compile the grunt asset before a deployment
+* If you're working on 'wp-festival-2', you'll need to 'composer install', then remove 'vendor/libraries/autoload.php', as it conflicts
+  - You'll need to install the front end assets here while in development mode
+* Here are the latest hosts that are used with this network:
+  - https://gist.github.com/jbrw1984/bc706cdb05dec4d46794
+* You can look at the current HTML mockups at: vendor/themes/wp-festival-2/static/mocks

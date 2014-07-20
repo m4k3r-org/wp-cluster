@@ -1,6 +1,6 @@
 ## Build DDP Site/Network
 ##
-## 
+## docker build -t discodonniepresents/www.discodonniepresents.com:0.1.0 --rm .
 ##
 
 NAME 			= discodonniepresents/www.discodonniepresents.com
@@ -12,7 +12,12 @@ default:
 # Build Docker Image for deployment
 docker:
 	cd application/static/etc && \
-	docker build -t $(NAME):$(VERSION) --rm .
+	docker build -t $(NAME):$(VERSION) --rm . \
+
+# Build Docker Image for deployment
+release:
+	docker tag discodonniepresents/www.discodonniepresents.com discodonniepresents/www.discodonniepresents.com:0.1.0
+	docker push discodonniepresents/www.discodonniepresents.com:0.1.0
 
 # Build for Distribution
 build:
@@ -24,4 +29,4 @@ build:
 install:
 	npm install --silent --development && \
 	composer install --prefer-source && \
-	grunt install --environment=development --system=linux --type=cluster
+	grunt install --environment=development --type=cluster
