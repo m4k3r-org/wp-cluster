@@ -1,6 +1,6 @@
 {
   "name": "DiscoDonniePresents/www.discodonniepresents.com",
-  "version": "1.0.0",
+  "version": "v2",
   "type": "project",
   "repositories": [
     {
@@ -116,9 +116,7 @@
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-network": "master",
     "usabilitydynamics/wp-elastic": "master",
-    "wpcloud/wp-vertical-edm": "master"
-  },
-  "requireThemes": {
+    "wpcloud/wp-vertical-edm": "master",
     "usabilitydynamics/wp-splash": "master",
     "usabilitydynamics/wp-flawless": "dev-legacy",
     "discodonniepresents/wp-spectacle": "master",
@@ -132,9 +130,7 @@
     "discodonniepresents/wp-lanmexico": "master",
     "discodonniepresents/wp-monsterblockparty": "master",
     "discodonniepresents/wp-thegift": "master",
-    "discodonniepresents/wp-winterfantasy": "master"
-  },
-  "requirePlugins": {
+    "discodonniepresents/wp-winterfantasy": "master",
     "usabilitydynamics/wp-simplify": "master",
     "wpackagist-plugin/public-post-preview": "2.3",
     "wpackagist-plugin/wpmandrill": "1.33",
@@ -159,7 +155,7 @@
     "usabilitydynamics/wp-seo-addon": "master"
   },
   "autoload": {
-    "classmap": [ "application/lib"],
+    "classmap": [ "application/lib" ],
     "files": [
       "vendor/modules/wp-cluster/wp-cluster.php",
       "vendor/modules/wp-veneer/wp-veneer.php",
