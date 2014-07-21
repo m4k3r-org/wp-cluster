@@ -7,7 +7,7 @@
 ##
 ## ### Pull and Run
 ## docker pull      andypotanin/www.discodonniepresents.com:latest
-## docker run --name edm -d -v /var/www/ andypotanin/www.discodonniepresents.com:latest
+## docker run       --name edm -d -v /var/www/ andypotanin/www.discodonniepresents.com:latest
 ##
 ################################################################################################
 

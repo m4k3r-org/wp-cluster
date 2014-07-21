@@ -14,9 +14,9 @@ All below commands should be ran from the project root.
 WIP
 
 ```shell
-docker pull andypotanin/www.discodonniepresents.com:latest
-docker run --name=edm -it andypotanin/www.discodonniepresents.com:0.1.6
-docker run -it andypotanin/www.discodonniepresents.com:0.1.6 which grunt
+docker pull                   andypotanin/www.discodonniepresents.com:latest
+docker run --name=edm   -itd  andypotanin/www.discodonniepresents.com:latest
+docker run --name=temp  -it   andypotanin/www.discodonniepresents.com:latest  --help
 ```
 
 ### Notes
