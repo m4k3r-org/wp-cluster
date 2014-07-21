@@ -36,7 +36,7 @@ build:
 # Install for Staging/Development
 install:
 	npm install
-	application/bin/composer install --prefer-source --no-dev --no-interaction
+	application/bin/composer install --prefer-source --dev --no-interaction
 	grunt install --environment=development --type=cluster
 
 # Fetch and Build Themes
