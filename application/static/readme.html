@@ -113,33 +113,29 @@
   </head>
   <body>  
     <p>DiscoDonniePresents.com &amp; the EDM Cluster</p>
-<h3 id="developing">Developing</h3>
-<p>Standard Linux Makefile is used for easy setup for local development as well as building a Docker container for distribution.</p>
-<p>Install for Development</p>
-<pre><code class="lang-shell">make</code></pre>
-<p>Install for Local Development</p>
-<pre><code class="lang-shell">make local</code></pre>
-<p>Build for Produciton</p>
-<pre><code class="lang-shell">make build</code></pre>
-<p>Build Docker Distribution Container</p>
-<pre><code class="lang-shell">make docker</code></pre>
-<p>We use grunt to run the build, here is the command that should be used:</p>
-<pre><code class="lang-shell">You can use this grunt file to do the following:
-   * grunt install - installs and builds environment
-   * Arguments:
-      --environment={environment} - builds specific environment: (production**, development, staging, local)
-      --system={system} - build for a specific system: (linux**, windows
-      --type={type} - build for a specific site type: (standalone**, cluster, multisite)</code></pre>
+<h3 id="getting-started">Getting Started</h3>
+<p>Standard Linux Makefile is used for easy setup for local development as well as building a Docker container for distribution.
+All below commands should be ran from the project root.</p>
+<ul>
+<li><code>make install</code> - Install for Development</li>
+<li><code>make build</code> - Build Docker image for distribution.</li>
+<li><code>make docker</code> - Create docker image.</li>
+<li><code>make release</code> - Release docker image.</li>
+<li><code>tail -f application/logs/*/*.log</code> - Monitor all logs.</li>
+</ul>
 <h3 id="production-deployment">Production Deployment</h3>
-<pre><code class="lang-shell">  docker pull discodonniepresents/www.discodonniepresents.com:latest
-  docker run -v /home/edm/public_html:/var/www:rw discodonniepresents/www.discodonniepresents.com:latest</code></pre>
-<h2 id="notes">Notes</h2>
+<p>WIP</p>
+<pre><code class="lang-shell">  docker pull andypotanin/www.discodonniepresents.com:latest
+  docker run --name test1 -d -v /home/edm/www1:/var/www:rw  andypotanin/www.discodonniepresents.com:latest
+  docker run --name test1 -d -v /home/edm/www1:/var/www:rw  andypotanin/www.discodonniepresents.com:latest
+  docker run --name test5 -d -v /home/edm/www5:/var/www     andypotanin/www.discodonniepresents.com:latest</code></pre>
+<h3 id="notes">Notes</h3>
 <ul>
 <li>Each directory has a corresponding &#39;readme.md&#39; which gives a brief spiel on what the directory should be used for.</li>
 <li>The username should be &#39;reidwilliams&#39; for the local environment, and the password should be &#39;password&#39;</li>
 <li>Use <a href="http://umesouthpadre.com/">http://umesouthpadre.com/</a> as an example site that version 1 of the festival theme has been implemented</li>
 </ul>
-<h2 id="setting-up-local-environment">Setting Up Local Environment</h2>
+<h3 id="setting-up-local-environment">Setting Up Local Environment</h3>
 <ol>
 <li>Make sure that both node and Composer are installed in your environment.<ul>
 <li>You should be able to run both &#39;npm&#39;, and &#39;composer&#39;.</li>
@@ -156,7 +152,7 @@
 <li>Import the &#39;application/static/fixtures/&#39; base SQL file.</li>
 <li>Navigate to the site. :)</li>
 </ol>
-<h2 id="development-notes">Development Notes</h2>
+<h3 id="development-notes">Development Notes</h3>
 <ul>
 <li>If you put &#39;define( &#39;SCRIPT_DEBUG&#39;, true );&#39; in your local config (system.php), it will use the JS assets which are not concatinated.<ul>
 <li>This will help with debugging.</li>
@@ -181,6 +177,13 @@
 </li>
 <li>You can look at the current HTML mockups at: vendor/themes/wp-festival-2/static/mocks</li>
 </ul>
+<p>We use grunt to run the build, here is the command that should be used:</p>
+<pre><code class="lang-shell">You can use this grunt file to do the following:
+   * grunt install - installs and builds environment
+   * Arguments:
+      --environment={environment} - builds specific environment: (production**, development, staging, local)
+      --system={system} - build for a specific system: (linux**, windows
+      --type={type} - build for a specific site type: (standalone**, cluster, multisite)</code></pre>
 
   </body>
 </html>
