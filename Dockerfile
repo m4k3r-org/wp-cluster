@@ -19,3 +19,12 @@ ADD           sunrise.php       /var/www/sunrise.php
 ADD           db.php            /var/www/db.php
 
 VOLUME        /var/www
+VOLUME        /var/www/storage/public
+VOLUME        /var/www/vendor/themes
+VOLUME        /var/www/vendor/plugins
+VOLUME        /var/www/vendor/modules
+VOLUME        /var/www/vendor/libraries
+VOLUME        /var/www/vendor
+VOLUME        /var/www/application/logs
+VOLUME        /var/www/application/tasks
+VOLUME        /var/www/wp-cli.yml
