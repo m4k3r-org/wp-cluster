@@ -115,7 +115,6 @@
     "usabilitydynamics/wp-cluster": "master",
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-network": "master",
-    "usabilitydynamics/wp-elastic": "master",
     "wpcloud/wp-vertical-edm": "master"
   },
   "require-dev": {
@@ -149,6 +148,7 @@
     "wpackagist-plugin/wp-pagenavi": "2.85",
     "wpackagist-plugin/wordpress-importer": "0.6.1",
     "wpackagist-plugin/redirection": "2.3.4",
+    "usabilitydynamics/wp-elastic": "master",
     "wpackagist-plugin/fantastic-elasticsearch": "2.1.0",
     "usabilitydynamics/wp-jf3-maintenance-mode": "2.0",
     "usabilitydynamics/wp-wpml-translation-management": "1.9.5",

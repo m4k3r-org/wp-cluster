@@ -35,7 +35,8 @@ build:
 
 # Install for Staging/Development
 install:
-	npm install
+	npm install --production
+	npm install --development
 	application/bin/composer install --prefer-source --dev --no-interaction
 	grunt install --environment=development --type=cluster
 

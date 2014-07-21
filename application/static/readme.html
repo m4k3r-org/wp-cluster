@@ -121,13 +121,20 @@ All below commands should be ran from the project root.</p>
 <li><code>make build</code> - Build Docker image for distribution.</li>
 <li><code>make docker</code> - Create docker image.</li>
 <li><code>make release</code> - Release docker image.</li>
+</ul>
+<h4 id="other-commands">Other Commands</h4>
+<ul>
+<li><code>make installThemes</code> - Fetch theme repositories.</li>
+<li><code>make installPlugins</code> - Fetch theme repositories.</li>
 <li><code>tail -f application/logs/*/*.log</code> - Monitor all logs.</li>
 </ul>
-<h3 id="production-deployment">Production Deployment</h3>
-<p>WIP</p>
-<pre><code class="lang-shell">docker pull                   andypotanin/www.discodonniepresents.com:latest
-docker run --name=edm   -itd  andypotanin/www.discodonniepresents.com:latest
-docker run --name=temp  -it   andypotanin/www.discodonniepresents.com:latest  --help</code></pre>
+<h3 id="working-with-container-wip-">Working With Container (WIP)</h3>
+<ul>
+<li><code>docker pull  andypotanin/www.discodonniepresents.com:latest</code> - Pull latest Docker image.</li>
+<li><code>docker run --name=edm -d  andypotanin/www.discodonniepresents.com:latest start</code> - Run Docker image as server.</li>
+<li><code>docker run --name=dev -d -v /var/www/themes -v /var/www/plugins andypotanin/www.discodonniepresents.com:latest</code> - Create volumes for development.</li>
+<li><code>docker run --name=dev -it andypotanin/www.discodonniepresents.com:latest  --help</code> - Get help commands.</li>
+</ul>
 <h3 id="notes">Notes</h3>
 <ul>
 <li>Each directory has a corresponding &#39;readme.md&#39; which gives a brief spiel on what the directory should be used for.</li>
