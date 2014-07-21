@@ -41,12 +41,25 @@ You can use this grunt file to do the following:
    * You should be able to run both 'npm', and 'composer'.
 2. Run 'npm install' to install all the node modules required.
 3. Run 'composer install' to install all of the PHP repositories and libraries required.
+   * Remove 'w3-total-cache' from 'vendor/plugins' directory.
 4. Run 'grunt install' in order to properly configure your environment.
 5. Create a file called 'application/static/etc/wp-config/system.php', in here define your config details specific to your environment
    * Do this as your normally would in a wp-config file (i.e. define( 'DB_HOST', 'localhost' ) ).
-6. Modify your hosts files to add the appropriate domains to your implementation.
+6. Modify your hosts files to add the appropriate domains to your implementation (i.e. suncitymusicfestival.com, discodonniepresents.com).
+   * Also create subdomains for 'media.*', and 'assets.*' (i.e. media.suncitymusicfestival.com)
 7. Import the 'application/static/fixtures/' base SQL file.
-8. Navigate to the site. :)
+   * This file has no data, but has the overall table structure
+   * 20140707-edm_cluster-base.sql.zip
+8. Navigate to the site. :) http://discodonniepresents.com/manage
+9. Choose "My Sites" -> "Network Admin" -> "Themes"
+10. Network Activate "WP-Festival v2.0.0"
+11. Navigate to http://suncitymusicfestival.com/manage
+12. Choose "Appearance" -> "Themes"
+13. Choose "Tools" -> "Import", and import the data dump from 'application/static/fixtures/sunsetmusicfestival2014.wordpress.2014-07-21.xml"
+   * You might try to import without images for faster speed
+   * sunsetmusicfestival2014.wordpress.2014-07-21.xml.zip
+14. Or, alternately, use the DB dump that has data and is located in "application/static/fixtures".
+   * 20140721-edm_cluster-with_data.sql.zip
 
 ## Development Notes
 * If you put 'define( 'SCRIPT_DEBUG', true );' in your local config (system.php), it will use the JS assets which are not concatinated.
