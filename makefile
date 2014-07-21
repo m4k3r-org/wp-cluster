@@ -3,22 +3,22 @@
 ##
 ##
 
-NAME 			   = wp-festival
-VERSION 	   = v1
+NAME 			  = wp-festival
 
 default:
 	make install
 
 # Build for Distribution
 build:
-	echo Building $(NAME):$(VERSION).
+	@echo Building $(NAME).
 	npm install --production
-	php /usr/bin/composer.phar install --prefer-dist
+	composer install --prefer-dist --no-dev --no-interaction
 	grunt build
 
 # Install for Staging/Development
 install:
-	echo Installing $(NAME):$(VERSION).
+	@echo Installing $(NAME).
 	npm install --development
-	php /usr/bin/composer.phar install --prefer-source
+	npm install --production
+	composer install --prefer-source --dev --no-interaction
 	grunt install
