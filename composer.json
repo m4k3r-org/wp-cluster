@@ -18,7 +18,6 @@
     "vendor-dir": "vendor/libraries",
     "bin-dir": "vendor/bin",
     "github-oauth": {
-      "description": "edm.wpcloud.io",
       "github.com": "8282b219ff377f9e209463564800879d7651b475"
     },
     "component-dir": "vendor/components",
@@ -114,20 +113,15 @@
     "php": ">=5.3",
     "composer/installers": "~1.0",
     "automattic/wordpress": "4.0-beta2",
-    "usabilitydynamics/lib-api": "master",
+    "usabilitydynamics/lib-installer": "master",
     "usabilitydynamics/wp-cluster": "master",
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-network": "master",
     "usabilitydynamics/wp-splash": "master",
     "usabilitydynamics/wp-flawless": "dev-legacy",
-    "usabilitydynamics/lib-installer": "master",
-    "discodonniepresents/wp-festival-2": "master",
-    "discodonniepresents/wp-festival": "master",
-    "discodonniepresents/wp-disco": "dev-legacy",
     "wpcloud/wp-vertical-edm": "master"
   },
   "require-dev": {
-    "usabilitydynamics/wp-simplify": "master",
     "discodonniepresents/wp-spectacle": "master",
     "discodonniepresents/wp-bassoddysey": "master",
     "discodonniepresents/wp-dayafter": "master",
@@ -152,13 +146,20 @@
     "wpackagist-plugin/wp-pagenavi": "2.85",
     "wpackagist-plugin/wordpress-importer": "0.6.1",
     "wpackagist-plugin/redirection": "2.3.4",
-    "usabilitydynamics/wp-elastic": "master",
     "wpackagist-plugin/fantastic-elasticsearch": "2.1.0",
+    "usabilitydynamics/lib-api": "master",
     "usabilitydynamics/wp-jf3-maintenance-mode": "2.0",
     "usabilitydynamics/wp-wpml-translation-management": "1.9.5",
     "usabilitydynamics/wp-wpml": "3.1.6",
     "usabilitydynamics/wp-gravityforms": "master",
     "usabilitydynamics/wp-seo-addon": "master"
+  },
+  "require-disabled": {
+    "discodonniepresents/wp-festival/v1": "master",
+    "discodonniepresents/wp-festival/v2": "master",
+    "usabilitydynamics/wp-crm": "dev-master",
+    "usabilitydynamics/wp-simplify": "dev-master",
+    "usabilitydynamics/wp-elastic": "dev-master"
   },
   "autoload": {
     "classmap": [ "application/lib" ],

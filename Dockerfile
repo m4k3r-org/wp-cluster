@@ -4,7 +4,6 @@
 ## * Select paths are exposed that are safe to be mounted for developemnt purposes.
 ## * Only essential files and directories added to container that allow Grunt tasks and web-based file serving.
 ##
-##
 ## @ver 0.2.1
 ## @author potanin@UD
 ##
@@ -22,7 +21,10 @@ ENV           PHP_ENV               development
 ENV           NODE_ENV              development
 
 ADD           application           /var/www/application
-ADD           vendor                /var/www/vendor
+ADD           vendor/libraries      /var/www/vendor/libraries
+ADD           vendor/modules        /var/www/vendor/modules
+ADD           vendor/plugins        /var/www/vendor/plugins
+ADD           vendor/themes         /var/www/vendor/themes
 ADD           node_modules          /var/www/node_modules
 ADD           storage               /var/www/storage
 ADD           .htaccess             /var/www/.htaccess
@@ -35,7 +37,6 @@ ADD           db.php                /var/www/db.php
 
 EXPOSE        80
 EXPOSE        443
-EXPOSE        1134
 EXPOSE        22
 
 WORKDIR       /var/www

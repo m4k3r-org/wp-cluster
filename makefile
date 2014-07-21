@@ -30,7 +30,7 @@ release:
 # Build for Distribution
 build:
 	npm install --production
-	application/bin/composer install --prefer-dist --no-dev --no-interaction
+	composer install --prefer-dist --no-dev --no-interaction
 	grunt install --environment=production --system=linux --type=cluster
 
 # Install for Staging/Development
