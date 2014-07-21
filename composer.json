@@ -17,6 +17,10 @@
     "github-protocols": [ "ssh" ],
     "vendor-dir": "vendor/libraries",
     "bin-dir": "vendor/bin",
+    "github-oauth": {
+      "description": "edm.wpcloud.io",
+      "github.com": "8282b219ff377f9e209463564800879d7651b475"
+    },
     "component-dir": "vendor/components",
     "optimize-autoloader": true
   },
@@ -117,8 +121,8 @@
     "usabilitydynamics/wp-splash": "master",
     "usabilitydynamics/wp-flawless": "dev-legacy",
     "usabilitydynamics/lib-installer": "master",
-    "discodonniepresents/wp-festival/v1": "master",
-    "discodonniepresents/wp-festival/v2": "master",
+    "discodonniepresents/wp-festival-2": "master",
+    "discodonniepresents/wp-festival": "master",
     "discodonniepresents/wp-disco": "dev-legacy",
     "wpcloud/wp-vertical-edm": "master"
   },

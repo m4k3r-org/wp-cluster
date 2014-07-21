@@ -14,7 +14,6 @@
 ORGANIATION   = andypotanin
 NAME 			    = www.discodonniepresents.com
 VERSION 	    = latest
-CWD           = /home/edm/www
 
 default:
 	make install
@@ -38,7 +37,7 @@ build:
 install:
 	npm install --production
 	npm install --development
-	application/bin/composer install --prefer-source --dev --no-interaction
+	composer install --prefer-source --dev --no-interaction
 	grunt install --environment=development --type=cluster
 
 # Fetch amd Build Plugins
