@@ -2,18 +2,18 @@
 ## Build DDP Site/Network
 ##
 ## ### Build and Push
-## docker build -t  andypotanin/www.discodonniepresents.com:0.1.6 --rm .
-## docker push      andypotanin/www.discodonniepresents.com:0.1.6
+## docker build -t  andypotanin/www.discodonniepresents.com:latest --rm .
+## docker push      andypotanin/www.discodonniepresents.com:latest
 ##
 ## ### Pull and Run
-## docker pull      andypotanin/www.discodonniepresents.com:0.1.6
-## docker run --name edm -d -v /var/www/ andypotanin/www.discodonniepresents.com:0.1.6
+## docker pull      andypotanin/www.discodonniepresents.com:latest
+## docker run --name edm -d -v /var/www/ andypotanin/www.discodonniepresents.com:latest
 ##
 ################################################################################################
 
 ORGANIATION  = andypotanin
 NAME 			   = www.discodonniepresents.com
-VERSION 	   = 0.1.6
+VERSION 	   = latest
 
 default:
 	make install

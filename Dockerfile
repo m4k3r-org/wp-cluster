@@ -14,6 +14,9 @@ FROM          usabilitydynamics/centos:latest
 MAINTAINER    UsabilityDynamics, Inc. <info@usabilitydynamics.com>
 USER          root
 
+RUN           /usr/bin/npm install --global --link grunt
+RUN           /usr/bin/npm install --global --link mocha
+
 RUN           mkdir -p /var/www
 RUN           mkdir -p /var/logs
 RUN           mkdir -p /var/storage
@@ -34,9 +37,6 @@ ADD           gruntfile.js          /var/www/gruntfile.js
 ADD           sunrise.php           /var/www/sunrise.php
 ADD           db.php                /var/www/db.php
 
-# ADD           advanced-cache.php    /var/www/sunrise.php
-# ADD           object-cache.php      /var/www/sunrise.php
-
 VOLUME        /var/www/storage/public
 VOLUME        /var/www/vendor/themes
 VOLUME        /var/www/vendor/plugins
@@ -53,7 +53,6 @@ VOLUME        /var/www/application/static/scripts
 VOLUME        /var/www/application/static/styles
 VOLUME        /var/www/application/static/templates
 VOLUME        /var/www/application/static/fixtures
-VOLUME        /var/www/wp-cli.yml
 VOLUME        /var/www
 
 EXPOSE        80

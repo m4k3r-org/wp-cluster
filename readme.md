@@ -15,7 +15,8 @@ WIP
 
 ```shell
 docker pull andypotanin/www.discodonniepresents.com:latest
-docker run -d -v /home/edm/www:/var/www:rw andypotanin/www.discodonniepresents.com
+docker run --name=edm -it andypotanin/www.discodonniepresents.com:0.1.6
+docker run -it andypotanin/www.discodonniepresents.com:0.1.6 which grunt
 ```
 
 ### Notes
