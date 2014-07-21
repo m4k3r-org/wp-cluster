@@ -1,6 +1,6 @@
 {
   "name": "DiscoDonniePresents/www.discodonniepresents.com",
-  "version": "v2",
+  "version": "2.0.1",
   "type": "project",
   "repositories": [
     {
@@ -109,22 +109,22 @@
   "require": {
     "php": ">=5.3",
     "composer/installers": "~1.0",
-    "usabilitydynamics/lib-installer": "master",
     "automattic/wordpress": "4.0-beta2",
     "usabilitydynamics/lib-api": "master",
     "usabilitydynamics/wp-cluster": "master",
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-network": "master",
+    "usabilitydynamics/wp-splash": "master",
+    "usabilitydynamics/wp-flawless": "dev-legacy",
+    "usabilitydynamics/lib-installer": "master",
+    "discodonniepresents/wp-festival/v1": "master",
+    "discodonniepresents/wp-festival/v2": "master",
+    "discodonniepresents/wp-disco": "dev-legacy",
     "wpcloud/wp-vertical-edm": "master"
   },
   "require-dev": {
-    "usabilitydynamics/wp-splash": "master",
-    "usabilitydynamics/wp-flawless": "dev-legacy",
     "usabilitydynamics/wp-simplify": "master",
     "discodonniepresents/wp-spectacle": "master",
-    "discodonniepresents/wp-festival": "dev-v2",
-    "discodonniepresents/wp-festival-v1": "1.2.1",
-    "discodonniepresents/wp-disco": "dev-legacy",
     "discodonniepresents/wp-bassoddysey": "master",
     "discodonniepresents/wp-dayafter": "master",
     "discodonniepresents/wp-freaksbeatstreats": "master",

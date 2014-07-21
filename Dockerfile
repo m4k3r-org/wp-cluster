@@ -26,7 +26,6 @@ ADD           vendor                /var/www/vendor
 ADD           node_modules          /var/www/node_modules
 ADD           storage               /var/www/storage
 ADD           .htaccess             /var/www/.htaccess
-ADD           wp-cli.yml            /var/www/wp-cli.yml
 ADD           index.php             /var/www/index.php
 ADD           package.json          /var/www/package.json
 ADD           composer.json         /var/www/composer.json

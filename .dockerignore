@@ -1,3 +1,6 @@
+makefile
 Dockerfile
 .environment
-makefile
+.gitignore
+.git
+.gitmodules

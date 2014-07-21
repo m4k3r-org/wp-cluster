@@ -7,9 +7,8 @@ $baseDir = dirname(dirname($vendorDir));
 
 return array(
     'WPModel' => array($vendorDir . '/hanamura/wp-model/src'),
-    'Symfony\\Component\\Process\\' => array($vendorDir . '/symfony/process'),
     'Raygun4php' => array($vendorDir . '/mindscape/raygun4php/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'Graze\\Monolog' => array($vendorDir . '/graze/monolog-extensions/src'),
-    'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src')
+    'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src'),
 );

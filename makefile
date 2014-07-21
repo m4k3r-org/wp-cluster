@@ -11,9 +11,10 @@
 ##
 ################################################################################################
 
-ORGANIATION  = andypotanin
-NAME 			   = www.discodonniepresents.com
-VERSION 	   = latest
+ORGANIATION   = andypotanin
+NAME 			    = www.discodonniepresents.com
+VERSION 	    = latest
+CWD           = $(shell pwd)
 
 default:
 	make install
@@ -47,6 +48,7 @@ installThemes:
 	git clone git@github.com:DiscoDonniePresents/wp-disco.git       -b legacy   vendor/themes/wp-disco
 	git clone git@github.com:DiscoDonniePresents/wp-dayafter.git    -b master   vendor/themes/wp-dayafter
 	git clone git@github.com:usabilitydynamics/wp-splash.git        -b master   vendor/themes/wp-splash
+
 	# cd ./vendor/themes/wp-festival && make
 	# cd ./vendor/themes/wp-festival-2 && make
 	# cd ./vendor/themes/wp-disco && make
