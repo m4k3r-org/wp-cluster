@@ -1,10 +1,15 @@
 ## Build DDP Site/Network
 ##
 ## docker build -t discodonniepresents/www.discodonniepresents.com:0.1.0 --rm .
+## docker tag discodonniepresents/www.discodonniepresents.com andypotanin/www.discodonniepresents.com:0.1.1
+## docker push andypotanin/www.discodonniepresents.com:0.1.1
+##
+## docker pull andypotanin/www.discodonniepresents.com:0.1.1
+## docker run --name www.discodonniepresents.com -d -v /home/edm/_www:/var/www:rw  andypotanin/www.discodonniepresents.com:0.1.1
 ##
 
 ORGANIATION  = discodonniepresents
-NAME 			   = discodonniepresents/www.discodonniepresents.com
+NAME 			   = www.discodonniepresents.com
 VERSION 	   = latest
 
 default:

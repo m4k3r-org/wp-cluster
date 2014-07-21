@@ -14,8 +14,10 @@ All below commands should be ran from the project root.
 WIP
 
 ```shell
-  docker pull discodonniepresents/www.discodonniepresents.com:latest
-  docker run -v /home/edm/public_html:/var/www:rw discodonniepresents/www.discodonniepresents.com:latest
+  docker pull andypotanin/www.discodonniepresents.com:latest
+  docker run --name test1 -d -v /home/edm/www1:/var/www:rw  andypotanin/www.discodonniepresents.com:latest
+  docker run --name test1 -d -v /home/edm/www1:/var/www:rw  andypotanin/www.discodonniepresents.com:latest
+  docker run --name test5 -d -v /home/edm/www5:/var/www     andypotanin/www.discodonniepresents.com:latest
 ```
 
 ### Notes
