@@ -10,8 +10,7 @@ All below commands should be ran from the project root.
 * `make release` - Release docker image.
 
 #### Other Commands
-* `make installThemes` - Fetch theme repositories.
-* `make installPlugins` - Fetch theme repositories.
+* `make installPluggable` - Fetch theme and plugin repositories and build/install them.
 * `tail -f application/logs/*/*.log` - Monitor all logs.
 
 ### Working With Container (WIP)

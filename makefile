@@ -14,11 +14,7 @@
 ORGANIATION   = andypotanin
 NAME 			    = www.discodonniepresents.com
 VERSION 	    = latest
-SHELL         := /bin/bash
 CWD           = /home/edm/www
-PATH          := bin:$(PATH)
-
-export PATH := bin:$(PATH)
 
 default:
 	make install
@@ -44,13 +40,13 @@ install:
 	npm install --development
 	application/bin/composer install --prefer-source --dev --no-interaction
 	grunt install --environment=development --type=cluster
+
+# Fetch amd Build Plugins
+installPluggable:
 	git clone git@github.com:DiscoDonniePresents/wp-festival.git -b legacy vendor/themes/wp-festival 2>/dev/null
 	git clone git@github.com:DiscoDonniePresents/wp-festival.git -b v2 vendor/themes/wp-festival-2 2>/dev/null
 	git clone git@github.com:DiscoDonniePresents/wp-dayafter.git -b master vendor/themes/wp-dayafter 2>/dev/null
 	git clone git@github.com:DiscoDonniePresents/wp-disco.git -b legacy vendor/themes/wp-disco 2>/dev/null
 	git clone git@github.com:usabilitydynamics/wp-splash.git -b legacy vendor/themes/wp-splash 2>/dev/null
+	git clone git@github.com:usabilitydynamics/wp-simplify.git -b master vendor/plugins/wp-simplify 2>/dev/null
 
-# Fetch amd Build Plugins
-installPlugins:
-	git clone git@github.com:usabilitydynamics/wp-simplify.git      -b master   vendor/plugins/wp-simplify
-	cd vendor/plugins/wp-simplify && composer install
