@@ -189,7 +189,7 @@ module.exports = function build( grunt ) {
     phpunit: {
       classes: {},
       options: {
-        bin: './vendor/bin/phpunit',
+        bin: './vendor/bin/phpunit'
       },
       local: {
         configuration: './test/php/phpunit.xml'
@@ -204,12 +204,15 @@ module.exports = function build( grunt ) {
   // Register tasks
   grunt.registerTask( 'default', [ 'markdown', 'less' , 'yuidoc', 'uglify' ] );
   
-  // Build Distribution
-  grunt.registerTask( 'distribution', [ 'pot' ] );
-
   // Update Environment
   grunt.registerTask( 'update', [ "clean", "shell:update" ] );
-  
+
+  // Install for development.
+  grunt.registerTask( 'install', [ 'pot', 'default' ] );
+
+  // Build Distribution.
+  grunt.registerTask( 'build', [ 'pot', 'default' ] );
+
   // Run coverage tests
   grunt.registerTask( 'testscrutinizer', [ 'shell:coverageScrutinizer' ] );
   grunt.registerTask( 'testcodeclimate', [ 'shell:coverageCodeClimate' ] );

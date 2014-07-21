@@ -2,9 +2,9 @@
 ##
 ##
 
-NAME 			   = wp-amd
-VERSION 	   = v2
+NAME = wp-amd
 
+# Default Install Action
 default:
 	make install
 
@@ -12,12 +12,13 @@ default:
 build:
 	echo Building $(NAME).
 	npm install --production
-	php vendor/bin/composer install --prefer-dist
+	composer install --prefer-dist --no-dev --no-interaction
 	grunt build
 
 # Install for Staging/Development
 install:
 	echo Installing $(NAME).
+	npm install --production
 	npm install --development
-	php vendor/bin/composer install --prefer-source
+	composer install --prefer-source --dev --no-interaction
 	grunt install
