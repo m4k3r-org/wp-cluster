@@ -125,8 +125,9 @@ All below commands should be ran from the project root.</p>
 </ul>
 <h3 id="production-deployment">Production Deployment</h3>
 <p>WIP</p>
-<pre><code class="lang-shell">docker pull andypotanin/www.discodonniepresents.com:latest
-docker run -d -v /home/edm/www:/var/www:rw andypotanin/www.discodonniepresents.com</code></pre>
+<pre><code class="lang-shell">docker pull                   andypotanin/www.discodonniepresents.com:latest
+docker run --name=edm   -itd  andypotanin/www.discodonniepresents.com:latest
+docker run --name=temp  -it   andypotanin/www.discodonniepresents.com:latest  --help</code></pre>
 <h3 id="notes">Notes</h3>
 <ul>
 <li>Each directory has a corresponding &#39;readme.md&#39; which gives a brief spiel on what the directory should be used for.</li>

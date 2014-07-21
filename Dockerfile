@@ -22,6 +22,7 @@ ENV           NODE_ENV              development
 
 ADD           application           /var/www/application
 ADD           vendor                /var/www/vendor
+ADD           node_modules          /var/www/node_modules
 ADD           storage               /var/www/storage
 ADD           .htaccess             /var/www/.htaccess
 ADD           wp-cli.yml            /var/www/wp-cli.yml
@@ -31,6 +32,8 @@ ADD           composer.json         /var/www/composer.json
 ADD           gruntfile.js          /var/www/gruntfile.js
 ADD           sunrise.php           /var/www/sunrise.php
 ADD           db.php                /var/www/db.php
+ADD           object-cache.php      /var/www/object-cache.php
+ADD           advanced-cache.php    /var/www/advanced-cache.php
 
 
 EXPOSE        80
@@ -39,5 +42,4 @@ EXPOSE        1134
 EXPOSE        22
 
 WORKDIR       /var/www
-CMD           --help
-ENTRYPOINT    grunt
+CMD           grunt --help

@@ -116,7 +116,9 @@
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-network": "master",
     "usabilitydynamics/wp-elastic": "master",
-    "wpcloud/wp-vertical-edm": "master",
+    "wpcloud/wp-vertical-edm": "master"
+  },
+  "requirePluggable": {
     "usabilitydynamics/wp-splash": "master",
     "usabilitydynamics/wp-flawless": "dev-legacy",
     "discodonniepresents/wp-spectacle": "master",

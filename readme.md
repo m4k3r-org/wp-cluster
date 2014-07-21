@@ -8,16 +8,18 @@ All below commands should be ran from the project root.
 * `make build` - Build Docker image for distribution.
 * `make docker` - Create docker image.
 * `make release` - Release docker image.
+
+#### Other Commands
+* `make installThemes` - Fetch theme repositories.
+* `make installPlugins` - Fetch theme repositories.
 * `tail -f application/logs/*/*.log` - Monitor all logs.
 
-### Production Deployment
-WIP
+### Working With Container (WIP)
 
-```shell
-docker pull                   andypotanin/www.discodonniepresents.com:latest
-docker run --name=edm   -itd  andypotanin/www.discodonniepresents.com:latest
-docker run --name=temp  -it   andypotanin/www.discodonniepresents.com:latest  --help
-```
+* `docker pull  andypotanin/www.discodonniepresents.com:latest` - Pull latest Docker image.
+* `docker run --name=edm -d  andypotanin/www.discodonniepresents.com:latest start` - Run Docker image as server.
+* `docker run --name=dev -d -v /var/www/themes -v /var/www/plugins andypotanin/www.discodonniepresents.com:latest` - Create volumes for development.
+* `docker run --name=dev -it andypotanin/www.discodonniepresents.com:latest  --help` - Get help commands.
 
 ### Notes
 * Each directory has a corresponding 'readme.md' which gives a brief spiel on what the directory should be used for.

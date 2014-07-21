@@ -65,9 +65,7 @@ module.exports = function( grunt ) {
           paths: [
             'application',
             'vendor/plugins',
-            'vendor/libraries/usabilitydynamics',
-            'vendor/themes',
-            'vendor/modules'
+            'vendor/libraries/usabilitydynamics'
           ],
           outdir: 'application/static/codex/'
         }
@@ -235,7 +233,7 @@ module.exports = function( grunt ) {
           '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
           'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php',
           'db.php': 'vendor/modules/wp-cluster/lib/class-database.php',
-          'sunrise.php': 'vendor/modules/wp-cluster/lib/class-sunrise.php',
+          'sunrise.php': 'vendor/modules/wp-cluster/lib/class-sunrise.php'
         }
       },
       production: {
