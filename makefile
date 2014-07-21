@@ -49,4 +49,6 @@ installPluggable:
 	git clone git@github.com:DiscoDonniePresents/wp-disco.git -b legacy vendor/themes/wp-disco 2>/dev/null
 	git clone git@github.com:usabilitydynamics/wp-splash.git -b legacy vendor/themes/wp-splash 2>/dev/null
 	git clone git@github.com:usabilitydynamics/wp-simplify.git -b master vendor/plugins/wp-simplify 2>/dev/null
-
+	git clone git@github.com:DiscoDonniePresents/wp-spectacle.git -b master vendor/themes/wp-spectacle 2>/dev/null
+	git clone git@github.com:DiscoDonniePresents/wp-winterfantasy.git -b master vendor/themes/wp-winterfantasy 2>/dev/null
+	git clone git@github.com:DiscoDonniePresents/wp-monsterblockparty.git -b master vendor/themes/wp-monsterblockparty 2>/dev/null
