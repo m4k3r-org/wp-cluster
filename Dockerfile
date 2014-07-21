@@ -10,12 +10,13 @@
 ##
 #################################################################
 
-FROM          andypotanin/devbox:0.1.1
+FROM          usabilitydynamics/blackbox:latest
 MAINTAINER    UsabilityDynamics, Inc. <info@usabilitydynamics.com>
 USER          root
 
-RUN           mkdir -p /var/storage
-RUN           mkdir -p /tmp
+RUN           mkdir -p              /var/storage
+RUN           mkdir -p              /etc/ssh
+RUN           mkdir -p              /etc/ssl
 
 ENV           PHP_ENV               development
 ENV           NODE_ENV              development
@@ -32,9 +33,6 @@ ADD           composer.json         /var/www/composer.json
 ADD           gruntfile.js          /var/www/gruntfile.js
 ADD           sunrise.php           /var/www/sunrise.php
 ADD           db.php                /var/www/db.php
-ADD           object-cache.php      /var/www/object-cache.php
-ADD           advanced-cache.php    /var/www/advanced-cache.php
-
 
 EXPOSE        80
 EXPOSE        443
@@ -42,4 +40,4 @@ EXPOSE        1134
 EXPOSE        22
 
 WORKDIR       /var/www
-CMD           grunt --help
+CMD           [ "grunt", "--help" ]
