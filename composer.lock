@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9c346479312d576a0072354234160eeb",
+    "hash": "e844f2653249388892e767ae7d40ca79",
     "packages": [
         {
             "name": "composer/installers",
@@ -192,19 +192,20 @@
                     "inc/helpers.php",
                     "inc/meta-box.php"
                 ]
-            }
+            },
+            "time": "2014-06-03 12:04:11"
         },
         {
             "name": "usabilitydynamics/lib-model",
-            "version": "0.2.3",
+            "version": "master",
             "source": {
                 "type": "git",
                 "url": "git@github.com:UsabilityDynamics/lib-model",
-                "reference": "0.2.3"
+                "reference": "master"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-model/archive/0.2.3.zip",
+                "url": "https://github.com/UsabilityDynamics/lib-model/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -255,7 +256,8 @@
                 "models",
                 "shema",
                 "validation"
-            ]
+            ],
+            "time": "2014-07-22 16:35:58"
         },
         {
             "name": "usabilitydynamics/lib-settings",
@@ -292,7 +294,8 @@
                 "classmap": [
                     "lib"
                 ]
-            }
+            },
+            "time": "2014-06-02 15:22:26"
         },
         {
             "name": "usabilitydynamics/lib-ui",
@@ -329,7 +332,8 @@
                 "classmap": [
                     "lib"
                 ]
-            }
+            },
+            "time": "2014-07-22 16:53:04"
         },
         {
             "name": "usabilitydynamics/lib-utility",
@@ -362,7 +366,8 @@
                 "classmap": [
                     "lib"
                 ]
-            }
+            },
+            "time": "2014-07-22 16:38:24"
         }
     ],
     "packages-dev": [],

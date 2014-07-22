@@ -27,7 +27,7 @@
     "usabilitydynamics/lib-ui": "master",
     "usabilitydynamics/lib-settings": "master",
     "usabilitydynamics/lib-eventbrite-client": "1.0.0",
-    "usabilitydynamics/lib-model": "0.2.3"
+    "usabilitydynamics/lib-model": "master"
   },
   "autoload": {
     "classmap": [ "lib" ]

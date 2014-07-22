@@ -4,7 +4,7 @@
  * Text Domain: wp-eventbrite
  * Description: Eventbrite Attendees Notifications
  * Author: Usability Dynamics, Inc
- * Version: 0.0.1
+ * Version: 0.1.1
  * Author URI: http://UsabilityDynamics.com
  *
  * Copyright 2011-2014  Usability Dynamics, Inc.   (email : info@UsabilityDynamics.com)
@@ -37,26 +37,27 @@ if( !function_exists( 'get_wp_eventbrite' ) ) {
   define( 'WP_EVENTBRITE_URL', plugin_dir_url( __FILE__ ) );
 
   /**
-   * 
+   * Determines if Composer autoloader is included and modules classes are uptodate
    *
+   * @author peshkov@UD
    */
   function wp_eventbrite_check_autoload() {
     global $_wp_eventbrite_errors;
     $_wp_eventbrite_errors = $_wp_eventbrite_errors === NULL ? array() : $_wp_eventbrite_errors;
     if( !class_exists( '\DiscoDonniePresents\Eventbrite\Bootstrap' ) || !class_exists( '\DiscoDonniePresents\Eventbrite\Utility' ) ) {
-      $_wp_eventbrite_errors[] = __( 'Composer Autoloader does not exist or have to be updated to the latest version.' );
+      $_wp_eventbrite_errors[] = __( 'Composer Autoloader does not exist or have to be updated to the latest version or there is no vendor directory.' );
       return false;
     }
     $dependencies = \DiscoDonniePresents\Eventbrite\Utility::get_schema( 'schema.dependency' );
     if( !empty( $dependencies ) && is_array( $dependencies ) ) {
-      foreach( $dependencies as $vendor => $classes ) {
+      foreach( $dependencies as $module => $classes ) {
         if( !empty( $classes ) && is_array( $classes ) ) {
           foreach( $classes as $class => $v ) {
             if( !class_exists( $class ) ) {
-              $_wp_eventbrite_errors[] = sprintf( __( 'Vendor <b>%s</b> is not installed or the version is old, class <b>%s</b> does not exist.' ), $vendor, $class );
+              $_wp_eventbrite_errors[] = sprintf( __( 'Module <b>%s</b> is not installed or the version is old, class <b>%s</b> does not exist.' ), $module, $class );
             }
             if ( '*' != trim( $v ) && ( !property_exists( $class, 'version' ) || $class::$version < $v ) ) {
-              $_wp_eventbrite_errors[] = sprintf( __( 'Vendor <b>%s</b> should be updated to the latest version, class <b>%s</b> must have version <b>%s</b> or higher.' ), $vendor, $class, $v );
+              $_wp_eventbrite_errors[] = sprintf( __( 'Module <b>%s</b> should be updated to the latest version, class <b>%s</b> must have version <b>%s</b> or higher.' ), $module, $class, $v );
             }
           }
         }
@@ -69,8 +70,9 @@ if( !function_exists( 'get_wp_eventbrite' ) ) {
   }
   
   /**
-   * 
+   * Renders admin notes in case there are errors on plugin init
    *
+   * @author peshkov@UD
    */
   function wp_eventbrite_admin_notices() {
     global $_wp_eventbrite_errors;
@@ -92,9 +94,8 @@ if( !function_exists( 'get_wp_eventbrite' ) ) {
   }
   
   //** Initialize. */
-  if( !wp_eventbrite_check_autoload() ) {
-    add_action( 'admin_notices', 'wp_eventbrite_admin_notices' );
-  } else {
+  add_action( 'admin_notices', 'wp_eventbrite_admin_notices' );
+  if( wp_eventbrite_check_autoload() ) {
     get_wp_eventbrite();
   }
 
