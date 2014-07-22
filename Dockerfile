@@ -10,39 +10,37 @@
 ## @author potanin@UD
 #################################################################
 
-FROM          wpcloud/blackbox:0.1.1
-MAINTAINER    UsabilityDynamics, Inc. <info@usabilitydynamics.com>
+FROM          usabilitydynamics/blackbox:1.0.0
+MAINTAINER    UsabilityDynamics, Inc.   <info@usabilitydynamics.com>
 
 ENV           WP_CLI_CONFIG_PATH        /var/www/application/static/etc/wp-cli.yml
+ENV           AWS_ACCESS_KEY_ID         AKIAJCDAT2T7FESLH3IQ
+ENV           AWS_SECRET_ACCESS_KEY     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
+ENV           AWS_STORAGE_BUCKET        storage.discodonniepresents.com
 ENV           IMAGE_NAME                DiscoDonniePresents/www.discodonniepresents.com
-ENV           CI_KEY                    generaet-me
 ENV           WP_AUTH_KEY               i%HNa^lg#_R-0.6i7AG0cOxFGk]{Q5lBHnVz;NG$iz&#Z3XZ)[[K5ZGEo~R:*Um_
 ENV           DEPLOYMENT_VERSION        2.0.1
 ENV           REPOSITORY_AUTH           8282b219ff377f9e209463564800879d7651b475
 ENV           CONTENT_ORIGIN            http://216.22.20.143
-ENV           STAGING_URL               /var/www/application/static/etc/wp-cli.yml
+ENV           STAGING_URL               http://208.52.164.220
 ENV           DATA_ORIGIN               http://216.22.20.143
 ENV           DATA_STAGING              http://208.52.164.220
 ENV           DATA_AUTHORITY            http://10.88.135.8
-ENV           APACHE_SERVERADMIN        admin@localhost
-ENV           APACHE_SERVERALIAS        docker.localhost
-ENV           APACHE_RUN_USER           edm
-ENV           APACHE_RUN_GROUP          edm
 
 ADD           application               /var/www/application
-ADD           application/webhook.php   /var/www/webhook.php
 ADD           vendor/libraries          /var/www/vendor/libraries
 ADD           vendor/modules            /var/www/vendor/modules
 ADD           vendor/plugins            /var/www/vendor/plugins
 ADD           vendor/themes             /var/www/vendor/themes
 ADD           storage                   /var/www/storage
-ADD           .htaccess                 /var/www/.htaccess
 ADD           index.php                 /var/www/index.php
 ADD           composer.json             /var/www/composer.json
-ADD           sunrise.php               /var/www/vendor/modules/wp-veneer/lib/local/.htaccess
-ADD           db.php                    /var/www/vendor/modules/wp-cluster/lib/class-database.php
-ADD           advanced-cache.php        /var/www/vendor/modules/wp-veneer/lib/class-advanced-cache.php
-ADD           object-cache.php          /var/www/vendor/modules/wp-veneer/lib/class-object-cache.php'
+
+ADD           vendor/modules/wp-cluster/lib/class-database.php        /var/www/db.php
+ADD           vendor/modules/wp-cluster/lib/class-sunrise.php         /var/www/sunrise.php
+ADD           vendor/modules/wp-veneer/lib/class-advanced-cache.php   /var/www/advanced-cache.php
+ADD           vendor/modules/wp-veneer/lib/class-object-cache.php     /var/www/advaobjectnced-cache.php
+ADD           vendor/modules/wp-veneer/lib/local/.htaccess            /var/www/.htaccess
 
 COPY          application/static/ssl    /etc/ssl
 COPY          application/wp-cli.yaml   /root
