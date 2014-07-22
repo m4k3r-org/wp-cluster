@@ -11,6 +11,7 @@
 FROM          wpcloud/blackbox:0.1.1
 MAINTAINER    UsabilityDynamics, Inc. <info@usabilitydynamics.com>
 
+ENV           WP_CLI_CONFIG_PATH        /var/www/application/static/etc/wp-cli.yml
 ENV           IMAGE_NAME                DiscoDonniePresents/www.discodonniepresents.com
 ENV           CI_KEY                    generaet-me
 ENV           WP_AUTH_KEY               i%HNa^lg#_R-0.6i7AG0cOxFGk]{Q5lBHnVz;NG$iz&#Z3XZ)[[K5ZGEo~R:*Um_
