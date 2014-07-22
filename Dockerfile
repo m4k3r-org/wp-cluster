@@ -6,10 +6,9 @@
 ##
 ## @ver 0.2.1
 ## @author potanin@UD
-##
 #################################################################
 
-FROM          usabilitydynamics/blackbox:latest
+FROM          wpCloud/BlackBox:latest
 MAINTAINER    UsabilityDynamics, Inc. <info@usabilitydynamics.com>
 USER          root
 
@@ -34,6 +33,15 @@ ADD           composer.json         /var/www/composer.json
 ADD           gruntfile.js          /var/www/gruntfile.js
 ADD           sunrise.php           /var/www/sunrise.php
 ADD           db.php                /var/www/db.php
+
+VOLUME        [ "/var/www/application" ]
+VOLUME        [ "/var/www/vendor/libraries" ]
+VOLUME        [ "/var/www/vendor/modules" ]
+VOLUME        [ "/var/www/vendor/plugins" ]
+VOLUME        [ "/var/www/vendor/themes" ]
+VOLUME        [ "/var/www/node_modules" ]
+VOLUME        [ "/var/www/storage" ]
+VOLUME        [ "/var/www" ]
 
 EXPOSE        80
 EXPOSE        443

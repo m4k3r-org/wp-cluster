@@ -2,16 +2,23 @@
 ## Build DDP Site/Network
 ##
 ## ### Build and Push
-## docker build -t  andypotanin/www.discodonniepresents.com:latest --rm .
-## docker push      andypotanin/www.discodonniepresents.com:latest
+## docker build -t  usabilitydynamics/www.discodonniepresents.com:latest --rm .
+## docker push      usabilitydynamics/www.discodonniepresents.com:latest
 ##
 ## ### Pull and Run
-## docker pull      andypotanin/www.discodonniepresents.com:latest
-## docker run       --name edm -d -v /var/www/ andypotanin/www.discodonniepresents.com:latest
+## docker pull      usabilitydynamics/www.discodonniepresents.com:latest
+## docker run       --name edm -d -v /var/www/ usabilitydynamics/www.discodonniepresents.com:latest
+## docker run -itd --name=udx.io -p 8010 usabilitydynamics/udx.io:0.3.2 npm start
+##
+## ### Commit and Push a Change
+## docker commit -m="Setup udx.io, tagged." furious_sammet
+## docker tag 612a966410e5 usabilitydynamics/udx.io:0.3.2
+## docker push usabilitydynamics/udx.io:0.3.2
+##
 ##
 ################################################################################################
 
-ORGANIATION   = andypotanin
+ORGANIATION   = usabilitydynamics
 NAME 			    = www.discodonniepresents.com
 VERSION 	    = latest
 

@@ -8,7 +8,6 @@ $baseDir = dirname(dirname($vendorDir));
 return array(
     'CSSTest' => $vendorDir . '/matthiasmullie/minify/tests/CSSTest.php',
     'CSSmin' => $vendorDir . '/mrclay/minify/min/lib/CSSmin.php',
-    'CollapseModule' => $baseDir . '/vendor/themes/wp-festival/lib/modules/collapse/collapse.php',
     'ComponentInstaller\\Installer' => $vendorDir . '/robloach/component-installer/src/ComponentInstaller/Installer.php',
     'ComponentInstaller\\Process\\BuildJsProcess' => $vendorDir . '/robloach/component-installer/src/ComponentInstaller/Process/BuildJsProcess.php',
     'ComponentInstaller\\Process\\CopyProcess' => $vendorDir . '/robloach/component-installer/src/ComponentInstaller/Process/CopyProcess.php',
@@ -95,7 +94,6 @@ return array(
     'MatthiasMullie\\Minify\\Exception' => $vendorDir . '/matthiasmullie/minify/Exception.php',
     'MatthiasMullie\\Minify\\JS' => $vendorDir . '/matthiasmullie/minify/JS.php',
     'MatthiasMullie\\Minify\\Minify' => $vendorDir . '/matthiasmullie/minify/Minify.php',
-    'Menufication' => $baseDir . '/vendor/plugins/wp-menufication/lib/class-menuficiation.php',
     'Minify' => $vendorDir . '/mrclay/minify/min/lib/Minify.php',
     'Minify_Build' => $vendorDir . '/mrclay/minify/min/lib/Minify/Build.php',
     'Minify_CSS' => $vendorDir . '/mrclay/minify/min/lib/Minify/CSS.php',
