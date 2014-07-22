@@ -4,3 +4,5 @@ Dockerfile
 .gitignore
 .git
 .gitmodules
+storage/public
+application/bin

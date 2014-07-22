@@ -20,6 +20,7 @@
 
 ORGANIATION   = usabilitydynamics
 NAME 			    = www.discodonniepresents.com
+DOMAIN 	      = edm.server
 VERSION 	    = latest
 
 default:
@@ -46,6 +47,10 @@ install:
 	npm install --development
 	composer install --prefer-source --dev --no-interaction
 	grunt install --environment=development --type=cluster
+
+# Install for Staging/Development
+server:
+	docker run -itd --name=$(DOMAIN) --hostname=$(DOMAIN).internal $(ORGANIATION)/$(NAME):$(VERSION)
 
 # Fetch amd Build Plugins
 installPluggable:
