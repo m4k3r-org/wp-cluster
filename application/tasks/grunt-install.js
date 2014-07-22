@@ -59,10 +59,7 @@ module.exports = function( grunt ) {
     var site_type = grunt.option( 'type' ) || 'standalone';
 
     // Run our clean routines
-    grunt.task.run( [
-      'clean:files',
-      'clean:symlinks',
-    ] );
+    // grunt.task.run( [ 'clean:files', 'clean:symlinks' ] );
 
     // Ok, we have a good environment, lets go
     grunt.log.writeln( 'Building environment for : ' + environment + ' on ' + system );
