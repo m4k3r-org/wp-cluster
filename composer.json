@@ -26,8 +26,8 @@
     "php": ">=5.3",
     "usabilitydynamics/lib-ui": "master",
     "usabilitydynamics/lib-settings": "master",
-    "usabilitydynamics/lib-eventbrite-client": "master",
-    "usabilitydynamics/lib-model": "master"
+    "usabilitydynamics/lib-eventbrite-client": "1.0.0",
+    "usabilitydynamics/lib-model": "0.2.3"
   },
   "autoload": {
     "classmap": [ "lib" ]

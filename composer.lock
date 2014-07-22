@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "49509612d5a44653b3ff52fff3855792",
+    "hash": "9c346479312d576a0072354234160eeb",
     "packages": [
         {
             "name": "composer/installers",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "020fa1983597249bfcb947b485c5aac8e0e36652"
+                "reference": "033679ad3cfc5ab759f9ed2a58881aeef13c342b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/020fa1983597249bfcb947b485c5aac8e0e36652",
-                "reference": "020fa1983597249bfcb947b485c5aac8e0e36652",
+                "url": "https://api.github.com/repos/composer/installers/zipball/033679ad3cfc5ab759f9ed2a58881aeef13c342b",
+                "reference": "033679ad3cfc5ab759f9ed2a58881aeef13c342b",
                 "shasum": ""
             },
             "replace": {
@@ -48,8 +48,7 @@
                 {
                     "name": "Kyle Robinson Young",
                     "email": "kyle@dontkry.com",
-                    "homepage": "https://github.com/shama",
-                    "role": "Developer"
+                    "homepage": "https://github.com/shama"
                 }
             ],
             "description": "A multi-framework Composer library installer",
@@ -84,6 +83,7 @@
                 "phpbb",
                 "piwik",
                 "ppi",
+                "puppet",
                 "roundcube",
                 "shopware",
                 "silverstripe",
@@ -93,7 +93,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-07-09 14:29:42"
+            "time": "2014-07-21 15:54:34"
         },
         {
             "name": "hanamura/wp-model",
@@ -133,15 +133,15 @@
         },
         {
             "name": "usabilitydynamics/lib-eventbrite-client",
-            "version": "master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:UsabilityDynamics/lib-eventbrite-client",
-                "reference": "master"
+                "reference": "1.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-eventbrite-client/archive/master.zip",
+                "url": "https://github.com/UsabilityDynamics/lib-eventbrite-client/archive/1.0.0.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -154,7 +154,14 @@
                     "lib"
                 ]
             },
-            "time": "2014-07-15 10:59:40"
+            "description": "PHP client for the Eventbrite API http://eventbrite.github.com",
+            "homepage": "https://github.com/UsabilityDynamics/lib-eventbrite-client",
+            "keywords": [
+                "api",
+                "client",
+                "eventbrite",
+                "php"
+            ]
         },
         {
             "name": "usabilitydynamics/lib-meta-box",
@@ -185,20 +192,19 @@
                     "inc/helpers.php",
                     "inc/meta-box.php"
                 ]
-            },
-            "time": "2014-06-03 12:04:11"
+            }
         },
         {
             "name": "usabilitydynamics/lib-model",
-            "version": "master",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:UsabilityDynamics/lib-model",
-                "reference": "master"
+                "reference": "0.2.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-model/archive/master.zip",
+                "url": "https://github.com/UsabilityDynamics/lib-model/archive/0.2.3.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -249,8 +255,7 @@
                 "models",
                 "shema",
                 "validation"
-            ],
-            "time": "2014-07-17 15:38:22"
+            ]
         },
         {
             "name": "usabilitydynamics/lib-settings",
@@ -287,8 +292,7 @@
                 "classmap": [
                     "lib"
                 ]
-            },
-            "time": "2014-06-02 15:22:26"
+            }
         },
         {
             "name": "usabilitydynamics/lib-ui",
@@ -325,8 +329,7 @@
                 "classmap": [
                     "lib"
                 ]
-            },
-            "time": "2014-07-15 16:52:21"
+            }
         },
         {
             "name": "usabilitydynamics/lib-utility",
@@ -359,24 +362,16 @@
                 "classmap": [
                     "lib"
                 ]
-            },
-            "time": "2014-06-25 21:24:06"
+            }
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ],
+    "stability-flags": [],
+    "prefer-stable": false,
     "platform": {
         "php": ">=5.3"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
