@@ -42,8 +42,8 @@ ADD           vendor/modules/wp-veneer/lib/class-advanced-cache.php   /var/www/a
 ADD           vendor/modules/wp-veneer/lib/class-object-cache.php     /var/www/advaobjectnced-cache.php
 ADD           vendor/modules/wp-veneer/lib/local/.htaccess            /var/www/.htaccess
 
-COPY          application/static/ssl    /etc/ssl
-COPY          application/wp-cli.yaml   /root
+COPY          application/static/ssl                                  /etc/ssl
+COPY          application/static/etc/wp-cli.yaml                      /root
 
 VOLUME        [ "/var/www/application" ]
 VOLUME        [ "/var/www/vendor" ]
