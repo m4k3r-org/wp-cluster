@@ -118,7 +118,6 @@
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-network": "master",
     "usabilitydynamics/wp-splash": "master",
-    "usabilitydynamics/wp-flawless": "dev-legacy",
     "wpcloud/wp-vertical-edm": "master"
   },
   "require-dev": {
@@ -158,6 +157,7 @@
     "discodonniepresents/wp-festival/v1": "master",
     "discodonniepresents/wp-festival/v2": "master",
     "usabilitydynamics/wp-crm": "dev-master",
+    "usabilitydynamics/wp-flawless": "dev-legacy",    
     "usabilitydynamics/wp-simplify": "dev-master",
     "usabilitydynamics/wp-elastic": "dev-master"
   },
