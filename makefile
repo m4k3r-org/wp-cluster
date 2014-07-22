@@ -2,23 +2,22 @@
 ## Build DDP Site/Network
 ##
 ## ### Build and Push
-## docker build -t  usabilitydynamics/www.discodonniepresents.com:latest --rm .
-## docker push      usabilitydynamics/www.discodonniepresents.com:latest
+## docker build -t  discodonniepresents/www.discodonniepresents.com --rm .
+## docker push      discodonniepresents/www.discodonniepresents.com
 ##
 ## ### Pull and Run
-## docker pull      usabilitydynamics/www.discodonniepresents.com:latest
-## docker run       --name edm -d -v /var/www/ usabilitydynamics/www.discodonniepresents.com:latest
-## docker run -itd --name=udx.io -p 8010 usabilitydynamics/udx.io:0.3.2 npm start
+## docker pull      discodonniepresents/www.discodonniepresents.com
+## docker run       --name edm -d -v /var/www/ discodonniepresents/www.discodonniepresents.com
 ##
 ## ### Commit and Push a Change
-## docker commit -m="Setup udx.io, tagged." furious_sammet
-## docker tag 612a966410e5 usabilitydynamics/udx.io:0.3.2
-## docker push usabilitydynamics/udx.io:0.3.2
+## docker commit -m="Setup www.discodonniepresents.com, tagged." furious_sammet
+## docker tag 612a966410e5 discodonniepresents/www.discodonniepresents.com:0.3.2
+## docker push discodonniepresents/www.discodonniepresents.com:0.3.2
 ##
 ##
 ################################################################################################
 
-ORGANIATION   = usabilitydynamics
+ORGANIATION   = discodonniepresents
 NAME 			    = www.discodonniepresents.com
 DOMAIN 	      = edm.server
 VERSION 	    = latest
