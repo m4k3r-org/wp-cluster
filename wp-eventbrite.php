@@ -37,21 +37,70 @@ if( !function_exists( 'get_wp_eventbrite' ) ) {
   define( 'WP_EVENTBRITE_URL', plugin_dir_url( __FILE__ ) );
 
   /**
+   * 
+   *
+   */
+  function wp_eventbrite_check_autoload() {
+    global $_wp_eventbrite_errors;
+    $_wp_eventbrite_errors = $_wp_eventbrite_errors === NULL ? array() : $_wp_eventbrite_errors;
+    if( !class_exists( '\DiscoDonniePresents\Eventbrite\Bootstrap' ) || !class_exists( '\DiscoDonniePresents\Eventbrite\Utility' ) ) {
+      $_wp_eventbrite_errors[] = __( 'Composer Autoloader does not exist or have to be updated to the latest version.' );
+      return false;
+    }
+    $dependencies = \DiscoDonniePresents\Eventbrite\Utility::get_schema( 'schema.dependency' );
+    if( !empty( $dependencies ) && is_array( $dependencies ) ) {
+      foreach( $dependencies as $vendor => $classes ) {
+        if( !empty( $classes ) && is_array( $classes ) ) {
+          foreach( $classes as $class => $v ) {
+            if( !class_exists( $class ) ) {
+              $_wp_eventbrite_errors[] = sprintf( __( 'Vendor <b>%s</b> is not installed or the version is old, class <b>%s</b> does not exist.' ), $vendor, $class );
+            }
+            if ( '*' != trim( $v ) && ( !property_exists( $class, 'version' ) || $class::$version < $v ) ) {
+              $_wp_eventbrite_errors[] = sprintf( __( 'Vendor <b>%s</b> should be updated to the latest version, class <b>%s</b> must have version <b>%s</b> or higher.' ), $vendor, $class, $v );
+            }
+          }
+        }
+      }
+    }
+    if( !empty( $_wp_eventbrite_errors ) ) {
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * 
+   *
+   */
+  function wp_eventbrite_admin_notices() {
+    global $_wp_eventbrite_errors;
+    if( !empty( $_wp_eventbrite_errors ) && is_array( $_wp_eventbrite_errors ) ) {
+      $errors = '<ul style="list-style:disc inside;"><li>' . implode( '</li><li>', $_wp_eventbrite_errors ) . '</li></ul>';
+      $message = sprintf( __( '<p><b>WP-Eventbrite</b> is active but can not be initialized due to following errors:</p> %s' ), $errors );
+      echo '<div class="error fade" style="padding:11px;">' . $message . '</div>';
+    }
+  }
+  
+  /**
    * Returns WP_Evenbrite object
    *
    * @author peshkov@UD
    */
   function get_wp_eventbrite( $key = false, $default = null ) {
-    if( class_exists( '\DiscoDonniePresents\Eventbrite\Bootstrap' ) ) {
-      $instance = \DiscoDonniePresents\Eventbrite\Bootstrap::get_instance();
-      return $key ? $instance->get( $key, $default ) : $instance;
-    }
-    return false;
+    $instance = \DiscoDonniePresents\Eventbrite\Bootstrap::get_instance();
+    return $key ? $instance->get( $key, $default ) : $instance;
+  }
+  
+  //** Initialize. */
+  if( !wp_eventbrite_check_autoload() ) {
+    add_action( 'admin_notices', 'wp_eventbrite_admin_notices' );
+  } else {
+    get_wp_eventbrite();
   }
 
 }
 
-// Initialize.
-get_wp_eventbrite();
+
+
 
 
