@@ -6,3 +6,7 @@ Dockerfile
 .gitmodules
 storage/public
 application/bin
+application/logs
+application/fixtures
+application/screenshots
+application/tests

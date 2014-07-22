@@ -10,15 +10,15 @@
 ## @author potanin@UD
 #################################################################
 
-FROM          usabilitydynamics/blackbox:1.0.0
+FROM          usabilitydynamics/blackbox:1.1.0
 MAINTAINER    UsabilityDynamics, Inc.   <info@usabilitydynamics.com>
 
-ENV           WP_CLI_CONFIG_PATH        /var/www/application/static/etc/wp-cli.yml
+ENV           WP_CLI_CONFIG_PATH        /var/www/application/static/etc/wp-cli.yaml
+ENV           WP_AUTH_KEY               i%HNa^lg#_R-0.6i7AG0cOxFGk]{Q5lBHnVz;NG$iz&#Z3XZ)[[K5ZGEo~R:*Um_
 ENV           AWS_ACCESS_KEY_ID         AKIAJCDAT2T7FESLH3IQ
 ENV           AWS_SECRET_ACCESS_KEY     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
 ENV           AWS_STORAGE_BUCKET        storage.discodonniepresents.com
 ENV           IMAGE_NAME                DiscoDonniePresents/www.discodonniepresents.com
-ENV           WP_AUTH_KEY               i%HNa^lg#_R-0.6i7AG0cOxFGk]{Q5lBHnVz;NG$iz&#Z3XZ)[[K5ZGEo~R:*Um_
 ENV           DEPLOYMENT_VERSION        2.0.1
 ENV           REPOSITORY_AUTH           8282b219ff377f9e209463564800879d7651b475
 ENV           CONTENT_ORIGIN            http://216.22.20.143
@@ -43,7 +43,7 @@ ADD           vendor/modules/wp-veneer/lib/class-object-cache.php     /var/www/a
 ADD           vendor/modules/wp-veneer/lib/local/.htaccess            /var/www/.htaccess
 
 COPY          application/static/ssl                                  /etc/ssl
-COPY          application/static/etc/wp-cli.yaml                      /root
+#COPY          application/static/etc/wp-cli.yaml                      /root
 
 VOLUME        [ "/var/www/application" ]
 VOLUME        [ "/var/www/vendor" ]
