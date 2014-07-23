@@ -8,7 +8,7 @@
   RewriteRule ^node_modules/(.*)$ /index.php [L]
   RewriteRule ^scripts/src/(.*)$ /index.php [L]
   RewriteRule ^styles/src/(.*)$ /index.php [L]
-  RewriteRule ^static/(.*)$ /index.php [L]
+  RewriteRule ^static/schemas/(.*)$ /index.php [L]
   RewriteRule ^composer.json$ /index.php [L]
   RewriteRule ^composer.lock$ /index.php [L]
   RewriteRule ^package.json$ /index.php [L]
