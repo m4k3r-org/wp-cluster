@@ -10,7 +10,7 @@ debug.log
 cgi-bin
 application/logs/*
 application/static/codex/*
-application/static/etc/wp-config/production
+application/static/etc/wp-config/*
 storage
 storage/*
 node_modules
