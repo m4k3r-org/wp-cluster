@@ -53,7 +53,7 @@ module.exports = function( grunt ) {
           {
             expand: true,
             cwd: 'storage/public',
-            src: [ 'media/**' ],
+            src: [ '**' ],
             dest: 'public/',
             filter: eliminateResizedImages
           }
