@@ -4,7 +4,7 @@
  * Text Domain: wp-eventbrite
  * Description: Eventbrite Attendees Notifications
  * Author: Usability Dynamics, Inc
- * Version: 0.1.1
+ * Version: 0.1.2
  * Author URI: http://UsabilityDynamics.com
  *
  * Copyright 2011-2014  Usability Dynamics, Inc.   (email : info@UsabilityDynamics.com)

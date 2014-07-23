@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "033679ad3cfc5ab759f9ed2a58881aeef13c342b"
+                "reference": "41cf781ed1271e25bf31b715416a349996aa2527"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/033679ad3cfc5ab759f9ed2a58881aeef13c342b",
-                "reference": "033679ad3cfc5ab759f9ed2a58881aeef13c342b",
+                "url": "https://api.github.com/repos/composer/installers/zipball/41cf781ed1271e25bf31b715416a349996aa2527",
+                "reference": "41cf781ed1271e25bf31b715416a349996aa2527",
                 "shasum": ""
             },
             "replace": {
@@ -64,6 +64,7 @@
                 "annotatecms",
                 "bitrix",
                 "cakephp",
+                "chef",
                 "codeigniter",
                 "concrete5",
                 "croogo",
@@ -93,7 +94,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-07-21 15:54:34"
+            "time": "2014-07-22 17:04:15"
         },
         {
             "name": "hanamura/wp-model",
@@ -333,7 +334,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-07-22 16:53:04"
+            "time": "2014-07-23 11:51:09"
         },
         {
             "name": "usabilitydynamics/lib-utility",
