@@ -126,8 +126,12 @@ namespace DiscoDonniePresents\Eventbrite {
         
           case ( $this->screens[ 'organizers' ] == $current_screen->id ):
             
-            //**  */
+            //** Get rid of third-party scripts and styles ( lib-meta-box ) to prevent conflicts */
+            wp_deregister_script( 'select2' );
+            wp_dequeue_script( 'select2' );
+            wp_deregister_style( 'select2' );
             wp_dequeue_style( 'select2' );
+            wp_deregister_style( 'rwmb-select-advanced' );
             wp_dequeue_style( 'rwmb-select-advanced' );
             
             //** Enqueue global scripts and styles */
