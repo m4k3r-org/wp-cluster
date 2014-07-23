@@ -27,18 +27,44 @@ module.exports = function( grunt ) {
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '0whgtaG4S6TTMwC+2xJBUup6PEQWq9uamn3E8Yli',
         region: 'us-east-1',
         uploadConcurrency: 5,
-        downloadConcurrency: 5
+        downloadConcurrency: 5,
+        bucket: process.env.AWS_STORAGE_BUCKET || 'storage.discodonniepresents.com',
+        differential: true
+      },
+      production: {
+        files: [
+          {
+            expand: true,
+            cwd: 'storage/public',
+            src: [ '**' ],
+            dest: 'public/',
+            filter: eliminateResizedImages
+          }
+        ]
+      },
+      static: {
+        files: [
+          {
+            expand: true,
+            cwd: 'storage/public',
+            src: [ '**/static' ],
+            dest: 'public/'
+          }
+        ]
       },
       media: {
         options: {
           bucket: process.env.AWS_STORAGE_BUCKET || 'storage.discodonniepresents.com',
           differential: true
         },
+        params: {
+          ContentEncoding: 'gzip'
+        },
         files: [
           {
             expand: true,
             cwd: 'storage/public',
-            src: [ '**/media' ],
+            src: [ 'media/**' ],
             dest: 'public/',
             filter: eliminateResizedImages
           }
@@ -56,24 +82,7 @@ module.exports = function( grunt ) {
           {
             expand: true,
             cwd: 'storage/public',
-            src: [ '**/assets' ],
-            dest: 'public/'
-          }
-        ]
-      },
-      static: {
-        options: {
-          bucket: process.env.AWS_STORAGE_BUCKET || 'storage.discodonniepresents.com',
-          differential: true // Only uploads the files that have changed
-        },
-        params: {
-          ContentEncoding: 'gzip'
-        },
-        files: [
-          {
-            expand: true,
-            cwd: 'storage/public',
-            src: [ '**' ],
+            src: [ 'assets/**' ],
             dest: 'public/'
           }
         ]
@@ -272,6 +281,7 @@ module.exports = function( grunt ) {
 
   // Automatically Load Tasks from application/tasks directory
   grunt.task.loadTasks( 'application/tasks' );
+
 
 };
 
