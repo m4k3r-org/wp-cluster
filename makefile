@@ -11,16 +11,16 @@
 ##
 ## ### Commit and Push a Change
 ## docker commit -m="Setup www.discodonniepresents.com, tagged." furious_sammet
-## docker tag 612a966410e5 discodonniepresents/www.discodonniepresents.com:0.3.2
-## docker push discodonniepresents/www.discodonniepresents.com:0.3.2
+## docker tag 612a966410e5 discodonniepresents/www.discodonniepresents.com:0.0.1
+## docker push discodonniepresents/www.discodonniepresents.com:0.0.1
 ##
 ##
 ################################################################################################
 
 ORGANIATION   = discodonniepresents
 NAME 			    = www.discodonniepresents.com
-DOMAIN 	      = edm.server
-VERSION 	    = latest
+DOMAIN 	      = www.discodonniepresents.com.internal
+VERSION 	    = 0.0.1
 
 default:
 	make install

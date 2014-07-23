@@ -26,6 +26,8 @@ ENV           STAGING_URL               http://208.52.164.220
 ENV           DATA_ORIGIN               http://216.22.20.143
 ENV           DATA_STAGING              http://208.52.164.220
 ENV           DATA_AUTHORITY            http://10.88.135.8
+ENV           DOCKER_REGISTRY           http://registry.wpcloud.io
+ENV           COMPOSER_REPOSITORY       http://repository.usabilitydynamics.com
 
 ADD           application               /var/www/application
 ADD           vendor/libraries          /var/www/vendor/libraries
@@ -42,14 +44,12 @@ ADD           vendor/modules/wp-veneer/lib/class-advanced-cache.php   /var/www/a
 ADD           vendor/modules/wp-veneer/lib/class-object-cache.php     /var/www/advaobjectnced-cache.php
 ADD           vendor/modules/wp-veneer/lib/local/.htaccess            /var/www/.htaccess
 
-COPY          application/static/ssl                                  /etc/ssl
-#COPY          application/static/etc/wp-cli.yaml                      /root
-
 VOLUME        [ "/var/www/application" ]
+VOLUME        [ "/var/www/application/lib" ]
+VOLUME        [ "/var/www/application/static" ]
+VOLUME        [ "/var/www/storage" ]
 VOLUME        [ "/var/www/vendor" ]
 VOLUME        [ "/var/www/vendor/themes" ]
 VOLUME        [ "/var/www/vendor/plugins" ]
 VOLUME        [ "/var/www/vendor/modules" ]
 VOLUME        [ "/var/www/vendor/libraries" ]
-VOLUME        [ "/var/www/storage" ]
-VOLUME        [ "/etc/ssl" ]
