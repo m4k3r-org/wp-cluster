@@ -25,29 +25,18 @@ module.exports = function( grunt ) {
       options: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'AKIAJCDAT2T7FESLH3IQ',
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '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',
-        region: 'us-east-1',
-        uploadConcurrency: 5,
-        downloadConcurrency: 5,
         bucket: process.env.AWS_STORAGE_BUCKET || 'storage.discodonniepresents.com',
+        region: 'us-east-1',
+        uploadConcurrency: 20,
+        downloadConcurrency: 20,
         differential: true
-      },
-      production: {
-        files: [
-          {
-            expand: true,
-            cwd: 'storage/public',
-            src: [ '**' ],
-            dest: 'public/',
-            filter: eliminateResizedImages
-          }
-        ]
       },
       static: {
         files: [
           {
             expand: true,
             cwd: 'storage/public',
-            src: [ '**/static' ],
+            src: [ '**' ],
             dest: 'public/'
           }
         ]
@@ -73,16 +62,13 @@ module.exports = function( grunt ) {
       assets: {
         options: {
           bucket: process.env.AWS_STORAGE_BUCKET || 'storage.discodonniepresents.com',
-          differential: true // Only uploads the files that have changed
-        },
-        params: {
-          ContentEncoding: 'gzip' // applies to all the files!
+          differential: true
         },
         files: [
           {
             expand: true,
             cwd: 'storage/public',
-            src: [ 'assets/**' ],
+            src: [ '**' ],
             dest: 'public/'
           }
         ]
