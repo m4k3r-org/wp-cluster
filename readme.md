@@ -4,6 +4,9 @@ In most cases you want to pull the Docker Staging/Production/Latest image to set
 
 `docker run -tdP discodonniepresents/www.discodonniepresents.com`
 
+The above will pull the "latest" tag, which should be very similar to what is on production. To pull the staging image:
+`docker run -tdP discodonniepresents/www.discodonniepresents.com:staging`
+
 ### Modular Development
 To start container and expose wp-festival and wp-veneer for development, run the following.
 
@@ -24,21 +27,39 @@ You will need to run "git clone" within those directories to begin development.
 Clone GitHub Project.
 `composer create-project discodonniepresents/www.discodonniepresents.com`
 
-Run Temporary Environment
-`docker pull discodonniepresents/www.discodonniepresents.com`
-`docker run -tiP --rm --name=ddp.dev --privileged discodonniepresents/www.discodonniepresents.com /bin/bash`
-`docker commit --message="wip" ddp.dev discodonniepresents/www.discodonniepresents.com`
+Run Temporary Environment with bash. Generally you should run a seperate terminal that can be used to commit and push the running container.
+```
+docker run -tiP --rm --privileged \
+  --name=ddp.wip \
+  -v /storage/storage.discodonniepresents.com:/var/storage \
+  -v /root/.ssh:/root/.ssh \
+  discodonniepresents/www.discodonniepresents.com \
+  /bin/bash
+```
+
+`docker commit --message="wip" ddp.wip discodonniepresents/www.discodonniepresents.com`
 `docker push discodonniepresents/www.discodonniepresents.com`
 
-Create Distribution
-`docker save discodonniepresents/www.discodonniepresents.com > discodonniepresents/www.discodonniepresents.com.tgz`
+```bash
+docker run -tiP --rm \
+  --name=ddp.wip \
+  --privileged \
+  -v /media/storage.discodonniepresents.com:/var/storage \
+  discodonniepresents/www.discodonniepresents.com /home/blackbox/startServer
+```
 
 ### Production Deployment
-On production, to start a daemonized container, run:
-`docker run -tdP --privileged discodonniepresents/www.discodonniepresents.com`
+On production, to start a daemonized container, run the following command.
 
-If default configuration must be overwritten, you may pass in a configuraiton file. (not implemented)
-`docker run -itP --privileged discodonniepresents/www.discodonniepresents.com start --config=https://gist.githubusercontent.com/andypotanin/848b80809dc13d16fc04/raw/`
+```bash
+docker run -tiP --rm \
+  --name=ddp.wip \
+  --privileged \
+  -v /media/storage.discodonniepresents.com:/var/storage \
+  discodonniepresents/www.discodonniepresents.com /home/blackbox/startServer
+```
+
+This command assumes that "storage" must reside on the host machine in /media/storage.discodonniepresents.com.
 
 ### Composer Configuration
 Composer is the authority on dependency management for latest-related services. NPM is also used, but almost entirely for development tools.
@@ -46,6 +67,19 @@ Composer is the authority on dependency management for latest-related services. 
 * Unlike before, composer.json does not require plugins and themes. Plugins and themes are installed by WordPress, not composer.
 * That being said, composer.json can require plugins absoltely essential for operation, such as WP-Veneer or for a multisite network WP-Network.
 * As a rule of thumb, Composer is used to manage "must-use", and above, level dependencies. Anything below should be controlled by WordPress state.
+
+### Image Commands
+Aside from /bin/bash and /bin/supervisord commands there are several helper commands.
+
+* /home/blackbox/startServices
+* /home/blackbox/stopServices
+
+* /home/blackbox/util/createDB
+* /home/blackbox/util/createMySQLAdminUser
+* /home/blackbox/util/importSQL
+* /home/blackbox/util/runMySQL
+* /home/blackbox/util/startApache2
+* /home/blackbox//utilstartMySQL
 
 ### Application Structure
 There is a change to the way "storage" works.

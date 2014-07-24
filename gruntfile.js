@@ -268,7 +268,6 @@ module.exports = function( grunt ) {
   // Automatically Load Tasks from application/tasks directory
   grunt.task.loadTasks( 'application/tasks' );
 
-
 };
 
 /**

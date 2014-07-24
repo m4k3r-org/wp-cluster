@@ -117,7 +117,7 @@
     "usabilitydynamics/wp-cluster": "master",
     "usabilitydynamics/wp-veneer": "dev-develop",
     "usabilitydynamics/wp-network": "master",
-    "usabilitydynamics/wp-splash": "master",
+    "usabilitydynamics/wp-splash": "master",    
     "wpcloud/wp-vertical-edm": "master"
   },
   "require-pluggable": {

@@ -6,11 +6,14 @@
 ## * Sunrise, Advanced Cache, etc. are now copied from wp-veener directory on build.
 ## * 495XX port range is allocated to DDP for static binding.
 ##
+## This will create a baseline build using usabilitydynamics/blackbox:1.1.1.
+## In practice, it may be prucent to utilize discodonniepresents/www.discodonniepresents.com:latest as source to ensure continuity.
+##
 ## @ver 0.2.1
 ## @author potanin@UD
 #################################################################
 
-FROM          usabilitydynamics/blackbox:1.1.0
+FROM          usabilitydynamics/blackbox:1.1.1
 MAINTAINER    UsabilityDynamics, Inc.   <info@usabilitydynamics.com>
 USER          root
 
@@ -57,8 +60,8 @@ ENV           COMPOSER_REPOSITORY                                     http://rep
 ## Port 22, 8080 and 8443 are also available, but should be requested only when needed.
 ##
 ##
-EXPOSE        49510:80
-EXPOSE        49511:443
+EXPOSE        80
+EXPOSE        443
 
 ##
 ## - Logs need to persist and do not need to be committed
