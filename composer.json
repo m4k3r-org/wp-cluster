@@ -115,12 +115,18 @@
     "automattic/wordpress": "4.0-beta2",
     "usabilitydynamics/lib-installer": "master",
     "usabilitydynamics/wp-cluster": "master",
-    "usabilitydynamics/wp-veneer": "master",
+    "usabilitydynamics/wp-veneer": "dev-develop",
     "usabilitydynamics/wp-network": "master",
     "usabilitydynamics/wp-splash": "master",
     "wpcloud/wp-vertical-edm": "master"
   },
-  "require-dev": {
+  "require-pluggable": {
+    "discodonniepresents/wp-festival/v1": "master",
+    "discodonniepresents/wp-festival/v2": "master",
+    "usabilitydynamics/wp-crm": "dev-master",
+    "usabilitydynamics/wp-flawless": "dev-legacy",    
+    "usabilitydynamics/wp-simplify": "dev-master",
+    "usabilitydynamics/wp-elastic": "dev-master",
     "discodonniepresents/wp-spectacle": "master",
     "discodonniepresents/wp-bassoddysey": "master",
     "discodonniepresents/wp-dayafter": "master",
@@ -152,14 +158,6 @@
     "usabilitydynamics/wp-wpml": "3.1.6",
     "usabilitydynamics/wp-gravityforms": "master",
     "usabilitydynamics/wp-seo-addon": "master"
-  },
-  "require-disabled": {
-    "discodonniepresents/wp-festival/v1": "master",
-    "discodonniepresents/wp-festival/v2": "master",
-    "usabilitydynamics/wp-crm": "dev-master",
-    "usabilitydynamics/wp-flawless": "dev-legacy",    
-    "usabilitydynamics/wp-simplify": "dev-master",
-    "usabilitydynamics/wp-elastic": "dev-master"
   },
   "autoload": {
     "classmap": [ "application/lib" ],

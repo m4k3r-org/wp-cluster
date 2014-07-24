@@ -4,9 +4,7 @@ Dockerfile
 .gitignore
 .git
 .gitmodules
-storage/public
-application/bin
 application/logs
-application/fixtures
-application/screenshots
-application/tests
+storage/media/**
+storage/cache/**
+storage/static/**

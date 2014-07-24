@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "58ce53acc9f41ed87d85502f9be35c54",
+    "hash": "86ac9836a4897ed9399c84a1b8decc8d",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -30,12 +30,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "020fa1983597249bfcb947b485c5aac8e0e36652"
+                "reference": "41cf781ed1271e25bf31b715416a349996aa2527"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/020fa1983597249bfcb947b485c5aac8e0e36652",
-                "reference": "020fa1983597249bfcb947b485c5aac8e0e36652",
+                "url": "https://api.github.com/repos/composer/installers/zipball/41cf781ed1271e25bf31b715416a349996aa2527",
+                "reference": "41cf781ed1271e25bf31b715416a349996aa2527",
                 "shasum": ""
             },
             "replace": {
@@ -66,8 +66,7 @@
                 {
                     "name": "Kyle Robinson Young",
                     "email": "kyle@dontkry.com",
-                    "homepage": "https://github.com/shama",
-                    "role": "Developer"
+                    "homepage": "https://github.com/shama"
                 }
             ],
             "description": "A multi-framework Composer library installer",
@@ -83,6 +82,7 @@
                 "annotatecms",
                 "bitrix",
                 "cakephp",
+                "chef",
                 "codeigniter",
                 "concrete5",
                 "croogo",
@@ -102,6 +102,7 @@
                 "phpbb",
                 "piwik",
                 "ppi",
+                "puppet",
                 "roundcube",
                 "shopware",
                 "silverstripe",
@@ -111,7 +112,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-07-09 14:29:42"
+            "time": "2014-07-22 17:04:15"
         },
         {
             "name": "google/api-php-client",
@@ -471,6 +472,64 @@
             "time": "2014-01-18 15:33:09"
         },
         {
+            "name": "siteorigin/panels",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/siteorigin-panels",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/siteorigin-panels/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "siteorigin-panels",
+                "main-file": "siteorigin-panels.php",
+                "text_domain": "siteorigin-panels"
+            },
+            "autoload": {
+                "classmap": [
+                    "widgets/basic.php",
+                    "widgets/widgets/testimonial/testimonial.php",
+                    "widgets/widgets/price-box/price-box.php",
+                    "widgets/widgets/list/list.php",
+                    "widgets/widgets/call-to-action/call-to-action.php",
+                    "widgets/widgets/button/button.php",
+                    "widgets/widgets/animated-image/animated-image.php",
+                    "widgets/lib/color.php"
+                ]
+            },
+            "license": [
+                "GPLv2"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Priday",
+                    "email": "support@siteorigin.com",
+                    "homepage": "http://siteorigin.com/",
+                    "role": "WordPress Developer"
+                }
+            ],
+            "description": "Build responsive page layouts using the widgets you know and love using this simple drag and drop page builder.",
+            "homepage": "http://siteorigin.com/page-builder/",
+            "keywords": [
+                "admin",
+                "builder",
+                "page-builder",
+                "responsive",
+                "wordpress"
+            ],
+            "time": "2014-06-04 16:34:03"
+        },
+        {
             "name": "usabilitydynamics/lib-api",
             "version": "master",
             "source": {
@@ -562,6 +621,39 @@
                 "MIT"
             ],
             "time": "2014-06-03 00:40:50"
+        },
+        {
+            "name": "usabilitydynamics/lib-layout-engine",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-layout-engine",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-layout-engine/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master",
+                "usabilitydynamics/lib-meta-box": "*",
+                "usabilitydynamics/lib-ui": "*",
+                "usabilitydynamics/lib-utility": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "usabilitydynamics/lib-carrington-build": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-06-04 15:44:17"
         },
         {
             "name": "usabilitydynamics/lib-meta-box",
@@ -657,7 +749,7 @@
                 "shema",
                 "validation"
             ],
-            "time": "2014-07-17 15:38:22"
+            "time": "2014-07-22 16:35:58"
         },
         {
             "name": "usabilitydynamics/lib-requires",
@@ -808,7 +900,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-07-15 16:52:21"
+            "time": "2014-07-23 11:51:09"
         },
         {
             "name": "usabilitydynamics/lib-utility",
@@ -842,7 +934,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-07-18 17:34:11"
+            "time": "2014-07-22 16:38:24"
         },
         {
             "name": "usabilitydynamics/wp-cluster",
@@ -935,21 +1027,47 @@
             "time": "2014-07-21 11:18:41"
         },
         {
-            "name": "usabilitydynamics/wp-veneer",
+            "name": "usabilitydynamics/wp-splash",
             "version": "master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-veneer",
+                "url": "git@github.com:UsabilityDynamics/wp-splash",
                 "reference": "master"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-veneer/archive/master.zip",
+                "url": "https://github.com/usabilitydynamics/wp-splash/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
-                "composer/installers": "~1.0",
+                "php": ">=5.3",
+                "siteorigin/panels": "master",
+                "usabilitydynamics/lib-installer": "master",
+                "usabilitydynamics/lib-layout-engine": "master",
+                "usabilitydynamics/lib-ui": "master"
+            },
+            "type": "wordpress-theme",
+            "extra": {
+                "installer-name": "wp-splash"
+            },
+            "time": "2014-07-01 13:17:37"
+        },
+        {
+            "name": "usabilitydynamics/wp-veneer",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/wp-veneer",
+                "reference": "develop"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/wp-veneer/archive/develop.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
                 "graze/monolog-extensions": "~1.4.0",
                 "matthiasmullie/minify": "1.2.0",
                 "mindscape/raygun4php": "dev-master",
@@ -957,12 +1075,18 @@
                 "mrclay/minify": "master",
                 "php": ">=5.3",
                 "usabilitydynamics/lib-api": "master",
-                "usabilitydynamics/lib-installer": "master",
                 "usabilitydynamics/lib-settings": "master",
                 "usabilitydynamics/lib-ui": "master",
                 "usabilitydynamics/lib-utility": "master"
             },
+            "require-dev": {
+                "composer/installers": "~1.0",
+                "usabilitydynamics/lib-installer": "master"
+            },
             "type": "wordpress-module",
+            "extra": {
+                "installer-name": "wp-veneer"
+            },
             "autoload": {
                 "classmap": [
                     "lib/class-api.php",
@@ -981,21 +1105,14 @@
                 ]
             },
             "license": [
-                "MIT"
+                "GPL-2.0"
             ],
-            "authors": [
-                {
-                    "name": "Andy Potanin",
-                    "homepage": "http://usabilitydynamics.com"
-                }
-            ],
-            "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
             "keywords": [
                 "multisite",
                 "varnish",
                 "wordpress"
             ],
-            "time": "2014-07-21 11:42:59"
+            "time": "2014-07-24 18:59:56"
         },
         {
             "name": "wpcloud/wp-vertical-edm",
@@ -1048,1257 +1165,15 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "discodonniepresents/wp-bassoddysey",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-bassoddysey",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-bassoddysey/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-theme",
-            "description": "Baseline theme composer.json for composer requirements.",
-            "time": "2014-07-07 11:58:38"
-        },
-        {
-            "name": "discodonniepresents/wp-dayafter",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-dayafter",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-dayafter/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-theme",
-            "description": "Baseline theme composer.json for composer requirements.",
-            "time": "2014-07-07 11:59:36"
-        },
-        {
-            "name": "discodonniepresents/wp-disco",
-            "version": "dev-legacy",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-disco",
-                "reference": "legacy"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-disco/archive/legacy.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "usabilitydynamics/wp-flawless": "dev-legacy"
-            },
-            "type": "wordpress-theme",
-            "extra": {
-                "installer-name": "flawless-hddp"
-            },
-            "license": [
-                "GPL-2.0"
-            ],
-            "description": "Festival Theme for the Drop Network",
-            "time": "2014-07-21 07:59:14"
-        },
-        {
-            "name": "discodonniepresents/wp-festival/v1",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-festival",
-                "reference": "legacy"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-festival/archive/legacy.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "archive": {
-                "exclude": [
-                    "/test"
-                ]
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "usabilitydynamics/lib-carrington": "master",
-                "usabilitydynamics/lib-meta-box": "master",
-                "usabilitydynamics/lib-settings": "master",
-                "usabilitydynamics/lib-wp-shortcode": "master",
-                "usabilitydynamics/lib-wp-theme": "master",
-                "usabilitydynamics/wp-menufication": "master"
-            },
-            "require-dev": {
-                "usabilitydynamics/wp-amd": "master"
-            },
-            "type": "wordpress-theme",
-            "extra": {
-                "installer-name": "wp-festival",
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "scripts": {
-                "pre-archive-cmd": [
-                    "echo Fetch all deps..."
-                ],
-                "post-archive-cmd": [
-                    "echo Remove all deps..."
-                ],
-                "post-package-install": [
-                    "echo Installed! wp-festival v2."
-                ]
-            },
-            "license": [
-                "GPL-2.0"
-            ],
-            "description": "Festival Theme for the Drop Network"
-        },
-        {
-            "name": "discodonniepresents/wp-festival/v2",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-festival",
-                "reference": "v2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-festival/archive/v2.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "archive": {
-                "exclude": [
-                    "/test",
-                    "/static/scripts/src",
-                    "/static/styles/src"
-                ]
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "usabilitydynamics/lib-carrington": "master",
-                "usabilitydynamics/lib-meta-box": "master",
-                "usabilitydynamics/lib-settings": "master",
-                "usabilitydynamics/lib-wp-shortcode": "master",
-                "usabilitydynamics/lib-wp-theme": "master"
-            },
-            "require-dev": {
-                "composer/installers": "~1.0",
-                "usabilitydynamics/wp-amd": "master",
-                "usabilitydynamics/wp-menufication": "master"
-            },
-            "type": "wordpress-theme",
-            "extra": {
-                "installer-name": "wp-festival-v2",
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload-dev": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "scripts": {
-                "pre-archive-cmd": [
-                    "echo Fetch all deps..."
-                ],
-                "post-archive-cmd": [
-                    "echo Remove all deps..."
-                ],
-                "post-package-install": [
-                    "echo Installed! wp-festival v2."
-                ]
-            },
-            "license": [
-                "GPL-2.0"
-            ],
-            "description": "Festival Theme for the Drop Network"
-        },
-        {
-            "name": "discodonniepresents/wp-freaksbeatstreats",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-freaksbeatstreats",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-freaksbeatstreats/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-theme",
-            "description": "Baseline theme composer.json for composer requirements.",
-            "time": "2014-07-07 11:58:45"
-        },
-        {
-            "name": "discodonniepresents/wp-hififest",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-hififest",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-hififest/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-theme",
-            "description": "Baseline theme composer.json for composer requirements.",
-            "time": "2014-07-07 11:58:49"
-        },
-        {
-            "name": "discodonniepresents/wp-lanmexico",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-lanmexico",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-lanmexico/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-theme",
-            "description": "Baseline theme composer.json for composer requirements.",
-            "time": "2014-07-07 12:03:04"
-        },
-        {
-            "name": "discodonniepresents/wp-monsterblockparty",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-monsterblockparty",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-monsterblockparty/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-theme",
-            "description": "Baseline theme composer.json for composer requirements.",
-            "time": "2014-07-07 11:58:22"
-        },
-        {
-            "name": "discodonniepresents/wp-spectacle",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-spectacle",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-spectacle/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "usabilitydynamics/lib-carrington": "master",
-                "usabilitydynamics/lib-meta-box": "master",
-                "usabilitydynamics/lib-settings": "master",
-                "usabilitydynamics/lib-wp-theme": "master"
-            },
-            "type": "wordpress-theme",
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "license": [
-                "GPL-2.0"
-            ],
-            "description": "Spectacle theme for the EDM Network",
-            "time": "2014-05-06 15:15:46"
-        },
-        {
-            "name": "discodonniepresents/wp-thegift",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-thegift",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-thegift/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-theme",
-            "description": "Baseline theme composer.json for composer requirements.",
-            "time": "2014-07-07 11:58:54"
-        },
-        {
-            "name": "discodonniepresents/wp-winterfantasy",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-winterfantasy",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/DiscoDonniePresents/wp-winterfantasy/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-theme",
-            "description": "Baseline theme composer.json for composer requirements.",
-            "time": "2014-07-07 11:58:58"
-        },
-        {
-            "name": "siteorigin/panels",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/siteorigin-panels",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/siteorigin-panels/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "siteorigin-panels",
-                "main-file": "siteorigin-panels.php",
-                "text_domain": "siteorigin-panels"
-            },
-            "autoload": {
-                "classmap": [
-                    "widgets/basic.php",
-                    "widgets/widgets/testimonial/testimonial.php",
-                    "widgets/widgets/price-box/price-box.php",
-                    "widgets/widgets/list/list.php",
-                    "widgets/widgets/call-to-action/call-to-action.php",
-                    "widgets/widgets/button/button.php",
-                    "widgets/widgets/animated-image/animated-image.php",
-                    "widgets/lib/color.php"
-                ]
-            },
-            "license": [
-                "GPLv2"
-            ],
-            "authors": [
-                {
-                    "name": "Greg Priday",
-                    "email": "support@siteorigin.com",
-                    "homepage": "http://siteorigin.com/",
-                    "role": "WordPress Developer"
-                }
-            ],
-            "description": "Build responsive page layouts using the widgets you know and love using this simple drag and drop page builder.",
-            "homepage": "http://siteorigin.com/page-builder/",
-            "keywords": [
-                "admin",
-                "builder",
-                "page-builder",
-                "responsive",
-                "wordpress"
-            ],
-            "time": "2014-06-04 16:34:03"
-        },
-        {
-            "name": "usabilitydynamics/lib-carrington",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-carrington",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-carrington/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib/classes"
-                ]
-            },
-            "time": "2014-05-02 06:30:34"
-        },
-        {
-            "name": "usabilitydynamics/lib-features",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-features",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-features/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "usabilitydynamics/lib-utility": "master"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ],
-                "files": [
-                    "lib/api/autoload.php"
-                ]
-            },
-            "time": "2014-05-22 09:25:00"
-        },
-        {
-            "name": "usabilitydynamics/lib-layout-engine",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-layout-engine",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-layout-engine/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master",
-                "usabilitydynamics/lib-meta-box": "*",
-                "usabilitydynamics/lib-ui": "*",
-                "usabilitydynamics/lib-utility": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*",
-                "usabilitydynamics/lib-carrington-build": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "time": "2014-06-04 15:44:17"
-        },
-        {
-            "name": "usabilitydynamics/lib-wp-shortcode",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-wp-shortcode",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-wp-shortcode/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "component",
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "time": "2014-01-20 16:48:17"
-        },
-        {
-            "name": "usabilitydynamics/lib-wp-theme",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-wp-theme",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-wp-theme/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "usabilitydynamics/lib-api": "master",
-                "usabilitydynamics/lib-meta-box": "master",
-                "usabilitydynamics/lib-model": "master",
-                "usabilitydynamics/lib-requires": "master",
-                "usabilitydynamics/lib-rpc": "master",
-                "usabilitydynamics/lib-settings": "master",
-                "usabilitydynamics/lib-ui": "master"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib/plugins",
-                    "lib/class-carrington.php",
-                    "lib/class-customizer.php",
-                    "lib/class-nav-menu.php",
-                    "lib/class-module.php",
-                    "lib/class-requires.php",
-                    "lib/class-scaffold.php",
-                    "lib/class-script.php",
-                    "lib/class-settings.php",
-                    "lib/class-utility.php"
-                ]
-            },
-            "time": "2014-07-21 01:25:22"
-        },
-        {
-            "name": "usabilitydynamics/wp-elastic",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-elastic",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/wp-elastic/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-api": "master",
-                "usabilitydynamics/lib-features": "master",
-                "usabilitydynamics/lib-meta-box": "master",
-                "usabilitydynamics/lib-model": "master",
-                "usabilitydynamics/lib-settings": "master",
-                "usabilitydynamics/lib-ui": "master",
-                "usabilitydynamics/lib-utility": "master"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-paths": {
-                    "vendor/plugins/{$name}": [
-                        "type:wordpress-plugin"
-                    ],
-                    "vendor/extensions/{$name}": [
-                        "type:wordpress-module"
-                    ],
-                    "vendor/themes/{$name}": [
-                        "type:wordpress-theme"
-                    ]
-                },
-                "installer-name": "wp-elastic"
-            },
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ],
-                "files": [
-                    "lib/api/autoload.php"
-                ]
-            },
-            "description": "Improve WordPress search performance/accuracy and enable faceted search by leveraging an ElasticSearch server.",
-            "time": "2014-07-21 11:53:08"
-        },
-        {
-            "name": "usabilitydynamics/wp-flawless",
-            "version": "dev-legacy",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-flawless",
-                "reference": "legacy"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/wp-flawless/archive/legacy.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3"
-            },
-            "type": "wordpress-theme",
-            "extra": {
-                "installer-name": "flawless"
-            },
-            "autoload": {
-                "classmap": [
 
-                ]
-            },
-            "time": "2014-06-18 15:00:16"
-        },
-        {
-            "name": "usabilitydynamics/wp-gravityforms",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-gravityforms",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-gravityforms/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "gravityforms"
-            },
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Fork of GravityForms repo so we can use it in our composer architecture.",
-            "time": "2014-07-09 02:14:02"
-        },
-        {
-            "name": "usabilitydynamics/wp-jf3-maintenance-mode",
-            "version": "2.0",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-jf3-maintenance-mode",
-                "reference": "2.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-jf3-maintenance-mode/archive/2.0.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "jf3-maintenance-mode"
-            },
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Fork of jf3-maintenance-mode so we can use it in our composer architecture."
-        },
-        {
-            "name": "usabilitydynamics/wp-menufication",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-menufication",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-menufication/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin",
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "time": "2014-05-13 15:10:02"
-        },
-        {
-            "name": "usabilitydynamics/wp-seo-addon",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-seo-addon",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-seo-addon/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "php": ">=5.3",
-                "usabilitydynamics/lib-settings": "master"
-            },
-            "type": "wordpress-plugin",
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "homepage": "https://github.com/UsabilityDynamics/wp-seo-addon",
-            "keywords": [
-                "seo",
-                "wordpress",
-                "wp-seo"
-            ],
-            "time": "2014-07-09 19:05:08"
-        },
-        {
-            "name": "usabilitydynamics/wp-simplify",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-simplify",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/wp-simplify/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "time": "2014-07-21 11:19:38"
-        },
-        {
-            "name": "usabilitydynamics/wp-splash",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-splash",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/wp-splash/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "php": ">=5.3",
-                "siteorigin/panels": "master",
-                "usabilitydynamics/lib-installer": "master",
-                "usabilitydynamics/lib-layout-engine": "master",
-                "usabilitydynamics/lib-ui": "master"
-            },
-            "type": "wordpress-theme",
-            "extra": {
-                "installer-name": "wp-splash"
-            },
-            "time": "2014-07-01 13:17:37"
-        },
-        {
-            "name": "usabilitydynamics/wp-wpml",
-            "version": "3.1.6",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-wpml",
-                "reference": "3.1.6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-wpml/archive/3.1.6.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "sitepress-multilingual-cms"
-            },
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Fork of WPML so we can use it in our composer architecture."
-        },
-        {
-            "name": "usabilitydynamics/wp-wpml-translation-management",
-            "version": "1.9.5",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-wpml-translation-management",
-                "reference": "1.9.5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-wpml-translation-management/archive/1.9.5.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master"
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "wpml-translation-management"
-            },
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Fork of WPML Translation management so we can use it in our composer architecture."
-        },
-        {
-            "name": "wpackagist-plugin/akismet",
-            "version": "3.0.0",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/akismet/",
-                "reference": "tags/3.0.0-RC1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/akismet.3.0.0.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/akismet": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/akismet/"
-        },
-        {
-            "name": "wpackagist-plugin/brightcove-video-cloud",
-            "version": "1.1",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/brightcove-video-cloud/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/brightcove-video-cloud.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/brightcove-video-cloud": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/brightcove-video-cloud/"
-        },
-        {
-            "name": "wpackagist-plugin/fantastic-elasticsearch",
-            "version": "2.1.0",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/fantastic-elasticsearch/",
-                "reference": "tags/2.1.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/fantastic-elasticsearch.2.1.0.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/fantastic-elasticsearch": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/fantastic-elasticsearch/"
-        },
-        {
-            "name": "wpackagist-plugin/google-analytics-for-wordpress",
-            "version": "4.3.5",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/google-analytics-for-wordpress/",
-                "reference": "tags/4.3.5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/google-analytics-for-wordpress.4.3.5.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/google-analytics-for-wordpress": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/google-analytics-for-wordpress/"
-        },
-        {
-            "name": "wpackagist-plugin/jetpack",
-            "version": "3.0.2",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/jetpack/",
-                "reference": "tags/3.0.2b1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/jetpack.3.0.2.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/jetpack": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/jetpack/"
-        },
-        {
-            "name": "wpackagist-plugin/public-post-preview",
-            "version": "2.3",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/public-post-preview/",
-                "reference": "tags/2.3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/public-post-preview.2.3.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/public-post-preview": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/public-post-preview/"
-        },
-        {
-            "name": "wpackagist-plugin/real-user-monitoring-by-pingdom",
-            "version": "1.0",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/real-user-monitoring-by-pingdom/",
-                "reference": "tags/1.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/real-user-monitoring-by-pingdom.1.0.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/real-user-monitoring-by-pingdom": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/real-user-monitoring-by-pingdom/"
-        },
-        {
-            "name": "wpackagist-plugin/redirection",
-            "version": "2.3.4",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/redirection/",
-                "reference": "tags/2.3.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/redirection.2.3.4.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/redirection": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/redirection/"
-        },
-        {
-            "name": "wpackagist-plugin/regenerate-thumbnails",
-            "version": "2.2.4",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/regenerate-thumbnails/",
-                "reference": "tags/2.2.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/regenerate-thumbnails.2.2.4.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/regenerate-thumbnails": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/regenerate-thumbnails/"
-        },
-        {
-            "name": "wpackagist-plugin/video",
-            "version": "1.5.6",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/video/",
-                "reference": "tags/1.5.6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/video.1.5.6.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/video": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/video/"
-        },
-        {
-            "name": "wpackagist-plugin/w3-total-cache",
-            "version": "0.9.4",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/w3-total-cache/",
-                "reference": "tags/0.9.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/w3-total-cache.0.9.4.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/w3-total-cache": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/w3-total-cache/"
-        },
-        {
-            "name": "wpackagist-plugin/widget-css-classes",
-            "version": "1.2.6",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/widget-css-classes/",
-                "reference": "tags/1.2.6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/widget-css-classes.1.2.6.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/widget-css-classes": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/widget-css-classes/"
-        },
-        {
-            "name": "wpackagist-plugin/wordpress-importer",
-            "version": "0.6.1",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/wordpress-importer/",
-                "reference": "tags/0.6.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/wordpress-importer.0.6.1.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/wordpress-importer": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/wordpress-importer/"
-        },
-        {
-            "name": "wpackagist-plugin/wordpress-seo",
-            "version": "1.5.3.3",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/wordpress-seo/",
-                "reference": "tags/1.5.3.3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/wordpress-seo.1.5.3.3.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/wordpress-seo": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/wordpress-seo/"
-        },
-        {
-            "name": "wpackagist-plugin/wp-pagenavi",
-            "version": "2.85",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/wp-pagenavi/",
-                "reference": "tags/2.85"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/wp-pagenavi.2.85.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/wp-pagenavi": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/wp-pagenavi/"
-        },
-        {
-            "name": "wpackagist-plugin/wpmandrill",
-            "version": "1.33",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/wpmandrill/",
-                "reference": "tags/1.33"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/wpmandrill.1.33.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/wpmandrill": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/wpmandrill/"
-        }
     ],
     "aliases": [
 
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "usabilitydynamics/wp-flawless": 20,
-        "discodonniepresents/wp-festival/v2": 20,
-        "discodonniepresents/wp-disco": 20
+        "usabilitydynamics/wp-veneer": 20
     },
-    "prefer-stable": false,
     "platform": {
         "php": ">=5.3"
     },

@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    $vendorDir . '/usabilitydynamics/lib-features/lib/api/autoload.php',
     $baseDir . '/vendor/modules/wp-cluster/wp-cluster.php',
     $baseDir . '/vendor/modules/wp-veneer/wp-veneer.php',
     $baseDir . '/application/bootstrap.php',
