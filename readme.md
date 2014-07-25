@@ -36,12 +36,13 @@ docker run -tiP --privileged \
   -p 49101:80 \
   -p 49102:443 \
   -p 49104:8080 \
-  -p 49105:3306 \
+  -e WP_BASE_DOMAIN=edm.cluster.veneer.io \
   -e DB_PREFIX=edm_ \
   -e DB_NAME=edm_cluster \
   -e DB_USER=edm_cluster \
   -e DB_PASSWORD=Gbq@anViLNsa \
   -e DB_HOST=shaniqua.rds.uds.io \
+  -e WP_VENEER_STORAGE=static/storage \
   discodonniepresents/www.discodonniepresents.com \
   /bin/bash
 ```
@@ -59,30 +60,48 @@ docker run -tiP --privileged \
   -p 49101:80 \
   -p 49102:443 \
   -p 49104:8080 \
-  -p 49105:3306 \
+  -e WP_BASE_DOMAIN=edm.cluster.veneer.io \
   -e DB_PREFIX=edm_ \
   -e DB_NAME=edm_cluster \
   -e DB_USER=edm_cluster \
   -e DB_PASSWORD=Gbq@anViLNsa \
   -e DB_HOST=shaniqua.rds.uds.io \
+  -e WP_VENEER_STORAGE=static/storage \
   discodonniepresents/www.discodonniepresents.com \
   /bin/bash
 ```
 
 Once ready, commit and push the "dddp.wip" container. This creates a new image using the name "discodonniepresents/www.discodonniepresents.com".
 ```
-docker commit --message="Doing stuf..." ddp.wip discodonniepresents/www.discodonniepresents.com && docker push discodonniepresents/www.discodonniepresents.com
+docker commit \
+  --message="Doing stuf..." \
+  ddp.wip discodonniepresents/www.discodonniepresents.com && \
+  docker push discodonniepresents/www.discodonniepresents.com
 ```
 
 ### Production Deployment
 On production, to start a daemonized container, run the following command.
 
-```bash
-docker run -tiP --rm \
+```
+docker run -di --privileged \
   --name=ddp.wip \
-  --privileged \
-  -v /media/storage.discodonniepresents.com:/var/storage \
-  discodonniepresents/www.discodonniepresents.com /home/blackbox/startServices
+  --hostname=www.discodonniepresents.com \
+  -v /storage/storage.discodonniepresents.com:/var/storage \
+  -v /root/.ssh:/root/.ssh \
+  -v /home/core/share/www.discodonniepresents.com/logs:/var/www/application/logs \
+  -p 49100:22 \
+  -p 49101:80 \
+  -p 49102:443 \
+  -p 49104:8080 \
+  -e WP_BASE_DOMAIN=edm.cluster.veneer.io \
+  -e DB_PREFIX=edm_ \
+  -e DB_NAME=edm_cluster \
+  -e DB_USER=edm_cluster \
+  -e DB_PASSWORD=Gbq@anViLNsa \
+  -e DB_HOST=shaniqua.rds.uds.io \
+  -e WP_VENEER_STORAGE=static/storage \
+  discodonniepresents/www.discodonniepresents.com \
+  /usr/bin/startServices
 ```
 
 This command assumes that "storage" must reside on the host machine in /media/storage.discodonniepresents.com.
@@ -97,8 +116,8 @@ Composer is the authority on dependency management for latest-related services. 
 ### Image Commands
 Aside from /bin/bash and /bin/supervisord commands there are several helper commands.
 
-* /home/blackbox/startServices
-* /home/blackbox/stopServices
+* /usr/bin/startServices
+* /usr/bin/stopServices
 
 * /home/blackbox/util/createDB
 * /home/blackbox/util/createMySQLAdminUser
