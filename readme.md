@@ -8,14 +8,14 @@ The above will pull the "latest" tag, which should be very similar to what is on
 `docker run -tdP discodonniepresents/www.discodonniepresents.com:staging`
 
 ### Modular Development
-To start container and expose wp-festival and wp-veneer for development, run the following.
+To start service container and expose wp-festival and wp-veneer for development, run the following.
 
 ```sh
 docker run -tdP \
-  -v ~/dev/wp-festival:/var/www/vendor/themes/wp-festival \
-  -v ~/dev/wp-veneer:/var/www/vendor/modules/wp-veneer \
+  -v ~/my-host/wp-festival:/var/www/vendor/themes/wp-festival \
+  -v ~/my-host/wp-veneer:/var/www/vendor/modules/wp-veneer \
   discodonniepresents/www.discodonniepresents.com \
-  /usr/bin/supervisord -n
+  /usr/bin/startServices
 ```
 
 This will mount the ~/dev/wp-festival and ~/dev/wp-veneer directories on your host machine.
@@ -24,28 +24,54 @@ You will need to run "git clone" within those directories to begin development.
 
 ### Container Development
 
-Clone GitHub Project.
-`composer create-project discodonniepresents/www.discodonniepresents.com`
-
 Run Temporary Environment with bash. Generally you should run a seperate terminal that can be used to commit and push the running container.
 ```
-docker run -tiP --rm --privileged \
+docker run -tiP --privileged \
   --name=ddp.wip \
+  --hostname=www.discodonniepresents.com \
   -v /storage/storage.discodonniepresents.com:/var/storage \
   -v /root/.ssh:/root/.ssh \
+  -v /home/core/share/www.discodonniepresents.com/logs:/var/www/application/logs \
+  -p 49100:22 \
+  -p 49101:80 \
+  -p 49102:443 \
+  -p 49104:8080 \
+  -p 49105:3306 \
+  -e DB_PREFIX=edm_ \
+  -e DB_NAME=edm_cluster \
+  -e DB_USER=edm_cluster \
+  -e DB_PASSWORD=Gbq@anViLNsa \
+  -e DB_HOST=shaniqua.rds.uds.io \
   discodonniepresents/www.discodonniepresents.com \
   /bin/bash
 ```
 
-`docker commit --message="wip" ddp.wip discodonniepresents/www.discodonniepresents.com`
-`docker push discodonniepresents/www.discodonniepresents.com`
+Expose entire /var/www directory for development:
 
-```bash
-docker run -tiP --rm \
+```
+docker run -tiP --privileged \
   --name=ddp.wip \
-  --privileged \
-  -v /media/storage.discodonniepresents.com:/var/storage \
-  discodonniepresents/www.discodonniepresents.com /home/blackbox/startServer
+  --hostname=www.discodonniepresents.com \
+  -v /storage/storage.discodonniepresents.com:/var/storage \
+  -v /root/.ssh:/root/.ssh \
+  -v /home/core/share/www.discodonniepresents.com/logs:/var/www/application/logs \
+  -p 49100:22 \
+  -p 49101:80 \
+  -p 49102:443 \
+  -p 49104:8080 \
+  -p 49105:3306 \
+  -e DB_PREFIX=edm_ \
+  -e DB_NAME=edm_cluster \
+  -e DB_USER=edm_cluster \
+  -e DB_PASSWORD=Gbq@anViLNsa \
+  -e DB_HOST=shaniqua.rds.uds.io \
+  discodonniepresents/www.discodonniepresents.com \
+  /bin/bash
+```
+
+Once ready, commit and push the "dddp.wip" container. This creates a new image using the name "discodonniepresents/www.discodonniepresents.com".
+```
+docker commit --message="Doing stuf..." ddp.wip discodonniepresents/www.discodonniepresents.com && docker push discodonniepresents/www.discodonniepresents.com
 ```
 
 ### Production Deployment
@@ -56,7 +82,7 @@ docker run -tiP --rm \
   --name=ddp.wip \
   --privileged \
   -v /media/storage.discodonniepresents.com:/var/storage \
-  discodonniepresents/www.discodonniepresents.com /home/blackbox/startServer
+  discodonniepresents/www.discodonniepresents.com /home/blackbox/startServices
 ```
 
 This command assumes that "storage" must reside on the host machine in /media/storage.discodonniepresents.com.
