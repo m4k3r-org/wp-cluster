@@ -58,23 +58,22 @@ module.exports = function( grunt ) {
     var copy_type = system == 'windows' ? 'copy' : 'symlink';
     var site_type = grunt.option( 'type' ) || 'standalone';
 
+return;
+
     // Run our clean routines
-    grunt.task.run( [
-      'clean:files',
-      'clean:symlinks',
-    ] );
+    // grunt.task.run( [ 'clean:files', 'clean:symlinks' ] );
 
     // Ok, we have a good environment, lets go
     grunt.log.writeln( 'Building environment for : ' + environment + ' on ' + system );
 
     // Run any task for the specific environment now
-    grunt.task.run( [ copy_type + ':' + environment ] );
+    // grunt.task.run( [ copy_type + ':' + environment ] );
 
     // Now run the shell script to configure .htaccess for the specific environment
-    grunt.task.run( [ 'shell:configure:' + environment ] );
+    // grunt.task.run( [ 'shell:configure:' + environment ] );
 
     // Run the task for the site type
-    grunt.task.run( [ copy_type + ':' + site_type ] );
+    // grunt.task.run( [ copy_type + ':' + site_type ] );
 
     // Build all of our docs/assets
     grunt.task.run( [
