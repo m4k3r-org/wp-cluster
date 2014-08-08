@@ -1,0 +1,56 @@
+// Define media queries
+
+@phone-landscape: ~"only screen and (min-width: 480px)";
+@tablet: ~"only screen and (min-width: 768px)";
+@desktop: ~"only screen and (min-width: 992px)";
+@large-desktop: ~"only screen and (min-width: 1200px)";
+@tv: ~"only screen and (min-width: 1680px)";
+
+// Define layout specific variables
+
+@coreImagesUrl: "../images";
+
+// Box sizing. Do not remove this, a bug in Bootstrap causes layout crash if this is not specified.
+
+*{
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+
+  &:before, &:after{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+}
+
+// Generic styles
+
+.last{
+  margin-right: 0 !important;
+}
+
+a{
+  outline: none;
+  border: 0;
+  color: #ffffff;
+  text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body{
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  text-align: center;
+}
+
+h2{
+  font-family: "audimat-bold";
+  font-weight: normal;
+  font-size: 50px;
+  letter-spacing: -0.04em;
+  color: #4a5674;
+  text-transform: uppercase;
+}
