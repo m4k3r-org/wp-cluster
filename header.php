@@ -18,6 +18,7 @@
     };
   </script>
 
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script type="text/javascript" data-main="<?php echo get_stylesheet_directory_uri(); ?>/static/scripts/src/app" src="http://cdn.udx.io/udx.requires.js"></script>
 
   <!--
