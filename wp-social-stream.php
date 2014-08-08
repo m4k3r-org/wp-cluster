@@ -14,14 +14,25 @@ if (! class_exists('WP_Social_Stream') ) {
      * Construct
      */
     public function __construct(){
+      /** Add our init action */
+      add_action( 'init', array( $this, 'init' ) );
+    }
+    
+    /** 
+     * Our init function, where we should add all actions
+     */
+    function init(){
+      /** Add our ajax actions for Twitter */
       add_action( 'wp_ajax_nopriv_social_stream_twitter', array( $this, 'social_stream_twitter' ) );
       add_action( 'wp_ajax_social_stream_twitter', array( $this, 'social_stream_twitter' ) );
-
+      
+      /** Add our moderation action */
       if ( current_user_can('manage_options') ) {
         add_action( 'wp_ajax_social_stream_moderate', array( $this, 'social_stream_moderate' ) );
       }
 
-      add_shortcode( 'social_stream', array( $this, 'social_stream_shortcode' ) );
+      /** Add our shortcode */
+      add_shortcode( 'wp_social_stream', array( $this, 'social_stream_shortcode' ) );
     }
 
     /**
@@ -43,8 +54,9 @@ if (! class_exists('WP_Social_Stream') ) {
      * @return type
      */
     function social_stream_shortcode( $attrs ) {
+    
       $defaults = array(
-        'requires' => 'socialstream',
+        'requires' => plugins_url( '/' . basename( __DIR__ ) . '/static/scripts/jquery.social.stream.1.5.5.custom.js', __DIR__ ),
         'path' => get_stylesheet_directory_uri(),
         'wall' => 'true',
         'rotate_delay' => '',
@@ -55,15 +67,15 @@ if (! class_exists('WP_Social_Stream') ) {
         'twitter_search_for' => '',
         'twitter_show_text' => 'text',
 
-        'twitter_consumer_key' => WP_SOCIAL_STREAM_TWITTER_CONSUMER_KEY,
-        'twitter_consumer_secret' => WP_SOCIAL_STREAM_TWITTER_CONSUMER_SECRET,
-        'twitter_access_token' => WP_SOCIAL_STREAM_TWITTER_ACCESS_TOKEN,
-        'twitter_access_token_secret' => WP_SOCIAL_STREAM_TWITTER_ACCESS_TOKEN_SECRET,
+        'twitter_consumer_key' => defined( 'WP_SOCIAL_STREAM_TWITTER_CONSUMER_KEY' ) ? WP_SOCIAL_STREAM_TWITTER_CONSUMER_KEY : false,
+        'twitter_consumer_secret' => defined( 'WP_SOCIAL_STREAM_TWITTER_CONSUMER_SECRET' ) ? WP_SOCIAL_STREAM_TWITTER_CONSUMER_SECRET : false,
+        'twitter_access_token' => defined( 'WP_SOCIAL_STREAM_TWITTER_ACCESS_TOKEN' ) ? WP_SOCIAL_STREAM_TWITTER_ACCESS_TOKEN : false,
+        'twitter_access_token_secret' => defined( 'WP_SOCIAL_STREAM_TWITTER_ACCESS_TOKEN_SECRET' ) ? WP_SOCIAL_STREAM_TWITTER_ACCESS_TOKEN_SECRET : false,
 
         'instagram_search_for' => '',
-        'instagram_client_id' => WP_SOCIAL_STREAM_INSTAGRAM_CLIENT_ID,
-        'instagram_access_token' => WP_SOCIAL_STREAM_INSTAGRAM_ACCESS_TOKEN,
-        'instagram_redirect_url' => WP_SOCIAL_STREAM_INSTAGRAM_REDIRECT_URL,
+        'instagram_client_id' => defined( 'WP_SOCIAL_STREAM_INSTAGRAM_CLIENT_ID' ) ? WP_SOCIAL_STREAM_INSTAGRAM_CLIENT_ID : false,
+        'instagram_access_token' => defined( 'WP_SOCIAL_STREAM_INSTAGRAM_ACCESS_TOKEN' ) ? WP_SOCIAL_STREAM_INSTAGRAM_ACCESS_TOKEN : false,
+        'instagram_redirect_url' => defined( 'WP_SOCIAL_STREAM_INSTAGRAM_REDIRECT_URL' ) ? WP_SOCIAL_STREAM_INSTAGRAM_REDIRECT_URL : false,
 
         'youtube_search_for' => '',
 
@@ -76,7 +88,10 @@ if (! class_exists('WP_Social_Stream') ) {
 
       $data['remove'] = $this->get_removed_items();
 
-      return $this->load_view( $data );
+      ob_start();
+      require_once( 'static/templates/view.php' );
+      $ret = ob_get_clean();
+      return $ret;
 
     }
 
@@ -169,34 +184,23 @@ if (! class_exists('WP_Social_Stream') ) {
 
       return $this->load_view( $_data );
     }
-
-    /**
-     * Admin view
-     * @param type $data
-     * @return type
-     */
-    public function admin_form( $data ){
-      ob_start();
-      require_once( __DIR__ . '/admin/form.php' );
-      return ob_get_clean();
-    }
-
+    
     /**
      * Some necessary js
      * @return type
      */
     public function admin_js() {
       $js = '
-				cfct_builder.addModuleLoadCallback("'.$this->id_base.'", function() {
-					'.$this->cfct_module_tabs_js().'
-				});
+        cfct_builder.addModuleLoadCallback("'.$this->id_base.'", function() {
+          '.$this->cfct_module_tabs_js().'
+        });
 
-				cfct_builder.addModuleSaveCallback("'.$this->id_base.'", function() {
-					// find the non-active image selector and clear his value
-					$("#'.$this->id_base.'-image-selectors .cfct-module-tab-contents>div:not(.active)").find("input:hidden").val("");
-					return true;
-				});
-			';
+        cfct_builder.addModuleSaveCallback("'.$this->id_base.'", function() {
+          // find the non-active image selector and clear his value
+          $("#'.$this->id_base.'-image-selectors .cfct-module-tab-contents>div:not(.active)").find("input:hidden").val("");
+          return true;
+        });
+      ';
       $js .= $this->global_image_selector_js('global_image', array('direction' => 'horizontal'));
       return $js;
     }
@@ -209,6 +213,4 @@ if (! class_exists('WP_Social_Stream') ) {
   }
 }
 
-$wpss =  new WP_Social_Stream();
-//register_activation_hook( __FILE__, array( $GLOBALS['wpps'], 'activate' ) );
-//register_deactivation_hook( __FILE__, array( $GLOBALS['wpps'], 'deactivate' ) );
+$wp_social_stream = new WP_Social_Stream();
