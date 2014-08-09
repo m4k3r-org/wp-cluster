@@ -9,6 +9,9 @@
  */
 if (! class_exists('WP_Social_Stream') ) {
   class WP_Social_Stream {
+  
+    /** Whether we're in debug mode or not */
+    public $debug = true;
 
     /**
      * Construct
@@ -21,7 +24,7 @@ if (! class_exists('WP_Social_Stream') ) {
     /** 
      * Our init function, where we should add all actions
      */
-    function init(){
+    function init(){ 
       /** Add our ajax actions for Twitter */
       add_action( 'wp_ajax_nopriv_social_stream_twitter', array( $this, 'social_stream_twitter' ) );
       add_action( 'wp_ajax_social_stream_twitter', array( $this, 'social_stream_twitter' ) );
@@ -33,6 +36,76 @@ if (! class_exists('WP_Social_Stream') ) {
 
       /** Add our shortcode */
       add_shortcode( 'wp_social_stream', array( $this, 'social_stream_shortcode' ) );
+      
+      /** Add our action to print our JS variable */
+      add_action( 'wp_print_scripts', array( $this, 'wp_print_scripts' ) );
+      
+      /** Enqueue our style */
+      wp_enqueue_style( 'wp-social-stream', plugins_url( '/wp-social-stream/static/styles/wp-social-stream.css' ) );
+      
+      /** If we're in debug mode development */
+      if( $this->debug ){
+        // Actions for the dynamic less compilation
+        add_action( 'wp_ajax_wp_social_stream_compile_less', array( $this, 'compile_less' ) );
+        add_action( 'wp_ajax_nopriv_wp_social_stream_compile_less', array( $this, 'compile_less' ) );
+      }
+      
+    }
+    
+    /**
+     * Dynamically try to compile the sent less asset
+     *
+     * @todo Move into lib-utility, or similar. -potanin@UD
+     *
+     * @method compile_less
+     * @note Only works on *nix systems right now
+     * @author williams@UD
+     */
+    public function compile_less( $file ){
+
+      try {
+
+        if( !isset( $_REQUEST[ 'less_file' ] ) ) {
+          throw new Exception( 'LESS file was not set.' );
+        }
+
+        $less_file = $_REQUEST[ 'less_file' ];
+        if( file_exists( $less_file ) ) {
+          throw new Exception( 'LESS file exists, you shouldn\'t be accessing this.' );
+        }
+
+        if( strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN' ) {
+          throw new Exception( 'You\'re on Windows, you\'re going to have to fix this yourself for Windows: vendor/themes/wp-festival-2/lib/class-festival.php:~516.' );
+        }
+
+        /** Try to figure out the path to the less file */
+        $less_path  = plugin_dir_path( __FILE__ ) . 'static/styles/';
+        $less_file  = str_ireplace( '.css', '.less', str_ireplace( $less_path, '', $less_file ) );
+        $less_path  = $less_path . 'src/';
+        $lessc_path = plugin_dir_path( __FILE__ ) . 'node_modules/less/bin/lessc';
+
+        /** Ok, if we don't have lessc bail */
+        if( !is_file( $lessc_path ) ) {
+          throw new Exception( 'Could not find the lessc executable, please run npm install in wp-festival-2.' );
+        }
+
+        if( !is_file( $less_path . $less_file ) ) {
+          throw new Exception( 'The LESS file specified does not exist: ' . $less_path . $less_file );
+        }
+
+        /** Ok, we made it, run the system command */
+        $cmd = 'cd ' . $less_path . ';node ' . $lessc_path . ' -x ' . $less_file;
+        header( 'Content-Type: text/css' );
+        system( $cmd );
+
+        die();
+
+      } catch( Exception $e ) {
+        http_response_code( 404 );
+        echo "<h1>LESS File Could Not Be Compiled</h1><p>{$e->getMessage()}</p>";
+        die();
+      }
+
     }
 
     /**
@@ -47,6 +120,15 @@ if (! class_exists('WP_Social_Stream') ) {
 
       die( update_option( 'social_stream_hidden', $current ) );
     }
+    
+    /** 
+     * Handle printing out our dynamic paths, through our JS file
+     */
+    function wp_print_scripts(){
+      // Pull in our file
+      require_once( 'static/templates/js.php' );
+    }
+    
 
     /**
      * Shortcode implementation for social stream
@@ -56,8 +138,8 @@ if (! class_exists('WP_Social_Stream') ) {
     function social_stream_shortcode( $attrs ) {
     
       $defaults = array(
-        'requires' => plugins_url( '/' . basename( __DIR__ ) . '/static/scripts/jquery.social.stream.1.5.5.custom.js', __DIR__ ),
-        'path' => get_stylesheet_directory_uri(),
+        'requires' => plugins_url( '/wp-social-stream/static/scripts/src/wp-social-stream.js' ),
+        'path' => plugins_url( '/wp-social-stream/static/' ),
         'wall' => 'true',
         'rotate_delay' => '',
         'rotate_direction' => 'up',
@@ -125,10 +207,10 @@ if (! class_exists('WP_Social_Stream') ) {
         $options = explode(':', base64_decode( $_GET['shortcode'] ) );
       }
 
-      define( 'SS_TWITTER_CONSUMER_KEY', $options[$this->get_field_name('twitter_consumer_key')]?$options[$this->get_field_name('twitter_consumer_key')]:$options[0] );
-      define( 'SS_TWITTER_CONSUMER_SECRET', $options[$this->get_field_name('twitter_consumer_secret')]?$options[$this->get_field_name('twitter_consumer_secret')]:$options[1] );
-      define( 'SS_TWITTER_ACCESS_TOKEN', $options[$this->get_field_name('twitter_access_token')]?$options[$this->get_field_name('twitter_access_token')]:$options[2] );
-      define( 'SS_TWITTER_ACCESS_TOKEN_SECRET', $options[$this->get_field_name('twitter_access_token_secret')]?$options[$this->get_field_name('twitter_access_token_secret')]:$options[3] );
+      define( 'SS_TWITTER_CONSUMER_KEY', defined( 'WP_SOCIAL_STREAM_TWITTER_CONSUMER_KEY' ) ? WP_SOCIAL_STREAM_TWITTER_CONSUMER_KEY : $options[0] );
+      define( 'SS_TWITTER_CONSUMER_SECRET', defined( 'WP_SOCIAL_STREAM_TWITTER_CONSUMER_SECRET' ) ? WP_SOCIAL_STREAM_TWITTER_CONSUMER_SECRET : $options[1] );
+      define( 'SS_TWITTER_ACCESS_TOKEN', defined( 'WP_SOCIAL_STREAM_TWITTER_ACCESS_TOKEN' ) ? WP_SOCIAL_STREAM_TWITTER_ACCESS_TOKEN : $options[2] );
+      define( 'SS_TWITTER_ACCESS_TOKEN_SECRET', defined( 'WP_SOCIAL_STREAM_TWITTER_ACCESS_TOKEN_SECRET' ) ? WP_SOCIAL_STREAM_TWITTER_ACCESS_TOKEN_SECRET : $options[ 3 ] );
 
       require_once 'lib/twitter.php';
       die();
