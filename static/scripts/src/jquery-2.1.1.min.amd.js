@@ -2,10 +2,10 @@ define(
   [
   ],
   function(){
-  
+
     // Hold our common settings
     var s = {
-      debug: true,
+      debug: false,
       name: 'wp-social-stream-jquery'
     };
     // We're loaded

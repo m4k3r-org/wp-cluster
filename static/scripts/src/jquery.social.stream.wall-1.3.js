@@ -6,7 +6,7 @@ define(
     var $ = jQuery;
     // Hold our common settings
     var s = {
-      debug: true,
+      debug: false,
       name: 'wp-social-stream-wall'
     };
     // We're loaded

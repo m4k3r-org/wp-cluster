@@ -1,19 +1,21 @@
-define(
-  [
-    window.wp_social_stream.base_url + 'src/jquery-2.1.1.min.amd.js',
-    wp_social_stream.base_url + 'src/knockout-3.1.0.min.amd.js'
-  ], 
-  function( jQuery, ko ){
+define( [
+  window.wp_social_stream.base_url + 'src/jquery.social.stream.wall-1.3.js',
+  wp_social_stream.base_url + 'src/jquery-2.1.1.min.amd.js',
+  wp_social_stream.base_url + 'src/knockout-3.1.0.min.amd.js', wp_social_stream.base_url + 'src/async-0.9.0.min.amd.js',
+  wp_social_stream.base_url + 'src/moment-2.8.1.min.amd.js'
+], function( social_stream_wall, jQuery, ko, async, moment ){
+
     // Use jQuery
     var $ = jQuery;
+
     // Hold our common settings
     var s = {
-      debug: true,
+      debug: false,
       name: 'wp-social-stream-custom'
     };
     // We're loaded
     if( s.debug ) console.debug( s.name, "loaded" );
-    
+
     /*
      * DC jQuery Social Stream
      * Copyright (c) 2013 Design Chemical
@@ -32,7 +34,6 @@ define(
         version: '1.5.5',
 
         create: function( el, options ){
-
           this.defaults = {
             feeds: {
               facebook: {
@@ -180,19 +181,27 @@ define(
             content: 'dcsns-content',
             iconPath: 'images/dcsns-dark/',
             imagePath: 'images/dcsns-dark/',
+            parallelRequestLimit: 10,
             debug: false
           };
 
+          /** Save the element */
+          this.el = el;
+          this.$el = jQuery( el );
+
           this.o = {}, this.timer_on = 0, this.id = 'dcsns-' + $( el ).index(), this.timerId = '', this.o = $.extend( true, this.defaults, options ), opt = this.o, $load = $( '<div class="dcsns-loading">creating stream ...</div>' );
 
-          $( el ).addClass( this.o.container ).append( '<div class="' + this.o.content + '"><ul class="' + this.o.cstream + '"></ul></div>' );
-
+          //$( el ).addClass( this.o.container ).append( '<div class="' + this.o.content + '"><ul class="' + this.o.cstream + '"></ul></div>' );
           var $c = $( '.' + this.o.content, el ), $a = $( '.' + this.o.cstream, el ), $l = $( 'li', $a );
 
           if( opt.height > 0 && opt.wall == false ){
-            $c.css( {height: opt.height + 'px'} );
+            $c.css( { height: opt.height + 'px' } );
           }
+          
+          /** @todo Undo - for now we're disabling the wall feature */
+          this.o.wall = false;
 
+          /** @todo We need to implement the filter in KnockOut */
           if( this.o.filter == true || this.o.controls == true ){
             var x = '<div class="dcsns-toolbar">';
             if( this.o.filter == true ){
@@ -217,10 +226,10 @@ define(
           }
 
           if( this.o.wall == true ){
-            $( '.dcsns-toolbar' ).append( $load );
-            this.createwall( $a );
+            // We do this with Knockout $( '.dcsns-toolbar' ).append( $load );
+            this.createWall( $a );
           } else{
-            $c.append( $load );
+            // We do this with Knockout $c.append( $load );
           }
 
           this.createstream( el, $a, 0, opt.days );
@@ -235,10 +244,13 @@ define(
         },
 
         createstream: function( obj, s, f1, f2 ){
+          /** Setup our enabled feeds, which we'll then pass through using async */
+          var tasks = {}, that = this, the_function, function_key;
           $.each( opt.feeds, function( k, v ){
             if( opt.feeds[k].id != '' ){
+              /** Add it to the enabled feeds */
               var txt = [];
-              $.each( opt.feeds[k].intro.split( ',' ), function( i, v ){
+              $.each( opt.feeds[ k ].intro.split( ',' ), function( i, v ){
                 v = $.trim( v );
                 txt.push( v );
               } );
@@ -246,22 +258,154 @@ define(
                 v = $.trim( v );
                 if( opt.feeds[k].feed && v.split( '#' ).length < 2 ){
                   if( k == 'youtube' && v.split( '/' ).length > 1 ){
-                    getFeed( k, v, opt.iconPath, opt.feeds[k], obj, opt, f1, f2, 'posted', '', i );
+                    function_key = Math.floor( ( Math.random() * 1000 ) + 1 );
+                    the_function = function( callback ){
+                      /** The getFeed function gets passed the callback, and is responsible for calling it */
+                      this.getFeed( callback, k, v, opt.iconPath, opt.feeds[k], obj, opt, f1, f2, 'posted', '', i );
+                    };
+                    tasks[ k + ':' + function_key ] = the_function.bind( that );
                   } else{
                     $.each( opt.feeds[k].feed.split( ',' ), function( i, feed ){
-                      getFeed( k, v, opt.iconPath, opt.feeds[k], obj, opt, f1, f2, txt[i], feed, i );
+                      function_key = Math.floor( ( Math.random() * 1000 ) + 1 );
+                      the_function = function( callback ){
+                        /** The getFeed function gets passed the callback, and is responsible for calling it */
+                        this.getFeed( callback, k, v, opt.iconPath, opt.feeds[k], obj, opt, f1, f2, txt[i], feed, i );
+                      };
+                      tasks[ k + ':' + function_key ] = the_function.bind( that );
                     } );
                   }
                 } else{
                   intro = v.split( '#' ).length < 2 ? opt.feeds[k].intro : opt.feeds[k].search;
-                  getFeed( k, v, opt.iconPath, opt.feeds[k], obj, opt, f1, f2, intro, '', i );
+                  function_key = Math.floor( ( Math.random() * 1000 ) + 1 );
+                  the_function = function( callback ){
+                    /** The getFeed function gets passed the callback, and is responsible for calling it */
+                    this.getFeed( callback, k, v, opt.iconPath, opt.feeds[k], obj, opt, f1, f2, intro, '', i );
+                  };
+                  tasks[ k + ':' + function_key ] = the_function.bind( that );
                 }
               } );
             }
           } );
+          /** Ok, now run these requests in parallel */
+          async.parallelLimit( tasks, this.o.parallelRequestLimit, function( err, results ){
+            /** Ok, we're just going to call the next function, which restructures our data array */
+            if( err ){
+              /** What can we do here? include a special template for errors? @todo */
+              this.showError( err );
+            } else{
+              /** Set the local data */
+              final_data = this.fixData( results );
+              this.data = {
+                'results': final_data
+              };
+              this.doKnockout();
+            }
+          }.bind( this ) );
         },
 
-        createwall: function( obj ){
+        /**
+         * This function gets our KO tempaltes, and then activates them against the final data
+         * array, based on the type of social network
+         */
+        doKnockout: function( data ){
+          /** Create our viewModel */
+          this.viewModel = ko.mapping.fromJS( this.data );
+          /** Apply your bindings to our existing element */
+          ko.applyBindings( this.viewModel, this.el );
+        },
+
+        /**
+         * This function is going to take an array of data with mixed content types and sort it by timestamp
+         * and transform it into a usable object
+         */
+        fixData: function( results ){
+          /** Setup needed vars */
+          var that = this, final_data = [], timestamp, format, url, id, rel;
+          /** Ok, we're going to loop through the results, just adding blindly to 'return' */
+          for( var key in results ){
+            type = key.split( ':' )[ 0 ];
+            /** Loop through the individual results */
+            for( var x in results[ key ] ){
+              var result = results[ key ][ x ];
+              /** Setup a unique identifier, and the group which this belongs to */
+              id = key + ':' + Math.floor( ( Math.random() * 1000 ) + 1 );
+              switch( type ){
+                case 'facebook':
+                  format = "ddd, DD MMM YYYY HH:mm:ss ZZ"; // Wed, 28 May 2014 05:43:55 -0700
+                  timestamp = moment( result.publishedDate, format );
+                  url = result.link;
+                  //if( s.debug ) console.log( s.name, 'FB Before: ' + result.publishedDate );
+                  //if( s.debug ) console.log( s.name, 'FB After: ' + timestamp.format( format ) );
+                  break;
+                case 'instagram':
+                  id = key + ':' + result.id;
+                  format = "X"; // 1407443333
+                  timestamp = moment( result.created_time, format );
+                  url = result.link;
+                  //if( s.debug ) console.log( s.name, 'IG Before: ' + result.created_time );
+                  //if( s.debug ) console.log( s.name, 'IG After: ' + timestamp.format( format ) );
+                  break;
+                case 'twitter':
+                  id = key + ':' + result.id_str;
+                  format = "ddd MMM DD HH:mm:ss ZZ YYYY"; // Fri Aug 08 07:49:24 +0000 2014
+                  timestamp = moment( result.created_at, format );
+                  url = '//twitter.com/' + result.user.screen_name + '/status/' + result.id_str;
+                  //if( s.debug ) console.log( s.name, 'TW Before: ' + result.created_at );
+                  //if( s.debug ) console.log( s.name, 'TW After: ' + timestamp.format( format ) );
+                  result.thumb_url = false;
+                  if( result.entities.media && result.entities.media.length ){
+                    result.thumb_url = result.entities.media[ 0 ].media_url_https;
+                  }
+                  break;
+                case 'youtube':
+                  format = "ddd, DD MMM YYYY HH:mm:ss ZZ"; // Wed, 28 May 2014 05:43:55 -0700
+                  timestamp = moment( result.publishedDate, format );
+                  url = result.link;
+                  //if( s.debug ) console.log( s.name, 'YT Before: ' + result.publishedDate );
+                  //if( s.debug ) console.log( s.name, 'YT After: ' + timestamp.format( format ) );
+                  /**
+                   * We have a special use case here, where we have to the the image URL based
+                   * off the ID
+                   */
+                  var _id = result.link.match( /watch\?v=([^&]*)/gi ).shift().split( '=' ).pop();
+                  id = key + ':' + _id;
+                  result.thumb_url = '//img.youtube.com/vi/' + _id + '/0.jpg';
+                  break;
+                default:
+                  this.showError( 'Not a supported network: ' + type );
+                  break;
+              }
+              final_data.push( {
+                'type': type,
+                'id': id,
+                'rel': key,
+                'timestamp': timestamp,
+                'num_timestamp': timestamp.format( 'X' ),
+                'from_now': timestamp.fromNow(),
+                'url': url,
+                'data': result
+              } );
+            }
+
+          }
+          /** Ok, now we're ready to sort the data */
+          final_data = performant_sort( final_data, function( left, right ){
+            var result = [];
+            while( ( left.length > 0 ) && ( right.length > 0 ) ){
+              if( parseInt( left[ 0 ].timestamp.format( "X" ) ) > parseInt( right[ 0 ].timestamp.format( "X" ) ) ){
+                result.push( left.shift() );
+              } else{
+                result.push( right.shift() );
+              }
+            }
+            result = result.concat( left, right );
+            return result;
+          } );
+          /** Just return the data */
+          return final_data;
+        },
+
+        createWall: function( obj ){
           obj.imagesLoaded( function(){
             obj.isotope( {
               itemSelector: 'li.dcsns-li',
@@ -275,9 +419,20 @@ define(
           } );
         },
 
+        /**
+         * This function is going to show an error when it occurs, for now we're just
+         * echoing to the console
+         * @todo Implement with proper KO templates
+         */
+        showError: function( err ){
+          if( typeof console !== 'undefined' ){
+            console.log( err );
+          }
+        },
+
         addevents: function( obj, $a ){
           var self = this, speed = this.o.speed;
-          var $container = $( '.stream', obj ), filters = {}
+          var $container = $( '.stream', obj ), filters = {};
           $( '.controls', obj ).delegate( 'a', 'click', function(){
             var x = $( this ).attr( 'class' );
             switch( x ){
@@ -321,6 +476,7 @@ define(
             } );
           }
         },
+
         rotate: function( a ){
           var self = this, stream = $( '.' + this.o.cstream, a ), speed = this.o.speed, delay = this.o.rotate.delay, r = this.o.rotate.direction == 'up' ? 'prev' : 'next';
           this.timer_on = 1;
@@ -330,10 +486,578 @@ define(
             self.rotate( a );
           }, delay );
         },
+
         pauseTimer: function(){
           clearTimeout( this.timerId );
           this.timer_on = 0;
           $( '.controls .pause' ).removeClass( 'pause' ).addClass( 'play' );
+        },
+
+        /**
+         * This pulls our data, and is async callback aware
+         * @param function callback This is required for the function to return anything
+         */
+        getFeed: function( callback, type, id, path, o, obj, opt, f1, f2, intro, feed, fn ){
+
+          var stream = $( '.stream', obj ), list = [], d = '', px = 300, c = [], data, href, url, n = opt.limit, txt = [
+          ], src;
+          frl = 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=' + n + '&callback=?&q=';
+
+          switch( type ){
+
+            case 'facebook':
+              var cp = id.split( '/' );
+              url = url = cp.length > 1 ? 'https://graph.facebook.com/' + cp[1] + '/photos?fields=id,link,from,name,picture,images,comments&limit=' + n : frl + encodeURIComponent( 'https://www.facebook.com/feeds/page.php?id=' + id + '&format=rss20' );
+              break;
+
+            case 'twitter':
+              var curl = o.url.replace( /\&#038;/gi, "&" );
+              var cp = id.split( '/' ), cq = id.split( '#' ), cu = o.url.split( '?' ), replies = o.replies == true ? '&exclude_replies=false' : '&exclude_replies=true';
+              var param = '&include_entities=true&include_rts=' + o.retweets + replies;
+              url1 = cu.length > 1 ? curl + '&' : curl + '?';
+              url = cp.length > 1 ? url1 + 'url=list&list_id=' + cp[1] + '&per_page=' + n + param : url1 + 'url=timeline&screen_name=' + id + '&count=' + n + param;
+              if( cq.length > 1 ){
+                var rts = o.retweets == false ? '+exclude:retweets' : '';
+                url = url1 + 'url=search&q=' + encodeURIComponent( cq[1] ) + '&count=' + n;
+              }
+              break;
+
+            case 'google':
+              n = n > 100 ? 100 : n;
+              href = 'https://plus.google.com/' + id;
+              url = 'https://www.googleapis.com/plus/v1/people/' + id + '/activities/public';
+              data = {key: o.api_key, maxResults: n, prettyprint: false, fields: "items(id,kind,object(attachments(displayName,fullImage,id,image,objectType,url),id,objectType,plusoners,replies,resharers,url),published,title,url,verb)"};
+              break;
+
+            case 'youtube':
+              var cp = id.split( '/' ), cq = id.split( '#' );
+              n = n > 50 ? 50 : n;
+              href = 'https://www.youtube.com/';
+              href += cq.length > 1 ? 'results?search_query=' + encodeURIComponent( cq[1] ) : 'user/' + id;
+              href = cp.length > 1 ? 'https://www.youtube.com/playlist?list=' + cp[1] : href;
+              url = 'https://gdata.youtube.com/feeds/';
+              if( cp.length > 1 ){
+                url += 'api/playlists/' + cp[1] + '?v=2&orderby=published'
+              } else{
+                url += cq.length > 1 ? 'api/videos?alt=rss&orderby=published&max-results=' + n + '&racy=include&q=' + encodeURIComponent( cq[1] ) : 'base/users/' + id + '/' + feed + '?alt=rss&v=2&orderby=published&client=ytapi-youtube-profile';
+              }
+              url = frl + encodeURIComponent( url );
+              break;
+
+            case 'flickr':
+              var cq = id.split( '/' ), fd = cq.length > 1 ? 'groups_pool' : 'photos_public';
+              id = cq.length > 1 ? cq[1] : id;
+              href = 'https://www.flickr.com/photos/' + id;
+              url = 'http://api.flickr.com/services/feeds/' + fd + '.gne?id=' + id + '&lang=' + o.lang + '&format=json&jsoncallback=?';
+              break;
+
+            case 'delicious':
+              href = 'https://www.delicious.com/' + id;
+              url = 'http://feeds.delicious.com/v2/json/' + id;
+              break;
+
+            case 'pinterest':
+              var cp = id.split( '/' );
+              url = 'https://www.pinterest.com/' + id + '/';
+              url += cp.length > 1 ? 'rss' : 'feed.rss';
+              href = 'http://www.pinterest.com/' + id;
+              url = frl + encodeURIComponent( url );
+              break;
+
+            case 'rss':
+              href = id;
+              url = frl + encodeURIComponent( id );
+              break;
+
+            case 'lastfm':
+              href = 'https://www.last.fm/user/' + id;
+              var ver = feed == 'lovedtracks' ? '2.0' : '1.0';
+              url = frl + encodeURIComponent( 'https://ws.audioscrobbler.com/' + ver + '/user/' + id + '/' + feed + '.rss' );
+              break;
+
+            case 'dribbble':
+              href = 'https://www.dribbble.com/' + id;
+              url = feed == 'likes' ? 'http://api.dribbble.com/players/' + id + '/shots/likes' : 'http://api.dribbble.com/players/' + id + '/shots';
+              break;
+
+            case 'vimeo':
+              href = 'https://www.vimeo.com/' + id;
+              url = 'https://vimeo.com/api/v2/' + id + '/' + feed + '.json';
+              break;
+
+            case 'stumbleupon':
+              href = 'https://www.stumbleupon.com/stumbler/' + id;
+              url = frl + encodeURIComponent( 'http://rss.stumbleupon.com/user/' + id + '/' + feed );
+              break;
+
+            case 'deviantart':
+              href = 'https://' + id + '.deviantart.com';
+              url = frl + encodeURIComponent( 'https://backend.deviantart.com/rss.xml?type=deviation&q=by%3A' + id + '+sort%3Atime+meta%3Aall' );
+              break;
+
+            case 'tumblr':
+              href = 'http://' + id + '.tumblr.com';
+              url = 'http://' + id + '.tumblr.com/api/read/json?callback=?';
+              break;
+
+            case 'instagram':
+              href = '#';
+              url = 'https://api.instagram.com/v1';
+              var cp = id.substr( 0, 1 ), cq = id.split( cp ), url1 = encodeURIComponent( cq[1] ), qs = '', ts = 0;
+              switch( cp ){
+                case '?':
+                  var p = cq[1].split( '/' );
+                  qs = '&lat=' + p[0] + '&lng=' + p[1] + '&distance=' + p[2];
+                  url += '/media/search';
+                  break;
+                case '#':
+                  url += '/tags/' + url1 + '/media/recent';
+                  ts = 1;
+                  break;
+                case '!':
+                  url += '/users/' + url1 + '/media/recent';
+                  break;
+                case '@':
+                  url += '/locations/' + url1 + '/media/recent';
+                  break;
+              }
+              if( o.accessToken == '' && ts == 0 ){
+                if( location.hash ){
+                  o.accessToken = location.hash.split( '=' )[1];
+                } else{
+                  location.href = "https://instagram.com/oauth/authorize/?client_id=" + o.clientId + "&redirect_uri=" + o.redirectUrl + "&response_type=token";
+                }
+              }
+              url += '?access_token=' + o.accessToken + '&client_id=' + o.clientId + '&count=' + n + qs;
+              break;
+          }
+          var dataType = type == 'twitter' ? 'json' : 'jsonp';
+          jQuery.ajax( {
+            url: url,
+            data: data,
+            cache: opt.cache,
+            dataType: dataType,
+            success: function( a ){
+              var error = '';
+              switch( type ){
+                case 'facebook':
+                  if( cp.length > 1 ){
+                    a = a.data;
+                  } else{
+                    if( a.responseStatus == 200 ){
+                      a = a.responseData.feed.entries;
+                    } else{
+                      error = a.responseDetails;
+                    }
+                  }
+                  break;
+                case 'google':
+                  error = a.error ? a.error : '';
+                  a = a.items;
+                  break;
+                case 'flickr':
+                  a = a.items;
+                  break;
+                case 'instagram':
+                  a = a.data;
+                  break;
+                case 'twitter':
+                  error = a.errors ? a.errors : '';
+                  if( cq.length > 1 ){
+                    a = a.statuses;
+                  }
+                  break;
+                case 'youtube':
+                  if( a.responseStatus == 200 ){
+                    a = a.responseData.feed.entries;
+                    if( cp.length > 1 ){
+                      var pl = cp[0];
+                    }
+                  } else{
+                    error = a.responseDetails;
+                  }
+                  break;
+                case 'dribbble':
+                  a = a.shots;
+                  break;
+                case 'tumblr':
+                  a = a.posts;
+                  break;
+                case 'delicious':
+                  break;
+                case 'vimeo':
+                  break;
+                default:
+                  if( a.responseStatus == 200 ){
+                    a = a.responseData.feed.entries;
+                  } else{
+                    error = a.responseDetails;
+                  }
+                  break;
+              }
+              if( error == '' ){
+                $.each( a, function( i, item ){
+                  if( i < n ){
+                    var html = [
+                    ], q = item.link, u = '<a href="' + href + '">' + id + '</a>', w = '', x = '<a href="' + q + '">' + item.title + '</a>', y = '', z = '', zz = '', m = '', d = item.publishedDate, sq = q, st = item.title, s = '';
+                    switch( type ){
+                      case 'facebook':
+                        if( cp.length > 1 ){
+                          id = item.from.id;
+                          var d = new Date();
+                          d = d.setFbAlbum( item.created_time );
+                          var set = parseQ( item.link );
+                          st = cp[0] != '' ? cp[0] : item.from.name;
+                          u = '<a href="http://www.facebook.com/media/set/?set=' + set[1] + '">' + st + '</a>';
+                          x = '';
+                          z = '<a href="' + item.link + '"><img src="' + item.images[o.image_width].source + '" alt="" /></a>';
+                          if( o.comments > 0 && item.comments ){
+                            i = 0;
+                            m += '<span class="meta"><span class="comments">comments</span></span>';
+                            $.each( item.comments.data, function( i, cmt ){
+                              if( o.comments > i ){
+                                m += '<span class="meta item-comments"><a href="http://facebook.com/' + cmt.from.id + '">' + cmt.from.name + '</a>' + cmt.message + '</span>';
+                                i++;
+                              } else{
+                                return false;
+                              }
+                            } );
+                          }
+                          z += m;
+                        } else{
+                          z = item[o.text];
+                        }
+                        break;
+
+                      case 'twitter':
+                        d = parseTwitterDate( item.created_at );
+                        var un = item.user.screen_name, ua = item.user.profile_image_url_https;
+                        href = 'https://www.twitter.com/' + un;
+                        q = href;
+                        y = '<a href="' + q + '" class="thumb"><img src="' + ua + '" alt="" /></a>';
+                        //z = '<span class="twitter-user"><a href="https://www.twitter.com/'+un+'"><strong>'+item.user.name+' </strong>@'+un+'</a></span>';
+                        z = '<div class="text">' + linkify( item.text ) + '</div>';
+                        img = '<div class="images">';
+                        if( o.images != '' && item.entities.media ){
+                          $.each( item.entities.media, function( i, media ){
+                            img += '<a href="' + media.media_url_https + '"><img class="img-responsive" src="' + media.media_url_https + ':' + o.images + '" alt="" /></a>';
+                          } );
+                        }
+                        img += '</div>';
+                        sq = item.id_str;
+                        break;
+
+                      case 'delicious':
+                        var d = new Date();
+                        d = d.setRFC3339( item.dt );
+                        x = '<a href="' + item.u + '">' + item.d + '</a>';
+                        q = item.u;
+                        z = item.n;
+                        sq = item.u;
+                        st = item.d;
+                        break;
+
+                      case 'rss':
+                        z = item[o.text];
+                        break;
+
+                      case 'pinterest':
+                        var src = $( 'img', item.content ).attr( 'src' );
+                        y = src ? '<a href="' + q + '"><img src="' + src + '" alt="" /></a>' : '';
+                        z = item.contentSnippet;
+                        st = z;
+                        break;
+
+                      case 'youtube':
+                        var v = [];
+                        v = parseQ( item.link );
+                        y = '<a href="' + q + '" title="' + item.title + '"><img src="http://img.youtube.com/vi/' + v['v'] + '/' + o.thumb + '.jpg" alt="" /></a>';
+                        z = item.contentSnippet;
+                        if( cp.length > 1 ){
+                          u = '<a href="' + href + '">' + pl + '</a>'
+                        }
+                        break;
+
+                      case 'flickr':
+                        d = parseTwitterDate( item.published );
+                        x = item.title;
+                        y = '<a href="' + q + '" title="' + item.title + '"><img src="' + item.media.m + '" alt="" /></a>';
+                        break;
+
+                      case 'lastfm':
+                        q = item.content;
+                        break;
+
+                      case 'dribbble':
+                        q = item.url;
+                        d = item.created_at;
+                        y = '<a href="' + q + '"><img src="' + item.image_teaser_url + '" alt="' + item.title + '" /></a>';
+                        z = '<span class="meta"><span class="views">' + num( item.views_count ) + '</span><span class="likes">' + num( item.likes_count ) + '</span><span class="comments">' + num( item.comments_count ) + '</span></span>';
+                        sq = item.url;
+                        break;
+
+                      case 'instagram':
+                        d = parseInt( item.created_time * 1000, 10 );
+                        x = '';
+                        y = '<a href="' + item.images[o.thumb].url + '"><img class="img-responsive" src="' + item.images[o.thumb].url + '" alt="" /></a>';
+                        z = item.caption != null ? htmlEncode( item.caption.text ) : '';
+                        u = '<a href="' + q + '">' + item.user.username + '</a>';
+                        st = item.caption != null ? item.caption.text : '';
+                        break;
+
+                      case 'vimeo':
+                        f = feed, at = item.name, tx = item.description, q = item.url;
+                        if( f == 'channels' ){
+                          y = item.logo != '' ? '<a href="' + q + '" class="logo"><img src="' + item.logo + '" alt="" width="' + px + '" /></a>' : '';
+                        } else
+                          if( f == 'groups' ){
+                            y = '<a href="' + q + '"><img src="' + item.thumbnail + '" alt="" /></a>';
+                          } else{
+                            var thumb = 'thumbnail_' + o.thumb, at = item.title, tx = f != 'albums' ? item.duration + ' secs' : item.description;
+                            y = '<a href="' + item.url + '" title="' + at + '"><img src="' + item[thumb] + '" alt="" /></a>';
+                          }
+                        x = '<a href="' + q + '">' + at + '</a>';
+                        z = tx;
+                        if( o.stats == true ){
+                          var m = '';
+                          m += f == 'albums' || f == 'channels' || f == 'groups' ? '<span class="videos">' + num( item.total_videos ) + '</span>' : '';
+                          if( f == 'channels' ){
+                            m += '<span class="users">' + num( item.total_subscribers ) + '</span>';
+                          } else
+                            if( f == 'groups' ){
+                              m += '<span class="users">' + num( item.total_members ) + '</span>';
+                            } else
+                              if( f != 'albums' ){
+                                m += '<span class="likes">' + num( item.stats_number_of_likes ) + '</span><span class="views">' + num( item.stats_number_of_plays ) + '</span><span class="comments">' + num( item.stats_number_of_comments ) + '</span>';
+                              }
+                          z += '<span class="meta">' + m + '</span>';
+                        }
+                        var dt = item.upload_date;
+                        if( f == 'likes' ){
+                          dt = item.liked_on;
+                        } else
+                          if( f == 'albums' || f == 'channels' || f == 'groups' ){
+                            dt = item.created_on;
+                          }
+                        var d = new Date();
+                        d = d.setVimeo( dt );
+                        sq = q;
+                        st = at;
+                        break;
+
+                      case 'stumbleupon':
+                        var src = $( 'img', item.content ).attr( 'src' );
+                        y = src != '' && feed == 'favorites' ? '<a href="' + q + '"><img src="' + src + '" alt="" /></a>' : '';
+                        z = item.contentSnippet;
+                        break;
+
+                      case 'deviantart':
+                        var src = $( 'img', item.content ).attr( 'src' );
+                        y = src ? '<a href="' + q + '"><img src="' + src + '" alt="" /></a>' : '';
+                        z = item.contentSnippet;
+                        break;
+
+                      case 'tumblr':
+                        q = item['url-with-slug'];
+                        d = item.date;
+                        x = '<a href="' + q + '">';
+                        switch( item.type ){
+                          case 'photo':
+                            x = item['photo-caption'];
+                            z = '<a href="' + q + '"><img src="' + item['photo-url-' + o.thumb] + '" alt="" /></a>';
+                            st = x;
+                            break;
+                          case 'video':
+                            x += item['video-caption'];
+                            z = o.video != '400' ? item['video-player-' + o.video] : item['video-player'];
+                            st = x;
+                            break;
+                          case 'regular':
+                            x += item['regular-title'];
+                            z = item['regular-body'];
+                            st = x;
+                            break;
+                          case 'quote':
+                            x += item['quote-source'];
+                            z = item['quote-text'];
+                            st = x;
+                            break;
+                          case 'audio':
+                            x = item['id3-artist'] ? '<a href="' + q + '">' + item['id3-artist'] + ' - ' + item['id3-album'] + '</a>' : '';
+                            x += item['id3-title'] ? '<a href="' + q + '" class="track">' + item['id3-title'] + '</a>' : '';
+                            z = item['audio-caption'];
+                            z += item['audio-player'];
+                            st = item['id3-artist'] + ' - ' + item['id3-album'] + ' - ' + item['id3-title'];
+                            break;
+                          case 'conversation':
+                            x += item['conversation-title'];
+                            z = item['conversation-text'];
+                            st = x;
+                            break;
+                          case 'link':
+                            var ltxt = item['link-text'].replace( /:/g, '' ).replace( /\?/g, '' ).replace( /\!/g, '' ).replace( /\./g, '' ).replace( /\'/g, '' );
+                            x = '<a href="' + item['link-url'] + '">' + ltxt + '</a>';
+                            z = item['link-description'];
+                            st = ltxt;
+                            break;
+                        }
+                        x += item.type != 'photo' || item.type != 'audio' ? '</a>' : '';
+                        st = stripHtml( st );
+                        sq = q;
+                        break;
+
+                      case 'google':
+                        var g = item.object.replies ? num( item.object.replies.totalItems ) : 0, m = item.object.plusoners ? num( item.object.plusoners.totalItems ) : 0, p = item.object.resharers ? num( item.object.resharers.totalItems ) : 0, dl;
+                        var d = new Date();
+                        d = d.setRFC3339( item.published );
+                        dl = {src: "", imgLink: "", useLink: "", useTitle: ""};
+                        var k = item.object.attachments;
+                        if( k ) if( k.length ){
+                          for( var l = 0; l < k.length; l++ ){
+                            var h = k[l];
+                            if( h.image ){
+                              dl.src = h.image.url;
+                              dl.imgLink = h.url;
+                              if( h.fullImage ){
+                                dl.w = h.fullImage.width || 0;
+                                dl.h = h.fullImage.height || 0
+                              }
+                            }
+                            if( h.objectType == "article" ) dl.useLink = h.url;
+                            if( h.displayName ) dl.useTitle = h.displayName
+                          }
+                          if( !dl.useLink ) dl.useLink = dl.imgLink;
+                          var img_h = o.image_height ? o.image_height : 75;
+                          var img_w = o.image_width ? o.image_width : 75;
+                          if( dl.src.indexOf( "resize_h" ) >= 0 ) dl.src = dl.w >= dl.h ? dl.src.replace( /resize_h=\d+/i, "resize_h=" + img_h ) : dl.src.replace( /resize_h=\d+/i, "resize_w=" + img_w )
+                        }
+                        dl = dl;
+                        q = dl.useLink;
+                        y = (dl.src ? (dl.useLink ? '<a href="' + dl.useLink + '">' : '') + '<img src="' + dl.src + '" />' + (dl.useLink ? '</a>' : '') : '');
+                        var t1 = px / (dl.w / dl.h) < px / 3 ? ' class="clear"' : '';
+                        x = (dl.useLink ? '<a href="' + dl.useLink + '"' + t1 + '>' : '') + (item.title ? item.title : dl.useTitle) + (dl.useLink ? '</a>' : '');
+                        if( o.shares ){
+                          z = '<span class="meta"><span class="plusones">+1s ' + m + '</span><span class="shares">' + p + '</span><span class="comments">' + g + '</span></span>';
+                        }
+                        sq = q;
+                        st = dl.useTitle;
+                        break;
+                    }
+
+                    switch( type ){
+                      case 'facebook':
+                        icon = '<a class="network-label lll" href="' + item.link + '"><img src="' + path + o.icon + '" alt="" class="icon" /></a>';
+                        break;
+                      case 'twitter':
+                        icon = '<a class="network-label" href="https://twitter.com/' + un + '/status/' + item.id_str + '"><img src="' + path + o.icon + '" alt="" class="icon" /></a>';
+                        break;
+                      default:
+                        icon = '<a class="network-label" href="' + q + '"><img src="' + path + o.icon + '" alt="" class="icon" /></a>';
+                        break;
+                    }
+
+                    if( type == 'twitter' ){
+                      var intent = 'https://twitter.com/intent/';
+                      s = '<a href="' + intent + 'tweet?in_reply_to=' + sq + '&via=' + opt.twitterId + '" class="share-reply"></a>';
+                      s += '<a href="' + intent + 'retweet?tweet_id=' + sq + '&via=' + opt.twitterId + '" class="share-retweet"></a>';
+                      s += '<a href="' + intent + 'favorite?tweet_id=' + sq + '" class="share-favorite"></a>';
+                    } else{
+                      s = share( st, sq, opt.twitterId );
+                    }
+
+                    $.each( o.out.split( ',' ), function( i, v ){
+
+                      zz += v != 'intro' ? '<span class="section-' + v + '">' : '';
+                      switch( v ){
+                        case 'intro':
+                          if( type == 'twitter' ){
+                            zintro = '<div class="section-' + v + '"><a href="https://twitter.com/' + un + '/status/' + item.id_str + '">' + nicetime( new Date( d ).getTime(), 0 ) + '</a></div>';
+                          } else{
+                            zintro = '<div class="section-' + v + '"><a href="' + q + '">' + nicetime( new Date( d ).getTime(), 0 ) + '</a></div>';
+                          }
+                          break;
+                        case 'title':
+                          zz += x;
+                          break;
+                        case 'thumb':
+                          if( type == 'rss' ){
+                            var src = item.content.indexOf( "img" ) >= 0 ? $( 'img', item.content ).attr( 'src' ) : '';
+                            y = src ? '<a href="' + q + '" class="thumb"><img src="' + src + '" alt="" /></a>' : '';
+                          }
+                          zz += y;
+                          break;
+                        case 'image':
+                          if( type == 'twitter' ){
+                            zz += img;
+                          }
+                          break;
+                        case 'text':
+                          zz += z;
+                          break;
+                        case 'user':
+                          zz += u;
+                          break;
+                        case 'meta':
+                          zz += m;
+                          break;
+                        case 'share':
+                          zz += s;
+                          break;
+                      }
+                      zz += v != 'intro' ? '</span>' : '';
+                    } );
+
+                    var df = type == 'instagram' ? nicetime( d, 1 ) : nicetime( new Date( d ).getTime(), 1 );
+                    var ob = df;
+                    switch( opt.order ){
+                      case 'random':
+                        ob = randomish( 6 );
+                        break;
+                      case 'none':
+                        ob = 1;
+                        break;
+                    }
+                    var out = '<li rel="' + ob + '" url="' + q + '" data-net="' + type + '" class="dcsns-li dcsns-' + type + ' dcsns-feed-' + fn + '"><div>' + w + '<div class="inner">' + zz + '<span class="clear"></span></div>' + zintro + icon + '</div></li>', str = opt.remove;
+                    if( str.indexOf( q ) !== -1 && q != '' ){
+                      n = n + 1;
+                    } else{
+                      if( opt.max == 'days' ){
+                        if( df <= f2 * 86400 && df >= f1 * 86400 ){
+                          list.push( out );
+                        } else
+                          if( df > f2 * 86400 ){
+                            return false;
+                          }
+                      } else{
+                        list.push( out );
+                      }
+                    }
+                  }
+                } );
+                /** Great success */
+                callback( null, a );
+              } else{
+                /** Bail */
+                callback( error, null );
+              }
+            }
+            /** ,
+             complete: function(){
+              var $newItems = $( list.join( '' ) );
+              if( opt.wall == true ){
+                stream.isotope( 'insert', $newItems );
+              } else{
+                stream.append( $newItems );
+                sortstream( stream, 'asc' );
+              }
+              if( type == 'facebook' && cp.length < 2 ){
+                fbHrefLink( id, $newItems );
+              } else
+                if( type == 'flickr' && cq.length > 1 ){
+                  flickrHrefLink( cq[1], $newItems );
+                }
+            } */
+          } );
         }
       } );
 
@@ -350,574 +1074,31 @@ define(
         return d;
       };
 
-      function getFeed( type, id, path, o, obj, opt, f1, f2, intro, feed, fn ){
-
-        var stream = $( '.stream', obj ), list = [], d = '', px = 300, c = [], data, href, url, n = opt.limit, txt = [
-        ], src;
-        frl = 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=' + n + '&callback=?&q=';
-
-        switch( type ){
-
-          case 'facebook':
-            var cp = id.split( '/' );
-            url = url = cp.length > 1 ? 'https://graph.facebook.com/' + cp[1] + '/photos?fields=id,link,from,name,picture,images,comments&limit=' + n : frl + encodeURIComponent( 'https://www.facebook.com/feeds/page.php?id=' + id + '&format=rss20' );
-            break;
-
-          case 'twitter':
-            var curl = o.url.replace( /\&#038;/gi, "&" );
-            var cp = id.split( '/' ), cq = id.split( '#' ), cu = o.url.split( '?' ), replies = o.replies == true ? '&exclude_replies=false' : '&exclude_replies=true';
-            var param = '&include_entities=true&include_rts=' + o.retweets + replies;
-            url1 = cu.length > 1 ? curl + '&' : curl + '?';
-            url = cp.length > 1 ? url1 + 'url=list&list_id=' + cp[1] + '&per_page=' + n + param : url1 + 'url=timeline&screen_name=' + id + '&count=' + n + param;
-            if( cq.length > 1 ){
-              var rts = o.retweets == false ? '+exclude:retweets' : '';
-              url = url1 + 'url=search&q=' + encodeURIComponent( cq[1] ) + '&count=' + n;
-            }
-            break;
-
-          case 'google':
-            n = n > 100 ? 100 : n;
-            href = 'https://plus.google.com/' + id;
-            url = 'https://www.googleapis.com/plus/v1/people/' + id + '/activities/public';
-            data = {key: o.api_key, maxResults: n, prettyprint: false, fields: "items(id,kind,object(attachments(displayName,fullImage,id,image,objectType,url),id,objectType,plusoners,replies,resharers,url),published,title,url,verb)"};
-            break;
-
-          case 'youtube':
-            var cp = id.split( '/' ), cq = id.split( '#' );
-            n = n > 50 ? 50 : n;
-            href = 'https://www.youtube.com/';
-            href += cq.length > 1 ? 'results?search_query=' + encodeURIComponent( cq[1] ) : 'user/' + id;
-            href = cp.length > 1 ? 'https://www.youtube.com/playlist?list=' + cp[1] : href;
-            url = 'https://gdata.youtube.com/feeds/';
-            if( cp.length > 1 ){
-              url += 'api/playlists/' + cp[1] + '?v=2&orderby=published'
-            } else{
-              url += cq.length > 1 ? 'api/videos?alt=rss&orderby=published&max-results=' + n + '&racy=include&q=' + encodeURIComponent( cq[1] ) : 'base/users/' + id + '/' + feed + '?alt=rss&v=2&orderby=published&client=ytapi-youtube-profile';
-            }
-            url = frl + encodeURIComponent( url );
-            break;
-
-          case 'flickr':
-            var cq = id.split( '/' ), fd = cq.length > 1 ? 'groups_pool' : 'photos_public';
-            id = cq.length > 1 ? cq[1] : id;
-            href = 'https://www.flickr.com/photos/' + id;
-            url = 'http://api.flickr.com/services/feeds/' + fd + '.gne?id=' + id + '&lang=' + o.lang + '&format=json&jsoncallback=?';
-            break;
-
-          case 'delicious':
-            href = 'https://www.delicious.com/' + id;
-            url = 'http://feeds.delicious.com/v2/json/' + id;
-            break;
-
-          case 'pinterest':
-            var cp = id.split( '/' );
-            url = 'https://www.pinterest.com/' + id + '/';
-            url += cp.length > 1 ? 'rss' : 'feed.rss';
-            href = 'http://www.pinterest.com/' + id;
-            url = frl + encodeURIComponent( url );
-            break;
-
-          case 'rss':
-            href = id;
-            url = frl + encodeURIComponent( id );
-            break;
-
-          case 'lastfm':
-            href = 'https://www.last.fm/user/' + id;
-            var ver = feed == 'lovedtracks' ? '2.0' : '1.0';
-            url = frl + encodeURIComponent( 'https://ws.audioscrobbler.com/' + ver + '/user/' + id + '/' + feed + '.rss' );
-            break;
-
-          case 'dribbble':
-            href = 'https://www.dribbble.com/' + id;
-            url = feed == 'likes' ? 'http://api.dribbble.com/players/' + id + '/shots/likes' : 'http://api.dribbble.com/players/' + id + '/shots';
-            break;
-
-          case 'vimeo':
-            href = 'https://www.vimeo.com/' + id;
-            url = 'https://vimeo.com/api/v2/' + id + '/' + feed + '.json';
-            break;
-
-          case 'stumbleupon':
-            href = 'https://www.stumbleupon.com/stumbler/' + id;
-            url = frl + encodeURIComponent( 'http://rss.stumbleupon.com/user/' + id + '/' + feed );
-            break;
-
-          case 'deviantart':
-            href = 'https://' + id + '.deviantart.com';
-            url = frl + encodeURIComponent( 'https://backend.deviantart.com/rss.xml?type=deviation&q=by%3A' + id + '+sort%3Atime+meta%3Aall' );
-            break;
-
-          case 'tumblr':
-            href = 'http://' + id + '.tumblr.com';
-            url = 'http://' + id + '.tumblr.com/api/read/json?callback=?';
-            break;
-
-          case 'instagram':
-            href = '#';
-            url = 'https://api.instagram.com/v1';
-            var cp = id.substr( 0, 1 ), cq = id.split( cp ), url1 = encodeURIComponent( cq[1] ), qs = '', ts = 0;
-            switch( cp ){
-              case '?':
-                var p = cq[1].split( '/' );
-                qs = '&lat=' + p[0] + '&lng=' + p[1] + '&distance=' + p[2];
-                url += '/media/search';
-                break;
-              case '#':
-                url += '/tags/' + url1 + '/media/recent';
-                ts = 1;
-                break;
-              case '!':
-                url += '/users/' + url1 + '/media/recent';
-                break;
-              case '@':
-                url += '/locations/' + url1 + '/media/recent';
-                break;
-            }
-            if( o.accessToken == '' && ts == 0 ){
-              if( location.hash ){
-                o.accessToken = location.hash.split( '=' )[1];
-              } else{
-                location.href = "https://instagram.com/oauth/authorize/?client_id=" + o.clientId + "&redirect_uri=" + o.redirectUrl + "&response_type=token";
-              }
-            }
-            url += '?access_token=' + o.accessToken + '&client_id=' + o.clientId + '&count=' + n + qs;
-            break;
+      /**
+       * A more performant sort
+       *
+       * @from http://tbranyen.com/post/increasing-javascript-array-sorting-performance
+       */
+      function performant_sort( array, sorter ){
+        var len = array.length;
+        if( len < 2 ){
+          return array;
         }
-        var dataType = type == 'twitter' ? 'json' : 'jsonp';
-        jQuery.ajax( {
-          url: url,
-          data: data,
-          cache: opt.cache,
-          dataType: dataType,
-          success: function( a ){
-            var error = '';
-            switch( type ){
-              case 'facebook':
-                if( cp.length > 1 ){
-                  a = a.data;
-                } else{
-                  if( a.responseStatus == 200 ){
-                    a = a.responseData.feed.entries;
-                  } else{
-                    error = a.responseDetails;
-                  }
-                }
-                break;
-              case 'google':
-                error = a.error ? a.error : '';
-                a = a.items;
-                break;
-              case 'flickr':
-                a = a.items;
-                break;
-              case 'instagram':
-                a = a.data;
-                break;
-              case 'twitter':
-                error = a.errors ? a.errors : '';
-                if( cq.length > 1 ){
-                  a = a.statuses
-                }
-                ;
-                break;
-              case 'youtube':
-                if( a.responseStatus == 200 ){
-                  a = a.responseData.feed.entries;
-                  if( cp.length > 1 ){
-                    var pl = cp[0];
-                  }
-                } else{
-                  error = a.responseDetails;
-                }
-                break;
-              case 'dribbble':
-                a = a.shots;
-                break;
-              case 'tumblr':
-                a = a.posts;
-                break;
-              case 'delicious':
-                break;
-              case 'vimeo':
-                break;
-              default:
-                if( a.responseStatus == 200 ){
-                  a = a.responseData.feed.entries;
-                } else{
-                  error = a.responseDetails;
-                }
-                break;
-            }
-            if( error == '' ){
-              $.each( a, function( i, item ){
-                if( i < n ){
-                  var html = [
-                  ], q = item.link, u = '<a href="' + href + '">' + id + '</a>', w = '', x = '<a href="' + q + '">' + item.title + '</a>', y = '', z = '', zz = '', m = '', d = item.publishedDate, sq = q, st = item.title, s = '';
-                  switch( type ){
-                    case 'facebook':
-                      if( cp.length > 1 ){
-                        id = item.from.id;
-                        var d = new Date();
-                        d = d.setFbAlbum( item.created_time );
-                        var set = parseQ( item.link );
-                        st = cp[0] != '' ? cp[0] : item.from.name;
-                        u = '<a href="http://www.facebook.com/media/set/?set=' + set[1] + '">' + st + '</a>';
-                        x = '';
-                        z = '<a href="' + item.link + '"><img src="' + item.images[o.image_width].source + '" alt="" /></a>';
-                        if( o.comments > 0 && item.comments ){
-                          i = 0;
-                          m += '<span class="meta"><span class="comments">comments</span></span>';
-                          $.each( item.comments.data, function( i, cmt ){
-                            if( o.comments > i ){
-                              m += '<span class="meta item-comments"><a href="http://facebook.com/' + cmt.from.id + '">' + cmt.from.name + '</a>' + cmt.message + '</span>';
-                              i++;
-                            } else{
-                              return false;
-                            }
-                          } );
-                        }
-                        z += m;
-                      } else{
-                        z = item[o.text];
-                      }
-                      break;
+        var pivot = Math.ceil( len / 2 );
+        return merge( performant_sort( array.slice( 0, pivot ), sorter ), performant_sort( array.slice( pivot ), sorter ), sorter );
+      }
 
-                    case 'twitter':
-                      d = parseTwitterDate( item.created_at );
-                      var un = item.user.screen_name, ua = item.user.profile_image_url_https;
-                      href = 'https://www.twitter.com/' + un;
-                      q = href;
-                      y = '<a href="' + q + '" class="thumb"><img src="' + ua + '" alt="" /></a>';
-                      //z = '<span class="twitter-user"><a href="https://www.twitter.com/'+un+'"><strong>'+item.user.name+' </strong>@'+un+'</a></span>';
-                      z = '<div class="text">' + linkify( item.text ) + '</div>';
-                      img = '<div class="images">';
-                      if( o.images != '' && item.entities.media ){
-                        $.each( item.entities.media, function( i, media ){
-                          img += '<a href="' + media.media_url_https + '"><img class="img-responsive" src="' + media.media_url_https + ':' + o.images + '" alt="" /></a>';
-                        } );
-                      }
-                      img += '</div>';
-                      sq = item.id_str;
-                      break;
-
-                    case 'delicious':
-                      var d = new Date();
-                      d = d.setRFC3339( item.dt );
-                      x = '<a href="' + item.u + '">' + item.d + '</a>';
-                      q = item.u;
-                      z = item.n;
-                      sq = item.u;
-                      st = item.d;
-                      break;
-
-                    case 'rss':
-                      z = item[o.text];
-                      break;
-
-                    case 'pinterest':
-                      var src = $( 'img', item.content ).attr( 'src' );
-                      y = src ? '<a href="' + q + '"><img src="' + src + '" alt="" /></a>' : '';
-                      z = item.contentSnippet;
-                      st = z;
-                      break;
-
-                    case 'youtube':
-                      var v = [];
-                      v = parseQ( item.link );
-                      y = '<a href="' + q + '" title="' + item.title + '"><img src="http://img.youtube.com/vi/' + v['v'] + '/' + o.thumb + '.jpg" alt="" /></a>';
-                      z = item.contentSnippet;
-                      if( cp.length > 1 ){
-                        u = '<a href="' + href + '">' + pl + '</a>'
-                      }
-                      break;
-
-                    case 'flickr':
-                      d = parseTwitterDate( item.published );
-                      x = item.title;
-                      y = '<a href="' + q + '" title="' + item.title + '"><img src="' + item.media.m + '" alt="" /></a>';
-                      break;
-
-                    case 'lastfm':
-                      q = item.content;
-                      break;
-
-                    case 'dribbble':
-                      q = item.url;
-                      d = item.created_at;
-                      y = '<a href="' + q + '"><img src="' + item.image_teaser_url + '" alt="' + item.title + '" /></a>';
-                      z = '<span class="meta"><span class="views">' + num( item.views_count ) + '</span><span class="likes">' + num( item.likes_count ) + '</span><span class="comments">' + num( item.comments_count ) + '</span></span>';
-                      sq = item.url;
-                      break;
-
-                    case 'instagram':
-                      d = parseInt( item.created_time * 1000, 10 );
-                      x = '';
-                      y = '<a href="' + item.images[o.thumb].url + '"><img class="img-responsive" src="' + item.images[o.thumb].url + '" alt="" /></a>';
-                      z = item.caption != null ? htmlEncode( item.caption.text ) : '';
-                      u = '<a href="' + q + '">' + item.user.username + '</a>';
-                      st = item.caption != null ? item.caption.text : '';
-                      break;
-
-                    case 'vimeo':
-                      f = feed, at = item.name, tx = item.description, q = item.url;
-                      if( f == 'channels' ){
-                        y = item.logo != '' ? '<a href="' + q + '" class="logo"><img src="' + item.logo + '" alt="" width="' + px + '" /></a>' : '';
-                      } else
-                        if( f == 'groups' ){
-                          y = '<a href="' + q + '"><img src="' + item.thumbnail + '" alt="" /></a>';
-                        } else{
-                          var thumb = 'thumbnail_' + o.thumb, at = item.title, tx = f != 'albums' ? item.duration + ' secs' : item.description;
-                          y = '<a href="' + item.url + '" title="' + at + '"><img src="' + item[thumb] + '" alt="" /></a>';
-                        }
-                      x = '<a href="' + q + '">' + at + '</a>';
-                      z = tx;
-                      if( o.stats == true ){
-                        var m = '';
-                        m += f == 'albums' || f == 'channels' || f == 'groups' ? '<span class="videos">' + num( item.total_videos ) + '</span>' : '';
-                        if( f == 'channels' ){
-                          m += '<span class="users">' + num( item.total_subscribers ) + '</span>';
-                        } else
-                          if( f == 'groups' ){
-                            m += '<span class="users">' + num( item.total_members ) + '</span>';
-                          } else
-                            if( f != 'albums' ){
-                              m += '<span class="likes">' + num( item.stats_number_of_likes ) + '</span><span class="views">' + num( item.stats_number_of_plays ) + '</span><span class="comments">' + num( item.stats_number_of_comments ) + '</span>';
-                            }
-                        z += '<span class="meta">' + m + '</span>';
-                      }
-                      var dt = item.upload_date;
-                      if( f == 'likes' ){
-                        dt = item.liked_on;
-                      } else
-                        if( f == 'albums' || f == 'channels' || f == 'groups' ){
-                          dt = item.created_on;
-                        }
-                      var d = new Date();
-                      d = d.setVimeo( dt );
-                      sq = q;
-                      st = at;
-                      break;
-
-                    case 'stumbleupon':
-                      var src = $( 'img', item.content ).attr( 'src' );
-                      y = src != '' && feed == 'favorites' ? '<a href="' + q + '"><img src="' + src + '" alt="" /></a>' : '';
-                      z = item.contentSnippet;
-                      break;
-
-                    case 'deviantart':
-                      var src = $( 'img', item.content ).attr( 'src' );
-                      y = src ? '<a href="' + q + '"><img src="' + src + '" alt="" /></a>' : '';
-                      z = item.contentSnippet;
-                      break;
-
-                    case 'tumblr':
-                      q = item['url-with-slug'];
-                      d = item.date;
-                      x = '<a href="' + q + '">';
-                      switch( item.type ){
-                        case 'photo':
-                          x = item['photo-caption'];
-                          z = '<a href="' + q + '"><img src="' + item['photo-url-' + o.thumb] + '" alt="" /></a>';
-                          st = x;
-                          break;
-                        case 'video':
-                          x += item['video-caption'];
-                          z = o.video != '400' ? item['video-player-' + o.video] : item['video-player'];
-                          st = x;
-                          break;
-                        case 'regular':
-                          x += item['regular-title'];
-                          z = item['regular-body'];
-                          st = x;
-                          break;
-                        case 'quote':
-                          x += item['quote-source'];
-                          z = item['quote-text'];
-                          st = x;
-                          break;
-                        case 'audio':
-                          x = item['id3-artist'] ? '<a href="' + q + '">' + item['id3-artist'] + ' - ' + item['id3-album'] + '</a>' : '';
-                          x += item['id3-title'] ? '<a href="' + q + '" class="track">' + item['id3-title'] + '</a>' : '';
-                          z = item['audio-caption'];
-                          z += item['audio-player'];
-                          st = item['id3-artist'] + ' - ' + item['id3-album'] + ' - ' + item['id3-title'];
-                          break;
-                        case 'conversation':
-                          x += item['conversation-title'];
-                          z = item['conversation-text'];
-                          st = x;
-                          break;
-                        case 'link':
-                          var ltxt = item['link-text'].replace( /:/g, '' ).replace( /\?/g, '' ).replace( /\!/g, '' ).replace( /\./g, '' ).replace( /\'/g, '' );
-                          x = '<a href="' + item['link-url'] + '">' + ltxt + '</a>';
-                          z = item['link-description'];
-                          st = ltxt;
-                          break;
-                      }
-                      x += item.type != 'photo' || item.type != 'audio' ? '</a>' : '';
-                      st = stripHtml( st );
-                      sq = q;
-                      break;
-
-                    case 'google':
-                      var g = item.object.replies ? num( item.object.replies.totalItems ) : 0, m = item.object.plusoners ? num( item.object.plusoners.totalItems ) : 0, p = item.object.resharers ? num( item.object.resharers.totalItems ) : 0, dl;
-                      var d = new Date();
-                      d = d.setRFC3339( item.published );
-                      dl = {src: "", imgLink: "", useLink: "", useTitle: ""};
-                      var k = item.object.attachments;
-                      if( k ) if( k.length ){
-                        for( var l = 0; l < k.length; l++ ){
-                          var h = k[l];
-                          if( h.image ){
-                            dl.src = h.image.url;
-                            dl.imgLink = h.url;
-                            if( h.fullImage ){
-                              dl.w = h.fullImage.width || 0;
-                              dl.h = h.fullImage.height || 0
-                            }
-                          }
-                          if( h.objectType == "article" ) dl.useLink = h.url;
-                          if( h.displayName ) dl.useTitle = h.displayName
-                        }
-                        if( !dl.useLink ) dl.useLink = dl.imgLink;
-                        var img_h = o.image_height ? o.image_height : 75;
-                        var img_w = o.image_width ? o.image_width : 75;
-                        if( dl.src.indexOf( "resize_h" ) >= 0 ) dl.src = dl.w >= dl.h ? dl.src.replace( /resize_h=\d+/i, "resize_h=" + img_h ) : dl.src.replace( /resize_h=\d+/i, "resize_w=" + img_w )
-                      }
-                      dl = dl;
-                      q = dl.useLink;
-                      y = (dl.src ? (dl.useLink ? '<a href="' + dl.useLink + '">' : '') + '<img src="' + dl.src + '" />' + (dl.useLink ? '</a>' : '') : '');
-                      var t1 = px / (dl.w / dl.h) < px / 3 ? ' class="clear"' : '';
-                      x = (dl.useLink ? '<a href="' + dl.useLink + '"' + t1 + '>' : '') + (item.title ? item.title : dl.useTitle) + (dl.useLink ? '</a>' : '');
-                      if( o.shares ){
-                        z = '<span class="meta"><span class="plusones">+1s ' + m + '</span><span class="shares">' + p + '</span><span class="comments">' + g + '</span></span>';
-                      }
-                      sq = q;
-                      st = dl.useTitle;
-                      break;
-                  }
-
-                  switch( type ){
-                    case 'facebook':
-                      icon = '<a class="network-label lll" href="' + item.link + '"><img src="' + path + o.icon + '" alt="" class="icon" /></a>';
-                      break;
-                    case 'twitter':
-                      icon = '<a class="network-label" href="https://twitter.com/' + un + '/status/' + item.id_str + '"><img src="' + path + o.icon + '" alt="" class="icon" /></a>';
-                      break;
-                    default:
-                      icon = '<a class="network-label" href="' + q + '"><img src="' + path + o.icon + '" alt="" class="icon" /></a>';
-                      break;
-                  }
-
-                  if( type == 'twitter' ){
-                    var intent = 'https://twitter.com/intent/';
-                    s = '<a href="' + intent + 'tweet?in_reply_to=' + sq + '&via=' + opt.twitterId + '" class="share-reply"></a>';
-                    s += '<a href="' + intent + 'retweet?tweet_id=' + sq + '&via=' + opt.twitterId + '" class="share-retweet"></a>';
-                    s += '<a href="' + intent + 'favorite?tweet_id=' + sq + '" class="share-favorite"></a>';
-                  } else{
-                    s = share( st, sq, opt.twitterId );
-                  }
-
-                  $.each( o.out.split( ',' ), function( i, v ){
-
-                    zz += v != 'intro' ? '<span class="section-' + v + '">' : '';
-                    switch( v ){
-                      case 'intro':
-                        console.log( type );
-                        if( type == 'twitter' ){
-                          zintro = '<div class="section-' + v + '"><a href="https://twitter.com/' + un + '/status/' + item.id_str + '">' + nicetime( new Date( d ).getTime(), 0 ) + '</a></div>';
-                        } else{
-                          zintro = '<div class="section-' + v + '"><a href="' + q + '">' + nicetime( new Date( d ).getTime(), 0 ) + '</a></div>';
-                        }
-                        break;
-                      case 'title':
-                        zz += x;
-                        break;
-                      case 'thumb':
-                        if( type == 'rss' ){
-                          var src = item.content.indexOf( "img" ) >= 0 ? $( 'img', item.content ).attr( 'src' ) : '';
-                          y = src ? '<a href="' + q + '" class="thumb"><img src="' + src + '" alt="" /></a>' : '';
-                        }
-                        zz += y;
-                        break;
-                      case 'image':
-                        if( type == 'twitter' ){
-                          zz += img;
-                        }
-                        break;
-                      case 'text':
-                        zz += z;
-                        break;
-                      case 'user':
-                        zz += u;
-                        break;
-                      case 'meta':
-                        zz += m;
-                        break;
-                      case 'share':
-                        zz += s;
-                        break;
-                    }
-                    zz += v != 'intro' ? '</span>' : '';
-                  } );
-
-                  var df = type == 'instagram' ? nicetime( d, 1 ) : nicetime( new Date( d ).getTime(), 1 );
-                  var ob = df;
-                  switch( opt.order ){
-                    case 'random':
-                      ob = randomish( 6 );
-                      break;
-                    case 'none':
-                      ob = 1;
-                      break;
-                  }
-                  var out = '<li rel="' + ob + '" url="' + q + '" data-net="' + type + '" class="dcsns-li dcsns-' + type + ' dcsns-feed-' + fn + '"><div>' + w + '<div class="inner">' + zz + '<span class="clear"></span></div>' + zintro + icon + '</div></li>', str = opt.remove;
-                  if( str.indexOf( q ) !== -1 && q != '' ){
-                    n = n + 1;
-                  } else{
-                    if( opt.max == 'days' ){
-                      if( df <= f2 * 86400 && df >= f1 * 86400 ){
-                        list.push( out );
-                      } else
-                        if( df > f2 * 86400 ){
-                          return false;
-                        }
-                    } else{
-                      list.push( out );
-                    }
-                  }
-                }
-              } );
-            } else
-              if( opt.debug == true ){
-                list.push( '<li class="dcsns-li dcsns-error">Error. ' + error + '</li>' );
-              }
-          },
-          complete: function(){
-            var $newItems = $( list.join( '' ) );
-            if( opt.wall == true ){
-              stream.isotope( 'insert', $newItems );
-            } else{
-              stream.append( $newItems );
-              sortstream( stream, 'asc' );
-            }
-            if( type == 'facebook' && cp.length < 2 ){
-              fbHrefLink( id, $newItems );
-            } else
-              if( type == 'flickr' && cq.length > 1 ){
-                flickrHrefLink( cq[1], $newItems );
-              }
-          }
-        } );
-        return;
+      function merge( left, right, sorter ){
+        return sorter.apply( this, [
+          left, right
+        ] );
       }
 
       function linkify( text ){
         text = text.replace( /((https?\:\/\/)|(www\.))(\S+)(\w{2,4})(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi, function( url ){
-            var full_url = !url.match( '^https?:\/\/' ) ? 'http://' + url : url;
-            return '<a href="' + full_url + '">' + url + '</a>';
-          } );
+          var full_url = !url.match( '^https?:\/\/' ) ? 'http://' + url : url;
+          return '<a href="' + full_url + '">' + url + '</a>';
+        } );
         text = text.replace( /(^|\s)@(\w+)/g, '$1@<a href="http://www.twitter.com/$2">$2</a>' );
         text = text.replace( /(^|\s)#(\w+)/g, '$1#<a href="http://twitter.com/search/%23$2">$2</a>' );
         return text;
@@ -1146,6 +1327,7 @@ define(
      * @param object
      */
     if( s.debug ) console.debug( s.name, "returning function" );
+
     return {
       init: function( object ){
         object.dcSocialStream( {
@@ -1154,7 +1336,6 @@ define(
               id: String( object.data( 'twitter_search_for' ) ),
               intro: '',
               search: '',
-              out: 'intro,image,' + String( object.data( 'twitter_show_text' ) ),
               retweets: false,
               replies: false,
               images: 'small', // large w: 786 h: 346, thumb w: 150 h: 150, medium w: 600 h: 264, small w: 340 h 150
@@ -1165,7 +1346,6 @@ define(
               id: String( object.data( 'instagram_search_for' ) ),
               intro: '',
               search: '',
-              out: 'intro,thumb',
               accessToken: object.data( 'instagram_access_token' ),
               redirectUrl: object.data( 'instagram_redirect_url' ),
               clientId: object.data( 'instagram_client_id' ),
@@ -1177,7 +1357,6 @@ define(
             facebook: {
               id: String( object.data( 'facebook_search_for' ) ),
               intro: '',
-              out: 'intro,text',
               text: 'content',
               comments: 0,
               image_width: 5,
@@ -1187,14 +1366,14 @@ define(
               id: String( object.data( 'youtube_search_for' ) ),
               intro: '',
               search: '',
-              out: 'intro,thumb,title',
               feed: 'uploads',
               thumb: '0',
               icon: 'youtube.png'
             }
           },
           wall: object.data( 'wall' ),
-          controls: false,
+          controls: Boolean( object.data( 'controls' ) ),
+          filter: Boolean( object.data( 'filter' ) ),
           height: parseInt( object.data( 'height' ) ),
           rotate: {
             delay: parseInt( object.data( 'rotate_delay' ) ),
@@ -1207,11 +1386,15 @@ define(
           max: 'limit',
           remove: String( object.data( 'remove' ) )
         } );
-        console.debug( 'stream loaded' );
-        
+
+        // @todo undo see what this does later, maybe actually do this */
+        if( s.debug ) console.debug( s.name, 'needs fixing: jquery.social.stream-1.5.5.custom.js ln 1023' );
+        return;
+
         /** See if we can moderate */
         jQuery( '.filter a.iso-active' ).click();
         if( object.data( 'moderate' ) == '1' ){
+
           jQuery( '.stream .dcsns-li' ).prepend( '<a class="moderate" href="javascript:;">x</a>' );
           jQuery( 'a.moderate', jQuery( '.stream' ) ).on( 'click', function( e ){
             var that = jQuery( this );
@@ -1233,6 +1416,10 @@ define(
           } );
         }
 
+        // @todo undo see what this does later, maybe actually do this */
+        if( s.debug ) console.debug( s.name, 'needs fixing: jquery.social.stream-1.5.5.custom.js ln 1050' );
+        return;
+
         /** Get our Twitter stuff */
         jQuery.getScript( "//platform.twitter.com/widgets.js", function(){} );
         jQuery( '.section-share a' ).click( function(){
@@ -1247,5 +1434,5 @@ define(
         } );
       }
     }
-  }
-);
+
+  } );

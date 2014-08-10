@@ -136,6 +136,7 @@ if (! class_exists('WP_Social_Stream') ) {
      * @return type
      */
     function social_stream_shortcode( $attrs ) {
+      global $wp_social_stream_templates_printed;
     
       $defaults = array(
         'requires' => plugins_url( '/wp-social-stream/static/scripts/src/wp-social-stream.js' ),
@@ -157,24 +158,57 @@ if (! class_exists('WP_Social_Stream') ) {
         'instagram_search_for' => '',
         'instagram_client_id' => defined( 'WP_SOCIAL_STREAM_INSTAGRAM_CLIENT_ID' ) ? WP_SOCIAL_STREAM_INSTAGRAM_CLIENT_ID : false,
         'instagram_access_token' => defined( 'WP_SOCIAL_STREAM_INSTAGRAM_ACCESS_TOKEN' ) ? WP_SOCIAL_STREAM_INSTAGRAM_ACCESS_TOKEN : false,
-        'instagram_redirect_url' => defined( 'WP_SOCIAL_STREAM_INSTAGRAM_REDIRECT_URL' ) ? WP_SOCIAL_STREAM_INSTAGRAM_REDIRECT_URL : false,
+        'instagram_redirect_url' => defined( 'WP_SOCIAL_STREAM_INSTAGRAM_REDIRECT_URL' ) ? WP_SOCIAL_STREAM_INSTAGRAM_REDIRECT_URL : home_url(),
 
         'youtube_search_for' => '',
 
         'facebook_search_for' => ''
       );
-      $data = shortcode_atts( $defaults, $attrs );
+      $this->data = shortcode_atts( $defaults, $attrs );
 
-      $data['callback'] = admin_url('admin-ajax.php?action=social_stream_twitter&shortcode='.base64_encode($data['twitter_consumer_key'].':'.$data['twitter_consumer_secret'].':'.$data['twitter_access_token'].':'.$data['twitter_access_token_secret']));
-      $data['moderate'] = current_user_can('manage_options')?'1':'0';
-
-      $data['remove'] = $this->get_removed_items();
+      $this->data['callback'] = admin_url('admin-ajax.php?action=social_stream_twitter&shortcode='.base64_encode($data['twitter_consumer_key'].':'.$data['twitter_consumer_secret'].':'.$data['twitter_access_token'].':'.$data['twitter_access_token_secret']));
+      $this->data['moderate'] = current_user_can('manage_options')?'1':'0';
+      $this->data['remove'] = $this->get_removed_items();
 
       ob_start();
-      require_once( 'static/templates/view.php' );
+      echo $this->get_template_part( 'static/templates/social_shortcode.php' );
+      if( !isset( $wp_social_stream_templates_printed ) ){
+        echo $this->get_template_part( 'static/templates/social_item_list.php' );
+        echo $this->get_template_part( 'static/templates/social_item_single_facebook.php' );
+        echo $this->get_template_part( 'static/templates/social_item_single_instagram.php' );
+        echo $this->get_template_part( 'static/templates/social_item_single_twitter.php' );
+        echo $this->get_template_part( 'static/templates/social_item_single_youtube.php' );
+        echo $this->get_template_part( 'static/templates/social_item_single.php' );
+        $wp_social_stream_templates_printed = true;
+      }
       $ret = ob_get_clean();
+      
       return $ret;
 
+    }
+    
+    /**
+     * Tries the load the template first from the child theme, and then the parent 
+     */
+    function get_template_part( $template ){
+      $files = array(
+        get_stylesheet_directory() . '/wp-social-stream/' . $template,
+        get_template_directory() . '/wp-social-stream/' . $template,
+        __DIR__ . '/' . $template
+      );
+      /** Try to load the files in order if they exist */
+      foreach( $files as $file ){
+        if( file_exists( $file ) ){
+          $data = $this->data;
+          ob_start();
+          require_once( $file );
+          return ob_get_clean();
+        }else{
+          continue;
+        }
+      }
+      /** We couldn't find it, bail */
+      return false;
     }
 
     /**
