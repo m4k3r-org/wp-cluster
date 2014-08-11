@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <title><?php echo wp_title(); ?></title>
-  <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="apple-touch-icon-precomposed" href="<?php echo get_stylesheet_directory_uri(); ?>/static/images/favicon/favicon-152.png">
