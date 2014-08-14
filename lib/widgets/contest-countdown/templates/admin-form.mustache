@@ -1,0 +1,45 @@
+<p>
+  <label for="{{title_id}}">Title</label>
+  <br><br>
+  <input class="widefat" type="text" name="{{title_name}}" id="{{title_id}}" value="{{title}}" />
+</p>
+
+<p>
+  <label for="{{description_id}}">Description</label>
+  <br><br>
+  <textarea class="widefat" name="{{description_name}}" id="{{description_id}}" >{{description}}</textarea>
+</p>
+
+<label for="dates">Dates</label>
+<table id="dates-multi">
+  {{#dates}}
+    <tr class="data-row">
+      <td>
+        <input id="dates" type="text" name="dates[]" value="{{value}}">
+      </td>
+
+      <td class="td-add">
+        <a href="#" class="dates-add">+</a>
+      </td>
+      <td class="td-remove">
+        <a href="#" class="dates-remove">x</a>
+      </td>
+    </tr>
+  {{/dates}}
+</table>
+
+
+<table style="display:none;" id="dates-clone">
+  <tr class="data-row">
+    <td>
+      <input type="text" name="dates[]" value="{{value}}">
+    </td>
+
+    <td class="td-add">
+      <a href="#" class="dates-add">+</a>
+    </td>
+    <td class="td-remove">
+      <a href="#" class="dates-remove">x</a>
+    </td>
+  </tr>
+</table>
