@@ -17,3 +17,5 @@ core/premium
 *.out
 *.pid
 *.gz
+
+vendor

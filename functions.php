@@ -7,14 +7,19 @@ if( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
   require_once( __DIR__ . '/vendor/autoload.php' );
 }
 
-// Load widgets
-//require_once('lib/widgets/presenter-logos/presenter-logos.php');
-
 require_once('lib/core.php');
+require_once('lib/widgets/widget-bootstrap.php');
 
 
-$wp_spectacle = new \WP_Spectacle\Core();
-$wp_spectacle
+// Initialize Spectacle core
+$spectacle = new Core();
+$spectacle
   ->load_styles()
   ->load_scripts();
 
+
+// Initialize Spectacle custom widgets
+$spectacle_widgets = new Widget_Bootstrap();
+$spectacle_widgets
+    ->init_widget_areas()
+    ->init_artist_lineup();
