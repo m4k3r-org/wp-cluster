@@ -22,4 +22,5 @@ $spectacle
 $spectacle_widgets = new Widget_Bootstrap();
 $spectacle_widgets
     ->init_widget_areas()
-    ->init_artist_lineup();
+    ->init_artist_lineup()
+    ->init_contest_countdown();
