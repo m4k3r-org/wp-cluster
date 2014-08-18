@@ -116,10 +116,10 @@ class ContestCountdown extends \WP_Widget
 
     if( isset( $instance[ 'dates' ] ) && is_array( $instance[ 'dates' ] ) && !empty( $instance[ 'dates' ] ) ){
       for( $i = 0, $mi = count( $instance[ 'dates' ] ); $i < $mi; $i++ ){
-        $data[ 'dates' ][ ] = [ 'value' => $instance[ 'dates' ][ $i ] ];
+        $data[ 'dates' ][ ] = [ 'value' => $instance[ 'dates' ][ $i ], 'cnt' => $i ];
       }
     } else{
-      $data[ 'dates' ][ ] = [ [ 'value' => '' ] ];
+      $data[ 'dates' ][ ] = [ [ 'value' => '', 'cnt' => 0  ] ];
     }
 
     if( array_key_exists( 'timezone', $instance ) ){
