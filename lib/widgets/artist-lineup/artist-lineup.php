@@ -89,6 +89,7 @@ class ArtistLineup extends \WP_Widget
   public function widget( $args, $instance ){
     $image_source = null;
     $date = null;
+    $time = null;
     $location = null;
 
     $valid_widget = true;
@@ -109,6 +110,10 @@ class ArtistLineup extends \WP_Widget
       $errors[ ] = 'missing location';
     }
 
+    if( array_key_exists( 'time', $instance ) ){
+      $time = $instance[ 'time' ];
+    }
+
     if( array_key_exists( 'image_image_id', $instance ) ){
       $image_src = wp_get_attachment_image_src( $instance[ 'image_image_id' ], 'full' );
       $image_source = $image_src[ 0 ];
@@ -123,6 +128,7 @@ class ArtistLineup extends \WP_Widget
         echo $this->_mustache_engine->render( 'widget', [
           'image_source' => $image_source,
           'date' => $date,
+          'time' => $time,
           'location' => $location
         ] );
 
@@ -131,6 +137,7 @@ class ArtistLineup extends \WP_Widget
         echo $this->_mustache_engine->render( 'json', [
           'image_source' => $image_source,
           'date' => $date,
+          'time' => $time,
           'location' => $location
         ] );
 
@@ -153,6 +160,7 @@ class ArtistLineup extends \WP_Widget
     // Get the selected image if any
     $data[ 'date' ] = isset( $instance[ 'date' ] ) ? $instance[ 'date' ] : '';
     $data[ 'location' ] = isset( $instance[ 'location' ] ) ? $instance[ 'location' ] : '';
+    $data[ 'time' ] = isset( $instance[ 'time' ] ) ? $instance[ 'time' ] : '';
     $data[ 'output' ] = ( isset( $instance[ 'output' ] ) && $instance['output'] == 'html' ) ? true : false;
     $data[ 'selected_image' ] = null;
 
@@ -171,6 +179,8 @@ class ArtistLineup extends \WP_Widget
       'date_name' => $this->get_field_name( 'date' ),
       'location_id' => $this->get_field_id( 'location' ),
       'location_name' => $this->get_field_name( 'location' ),
+      'time_id' => $this->get_field_id( 'time' ),
+      'time_name' => $this->get_field_name( 'time' ),
       'image_id' => $this->get_field_id( 'image' ),
       'image_name' => $this->get_field_name( 'image' ),
       'image_image_id' => $this->get_field_id( 'image_image_id' ),
@@ -204,6 +214,7 @@ class ArtistLineup extends \WP_Widget
 
     $instance[ 'date' ] = ( !empty( $new_instance[ 'date' ] ) ) ? strip_tags( $new_instance[ 'date' ] ) : '';
     $instance[ 'location' ] = ( !empty( $new_instance[ 'location' ] ) ) ? strip_tags( $new_instance[ 'location' ] ) : '';
+    $instance[ 'time' ] = ( !empty( $new_instance[ 'time' ] ) ) ? strip_tags( $new_instance[ 'time' ] ) : '';
     $instance[ 'output' ] = ( !empty( $new_instance[ 'output' ] ) && $new_instance[ 'output' ] == 'html' ) ? 'html' : 'json';
 
     if( array_key_exists( 'image', $new_instance ) ){
