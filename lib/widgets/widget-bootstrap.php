@@ -14,6 +14,11 @@ class Widget_Bootstrap
         'name' => 'Header Widget Area',
         'id' => 'header_widget_area'
       ));
+
+      register_sidebar( array(
+        'name' => 'Contest Widget Area',
+        'id' => 'contest_widget_area'
+      ));
     });
 
     return $this;
@@ -26,11 +31,9 @@ class Widget_Bootstrap
       register_widget( 'WP_Spectacle\Widgets\ArtistLineup' );
     });
 
-    wp_register_script('artist-lineup-widget-admin', __DIR__ .'/artist-lineup/static/scripts/artist-lineup-widget-admin.js');
-
     // Init widget scripts and styles
-    add_action( 'wp_enqueue_scripts', function (){
-      wp_enqueue_script( 'artist-lineup-widget-admin');
+    add_action( 'admin_enqueue_scripts', function (){
+      wp_enqueue_script( 'artist-lineup-widget-admin', get_template_directory_uri() .'/lib/widgets/artist-lineup/static/scripts/artist-lineup-widget-admin.js');
     });
 
     // Add shortcode for widget
@@ -61,8 +64,8 @@ class Widget_Bootstrap
     });
 
     // Init widget scripts and styles
-    add_action( 'wp_enqueue_scripts', function (){
-      wp_enqueue_script( 'contest-countdown-widget-admin', __DIR__ .'/contest-countdown/static/scripts/contest-countdown-widget-admin.js', array(), '', true );
+    add_action( 'admin_enqueue_scripts', function (){
+      wp_enqueue_script( 'contest-countdown-widget-admin', get_template_directory_uri() .'/lib/widgets/contest-countdown/static/scripts/contest-countdown-widget-admin.js', array(), '', true );
     });
 
     // Add shortcode for widget

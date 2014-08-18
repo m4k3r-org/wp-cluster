@@ -43,3 +43,11 @@ There are no images in the media library. You need to upload an image first.
 
 <input type="hidden" value="{{images.meta.sel_image_id}}" name="{{image_image_name}}" id="{{image_image_id}}">
 {{/error}}
+
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    jQuery('.datepicker').removeClass( 'hasDatepicker' ).removeData( 'datepicker' ).unbind().datepicker({
+      dateFormat : 'yy-mm-dd'
+    });
+  });
+</script>

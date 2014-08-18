@@ -36,11 +36,8 @@ class ContestCountdown extends \WP_Widget
   public function widget( $args, $instance ){
     $title = null;
     $description = null;
-    $date1 = null;
-    $date2 = null;
-
+    $dates = [];
     $valid_widget = true;
-
     $errors = [ ];
 
     if( array_key_exists( 'title', $instance ) ){
@@ -57,15 +54,18 @@ class ContestCountdown extends \WP_Widget
       $errors[ ] = 'missing description';
     }
 
+    if( array_key_exists( 'dates', $instance ) && !empty( $instance['dates'] ) ){
+      $dates = $instance[ 'dates' ];
+    } else{
+      $valid_widget = false;
+      $errors[ ] = 'missing description';
+    }
 
     if( $valid_widget ){
 
-        echo $this->_mustache_engine->render( 'json', [
-          'title' => $title,
-          'description' => $description,
-          'date1' => $date1,
-          'date2' => $date2
-        ] );
+      echo $this->_mustache_engine->render( 'json', [
+        'json' => json_encode($instance),
+      ] );
 
     } else{
       echo 'Broken widget: ' . implode( ', ', $errors );
@@ -82,12 +82,56 @@ class ContestCountdown extends \WP_Widget
    */
   public function form( $instance ){
     // Get the selected image if any
+
+    $timezones = [
+      ['value' => '-12'],
+      ['value' => '-11'],
+      ['value' => '-9'],
+      ['value' => '-8'],
+      ['value' => '-7'],
+      ['value' => '-6'],
+      ['value' => '-5'],
+      ['value' => '-4'],
+      ['value' => '-3'],
+      ['value' => '-2'],
+      ['value' => '-1'],
+      ['value' => '0'],
+      ['value' => '+1'],
+      ['value' => '+2'],
+      ['value' => '+3'],
+      ['value' => '+4'],
+      ['value' => '+5'],
+      ['value' => '+6'],
+      ['value' => '+7'],
+      ['value' => '+8'],
+      ['value' => '+9'],
+      ['value' => '+10'],
+      ['value' => '+11'],
+      ['value' => '+12']
+    ];
+
     $data[ 'title' ] = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] : '';
     $data[ 'description' ] = isset( $instance[ 'description' ] ) ? $instance[ 'description' ] : '';
-    $data[ 'date1' ] = isset( $instance[ 'date1' ] ) ? $instance[ 'date1' ] : '';
-    $data[ 'date2' ] = isset( $instance[ 'date2' ] ) ? $instance[ 'date2' ] : '';
-    $data[ 'dates' ] = isset( $instance[ 'dates' ] ) ? $instance[ 'dates' ] : [['value' => '']];
+    $data[ 'dates' ] = [ ];
 
+    if( isset( $instance[ 'dates' ] ) && is_array( $instance[ 'dates' ] ) && !empty( $instance[ 'dates' ] ) ){
+      for( $i = 0, $mi = count( $instance[ 'dates' ] ); $i < $mi; $i++ ){
+        $data[ 'dates' ][ ] = [ 'value' => $instance[ 'dates' ][ $i ] ];
+      }
+    } else{
+      $data[ 'dates' ][ ] = [ [ 'value' => '' ] ];
+    }
+
+    if( array_key_exists( 'timezone', $instance ) ){
+
+      for( $i=0, $mi=count($timezones); $i<$mi; $i++ )
+      {
+        if ( $timezones[$i]['value'] == $instance['timezone'] )
+        {
+          $timezones[$i]['selected'] = true;
+        }
+      }
+    }
 
     // Populate the template data
     $data = [
@@ -95,18 +139,14 @@ class ContestCountdown extends \WP_Widget
       'title_name' => $this->get_field_name( 'title' ),
       'description_id' => $this->get_field_id( 'description' ),
       'description_name' => $this->get_field_name( 'description' ),
-
+      'timezone_id' => $this->get_field_id( 'timezone' ),
+      'timezone_name' => $this->get_field_name( 'timezone' ),
       'dates_id' => $this->get_field_id( 'dates' ),
       'dates_name' => $this->get_field_name( 'dates' ),
-
-      'date1_id' => $this->get_field_id( 'date1' ),
-      'date1_name' => $this->get_field_name( 'date1' ),
-      'date2_id' => $this->get_field_id( 'date2' ),
-      'date2_name' => $this->get_field_name( 'date2' ),
-
       'title' => $data[ 'title' ],
       'description' => $data[ 'description' ],
-      'dates' => $data[ 'dates' ]
+      'dates' => $data[ 'dates' ],
+      'timezones' => $timezones
     ];
 
     echo $this->_mustache_engine->render( 'admin-form', $data );
@@ -122,11 +162,21 @@ class ContestCountdown extends \WP_Widget
    */
   public function update( $new_instance, $old_instance ){
     $instance = array();
-
     $instance[ 'title' ] = ( !empty( $new_instance[ 'title' ] ) ) ? strip_tags( $new_instance[ 'title' ] ) : '';
     $instance[ 'description' ] = ( !empty( $new_instance[ 'description' ] ) ) ? strip_tags( $new_instance[ 'description' ] ) : '';
-    $instance[ 'date1' ] = ( !empty( $new_instance[ 'date1' ] ) ) ? strip_tags( $new_instance[ 'date1' ] ) : '';
-    $instance[ 'date2' ] = ( !empty( $new_instance[ 'date2' ] ) ) ? strip_tags( $new_instance[ 'date2' ] ) : '';
+    $instance[ 'dates' ] = ( !empty( $new_instance[ 'dates' ] ) ) ? $new_instance[ 'dates' ] : [ ];
+    $instance[ 'timezone' ] = ( isset( $new_instance[ 'timezone' ] ) ) ? $new_instance[ 'timezone' ] : '0';
+
+    if( isset( $instance[ 'dates' ] ) && is_array( $instance[ 'dates' ] ) && !empty( $instance[ 'dates' ] ) ){
+      for( $i = 0, $mi = count( $instance[ 'dates' ] ); $i < $mi; $i++ ){
+
+        if( empty( $instance[ 'dates' ][ $i ] ) ){
+          unset( $instance[ 'dates' ][ $i ] );
+        }
+      }
+    }
+
+    $instance[ 'dates' ] = array_values( $instance[ 'dates' ] );
 
     return $instance;
   }
