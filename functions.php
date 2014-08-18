@@ -8,6 +8,8 @@ if( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 }
 
 require_once('lib/core.php');
+require_once('lib/navigation-builder.php');
+
 require_once('lib/widgets/widget-bootstrap.php');
 
 
@@ -15,7 +17,8 @@ require_once('lib/widgets/widget-bootstrap.php');
 $spectacle = new Core();
 $spectacle
   ->load_styles()
-  ->load_scripts();
+  ->load_scripts()
+  ->register_navigation();
 
 
 // Initialize Spectacle custom widgets

@@ -33,3 +33,7 @@
 
 <body>
   <div id="doc">
+
+    <?php if ( has_nav_menu( 'main-navigation' ) ): ?>
+      <a href="#" class="main-menu"><span class="icon-spectacle-menu"></span><span class="text">Menu</span></a>
+    <?php endif;

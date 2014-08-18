@@ -16,4 +16,13 @@ class Core
     return $this;
   }
 
+  public function register_navigation()
+  {
+    add_action( 'init', function() {
+      register_nav_menu( 'main-navigation', __( 'Main Navigation' ) );
+    });
+
+    return $this;
+  }
+
 }
