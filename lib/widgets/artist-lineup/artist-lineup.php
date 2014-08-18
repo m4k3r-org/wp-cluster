@@ -189,6 +189,7 @@ class ArtistLineup extends \WP_Widget
       'output_name' => $this->get_field_name( 'output' ),
       'images' => $this->_get_images( $data[ 'selected_image' ] ),
       'date' => $data[ 'date' ],
+      'time' => $data[ 'time' ],
       'location' => $data[ 'location' ],
       'output' => $data[ 'output' ]
     ];
