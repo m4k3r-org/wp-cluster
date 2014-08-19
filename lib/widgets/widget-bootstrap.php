@@ -110,8 +110,11 @@ class Widget_Bootstrap
     // Add shortcode for widget
     add_shortcode( 'widget_winner', function( $atts ) {
       // Configure defaults and extract the attributes into variables
+
+      $atts[ 'urls' ] = explode( ",", $atts[ 'urls' ] );
+
       extract( shortcode_atts( array(
-        'title' => '',
+        'urls' => '',
       ), $atts ) );
 
       ob_start();
