@@ -27,4 +27,5 @@ $spectacle_widgets
     ->init_widget_areas()
     ->init_artist_lineup()
     ->init_contest_countdown()
-    ->init_winner();
+    ->init_winner()
+    ->init_buy_ticket();
