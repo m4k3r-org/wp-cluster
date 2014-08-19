@@ -28,4 +28,5 @@ $spectacle_widgets
     ->init_artist_lineup()
     ->init_contest_countdown()
     ->init_winner()
-    ->init_buy_ticket();
+    ->init_buy_ticket()
+    ->init_insert_image();

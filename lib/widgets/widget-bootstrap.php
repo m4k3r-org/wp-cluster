@@ -6,6 +6,7 @@ require_once('artist-lineup/artist-lineup.php');
 require_once('contest-countdown/contest-countdown.php');
 require_once('winner/winner.php');
 require_once('buy-ticket/buy-ticket.php');
+require_once('insert-image/insert-image.php');
 
 class Widget_Bootstrap
 {
@@ -152,6 +153,32 @@ class Widget_Bootstrap
 
       ob_start();
       the_widget( 'WP_Spectacle\Widgets\BuyTicket', $atts, $args );
+      $output = ob_get_clean();
+
+      return $output;
+
+    });
+
+    return $this;
+  }
+
+  public function init_insert_image()
+  {
+    // Init widget
+    add_action( 'widgets_init', function() {
+      register_widget( 'WP_Spectacle\Widgets\InsertImage' );
+    });
+
+    // Add shortcode for widget
+    add_shortcode( 'widget_insert_image', function( $atts ) {
+      // Configure defaults and extract the attributes into variables
+      extract( shortcode_atts( array(
+        'title' => '',
+        'image_image_id' => ''
+      ), $atts ) );
+
+      ob_start();
+      the_widget( 'WP_Spectacle\Widgets\InsertImage', $atts, $args );
       $output = ob_get_clean();
 
       return $output;

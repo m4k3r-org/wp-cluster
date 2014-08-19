@@ -36,7 +36,7 @@ class ContestCountdown extends \WP_Widget
   public function widget( $args, $instance ){
     $title = null;
     $description = null;
-    $dates = [];
+    $dates = [ ];
     $valid_widget = true;
     $errors = [ ];
 
@@ -54,7 +54,7 @@ class ContestCountdown extends \WP_Widget
       $errors[ ] = 'missing description';
     }
 
-    if( array_key_exists( 'dates', $instance ) && !empty( $instance['dates'] ) ){
+    if( array_key_exists( 'dates', $instance ) && !empty( $instance[ 'dates' ] ) ){
       $dates = $instance[ 'dates' ];
     } else{
       $valid_widget = false;
@@ -64,7 +64,10 @@ class ContestCountdown extends \WP_Widget
     if( $valid_widget ){
 
       echo $this->_mustache_engine->render( 'json', [
-        'json' => json_encode($instance),
+        'json' => json_encode( [
+          'data' => $instance,
+          'type' => 'widget_contest_countdown'
+        ] )
       ] );
 
     } else{
@@ -84,30 +87,30 @@ class ContestCountdown extends \WP_Widget
     // Get the selected image if any
 
     $timezones = [
-      ['value' => '-12'],
-      ['value' => '-11'],
-      ['value' => '-9'],
-      ['value' => '-8'],
-      ['value' => '-7'],
-      ['value' => '-6'],
-      ['value' => '-5'],
-      ['value' => '-4'],
-      ['value' => '-3'],
-      ['value' => '-2'],
-      ['value' => '-1'],
-      ['value' => '0'],
-      ['value' => '+1'],
-      ['value' => '+2'],
-      ['value' => '+3'],
-      ['value' => '+4'],
-      ['value' => '+5'],
-      ['value' => '+6'],
-      ['value' => '+7'],
-      ['value' => '+8'],
-      ['value' => '+9'],
-      ['value' => '+10'],
-      ['value' => '+11'],
-      ['value' => '+12']
+      [ 'value' => '-12' ],
+      [ 'value' => '-11' ],
+      [ 'value' => '-9' ],
+      [ 'value' => '-8' ],
+      [ 'value' => '-7' ],
+      [ 'value' => '-6' ],
+      [ 'value' => '-5' ],
+      [ 'value' => '-4' ],
+      [ 'value' => '-3' ],
+      [ 'value' => '-2' ],
+      [ 'value' => '-1' ],
+      [ 'value' => '0' ],
+      [ 'value' => '+1' ],
+      [ 'value' => '+2' ],
+      [ 'value' => '+3' ],
+      [ 'value' => '+4' ],
+      [ 'value' => '+5' ],
+      [ 'value' => '+6' ],
+      [ 'value' => '+7' ],
+      [ 'value' => '+8' ],
+      [ 'value' => '+9' ],
+      [ 'value' => '+10' ],
+      [ 'value' => '+11' ],
+      [ 'value' => '+12' ]
     ];
 
     $data[ 'title' ] = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] : '';
@@ -119,16 +122,14 @@ class ContestCountdown extends \WP_Widget
         $data[ 'dates' ][ ] = [ 'value' => $instance[ 'dates' ][ $i ], 'cnt' => $i ];
       }
     } else{
-      $data[ 'dates' ][ ] = [ [ 'value' => '', 'cnt' => 0  ] ];
+      $data[ 'dates' ][ ] = [ [ 'value' => '', 'cnt' => 0 ] ];
     }
 
     if( array_key_exists( 'timezone', $instance ) ){
 
-      for( $i=0, $mi=count($timezones); $i<$mi; $i++ )
-      {
-        if ( $timezones[$i]['value'] == $instance['timezone'] )
-        {
-          $timezones[$i]['selected'] = true;
+      for( $i = 0, $mi = count( $timezones ); $i < $mi; $i++ ){
+        if( $timezones[ $i ][ 'value' ] == $instance[ 'timezone' ] ){
+          $timezones[ $i ][ 'selected' ] = true;
         }
       }
     }
