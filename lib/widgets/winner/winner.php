@@ -51,6 +51,7 @@ class Winner extends \WP_Widget
           continue;
         }
 
+        $current_data[ 'source' ] = 'instagram';
         $media_id = isset( $embed[ 'media_id' ] ) ? $embed[ 'media_id' ] : null;
         $current_data[ 'title' ] = isset( $embed[ 'title' ] ) ? $embed[ 'title' ] : null;
         $current_data[ 'author_name' ] = isset( $embed[ 'author_name' ] ) ? $embed[ 'author_name' ] : null;
@@ -87,6 +88,7 @@ class Winner extends \WP_Widget
           continue;
         }
 
+        $current_data[ 'source' ] = 'twitter';
         $current_data[ 'title' ] = isset( $tweet->text ) ? $tweet->text : null;
         $current_data[ 'author_name' ] = isset( $tweet->user->name ) ? $tweet->user->name : null;
         $current_data[ 'author_profile_picture' ] = isset( $tweet->user->profile_image_url ) ? $tweet->user->profile_image_url : null;
@@ -115,6 +117,7 @@ class Winner extends \WP_Widget
 
         $youtube_array = json_decode( $youtube_data, true );
 
+        $current_data[ 'source' ] = 'youtube';
         $current_data[ 'title' ] = isset( $youtube_array[ 'data' ][ 'title' ] ) ? $youtube_array[ 'data' ][ 'title' ] : null;
         $current_data[ 'created_time' ] = isset( $youtube_array[ 'data' ][ 'uploaded' ] ) ? strtotime( $youtube_array[ 'data' ][ 'uploaded' ] ) : null;
         $current_data[ 'image_url' ] = isset( $youtube_array[ 'data' ][ 'thumbnail' ][ 'hqDefault' ] ) ? $youtube_array[ 'data' ][ 'thumbnail' ][ 'hqDefault' ] : null;
