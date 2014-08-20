@@ -93,11 +93,11 @@ class Winner extends \WP_Widget
         $current_data[ 'created_time' ] = isset( $tweet->created_at ) ? strtotime( $tweet->created_at ) : null;
         $current_data[ 'image_url' ] = null;
 
-        /*     if ( isset($current_data[ 'created_time' ]) ){
+         if ( isset($current_data[ 'created_time' ]) ){
 
-               $current_data[ 'created_time' ] = $this->_ago($current_data[ 'created_time' ]);
+           $current_data[ 'created_time' ] = $this->_ago($current_data[ 'created_time' ]);
 
-             }*/
+         }
 
         $data[ ] = $current_data;
 
