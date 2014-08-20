@@ -28,8 +28,9 @@ require( [
   'vendor/fancybox-2.1.5/helpers/jquery.fancybox-media',
   'lib/stream',
   'lib/countdown',
-  'lib/contests'
-], function( $, isTouch, fancybox, fancyboxMedia, stream, countDown, contests ){
+  'lib/contests',
+  'lib/swipe'
+], function( $, isTouch, fancybox, fancyboxMedia, stream, countDown, contests, swipe ){
 
 
   // Initialize top video popup
@@ -64,4 +65,6 @@ require( [
 
   // Initialize the contests section
   contests.init();
+
+
 } );

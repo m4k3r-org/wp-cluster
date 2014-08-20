@@ -8,12 +8,30 @@
 		{
 			"selection": [
 				{
+					"order": 9,
+					"id": 10,
+					"prevSize": 32,
+					"code": 104,
+					"name": "indicator",
+					"tempChar": "",
+					"ligatures": ""
+				},
+				{
 					"order": 8,
+					"id": 9,
+					"prevSize": 32,
+					"code": 120,
+					"name": "close",
+					"tempChar": "",
+					"ligatures": ""
+				},
+				{
+					"order": 7,
 					"id": 8,
 					"prevSize": 32,
 					"code": 97,
 					"name": "menu",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -26,56 +44,56 @@
 				},
 				{
 					"id": 2,
-					"order": 2,
+					"order": 1,
 					"prevSize": 32,
 					"code": 98,
 					"name": "location",
-					"tempChar": "",
-					"ligatures": ""
-				},
-				{
-					"id": 3,
-					"order": 3,
-					"prevSize": 32,
-					"code": 99,
-					"name": "date",
-					"tempChar": "",
-					"ligatures": ""
-				},
-				{
-					"id": 4,
-					"order": 4,
-					"prevSize": 32,
-					"code": 100,
-					"name": "ticket",
 					"tempChar": "",
 					"ligatures": ""
 				},
 				{
-					"id": 5,
-					"order": 5,
+					"id": 3,
+					"order": 2,
 					"prevSize": 32,
-					"code": 101,
-					"name": "play",
+					"code": 99,
+					"name": "date",
 					"tempChar": "",
 					"ligatures": ""
 				},
 				{
-					"id": 6,
-					"order": 6,
+					"id": 4,
+					"order": 3,
 					"prevSize": 32,
-					"code": 102,
-					"name": "up-arrow",
+					"code": 100,
+					"name": "ticket",
 					"tempChar": "",
 					"ligatures": ""
 				},
 				{
+					"id": 5,
+					"order": 4,
+					"prevSize": 32,
+					"code": 101,
+					"name": "play",
+					"tempChar": "",
+					"ligatures": ""
+				},
+				{
+					"id": 6,
+					"order": 5,
+					"prevSize": 32,
+					"code": 102,
+					"name": "up-arrow",
+					"tempChar": "",
+					"ligatures": ""
+				},
+				{
 					"id": 7,
-					"order": 7,
+					"order": 6,
 					"prevSize": 32,
 					"code": 103,
 					"name": "down-arrow",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				}
 			],
@@ -86,6 +104,41 @@
 			"height": 1024,
 			"prevSize": 32,
 			"icons": [
+				{
+					"id": 10,
+					"paths": [
+						"M0 0h204.8v1024h-204.8v-1024z",
+						"M614.4 0h204.8v1024h-204.8v-1024z",
+						"M1228.8 0h204.8v1024h-204.8v-1024z",
+						"M1843.2 0h204.8v1024h-204.8v-1024z"
+					],
+					"attrs": [
+						{},
+						{},
+						{},
+						{}
+					],
+					"width": 2048,
+					"grid": 0,
+					"tags": [
+						"indicator"
+					]
+				},
+				{
+					"id": 9,
+					"paths": [
+						"M146.913 25.211l851.961 851.919c33.572 33.614 33.572 88.088 0 121.745-33.614 33.572-88.088 33.572-121.745 0l-851.919-851.961c-33.614-33.614-33.614-88.088 0-121.703s88.131-33.614 121.703 0z",
+						"M998.875 146.913l-851.961 851.961c-33.572 33.572-88.046 33.572-121.703 0-33.614-33.614-33.614-88.088 0-121.745l851.919-851.919c33.614-33.614 88.088-33.614 121.745 0 33.572 33.614 33.572 88.088 0 121.703z"
+					],
+					"attrs": [
+						{},
+						{}
+					],
+					"grid": 0,
+					"tags": [
+						"close"
+					]
+				},
 				{
 					"id": 8,
 					"paths": [
