@@ -56,6 +56,7 @@ class Winner extends \WP_Widget
         $current_data[ 'title' ] = isset( $embed[ 'title' ] ) ? $embed[ 'title' ] : null;
         $current_data[ 'author_name' ] = isset( $embed[ 'author_name' ] ) ? $embed[ 'author_name' ] : null;
         $current_data[ 'image_url' ] = isset( $embed[ 'url' ] ) ? $embed[ 'url' ] : null;
+        $current_data[ 'post_url' ] = $instance[ 'urls' ][ $i ];
 
         if( isset( $media_id ) ){
           $json_media = file_get_contents( "https://api.instagram.com/v1/media/" . $media_id . "23?access_token=" . WP_SOCIAL_STREAM_INSTAGRAM_ACCESS_TOKEN );
@@ -94,6 +95,7 @@ class Winner extends \WP_Widget
         $current_data[ 'author_profile_picture' ] = isset( $tweet->user->profile_image_url ) ? $tweet->user->profile_image_url : null;
         $current_data[ 'created_time' ] = isset( $tweet->created_at ) ? strtotime( $tweet->created_at ) : null;
         $current_data[ 'image_url' ] = null;
+        $current_data[ 'post_url' ] = $instance[ 'urls' ][ $i ];
 
          if ( isset($current_data[ 'created_time' ]) ){
 
@@ -128,6 +130,7 @@ class Winner extends \WP_Widget
 
         $current_data[ 'author_name' ] = isset( $author_array[ 'entry' ][ 'title' ][ '$t' ] ) ? $author_array[ 'entry' ][ 'title' ][ '$t' ] : null;
         $current_data[ 'author_profile_picture' ] = isset( $author_array[ 'entry' ][ 'media$thumbnail' ][ 'url' ] ) ? $author_array[ 'entry' ][ 'media$thumbnail' ][ 'url' ] : null;
+        $current_data[ 'post_url' ] = $instance[ 'urls' ][ $i ];
 
         if( isset( $current_data[ 'created_time' ] ) ){
 
