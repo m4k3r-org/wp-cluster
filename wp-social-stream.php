@@ -4,7 +4,7 @@
  * Text Domain: wp-social-stream
  * Description: Social Stream Plugin
  * Author: Usability Dynamics, Inc
- * Version: 1.0.0
+ * Version: 10.0.0
  * Author URI: http://UsabilityDynamics.com
  */
 if (! class_exists('WP_Social_Stream') ) {
