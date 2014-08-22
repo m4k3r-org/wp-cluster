@@ -25,4 +25,13 @@ class Core
     return $this;
   }
 
+  public function add_featured_image()
+  {
+    // Add post thumbnails
+    add_theme_support( 'post-thumbnails' );
+
+    // Set the featured image sizes
+    set_post_thumbnail_size(700);
+    set_post_thumbnail_size(2000);
+  }
 }

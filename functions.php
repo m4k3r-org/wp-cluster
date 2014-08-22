@@ -18,8 +18,8 @@ $spectacle = new Core();
 $spectacle
   ->load_styles()
   ->load_scripts()
-  ->register_navigation();
-
+  ->register_navigation()
+  ->add_featured_image();
 
 // Initialize Spectacle custom widgets
 $spectacle_widgets = new Widget_Bootstrap();
@@ -29,4 +29,5 @@ $spectacle_widgets
     ->init_contest_countdown()
     ->init_winner()
     ->init_buy_ticket()
-    ->init_insert_image();
+    ->init_insert_image()
+    ->init_hotel();
