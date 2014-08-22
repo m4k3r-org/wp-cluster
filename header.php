@@ -31,7 +31,7 @@
   <?php wp_head(); ?>
 </head>
 
-<body>
+<body <?php body_class(); ?>>
   <div id="doc">
 
     <?php if ( has_nav_menu( 'main-navigation' ) ): ?>

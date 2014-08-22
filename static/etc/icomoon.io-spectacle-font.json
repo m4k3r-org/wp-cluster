@@ -8,12 +8,30 @@
 		{
 			"selection": [
 				{
+					"order": 16,
+					"id": 17,
+					"prevSize": 32,
+					"code": 111,
+					"name": "left",
+					"tempChar": "",
+					"ligatures": ""
+				},
+				{
+					"order": 15,
+					"id": 16,
+					"prevSize": 32,
+					"code": 110,
+					"name": "right",
+					"tempChar": "",
+					"ligatures": ""
+				},
+				{
 					"order": 13,
 					"id": 15,
 					"prevSize": 32,
 					"code": 109,
 					"name": "comment",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -22,7 +40,7 @@
 					"prevSize": 32,
 					"code": 108,
 					"name": "time",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -31,7 +49,7 @@
 					"prevSize": 32,
 					"code": 107,
 					"name": "cat-3",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -40,7 +58,7 @@
 					"prevSize": 32,
 					"code": 106,
 					"name": "cat-2",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -49,7 +67,7 @@
 					"prevSize": 32,
 					"code": 105,
 					"name": "cat-1",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -58,7 +76,7 @@
 					"prevSize": 32,
 					"code": 104,
 					"name": "indicator",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -67,7 +85,7 @@
 					"prevSize": 32,
 					"code": 120,
 					"name": "close",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -76,7 +94,7 @@
 					"prevSize": 32,
 					"code": 97,
 					"name": "menu",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -93,7 +111,7 @@
 					"prevSize": 32,
 					"code": 98,
 					"name": "location",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -102,7 +120,7 @@
 					"prevSize": 32,
 					"code": 99,
 					"name": "date",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -111,7 +129,7 @@
 					"prevSize": 32,
 					"code": 100,
 					"name": "ticket",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -120,7 +138,7 @@
 					"prevSize": 32,
 					"code": 101,
 					"name": "play",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -129,7 +147,7 @@
 					"prevSize": 32,
 					"code": 102,
 					"name": "up-arrow",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -138,7 +156,7 @@
 					"prevSize": 32,
 					"code": 103,
 					"name": "down-arrow",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				}
 			],
@@ -149,6 +167,34 @@
 			"height": 1024,
 			"prevSize": 32,
 			"icons": [
+				{
+					"id": 17,
+					"paths": [
+						"M13.581 544.673c-8.697-8.651-13.581-20.418-13.581-32.65s4.883-23.999 13.581-32.65l466.676-465.839c18.046-17.999 47.347-17.999 65.439 0 18.092 18.046 18.092 47.3 0 65.299l-433.98 433.19 433.98 433.19c18.092 17.999 18.092 47.3 0 65.299-18.092 18.046-47.347 18.046-65.439 0l-466.676-465.839z"
+					],
+					"attrs": [
+						{}
+					],
+					"width": 559,
+					"grid": 0,
+					"tags": [
+						"left [Converted]"
+					]
+				},
+				{
+					"id": 16,
+					"paths": [
+						"M545.696 544.673c8.697-8.651 13.581-20.418 13.581-32.65s-4.883-23.999-13.581-32.65l-466.723-465.839c-18.092-17.999-47.347-17.999-65.439 0-18.092 18.046-18.092 47.3 0 65.299l433.98 433.19-433.98 433.19c-18.092 17.999-18.092 47.3 0 65.299 18.092 18.046 47.347 18.046 65.439 0l466.723-465.839z"
+					],
+					"attrs": [
+						{}
+					],
+					"width": 559,
+					"grid": 0,
+					"tags": [
+						"right [Converted]"
+					]
+				},
 				{
 					"id": 15,
 					"paths": [
