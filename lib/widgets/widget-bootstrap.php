@@ -7,6 +7,7 @@ require_once('contest-countdown/contest-countdown.php');
 require_once('winner/winner.php');
 require_once('buy-ticket/buy-ticket.php');
 require_once('insert-image/insert-image.php');
+require_once('hotel/hotel.php');
 
 class Widget_Bootstrap
 {
@@ -188,4 +189,18 @@ class Widget_Bootstrap
     return $this;
   }
 
+  public function init_hotel()
+  {
+    // Init widget
+    add_action( 'widgets_init', function() {
+      register_widget( 'WP_Spectacle\Widgets\Hotel' );
+    });
+
+    // Init widget scripts and styles
+    add_action( 'admin_enqueue_scripts', function (){
+      wp_enqueue_script( 'hotel-widget-admin', get_template_directory_uri() .'/lib/widgets/hotel/static/scripts/hotel-widget-admin.js');
+    });
+
+    return $this;
+  }
 }
