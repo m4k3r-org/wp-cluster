@@ -153,7 +153,8 @@
     "usabilitydynamics/wp-wpml-translation-management": "1.9.5",
     "usabilitydynamics/wp-wpml": "3.1.6",
     "usabilitydynamics/wp-gravityforms": "master",
-    "usabilitydynamics/wp-seo-addon": "master"
+    "usabilitydynamics/wp-seo-addon": "master",
+    "usabilitydynamics/wp-social-stream": "master"
   },
   "autoload": {
     "classmap": [
