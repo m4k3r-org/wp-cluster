@@ -168,7 +168,7 @@ class Shortcodes
       if ( isset( $content[0] ) ) { $content[0]['class'] = 'diamond-box-left'; }
       if ( isset( $content[1] ) ) { $content[1]['class'] = 'diamond-box-right'; }
 
-      $html = '<div class="diamond-box-container">';
+      $html = '<div class="diamond-box-container-widget">';
 
       $buy_tickets_html = '<a href="' .esc_attr( $attributes[ 'buy_tickets_link' ]) .'" onclick="javascript:_gaq.push( [ \'_link\', \'' .esc_attr( $attributes[ 'buy_tickets_link' ] ) .'\' ] ); return false;" class="buy-tickets" target="_blank"><div class="inner">Buy<strong>Tickets</strong></div></a>';
       $diamond_box_html = '<div class="diamond-box ::diamond_box_class::"><div class="inner"><strong>::date_day::<br>::date::</strong>::location::<hr><div class="time">::time::</div></div></div>';
