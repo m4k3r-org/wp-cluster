@@ -36,13 +36,22 @@
     z-index: 71000 !important;
   }
 
-  .icon-spectacle-close {
+  .overlay-close {
     position: absolute;
     top: 40px;
-    right: 20px;
+    left: 20px;
+    text-transform: uppercase;
     color: #ffffff;
     z-index: 72001;
+    font-family: "Dosis", sans-serif;
+    font-weight: 400;
     font-size: 24px;
+
+    .icon-spectacle-close {
+      font-size: 22px;
+      margin: 0 5px 0 0;
+    }
+
   }
 }
 
@@ -56,83 +65,70 @@
 
   display: none;
   overflow: auto;
-  background-color: rgba(252,225,21,0.95);
+  background-color: rgba(67,80,111,0.95);
 
   .overlay-content{
     position: relative;
-    top: 60px;
+    top: 100px;
     left: 0px;
     right: 0px;
-  }
+    color: #fff;
 
-  .search{
-    margin: 40px 40px 100px 40px;
-    padding: 0 0 30px 0;
-    border-bottom: 1px solid #ffffff;
-
-    button{
-      border: 0;
-      background: none;
-      color: #ffffff;
-      font-size: 36px;
-      width: 44px;
-      float: left;
-      margin: 7px 0 0 -100%;
+    @media @tablet {
+      top: 60px;
     }
-
-    .text-container{
-      float: left;
-      width: 100%;
-
-      .inner{
-        margin-left: 74px;
-
-        input[type="text"]{
-          width: 100%;
-          display: block;
-          font-family: "Dosis", sans-serif;
-          font-size: 48px;
-          background: none;
-          text-transform: uppercase;
-          color: #ffffff;
-          border: 0;
-          margin: 0;
-          padding: 0;
-          line-height: 100%;
-
-          -webkit-appearance: none;
-          border-radius: 0;
-          resize: none;
-
-        }
-
-      }
-    }
-
   }
 
   nav{
     margin: 0 40px;
     text-align: center;
 
-    a{
-      display: block;
-      font-family: "Dosis", sans-serif;
-      font-weight: 400;
-      text-transform: uppercase;
-      color: #ffffff;
-    }
+    ul
+    {
+      list-style: none;
+      padding: 0;
+      margin: 0;
 
-    > a, .left-column > a{
-      font-size: 48px;
-      border-bottom: 1px solid #ffffff;
-      padding: 0 0 20px 0;
-      margin: 20px 0;
+      li {
+
+        font-size: 40px;
+        font-family: "audimat-bold", sans-serif;
+        font-weight: normal;
+        letter-spacing: -0.05em;
+        text-transform: uppercase;
+        color: #ffffff;
+
+        border-bottom: 1px solid rgba(255,255,255,0.3);
+        padding: 0 0 15px 0;
+        margin: 0 0 15px 0;
+
+        @media @tablet {
+          font-size: 60px;
+          padding: 0 0 35px 0;
+          margin: 0 0 35px 0;
+        }
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        a{
+          display: block;
+          color: #fff;
+        }
+
+        ul {
+          li {
+            border: 0;
+            padding: 0 0 15px 0;
+            margin: 0 0 15px 0;
+          }
+        }
+      }
     }
 
     .dropdown-menu {
       display: none;
-      border-bottom: 1px solid #ffffff;
       padding: 0 0 20px 0;
       list-style: none;
 

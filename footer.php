@@ -3,7 +3,11 @@
 <?php if ( has_nav_menu( 'main-navigation' ) ): ?>
 
 <div class="navigation-overlay overlay">
-  <a href="#" class="icon-spectacle-close"></a>
+
+  <a href="#" class="overlay-close">
+    <span class="icon-spectacle-close"></span>
+    Close
+  </a>
   <div class="overlay-content">
     <nav class="clearfix">
       <?php
