@@ -30,7 +30,7 @@
     "classmap": [ "lib" ]
   },
   "extra": {
-    "installer-name": "wp-spectacle",
+    "installer-name": "wp-spectacle-v2",
     "installer-paths": {
       "vendor/libraries/{$vendor}/{$name}": [
         "type:wordpress-library"
