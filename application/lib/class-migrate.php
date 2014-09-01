@@ -711,7 +711,7 @@ namespace EDM\Application {
         foreach( $sites as $site ) {
           /** Change the currently active site */
           switch_to_blog( $site->blog_id );
-          $this->_echo( "Processing site {$site->site_id}, blog {$site->blog_id}..." );
+          $this->_echo( "Processing site {$site->site_id}, blog {$site->domain} ({$site->blog_id})..." );
 
           /** Flush any cache */
           wp_cache_flush();
@@ -794,11 +794,37 @@ namespace EDM\Application {
 
           /** Now we need to reactivate the current site's theme */
           $themes = get_theme_roots();
+          $theme_map = array( 
+            "flawless" => "flawless",
+            "flawless-hddp" => "flawless-hddp",
+            "bassodyssey" => "wp-bassoddysey",
+            "dayafter" => "wp-dayafter",
+            "wp-festival" => "wp-festival",
+            "wp-festival-2" => "wp-festival-2",
+            "freaksbeatstreats" => "wp-freaksbeatstreats",
+            "hififest.com" => "wp-hififest",
+            "lanmexico-2014" => "wp-lanmexico",
+            "monsterblockparty.com" => "wp-monsterblockparty",
+            "wp-spectacle" => "wp-spectacle",
+            "wp-spectacle-2" => "wp-spectacle-2",
+            "wp-spectacle-chmf" => "wp-spectacle-chmf",
+            "wp-spectacle-isladelsol" => "wp-spectacle-isladelsol",
+            "network-splash" => "wp-splash",
+            "wp-splash" => "wp-splash",
+            "thegift" => "wp-thegift",
+            "winterfantasy-2" => "wp-winterfantasy",
+            "braxton" => "wp-braxton",
+            "k-boom" => "wp-kboom"
+          );
           $stylesheet = get_option( 'stylesheet' );
-          if( $stylesheet == 'network-splash' ){
-            $stylesheet = 'wp-splash';
+          $this->_echo( "Trying to find theme called: " . $stylesheet );
+          /** Convert our theme if it exists */
+          if( isset( $theme_map[ $stylesheet ] ) && $theme_map[ $stylesheet ] != $stylesheet ){
+            $stylesheet = $theme_map[ $stylesheet ];
+            $this->_echo( "Found theme in map, renaming to {$stylesheet}." );
           }
           if( !in_array( $stylesheet, array_keys( $themes ) ) ){
+            $this->_echo( "Could not find theme {$stylesheet}. Reverting to wp-splash." );
             $stylesheet = 'wp-splash';
           }
           /** Ok, go ahead and update our stylesheet root */

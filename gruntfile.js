@@ -152,6 +152,7 @@ module.exports = function( grunt ) {
         'db.php',
         'object-cache.php',
         'sunrise.php',
+        'w3tc-config',
         'vendor/libraries/automattic/wordpress/wp-config.php',
         'wp-cli.yml'
       ],
@@ -161,6 +162,7 @@ module.exports = function( grunt ) {
         'db.php',
         'object-cache.php',
         'sunrise.php',
+        'w3tc-config',
         'vendor/libraries/automattic/wordpress/wp-config.php',
         'wp-cli.yml'
       ],
@@ -248,8 +250,9 @@ module.exports = function( grunt ) {
       production: {
         files: {
           'wp-cli.yml': 'application/static/etc/wp-cli.yml',
-          'advanced-cache.php': 'vendor/modules/wp-veneer/lib/class-advanced-cache.php',
-          'object-cache.php': 'vendor/modules/wp-veneer/lib/class-object-cache.php'
+          'advanced-cache.php': 'vendor/plugins/w3-total-cache/wp-content/advanced-cache.php',
+          'object-cache.php': 'vendor/plugins/w3-total-cache/wp-content/object-cache.php',
+          'w3tc-config': 'application/static/etc/w3tc-config'
         }
       },
       development: {
@@ -286,8 +289,10 @@ module.exports = function( grunt ) {
       },
       production: {
         files: {
-          'advanced-cache.php': 'vendor/modules/wp-veneer/lib/class-advanced-cache.php',
-          'object-cache.php': 'vendor/modules/wp-veneer/lib/class-object-cache.php'
+          'wp-cli.yml': 'application/static/etc/wp-cli.yml',
+          'advanced-cache.php': 'vendor/plugins/w3-total-cache/wp-content/advanced-cache.php',
+          'object-cache.php': 'vendor/plugins/w3-total-cache/wp-content/object-cache.php',
+          'w3tc-config': 'application/static/etc/w3tc-config'
         }
       },
       development: {
