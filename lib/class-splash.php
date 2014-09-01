@@ -487,8 +487,8 @@ namespace UsabilityDynamics\Theme {
 
       // @temp hardcoded, use get_template_directory_uri() to figure out correct URL that should be replaced.
 
-      $url = str_replace( 'themes/wp-splash/static/', 'vendor/usabilitydynamics/wp-splash/static/', $url );
-      $url = str_replace( 'themes/wp-splash/vendor/', 'vendor/usabilitydynamics/wp-splash/vendor/', $url );
+      $url = str_replace( 'themes/wp-splash/static/', 'vendor/themes/wp-splash/static/', $url );
+      $url = str_replace( 'themes/wp-splash/vendor/', 'vendor/themes/wp-splash/vendor/', $url );
 
       return $url;
 
