@@ -1,0 +1,10 @@
+makefile
+Dockerfile
+.environment
+.gitignore
+.git
+.gitmodules
+application/logs
+storage/media/**
+storage/cache/**
+storage/static/**

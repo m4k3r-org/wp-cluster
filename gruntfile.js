@@ -17,15 +17,63 @@ module.exports = function( grunt ) {
   // Build Configuration.
   grunt.initConfig({
 
-    // Runtime Meta.
-    job: {
-      build: process.env.CIRCLE_BUILD_NUM,
-      artifacts: process.env.CIRCLE_ARTIFACTS,
-      branch: process.env.CIRCLE_BRANCH
-    },
-
     // Get Project Package.
     composer: grunt.file.readJSON( 'composer.json' ),
+
+    // Sync storage with S3
+    aws_s3: {
+      options: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'AKIAJCDAT2T7FESLH3IQ',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '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',
+        bucket: process.env.AWS_STORAGE_BUCKET || 'storage.discodonniepresents.com',
+        region: 'us-east-1',
+        uploadConcurrency: 20,
+        downloadConcurrency: 20,
+        differential: true
+      },
+      static: {
+        files: [
+          {
+            expand: true,
+            cwd: 'storage/public',
+            src: [ '**' ],
+            dest: 'public/'
+          }
+        ]
+      },
+      media: {
+        options: {
+          bucket: process.env.AWS_STORAGE_BUCKET || 'storage.discodonniepresents.com',
+          differential: true
+        },
+        params: {
+          ContentEncoding: 'gzip'
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'storage/public',
+            src: [ '**' ],
+            dest: 'public/',
+            filter: eliminateResizedImages
+          }
+        ]
+      },
+      assets: {
+        options: {
+          bucket: process.env.AWS_STORAGE_BUCKET || 'storage.discodonniepresents.com',
+          differential: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'storage/public',
+            src: [ '**' ],
+            dest: 'public/'
+          }
+        ]
+      }
+    },
 
     // Visual Regression.
     phantomcss: {
@@ -65,9 +113,7 @@ module.exports = function( grunt ) {
           paths: [
             'application',
             'vendor/plugins',
-            'vendor/libraries/usabilitydynamics',
-            'vendor/themes',
-            'vendor/modules'
+            'vendor/libraries/usabilitydynamics'
           ],
           outdir: 'application/static/codex/'
         }
@@ -97,34 +143,6 @@ module.exports = function( grunt ) {
       }
     },
 
-    // Clean Directories.
-    clean: {
-      files: [
-        '.environment',
-        '.htaccess',
-        'advanced-cache.php',
-        'db.php',
-        'object-cache.php',
-        'sunrise.php',
-        'vendor/libraries/automattic/wordpress/wp-config.php',
-        'wp-cli.yml'
-      ],
-      symlinks: [
-        '.htaccess',
-        'advanced-cache.php',
-        'db.php',
-        'object-cache.php',
-        'sunrise.php',
-        'vendor/libraries/automattic/wordpress/wp-config.php',
-        'wp-cli.yml'
-      ],
-      junk: [
-        'cgi-bin',
-        'uploads'
-      ],
-      test: []
-    },
-
     // Build Our Less Assets
     less: {
       development: {
@@ -147,7 +165,7 @@ module.exports = function( grunt ) {
           relativeUrls: true,
           paths: [
             'application/static/styles/src'
-          ],
+          ]
         },
         files: {
           'application/static/styles/app.css' : [
@@ -172,98 +190,6 @@ module.exports = function( grunt ) {
             max_line_length: 1000,
             no_mangle: true
           }
-        }
-      }
-    },
-
-    // Symbolic Links.
-    symlink: {
-      standalone: {
-        files: {
-          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php'
-        }
-      },
-      network: {
-        files: {
-          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php',
-          'sunrise.php': 'vendor/modules/wp-cluster/lib/class-sunrise.php'
-        }
-      },
-      cluster: {
-        files: {
-          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php',
-          'db.php': 'vendor/modules/wp-cluster/lib/class-database.php',
-          'sunrise.php': 'vendor/modules/wp-cluster/lib/class-sunrise.php'
-        }
-      },
-      production: {
-        files: {
-          'wp-cli.yml': 'application/static/etc/wp-cli.yml',
-          'advanced-cache.php': 'vendor/modules/wp-veneer/lib/class-advanced-cache.php',
-          'object-cache.php': 'vendor/modules/wp-veneer/lib/class-object-cache.php'
-        }
-      },
-      development: {
-        files: {
-          'wp-cli.yml': 'application/static/etc/wp-cli.yml'
-        }
-      },
-      staging: {},
-      local: {}
-    },
-
-    // Copying files (for Windows)
-    copy: {
-      standalone: {
-        files: {
-          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php'
-        }
-      },
-      network: {
-        files: {
-          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php',
-          'sunrise.php': 'vendor/modules/wp-cluster/lib/class-sunrise.php'
-        }
-      },
-      cluster: {
-        files: {
-          '.htaccess': 'vendor/modules/wp-veneer/lib/local/.htaccess',
-          'vendor/libraries/automattic/wordpress/wp-config.php': 'vendor/modules/wp-veneer/lib/class-config.php',
-          'db.php': 'vendor/modules/wp-cluster/lib/class-database.php',
-          'sunrise.php': 'vendor/modules/wp-cluster/lib/class-sunrise.php',
-        }
-      },
-      production: {
-        files: {
-          'advanced-cache.php': 'vendor/modules/wp-veneer/lib/class-advanced-cache.php',
-          'object-cache.php': 'vendor/modules/wp-veneer/lib/class-object-cache.php'
-        }
-      },
-      development: {
-        files: {
-          'wp-cli.yml': 'application/static/etc/wp-cli.yml'
-        }
-      },
-      staging: {},
-      local: {}
-    },
-
-    // Shell commands
-    shell: {
-      // This just configures the environment file
-      configure: {
-        options: {
-          stdout: true
-        },
-        command: function( environment ){
-          var cmd = 'echo ' + environment + ' > ./.environment';
-          grunt.log.writeln( 'Running command: ' + cmd );
-          return cmd;
         }
       }
     },
@@ -337,16 +263,17 @@ module.exports = function( grunt ) {
       }
     }
 
-  } );
-
-  // Pull in some NPM based tasks
-  grunt.loadNpmTasks( 'grunt-contrib-requirejs' );
-  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-  grunt.loadNpmTasks( 'grunt-contrib-less' );
-  grunt.loadNpmTasks( 'grunt-contrib-watch' );
-  grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
+  });
 
   // Automatically Load Tasks from application/tasks directory
   grunt.task.loadTasks( 'application/tasks' );
 
 };
+
+/**
+ * Match WordPress media naming convention.
+ *
+ */
+function eliminateResizedImages(filepath) {
+  return !filepath.match( /(.+?)-(\d*)x(\d*)\.[^\.]*/ );
+}

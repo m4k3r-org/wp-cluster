@@ -1,79 +1,139 @@
-DiscoDonniePresents.com & the EDM Cluster
+### Environment Setup
+You should never have to pull this repository unless you're planning on making changes to the core image.
+In most cases you want to pull the Docker Staging/Production/Latest image to setup your environment.
 
-## Running Build
-Standard Linux Makefile is used for easy setup for local development as well as building a Docker container for distribution.
+`docker run -tdP discodonniepresents/www.discodonniepresents.com`
 
-```shell
-# Install for Development
-make install
+The above will pull the "latest" tag, which should be very similar to what is on production. To pull the staging image:
+`docker run -tdP discodonniepresents/www.discodonniepresents.com:staging`
+
+### Modular Development
+To start service container and expose wp-festival and wp-veneer for development, run the following.
+
+```sh
+docker run -tdP \
+  -v ~/my-host/wp-festival:/var/www/vendor/themes/wp-festival \
+  -v ~/my-host/wp-veneer:/var/www/vendor/modules/wp-veneer \
+  discodonniepresents/www.discodonniepresents.com \
+  /usr/bin/startServices
 ```
 
-```shell
-# Build for Produciton
-make build
+This will mount the ~/dev/wp-festival and ~/dev/wp-veneer directories on your host machine.
+If those directories don't exist they will be created.
+You will need to run "git clone" within those directories to begin development.
+
+### Container Development
+
+Run Temporary Environment with bash. Generally you should run a seperate terminal that can be used to commit and push the running container.
+```
+docker run -tiP --privileged \
+  --name=ddp.wip \
+  --hostname=www.discodonniepresents.com \
+  -v /storage/storage.discodonniepresents.com:/var/storage \
+  -v /root/.ssh:/root/.ssh \
+  -v /home/core/share/www.discodonniepresents.com/logs:/var/www/application/logs \
+  -p 49100:22 \
+  -p 49101:80 \
+  -p 49102:443 \
+  -p 49104:8080 \
+  -e WP_BASE_DOMAIN=edm.cluster.veneer.io \
+  -e DB_PREFIX=edm_ \
+  -e DB_NAME=edm_cluster \
+  -e DB_USER=edm_cluster \
+  -e DB_PASSWORD=Gbq@anViLNsa \
+  -e DB_HOST=shaniqua.rds.uds.io \
+  -e WP_VENEER_STORAGE=static/storage \
+  discodonniepresents/www.discodonniepresents.com \
+  /bin/bash
 ```
 
-```shell
-# Build Docker Distribution Container
-make docker
+Expose entire /var/www directory for development:
+
+```
+docker run -tiP --privileged \
+  --name=ddp.wip \
+  --hostname=www.discodonniepresents.com \
+  -v /storage/storage.discodonniepresents.com:/var/storage \
+  -v /root/.ssh:/root/.ssh \
+  -v /home/core/share/www.discodonniepresents.com/logs:/var/www/application/logs \
+  -p 49100:22 \
+  -p 49101:80 \
+  -p 49102:443 \
+  -p 49104:8080 \
+  -e WP_BASE_DOMAIN=edm.cluster.veneer.io \
+  -e DB_PREFIX=edm_ \
+  -e DB_NAME=edm_cluster \
+  -e DB_USER=edm_cluster \
+  -e DB_PASSWORD=Gbq@anViLNsa \
+  -e DB_HOST=shaniqua.rds.uds.io \
+  -e WP_VENEER_STORAGE=static/storage \
+  discodonniepresents/www.discodonniepresents.com \
+  /bin/bash
 ```
 
-We use grunt to run the build, here is the command that should be used:
-
-```shell
-You can use this grunt file to do the following:
-   * grunt install - installs and builds environment
-   * Arguments:
-      --environment={environment} - builds specific environment: (production**, development, staging, local)
-      --system={system} - build for a specific system: (linux**, windows
-      --type={type} - build for a specific site type: (standalone**, cluster, multisite)
+Once ready, commit and push the "dddp.wip" container. This creates a new image using the name "discodonniepresents/www.discodonniepresents.com".
+```
+docker commit \
+  --message="Doing stuf..." \
+  ddp.wip discodonniepresents/www.discodonniepresents.com && \
+  docker push discodonniepresents/www.discodonniepresents.com
 ```
 
-## Notes
+### Production Deployment
+On production, to start a daemonized container, run the following command.
 
-* Each directory has a corresponding 'readme.md' which gives a brief spiel on what the directory should be used for.
-* The username should be 'reidwilliams' for the local environment, and the password should be 'password'
-* Use http://umesouthpadre.com/ as an example site that version 1 of the festival theme has been implemented
+```
+docker run -di --privileged \
+  --name=ddp.wip \
+  --hostname=www.discodonniepresents.com \
+  -v /storage/storage.discodonniepresents.com:/var/storage \
+  -v /root/.ssh:/root/.ssh \
+  -v /home/core/share/www.discodonniepresents.com/logs:/var/www/application/logs \
+  -p 49100:22 \
+  -p 49101:80 \
+  -p 49102:443 \
+  -p 49104:8080 \
+  -e WP_BASE_DOMAIN=edm.cluster.veneer.io \
+  -e DB_PREFIX=edm_ \
+  -e DB_NAME=edm_cluster \
+  -e DB_USER=edm_cluster \
+  -e DB_PASSWORD=Gbq@anViLNsa \
+  -e DB_HOST=shaniqua.rds.uds.io \
+  -e WP_VENEER_STORAGE=static/storage \
+  discodonniepresents/www.discodonniepresents.com \
+  /usr/bin/startServices
+```
 
-## Setting Up Local Environment
+This command assumes that "storage" must reside on the host machine in /media/storage.discodonniepresents.com.
 
-1. Make sure that both node and Composer are installed in your environment.
-   * You should be able to run both 'npm', and 'composer'.
-2. Run 'npm install' to install all the node modules required.
-3. Run 'composer install' to install all of the PHP repositories and libraries required.
-   * Remove 'w3-total-cache' from 'vendor/plugins' directory.
-4. Run 'grunt install' in order to properly configure your environment.
-5. Create a file called 'application/static/etc/wp-config/system.php', in here define your config details specific to your environment
-   * Do this as your normally would in a wp-config file (i.e. define( 'DB_HOST', 'localhost' ) ).
-6. Modify your hosts files to add the appropriate domains to your implementation (i.e. suncitymusicfestival.com, discodonniepresents.com).
-   * Also create subdomains for 'media.*', and 'assets.*' (i.e. media.suncitymusicfestival.com)
-7. Import the 'application/static/fixtures/' base SQL file.
-   * This file has no data, but has the overall table structure
-   * 20140707-edm_cluster-base.sql.zip
-8. Navigate to the site. :) http://discodonniepresents.com/manage
-9. Choose "My Sites" -> "Network Admin" -> "Themes"
-10. Network Activate "WP-Festival v2.0.0"
-11. Navigate to http://suncitymusicfestival.com/manage
-12. Choose "Appearance" -> "Themes"
-13. Choose "Tools" -> "Import", and import the data dump from 'application/static/fixtures/sunsetmusicfestival2014.wordpress.2014-07-21.xml"
-   * You might try to import without images for faster speed
-   * sunsetmusicfestival2014.wordpress.2014-07-21.xml.zip
-14. Or, alternately, use the DB dump that has data and is located in "application/static/fixtures".
-   * 20140721-edm_cluster-with_data.sql.zip
+### Composer Configuration
+Composer is the authority on dependency management for latest-related services. NPM is also used, but almost entirely for development tools.
 
-## Development Notes
-* If you put 'define( 'SCRIPT_DEBUG', true );' in your local config (system.php), it will use the JS assets which are not concatinated.
-  - This will help with debugging.
-  - You can still run 'grunt requirejs' to build an updated, minified file for exclusion, or 'grunt' to compile CSS + JS
-  - Generally, if you know that it's being used, bring it in as an AMD module, and remove any enqueue that you can, as upon build, you'll have all the script in one file.
-  - For now, continue to use components with composer for JS assets.
-* In wp-festival, if you remove the 'styles/app.css' file, each request to the CSS file will be dynamically generated on the fly.
-  - No need to run grunt watch
-  - ** Only for *nix right now, will work on Windows with some tweaks **
-  - Be sure to compile the grunt asset before a deployment
-* If you're working on 'wp-festival-2', you'll need to 'composer install', then remove 'vendor/libraries/autoload.php', as it conflicts
-  - You'll need to install the front end assets here while in development mode
-* While working ind development, it is suggested that you remove the 'vendor/plugins/w3-total-cache', so you won't cache any pages
-* Here are the latest hosts that are used with this network:
-  - https://gist.github.com/jbrw1984/bc706cdb05dec4d46794
-* You can look at the current HTML mockups at: vendor/themes/wp-festival-2/static/mocks
+* Unlike before, composer.json does not require plugins and themes. Plugins and themes are installed by WordPress, not composer.
+* That being said, composer.json can require plugins absoltely essential for operation, such as WP-Veneer or for a multisite network WP-Network.
+* As a rule of thumb, Composer is used to manage "must-use", and above, level dependencies. Anything below should be controlled by WordPress state.
+
+### Image Commands
+Aside from /bin/bash and /bin/supervisord commands there are several helper commands.
+
+* /usr/bin/startServices
+* /usr/bin/stopServices
+
+* /home/blackbox/util/createDB
+* /home/blackbox/util/createMySQLAdminUser
+* /home/blackbox/util/importSQL
+* /home/blackbox/util/runMySQL
+* /home/blackbox/util/startApache2
+* /home/blackbox//utilstartMySQL
+
+### Application Structure
+There is a change to the way "storage" works.
+
+* /storage/assets - Domain-specific asset files, such as styles and scripts, that are generated based on domain settings.
+* /storage/media  - Uploads.
+* /storage/static - Any static files that are served before WordPress by .htaccess.
+
+### GitHub vs Docker
+
+* Things that should not be stored in GitHub repository: w3tc-config, plugins, themes, storage, node_modules, vendor, cache
+* Things that should be stored in Docker Image: w3tc-config, plugins, themes, storage, node_modules, vendor. In case of DDP storage/media will not be stored on host due to its size.
