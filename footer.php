@@ -19,6 +19,6 @@
 </div>
 
 <?php endif; ?>
-
+<?php wp_footer(); ?>
 </body>
 </html>
