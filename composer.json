@@ -25,9 +25,6 @@
   },
   "extra": {
     "installer-paths": {
-      "vendor/libraries/{$vendor}/{$name}": [
-        "type:wordpress-library"
-      ],
       "vendor/modules/{$name}": [
         "type:wordpress-muplugin",
         "type:wordpress-module",
@@ -39,15 +36,18 @@
       ],
       "vendor/themes/{$name}": [
         "type:wordpress-theme"
+      ],
+      "vendor/libraries/{$vendor}/{$name}": [
+        "type:wordpress-library"
       ]
     },
     "settings":{
       "site": {
         "db_prefix": "edm_",
         "db_name": "edm_cluster",
-        "db_user": "edm_cluster",
-        "db_password": "Gbq@anViLNsa",
-        "db_host": "shaniqua",
+        "db_user": "root",
+        "db_password": "root",
+        "db_host": "localhost",
         "wp_debug": true,
         "wp_debug_display": false,
         "wp_debug_log": true,
@@ -63,8 +63,7 @@
         "logged_in_salt": "?XqOsBrOJxy>zmc!}/w:Z ajt>Xt~3%34:-Ela/vG8~n.?u2cDYl+ZP^WF7HrR_6",
         "nonce_salt": "2]%rCV OEx#XNn&l:+9x--FM+!vSbRtsYIzQ<Za:+_8.a@d0rgzhb9k=ixGTh/pW",
         "secret_key": "N)6&-NfF%rC;.ic) Ua0BAyB;gT\\%L1i]PRmA9Pd7H!w1jO4qEo_sV@71!-[W}r&",
-        "force_ssl_admin": false,
-        "raygun_api_key": "haE1JqYmnVpzEKCsoxgn3g=="
+        "force_ssl_admin": false
       },
       "default": {
         "wp_memory_limit": "512M",
@@ -125,8 +124,9 @@
     "usabilitydynamics/wp-splash": "master",
     "usabilitydynamics/wp-flawless": "dev-legacy",
     "usabilitydynamics/wp-simplify": "master",
-    "usabilitydynamics/wp-elastic": "master",
     "usabilitydynamics/wp-rpc": "master",
+    "usabilitydynamics/wp-elastic": "master",
+    "discodonniepresents/wp-eventbrite": "0.1.3",
     "discodonniepresents/wp-spectacle/v1": "1.0.0",
     "discodonniepresents/wp-spectacle": "dev-develop",
     "discodonniepresents/wp-spectacle-chmf": "dev-develop",

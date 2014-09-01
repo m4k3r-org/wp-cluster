@@ -14,13 +14,11 @@ if( class_exists( 'EDM\Application\Bootstrap' ) ) {
 }
 
 /** Ok, this action is hackish so we can load this functionality only on DDP! */
-add_action( 'init', function(){
-  if( defined( 'DOMAIN_CURRENT_SITE' ) && DOMAIN_CURRENT_SITE == 'discodonniepresents.com' ){
-    define( 'WP_ELASTIC_SCHEMAS_DIR', WP_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/static/schemas' );
-    require_once( WP_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/vertical-edm.php' );
-    require_once( WP_PLUGIN_DIR . '/wp-elastic/wp-elastic.php' );
-  }
-} );
+if( defined( 'DOMAIN_CURRENT_SITE' ) && DOMAIN_CURRENT_SITE == 'discodonniepresents.com' ){
+  define( 'WP_ELASTIC_SCHEMAS_DIR', WP_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/static/schemas' );
+  require_once( WP_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/vertical-edm.php' );
+  require_once( WP_PLUGIN_DIR . '/wp-elastic/wp-elastic.php' );
+}
 
 /**
  * Some quick hackish WPML fixes

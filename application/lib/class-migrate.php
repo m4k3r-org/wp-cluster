@@ -465,7 +465,7 @@ namespace EDM\Application {
 
         /** Now, go through and convert the enhanced terms */
         $this->convert_enhanced_terms();
-
+        
         /** Now, go through and convert the posts */
         $this->convert_posts();
 
@@ -749,13 +749,13 @@ namespace EDM\Application {
           $wpdb->query( "DELETE FROM {$wpdb->prefix}options WHERE option_name LIKE '%seo_woo_%'" );
           $wpdb->query( "DELETE FROM {$wpdb->prefix}options WHERE option_name LIKE '%woo_%'" );
           $wpdb->query( "DELETE FROM {$wpdb->prefix}options WHERE option_name LIKE '%cloudflare%'" );
-          $wpdb->query( "DROP TABLE {$wpdb->prefix}taxonomymeta" );
-          $wpdb->query( "DROP TABLE {$wpdb->prefix}stream" );
-          $wpdb->query( "DROP TABLE {$wpdb->prefix}stream_meta" );
-          $wpdb->query( "DROP TABLE {$wpdb->prefix}stream_context" );
-          $wpdb->query( "DROP TABLE {$wpdb->prefix}ud_qa_hdp_event;" );
-          $wpdb->query( "DROP TABLE {$wpdb->prefix}ud_qa_hdp_photo_gallery;" );
-          $wpdb->query( "DROP TABLE {$wpdb->prefix}ud_qa_hdp_video;" );
+          $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}taxonomymeta" );
+          $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}stream" );
+          $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}stream_meta" );
+          $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}stream_context" );
+          $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}ud_qa_hdp_event;" );
+          $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}ud_qa_hdp_photo_gallery;" );
+          $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}ud_qa_hdp_video;" );
 
           /** Get our list of plugins */
           $plugins = get_plugins();
