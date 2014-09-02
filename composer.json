@@ -1,5 +1,6 @@
 {
   "name": "DiscoDonniePresents/www.discodonniepresents.com",
+  "description": "The composer library for the DDP network.",
   "version": "2.0.1",
   "type": "project",
   "repositories": [
@@ -51,7 +52,7 @@
         "wp_debug": true,
         "wp_debug_display": false,
         "wp_debug_log": true,
-        "script_debug": false,
+        "script_debug": true,
         "savequeries": false,
         "wp_default_theme": "wp-splash",
         "auth_key": "i%HNa^lg#_R-0.6i7AG0cOxFGk]{Q5lBHnVz;NG$iz&#Z3XZ)[[K5ZGEo~R:*Um_",
@@ -63,7 +64,17 @@
         "logged_in_salt": "?XqOsBrOJxy>zmc!}/w:Z ajt>Xt~3%34:-Ela/vG8~n.?u2cDYl+ZP^WF7HrR_6",
         "nonce_salt": "2]%rCV OEx#XNn&l:+9x--FM+!vSbRtsYIzQ<Za:+_8.a@d0rgzhb9k=ixGTh/pW",
         "secret_key": "N)6&-NfF%rC;.ic) Ua0BAyB;gT\\%L1i]PRmA9Pd7H!w1jO4qEo_sV@71!-[W}r&",
-        "force_ssl_admin": false
+        "force_ssl_admin": false,
+        "wp_elastic_service_index": "api.discodonniepresents.com",
+        "wp_elastic_service_url": "qccj-nxwm-etsk-niuu",
+        "wp_elastic_secret_key": "qccj-nxwm-etsk-niuu-chdq-tvek-desl-izlf",
+        "wp_elastic_public_key": "qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty",
+        "wp_social_stream_twitter_consumer_key": "iofHkaMCCzxR12Vt9vUL1g",
+        "wp_social_stream_twitter_consumer_secret": "jyzSl4zg26HaBP9eefTWZHjojgWUMxk7XUyJ8J3qiqY",
+        "wp_social_stream_twitter_access_token": "101485804-shGXjN0D43uU7CtCBHaML5K8uycHqgvEMd5gHtrY",
+        "wp_social_stream_twitter_access_token_secret": "YcCOXWu1bidAv1APgRAd8ATNBl2UmTDXFkoGzicJny5aw",
+        "wp_social_stream_instagram_client_id": "ec4c95bf89754e1d8fd3581edba04808",
+        "wp_social_stream_instagram_access_token": "44220099.ec4c95b.d2c3acc28b1f432884be1ddcd8733499"
       },
       "default": {
         "wp_memory_limit": "512M",
@@ -162,8 +173,8 @@
     "wpackagist-plugin/redirection": "2.3.6",
     "wpackagist-plugin/fantastic-elasticsearch": "2.1.0",
     "usabilitydynamics/wp-jf3-maintenance-mode": "2.0",
-    "usabilitydynamics/wp-wpml-translation-management": "1.9.5",
-    "usabilitydynamics/wp-wpml": "3.1.6",
+    "usabilitydynamics/wp-wpml-translation-management": "1.9.6",
+    "usabilitydynamics/wp-wpml": "3.1.7.2",
     "usabilitydynamics/wp-gravityforms": "master",
     "usabilitydynamics/wp-seo-addon": "master",
     "usabilitydynamics/wp-social-stream": "dev-develop"

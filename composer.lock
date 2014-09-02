@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "27a7bb43c9746bf7a1f493a2f0e527d0",
+    "hash": "5360f886ef3f14b447a3c392affdd1bd",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -1001,7 +1001,7 @@
                 "varnish",
                 "wordpress"
             ],
-            "time": "2014-07-24 18:59:56"
+            "time": "2014-09-01 23:22:38"
         },
         {
             "name": "wpcloud/wp-vertical-edm",
@@ -1641,7 +1641,7 @@
                 "GPL-2.0"
             ],
             "description": "Spectacle theme for the EDM Network",
-            "time": "2014-09-01 14:52:38"
+            "time": "2014-09-01 23:23:08"
         },
         {
             "name": "discodonniepresents/wp-spectacle-chmf",
@@ -2678,7 +2678,7 @@
             ],
             "description": "UD Social Stream Plugin",
             "homepage": "https://github.com/UsabilityDynamics/wp-social-stream",
-            "time": "2014-09-01 08:14:08"
+            "time": "2014-09-01 23:24:14"
         },
         {
             "name": "usabilitydynamics/wp-splash",
@@ -2705,19 +2705,19 @@
             "extra": {
                 "installer-name": "wp-splash"
             },
-            "time": "2014-07-01 13:17:37"
+            "time": "2014-09-01 23:23:55"
         },
         {
             "name": "usabilitydynamics/wp-wpml",
-            "version": "3.1.6",
+            "version": "3.1.7.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:UsabilityDynamics/wp-wpml",
-                "reference": "3.1.6"
+                "reference": "3.1.7.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-wpml/archive/3.1.6.zip",
+                "url": "https://github.com/UsabilityDynamics/wp-wpml/archive/3.1.7.2.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -2737,15 +2737,15 @@
         },
         {
             "name": "usabilitydynamics/wp-wpml-translation-management",
-            "version": "1.9.5",
+            "version": "1.9.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:UsabilityDynamics/wp-wpml-translation-management",
-                "reference": "1.9.5"
+                "reference": "1.9.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-wpml-translation-management/archive/1.9.5.zip",
+                "url": "https://github.com/UsabilityDynamics/wp-wpml-translation-management/archive/1.9.6.zip",
                 "reference": null,
                 "shasum": null
             },
