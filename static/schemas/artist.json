@@ -33,7 +33,13 @@
         "menu_position": 20,
         "public": true,
         "publicly_queryable": true,
-        "query_var": "_artist",
+        "rewrite": {
+          "slug": "artists",
+          "with_front": true,
+          "feeds": true,
+          "pages": true
+        },
+        "query_var": "artist",
         "show_in_admin_bar": true,
         "show_in_menu": true,
         "show_in_nav_menus": true,

@@ -27,11 +27,17 @@
         "description": "Promoter",
         "can_export": true,
         "exclude_from_search": false,
-        "has_archive": true,
         "hierarchical": false,
         "menu_icon": "dashicons-megaphone",
         "menu_position": 20,
         "public": true,
+        "has_archive": true,
+        "rewrite": {
+          "slug": "promoter",
+          "with_front": true,
+          "feeds": false,
+          "pages": true
+        },
         "publicly_queryable": true,
         "show_in_admin_bar": true,
         "show_in_menu": true,
