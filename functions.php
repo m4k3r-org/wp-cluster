@@ -270,13 +270,6 @@ class flawless_theme extends Flawless_F {
       add_action( 'load-post.php', array( 'flawless_theme', 'post_editor_loader' ) );
     }
 
-    //** Has to be run every time for custom taxonomy URLs to work, when permalinks are used. */
-    if( isset( $_REQUEST[ 'flush_rewrite_rules' ] ) && $_REQUEST[ 'flush_rewrite_rules' ] == 'true' ) {
-      flush_rewrite_rules();
-    } elseif( $flawless[ 'using_permalinks' ] ) {
-      flush_rewrite_rules();
-    }
-
     add_action( 'get_footer', function() {
       global $wp_query, $flawless;
       $wp_query->query_vars[ 'flawless' ] = $flawless;
@@ -3751,6 +3744,14 @@ class flawless_theme extends Flawless_F {
         die( json_encode( $flawless ));
       }
 
+    }
+
+
+    //** Has to be run every time for custom taxonomy URLs to work, when permalinks are used. */
+    if( isset( $_REQUEST[ 'flush_rewrite_rules' ] ) && $_REQUEST[ 'flush_rewrite_rules' ] == 'true' ) {
+      flush_rewrite_rules( false, 'flawless' );
+    } elseif( $flawless[ 'using_permalinks' ] ) {
+      flush_rewrite_rules( false, 'flawless' );
     }
 
     do_action( 'flawless::admin_init' );
