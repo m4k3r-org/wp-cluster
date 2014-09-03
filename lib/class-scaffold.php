@@ -661,6 +661,9 @@ namespace UsabilityDynamics\AMD {
       /**
        * Global JS URL
        * @return bool|string
+       *
+       * @todo Make flush_rewrite_rules intelligently based on actual permalink changes.
+       *
        */
       public function get_asset_url() {
         global $wp_rewrite;
@@ -674,7 +677,7 @@ namespace UsabilityDynamics\AMD {
           case ( !array_key_exists( '^' . $this->get( 'permalink' ), $wp_rewrite->rules ) ):
             // Looks like permalink structure is set, but our rules are not.
             // Flush rewrite rules to have correct permalink next time.
-            flush_rewrite_rules( );
+            add_action( 'admin_init' , "flush_rewrite_rules" );
           break;
           default:
             $url = home_url( $this->get( 'permalink' ) );
