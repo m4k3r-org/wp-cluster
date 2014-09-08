@@ -84,7 +84,7 @@ On production, to start a daemonized container, run the following command.
 
 ```
 docker run -di --privileged \
-  --name=ddp.wip \
+  --name=ddp.production \
   --hostname=www.discodonniepresents.com \
   -v /storage/storage.discodonniepresents.com:/var/storage \
   -v /root/.ssh:/root/.ssh \

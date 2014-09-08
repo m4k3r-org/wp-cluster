@@ -43,11 +43,13 @@ build:
 
 # Install for Staging/Development
 install:
-	npm install --production
-	npm install --development
+	NPM_ENV=production  npm install
+	NPM_ENV=development npm install
 	composer install --prefer-source --dev --no-interaction
 	grunt install --environment=development --type=cluster
 
 # Install for Staging/Development
 server:
-	docker run -itd --name=$(DOMAIN) --hostname=$(DOMAIN).internal $(ORGANIATION)/$(NAME):$(VERSION)
+	docker run -itd --name=$(DOMAIN) \
+		--hostname=$(DOMAIN).internal \
+		$(ORGANIATION)/$(NAME):$(VERSION)

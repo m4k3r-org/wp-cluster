@@ -13,8 +13,10 @@ error_log
 local-debug.php
 request_log.txt
 .DS_Store
+.svn
 php_grep.php
 migrate.log
 debug.log
 application/static/codex
 application/static/etc/wp-config
+vendor/libraries/composer/installers
