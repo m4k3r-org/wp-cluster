@@ -50,6 +50,8 @@ install:
 
 # Install for Staging/Development
 server:
-	docker run -itd --name=$(DOMAIN) \
+	docker run -itd \
+		--name=ddp.production \
 		--hostname=$(DOMAIN).internal \
-		$(ORGANIATION)/$(NAME):$(VERSION)
+		--entrypoint=/var/www/application/bin/bash/docker.entrypoint.sh \
+		$(ORGANIATION)/$(NAME):$(VERSION) /bin/bash
