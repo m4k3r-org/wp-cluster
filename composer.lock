@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5360f886ef3f14b447a3c392affdd1bd",
+    "hash": "a6e7951a7f5b95f7238a6a23e1bdc55a",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -665,7 +665,7 @@
                 "shema",
                 "validation"
             ],
-            "time": "2014-07-22 16:35:58"
+            "time": "2014-09-03 21:29:37"
         },
         {
             "name": "usabilitydynamics/lib-requires",
@@ -850,7 +850,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-08-18 15:06:59"
+            "time": "2014-09-06 09:50:48"
         },
         {
             "name": "usabilitydynamics/wp-cluster",
@@ -1050,7 +1050,7 @@
             "license": [
                 "GPLv2"
             ],
-            "time": "2014-06-09 10:41:31"
+            "time": "2014-09-03 21:30:57"
         }
     ],
     "packages-dev": [
@@ -1180,6 +1180,32 @@
                 "component": {
                     "scripts": [
                         "dist/knockout.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/malihu-custom-scrollbar-plugin",
+            "version": "3.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/malihu/malihu-custom-scrollbar-plugin",
+                "reference": "3.0.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/malihu/malihu-custom-scrollbar-plugin/archive/3.0.3.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "js/minified/jquery.mCustomScrollbar.min.js"
                     ]
                 }
             }
@@ -1391,6 +1417,7 @@
                 "components/fancybox2": "2.1.5",
                 "components/iscroll": "5.1.1",
                 "components/knockout": "3.1.0",
+                "components/malihu-custom-scrollbar-plugin": "3.x",
                 "components/masonry": "3.1.5",
                 "components/sticky": "1.0.0",
                 "composer/installers": "~1.0",
@@ -1434,7 +1461,7 @@
                 "GPL-2.0"
             ],
             "description": "Festival Theme for the Drop Network",
-            "time": "2014-09-01 13:10:44"
+            "time": "2014-09-05 14:47:20"
         },
         {
             "name": "discodonniepresents/wp-festival/v1",
@@ -1586,8 +1613,11 @@
                 "usabilitydynamics/lib-installer": "master"
             },
             "type": "wordpress-theme",
+            "extra": {
+                "installer-name": "wp-spectacle-mbp"
+            },
             "description": "Baseline theme composer.json for composer requirements.",
-            "time": "2014-07-07 11:58:22"
+            "time": "2014-09-08 18:54:11"
         },
         {
             "name": "discodonniepresents/wp-spectacle",
@@ -1688,6 +1718,29 @@
             "type": "wordpress-theme",
             "description": "Spectacle child theme for Isla Del Sol Festival",
             "time": "2014-08-26 13:53:34"
+        },
+        {
+            "name": "discodonniepresents/wp-spectacle-mbp",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:DiscoDonniePresents/wp-spectacle-mbp",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/DiscoDonniePresents/wp-spectacle-mbp/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3",
+                "usabilitydynamics/lib-installer": "master"
+            },
+            "type": "wordpress-theme",
+            "description": "Spectacle child theme for Monster Block Party",
+            "time": "2014-09-08 18:54:11"
         },
         {
             "name": "discodonniepresents/wp-spectacle/v1",
@@ -2398,7 +2451,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-07-21 11:10:53"
+            "time": "2014-09-03 21:31:36"
         },
         {
             "name": "usabilitydynamics/wp-elastic",
@@ -2478,7 +2531,7 @@
 
                 ]
             },
-            "time": "2014-06-18 15:00:16"
+            "time": "2014-09-03 21:32:11"
         },
         {
             "name": "usabilitydynamics/wp-gravityforms",
@@ -2705,7 +2758,7 @@
             "extra": {
                 "installer-name": "wp-splash"
             },
-            "time": "2014-09-01 23:23:55"
+            "time": "2014-09-06 01:27:24"
         },
         {
             "name": "usabilitydynamics/wp-wpml",
