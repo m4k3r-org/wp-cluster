@@ -7,6 +7,9 @@
 ##
 ############################################################
 
+rm -rf /var/run/apache2.pid
+rm -rf /var/run/apache2/apache2.pid
+
 ## No Argumens, start service and bash.
 if [ "$*" == "" ] || [ ${1} == "/bin/bash" ]; then
 
