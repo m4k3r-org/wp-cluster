@@ -45,10 +45,10 @@
     "settings":{
       "site": {
         "db_prefix": "edm_",
-        "db_name": "edm_cluster",
-        "db_user": "root",
-        "db_password": "root",
-        "db_host": "localhost",
+        "db_name": "edm_cluster_new",
+        "db_user": "edm_cluster",
+        "db_password": "Gbq@anViLNsa",
+        "db_host": "10.88.135.7",
         "wp_debug": true,
         "wp_debug_display": false,
         "wp_debug_log": true,

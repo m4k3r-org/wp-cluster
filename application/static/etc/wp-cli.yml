@@ -1,7 +1,7 @@
 path: vendor/libraries/automattic/wordpress
 url: http://discodonniepresents.com
 user: reidwilliams
-password: password
+password: LJzflMVaGpWV
 color: true
 disabled_commands:
   - db drop

@@ -696,6 +696,9 @@ namespace EDM\Application {
 
         /** Flush any cache */
         wp_cache_flush();
+        
+        /** Delete global transients */
+        $wpdb->query( "DELETE FROM {$wpdb->sitemeta} WHERE meta_key LIKE '%_transient_%'" );
 
         /** Delete all the global options we don't care about */
         $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'elasticsearch'" );
