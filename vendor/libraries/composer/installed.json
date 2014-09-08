@@ -2107,34 +2107,6 @@
         "description": "Baseline theme composer.json for composer requirements."
     },
     {
-        "name": "discodonniepresents/wp-monsterblockparty",
-        "version": "master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "git@github.com:DiscoDonniePresents/wp-monsterblockparty",
-            "reference": "master"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://github.com/DiscoDonniePresents/wp-monsterblockparty/archive/master.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "composer/installers": "~1.0",
-            "php": ">=5.3",
-            "usabilitydynamics/lib-installer": "master"
-        },
-        "time": "2014-09-08 18:54:11",
-        "type": "wordpress-theme",
-        "extra": {
-            "installer-name": "wp-spectacle-mbp"
-        },
-        "installation-source": "source",
-        "description": "Baseline theme composer.json for composer requirements."
-    },
-    {
         "name": "usabilitydynamics/siteorigin-panels",
         "version": "master",
         "version_normalized": "9999999-dev",
@@ -2375,31 +2347,6 @@
         "type": "wordpress-theme",
         "installation-source": "source",
         "description": "Spectacle child theme for Isla Del Sol Festival"
-    },
-    {
-        "name": "discodonniepresents/wp-spectacle-mbp",
-        "version": "master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "git@github.com:DiscoDonniePresents/wp-spectacle-mbp",
-            "reference": "master"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://github.com/DiscoDonniePresents/wp-spectacle-mbp/archive/master.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "composer/installers": "~1.0",
-            "php": ">=5.3",
-            "usabilitydynamics/lib-installer": "master"
-        },
-        "time": "2014-09-08 18:54:11",
-        "type": "wordpress-theme",
-        "installation-source": "source",
-        "description": "Spectacle child theme for Monster Block Party"
     },
     {
         "name": "discodonniepresents/wp-spectacle/v1",
@@ -3393,5 +3340,58 @@
         "type": "wordpress-plugin",
         "installation-source": "source",
         "homepage": "http://wordpress.org/plugins/wpmandrill/"
+    },
+    {
+        "name": "discodonniepresents/wp-monsterblockparty",
+        "version": "master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "git@github.com:DiscoDonniePresents/wp-monsterblockparty",
+            "reference": "master"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/DiscoDonniePresents/wp-monsterblockparty/archive/master.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "composer/installers": "~1.0",
+            "php": ">=5.3",
+            "usabilitydynamics/lib-installer": "master"
+        },
+        "time": "2014-09-08 18:54:11",
+        "type": "wordpress-theme",
+        "extra": {
+            "installer-name": "wp-spectacle-mbp"
+        },
+        "installation-source": "source",
+        "description": "Baseline theme composer.json for composer requirements."
+    },
+    {
+        "name": "discodonniepresents/wp-spectacle-mbp",
+        "version": "master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "git@github.com:DiscoDonniePresents/wp-spectacle-mbp",
+            "reference": "master"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/DiscoDonniePresents/wp-spectacle-mbp/archive/master.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "composer/installers": "~1.0",
+            "php": ">=5.3",
+            "usabilitydynamics/lib-installer": "master"
+        },
+        "time": "2014-09-08 18:54:11",
+        "type": "wordpress-theme",
+        "installation-source": "source",
+        "description": "Spectacle child theme for Monster Block Party"
     }
 ]
