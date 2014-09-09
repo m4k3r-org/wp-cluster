@@ -16,7 +16,7 @@ docker pull blackbox/ddp
 ### Start Blackbox
 ```
 docker run -itd \
-  --name=ddp-cluster \
+  --name=ddp \
   --net=host \
   --sig-proxy=false \
   --privileged=true \
@@ -29,7 +29,7 @@ docker run -itd \
 
 Attach to Blackbox container:
 ```
-docker attach ddp-cluster
+docker attach ddp
 ```
 
 Pull images we will need:
@@ -56,7 +56,7 @@ docker run -dit \
   --publish=22 \
   --publish=80 \
   -e DB_PREFIX=edm_ \
-  -e DB_NAME=edm_cluster \
+  -e DB_NAME=edm_cluster_new \
   -e DB_USER=edm_cluster \
   -e DB_PASSWORD=Gbq@anViLNsa \
   -e DB_HOST=10.88.135.7 \
