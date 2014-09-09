@@ -55,7 +55,7 @@ namespace DiscoDonniePresents {
 
       /**
        *
-       * @internal param \DiscoDonniePresents\type $args
+       * @param type $args
        * @return type
        */
       public function credit() {

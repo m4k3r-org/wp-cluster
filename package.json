@@ -1,0 +1,26 @@
+{
+  "name": "flawless-hddp",
+  "version": "0.0.0",
+  "description": "test",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DiscoDonniePresents/wp-disco"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DiscoDonniePresents/wp-disco/issues"
+  },
+  "homepage": "https://github.com/DiscoDonniePresents/wp-disco",
+  "devDependencies": {
+    "mocha": "^1.21.4",
+    "should": "^4.0.4"
+  }
+}
