@@ -33,6 +33,7 @@ namespace DiscoDonniePresents {
       /**
        *
        * @param type $id
+       * @param bool $preload
        */
       public function __construct($id = null, $preload = true) {
         parent::__construct($id);
@@ -54,7 +55,7 @@ namespace DiscoDonniePresents {
 
       /**
        *
-       * @param type $args
+       * @internal param \DiscoDonniePresents\type $args
        * @return type
        */
       public function credit() {
@@ -76,7 +77,7 @@ namespace DiscoDonniePresents {
 
       /**
        *
-       * @param type $args
+       * @param array|\DiscoDonniePresents\type $args
        * @return type
        */
       public function event( $args = array() ) {

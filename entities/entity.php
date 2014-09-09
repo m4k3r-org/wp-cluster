@@ -101,9 +101,13 @@ namespace DiscoDonniePresents {
       /**
        * Getter for meta
        * @param type $key
+       * @param null $value
        * @return type
        */
       public function meta( $key = null, $value = null ) {
+
+        //die( '<pre>' . print_r( $this->_meta, true ) . '</pre>');
+        //echo "\n {$key} -> {$value}";
 
         if ( !$key ) {
           return $this->_meta;
@@ -141,8 +145,8 @@ namespace DiscoDonniePresents {
       /**
        * Return taxonomies by parameters
        * @param type $slug
-       * @param type $format
-       * @param type $separator
+       * @param \DiscoDonniePresents\type|string $format
+       * @param \DiscoDonniePresents\type|string $separator
        * @return boolean
        */
       public function taxonomies( $slug, $format = 'link', $separator = ', ' ) {
@@ -202,7 +206,7 @@ namespace DiscoDonniePresents {
 
       /**
        * Load events for current meta if exist
-       * @param type $options
+       * @param array|\DiscoDonniePresents\type $options
        * @return \DiscoDonniePresents\Event|boolean
        */
       public function load_events( $options = array() ) {
@@ -261,7 +265,7 @@ namespace DiscoDonniePresents {
 
       /**
        * Return events if exist
-       * @param type $args
+       * @param array|\DiscoDonniePresents\type $args
        * @return type
        */
       public function events( $args = array() ) {
@@ -295,7 +299,8 @@ namespace DiscoDonniePresents {
       /**
        * To Elastic Format
        * Need to extend by child class
-       * @param type $param
+       * @internal param \DiscoDonniePresents\type $param
+       * @return \DiscoDonniePresents\type
        */
       public function toElasticFormat() {
         return $this->_post;

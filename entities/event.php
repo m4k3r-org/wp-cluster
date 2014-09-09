@@ -57,6 +57,7 @@ namespace DiscoDonniePresents {
       /**
        *
        * @param type $id
+       * @param bool $preload
        */
       public function __construct( $id = null, $preload = true ) {
         parent::__construct( $id );
@@ -167,9 +168,13 @@ namespace DiscoDonniePresents {
        */
       private function apply_formatting() {
 
+        $dateStart =  $this->meta( 'dateStart' );
+
         //** Date and time */
-        $this->meta( 'eventDateHuman', date( 'l, F j, Y', strtotime( $this->meta( 'dateStart' ) ) ) );
-        $this->meta( 'eventTimeHuman', date( 'g:i A', strtotime( $this->meta( 'dateStart' ) ) ) );
+        if( $dateStart ) {
+          $this->meta( 'eventDateHuman', date( 'l, F j, Y', strtotime( $dateStart ) ) );
+          $this->meta( 'eventTimeHuman', date( 'g:i A', strtotime( $dateStart ) ) );
+        }
 
       }
 
