@@ -7,36 +7,6 @@ In most cases you want to pull the Docker Staging/Production/Latest image to set
 The above will pull the "latest" tag, which should be very similar to what is on production. To pull the staging image:
 `docker run -tdP discodonniepresents/www.discodonniepresents.com:staging`
 
-### Production Deployment
-On production, to start a daemonized container, run the following command.
-
-```
-docker run -dit \
-  --privileged \
-  --name=ddp.production \
-  --hostname=www.discodonniepresents.com \
-  -v /storage/storage.discodonniepresents.com:/var/storage \
-  -v /root/.ssh:/root/.ssh \
-  -v /home/core/share/www.discodonniepresents.com/logs:/var/www/application/logs \
-  --publish=22 \
-  --publish=80 \
-  -e DB_PREFIX=edm_ \
-  -e DB_NAME=edm_cluster \
-  -e DB_USER=edm_cluster \
-  -e DB_PASSWORD=Gbq@anViLNsa \
-  -e DB_HOST=10.88.135.7 \
-  -e WP_VENEER_STORAGE=static/storage \
-  -e WP_BASE_DOMAIN=edm.cluster.veneer.io \
-  -e HOME=/root \
-  -e WP_ENV=production \
-  -e PHP_ENV=production \
-  -e NODE_ENV=production \
-  discodonniepresents/www.discodonniepresents.com \
-  /usr/bin/startServices
-```
-
-This command assumes that "storage" must reside on the host machine in /media/storage.discodonniepresents.com.
-
 ### Composer Configuration
 Composer is the authority on dependency management for latest-related services. NPM is also used, but almost entirely for development tools.
 
