@@ -14,7 +14,7 @@
 
       <li class="hdp_results_item" data-bind="attr: {df_id_: _id}">
         <ul class="df_result_data">
-          <li attribute_key="raw_html">
+          <li data-attribute-key="raw_html">
             <ul>
               <li>
                 <ul class="hdp_photo clearfix">

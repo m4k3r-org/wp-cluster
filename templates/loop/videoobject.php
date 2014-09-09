@@ -4,7 +4,7 @@ $permalink = get_permalink($video->post('ID'));
 
 <li id="df_id_<?php echo $video->post('ID'); ?>" class="hdp_results_item">
   <ul class="df_result_data">
-    <li attribute_key="raw_html">
+    <li data-attribute-key="raw_html">
       <ul>
 
         <li>

@@ -702,10 +702,10 @@
 
       /** Render each Sort Button and attach Click event */
       jQuery.each( s.data.sortable_attributes ? s.data.sortable_attributes : {} , function( attribute_key, settings ) {
-        if( !jQuery('div[attribute_key="' + attribute_key + '"]', s.ux.sorter ).length ) {
-          s.ux.sorter.append( s.ux.sorter[ attribute_key ] = jQuery( s.ux.sorter_button ).clone(false).addClass( s.classes.sorter.button ).attr( 'attribute_key', attribute_key ).attr( 'sort_direction', 'ASC' ).text( settings.label ) );
+        if( !jQuery('div[data-attribute-key="' + attribute_key + '"]', s.ux.sorter ).length ) {
+          s.ux.sorter.append( s.ux.sorter[ attribute_key ] = jQuery( s.ux.sorter_button ).clone(false).addClass( s.classes.sorter.button ).attr( data-attribute-key, attribute_key ).attr( 'sort_direction', 'ASC' ).text( settings.label ) );
           jQuery( s.ux.sorter[ attribute_key ] ).click( function( event ) {
-            s.settings.sort_by = this.getAttribute('attribute_key');
+            s.settings.sort_by = this.getAttribute(data-attribute-key);
             s.settings.sort_direction = this.getAttribute('sort_direction');
             jQuery( 'div', s.ux.sorter ).removeClass( s.classes.sorter.button_active );
             jQuery( this ).addClass( s.classes.sorter.button_active );
@@ -796,7 +796,7 @@
 
         /** Create UX object of Filter DOM elements and settings that is applicable to all filters */
         filter = {
-          inputs_list_wrapper: jQuery( '<div class="' + s.classes.filter.inputs_list_wrapper + '" attribute_key="' + attribute_key +'" filter="' + s.attributes[ attribute_key ][ 'filter' ] +'"></div>' ),
+          inputs_list_wrapper: jQuery( '<div class="' + s.classes.filter.inputs_list_wrapper + '" data-attribute-key="' + attribute_key +'" filter="' + s.attributes[ attribute_key ][ 'filter' ] +'"></div>' ),
           filter_label: jQuery( s.ux.filter_label ).clone( true ).attr( 'class', s.classes.filter.filter_label ).text( s.attributes[ attribute_key ].label ),
           inputs_list: jQuery( '<ul class="' + s.classes.filter.inputs_list + '"></ul>' ),
           show_more: jQuery( '<div class="' + s.classes.filter.show_more + '">' + s.settings.messages.show_more + '</div>' ).hide(),
@@ -870,7 +870,7 @@
             filter.items.single = {
               wrapper: jQuery( '<li class="' + s.classes.filter.value_wrapper + '"></li>' ),
               label: jQuery( '<label class="' + s.classes.inputs.input +'"></label>' ),
-              trigger: jQuery( '<input type="text" class="' + s.classes.filter.trigger + '" attribute_key="' + attribute_key + '" placeholder="' + s.attributes[ attribute_key ].filter_placeholder + '" >' )
+              trigger: jQuery( '<input type="text" class="' + s.classes.filter.trigger + '" data-attribute-key="' + attribute_key + '" placeholder="' + s.attributes[ attribute_key ].filter_placeholder + '" >' )
             }
 
             /** Add to DOM */
@@ -933,7 +933,7 @@
             filter.items.single = {
               wrapper: jQuery( '<li class="' + s.classes.filter.value_wrapper + '"></li>' ),
               label: jQuery( '<label class="' + s.classes.inputs.input +'"></label>' ),
-              trigger: jQuery( '<select class="' + s.classes.filter.trigger + '" attribute_key="' + attribute_key + '"></select>' ),
+              trigger: jQuery( '<select class="' + s.classes.filter.trigger + '" data-attribute-key="' + attribute_key + '"></select>' ),
               empty_placeholder: jQuery( '<option class="' + s.classes.filter.default_filter + '">' + attribute.default_filter_label + '</option>' )
             }
 
@@ -1061,7 +1061,7 @@
               this_element.wrapper =  jQuery( '<li class="' + filter_value.css_class + '" filter_key="' + filter_value.filter_key + '"></li>' );
 
               this_element.label_wrapper = jQuery( '<label class="' + s.classes.labels.checkbox + '"></label>' );
-              this_element.trigger = jQuery( '<input type="checkbox" class="' + s.classes.filter.trigger + '" attribute_key="' + attribute_key + '"  value="' + filter_value.filter_key + '">' );
+              this_element.trigger = jQuery( '<input type="checkbox" class="' + s.classes.filter.trigger + '" data-attribute-key="' + attribute_key + '"  value="' + filter_value.filter_key + '">' );
               this_element.label = jQuery( '<span class="' + s.classes.filter.value_label + '">' + filter_value.value + '</span> ' );
               this_element.count = jQuery( '<span class="' + s.classes.filter.value_count + '"></span>' );
 
@@ -1471,7 +1471,7 @@
           }
 
           /** Create DOM reference for this attribute in DFRO and append it to Attribute Wrapper */
-          dfro.dom.attribute_wrapper.append( dfro.dom.attributes[ attribute_key ] = jQuery( '<li class="' + s.classes.results.list_item + '" attribute_key="' + attribute_key + '">' + ( attribute_value !== null ? attribute_value : '' ) + '</li>' ) );
+          dfro.dom.attribute_wrapper.append( dfro.dom.attributes[ attribute_key ] = jQuery( '<li class="' + s.classes.results.list_item + '" data-attribute-key="' + attribute_key + '">' + ( attribute_value !== null ? attribute_value : '' ) + '</li>' ) );
 
           log({
             'Log Event' : 'Appended dfro.dom.attributes[' + attribute_key + '] attribute.',

@@ -77,6 +77,9 @@ class hddp extends Flawless_F {
   static function init_upper() {
     global $wpdb, $flawless;
 
+    // fixes /vendor assets URLs for composer-isntalled libraries
+    add_filter( 'includes_url', array( __CLASS__, 'includes_url' ), 5 );
+
     wp_register_script( 'knockout', get_stylesheet_directory_uri() . '/js/knockout.js', array(), '3.1.0', true );
     wp_register_script( 'jquery-ud-form_helper', get_stylesheet_directory_uri() . '/js/jquery.ud.form_helper.js', array( 'jquery-ui-core' ), '1.1.3', true );
     wp_register_script( 'jquery-ud-smart_buttons', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.smart_buttons/0.6/jquery.ud.smart_buttons.js', array( 'jquery-ui-core' ), '0.6', true );
@@ -84,9 +87,7 @@ class hddp extends Flawless_F {
     wp_register_script( 'jquery-ud-execute_triggers', 'http' . ( is_ssl() ? 's' : '' ) . '://cdn.usabilitydynamics.com/js/jquery.ud.execute_triggers/0.2/jquery.ud.execute_triggers.js', array( 'jquery-ui-core' ), '0.2', true );
 
     wp_register_script( 'jquery-ud-elastic_filter', get_stylesheet_directory_uri() . '/js/jquery.ud.elastic_filter.js', array( 'jquery' ), HDDP_Version, true );
-    wp_register_script( 'jquery-new-ud-elasticsearch', get_stylesheet_directory_uri() . '/js/jquery.new.ud.elasticsearch.js', array( 'jquery' ), HDDP_Version, true );
 
-    wp_register_script( 'jquery-ud-dynamic_filter', get_stylesheet_directory_uri() . '/js/jquery.ud.dynamic_filter.js', array( 'jquery' ), HDDP_Version, true );
     wp_register_script( 'jquery-ud-date-slector', get_stylesheet_directory_uri() . '/js/jquery.ud.date_selector.js', array( 'jquery-ui-core' ), '0.1.1', true );
     wp_register_script( 'jquery-jqtransform', get_stylesheet_directory_uri() . '/js/jquery.jqtransform.js', array( 'jquery' ), HDDP_Version, true );
     wp_register_script( 'jquery-simplyscroll', get_stylesheet_directory_uri() . '/js/jquery.simplyscroll.min.js', array( 'jquery' ), HDDP_Version, true );
@@ -103,9 +104,6 @@ class hddp extends Flawless_F {
     wp_register_style( 'jquery-simplyscroll', get_stylesheet_directory_uri() . '/css/jquery.simplyscroll.css' );
 
     wp_register_script( 'jquery-fitvids', get_stylesheet_directory_uri() . '/js/jquery.fitvids.js', array( 'jquery' ), HDDP_Version, true );
-
-
-    add_filter( 'includes_url', array( __CLASS__, 'includes_url' ), 5 );
 
     //** DDP Elastic */
     wp_register_script( 'jquery-ddp-elastic-suggest', includes_url( '/vendor/libraries/usabilitydynamics/lib-js-elastic-filter/scripts/jquery.elasticSearch.js' ), array( 'jquery', 'jquery-cookie' ), HDDP_Version, true );

@@ -49,7 +49,7 @@
       </ul>
     </div>
   </div>
-  <div attribute_key="hdp_date_range" class="df_filter_inputs_list_wrapper inputs-container">
+  <div data-attribute-key="hdp_date_range" class="df_filter_inputs_list_wrapper inputs-container">
     <span class="df_filter_label">Date Range</span>
     <ul class="df_filter_inputs_list">
       <li>

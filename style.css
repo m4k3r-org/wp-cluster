@@ -1996,10 +1996,10 @@
     width: 100%;
   }
 
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_state"],
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_photo_gallery_state"],
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_type"],
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_photo_gallery_type"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[data-attribute-key="hdp_state"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[data-attribute-key="hdp_photo_gallery_state"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[data-attribute-key="hdp_type"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[data-attribute-key="hdp_photo_gallery_type"],
   #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[facet="State"],
   #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[facet="Event Type"] {
     float: left;
@@ -2007,18 +2007,18 @@
     margin-right: 2%;
   }
 
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_city"],
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_photo_gallery_city"],
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_promoter"],
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_photo_gallery_promoter"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[data-attribute-key="hdp_city"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[data-attribute-key="hdp_photo_gallery_city"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[data-attribute-key="hdp_promoter"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[data-attribute-key="hdp_photo_gallery_promoter"],
   #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[facet="City"],
   #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[facet="Promoters"] {
     float: right;
     width: 49%;
   }
 
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_venue"],
-  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[attribute_key="hdp_photo_gallery_venue"] {
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[data-attribute-key="hdp_venue"],
+  #filter_wrapper #df_sidebar_filters .df_filter_inputs_list_wrapper[data-attribute-key="hdp_photo_gallery_venue"] {
     clear: both;
   }
 
@@ -3287,25 +3287,25 @@
   background: url("img/right.png") no-repeat scroll 50% 50%;
 }
 
-#df_sidebar_filters [attribute_key="hdp_date_range"] .jqTransformInputWrapper {
+#df_sidebar_filters [data-attribute-key="hdp_date_range"] .jqTransformInputWrapper {
   width: 45% !important;
   float: left;
 }
 
-#df_sidebar_filters [attribute_key="hdp_date_range"] .jqTransformInputWrapper:nth-child(2) {
+#df_sidebar_filters [data-attribute-key="hdp_date_range"] .jqTransformInputWrapper:nth-child(2) {
   margin-left: 9%;
 }
 
-#df_sidebar_filters [attribute_key="hdp_date_range"] .jqTransformInputInner {
+#df_sidebar_filters [data-attribute-key="hdp_date_range"] .jqTransformInputInner {
   /*margin-right: 0;*/
 }
 
-#df_sidebar_filters [attribute_key="hdp_date_range"] .jqTransformInputInner div {
+#df_sidebar_filters [data-attribute-key="hdp_date_range"] .jqTransformInputInner div {
   margin-left: 0;
   padding-right: 5px;
 }
 
-#df_sidebar_filters [attribute_key="hdp_date_range"] .jqTransformInputInnerRight {
+#df_sidebar_filters [data-attribute-key="hdp_date_range"] .jqTransformInputInnerRight {
   background: url("img/global.sprite.png") no-repeat scroll -88px -106px rgba(0, 0, 0, 0);
 }
 
@@ -3434,21 +3434,21 @@
   /*outline: none;*/
 }
 
-.inputs-container[attribute_key="hdp_date_range"] .jqTransformInputWrapper {
+.inputs-container[data-attribute-key="hdp_date_range"] .jqTransformInputWrapper {
   width: 45% !important;
   float: left;
 }
 
-.inputs-container[attribute_key="hdp_date_range"] li:nth-child(2) .jqTransformInputWrapper {
+.inputs-container[data-attribute-key="hdp_date_range"] li:nth-child(2) .jqTransformInputWrapper {
   margin-left: 9%;
 }
 
-.inputs-container[attribute_key="hdp_date_range"] .jqTransformInputInner div {
+.inputs-container[data-attribute-key="hdp_date_range"] .jqTransformInputInner div {
   margin-left: 0;
   padding-right: 5px;
 }
 
-.inputs-container[attribute_key="hdp_date_range"] .jqTransformInputInnerRight {
+.inputs-container[data-attribute-key="hdp_date_range"] .jqTransformInputInnerRight {
   background: url("img/global.sprite.png") no-repeat scroll -88px -106px rgba(0, 0, 0, 0);
 }
 
