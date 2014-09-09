@@ -3532,3 +3532,6 @@ body.admin-bar div.general_header_wrapper {
 .autocompletion .promoter_icon .icon {
   background-position: -96px -64px;
 }
+.autocompletion .search-autocomplete-list[data-state=loading] {
+  display: none;
+}

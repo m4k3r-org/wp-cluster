@@ -24,7 +24,6 @@
     </div>
   </div>
 
-
   <div class="<?php flawless_block_class( 'main cfct-block span8' ); ?>">
     <?php if( have_posts() ) : while( have_posts() ) : the_post(); ?>
 
@@ -36,7 +35,7 @@
 
         <?php get_template_part( 'entry-meta', 'header' ); ?>
 
-          <?php echo get_the_post_thumbnail( $null, 'hd_large', array( 'data-media-id' => get_post_thumbnail_id() ) ); ?>
+          <?php echo get_the_post_thumbnail( null, 'hd_large', array( 'data-media-id' => get_post_thumbnail_id() ) ); ?>
 
           <header class="entry-title-wrapper page-title-wrapper">
           <?php flawless_breadcrumbs(); ?>

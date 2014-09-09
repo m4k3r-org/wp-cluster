@@ -15,6 +15,7 @@ global $flawless;
     <label class="screen-reader-text" for="df_q"><?php _e( 'Search for:' ); ?></label>
     <input data-suggest="desktop" class="search_input_field" data-bind="elasticSuggest:{
       selector:'#autocompletion',
+      resultList:'.search-autocomplete-list',
       timeout: 1,
       size:50,
       document_type:{
@@ -57,8 +58,7 @@ global $flawless;
     <img class="cancel" data-bind="visible:!desktop.loading()&&desktop.has_text(),click:desktop.clear" src="<?php echo get_stylesheet_directory_uri() ?>/img/cancel.png" />
   </div>
 
-
-  <ul data-bind="enable:label=true,visible:desktop.visible">
+  <ul data-bind="enable:label=true,visible:desktop.visible" data-state="loading" class="search-autocomplete-list">
     <!-- ko if:desktop.documents().length -->
       <!-- ko foreach:desktop.documents -->
         <!-- ko if: _type != label -->

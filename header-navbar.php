@@ -107,7 +107,7 @@
         <img class="cancel" data-bind="visible:!mobile.loading()&&mobile.has_text(),click:mobile.clear" src="<?php echo get_stylesheet_directory_uri() ?>/img/cancel.png"/>
       </div>
         <div class="clearfix"></div>
-        <ul data-bind="enable:label=true,visible:mobile.visible">
+        <ul data-bind="enable:label=true,visible:mobile.visible"">
           <!-- ko if:mobile.documents().length -->
             <!-- ko foreach:mobile.documents -->
               <!-- ko if: _type != label -->

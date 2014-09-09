@@ -104,8 +104,11 @@ class hddp extends Flawless_F {
 
     wp_register_script( 'jquery-fitvids', get_stylesheet_directory_uri() . '/js/jquery.fitvids.js', array( 'jquery' ), HDDP_Version, true );
 
+
+    add_filter( 'includes_url', array( __CLASS__, 'includes_url' ), 5 );
+
     //** DDP Elastic */
-    wp_register_script( 'jquery-ddp-elastic-suggest', get_stylesheet_directory_uri() . '/vendor/usabilitydynamics/lib-js-elastic-filter/scripts/jquery.elasticSearch.js', array( 'jquery', 'jquery-cookie' ), HDDP_Version, true );
+    wp_register_script( 'jquery-ddp-elastic-suggest', includes_url( '/vendor/libraries/usabilitydynamics/lib-js-elastic-filter/scripts/jquery.elasticSearch.js' ), array( 'jquery', 'jquery-cookie' ), HDDP_Version, true );
     wp_register_script( 'elastic-dsl', get_stylesheet_directory_uri() . '/js/elastic.dsl.js', array(), HDDP_Version, true );
     wp_register_script( 'xmlhttpclient', get_stylesheet_directory_uri() . '/js/xmlhttpclient.js', array(), HDDP_Version, true );
 
@@ -154,9 +157,23 @@ class hddp extends Flawless_F {
   }
 
   /**
+   *
+   * @param null $url
+   * @param null $path
+   * @return mixed|null
+   */
+  static public function includes_url( $url = null, $path = null ) {
+
+    if( strpos( $url, '/wp-includes/vendor/libraries' )) {
+      $url = str_replace( '/wp-includes/vendor/libraries', '/vendor/libraries', $url );
+    }
+
+    return $url;
+
+  }
+
+  /**
    * Add custom menu item
-   * @global type $wp_admin_bar
-   * @return type
    */
   static function es_menu( $wp_admin_bar ) {
     add_submenu_page( 'elastic_search', 'Additional ElasticSearch Options', 'Advanced [DDP]', 'manage_options', 'es_options', array( __CLASS__, 'es_options_ui' ) );
@@ -171,10 +188,11 @@ class hddp extends Flawless_F {
 
   /**
    * Delete term from es
-   * @param type $term
+   * @param $term_id
    * @param type $tt_id
    * @param type $taxonomy
    * @param type $deleted_term
+   * @internal param \type $term
    */
   static function es_delete_term( $term_id, $tt_id, $taxonomy, $deleted_term ) {
 
