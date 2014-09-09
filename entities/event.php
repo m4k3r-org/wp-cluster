@@ -128,6 +128,7 @@ namespace DiscoDonniePresents {
        */
       private function load_artists() {
         $_artists = array();
+
         if ( $artists = $this->meta('artists') ) {
 
           foreach( (array)$artists as $artist_id ) {
@@ -228,6 +229,8 @@ namespace DiscoDonniePresents {
 
       /**
        *
+       * @param string $format
+       * @param string $separator
        * @return type
        */
       public function artists( $format = 'link', $separator = ', ' ) {
@@ -268,6 +271,8 @@ namespace DiscoDonniePresents {
 
       /**
        *
+       * @param string $format
+       * @param string $separator
        * @return type
        */
       public function promoters( $format = 'link', $separator = ', ' ) {
@@ -343,9 +348,9 @@ namespace DiscoDonniePresents {
         $photo = wp_get_attachment_image_src( $this->meta('posterImage'), 'full' );
         $poster = wp_get_attachment_image_src( $this->meta('posterImage'), 'sidebar_poster' );
 
-        $_object[ 'summary' ] = $this->post( 'post_title' );
+        $_object[ 'summary' ] = htmlspecialchars_decode( $this->post( 'post_title' ) );
         $_object[ 'url' ]     = get_permalink( $this->_id );
-        $_object[ 'description' ] = $this->post( 'post_excerpt' );
+        $_object[ 'description' ] = htmlspecialchars_decode( $this->post( 'post_excerpt' ) );
         $_object[ 'start_date' ] = date( 'c', strtotime( $this->meta('dateStart') ) );
         $_object[ 'end_date' ] = date( 'c', strtotime( $this->meta('dateEnd') ) );
         $_object[ 'event_type' ] = $this->taxonomies( 'event-type', 'elasticsearch' );
@@ -358,9 +363,9 @@ namespace DiscoDonniePresents {
 
         $_object[ 'artists' ] = array();
 
-        foreach( $this->_artists as $_artist ) {
+        foreach( (array) $this->_artists as $_artist ) {
           $_object[ 'artists' ][] = array(
-              'name' => $_artist->post('post_title'),
+              'name' => htmlspecialchars_decode( $_artist->post('post_title') ),
               'url' => get_permalink( $_artist->post('ID') ),
               'genre' => $_artist->taxonomies( 'genre', 'elasticsearch' ) ? $_artist->taxonomies( 'genre', 'elasticsearch' ) : array()
           );
@@ -368,10 +373,10 @@ namespace DiscoDonniePresents {
 
         $_object[ 'promoters' ] = array();
 
-        foreach( $this->_promoters as $_promoter ) {
+        foreach( (array) $this->_promoters as $_promoter ) {
           $_object[ 'promoters' ][] = array(
-              'name' => $_promoter->post('post_title'),
-              'url' => get_permalink( $_promoter->post('ID') )
+            'name' => htmlspecialchars_decode( $_promoter->post('post_title') ),
+            'url' => get_permalink( $_promoter->post('ID') )
           );
         }
 
@@ -380,7 +385,7 @@ namespace DiscoDonniePresents {
         $country = $this->venue()->taxonomies('country', 'elasticsearch');
         $type = $this->venue()->taxonomies('venue-type', 'elasticsearch');
         $_object[ 'venue' ] = array(
-          'name' => $this->venue()->post( 'post_title' ),
+          'name' => htmlspecialchars_decode( $this->venue()->post( 'post_title' ) ),
           'type' => $type[0],
           'url' => get_permalink( $this->venue()->post( 'ID' ) ),
           'address' => array(
@@ -396,7 +401,7 @@ namespace DiscoDonniePresents {
         );
 
         $_object[ 'tour' ] = array(
-          'name' => $this->tour()->post('post_title'),
+          'name' => htmlspecialchars_decode( $this->tour()->post('post_title') ),
           'url' => get_permalink( $this->tour()->post('ID') )
         );
 

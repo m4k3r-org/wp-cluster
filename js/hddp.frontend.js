@@ -228,19 +228,21 @@ jQuery( document ).ready( function() {
         case 37:
           var el = expanded.parents('.hdp_results_item').prev().find('.hdp_event_collapsed');
           el.click();
-          break;
+        break;
 
         //** Right */
         case 39:
           var el = expanded.parents('.hdp_results_item').next().find('.hdp_event_collapsed');
           el.click();
-          break;
+        break;
       }
 
-      if ( el.next().length ) {
+      if ( el && 'function' === typeof el.next && el.next().length ) {
+
         jQuery('html').animate({
-            scrollTop: el.next().offset().top - 150
+          scrollTop: el.next().offset().top - 150
         }, 250);
+
       }
     }
 

@@ -27,6 +27,7 @@ namespace DiscoDonniePresents {
       /**
        *
        * @param type $id
+       * @param bool $preload
        */
       public function __construct($id = null, $preload = true) {
         parent::__construct($id);
