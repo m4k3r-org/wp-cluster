@@ -3,11 +3,12 @@
   period: false,
   sort_by: 'event_date',
   sort_dir: 'desc',
-  per_page: 6,
+  per_page: 18,
   return_fields: [
     'summary',
     'url',
     'image.small',
+    'image.poster',
     'event_date',
     'venue.address.state',
     'venue.address.city'
@@ -45,7 +46,7 @@
   </div>
 </form>
 
-<div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_video">
+<div data-template="/elastic/videoobject" id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_video">
   <div class="df_element hdp_results clearfix">
     <!-- ko if: videos.documents().length -->
     <ul data-bind="foreach: videos.documents" class="df_element hdp_results_items clearfix">
@@ -57,9 +58,9 @@
               <li>
                 <ul class="hdp_video clearfix">
                   <li class="hdp_video_thumbnail">
-                    <a data-bind="href:fields['url'],attr:{title:'Videos from '+fields['summary']}">
-                      <div class="overlay"></div>
-                      <img data-bind="attr:{src:fields['image.small']}" />
+                    <div class="overlay"></div>
+                    <a data-bind="attr:{'href':fields['image.poster'],title:'Videos from '+fields['summary']}" href="#" rel="videoobject">
+                      <img data-bind="attr:{src:fields['image.small']}" src="#" />
                     </a>
                   </li>
                   <li class="hdp_video_title"><a data-bind="html:fields['summary'],attr:{href:fields['url'],title:'Videos from '+fields['summary']}"></a></li>

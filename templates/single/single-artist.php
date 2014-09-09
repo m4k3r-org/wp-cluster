@@ -100,7 +100,7 @@
           middle_timepoint: { gte: 'now-1d', lte: 'now-1d' },
           per_page: 6, period: false, period_field: 'event_date', sort_by: 'event_date', type: 'imagegallery', location_field: 'venue.address.geo',
           custom_query: { filter: { bool: { must: [{ term: { 'artists.name': '<?php echo addslashes($artist->post('post_title')); ?>'}}]}}},
-          return_fields: [ 'summary', 'url', 'image.small', 'event_date', 'venue.address.state', 'venue.address.city']}" class="elastic_form">
+          return_fields: [ 'summary', 'url', 'image.small', 'image.poster', 'event_date', 'venue.address.state', 'venue.address.city']}" class="elastic_form">
         </form>
 
         <?php include locate_template('templates/elastic/loop/imagegallery.php'); ?>
@@ -114,7 +114,7 @@
           middle_timepoint: { gte: 'now-1d', lte: 'now-1d' },
           per_page: 6, period: false, period_field: 'event_date', sort_by: 'event_date', type: 'videoobject', location_field: 'venue.address.geo',
           custom_query: { filter: { bool: { must: [{ term: { 'artists.name': '<?php echo addslashes($artist->post('post_title')); ?>'}}]}}},
-          return_fields: [ 'summary', 'url', 'image.small', 'event_date', 'venue.address.state', 'venue.address.city']}" class="elastic_form">
+          return_fields: [ 'summary', 'url', 'image.small', 'image.poster', 'event_date', 'venue.address.state', 'venue.address.city']}" class="elastic_form">
         </form>
 
         <?php include locate_template('templates/elastic/loop/videoobject.php'); ?>

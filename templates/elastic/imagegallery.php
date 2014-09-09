@@ -3,11 +3,12 @@
   period: false,
   sort_by: 'event_date',
   sort_dir: 'desc',
-  per_page: 6,
+  per_page: 18,
   return_fields: [
     'summary',
     'url',
     'image.small',
+    'image.poster',
     'event_date',
     'venue.address.state',
     'venue.address.city'
@@ -45,7 +46,7 @@
   </div>
 </form>
 
-<div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_photo_gallery">
+<div data-template="/elastic/imagegallery" id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_photo_gallery">
   <div class="df_element hdp_results clearfix">
     <!-- ko if: photos.documents().length -->
     <ul data-bind="foreach: photos.documents" class="df_element hdp_results_items clearfix">
@@ -59,7 +60,9 @@
                   <li class="hdp_photo_thumbnail">
                     <a data-bind="href:fields['url'],attr:{title:'Photos from '+fields['summary']}">
                       <div class="overlay"></div>
-                      <img data-bind="attr:{src:fields['image.small']}" />
+                      <a data-bind="attr:{'href':fields['image.poster'],title:'Photos from '+fields['summary']}" href="#" rel="imagegallery">
+                        <img data-bind="attr:{src:fields['image.small'],'data-large-src':fields['image.poster']}" src="#" />
+                      </a>
                     </a>
                   </li>
                   <li class="hdp_photo_title"><a data-bind="html:fields['summary'],attr:{href:fields['url'],title:'Photos from '+fields['summary']}"></a></li>
