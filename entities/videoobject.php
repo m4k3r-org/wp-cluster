@@ -100,6 +100,11 @@ namespace DiscoDonniePresents {
         $photo = wp_get_attachment_image_src( $this->meta('primaryImageOfPage'), 'full' );
         $poster = wp_get_attachment_image_src( $this->meta('primaryImageOfPage'), 'sidebar_poster' );
         $small = wp_get_attachment_image_src( $this->meta('primaryImageOfPage'), 'hd_small' );
+        if( !$photo && $this->event()->meta( 'posterImage' ) ){
+          $photo = wp_get_attachment_image_src( $this->event()->meta( 'posterImage' ), 'full' );
+          $poster = wp_get_attachment_image_src( $this->event()->meta( 'posterImage' ), 'sidebar_poster' );
+          $small = wp_get_attachment_image_src( $this->event()->meta( 'posterImage' ), 'hd_small' );
+        }
 
         $_object[ 'summary' ] = $this->post('post_title');
         $_object[ 'url' ] = get_permalink( $this->_id );

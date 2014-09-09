@@ -118,7 +118,7 @@ namespace DiscoDonniePresents {
         $_object = array();
 
         $photo = wp_get_attachment_image_src( $this->meta('primaryImageOfPage'), 'full' );
-        $poster = wp_get_attachment_image_src( $this->meta('primaryImageOfPage'), 'sidebar_poster' );
+        $poster = wp_get_attachment_image_src( $this->event()->meta( 'posterImage' ), 'sidebar_poster' );
         $small = wp_get_attachment_image_src( $this->meta('primaryImageOfPage'), 'hd_small' );
 
         $_object[ 'summary' ] = $this->post('post_title');
