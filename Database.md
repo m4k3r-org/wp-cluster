@@ -14,8 +14,9 @@ s3cmd ls s3://cdn.uds.io
 
 Push MySQL dump to bucket.
 ```
-tar -cvzf edm_cluster_new.sql.tar.gz edm_cluster_new.sql
-s3cmd -P put ./edm_cluster_new.sql.tar.gz s3://cdn.uds.io
+wp db export edm_cluster.sql
+tar -cvzf edm_cluster.sql.tar.gz edm_cluster.sql
+s3cmd -P put ./edm_cluster.sql.tar.gz s3://cdn.uds.io
 ```
 
 Fetch MySQL dump from bucket.
