@@ -1,3 +1,4 @@
+<section data-template="elastic/list-event">
 <div class="hdp_filter" id="hdp_filter_events">
   <div data-scope="events" data-bind="elasticTimeControl:{}" class="hdp_filter_event_past hidden-phone" id="hdp_filter_event">
     <span class="hdp_filter_text">Display:</span>
@@ -43,7 +44,7 @@
             <ul>
               <li>
                 <ul class="hdp_event_collapsed clearfix">
-                  <li data-bind="html:moment(fields.start_date[0]).format('MMMM DD, YYYY')" class="hdp_event_date"></li>
+                  <li data-bind="html:moment(fields.start_date[0]).format('MMM DD, YYYY')" class="hdp_event_date"></li>
                   <li data-bind="html:fields['summary']" class="hdp_event_title"></li>
                   <li data-bind="html:fields['venue.address.city']" class="hdp_event_city"></li>
                   <li data-bind="html:fields['venue.address.state']" class="hdp_event_state"></li>
@@ -51,7 +52,7 @@
                 <ul class="hdp_event_expanded clearfix">
                   <li class="hdp_event_flyer">
                     <a data-bind="attr: {href:fields.url}">
-                      <img data-bind="attr: {src:fields['image.poster']}" class="fixed_size attachment-events_flyer_thumb"/>
+                      <img data-bind="attr: {src:fields['image.poster']}" class="fixed_size attachment-events_flyer_thumb" src="*" />
                     </a>
                   </li>
                   <li class="hdp_event_title">
@@ -81,7 +82,7 @@
 
     <div class="hdp_results_message clearfix" style="display: block;">
       <div class="df_load_status left">
-        Displaying <span class="df_current_count" data-bind="html:events.count">0</span> of <span data-bind="html:events.total"></span> Events
+        Displaying <span class="df_current_count" data-bind="html:events.count">0</span> of <span data-bind="html:events.total"></span> events
       </div>
       <a class="btn" data-scope="events" data-bind="visible:events.has_more_documents,filterShowMoreControl:{count:100}">
         <span>Show More</span>
@@ -90,3 +91,4 @@
 
   </div>
 </div>
+</section>

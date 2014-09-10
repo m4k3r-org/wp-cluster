@@ -27,8 +27,8 @@
                     </a>
                   </li>
                   <li class="hdp_photo_title"><a data-bind="html:fields['summary'],attr:{href:fields['url'],title:'Videos from '+fields['summary']}"></a></li>
-                  <li class="hdp_photo_date" data-bind="html:moment(fields.event_date[0]).format('LLLL')"></li>
-                  <li class="hdp_photo_location" data-bind="html:(fields['venue.address.city']+', '+fields['venue.address.state'])"></li>
+                  <li class="hdp_photo_date" data-bind="visible:fields.event_date[0],html:moment(fields.event_date[0]).format('LLLL')"></li>
+                  <li class="hdp_photo_location" data-bind="visible:fields['venue.address.city'] && fields['venue.address.state'],html:(fields['venue.address.city']+', '+fields['venue.address.state'])"></li>
                 </ul>
               </li>
             </ul>
@@ -41,7 +41,7 @@
 
     <div data-bind="visible:videos.documents().length" class="hdp_results_message clearfix" style="display: block;">
       <div class="df_load_status left">
-        Displaying <span class="df_current_count" data-bind="html:videos.count">0</span> of <span data-bind="html:videos.total"></span> Videos
+        Displaying <span class="df_current_count" data-bind="html:videos.count">0</span> of <span data-bind="html:videos.total"></span> videos
       </div>
       <a class="btn" data-scope="videos" data-bind="visible:videos.has_more_documents,filterShowMoreControl:{count:6}">
         <span>Show More</span>

@@ -46,7 +46,7 @@
   </div>
 </form>
 
-<div data-template="/elastic/imagegallery" id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_photo_gallery">
+<div data-template="/elastic/list-imagegallery" id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_photo_gallery">
   <div class="df_element hdp_results clearfix">
     <!-- ko if: photos.documents().length -->
     <ul data-bind="foreach: photos.documents" class="df_element hdp_results_items clearfix">
@@ -66,8 +66,8 @@
                     </a>
                   </li>
                   <li class="hdp_photo_title"><a data-bind="html:fields['summary'],attr:{href:fields['url'],title:'Photos from '+fields['summary']}"></a></li>
-                  <li class="hdp_photo_date" data-bind="html:moment(fields.event_date[0]).format('LLLL')"></li>
-                  <li class="hdp_photo_location" data-bind="html:(fields['venue.address.city']+', '+fields['venue.address.state'])"></li>
+                  <li class="hdp_photo_date" data-bind="visible:fields.event_date[0],html:moment(fields.event_date[0]).format('LLLL')"></li>
+                  <li class="hdp_photo_location" data-bind="visible:fields['venue.address.city'] && fields['venue.address.state'],html:(fields['venue.address.city']+', '+fields['venue.address.state'])"></li>
                 </ul>
               </li>
             </ul>
@@ -80,7 +80,7 @@
 
     <div class="hdp_results_message clearfix" style="display: block;">
       <div class="df_load_status left">
-        Displaying <span class="df_current_count" data-bind="html:photos.count">0</span> of <span data-bind="html:photos.total"></span> Galleries
+        Displaying <span class="df_current_count" data-bind="html:photos.count">0</span> of <span data-bind="html:photos.total"></span> galleries
       </div>
       <a class="btn" data-scope="photos" data-bind="visible:photos.has_more_documents,filterShowMoreControl:{count:6}">
         <span>Show <em data-bind="html:photos.moreCount" class="df_more_count"></em> More</span>
