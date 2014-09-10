@@ -784,7 +784,9 @@ class hddp extends Flawless_F {
 
     ob_start();
 
-    include 'templates/elastic/'.$args['post_type'].'.php';
+    get_template_part( 'templates/elastic/list', $args['post_type'] );
+
+    //include 'templates/elastic/'.$args['post_type'].'.php';
 
     return ob_get_clean();
 
