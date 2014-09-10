@@ -95,7 +95,7 @@
           return_fields: [ 'summary', 'url', 'image.small', 'image.poster', 'event_date', 'venue.address.state', 'venue.address.city']}" class="elastic_form">
         </form>
 
-        <?php include locate_template('templates/elastic/loop/imagegallery.php'); ?>
+        <?php get_template_part('templates/elastic/loop', 'imagegallery'); ?>
 
       </div>
 
@@ -109,7 +109,7 @@
           return_fields: [ 'summary', 'url', 'image.small', 'image.poster', 'event_date', 'venue.address.state', 'venue.address.city']}" class="elastic_form">
         </form>
 
-        <?php include locate_template('templates/elastic/loop/videoobject.php'); ?>
+        <?php get_template_part('templates/elastic/loop', 'videoobject'); ?>
 
       </div>
 

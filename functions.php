@@ -455,25 +455,6 @@ class hddp extends Flawless_F {
   }
 
   /**
-   * New Elastic Search Facets
-   *
-   * @param type $atts
-   *
-   * @return type
-   */
-  public static function elasticsearch_facets( $atts ) {
-
-    $args = shortcode_atts( array(
-        'post_type' => ''
-    ), $atts );
-
-    ob_start();
-    include 'templates/elastic/'.$args['post_type'].'_facets.php';
-
-    return ob_get_clean();
-  }
-
-  /**
    * Geo-locates and event based on venue address and updates the event meta.
    *
    * @todo Ideally address information should only be stored in the term's meta, not duplicated. - potanin@UD 5/17/12
@@ -690,7 +671,7 @@ class hddp extends Flawless_F {
 
     ob_start();
 
-    include 'templates/elastic/loop/'.$args['post_type'].'.php';
+    get_template_part( 'templates/elastic/loop', $args['post_type'] );
 
     return ob_get_clean();
   }
@@ -786,10 +767,30 @@ class hddp extends Flawless_F {
 
     get_template_part( 'templates/elastic/list', $args['post_type'] );
 
-    //include 'templates/elastic/'.$args['post_type'].'.php';
-
     return ob_get_clean();
 
   }
+
+
+  /**
+   * New Elastic Search Facets
+   *
+   * @param type $atts
+   *
+   * @return type
+   */
+  public static function elasticsearch_facets( $atts ) {
+
+    $args = shortcode_atts( array(
+      'post_type' => ''
+    ), $atts );
+
+    ob_start();
+
+    get_template_part( 'templates/elastic/facets', $args['post_type'] );
+
+    return ob_get_clean();
+  }
+
 
 }

@@ -83,8 +83,9 @@
           return_fields: ['start_date','description','summary','venue.address.city','venue.address.state','url','image.poster','venue.name','artists.name','tickets']}" class="elastic_form">
         </form>
 
-        <?php include locate_template('templates/elastic/event_controls.php'); ?>
-        <?php include locate_template('templates/elastic/loop/event.php'); ?>
+        <?php get_template_part('templates/elastic/loop', 'videoobject'); ?>
+        <?php get_template_part('templates/elastic/controls', 'event'); ?>
+        <?php get_template_part('templates/elastic/loop', 'event'); ?>
 
       </div>
 
@@ -98,7 +99,7 @@
           return_fields: [ 'summary', 'url', 'image.small', 'image.poster', 'event_date', 'venue.address.state', 'venue.address.city']}" class="elastic_form">
         </form>
 
-        <?php include locate_template('templates/elastic/loop/imagegallery.php'); ?>
+        <?php get_template_part('templates/elastic/loop', 'imagegallery'); ?>
 
       </div>
 
@@ -112,7 +113,7 @@
           return_fields: [ 'summary', 'url', 'image.small', 'image.poster', 'event_date', 'venue.address.state', 'venue.address.city']}" class="elastic_form">
         </form>
 
-        <?php include locate_template('templates/elastic/loop/videoobject.php'); ?>
+        <?php get_template_part('templates/elastic/loop', 'videoobject'); ?>
 
       </div>
 
