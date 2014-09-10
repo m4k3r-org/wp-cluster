@@ -2,9 +2,7 @@
 
 <?php get_template_part( 'attention', 'artist' ); ?>
 
-<?php
-  $artist = new \DiscoDonniePresents\Artist( get_the_ID(), false ); the_post();
-?>
+<?php $artist = new \DiscoDonniePresents\Artist( get_the_ID(), false ); the_post(); ?>
 
 <?php $image = wp_get_attachment_image( $artist->meta('logo'), $size = 'sidebar_poster' ); ?>
 
