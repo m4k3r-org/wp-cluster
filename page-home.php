@@ -77,13 +77,13 @@ $artist_lineup = json_decode( $artist_lineup, true );
         <div class="inner">
           Tickets
           <strong>On Sale</strong>
-          <small>Fri, Sep 12 12 PM CT</small>
+          <small>Fri, Sep 12 @ 12 PM CT</small>
         </div>
       </a>
 
-      <p class="main-content">For all the Ghouls and Boys! The Monster Block Party is a FREE, daytime Halloween festival for Salt Lake City's goblins and ghouls of all ages. There will be trick-or-treating booths, a costume contest with prizes (Kid, Teen and Adult divisions), free arts and crafts projects, a pumpkin drop, live performances and more!</p>
+      <p class="main-content">&nbsp;</p>
 
-      <h2>Social Stream</h2>
+      <h2>#FreaksBeatsTreats</h2>
       <hr>
 
       <div class="stream">
