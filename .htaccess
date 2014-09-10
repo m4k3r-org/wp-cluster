@@ -7,8 +7,8 @@
 <IfModule mod_rewrite.c>
   RewriteRule ^test/(.*)$ /index.php [L]
   RewriteRule ^node_modules/(.*)$ /index.php [L]
-  RewriteRule ^static/scripts/(.*)$ /index.php [L]
-  RewriteRule ^static/styles/(.*)$ /index.php [L]
+  RewriteRule ^js/src/(.*)$ /index.php [L]
+  RewriteRule ^css/src/(.*)$ /index.php [L]
   RewriteRule ^composer.json$ /index.php [L]
   RewriteRule ^composer.lock$ /index.php [L]
   RewriteRule ^package.json$ /index.php [L]
