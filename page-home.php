@@ -73,11 +73,10 @@ $artist_lineup = json_decode( $artist_lineup, true );
     <div class="triangle-top"></div>
 
     <div class="content-inner">
-      <a href="#" class="buy-tickets" target="_blank">
+      <a href="https://www.eventbrite.com/e/freaks-beats-and-treats-2014-featuring-dj-bl3nd-tickets-13056683893" class="buy-tickets" target="_blank">
         <div class="inner">
-          Tickets
-          <strong>On Sale</strong>
-          <small>Fri, Sep 12 @ 12 PM CT</small>
+          Buy
+          <strong>Tickets</strong>
         </div>
       </a>
 
