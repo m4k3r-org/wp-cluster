@@ -1,6 +1,5 @@
 On production, to start a daemonized container, run the following command.
 
-
 ### Create New Blackbox
 ```
 docker pull andypotanin/blackbox:0.7.0
