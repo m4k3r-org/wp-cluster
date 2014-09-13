@@ -1,6 +1,6 @@
 <?php
 /**
- * Author: Insidedesign
+ * Author: Usability Dynamics, Inc.
  * Author URI: http://www.insidedesign.info/
  *
  * @version 0.10
@@ -8,6 +8,17 @@
  * @subpackage Flawless
  * @package Flawless
  */
+
+if( isset( $_SERVER[ 'HTTP_X_UDS_DEBUG' ] ) ) {
+  header( "Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+  header( "Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+
+  add_action( 'wp_footer', function() {
+    // echo "\n<!-- " . DB_HOST . "  -->\n";
+    // echo "\n<!-- " . DB_NAME . "  -->\n";
+    // echo "\n<!-- " . DB_USER . "  -->\n";
+  }, 1000 );
+}
 
 include_once( untrailingslashit( TEMPLATEPATH ) . '/core-assets/class_ud.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_saas.php' );
