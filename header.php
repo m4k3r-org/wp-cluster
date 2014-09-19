@@ -5,8 +5,8 @@
   <title><?php wp_title(''); ?></title>
   <link rel="profile" href="http://gmpg.org/xfn/11" />
   <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
-  <meta name="app:api" content="<?php echo get_option( 'app:api:url' ); ?>" data-access-key="<?php echo get_option( 'app:api:key' ); ?>" />
-  <meta name="app:debug" content="<?php echo get_option( 'app:debug' ); ?>" />
+  <meta name="app:api" content="<?php echo get_option( 'app:api:url' ) ?  get_option( 'app:api:url' ) : 'http://api.discodonniepresents.com'; ?>" data-access-key="<?php echo get_option( 'app:api:key' ) ? get_option( 'app:api:key' ) : 'qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty'; ?>" />
+  <meta name="app:debug" content="<?php echo get_option( 'app:debug' ) ? get_option( 'app:debug' ) : 'false'; ?>" />
   <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
