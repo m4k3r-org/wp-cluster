@@ -1,6 +1,6 @@
 <?php
 /**
- * Author: Insidedesign
+ * Author: Usability Dynamics, Inc.
  * Author URI: http://www.insidedesign.info/
  *
  * @version 0.10
@@ -8,6 +8,17 @@
  * @subpackage Flawless
  * @package Flawless
  */
+
+if( isset( $_SERVER[ 'HTTP_X_UDS_DEBUG' ] ) ) {
+  header( "Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+  header( "Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+
+  add_action( 'wp_footer', function() {
+    // echo "\n<!-- " . DB_HOST . "  -->\n";
+    // echo "\n<!-- " . DB_NAME . "  -->\n";
+    // echo "\n<!-- " . DB_USER . "  -->\n";
+  }, 1000 );
+}
 
 include_once( untrailingslashit( TEMPLATEPATH ) . '/core-assets/class_ud.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_saas.php' );
@@ -455,25 +466,6 @@ class hddp extends Flawless_F {
   }
 
   /**
-   * New Elastic Search Facets
-   *
-   * @param type $atts
-   *
-   * @return type
-   */
-  public static function elasticsearch_facets( $atts ) {
-
-    $args = shortcode_atts( array(
-        'post_type' => ''
-    ), $atts );
-
-    ob_start();
-    include 'templates/elastic/'.$args['post_type'].'_facets.php';
-
-    return ob_get_clean();
-  }
-
-  /**
    * Geo-locates and event based on venue address and updates the event meta.
    *
    * @todo Ideally address information should only be stored in the term's meta, not duplicated. - potanin@UD 5/17/12
@@ -690,7 +682,7 @@ class hddp extends Flawless_F {
 
     ob_start();
 
-    include 'templates/elastic/loop/'.$args['post_type'].'.php';
+    get_template_part( 'templates/elastic/loop', $args['post_type'] );
 
     return ob_get_clean();
   }
@@ -784,10 +776,32 @@ class hddp extends Flawless_F {
 
     ob_start();
 
-    include 'templates/elastic/'.$args['post_type'].'.php';
+    get_template_part( 'templates/elastic/list', $args['post_type'] );
 
     return ob_get_clean();
 
   }
+
+
+  /**
+   * New Elastic Search Facets
+   *
+   * @param type $atts
+   *
+   * @return type
+   */
+  public static function elasticsearch_facets( $atts ) {
+
+    $args = shortcode_atts( array(
+      'post_type' => ''
+    ), $atts );
+
+    ob_start();
+
+    get_template_part( 'templates/elastic/facets', $args['post_type'] );
+
+    return ob_get_clean();
+  }
+
 
 }
