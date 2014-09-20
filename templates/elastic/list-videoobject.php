@@ -60,7 +60,7 @@
                   <li class="hdp_video_thumbnail">
                     <div class="overlay"></div>
                     <a data-bind="attr:{'href':fields['image.poster'],title:'Videos from '+fields['summary']}" href="#" rel="videoobject">
-                      <img data-bind="attr:{src:fields['image.small']}" src="#" />
+                      <img data-bind="attr:{src:fields['image.small']}" src="<?php echo includes_url( '/theme/img/placeholder.png' ); ?>" />
                     </a>
                   </li>
                   <li class="hdp_video_title"><a data-bind="html:fields['summary'],attr:{href:fields['url'],title:'Videos from '+fields['summary']}"></a></li>

@@ -62,7 +62,7 @@
                       <a data-bind="href:fields['url'],attr:{title:'Photos from '+fields['summary']}">
                         <div class="overlay"></div>
                         <a data-bind="attr:{'href':fields['image.poster'],title:'Photos from '+fields['summary']}" href="#" rel="imagegallery">
-                          <img data-bind="attr:{src:fields['image.small'],'data-large-src':fields['image.poster']}" src="#" />
+                          <img data-bind="attr:{src:fields['image.small'],'data-large-src':fields['image.poster']}" src="<?php echo includes_url( '/theme/img/placeholder.png' ); ?>" />
                         </a>
                       </a>
                     </li>

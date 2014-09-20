@@ -1,7 +1,3 @@
-<?php
-
-$permalink = get_permalink( $event->post('ID') ); ?>
-
 <li <?php post_class(); ?>>
 
 	<ul class="hdp_event_collapsed clearfix">
@@ -12,8 +8,8 @@ $permalink = get_permalink( $event->post('ID') ); ?>
 	</ul>
 
 	<ul class="hdp_event_expanded clearfix">
-		<li class="hdp_event_flyer"><a href="<?php echo $permalink; ?>"><img class="fixed_size attachment-events_flyer_thumb" src="<?php echo flawless_image_link( $event->meta('posterImage'), 'events_flyer_thumb' ); ?>"/></a></li>
-		<li class="hdp_event_title"><a href="<?php echo $permalink; ?>"><?php echo $event->post('post_title'); ?></a></li>
+		<li class="hdp_event_flyer"><a href="<?php echo get_permalink( $event->post('ID') ); ?>"><img class="fixed_size attachment-events_flyer_thumb" src="<?php echo flawless_image_link( $event->meta('posterImage'), 'events_flyer_thumb' ); ?>"/></a></li>
+		<li class="hdp_event_title"><a href="<?php echo get_permalink( $event->post('ID') ); ?>"><?php echo $event->post('post_title'); ?></a></li>
 		<li class="hdp_event_date"><span>Date:</span> <?php echo $event->meta('eventDateHuman'); ?></li>
 		<li class="hdp_event_venue"><span>Venue:</span>
       <a href="<?php echo get_permalink( $event->venue()->post( 'ID' ) ); ?>">
@@ -31,7 +27,7 @@ $permalink = get_permalink( $event->post('ID') ); ?>
       if( isset( $ticketurl ) && strtotime( $event->meta('dateStart') ) > $time ) { ?>
         <a class="btn" href="<?php echo $ticketurl; ?>" <?php if ( $event->meta('disable_cross_domain_tracking') !== 'true' ) { ?>onclick="_gaq.push(['_link', '<?php echo $ticketurl; ?>']); return false;"<?php } ?>><span>Buy Tickets</span></a> <?php
       } ?>
-      <a class="btn" href="<?php echo $permalink; ?>" title="<?php the_title_attribute(); ?>"><span>More Info</span></a>
+      <a class="btn" href="<?php echo get_permalink( $event->post('ID') ); ?>" title="<?php the_title_attribute(); ?>"><span>More Info</span></a>
     </li>
 	</ul>
 
