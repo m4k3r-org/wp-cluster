@@ -166,12 +166,33 @@ class hddp extends Flawless_F {
   }
 
   /**
+   * Inject Theme-specific Includes URL Rewrites
+   *
+   * includes_url( '/theme/img/placeholder.png' )
+   *
+   *
+   * @todo Add test.
    *
    * @param null $url
    * @param null $path
    * @return mixed|null
    */
   static public function includes_url( $url = null, $path = null ) {
+
+    // Get theme Images
+    if( strpos( $url, '/theme/img/' ) ) {
+      $url = str_replace( site_url( '/' . WPINC . '/theme/' ), trailingslashit( get_stylesheet_directory_uri() ), $url );
+    }
+
+    // Get theme JS
+    if( strpos( $url, '/theme/js/' ) ) {
+      $url = str_replace( site_url( '/' . WPINC . '/theme/' ), trailingslashit( get_stylesheet_directory_uri() ), $url );
+    }
+
+    // Get theme CSS
+    if( strpos( $url, '/theme/css/' ) ) {
+      $url = str_replace( site_url( '/' . WPINC . '/theme/' ), trailingslashit( get_stylesheet_directory_uri() ), $url );
+    }
 
     if( strpos( $url, '/wp-includes/vendor/libraries' )) {
       $url = str_replace( '/wp-includes/vendor/libraries', '/vendor/libraries', $url );

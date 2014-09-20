@@ -34,7 +34,7 @@
                   <ul class="hdp_event_expanded clearfix">
                     <li class="hdp_event_flyer">
                       <a data-bind="attr: {href:fields.url}">
-                        <img data-bind="attr: {src:fields['image.poster']}" class="fixed_size attachment-events_flyer_thumb" src="#" />
+                        <img data-bind="attr: {src:fields['image.poster']}" class="fixed_size attachment-events_flyer_thumb" src="<?php echo includes_url( '/theme/img/placeholder.png' ); ?>" />
                       </a>
                     </li>
                     <li class="hdp_event_title">
