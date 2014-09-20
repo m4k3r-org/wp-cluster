@@ -47,7 +47,7 @@
     </div>
   </form>
 
-  <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_photo_gallery">
+  <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" data-dynamic-filter="hdp_photo_gallery">
     <div class="df_element hdp_results clearfix">
       <!-- ko if: photos.documents().length -->
       <ul data-bind="foreach: photos.documents" class="df_element hdp_results_items clearfix">

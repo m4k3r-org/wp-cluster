@@ -23,7 +23,7 @@
     <li class="hdp_event_state">State</li>
   </ul>
 
-  <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_event">
+  <div id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" data-dynamic-filter="hdp_event">
   <div class="df_element hdp_results clearfix">
 
     <!-- ko if: !events.documents().length -->

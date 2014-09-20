@@ -46,7 +46,7 @@
   </div>
 </form>
 
-<div data-template="/elastic/list-videoobject" id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" dynamic_filter="hdp_video">
+<div data-template="/elastic/list-videoobject" id="dynamic_filter" class="dynamic_filter df_element df_top_wrapper df_element df_top_wrapper clearfix" data-dynamic-filter="hdp_video">
   <div class="df_element hdp_results clearfix">
     <!-- ko if: videos.documents().length -->
     <ul data-bind="foreach: videos.documents" class="df_element hdp_results_items clearfix">
