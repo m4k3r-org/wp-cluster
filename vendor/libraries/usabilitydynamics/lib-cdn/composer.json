@@ -1,0 +1,58 @@
+{
+  "name": "usabilitydynamics/lib-cdn",
+  "keywords": [ "cdn", "gce" ],
+  "type": "library",
+  "require": {
+    "usabilitydynamics/lib-utility": "*",
+    "google/api-php-client": "0.6.7"
+  },
+  "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://repository.usabilitydynamics.com"
+    }
+  ],
+  "autoload": {
+    "classmap": [
+      "lib/class-cdn.php",
+      "lib/class-gcs.php"
+    ]
+  },
+  "extra": {
+    "component": {
+      "schemas": [
+        "schemas/azure.json",
+        "schemas/s3.json"
+      ],
+      "scripts": [
+        "scripts/cdn.js"
+      ]
+    }
+  },
+  "homepage": "http://github.com/usabilitydynamics/lib-cdn",
+  "authors": [
+    {
+      "name": "Andy Potanin",
+      "email": "andy.potanin@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Maxim Peshkov",
+      "email": "maxim.peshkov@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Anton Korotkov",
+      "email": "anton.korotkov@usabilitydynamics.com",
+      "homepage": "http://usabilitydynamics.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/usabilitydynamics/lib-cdn/issues"
+  },
+  "license": "MIT"
+}
