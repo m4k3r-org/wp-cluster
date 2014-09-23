@@ -80,7 +80,9 @@ $artist_lineup = json_decode( $artist_lineup, true );
         </div>
       </a>
 
-      <p class="main-content">&nbsp;</p>
+      <p class="main-content">
+        Join Disco Donnie Presents and Global Groove Events as we craft another crazy Halloween event filled with massive beats and eerie treats! Freaks, Beats, and Treats is making its return to Hidalgo, TX to haunt the State Farm Arena (Outdoors) this Hallows Eve. This year we have DJ Bl3ND headlining the stage and taking us deep into the night. With his big bass drops and piercing drum claps, DJ BL3ND is sure get us rocking at this year's event. Meet us on the dance floor this Friday, October 31st and come dressed in your freaky best!
+      </p>
 
       <h2>#FreaksBeatsTreats</h2>
       <hr>
