@@ -23,7 +23,7 @@ define(
     /** See if we have an existing version */
     if( typeof window.ko == 'object' ){
       version = window.ko.version.split( '.' );
-      if( parseInt( version[ 0 ] ) == 3 ){
+      if( parseInt( version[ 0 ] ) == 3 && typeof window.ko.mapping != 'undefined' ){
         if( s.debug ) console.debug( s.name, "Valid version of window.ko found" );
         return window.ko;
       }else{
