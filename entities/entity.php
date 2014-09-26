@@ -303,6 +303,7 @@ namespace DiscoDonniePresents {
        * @return \DiscoDonniePresents\type
        */
       public function toElasticFormat() {
+        $this->_post->post_content = do_shortcode( $this->_post->post_content );
         return $this->_post;
       }
 
