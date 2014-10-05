@@ -1,5 +1,5 @@
 {
-    "name": "afragen/github-updater",
+    "name": "usabilitydynamics/wp-github-updater",
     "type": "wordpress-plugin",
     "license": "GPLv2",
     "require": {
