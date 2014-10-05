@@ -118,10 +118,14 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 			$endpoint = str_replace( '/:' . $segment, '/' . $value, $endpoint );
 		}
 
+		// Set Access Token from constant.
+		if( empty( $this->type->access_token ) && defined( 'GITHUB_UPDATER_TOKEN' ) ) {
+			$this->type->access_token = GITHUB_UPDATER_TOKEN;
+		}
+
 		if ( ! empty( $this->type->access_token ) ) {
 			$endpoint = add_query_arg( 'access_token', $this->type->access_token, $endpoint );
 		}
-
 
 		// If a branch has been given, only check that for the remote info.
 		// If it's not been given, GitHub will use the Default branch.
