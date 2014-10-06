@@ -257,7 +257,7 @@ namespace UsabilityDynamics\Theme {
     public function init() {
 
       if( !class_exists( 'UsabilityDynamics\LayoutEngine\Core' ) ) {
-        wp_die( 'UsabilityDynamics\LayoutEngine\Core not found.' );
+        // wp_die( 'UsabilityDynamics\LayoutEngine\Core not found.' );
       }
 
       if( !class_exists( 'UsabilityDynamics\UI\Panel' ) ) {
