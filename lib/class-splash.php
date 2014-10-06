@@ -256,13 +256,19 @@ namespace UsabilityDynamics\Theme {
      */
     public function init() {
 
-      if( !class_exists( 'UsabilityDynamics\LayoutEngine\Core' ) ) {
-        // wp_die( 'UsabilityDynamics\LayoutEngine\Core not found.' );
-      }
+	    try {
 
-      if( !class_exists( 'UsabilityDynamics\UI\Panel' ) ) {
-	      // wp_die( 'UsabilityDynamics\UI\Panel not found.' );
-      }
+		    if( !class_exists( 'UsabilityDynamics\LayoutEngine\Core' ) ) {
+			    throw new \Exception( 'UsabilityDynamics\LayoutEngine\Core not found.' );
+		    }
+
+		    if( !class_exists( 'UsabilityDynamics\UI\Panel' ) ) {
+			    throw new \Exception( 'UsabilityDynamics\UI\Panel not found.' );
+		    }
+
+	    } catch( \Exception $error ) {
+		    wp_die( '<h1>Site Temporarily Unavailable</h1><p>Our aplogizes, but this site is currently not available.</p><p>The theme is currently being updated, please check back later.</p><!--' . $error->getMessage() . '-->' );
+	    }
 
       add_filter( 'the_content',  array( $this, 'the_content' ) );
       add_filter( 'content_url',  array( $this, 'content_url' ), 20, 2 );

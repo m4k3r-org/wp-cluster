@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "0db874f0da68e0b50b33274c11ce36f6",
+    "hash": "309c2e1a3d048a03f766de5e7e0e4bfc",
     "packages": [
         {
             "name": "composer/installers",
@@ -11,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "11f7f8e82cbe1538721b72aa14bbd8007dde96e1"
+                "reference": "5ed225fe8545c4e4bf502d56fdd87791ecfdd078"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/11f7f8e82cbe1538721b72aa14bbd8007dde96e1",
-                "reference": "11f7f8e82cbe1538721b72aa14bbd8007dde96e1",
+                "url": "https://api.github.com/repos/composer/installers/zipball/5ed225fe8545c4e4bf502d56fdd87791ecfdd078",
+                "reference": "5ed225fe8545c4e4bf502d56fdd87791ecfdd078",
                 "shasum": ""
             },
             "replace": {
@@ -47,8 +48,7 @@
                 {
                     "name": "Kyle Robinson Young",
                     "email": "kyle@dontkry.com",
-                    "homepage": "https://github.com/shama",
-                    "role": "Developer"
+                    "homepage": "https://github.com/shama"
                 }
             ],
             "description": "A multi-framework Composer library installer",
@@ -59,17 +59,20 @@
                 "Hurad",
                 "MODX Evo",
                 "OXID",
+                "Thelia",
                 "WolfCMS",
                 "agl",
                 "annotatecms",
                 "bitrix",
                 "cakephp",
+                "chef",
                 "codeigniter",
                 "concrete5",
                 "croogo",
                 "drupal",
                 "elgg",
                 "fuelphp",
+                "grav",
                 "installer",
                 "joomla",
                 "kohana",
@@ -83,6 +86,7 @@
                 "phpbb",
                 "piwik",
                 "ppi",
+                "puppet",
                 "roundcube",
                 "shopware",
                 "silverstripe",
@@ -92,110 +96,64 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-06-04 16:59:54"
+            "time": "2014-09-25 03:36:45"
         },
         {
-            "name": "usabilitydynamics/lib-installer",
+            "name": "siteorigin/panels",
             "version": "master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-installer",
+                "url": "git@github.com:UsabilityDynamics/siteorigin-panels",
                 "reference": "master"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-installer/archive/master.zip",
+                "url": "https://github.com/UsabilityDynamics/siteorigin-panels/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
-                "composer-plugin-api": "1.0.0",
                 "composer/installers": "~1.0",
                 "php": ">=5.3"
             },
-            "type": "composer-installer",
+            "type": "wordpress-plugin",
             "extra": {
-                "class": [
-                    "UsabilityDynamics\\Installers\\ProductModule"
-                ],
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
+                "installer-name": "siteorigin-panels",
+                "main-file": "siteorigin-panels.php",
+                "text_domain": "siteorigin-panels"
             },
             "autoload": {
-                "psr-4": {
-                    "UsabilityDynamics\\Installers\\": "lib/"
-                }
+                "classmap": [
+                    "widgets/basic.php",
+                    "widgets/widgets/testimonial/testimonial.php",
+                    "widgets/widgets/price-box/price-box.php",
+                    "widgets/widgets/list/list.php",
+                    "widgets/widgets/call-to-action/call-to-action.php",
+                    "widgets/widgets/button/button.php",
+                    "widgets/widgets/animated-image/animated-image.php",
+                    "widgets/lib/color.php"
+                ]
             },
             "license": [
-                "MIT"
+                "GPLv2"
             ],
-            "time": "2014-06-03 00:40:50"
-        },
-        {
-            "name": "usabilitydynamics/lib-layout-engine",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-layout-engine",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-layout-engine/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "php": ">=5.3",
-                "usabilitydynamics/lib-installer": "master",
-                "usabilitydynamics/lib-meta-box": "*",
-                "usabilitydynamics/lib-ui": "*",
-                "usabilitydynamics/lib-utility": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*",
-                "usabilitydynamics/lib-carrington-build": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "time": "2014-06-04 15:44:17"
-        },
-        {
-            "name": "usabilitydynamics/lib-meta-box",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-meta-box",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-meta-box/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "library",
-            "extra": {
-                "installer-name": "lib-meta-box"
-            },
-            "autoload": {
-                "classmap": [
-                    "inc/fields",
-                    "inc/common.php",
-                    "inc/field.php",
-                    "inc/helpers.php",
-                    "inc/meta-box.php"
-                ]
-            },
-            "time": "2014-06-03 12:04:11"
+            "authors": [
+                {
+                    "name": "Greg Priday",
+                    "email": "support@siteorigin.com",
+                    "homepage": "http://siteorigin.com/",
+                    "role": "WordPress Developer"
+                }
+            ],
+            "description": "Build responsive page layouts using the widgets you know and love using this simple drag and drop page builder.",
+            "homepage": "http://siteorigin.com/page-builder/",
+            "keywords": [
+                "admin",
+                "builder",
+                "page-builder",
+                "responsive",
+                "wordpress"
+            ]
         },
         {
             "name": "usabilitydynamics/lib-ui",
@@ -207,24 +165,29 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-ui/archive/master.zip",
+                "url": "https://github.com/UsabilityDynamics/lib-ui/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
+                "php": ">=5.3",
                 "usabilitydynamics/lib-utility": "master"
             },
             "type": "library",
             "extra": {
+                "installer-name": "lib-ui",
+                "text_domain": "lib-ui",
+                "main-file": "lib/class-ui.php",
+                "class": "UsabilityDynamics\\UI",
                 "component": {
                     "scripts": [
-                        "scripts/ui.js",
-                        "scripts/ui.markdown.js",
-                        "scripts/ui.jquery-tabs.js"
+                        "static/scripts/ui.js",
+                        "static/scripts/ui.markdown.js",
+                        "static/scripts/ui.jquery-tabs.js"
                     ],
                     "styles": [
-                        "styles/ui.css",
-                        "styles/ui.less"
+                        "static/styles/ui.css",
+                        "static/styles/ui.less"
                     ]
                 }
             },
@@ -233,7 +196,36 @@
                     "lib"
                 ]
             },
-            "time": "2014-06-03 13:46:45"
+            "license": [
+                "GNU"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "email": "andy.potanin@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Maxim Peshkov",
+                    "email": "maxim.peshkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anton Korotkov",
+                    "email": "anton.korotkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "http://github.com/UsabilityDynamics/wp-ui",
+            "keywords": [
+                "css-editor",
+                "editor",
+                "script-editor",
+                "ui"
+            ]
         },
         {
             "name": "usabilitydynamics/lib-utility",
@@ -245,7 +237,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-utility/archive/master.zip",
+                "url": "https://github.com/UsabilityDynamics/lib-utility/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -267,7 +259,34 @@
                     "lib"
                 ]
             },
-            "time": "2014-06-02 12:50:32"
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "email": "andy.potanin@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Maxim Peshkov",
+                    "email": "maxim.peshkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anton Korotkov",
+                    "email": "anton.korotkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                }
+            ],
+            "keywords": [
+                "job",
+                "process",
+                "utility"
+            ]
         },
         {
             "name": "zaininnari/html-minifier",
@@ -321,20 +340,13 @@
             "time": "2013-10-27 09:21:31"
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ],
+    "stability-flags": [],
+    "prefer-stable": false,
     "platform": {
         "php": ">=5.3"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
