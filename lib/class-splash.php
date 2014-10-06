@@ -261,11 +261,7 @@ namespace UsabilityDynamics\Theme {
       }
 
       if( !class_exists( 'UsabilityDynamics\UI\Panel' ) ) {
-<<<<<<< HEAD
-        // wp_die( 'UsabilityDynamics\UI\Panel not found.' );
-=======
-        wp_die( 'UsabilityDynamics\UI\Panel not found.' );
->>>>>>> 239245c993942a1a87c908a1ce22de35010e25dc
+	      // wp_die( 'UsabilityDynamics\UI\Panel not found.' );
       }
 
       add_filter( 'the_content',  array( $this, 'the_content' ) );
