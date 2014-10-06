@@ -1,12 +1,16 @@
+temp
 node_modules
 npm-debug.log
+static/codex
 .svn
 .idea
 .idea/workspace.xml
 .DS_Store
+.dynamic
 .Trashes
 *.sublime-project
 *.sublime-workspace
+
 *.seed
 *.log
 *.csv
@@ -14,10 +18,3 @@ npm-debug.log
 *.out
 *.pid
 *.gz
-.\#*
-*#
-ssl
-*~
-.waterline
-.htaccess
-.environment
