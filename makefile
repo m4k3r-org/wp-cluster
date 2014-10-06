@@ -2,7 +2,7 @@
 ##
 ##
 
-NAME = wp-network
+NAME = wp-splash
 
 # Default Install Action
 default:
