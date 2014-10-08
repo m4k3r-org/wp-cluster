@@ -5,9 +5,6 @@
 [![Dependencies](https://gemnasium.com/UsabilityDynamics/wp-splash.svg)](https://gemnasium.com/UsabilityDynamics/wp-splash)
 
 
-Removed "usabilitydynamics/lib-layout-engine" from composer.json due to failure to install.
-
-
 ### Theme Options
 * admin:hide-post-menu
 * admin:hide-users-menu
