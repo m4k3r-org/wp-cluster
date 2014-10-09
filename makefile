@@ -1,18 +1,6 @@
 ################################################################################################
 ## Build DDP Network
 ##
-## export ACCOUNT_NAME=ddp
-## export CIRCLE_PROJECT_USERNAME=UsabilityDynamics
-## export CIRCLE_PROJECT_REPONAME=www.usabilitydynamics.com
-## export CURRENT_BRANCH=$(git describe --contains --all HEAD)
-## export CURRENT_TAG=$(git describe --always --tag)
-## export CURRENT_COMMIT=$(git rev-list -1 HEAD)
-## export UPLOADS_BUCKET=gs://storage.usabilitydynamics.com/uploads
-## export UPLOADS_DIR=/home/ddp/storage/uploads/
-##
-## @git reset --hard HEAD
-## @git pull origin ${CURRENT_BRANCH}
-##
 ################################################################################################
 
 CIRCLE_PROJECT_USERNAME	      ?=DiscoDonniePresents
@@ -21,9 +9,9 @@ CURRENT_BRANCH                ?=$(shell git describe --contains --all HEAD)
 CURRENT_COMMIT                ?=$(shell git rev-list -1 HEAD)
 CURRENT_TAG                   ?=$(shell git describe --always --tag)
 ACCOUNT_NAME		              ?=ddp
-UPLOADS_DIR		                ?=/home/ddp/storage/uploads/
-UPLOADS_BUCKET		            ?=gs://storage.usabilitydynamics.com/uploads
-RDS_BUCKET		                ?=s3://rds.uds.io/UsabilityDynamics/www.usabilitydynamics.com
+STORAGE_DIR		                ?=/var/storage/
+STORAGE_BUCKET		            ?=gs://storage.discodonniepresents.com
+RDS_BUCKET		                ?=s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com
 
 #
 #
@@ -88,12 +76,11 @@ production:
 
 #
 #
-# s3-cli sync --no-delete-removed --acl-public --no-check-md5 --skip-existing s3://rds.uds.io/DiscoDonniePresents/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
 #
-# @gsutil -m acl -R set public-read ${UPLOADS_BUCKET}
+# @gsutil -m acl -R set public-read ${STORAGE_BUCKET}
 storageSync:
-	@echo "Synchornizing files with <${UPLOADS_BUCKET}> bucket."
-	@gsutil -m rsync -dpr ${UPLOADS_DIR} ${UPLOADS_BUCKET}
+	@echo "Synchornizing files with <${STORAGE_BUCKET}> bucket."
+	@gsutil -m rsync -dpr ${STORAGE_DIR} ${STORAGE_BUCKET}
 
 # Prepare for Git Push and push
 #
