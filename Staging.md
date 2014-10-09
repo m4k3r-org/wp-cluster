@@ -119,3 +119,13 @@ Now, all you need to do is goto any one of the sites mentioned above in the HOST
 
 * [Gas Mask](http://www.macupdate.com/app/mac/29949/gas-mask) - Allows you to quickly switch between different sets of HOSTS on OSX
 * [Server IP](https://chrome.google.com/webstore/detail/server-ip/lllhkijapbmlekoldcoohglpihmcjdgj?hl=en-UShttps://chrome.google.com/webstore/detail/server-ip/lllhkijapbmlekoldcoohglpihmcjdgj?hl=en-US) - Chrome add-on that shows you the IP of the server you're currently looking at
+
+## Windows Guides
+
+With Windows, you'll use the same concepts - but with a few key differences:
+* Different VPN Client - You'll need to download a VPN client [here](ftp://ftp.broadriver.com/Cisco%20VPN%20Client/) (User: public, Pass: publicaccess), and use it to connect to the VPN.
+* You'll use PuTTy in order to connect and setup your tunnels.
+  * [How to Use Private Key Auth with PuTTy](https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users)
+  * [How to Setup SSH Tunnels with PuTTy](http://howto.ccs.neu.edu/howto/windows/ssh-port-tunneling-with-putty/)
+* HOSTS File - This file is in a different location for Windows, see the following guide for editing it.
+  * [Editing the Windows HOSTS File](http://helpdeskgeek.com/windows-7/windows-7-hosts-file/)
