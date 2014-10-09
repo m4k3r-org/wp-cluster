@@ -26,7 +26,6 @@ dependencies:
     - echo "memory_limit = 512M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
     # - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
     # - cp config/custom.ini ~/.phpenv/versions/$(phpenv global)/etc/conf.d/
-    # - npm install mocha --global
     # - npm install grunt-cli --global
 
   post:
