@@ -96,12 +96,12 @@
 				<?php if ( is_singular( [ 'post', 'artist' ] ) ): ?>
           <div class="posts-navigation-prev">
             <?php
-                previous_post_link('%link', '<span class="icon-left">' . _x() . '</span>' );
+                next_post_link('%link', '<span class="icon-left">' . _x() . '</span>' );
             ?>
           </div>
           <div class="posts-navigation-next">
             <?php
-              next_post_link('%link', '<span class="icon-right">' . _x() . '</span>' );
+              previous_post_link('%link', '<span class="icon-right">' . _x() . '</span>' );
             ?>
           </div>
 				<?php endif; ?>

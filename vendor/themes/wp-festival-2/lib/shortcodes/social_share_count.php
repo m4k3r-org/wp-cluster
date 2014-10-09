@@ -34,19 +34,6 @@ namespace UsabilityDynamics\Festival2 {
 			public $group = 'Festival';
 
 			/**
-			 * @var array Holds the share counts
-			 */
-			private $_shares = [
-				'facebook' => null,
-				'twitter' => null,
-				'google_plus' => null,
-				'pinterest' => null,
-				'total' => null,
-				'url' => null
-			];
-
-
-			/**
 			 * Construct
 			 *
 			 * @param array|\UsabilityDynamics\Festival2\type $options
@@ -95,36 +82,49 @@ namespace UsabilityDynamics\Festival2 {
 					return json_encode(false);
 				}
 
-				$this->_shares['url'] = $atts['url'];
+				$shares = [
+					'twitter' => 0,
+					'facebook' => 0,
+					'google_plus' => 0,
+					'pinterest' => 0,
+					'total' => 0,
+					'url' => null
+				];
 
-				if ( (bool) $atts['facebook'] === true )
-				{
-					$this->_shares['facebook'] = $this->_get_facebook_shares();
-				}
-				if ( (bool) $atts['twitter'] === true )
-				{
-					$this->_shares['twitter'] = $this->_get_twitter_shares();
-				}
-				if ( (bool) $atts['google_plus'] === true )
-				{
-					$this->_shares['google_plus'] = $this->_get_google_plus_shares();
-				}
-				if ( (bool) $atts['pinterest'] === true )
-				{
-					$this->_shares['pinterest'] = $this->_get_pinterest_shares();
-				}
+
 				if ( (bool) $atts['total'] === true )
 				{
-					$this->_shares['total'] = $this->_get_total_shares();
+					$shares = $this->_get_total_shares( $atts['url'] );
+				}
+				else
+				{
+					if ( (bool) $atts['facebook'] === true )
+					{
+						$shares['facebook'] = $this->_get_facebook_shares( $atts['url'] );
+					}
+					if ( (bool) $atts['twitter'] === true )
+					{
+						$shares['twitter'] = $this->_get_twitter_shares( $atts['url'] );
+					}
+					if ( (bool) $atts['google_plus'] === true )
+					{
+						$shares['google_plus'] = $this->_get_google_plus_shares( $atts['url'] );
+					}
+					if ( (bool) $atts['pinterest'] === true )
+					{
+						$shares['pinterest'] = $this->_get_pinterest_shares( $atts['url'] );
+					}
 				}
 
-				return json_encode($this->_shares);
+				$shares['url'] = $atts['url'];
+
+				return json_encode($shares);
 			}
 
 
-			private function _get_facebook_shares()
+			private function _get_facebook_shares( $url )
 			{
-				$fb_url = 'http://api.facebook.com/restserver.php?method=links.getStats&format=json&urls=' .$this->_shares['url'];
+				$fb_url = 'http://api.facebook.com/restserver.php?method=links.getStats&format=json&urls=' .$url;
 
 				$data = $this->_curl_get_data( $fb_url );
 				$data = json_decode( $data, true );
@@ -141,9 +141,9 @@ namespace UsabilityDynamics\Festival2 {
 				return $data;
 			}
 
-			private function _get_twitter_shares()
+			private function _get_twitter_shares( $url )
 			{
-				$twitter_url = 'http://urls.api.twitter.com/1/urls/count.json?url=' .$this->_shares['url'];
+				$twitter_url = 'http://urls.api.twitter.com/1/urls/count.json?url=' .$url;
 
 				$data = $this->_curl_get_data( $twitter_url );
 				$data = json_decode( $data, true );
@@ -160,13 +160,13 @@ namespace UsabilityDynamics\Festival2 {
 				return $data;
 			}
 
-			private function _get_google_plus_shares()
+			private function _get_google_plus_shares( $url )
 			{
 				$curl = curl_init();
 				curl_setopt( $curl, CURLOPT_URL, "https://clients6.google.com/rpc" );
 				curl_setopt( $curl, CURLOPT_POST, true );
 				curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
-				curl_setopt( $curl, CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"' .rawurldecode($this->_shares['url']) .'","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]' );
+				curl_setopt( $curl, CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"' .rawurldecode($url) .'","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]' );
 				curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
 				curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Content-type: application/json' ));
 
@@ -187,9 +187,9 @@ namespace UsabilityDynamics\Festival2 {
 				return $data;
 			}
 
-			private function _get_pinterest_shares()
+			private function _get_pinterest_shares( $url )
 			{
-				$pinterest_url = 'http://api.pinterest.com/v1/urls/count.json?url=' .$this->_shares['url'];
+				$pinterest_url = 'http://api.pinterest.com/v1/urls/count.json?url=' .$url;
 
 				$data = $this->_curl_get_data( $pinterest_url );
 				$data = preg_replace('/^receiveCount((.*))$/', "\1", $data);
@@ -207,30 +207,22 @@ namespace UsabilityDynamics\Festival2 {
 				return $data;
 			}
 
-			private function _get_total_shares()
+			private function _get_total_shares( $url )
 			{
-				if ( $this->_shares['facebook'] === null )
-				{
-					$this->_shares['facebook'] = $this->_get_facebook_shares();
-				}
-				if ( $this->_shares['twitter'] === null )
-				{
-					$this->_shares['twitter'] = $this->_get_twitter_shares();
-				}
-				if ( $this->_shares['google_plus'] === null )
-				{
-					$this->_shares['google_plus'] = $this->_get_google_plus_shares();
-				}
-				if ( $this->_shares['pinterest'] === null )
-				{
-					$this->_shares['pinterest'] = $this->_get_pinterest_shares();
-				}
+				$twitter = $this->_get_twitter_shares( $url );
+				$facebook = $this->_get_facebook_shares( $url );
+				$google_plus = $this->_get_google_plus_shares( $url );
+				$pinterest = $this->_get_pinterest_shares( $url );
 
-				return
-						(int) $this->_shares['facebook'] +
-						(int) $this->_shares['twitter'] +
-						(int) $this->_shares['google_plus'] +
-						(int) $this->_shares['pinterest'];
+				$total = (int) $twitter + (int) $facebook + (int) $google_plus + (int) $pinterest;
+
+				return [
+					'twitter' => $twitter,
+					'facebook' => $facebook,
+					'google_plus' => $google_plus,
+					'pinterest' => $pinterest,
+					'total' => $total
+				];
 			}
 
 

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "39df17812b842c74902bb78373befb57",
+    "hash": "303d7ed6a6f7cc5f61f8c0782c2e23a7",
     "packages": [
         {
             "name": "components/dotdotdot",
@@ -54,6 +54,32 @@
                 "component": {
                     "scripts": [
                         "source/jquery.fancybox.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/fitvids",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/davatron5000/FitVids.js",
+                "reference": "1.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/davatron5000/FitVids.js/archive/v1.1.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.fitvids.js"
                     ]
                 }
             }
@@ -266,12 +292,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "5914f4a3e90a9176c93e5dd0c8ad2b3679fda6ed"
+                "reference": "5ed225fe8545c4e4bf502d56fdd87791ecfdd078"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/5914f4a3e90a9176c93e5dd0c8ad2b3679fda6ed",
-                "reference": "5914f4a3e90a9176c93e5dd0c8ad2b3679fda6ed",
+                "url": "https://api.github.com/repos/composer/installers/zipball/5ed225fe8545c4e4bf502d56fdd87791ecfdd078",
+                "reference": "5ed225fe8545c4e4bf502d56fdd87791ecfdd078",
                 "shasum": ""
             },
             "replace": {
@@ -350,7 +376,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-09-16 22:11:26"
+            "time": "2014-09-25 03:36:45"
         },
         {
             "name": "hanamura/wp-model",
@@ -394,12 +420,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "cf81147590cfd99b8c51ceabdd991e3d7ce44b4b"
+                "reference": "52eff4c53d6fb47b1eddb3df0597a8f1be6447b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/cf81147590cfd99b8c51ceabdd991e3d7ce44b4b",
-                "reference": "cf81147590cfd99b8c51ceabdd991e3d7ce44b4b",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/52eff4c53d6fb47b1eddb3df0597a8f1be6447b4",
+                "reference": "52eff4c53d6fb47b1eddb3df0597a8f1be6447b4",
                 "shasum": ""
             },
             "require": {
@@ -460,7 +486,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2014-09-16 00:53:54"
+            "time": "2014-09-27 20:24:07"
         },
         {
             "name": "robloach/component-installer",
@@ -513,12 +539,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "8f1f4e4329d3dc9fe08a7106417168145301e49f"
+                "reference": "2f0db541a7de08dbe5a4b55acfbaf8e3e6b029d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/8f1f4e4329d3dc9fe08a7106417168145301e49f",
-                "reference": "8f1f4e4329d3dc9fe08a7106417168145301e49f",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/2f0db541a7de08dbe5a4b55acfbaf8e3e6b029d9",
+                "reference": "2f0db541a7de08dbe5a4b55acfbaf8e3e6b029d9",
                 "shasum": ""
             },
             "require": {
@@ -551,7 +577,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2014-08-31 03:28:38"
+            "time": "2014-10-01 05:53:11"
         },
         {
             "name": "usabilitydynamics/lib-api",
@@ -594,6 +620,9 @@
                 "url": "https://github.com/usabilitydynamics/lib-carrington/archive/master.zip",
                 "reference": null,
                 "shasum": null
+            },
+            "require": {
+                "php": ">=5.3"
             },
             "type": "library",
             "autoload": {
@@ -697,7 +726,7 @@
                 "shema",
                 "validation"
             ],
-            "time": "2014-09-03 21:29:37"
+            "time": "2014-07-22 16:35:58"
         },
         {
             "name": "usabilitydynamics/lib-requires",
@@ -714,7 +743,7 @@
                 "shasum": null
             },
             "require": {
-                "usabilitydynamics/lib-utility": "master"
+                "usabilitydynamics/lib-utility": "*"
             },
             "type": "library",
             "autoload": {
@@ -723,31 +752,6 @@
                 ]
             },
             "time": "2014-06-25 22:11:12"
-        },
-        {
-            "name": "usabilitydynamics/lib-rpc",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-rpc",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-rpc/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "component",
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "time": "2014-04-30 00:09:45"
         },
         {
             "name": "usabilitydynamics/lib-settings",
@@ -802,6 +806,7 @@
                 "shasum": null
             },
             "require": {
+                "php": ">=5.3",
                 "usabilitydynamics/lib-utility": "master"
             },
             "type": "library",
@@ -857,7 +862,7 @@
                     "lib"
                 ]
             },
-            "time": "2014-09-06 09:50:48"
+            "time": "2014-08-18 15:06:59"
         },
         {
             "name": "usabilitydynamics/lib-wp-shortcode",
@@ -896,14 +901,12 @@
                 "shasum": null
             },
             "require": {
-                "composer/installers": "~1.0",
                 "usabilitydynamics/lib-api": "master",
-                "usabilitydynamics/lib-meta-box": "master",
                 "usabilitydynamics/lib-model": "master",
                 "usabilitydynamics/lib-requires": "master",
-                "usabilitydynamics/lib-rpc": "master",
                 "usabilitydynamics/lib-settings": "master",
-                "usabilitydynamics/lib-ui": "master"
+                "usabilitydynamics/lib-ui": "master",
+                "usabilitydynamics/lib-utility": "master"
             },
             "type": "library",
             "autoload": {

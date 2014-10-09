@@ -32,6 +32,8 @@ if( !class_exists( 'UsabilityDynamics_Festival2_Widget_Company_Item' ) ){
       $description = $instance[ 'description' ];
       $background = $instance[ 'background' ];
       $url = $instance[ 'url' ];
+      $button_text = $instance[ 'button_text' ];
+      $is_sponsor_leadin = $instance[ 'is_sponsor_leadin' ];
 
       $image_source = false;
 
@@ -59,14 +61,21 @@ if( !class_exists( 'UsabilityDynamics_Festival2_Widget_Company_Item' ) ){
       $instance[ 'description' ] = $new_instance[ 'description' ];
       $instance[ 'background' ] = $new_instance[ 'background' ];
       $instance[ 'url' ] = $new_instance[ 'url' ];
+      $instance[ 'button_text' ] = $new_instance[ 'button_text' ];
+      $instance[ 'is_sponsor_leadin' ] = $new_instance[ 'is_sponsor_leadin' ];
 
       if( array_key_exists( 'image', $new_instance ) ){
         $instance[ 'image' ] = $new_instance[ 'image' ];
 
-        $images = $this->_get_images( $new_instance[ 'image' ] );
-        $images = $images[ 'meta' ];
+        if ( !empty( $new_instance[ 'image' ] ) ){
+          $images = $this->_get_images( $new_instance[ 'image' ] );
+          $images = $images[ 'meta' ];
 
-        $instance[ 'image_image_id' ] = $images[ 'sel_image_id' ];
+          $instance[ 'image_image_id' ] = $images[ 'sel_image_id' ];
+        }
+        else{
+          $instance[ 'image_image_id' ] = null;
+        }
       }
       /*
             if( array_key_exists( 'image_image_id', $new_instance ) ){
@@ -88,6 +97,8 @@ if( !class_exists( 'UsabilityDynamics_Festival2_Widget_Company_Item' ) ){
       $data[ 'description' ] = isset ( $instance[ 'description' ] ) ? $instance[ 'description' ] : '';
       $data[ 'background' ] = isset ( $instance[ 'background' ] ) ? $instance[ 'background' ] : '';
       $data[ 'url' ] = isset ( $instance[ 'url' ] ) ? $instance[ 'url' ] : '';
+      $data[ 'button_text' ] = isset ( $instance[ 'button_text' ] ) ? $instance[ 'button_text' ] : '';
+      $data[ 'is_sponsor_leadin' ] = isset ( $instance[ 'is_sponsor_leadin' ] ) ? $instance[ 'is_sponsor_leadin' ] : '';
       $data[ 'selected_image' ] = null;
 
       if( array_key_exists( 'image', $instance ) ){

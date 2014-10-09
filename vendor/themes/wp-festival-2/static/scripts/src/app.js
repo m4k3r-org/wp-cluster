@@ -50,9 +50,10 @@ define( 'app', [ 'module', 'require', 'exports' ], function( module, localRequir
         'lib/fancybox',
         'lib/blog-main',
 				'lib/tabbed-content',
-        'lib/module-video'
+        'lib/module-video',
+				'components/fitvids/fitvids-built'
       ],
-      function( module, require, exports, $, developer, equalheights, swipe, countdown, ss, stickem, dotdotdot, stickynav, buytickets, navigation, masonry, carousel, account, streamFilter, artistProfile, collapse, share, imagelightbox, stream, fancybox, blogMain, tabbedContent, videoModule ){
+      function( module, require, exports, $, developer, equalheights, swipe, countdown, ss, stickem, dotdotdot, stickynav, buytickets, navigation, masonry, carousel, account, streamFilter, artistProfile, collapse, share, imagelightbox, stream, fancybox, blogMain, tabbedContent, videoModule, fv ){
     
         var self = this, resizeTo = null;
       
@@ -176,9 +177,12 @@ define( 'app', [ 'module', 'require', 'exports' ], function( module, localRequir
           }
       
           $( window ).trigger( 'resize' );
-      
-          // Initialize artist lineup content stick
-          stickem.init();
+
+          if( document.documentElement.clientWidth >= 768 ){
+            // Initialize artist lineup content stick
+            stickem.init();
+          }
+
       
           // Initialize text trim for news section
           dotdotdot.init();
@@ -297,7 +301,6 @@ define( 'app', [ 'module', 'require', 'exports' ], function( module, localRequir
 
         if( $( '.organizer-item' ).length ) {
           equalheights.equalize( $( '.organizer-item' ), 768 );
-        //  console.log('equal');
         }
 
         if ( $('.posts-list-container' ).length ){
@@ -332,11 +335,31 @@ define( 'app', [ 'module', 'require', 'exports' ], function( module, localRequir
 						});
 
 						$('.tab-header a:first').trigger('click');
-
 					}
 				}
 
 
+				// Fit Video in the blog content
+				if ( $( 'article.content').length > 0 )
+				{
+					$('article.content').fitVids();
+				}
+
+				// Hotel items adjustments
+				equalheights.equalize( $( '.hotel-item .row > .col-xs-12' ), 768 );
+
+				$(window).on('resizeEnd', function() {
+					$('.hotel-item').each( function() {
+						var t = $(this);
+						var rtHeight = $('.room-types', t).outerHeight(true);
+						var rtpHeight = $('.room-types', t).parents('.col-xs-12').outerHeight(true);
+
+						if ( rtpHeight > rtHeight )
+						{
+							$('.room-types', t).outerHeight( rtpHeight );
+						}
+					});
+				});
 
 
         $( window ).trigger( 'resize' );

@@ -1,0 +1,190 @@
+.hotel-item {
+	background: #FFF;
+	margin: 20px auto;
+
+	.photo {
+		margin: 10px;
+
+		@media @tablet {
+			margin: 20px;
+		}
+
+		@media @desktop {
+			margin: 20px 0 20px 20px;
+		}
+
+		.img-resp {
+			width: 100%;
+			padding-bottom: 100%;
+			overflow: hidden;
+			background-position: center center;
+			background-size: cover;
+		}
+	}
+
+	.hotel-content {
+		margin: 10px;
+
+		@media @tablet {
+			margin: 20px;
+		}
+
+		@media @desktop {
+			margin: 20px 0 0 0;
+		}
+
+		.title {
+			font-family: "Armata", sans-serif;
+			font-size: 24px;
+			color: #000;
+			margin: 0 0 20px 0;
+			padding: 0;
+		}
+
+		address {
+			color: #808285;
+			font-style: normal;
+			font-size: 14px;
+			border-bottom: 1px solid #dcddde;
+			padding: 0 0 20px 0;
+			margin: 0 0 20px 0;
+		}
+
+		.phone,
+		.distance {
+			font-family: "Armata", sans-serif;
+			font-size: 18px;
+			font-weight: 100;
+			color: #000;
+			text-transform: uppercase;
+
+			margin: 0 0 10px 0;
+
+			@media @tablet {
+				float: left;
+				margin: 0 20px 0 0;
+			}
+		}
+
+		.distance {
+			margin-bottom: 20px;
+		}
+
+		.services {
+			border-top: 1px solid #dcddde;
+			list-style: none;
+			margin: 0;
+			padding: 20px 0;
+
+			font-size: 14px;
+
+			@media @tablet {
+				border-bottom: 1px solid #dcddde;
+			}
+
+			li {
+				margin: 0 0 10px 0;
+				vertical-align: middle;
+
+				@media @tablet {
+					float: left;
+					width: 50%;
+
+					overflow: hidden;
+					white-space: nowrap;
+
+				}
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+
+				span {
+					font-size: 16px;
+					margin: 0 5px 0 0;
+					color: #d1d3d4;
+
+					&.icon-hotel-checked {
+						color: #0c9aad;
+					}
+				}
+			}
+		}
+	}
+
+	.room-types {
+		background: #f1f2f2;
+
+		h3 {
+			display: block;
+			text-align: center;
+			font-family: "Armata", sans-serif;
+			font-size: 18px;
+			padding: 20px 0;
+			margin: 0 10px 20px 10px;
+
+			border-bottom: 1px solid #dcddde;
+
+			@media @tablet {
+				margin: 0 20px 20px 20px;
+			}
+		}
+
+		.room-type-content {
+			margin: 0 10px 20px 10px;
+			padding: 0 0 20px 0;
+			border-bottom: 1px solid #dcddde;
+
+			@media @tablet {
+				margin: 0 20px 20px 20px;
+			}
+
+			.room-type-description-wrapper {
+				width: 100%;
+				float: left;
+
+				.room-type-description {
+					margin-right: 120px;
+
+					font-family: "Armata", sans-serif;
+					font-size: 16px;
+					text-transform: uppercase;
+					line-height: 140%;
+				}
+			}
+			
+			.button {
+				float: left;
+				margin-left: -100px;
+				width: 100px;
+				height: 40px;
+				line-height: 40px;
+
+				color: #1b2439;
+				border: 1px solid #1b2439;
+				font-size: 14px;
+				font-family: "Roboto Condensed", sans-serif;
+			}
+		}
+
+		.discount {
+			text-align: center;
+			color: #808285;
+			font-size: 14px;
+			line-height: 140%;
+
+			margin: 0 20px 20px 20px;
+
+			.coupon-code {
+				display: block;
+				font-family: "Armata", sans-serif;
+				color: #0c9aad;
+				font-size: 24px;
+				font-weight: 100;
+				margin: 20px 0 0 0;
+			}
+		}
+
+	}
+
+}

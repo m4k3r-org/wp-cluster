@@ -58,6 +58,11 @@
 			"title": "Page: Artist Single",
 			"priority": 80
 		},
+		"page_hotels": {
+			"title": "Page: Hotels",
+			"priority": 90
+		},
+
     "misc": {
       "title": {
         "title": "Miscellaneous",
@@ -1179,7 +1184,52 @@
 			"selector": [
 				".single-artist header .button:hover"
 			]
+		},
+		{
+			"key": "page_hotels_sidebar_background",
+			"label": "Room Type Background",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "background-color",
+			"important": false,
+			"selector": [
+				".hotel-item .room-types"
+			]
+		},
+		{
+			"key": "page_hotels_sidebar_coupon_code_color",
+			"label": "Coupon Code Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "color",
+			"important": false,
+			"selector": [
+				".hotel-item .room-types .discount .coupon-code"
+			]
+		},
+		{
+			"key": "page_hotels_services_icon_checked_color",
+			"label": "Services Checked Icon Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "color",
+			"important": false,
+			"selector": [
+				".hotel-item .hotel-content .services li span.icon-hotel-checked"
+			]
+		},
+		{
+			"key": "page_hotels_services_icon_unchecked_color",
+			"label": "Services Unchecked Icon Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "color",
+			"important": false,
+			"selector": [
+				".hotel-item .hotel-content .services li span.icon-hotel-unchecked"
+			]
 		}
+
 
 
 

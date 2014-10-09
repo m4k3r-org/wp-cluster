@@ -207,7 +207,7 @@
       }
 
       .description{
-        padding: 60px 40px 40px;
+        padding: 60px 40px 30px;
         position: relative;
         display: block;
       }
@@ -217,7 +217,7 @@
         font-weight: 500;
         text-align: center;
         margin-bottom: 25px;
-        height: 60px;
+        height: 110px;
 
         a{
           color: black;
@@ -260,13 +260,14 @@
     }
 
     .share{
-      background-image: url("@{coreImagesUrl}/share-bg.png");
+   //   background-image: url("@{coreImagesUrl}/share-bg.png");
       height: 40px;
       position: absolute;
       right: 10px;
       top: 10px;
       width: 40px;
       border-radius: 3px;
+      background-color: rgba(0,0,0, 0.9);
 
       .icon-share{
         font-size: 17px;
@@ -274,6 +275,10 @@
         height: 19px;
         margin: 12px auto;
         width: 16px;
+      }
+
+      &:hover{
+         background-color:rgba(0,0,0, 0.6);
       }
     }
 
@@ -550,6 +555,7 @@ p.latest-blog-posts{
        position: absolute;
        top: 0;
        left: 0;
+       right:0;
      }
 
      /* front pane, placed above back */
@@ -619,7 +625,6 @@ p.latest-blog-posts{
 
            a{
              height: 100px;
-             padding: 40px;
              width: 100px;
              float: left;
              margin: 0;
@@ -629,6 +634,10 @@ p.latest-blog-posts{
 
                &:hover{
                  background-color: #20caff;
+               }
+
+               .icon-twitter{
+                 right: 3px;
                }
              }
 
@@ -659,6 +668,8 @@ p.latest-blog-posts{
              [class^="icon-"]{
                font-size: 20px;
                font-weight: normal;
+               display:inline-block;
+               margin-top: 35px;
              }
 
              em{

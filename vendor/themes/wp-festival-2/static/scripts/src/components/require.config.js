@@ -9,6 +9,10 @@ var components = {
             "main": "fancybox2-built.js"
         },
         {
+            "name": "fitvids",
+            "main": "fitvids-built.js"
+        },
+        {
             "name": "imagesloaded",
             "main": "imagesloaded-built.js"
         },
@@ -77,6 +81,11 @@ var components = {
             ]
         },
         "components/fancybox2/fancybox2-built": {
+            "deps": [
+                "jquery"
+            ]
+        },
+        "components/fitvids/fitvids-built": {
             "deps": [
                 "jquery"
             ]

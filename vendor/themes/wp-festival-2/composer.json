@@ -67,6 +67,33 @@
 					"robloach/component-installer": "*"
 				}
 			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "components/fitvids",
+				"type": "component",
+				"version": "1.1.0",
+				"dist": {
+					"url": "https://github.com/davatron5000/FitVids.js/archive/v1.1.0.zip",
+					"type": "zip"
+				},
+				"source": {
+					"url": "https://github.com/davatron5000/FitVids.js",
+					"type": "git",
+					"reference": "1.1.0"
+				},
+				"extra": {
+					"component": {
+						"scripts": [
+							"jquery.fitvids.js"
+						]
+					}
+				},
+				"require": {
+					"robloach/component-installer": "*"
+				}
+			}
 		}
   ],
   "config": {
@@ -102,7 +129,11 @@
         },
         "components/fancybox2/fancybox2-built": {
           "deps": [ "jquery" ]
-        }
+        },
+				"components/fitvids/fitvids-built": {
+					"deps": [ "jquery" ]
+				}
+
       }
     }
   },
@@ -120,6 +151,7 @@
     "components/sticky": "1.0.0",
     "components/masonry": "3.1.5",
 		"components/imagesloaded": "3.1.8",
+		"components/fitvids": "1.1.0",
     "components/fancybox2": "2.1.5",
     "components/malihu-custom-scrollbar-plugin": "3.x",
     "components/jquery": "~2.1"

@@ -100,7 +100,7 @@ define( ['jquery'], function( $ ){
 
         url = $( this ).closest( 'a' ).attr( 'href' );
 
-        window.location = url + '#commentform';
+        window.location = url + '#comments';
 
       } );
     }
