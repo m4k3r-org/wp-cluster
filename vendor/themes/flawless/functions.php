@@ -137,7 +137,7 @@ class flawless_theme extends Flawless_F {
     wp_register_script( 'bootstrap',  get_bloginfo( 'template_url' ) . '/js/bootstrap.min.js', array( 'jquery' ), '2.0.1', true );
     wp_register_script( 'jquery-lazyload',  get_bloginfo( 'template_url' ) . '/js/jquery.lazyload.min.js', array( 'jquery' ), '1.7.0', true );
     wp_register_script( 'jquery-touch-punch',  get_bloginfo( 'template_url' ) . '/js/jquery.ui.touch-punch.min.js', array( 'jquery' ), '0.2.2', true );
-    //wp_register_script( 'jquery-fancybox',  get_bloginfo( 'template_url' ) . '/js/jquery.fancybox.pack.js', array( 'jquery' ), '2.0.4', true );
+    wp_register_script( 'jquery-fancybox',  get_bloginfo( 'template_url' ) . '/js/jquery.fancybox.pack.js', array( 'jquery' ), '2.0.4', true );
     wp_register_script( 'jquery-placeholder',  get_bloginfo( 'template_url' ) . '/js/jquery.placeholder.min.js', array( 'jquery' ), '2.0.4',true );
     wp_register_script( 'google-pretify',  get_bloginfo( 'template_url' ) . '/js/google-prettify.js', array( 'jquery' ), Flawless_Version, true );
 
