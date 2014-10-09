@@ -1,4 +1,5 @@
-edm_cluster_new.sql
+/*.sql
+/*.sql.tgz
 application/.logs
 application/logs
 application/logs/*
