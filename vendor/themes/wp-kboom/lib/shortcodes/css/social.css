@@ -1,0 +1,74 @@
+/* SITE5 WORDPRESS THEME SOCIAL */
+
+/* === Twitter === */
+#twitter_update_list
+{
+	margin-bottom:20px!important;
+	margin-top:20px!important;
+}
+
+#twitter_update_list li
+{
+	background:url(../images/icons/small/tweet.png) no-repeat left top;
+	list-style:none!important;
+	padding-bottom:10px;
+	padding-left:10px;
+}
+
+#twitter_update_list li span
+{
+	padding-bottom:10px;
+	padding-left:10px;
+}
+
+#twitter_update_list li a
+{
+	margin-left:5px;
+}
+
+.twitter-share-button
+{
+	float:left;
+	height:40px;
+}
+
+.facebook-share-button
+{
+	margin-top:-16px;
+}
+
+.flickrstream img
+{
+	background-color:#fafafa;
+	border:1px solid #ddd;
+	height:40px;
+	list-style:none;
+	margin:3px;
+	padding:2px;
+	text-align:center;
+	width:40px;
+}
+
+.flickrstream img:hover
+{
+	border:1px solid #ccc;
+}
+
+#sidebar .flickrstream a
+{
+	background:none;
+}
+
+#sidebar .textwidget h4 a,#sidebar .textwidget a
+{
+	background:none;
+	list-style:none;
+	padding-left:0;
+}
+
+.share-this
+{
+	margin-bottom:20px!important;
+	margin-top:20px!important;
+	width:100%;
+}

@@ -1,0 +1,943 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "39df17812b842c74902bb78373befb57",
+    "packages": [
+        {
+            "name": "components/dotdotdot",
+            "version": "1.6.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BeSite/jQuery.dotdotdot",
+                "reference": "v1.6.14"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/BeSite/jQuery.dotdotdot/archive/v1.6.14.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "src/js/jquery.dotdotdot.min.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/fancybox2",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fancyapps/fancyBox",
+                "reference": "e2248f468dc4b45f5b1ef1776bde958b2b52775d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/fancyapps/fancyBox/archive/v2.1.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "source/jquery.fancybox.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/imagesloaded",
+            "version": "3.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/desandro/imagesloaded",
+                "reference": "3.1.8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/desandro/imagesloaded/archive/v3.1.8.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "imagesloaded.pkgd.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/iscroll",
+            "version": "5.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cubiq/iscroll",
+                "reference": "v5.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/cubiq/iscroll/archive/v5.1.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "build/iscroll.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/jquery",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jquery.git",
+                "reference": "9e2c56ed9f17e6b55de97ae64a3ed0cf17cd30d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jquery/zipball/9e2c56ed9f17e6b55de97ae64a3ed0cf17cd30d4",
+                "reference": "9e2c56ed9f17e6b55de97ae64a3ed0cf17cd30d4",
+                "shasum": ""
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.js"
+                    ],
+                    "files": [
+                        "jquery.min.js",
+                        "jquery.min.map",
+                        "jquery-migrate.js",
+                        "jquery-migrate.min.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Resig",
+                    "email": "jeresig@gmail.com",
+                    "homepage": "http://ejohn.org/"
+                }
+            ],
+            "description": "jQuery JavaScript Library",
+            "homepage": "http://jquery.com",
+            "time": "2014-07-02 11:52:43"
+        },
+        {
+            "name": "components/knockout",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/knockout/knockout",
+                "reference": "v3.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/knockout/knockout/archive/v3.1.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "dist/knockout.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/malihu-custom-scrollbar-plugin",
+            "version": "3.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/malihu/malihu-custom-scrollbar-plugin",
+                "reference": "3.0.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/malihu/malihu-custom-scrollbar-plugin/archive/3.0.3.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "js/minified/jquery.mCustomScrollbar.min.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/masonry",
+            "version": "3.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/desandro/masonry",
+                "reference": "v3.1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/desandro/masonry/archive/v3.1.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "dist/masonry.pkgd.min.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "components/sticky",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2degrees/jquery.sticky",
+                "reference": "a0acf2cee5cbd9cdf34f9a37c0a17781f0265a9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/2degrees/jquery.sticky/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.sticky.js"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "composer/installers",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "5914f4a3e90a9176c93e5dd0c8ad2b3679fda6ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/5914f4a3e90a9176c93e5dd0c8ad2b3679fda6ed",
+                "reference": "5914f4a3e90a9176c93e5dd0c8ad2b3679fda6ed",
+                "shasum": ""
+            },
+            "replace": {
+                "roundcube/plugin-installer": "*",
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Composer\\Installers\\Installer",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Composer\\Installers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "http://composer.github.com/installers/",
+            "keywords": [
+                "Craft",
+                "Dolibarr",
+                "Hurad",
+                "MODX Evo",
+                "OXID",
+                "Thelia",
+                "WolfCMS",
+                "agl",
+                "annotatecms",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "drupal",
+                "elgg",
+                "fuelphp",
+                "grav",
+                "installer",
+                "joomla",
+                "kohana",
+                "laravel",
+                "lithium",
+                "magento",
+                "mako",
+                "mediawiki",
+                "modulework",
+                "moodle",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "puppet",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "symfony",
+                "typo3",
+                "wordpress",
+                "zend",
+                "zikula"
+            ],
+            "time": "2014-09-16 22:11:26"
+        },
+        {
+            "name": "hanamura/wp-model",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hanamura/wp-model.git",
+                "reference": "09c5611c616994d18414beb89ebb1981b86d43e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hanamura/wp-model/zipball/09c5611c616994d18414beb89ebb1981b86d43e6",
+                "reference": "09c5611c616994d18414beb89ebb1981b86d43e6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "WPModel": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taro Hanamura",
+                    "email": "m@hanamurataro.com"
+                }
+            ],
+            "description": "Missing functionalities from model objects of WordPress.",
+            "time": "2014-04-25 08:19:05"
+        },
+        {
+            "name": "kriswallsmith/assetic",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kriswallsmith/assetic.git",
+                "reference": "cf81147590cfd99b8c51ceabdd991e3d7ce44b4b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/cf81147590cfd99b8c51ceabdd991e3d7ce44b4b",
+                "reference": "cf81147590cfd99b8c51ceabdd991e3d7ce44b4b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1",
+                "symfony/process": "~2.1"
+            },
+            "require-dev": {
+                "cssmin/cssmin": "*",
+                "joliclic/javascript-packer": "*",
+                "kamicane/packager": "*",
+                "leafo/lessphp": "*",
+                "leafo/scssphp": "*",
+                "leafo/scssphp-compass": "*",
+                "mrclay/minify": "*",
+                "patchwork/jsqueeze": "*",
+                "phpunit/phpunit": "~3.7",
+                "psr/log": "~1.0",
+                "ptachoire/cssembed": "*",
+                "twig/twig": "~1.6"
+            },
+            "suggest": {
+                "leafo/lessphp": "Assetic provides the integration with the lessphp LESS compiler",
+                "leafo/scssphp": "Assetic provides the integration with the scssphp SCSS compiler",
+                "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin",
+                "patchwork/jsqueeze": "Assetic provides the integration with the JSqueeze JavaScript compressor",
+                "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
+                "twig/twig": "Assetic provides the integration with the Twig templating engine"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Assetic": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                }
+            ],
+            "description": "Asset Management for PHP",
+            "homepage": "https://github.com/kriswallsmith/assetic",
+            "keywords": [
+                "assets",
+                "compression",
+                "minification"
+            ],
+            "time": "2014-09-16 00:53:54"
+        },
+        {
+            "name": "robloach/component-installer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RobLoach/component-installer.git",
+                "reference": "7aaa3d20fce87030d5f4094f4394c7c1e1f0e19d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/7aaa3d20fce87030d5f4094f4394c7c1e1f0e19d",
+                "reference": "7aaa3d20fce87030d5f4094f4394c7c1e1f0e19d",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "1.0.0",
+                "kriswallsmith/assetic": "1.*",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "composer/composer": "1.*"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "ComponentInstaller\\Installer"
+            },
+            "autoload": {
+                "psr-0": {
+                    "ComponentInstaller": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Loach",
+                    "homepage": "http://robloach.net"
+                }
+            ],
+            "description": "Allows installation of Components via Composer.",
+            "time": "2014-09-16 17:57:47"
+        },
+        {
+            "name": "symfony/process",
+            "version": "dev-master",
+            "target-dir": "Symfony/Component/Process",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Process.git",
+                "reference": "8f1f4e4329d3dc9fe08a7106417168145301e49f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/8f1f4e4329d3dc9fe08a7106417168145301e49f",
+                "reference": "8f1f4e4329d3dc9fe08a7106417168145301e49f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Process\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-08-31 03:28:38"
+        },
+        {
+            "name": "usabilitydynamics/lib-api",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-api",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-api/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "time": "2014-06-03 15:01:06"
+        },
+        {
+            "name": "usabilitydynamics/lib-carrington",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-carrington",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-carrington/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/classes"
+                ]
+            },
+            "time": "2014-05-02 06:30:34"
+        },
+        {
+            "name": "usabilitydynamics/lib-meta-box",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/wp-meta-box",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/wp-meta-box/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "library",
+            "extra": {
+                "installer-name": "lib-meta-box"
+            },
+            "autoload": {
+                "classmap": [
+                    "inc/fields",
+                    "inc/common.php",
+                    "inc/field.php",
+                    "inc/helpers.php",
+                    "inc/meta-box.php"
+                ]
+            },
+            "time": "2014-06-03 12:04:11"
+        },
+        {
+            "name": "usabilitydynamics/lib-model",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-model",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/lib-model/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "hanamura/wp-model": "1.1.1",
+                "usabilitydynamics/lib-meta-box": "*",
+                "usabilitydynamics/lib-utility": "*"
+            },
+            "type": "library",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "static/scripts/udx.model.js",
+                        "static/scripts/udx.model.validation.js"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "email": "andy.potanin@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Maxim Peshkov",
+                    "email": "maxim.peshkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anton Korotkov",
+                    "email": "anton.korotkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "http://github.com/usabilitydynamics/lib-models",
+            "keywords": [
+                "models",
+                "shema",
+                "validation"
+            ],
+            "time": "2014-09-03 21:29:37"
+        },
+        {
+            "name": "usabilitydynamics/lib-requires",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-requires",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-requires/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-06-25 22:11:12"
+        },
+        {
+            "name": "usabilitydynamics/lib-rpc",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-rpc",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/lib-rpc/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "component",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-04-30 00:09:45"
+        },
+        {
+            "name": "usabilitydynamics/lib-settings",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-settings",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-settings/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "*"
+            },
+            "require-dev": {
+                "justinrainbow/json-schema": "1.1.*"
+            },
+            "type": "library",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "scripts/settings.js"
+                    ],
+                    "templates": [
+                        "views/new-installation.xhtml"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-06-02 15:22:26"
+        },
+        {
+            "name": "usabilitydynamics/lib-ui",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-ui",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-ui/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "master"
+            },
+            "type": "library",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "scripts/ui.js",
+                        "scripts/ui.markdown.js",
+                        "scripts/ui.jquery-tabs.js"
+                    ],
+                    "styles": [
+                        "styles/ui.css",
+                        "styles/ui.less"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-07-23 11:51:09"
+        },
+        {
+            "name": "usabilitydynamics/lib-utility",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-utility",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-utility/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "library",
+            "extra": {
+                "installer-name": "lib-utility",
+                "component": {
+                    "name": "utility",
+                    "scripts": [
+                        "scripts/*.js"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-09-06 09:50:48"
+        },
+        {
+            "name": "usabilitydynamics/lib-wp-shortcode",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-wp-shortcode",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/lib-wp-shortcode/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "component",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "time": "2014-01-20 16:48:17"
+        },
+        {
+            "name": "usabilitydynamics/lib-wp-theme",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-wp-theme",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-wp-theme/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "usabilitydynamics/lib-api": "master",
+                "usabilitydynamics/lib-meta-box": "master",
+                "usabilitydynamics/lib-model": "master",
+                "usabilitydynamics/lib-requires": "master",
+                "usabilitydynamics/lib-rpc": "master",
+                "usabilitydynamics/lib-settings": "master",
+                "usabilitydynamics/lib-ui": "master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/plugins",
+                    "lib/class-carrington.php",
+                    "lib/class-customizer.php",
+                    "lib/class-nav-menu.php",
+                    "lib/class-module.php",
+                    "lib/class-requires.php",
+                    "lib/class-scaffold.php",
+                    "lib/class-script.php",
+                    "lib/class-settings.php",
+                    "lib/class-utility.php"
+                ]
+            },
+            "time": "2014-08-14 19:13:58"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": [
+
+    ],
+    "prefer-stable": false,
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}
