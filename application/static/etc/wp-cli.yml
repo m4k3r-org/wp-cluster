@@ -4,4 +4,17 @@ user: reidwilliams
 password: LJzflMVaGpWV
 color: true
 disabled_commands:
+  - eval-file
+  - cron
+  - comment
+  - menu
+  - eval
+  - widget
+  - core multisite-install
+  - site create
+  - term
+  - sidebar
+  - shell
+  - scaffold
+disabled_commands:
   - db drop

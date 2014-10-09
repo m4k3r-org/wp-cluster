@@ -1,6 +1,5 @@
 ################################################################################################
-## Build UD Site/Network
-##
+## Build DDP Network
 ##
 ## export ACCOUNT_NAME=ddp
 ## export CIRCLE_PROJECT_USERNAME=UsabilityDynamics
@@ -10,11 +9,6 @@
 ## export CURRENT_COMMIT=$(git rev-list -1 HEAD)
 ## export UPLOADS_BUCKET=gs://storage.usabilitydynamics.com/uploads
 ## export UPLOADS_DIR=/home/ddp/storage/uploads/
-##
-## wp theme list
-## wp theme search fancy
-## wp post list
-## wp post update 1 --post_title="An Introduction..."
 ##
 ## @git reset --hard HEAD
 ## @git pull origin ${CURRENT_BRANCH}
@@ -57,11 +51,10 @@ staging:
 	@tar -xvf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz -C ~/tmp
 	@wp db import ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@wp option update upload_url_path https://storage.googleapis.com/storage.usabilitydynamics.com/uploads
-	@wp option update uds:ci:branch ${CURRENT_BRANCH}
-	@wp option update uds:ci:build ${CIRCLE_BUILD_NUM}
-	@wp option update uds:ci:organization ${CIRCLE_PROJECT_USERNAME}
-	@wp option update uds:ci:repository ${CIRCLE_PROJECT_REPONAME}
-	@wp option update uds:ci:db s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
+	@wp option update git:branch ${CURRENT_BRANCH}
+	@wp option update git:build ${CIRCLE_BUILD_NUM}
+	@wp option update git:organization ${CIRCLE_PROJECT_USERNAME}
+	@wp option update git:repository ${CIRCLE_PROJECT_REPONAME}
 	@wp transient delete-all
 	@wp cache flush
 
@@ -78,11 +71,10 @@ develop:
 	@wp db import ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@wp plugin deactivate w3-total-cache google-sitemap-generator
 	@wp option update upload_url_path https://storage.googleapis.com/storage.usabilitydynamics.com/uploads
-	@wp option update uds:ci:branch ${CURRENT_BRANCH}
-	@wp option update uds:ci:build ${CIRCLE_BUILD_NUM}
-	@wp option update uds:ci:organization ${CIRCLE_PROJECT_USERNAME}
-	@wp option update uds:ci:repository ${CIRCLE_PROJECT_REPONAME}
-	@wp option update uds:ci:db s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
+	@wp option update git:branch ${CURRENT_BRANCH}
+	@wp option update git:build ${CIRCLE_BUILD_NUM}
+	@wp option update git:organization ${CIRCLE_PROJECT_USERNAME}
+	@wp option update git:repository ${CIRCLE_PROJECT_REPONAME}
 	@wp transient delete-all
 	@wp cache flush
 
@@ -91,9 +83,9 @@ develop:
 #
 production:
 	@echo "Installing ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CURRENT_TAG} for development."
-	@wp option update uds:ci:branch ${CURRENT_BRANCH}
-	@wp option update uds:ci:organization ${CIRCLE_PROJECT_USERNAME}
-	@wp option update uds:ci:repository ${CIRCLE_PROJECT_REPONAME}
+	@wp option update git:branch ${CURRENT_BRANCH}
+	@wp option update git:organization ${CIRCLE_PROJECT_USERNAME}
+	@wp option update git:repository ${CIRCLE_PROJECT_REPONAME}
 
 #
 #
