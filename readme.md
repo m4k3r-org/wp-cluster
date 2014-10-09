@@ -1,3 +1,10 @@
+### CLI Commands
+
+Create Backup:
+```
+s3cmd put --no-check-md5 --reduced-redundancy edm_cluster_new.sql.tgz s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com/edm_cluster_new.sql.tgz
+```
+
 ### Environment Setup
 You should never have to pull this repository unless you're planning on making changes to the core image.
 In most cases you want to pull the Docker Staging/Production/Latest image to setup your environment.

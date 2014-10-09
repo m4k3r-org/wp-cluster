@@ -15,8 +15,8 @@
 ##
 ################################################################################################
 
-CIRCLE_PROJECT_USERNAME	      ?=UsabilityDynamics
-CIRCLE_PROJECT_REPONAME	      ?=www.usabilitydynamics.com
+CIRCLE_PROJECT_USERNAME	      ?=DiscoDonniePresents
+CIRCLE_PROJECT_REPONAME	      ?=www.discodonniepresents.com
 CURRENT_BRANCH                ?=$(shell git describe --contains --all HEAD)
 CURRENT_COMMIT                ?=$(shell git rev-list -1 HEAD)
 CURRENT_TAG                   ?=$(shell git describe --always --tag)
@@ -38,7 +38,6 @@ snapshot:
 	@wp db export ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@tar cvzf ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@s3cmd put --no-check-md5 --reduced-redundancy ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
-	@s3cmd cp s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_TAG}.sql.tgz
 	@echo "MySQL snapshot available at s3://rds.uds.io/DiscoDonniePresents/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz."
 
 #
