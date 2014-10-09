@@ -50,7 +50,7 @@
         "db_host": "10.88.135.7",
         "wp_debug": true,
         "wp_debug_display": false,
-        "wp_debug_log": true,
+        "wp_debug_log": false,
         "script_debug": false,
         "savequeries": false,
         "wp_default_theme": "wp-splash",

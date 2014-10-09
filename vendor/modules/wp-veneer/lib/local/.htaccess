@@ -47,7 +47,6 @@
   AddType text/vtt vtt
   AddType text/x-component htc
   AddType text/x-vcard vcf
-
 </IfModule>
 # END Mimes
 
@@ -91,7 +90,6 @@
   </FilesMatch>
 
 </IfModule>
-
 # END Static Cache
 
 # BEGIN Browser Optimization
