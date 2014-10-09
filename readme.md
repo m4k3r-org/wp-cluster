@@ -5,6 +5,17 @@ Create Backup:
 s3cmd put --no-check-md5 --reduced-redundancy edm_cluster_new.sql.tgz s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com/edm_cluster_new.sql.tgz
 ```
 
+### GitHub Plugin Install
+```
+wget --quiet --header "Authorization: token ${GITHUB_UPDATER_TOKEN}" -O /tmp/wp-pagespeed.zip https://api.github.com/repos/UsabilityDynamics/wp-pagespeed/zipball/master
+wget --quiet --header "Authorization: token ${GITHUB_UPDATER_TOKEN}" -O /tmp/wp-revisr.zip https://api.github.com/repos/UsabilityDynamics/wp-revisr/zipball/master
+wget --quiet --header "Authorization: token ${GITHUB_UPDATER_TOKEN}" -O /tmp/wp-github-updater.zip https://api.github.com/repos/UsabilityDynamics/wp-github-updater/zipball/master
+
+wp plugin install /tmp/wp-pagespeed.zip --force
+wp plugin install /tmp/wp-revisr.zip --force
+wp plugin install /tmp/wp-github-updater.zip --force
+```
+
 ### Environment Setup
 You should never have to pull this repository unless you're planning on making changes to the core image.
 In most cases you want to pull the Docker Staging/Production/Latest image to setup your environment.

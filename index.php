@@ -4,6 +4,7 @@
  */
 try {
 
+
 	header( 'PageSpeed:off' );
 
   /** Try to pull in our local debug file if it exists */

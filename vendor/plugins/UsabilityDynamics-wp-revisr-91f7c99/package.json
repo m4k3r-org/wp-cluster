@@ -1,0 +1,25 @@
+{
+  "name": "wp-revisr",
+  "version": "1.5.3",
+  "description": "A plugin that allows developers to manage WordPress websites with Git repositories. Integrates several key git functions into the WordPress admin.",
+  "main": "gruntfile.js",
+  "scripts": {
+    "test": "mocha --ui exports --reporter list"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UsabilityDynamics/wp-revisr.git"
+  },
+  "keywords": [
+    "wordpress"
+  ],
+  "author": "ExpandedFronts",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/UsabilityDynamics/wp-revisr/issues"
+  },
+  "homepage": "https://github.com/UsabilityDynamics/wp-revisr",
+  "devDependencies": {
+    "should": "^4.0.4"
+  }
+}
