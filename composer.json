@@ -1,8 +1,7 @@
 {
   "name": "DiscoDonniePresents/www.discodonniepresents.com",
   "description": "The composer library for the DDP network.",
-  "version": "2.0.1",
-  "type": "project",
+  "type": "wordpress-site",
   "repositories": [
     {
       "type": "composer",
