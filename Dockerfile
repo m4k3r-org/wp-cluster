@@ -13,7 +13,7 @@
 ## @author potanin@UD
 #################################################################
 
-FROM          usabilitydynamics/blackbox:1.1.1
+FROM          hipstack/wordpress
 MAINTAINER    UsabilityDynamics, Inc.   <info@usabilitydynamics.com>
 USER          root
 
@@ -61,7 +61,6 @@ ENV           COMPOSER_REPOSITORY                                     http://rep
 ##
 ##
 EXPOSE        80
-EXPOSE        443
 
 ##
 ## - Logs need to persist and do not need to be committed
