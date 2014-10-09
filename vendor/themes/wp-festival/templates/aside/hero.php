@@ -8,9 +8,13 @@
  * @since festival 0.1.0
  */
 
-global $wp_query;
+global $wp_query, $data;
 
-extract( $data = wp_festival()->extend( array(
+if( !$data ) {
+	$data  = $wp_query->data[ 'hero' ];
+}
+
+$_data = extract( wp_festival()->extend( array(
   'image_src' => '',
   'image_alignment' => '',
   'title' => '',
@@ -25,7 +29,8 @@ extract( $data = wp_festival()->extend( array(
   'tw_account' => '',
   'tw_hashtag' => '',
   'gp_share' => false,
-), (array)$wp_query->data[ 'hero' ] ) );
+), (array) $data ) );
+
 
 ?>
 <div class="<?php echo $id_base; ?>-image" style="min-height: <?php echo $box_height; ?>px;<?php if (!empty($image_src)) { ?> background-image: url(<?php echo $image_src[0]; ?>); background-position: <?php echo $image_alignment; ?>; background-repeat: no-repeat;<?php } ?>">
