@@ -1,57 +1,155 @@
 ################################################################################################
-## Build DDP Site/Network
+## Build UD Site/Network
 ##
-## This can be used to a build a "baseline" image.
 ##
-## ### Build and Push
-## docker build -t  discodonniepresents/www.discodonniepresents.com --rm .
-## docker push      discodonniepresents/www.discodonniepresents.com
+## export ACCOUNT_NAME=ddp
+## export CIRCLE_PROJECT_USERNAME=UsabilityDynamics
+## export CIRCLE_PROJECT_REPONAME=www.usabilitydynamics.com
+## export CURRENT_BRANCH=$(git describe --contains --all HEAD)
+## export CURRENT_TAG=$(git describe --always --tag)
+## export CURRENT_COMMIT=$(git rev-list -1 HEAD)
+## export UPLOADS_BUCKET=gs://storage.usabilitydynamics.com/uploads
+## export UPLOADS_DIR=/home/ddp/storage/uploads/
 ##
-## ### Pull and Run
-## docker pull      discodonniepresents/www.discodonniepresents.com
-## docker run       --name edm -d -v /var/www/ discodonniepresents/www.discodonniepresents.com
+## wp theme list
+## wp theme search fancy
+## wp post list
+## wp post update 1 --post_title="An Introduction..."
 ##
-## ### Commit and Push a Change
-## docker commit -m="Setup www.discodonniepresents.com, tagged." furious_sammet
-## docker tag 612a966410e5 discodonniepresents/www.discodonniepresents.com:0.0.1
-## docker push discodonniepresents/www.discodonniepresents.com:0.0.1
+## @git reset --hard HEAD
+## @git pull origin ${CURRENT_BRANCH}
 ##
 ################################################################################################
 
-ORGANIATION   = discodonniepresents
-NAME 			    = www.discodonniepresents.com
-DOMAIN 	      = www.discodonniepresents.com.internal
-VERSION 	    = baseline-2.0.1
+CIRCLE_PROJECT_USERNAME	      ?=UsabilityDynamics
+CIRCLE_PROJECT_REPONAME	      ?=www.usabilitydynamics.com
+CURRENT_BRANCH                ?=$(shell git describe --contains --all HEAD)
+CURRENT_COMMIT                ?=$(shell git rev-list -1 HEAD)
+CURRENT_TAG                   ?=$(shell git describe --always --tag)
+ACCOUNT_NAME		              ?=ddp
+UPLOADS_DIR		                ?=/home/ddp/storage/uploads/
+UPLOADS_BUCKET		            ?=gs://storage.usabilitydynamics.com/uploads
+RDS_BUCKET		                ?=s3://rds.uds.io/UsabilityDynamics/www.usabilitydynamics.com
 
-default:
-	make install
+#
+#
+#
+default: install
 
-# Build Docker Image for deployment
-docker:
-	docker build -t $(ORGANIATION)/$(NAME):$(VERSION) --rm .
+# Create MySQL Snapshot
+#
+#
+snapshot:
+	@echo "Creating MySQL snapshot for <${CURRENT_BRANCH}> database branch."
+	@wp db export ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
+	@tar cvzf ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
+	@s3cmd put --no-check-md5 --reduced-redundancy ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
+	@s3cmd cp s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_TAG}.sql.tgz
+	@echo "MySQL snapshot available at s3://rds.uds.io/DiscoDonniePresents/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz."
 
-# Build Docker Image for deployment
+#
+# - Import MySQL Snapshot
+#
+staging:
+	@echo "Setting up staging environment from RDS data snapshot, <${CURRENT_BRANCH}> database branch, using s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz for MySQL data."
+	@rm -rf composer.lock wp-vendor/composer/installed.json wp-vendor/composer/installers
+	@s3cmd get --no-check-md5 --skip-existing s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
+	@tar -xvf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz -C ~/tmp
+	@wp db import ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
+	@wp option update upload_url_path https://storage.googleapis.com/storage.usabilitydynamics.com/uploads
+	@wp option update uds:ci:branch ${CURRENT_BRANCH}
+	@wp option update uds:ci:build ${CIRCLE_BUILD_NUM}
+	@wp option update uds:ci:organization ${CIRCLE_PROJECT_USERNAME}
+	@wp option update uds:ci:repository ${CIRCLE_PROJECT_REPONAME}
+	@wp option update uds:ci:db s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
+	@wp transient delete-all
+	@wp cache flush
+
+#
+# - Import MySQL Snapshot
+#
+develop:
+	@echo "Installing ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CURRENT_TAG} for development."
+	@npm install --silent
+	@rm -rf composer.lock wp-vendor/composer/installed.json wp-vendor/composer/installers
+	@composer update --dev --prefer-source --no-interaction --no-progress
+	@s3cmd get --no-check-md5 --skip-existing s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
+	@tar -xvf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz -C ~/tmp
+	@wp db import ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
+	@wp plugin deactivate w3-total-cache google-sitemap-generator
+	@wp option update upload_url_path https://storage.googleapis.com/storage.usabilitydynamics.com/uploads
+	@wp option update uds:ci:branch ${CURRENT_BRANCH}
+	@wp option update uds:ci:build ${CIRCLE_BUILD_NUM}
+	@wp option update uds:ci:organization ${CIRCLE_PROJECT_USERNAME}
+	@wp option update uds:ci:repository ${CIRCLE_PROJECT_REPONAME}
+	@wp option update uds:ci:db s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
+	@wp transient delete-all
+	@wp cache flush
+
+#
+#
+#
+production:
+	@echo "Installing ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CURRENT_TAG} for development."
+	@wp option update uds:ci:branch ${CURRENT_BRANCH}
+	@wp option update uds:ci:organization ${CIRCLE_PROJECT_USERNAME}
+	@wp option update uds:ci:repository ${CIRCLE_PROJECT_REPONAME}
+
+#
+#
+# s3-cli sync --no-delete-removed --acl-public --no-check-md5 --skip-existing s3://rds.uds.io/DiscoDonniePresents/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
+#
+# @gsutil -m acl -R set public-read ${UPLOADS_BUCKET}
+storageSync:
+	@echo "Synchornizing files with <${UPLOADS_BUCKET}> bucket."
+	@gsutil -m rsync -dpr ${UPLOADS_DIR} ${UPLOADS_BUCKET}
+
+# Prepare for Git Push and push
+#
+#
 release:
-	make docker
-	docker push $(ORGANIATION)/$(NAME):$(VERSION)
+	@echo "Running application install ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CURRENT_TAG}."
+	@rm -rf composer.lock
+	@rm -rf wp-vendor/composer/installed.json
+	@rm -rf wp-vendor/composer/installers
+	@rm -rf wp-vendor/composer/installers/.gitignore
+	@rm -rf wp-vendor/**/.git
+	@composer update --optimize-autoloader --no-dev --prefer-dist --no-interaction
+	@git add . --all && git commit -m '[ci skip]' && git push
 
-# Build for Distribution
-build:
-	npm install --production
-	composer install --prefer-dist --no-dev --no-interaction
-	grunt install --environment=production --system=linux --type=cluster
+# Prepare for Git Push and push
+#
+#
+snapshotRelease:
+	make snapshot
+	make release
+
+# Dangerous command. Will dump any local changes.
+#
+#
+reset:
+	@echo "Resetting current branch <${CURRENT_BRANCH}> to origin."
+	@git fetch --force --quiet origin
+	@git clean --force -d --quiet
+	@git reset --hard origin/${CURRENT_BRANCH}
+	@git pull --force --quiet
+
+#
+#
+#
+merge:
+	@echo "Merging current <${CURRENT_BRANCH}> branch with origin/production."
+	@git fetch origin
+	@git merge --no-ff origin/production -m "Merging with production"
 
 # Install for Staging/Development
+#
+# - We always dump /wp-vendor/composer/installers* to avoid any issues with installers.
+# - Composer install Will delete any unused depds.
+# - Composer update will fix anything missing. If "dist" is unavailable, will fall back to source.
+#
 install:
-	NPM_ENV=production  npm install
-	NPM_ENV=development npm install
-	composer install --prefer-source --dev --no-interaction
-	grunt install --environment=development --type=cluster
-
-# Install for Staging/Development
-server:
-	docker run -itd \
-		--name=ddp.production \
-		--hostname=$(DOMAIN).internal \
-		--entrypoint=/var/www/application/bin/bash/docker.entrypoint.sh \
-		$(ORGANIATION)/$(NAME):$(VERSION) /bin/bash
+	@echo "Installing ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CURRENT_TAG}."
+	@npm install --silent
+	@rm -rf wp-vendor/composer/installed.json wp-vendor/composer/installers
+	@composer update --prefer-source --dev --no-interaction --no-progress
