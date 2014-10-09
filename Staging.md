@@ -66,3 +66,39 @@ Group Password: praYefe6
 User Name: *private*
 User Password: *private*
 ```
+
+Once you're connected, verify that you can ping the Ramadi host by using the following command:
+
+```
+$ ping ramadi
+PING ramadi (208.52.164.204): 56 data bytes
+64 bytes from 208.52.164.204: icmp_seq=0 ttl=64 time=30.564 ms
+64 bytes from 208.52.164.204: icmp_seq=1 ttl=64 time=32.172 ms
+64 bytes from 208.52.164.204: icmp_seq=2 ttl=64 time=30.497 ms
+```
+
+## Step 3: Configure SSH
+
+Now, the next step is to configure SSH so that when you connect to Ramadi, your ports on your local machine will forward to the necessary ports on the Docker container running inside Ramadi. To do this on Mac, run the following commands in a terminal. After you do this, you can close the terminal.
+
+```
+$ sudo su root
+$ nano ~/.ssh/config
+```
+
+**Note: On OSX, you have to do this as the root user using 'sudo' due to the fact that normal users are not allowed to run things on low level ports.**
+
+### Contents of the 'config' file
+
+```
+Host ramadi
+User root
+Port 22
+IdentityFile *path to your private key*
+# Staging
+LocalForward 80 172.17.0.17:8080
+LocalForward 1134 172.17.0.17:22
+LocalForward 8000 172.17.0.17:8000
+```
+
+**Why?: The last 3 lines forward ports 80, 1134, and 8000 from your local machine (127.0.0.1) to the remote staging Docker instance.**
