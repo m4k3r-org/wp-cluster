@@ -12,6 +12,7 @@ ACCOUNT_NAME		              ?=ddp
 STORAGE_DIR		                ?=/var/storage/
 STORAGE_BUCKET		            ?=gs://storage.discodonniepresents.com
 RDS_BUCKET		                ?=s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com
+SITE_LIST		                  ?=$(shell wp --allow-root site list --field=url --format=csv)
 
 #
 #
@@ -77,10 +78,10 @@ production:
 #
 #
 #
-# @gsutil -m acl -R set public-read ${STORAGE_BUCKET}
 storageSync:
-	@echo "Synchornizing files with <${STORAGE_BUCKET}> bucket."
-	@gsutil -m rsync -dpr ${STORAGE_DIR} ${STORAGE_BUCKET}
+	@echo "Pushing storage files from <${STORAGE_DIR}> to <${STORAGE_BUCKET}> bucket."
+	$(echo $(wp --allow-root site list --field=url --format=csv) | while read line; do echo "Site: ${item}"; done)
+
 
 # Prepare for Git Push and push
 #

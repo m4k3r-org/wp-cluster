@@ -83,9 +83,10 @@ jQuery( document ).bind( 'hddp::initialize', function() {
   }
 
   /* Attach to our filter button */
-  jQuery( '#filter_wrapper .btn_show_filter' ).live( 'click', function( e ) {
+  jQuery( '#filter_wrapper .btn_show_filter' ).click(function( e ) {
 
     e.preventDefault();
+
 
     if( jQuery( '#filter_wrapper #df_sidebar_filters_wrap' ).css( 'visibility' ) == 'hidden' ) {
       jQuery( '#filter_wrapper #df_sidebar_filters_wrap' ).css( 'visibility', 'visible' );
