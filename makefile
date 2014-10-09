@@ -34,17 +34,6 @@ snapshot:
 #
 staging:
 	@echo "Setting up staging environment from RDS data snapshot, <${CURRENT_BRANCH}> database branch, using s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz for MySQL data."
-	@rm -rf composer.lock wp-vendor/composer/installed.json wp-vendor/composer/installers
-	@s3cmd get --no-check-md5 --skip-existing s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
-	@tar -xvf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz -C ~/tmp
-	@wp db import ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
-	@wp option update upload_url_path https://storage.googleapis.com/storage.usabilitydynamics.com/uploads
-	@wp option update git:branch ${CURRENT_BRANCH}
-	@wp option update git:build ${CIRCLE_BUILD_NUM}
-	@wp option update git:organization ${CIRCLE_PROJECT_USERNAME}
-	@wp option update git:repository ${CIRCLE_PROJECT_REPONAME}
-	@wp transient delete-all
-	@wp cache flush
 
 #
 # - Import MySQL Snapshot
@@ -58,7 +47,6 @@ develop:
 	@tar -xvf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz -C ~/tmp
 	@wp db import ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@wp plugin deactivate w3-total-cache google-sitemap-generator
-	@wp option update upload_url_path https://storage.googleapis.com/storage.usabilitydynamics.com/uploads
 	@wp option update git:branch ${CURRENT_BRANCH}
 	@wp option update git:build ${CIRCLE_BUILD_NUM}
 	@wp option update git:organization ${CIRCLE_PROJECT_USERNAME}
@@ -81,7 +69,6 @@ production:
 storageSync:
 	@echo "Pushing storage files from <${STORAGE_DIR}> to <${STORAGE_BUCKET}> bucket."
 	$(echo $(wp --allow-root site list --field=url --format=csv) | while read line; do echo "Site: ${item}"; done)
-
 
 # Prepare for Git Push and push
 #
