@@ -23,8 +23,8 @@ default: install
 #
 #
 snapshot:
-	@echo "Creating MySQL snapshot for <${CURRENT_BRANCH}> database branch."
-	@wp db export ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
+	@echo "Creating MySQL snapshot for <${CURRENT_BRANCH}> database branch to ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
+	@wp --allow-root db export ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@tar cvzf ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@s3cmd put --no-check-md5 --reduced-redundancy ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
 	@echo "MySQL snapshot available at s3://rds.uds.io/DiscoDonniePresents/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz."
