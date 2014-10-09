@@ -102,3 +102,20 @@ LocalForward 8000 172.17.0.17:8000
 ```
 
 **Why?: The last 3 lines forward ports 80, 1134, and 8000 from your local machine (127.0.0.1) to the remote staging Docker instance.**
+
+## Step 4: SSH and Establish the Tunnel
+
+At this point, all you should need to do is run the terminal, and type the following command to SSH into Ramadi as the root user locally. You don't need to do anything with this terminal, as just establishing the connection creates the tunnel you need to test out all the sites.
+
+```
+$sudo ssh ramadi
+```
+
+## Step 5: Verify Site
+
+Now, all you need to do is goto any one of the sites mentioned above in the HOSTS file modification, and checking to see that you're looking at the staging content.
+
+## Recommended Tools
+
+* [Gas Mask](http://www.macupdate.com/app/mac/29949/gas-mask) - Allows you to quickly switch between different sets of HOSTS on OSX
+* [Server IP](https://chrome.google.com/webstore/detail/server-ip/lllhkijapbmlekoldcoohglpihmcjdgj?hl=en-UShttps://chrome.google.com/webstore/detail/server-ip/lllhkijapbmlekoldcoohglpihmcjdgj?hl=en-US) - Chrome add-on that shows you the IP of the server you're currently looking at
