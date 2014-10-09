@@ -27,23 +27,28 @@ function brightcove_menu() {
 
 
 wp_deregister_script( 'brightcove_admin_script' );
-wp_register_script( 'brightcove_admin_script', '/wp-content/plugins/brightcove-video-cloud/admin/brightcove_admin.js');
+$myBrightcoveAdminScript = plugins_url('admin/brightcove_admin.js', __FILE__);
+wp_register_script( 'brightcove_admin_script', $myBrightcoveAdminScript);
 wp_enqueue_script( 'brightcove_admin_script');
 
-wp_register_style( 'brightcove_menu_style', '/wp-content/plugins/brightcove-video-cloud/admin/brightcove_admin.css');
+$myBrightcoveMenuStyle = plugins_url('admin/brightcove_admin.css',__FILE__);
+wp_register_style( 'brightcove_menu_style', $myBrightcoveMenuStyle);
 wp_enqueue_style( 'brightcove_menu_style' );
 add_menu_page(__('Brightcove Settings'), __('Brightcove'), 'edit_themes', 'brightcove_menu', 'brightcove_menu_render', WP_PLUGIN_URL.'/brightcove-video-cloud/admin/bc_icon.png'); 
 
   wp_deregister_script('jQueryValidate');
-  wp_register_script( 'jQueryValidate', '/wp-content/plugins/brightcove-video-cloud/jQueryValidation/jquery.validate.min.js');
+  $myBrightcoveJQValidate = plugins_url('jQueryValidation/jquery.validate.min.js',__FILE__);
+  wp_register_script( 'jQueryValidate',$myBrightcoveJQValidate);
   wp_enqueue_script( 'jQueryValidate' );
 
   wp_deregister_script('jQueryValidateAddional');
-  wp_register_script( 'jQueryValidateAddional', '/wp-content/plugins/brightcove-video-cloud/jQueryValidation/additional-methods.min.js');
+  $myBrightcoveJQAdditionalMethods = plugins_url('jQueryValidation/additional-methods.min.js',__FILE__);
+  wp_register_script( 'jQueryValidateAddional', $myBrightcoveJQAdditionalMethods);
   wp_enqueue_script( 'jQueryValidateAddional');
 
-    wp_deregister_script('jqueryPlaceholder');
-  wp_register_script( 'jqueryPlaceholder', '/wp-content/plugins/brightcove-video-cloud/jQueryPlaceholder/jQueryPlaceholder.js');
+  wp_deregister_script('jqueryPlaceholder');
+  $myBrightcoveJQPlaceholder = plugins_url('jQueryPlaceholder/jQueryPlaceholder.js', __FILE__);
+  wp_register_script( 'jqueryPlaceholder', $myBrightcoveJQPlaceholder);
   wp_enqueue_script( 'jqueryPlaceholder');
   
 

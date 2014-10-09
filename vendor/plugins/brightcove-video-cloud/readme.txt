@@ -2,7 +2,7 @@
 Contributors: brightcove
 Tags: video, brightcove
 Requires at least: 3.6
-Tested up to: 3.8
+Tested up to: 4.0
 Stable tag: trunk
 
 [Updated] An easy to use plugin that inserts Brightcove Video into your Wordpress site. 
@@ -107,4 +107,8 @@ For Video Cloud Professional and Video Cloud Enterprise Brightcove customers, th
 * Dynamic_brightcove.js is currently updated with jQuery libraries
 * Shortcode has been rewritten to add the necessary fields in the output
 
+= 1.2 =
+* Plugin no longer interferes with Mandrill by MailChimp
+* Removed development bundle to minimize plugin size
+* Bundled plugin’s dependent files with Wordpress
 

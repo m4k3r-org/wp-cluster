@@ -657,6 +657,7 @@ class GFFormsModel {
         $lead_notes_table = self::get_lead_notes_table_name();
         $lead_detail_table = self::get_lead_details_table_name();
         $lead_detail_long_table = self::get_lead_details_long_table_name();
+        $lead_meta_table = self::get_lead_meta_table_name();
 
         do_action("gform_delete_entries", $form_id, $status);
 
@@ -687,6 +688,13 @@ class GFFormsModel {
                                     SELECT id FROM $lead_table WHERE form_id=%d {$status_filter}
                                 )", $form_id);
         $wpdb->query($sql);
+
+        //Delete from lead meta
+        $sql = $wpdb->prepare(" DELETE FROM $lead_meta_table
+        						WHERE lead_id IN (
+        							SELECT id FROM $lead_table WHERE form_id=%d {$status_filter}
+                                )", $form_id);
+    	$wpdb->query($sql);
 
         //Delete from lead
         $sql = $wpdb->prepare("DELETE FROM $lead_table WHERE form_id=%d {$status_filter}", $form_id);
@@ -1472,7 +1480,7 @@ class GFFormsModel {
         return null;
     }
 
-    public static function is_value_match( $field_value, $target_value, $operation="is", $source_field = null, $rule = null ){
+    public static function is_value_match( $field_value, $target_value, $operation="is", $source_field = null, $rule = null, $form = null ) {
 
         $is_match = false;
 
@@ -1500,7 +1508,7 @@ class GFFormsModel {
             $is_match = true;
         }
 
-        return apply_filters( 'gform_is_value_match', $is_match, $field_value, $target_value, $operation, $source_field, $rule );
+        return apply_filters( 'gform_is_value_match', $is_match, $field_value, $target_value, $operation, $source_field, $rule, $form );
     }
 
     private static function try_convert_float($text){
@@ -1582,7 +1590,7 @@ class GFFormsModel {
             $source_field = RGFormsModel::get_field($form, $rule["fieldId"]);
             $field_value = empty($lead) ? self::get_field_value($source_field, $field_values) : self::get_lead_field_value($lead, $source_field);
 
-            $is_value_match = self::is_value_match($field_value, $rule["value"], $rule["operator"], $source_field);
+            $is_value_match = self::is_value_match( $field_value, $rule['value'], $rule['operator'], $source_field, $rule, $form );
 
             if($is_value_match)
                 $match_count++;
@@ -2004,7 +2012,7 @@ class GFFormsModel {
             break;
 
             case "date" :
-                $value = self::prepare_date($field["dateFormat"], $value);
+                $value = self::prepare_date( rgar( $field, 'dateFormat' ), $value);
 
             break;
 
@@ -2688,10 +2696,9 @@ class GFFormsModel {
         $value = self::prepare_value($form, $field, $value, $input_name, rgar($lead, "id"));
 
         //ignore fields that have not changed
-        if($lead != null && $value === rgget($input_id, $lead)){
+        if( $lead != null && $value === rgget( (string) $input_id, $lead ) ){
             return;
 		}
-
 
         $lead_detail_id = self::get_lead_detail_id($current_fields, $input_id);
         self::update_lead_field_value($form, $lead, $field, $lead_detail_id, $input_id, $value);
@@ -2792,7 +2799,7 @@ class GFFormsModel {
         }
     }
 
-    private static function set_permissions($path){
+    public static function set_permissions($path){
 
         $permission = apply_filters("gform_file_permission", 0644, $path);
         if($permission){
@@ -2959,31 +2966,39 @@ class GFFormsModel {
 
     public static function is_duplicate($form_id, $field, $value){
         global $wpdb;
-        $lead_detail_table_name = self::get_lead_details_table_name();
-        $lead_table_name = self::get_lead_table_name();
-        $sql_comparison = "ld.value=%s";
 
-        switch(RGFormsModel::get_input_type($field)){
-            case "time" :
+        $lead_detail_table_name = self::get_lead_details_table_name();
+        $lead_table_name        = self::get_lead_table_name();
+        $lead_detail_long       = self::get_lead_details_long_table_name();
+        $is_long                = ! is_array( $value ) && strlen( $value ) > GFORMS_MAX_FIELD_LENGTH - 10;
+
+        $sql_comparison = $is_long ? '( ld.value = %s OR ldl.value = %s )' : 'ld.value = %s';
+
+        switch( GFFormsModel::get_input_type( $field ) ) {
+            case 'time':
                 $value = sprintf("%02d:%02d %s", $value[0], $value[1], $value[2]);
             break;
-            case "date" :
+            case 'date':
                 $value = self::prepare_date(rgar($field, "dateFormat"), $value);
             break;
-            case "number" :
+            case 'number':
                 $value = GFCommon::clean_number($value, rgar($field, 'numberFormat'));
             break;
-            case "phone" :
+            case 'phone':
                 $value = str_replace(array(")", "(", "-", " "), array("", "", "", ""), $value);
-                $sql_comparison = 'replace(replace(replace(replace(ld.value, ")", ""), "(", ""), "-", ""), " ", "") = %s';
+                $sql_comparison = 'replace( replace( replace( replace( ld.value, ")", "" ), "(", "" ), "-", "" ), " ", "" ) = %s';
             break;
-         }
+        }
 
+        $inner_sql_template =  "SELECT %s as input, ld.lead_id
+                                FROM {$lead_detail_table_name} ld
+                                INNER JOIN {$lead_table_name} l ON l.id = ld.lead_id\n";
 
-        $inner_sql_template = " SELECT %s as input, ld.lead_id
-                                FROM $lead_detail_table_name ld
-                                INNER JOIN $lead_table_name l ON l.id = ld.lead_id
-                                WHERE l.form_id=%d AND ld.form_id=%d
+        if( $is_long ) {
+            $inner_sql_template .= "INNER JOIN {$lead_detail_long} ldl ON ldl.lead_detail_id = ld.id\n";
+        }
+
+        $inner_sql_template .= "WHERE l.form_id=%d AND ld.form_id=%d
                                 AND ld.field_number between %s AND %s
                                 AND status='active' AND {$sql_comparison}";
 
@@ -2994,11 +3009,11 @@ class GFFormsModel {
             $input_count = sizeof($field["inputs"]);
             foreach($field["inputs"] as $input){
                 $union = empty($inner_sql) ? "" : " UNION ALL ";
-                $inner_sql .= $union . $wpdb->prepare($inner_sql_template, $input["id"], $form_id, $form_id, $input["id"] - 0.001, $input["id"] + 0.001, $value[$input["id"]]);
+                $inner_sql .= $union . $wpdb->prepare($inner_sql_template, $input["id"], $form_id, $form_id, $input["id"] - 0.001, $input["id"] + 0.001, $value[ $input['id'] ], $value[ $input['id'] ] );
             }
         }
         else{
-            $inner_sql = $wpdb->prepare($inner_sql_template, $field["id"], $form_id, $form_id, doubleval($field["id"]) - 0.001, doubleval($field["id"]) + 0.001, $value);
+            $inner_sql = $wpdb->prepare($inner_sql_template, $field["id"], $form_id, $form_id, doubleval($field["id"]) - 0.001, doubleval($field["id"]) + 0.001, $value, $value );
         }
 
         $sql .= $inner_sql . "
@@ -3226,13 +3241,13 @@ class GFFormsModel {
         $entry_meta_sql_join = "";
         if ( false === empty( $entry_meta ) && array_key_exists( $sort_field, $entry_meta ) ) {
             $entry_meta_sql_join = $wpdb->prepare("INNER JOIN
-                                                    (
-                                                    SELECT
-                                                         lead_id, meta_value as $sort_field
-                                                         from $lead_meta_table_name
-                                                         WHERE meta_key = '$sort_field'
-                                                    ) lead_meta_data ON lead_meta_data.lead_id = l.id
-                                                    ");
+													(
+													SELECT
+														 lead_id, meta_value as $sort_field
+														 from $lead_meta_table_name
+														 WHERE meta_key = %s
+													) lead_meta_data ON lead_meta_data.lead_id = l.id
+													", $sort_field);
             $is_numeric_sort = $entry_meta[$sort_field]['is_numeric'];
         }
         $grid_columns = RGFormsModel::get_grid_columns($form_id);
@@ -4094,7 +4109,60 @@ class GFFormsModel {
                     break;
                 case "global":
 
-                    $sql_array[] = $wpdb->prepare("value $operator %s", $search_term);
+					// include choice text
+					$forms = array();
+					if ( $form_id == 0 ) {
+						$forms = GFAPI::get_forms();
+					} elseif ( is_array( $form_id ) ) {
+						foreach ( $form_id as $id ){
+							$forms[] = GFAPI::get_form( $id );
+						}
+					} else {
+						$forms[] = GFAPI::get_form( $form_id );
+					}
+
+					$choice_texts_clauses = array();
+					foreach ( $forms as $form ) {
+						if ( isset( $form['fields'] ) ) {
+							$choice_texts_clauses_for_form = array();
+							foreach ( $form['fields'] as $field ) {
+								$choice_texts_clauses_for_field = array();
+								if ( isset( $field['choices'] ) && is_array( $field['choices'] ) ) {
+									foreach ( $field['choices'] as $choice ) {
+										if ( ( $operator == '=' && strtolower( $choice['text'] ) == strtolower( $val ) ) || ( $operator == 'like' && strpos( strtolower( $choice['text'] ), strtolower( $val ) ) !== false ) ) {
+											if ( rgar( $field, 'gsurveyLikertEnableMultipleRows' ) ){
+												$choice_value =  '%' . $choice['value'] . '%' ;
+												$choice_search_operator = 'like';
+											} else {
+												$choice_value =  $choice['value'];
+												$choice_search_operator = '=';
+											}
+											$choice_texts_clauses_for_field[] = $wpdb->prepare( "field_number BETWEEN %s AND %s AND value {$choice_search_operator} %s", (float) $field['id'] - 0.0001, (float) $field['id'] + 0.9999, $choice_value );
+										}
+									}
+								}
+								if ( ! empty( $choice_texts_clauses_for_field ) ) {
+									$choice_texts_clauses_for_form[] = join( ' OR ', $choice_texts_clauses_for_field );
+								}
+							}
+						}
+						if ( ! empty( $choice_texts_clauses_for_form ) ) {
+							$choice_texts_clauses[] = '(l.form_id = ' . $form['id'] . ' AND (' . join( ' OR ', $choice_texts_clauses_for_form ) . ' ))';
+						}
+					}
+					$choice_texts_clause = '';
+					if ( ! empty( $choice_texts_clauses) ){
+						$choice_texts_clause = join( ' OR ', $choice_texts_clauses );
+						$choice_texts_clause = "
+						l.id IN (
+                        SELECT
+                        lead_id
+                        FROM {$lead_details_table_name}
+                        WHERE {$choice_texts_clause} ) OR ";
+					}
+
+					$choice_value_clause = $wpdb->prepare( "value {$operator} %s", $search_term );
+					$sql_array[] = '(' . $choice_texts_clause . $choice_value_clause . ')';
                     break;
                 case "meta":
                     /* doesn't support "<>" for multiple values of the same key */
@@ -4396,6 +4464,17 @@ class GFFormsModel {
         return in_array( $field_id, $encrypted_fields );
     }
 
+	public static function delete_password( $entry, $form ) {
+		$password_fields = GFCommon::get_fields_by_type( $form, array( 'password' ) );
+		if ( is_array( $password_fields ) ) {
+			foreach ( $password_fields as $password_field ) {
+				$entry[$password_field['id']] = '';
+			}
+		}
+		GFAPI::update_entry( $entry );
+
+		return $entry;
+	}
 }
 
 class RGFormsModel extends GFFormsModel { }

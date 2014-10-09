@@ -30,6 +30,14 @@ abstract class GFFeedAddOn extends GFAddOn {
 
     }
 
+    public function init_ajax() {
+
+		parent::init_ajax();
+
+        add_action( "wp_ajax_gf_feed_is_active_{$this->_slug}", array( $this, 'ajax_toggle_is_active' ) );
+
+	}
+
     protected function setup(){
         parent::setup();
 
@@ -110,45 +118,78 @@ abstract class GFFeedAddOn extends GFAddOn {
 
     //-------- Front-end methods ---------------------------
 
-    public function maybe_process_feed( $entry, $form, $is_delayed = false ) {
+    public function maybe_process_feed( $entry, $form ) {
 
-        $paypal_feed = $this->get_paypal_feed( $form['id'], $entry );
-        $has_payment = self::get_paypal_payment_amount($form, $entry, $paypal_feed) > 0;
-
-        if( $paypal_feed && rgar( $paypal_feed['meta'], "delay_{$this->_slug}" ) && $has_payment && !$is_delayed ) {
-            self::log_debug( "Feed processing delayed pending PayPal payment received for entry {$entry['id']}" );
-            return $entry;
-        }
-
-        // getting all active feeds
+        //Getting all feeds for current add-on
         $feeds = $this->get_feeds( $form['id'] );
 
+		if ( empty( $feeds ) ){
+			//no feeds to process
+			return $entry;
+		}
+
+		//get paypal feed to pass for delay check, must be done per add-on
+		$paypal_feeds = $this->get_feeds_by_slug( 'gravityformspaypal', $form['id'] );
+		$active_paypal_feed = '';
+		//loop through paypal feeds to get active one for this form submission, needed to see if add-on processing should be delayed
+		foreach ( $paypal_feeds as $paypal_feed ){
+			if ( $paypal_feed['is_active'] && $this->is_feed_condition_met( $paypal_feed, $form, $entry ) ){
+				$active_paypal_feed = $paypal_feed;
+				break;
+			}
+		}
+
+		$is_delayed = false;
+		if ( ! empty( $active_paypal_feed ) && $this->is_delayed( $active_paypal_feed ) ) {
+			$this->log_debug( 'Feed processing is delayed pending payment, not processing feed for entry #' . $entry['id'] . ' for ' . $this->_slug );
+			$is_delayed = true;
+		}
+
+		//Processing feeds
         $processed_feeds = array();
         foreach ( $feeds as $feed ) {
-            if ( $this->is_feed_condition_met( $feed, $form, $entry ) ) {
-                $this->process_feed( $feed, $entry, $form );
-                $processed_feeds[] = $feed["id"];
-            } else {
-                $this->log_debug( "Opt-in condition not met; not fulfilling entry {$entry["id"]} to list" );
-            }
+            if ( ! $feed['is_active'] ) {
+				$this->log_debug( 'Feed is inactive, not processing feed for entry #' . $entry['id'] . ' for ' . $this->_slug );
+				continue;
+			}
+			if ( ! $this->is_feed_condition_met( $feed, $form, $entry ) ){
+				$this->log_debug( 'Feed condition not met, not processing feed for entry #' . $entry['id'] . ' for ' . $this->_slug );
+				continue;
+			}
+
+			$processed_feeds[] = $feed['id'];
+
+			//process feed if not delayed
+			if ( !$is_delayed ) {
+				//all requirements met, process feed
+				$this->process_feed( $feed, $entry, $form );
+				//should the add-on fulfill be done here????
+				$this->log_debug( 'Marking entry ' . $entry['id'] . ' as fulfilled for ' . $this->_slug );
+				gform_update_meta( $entry['id'], "{$this->_slug}_is_fulfilled", true );
+			}
+
         }
 
-        if(!empty($processed_feeds)){
-            $meta = gform_get_meta($entry["id"], "processed_feeds");
-            if(empty($meta))
+        //Saving processed feeds
+        if( ! empty( $processed_feeds ) ){
+            $meta = gform_get_meta( $entry['id'], 'processed_feeds' );
+            if( empty( $meta ) ) {
                 $meta = array();
+			}
 
             $meta[$this->_slug] = $processed_feeds;
 
-            gform_update_meta( $entry["id"], "processed_feeds", $meta );
+            gform_update_meta( $entry['id'], 'processed_feeds', $meta );
         }
 
         return $entry;
     }
 
-    public function get_feed_by_entry( $entry_id ) {
-        return gform_update_meta( $entry["id"], "processed_feeds", $meta );
-    }
+	public function is_delayed( $paypal_feed ){
+		//look for delay in paypal feed specific to add-on
+		$delay = rgar( $paypal_feed['meta'], 'delay_' . $this->_slug );
+		return $delay;
+	}
 
     public function process_feed( $feed, $entry, $form ) {
 
@@ -203,6 +244,22 @@ abstract class GFFeedAddOn extends GFAddOn {
 
         return $results;
     }
+
+	public function get_feeds_by_slug ( $slug, $form_id = null ){
+		global $wpdb;
+
+		$form_filter = is_numeric( $form_id ) ? $wpdb->prepare( 'AND form_id=%d', absint( $form_id ) ) : '';
+
+		$sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}gf_addon_feed
+                               WHERE addon_slug=%s {$form_filter}", $slug);
+
+		$results = $wpdb->get_results( $sql, ARRAY_A );
+		foreach( $results as &$result ){
+			$result['meta'] = json_decode( $result['meta'], true );
+		}
+
+		return $results;
+	}
 
     public function get_current_feed(){
         $feed_id = $this->get_current_feed_id();
@@ -282,10 +339,6 @@ abstract class GFFeedAddOn extends GFAddOn {
 
     public function form_settings_init(){
         parent::form_settings_init();
-
-        if (RG_CURRENT_PAGE == "admin-ajax.php") {
-            add_action("wp_ajax_gf_feed_is_active_{$this->_slug}", array($this, 'ajax_toggle_is_active'));
-        }
     }
 
     public function ajax_toggle_is_active(){
@@ -745,26 +798,34 @@ abstract class GFFeedAddOn extends GFAddOn {
         return $feed;
     }
 
-    public function paypal_fulfillment( $entry, $config, $transaction_id, $amount ) {
+    public function paypal_fulfillment( $entry, $paypal_config, $transaction_id, $amount ) {
 
-        self::log_debug( "Checking PayPal fulfillment for transaction {$transaction_id}" );
-
+        $this->log_debug( 'Checking PayPal fulfillment for transaction ' . $transaction_id . ' for ' . $this->_slug );
         $is_fulfilled = gform_get_meta( $entry['id'], "{$this->_slug}_is_fulfilled" );
+		if( $is_fulfilled ){
+			$this->log_debug( 'Entry ' . $entry['id'] . ' is already fulfilled for ' . $this->_slug . '. No action necessary.' );
+			return false;
+		}
 
-        if ( !$is_fulfilled ) {
+		$form = RGFormsModel::get_form_meta( $entry['form_id'] );
 
-            self::log_debug( "Entry {$entry['id']} has not been fulfilled." );
-            $form = RGFormsModel::get_form_meta( $entry['form_id'] );
-            $this->maybe_process_feed( $entry, $form, true );
+		$feed_to_process = '';
+		$feeds = $this->get_feeds( $entry['form_id'] );
+		foreach ( $feeds as $feed ){
+			if ( $feed['is_active'] && $this->is_feed_condition_met( $feed, $form, $entry ) ){
+				$feed_to_process = $feed;
+				break;
+			}
+		}
+		if ( empty( $feed_to_process ) ){
+			$this->log_debug( 'No active feeds found or feeds did not meet conditional logic for ' . $this->_slug . '. No fulfillment necessary.' );
+			return false;
+		}
 
-            // updating meta to indicate this entry has been fulfilled for the current add-on
-            self::log_debug( "Marking entry {$entry['id']} as fulfilled" );
-            gform_update_meta( $entry['id'], "{$this->_slug}_is_fulfilled", true );
-
-        } else {
-            self::log_debug( "Entry {$entry['id']} is already fulfilled." );
-        }
-
+		$this->process_feed( $feed_to_process, $entry, $form );
+		// updating meta to indicate this entry has been fulfilled for the current add-on
+		$this->log_debug( 'Marking entry ' . $entry['id'] . ' as fulfilled for ' . $this->_slug );
+		gform_update_meta( $entry['id'], "{$this->_slug}_is_fulfilled", true );
     }
 
     public static function get_paypal_payment_amount($form, $entry, $paypal_config){
@@ -814,6 +875,21 @@ abstract class GFFeedAddOn extends GFAddOn {
         //does not require that feed meets conditional logic. return true since there are feeds
         return true;
     }
+    
+    protected function is_delayed_payment( $entry, $form, $is_delayed ) {
+		if ( $this->_slug == 'gravityformspaypal' ) {
+			return false;
+		}
+
+		$paypal_feed = $this->get_paypal_feed( $form['id'], $entry );
+		if ( ! $paypal_feed ) {
+			return false;
+		}
+
+		$has_payment = self::get_paypal_payment_amount( $form, $entry, $paypal_feed ) > 0;
+
+		return rgar( $paypal_feed['meta'], "delay_{$this->_slug}" ) && $has_payment && ! $is_delayed;
+	}
 
 }
 

@@ -1,37 +1,39 @@
 <?php
 /**
  * @package Brightcove Video Cloud
- * @version 1.1
+ * @version 1.2
  */
 /*
 Plugin Name: Brightcove Video Cloud
 Plugin URL: 
 Description: An easy to use plugin that inserts Brightcove Video into your Wordpress site. 
 Author: Brightcove
-Version: 1.1
+Version: 1.2
 Author URI: 
 */
 
 require dirname( __FILE__ ) . '/admin/brightcove_admin.php';
 require dirname( __FILE__ ) . '/brightcove_shortcode.php';
 
-//Nessesary to fix wordpress bug where wp_get_current_user is undefined
-require_once(ABSPATH."wp-includes/pluggable.php");
+add_action('init' , 'brightcove_init');
+
+function brightcove_init(){
 
 /************************Upload Media Tab ***************************/
 
 function brightcove_media_menu($tabs) {
 	//TODO Check for isset or empty instead
  
-  if (get_option('bc_api_key') != NULL or get_option('bc_api_key') != '') {
-    $tabs['brightcove_api']='Brightcove'; 
-  } else {
-    $tabs['brightcove']='Brightcove';
-  }
-  return $tabs;
+	if (get_option('bc_api_key') != NULL or get_option('bc_api_key') != '') {
+    	$tabs['brightcove_api']='Brightcove'; 
+	} else {
+   		$tabs['brightcove']='Brightcove';
+   	}
+   	return $tabs;
 }
 
-add_action('admin_enqueue_scripts', 'add_all_admin_scripts');
+add_action('wp_enqueue_scripts', 'add_all_scripts');
+add_action('wp_enqueue_scripts', 'add_all_admin_scripts');
 add_filter('media_upload_tabs', 'brightcove_media_menu');
 add_action('media_upload_brightcove', 'brightcove_menu_handle');
 add_action('media_upload_brightcove_api', 'brightcove_api_menu_handle');
@@ -39,9 +41,9 @@ add_action('media_upload_brightcove_api', 'brightcove_api_menu_handle');
 function add_all_admin_scripts(){
 
 	wp_enqueue_script('media-upload');
-	$myStyleUrl = plugins_url('brightcove.css', __FILE__);
-	wp_register_style('myStyleSheets', $myStyleUrl);
-	wp_enqueue_style( 'myStyleSheets');
+	$brightcoveStyleUrl = plugins_url('brightcove.css', __FILE__);
+	wp_register_style('brightcoveStyleSheets', $brightcoveStyleUrl);
+	wp_enqueue_style( 'brightcoveStyleSheets');
 }
 
 function brightcove_menu_handle() {
@@ -52,81 +54,82 @@ function brightcove_menu_handle() {
 }
 
 function brightcove_api_menu_handle() {
-  return wp_iframe('bc_media_api_upload_form');
+  	return wp_iframe('bc_media_api_upload_form');
 }
 
 //Adds all the scripts nessesary for plugin to work
 function add_all_scripts() {
-	add_brightcove_script();
+	add_bcove_scripts(); 
 	add_jquery_scripts();
 	add_validation_scripts();
 	add_dynamic_brightcove_api_script();
 }
 
-function add_brightcove_script() {	
-wp_deregister_script( 'brightcove_script' );
-wp_register_script( 'brightcove_script', '/wp-content/plugins/brightcove-video-cloud/js/BrightcoveExperiences.js', array(), null, false);
-wp_enqueue_script( 'brightcove_script' );
+function add_bcove_scripts() {	
+	wp_deregister_script( 'bcove-script' );
+	$varbsbs = plugins_url('brightcove-experience.js',__FILE__);
+  	wp_register_script( 'bcove-script', $varbsbs);
+	wp_enqueue_script( 'bcove-script' );
 }
 
 function add_jquery_scripts() {
-  wp_deregister_script('jquery');
-  wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-  wp_enqueue_script( 'jquery' );
+  	wp_deregister_script('bcove-jquery');
+  	$varbj = plugins_url('jquery.min.js',__FILE__);
+  	wp_register_script( 'bcove-jquery', $varbj);
+  	wp_enqueue_script( 'bcove-jquery' );
 
-  wp_deregister_script('jquery-ui-core');
-  wp_register_script( 'jquery-ui-core', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js');
-  wp_enqueue_script( 'jquery-ui-core' );
+  	wp_deregister_script('bcove-jquery-ui-core');
+  	$varbjuc = plugins_url('jquery-ui.min.js',__FILE__);
+  	wp_register_script( 'bcove-jquery-ui-core', $varbjuc);
+  	wp_enqueue_script( 'bcove-jquery-ui-core' );
 
-  wp_register_style('jqueryStyle', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css');
-  wp_enqueue_style( 'jqueryStyle');
-  
-  /*  wp_deregister_script('jquery-ui-core');
-  wp_register_script( 'jquery-ui-core', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js');
-  wp_enqueue_script( 'jquery-ui-core' );
-
-  wp_register_style('jqueryStyle', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css');
-  wp_enqueue_style( 'jqueryStyle');*/
+  	wp_deregister_style('jqueryStyle'); 
+  	$varjs = plugins_url('jquery-ui.css',__FILE__);
+  	wp_register_script( 'jqueryStyle', $varjs);
+  	wp_enqueue_style( 'jqueryStyle');
 
 }
 
-function add_validation_scripts()
-{
-  wp_deregister_script('jqueryPlaceholder');
-  wp_register_script( 'jqueryPlaceholder', '/wp-content/plugins/brightcove-video-cloud/jQueryPlaceholder/jQueryPlaceholder.js');
-  wp_enqueue_script( 'jqueryPlaceholder');
+function add_validation_scripts() {
+  	wp_deregister_script('jqueryPlaceholder');
+  	$varjp = plugins_url('jQueryPlaceholder/jQueryPlaceholder.js',__FILE__);
+  	wp_register_script( 'jqueryPlaceholder', $varjp);
+  	wp_enqueue_script( 'jqueryPlaceholder');
 
-  wp_deregister_script('jquery-validate');
-  wp_register_script( 'jquery-validate', '/wp-content/plugins/brightcove-video-cloud/jQueryValidation/jquery.validate.min.js');
-  wp_enqueue_script( 'jquery-validate' );
+  	wp_deregister_script('jquery-validate');
+  	$varjv = plugins_url('jQueryValidation/jquery.validate.min.js',__FILE__);
+  	wp_register_script( 'jquery-validate', $varjv);
+  	wp_enqueue_script( 'jquery-validate' );
 
-  wp_deregister_script('jquery-validat-addional');
-  wp_register_script( 'jquery-validate-addional', '/wp-content/plugins/brightcove-video-cloud/jQueryValidation/additional-methods.min.js');
-  wp_enqueue_script( 'jquery-validate-addional' );
+  	wp_deregister_script('jquery-validate-additional');
+  	$varjva = plugins_url('jQueryValidation/additional-methods.min.js',__FILE__);
+  	wp_register_script( 'jquery-validate-additional', $varjva);
+  	wp_enqueue_script( 'jquery-validate-additional' );
 }
 
 
 function add_dynamic_brightcove_api_script() {	
-wp_deregister_script( 'dynamic_brightcove_script' );
-wp_register_script( 'dynamic_brightcove_script', '/wp-content/plugins/brightcove-video-cloud/dynamic_brightcove.js');
-wp_enqueue_script( 'dynamic_brightcove_script' );
+	wp_deregister_script( 'dynamic_brightcove_script' );
+	$vardbas = plugins_url('dynamic_brightcove.js',__FILE__);
+  	wp_register_script( 'dynamic_brightcove_script', $vardbas);
+	wp_enqueue_script( 'dynamic_brightcove_script' );
 }
 
 //global variables 
 
 GLOBAL $bcGlobalVariables;
 
-$bcGlobalVariables = Array('playerID'=>null, 
-'defaultHeight' => null, 
-'defaultWidth' => null, 
-'defaultKeyPlaylist' => null, 
-'defaultHeightPlaylist' => null, 
-'defaultWidthPlaylist' => null,
-'defaultSet' => null, 
-'defaultSetErrorMessage' => null, 
-'defaultsSection' => null, 
-'loadingImg' => null, 
-'publisherID' => null);
+$bcGlobalVariables = Array('playerID' => null, 
+						   'defaultHeight' => null, 
+						   'defaultWidth' => null, 
+						   'defaultKeyPlaylist' => null, 
+						   'defaultHeightPlaylist' => null, 
+						   'defaultWidthPlaylist' => null,
+						   'defaultSet' => null, 
+						   'defaultSetErrorMessage' => null, 
+						   'defaultsSection' => null, 
+						   'loadingImg' => null, 
+						   'publisherID' => null);
 
 //Publisher ID 
 $bcGlobalVariables['publisherID']=get_option('bc_pub_id');
@@ -135,42 +138,44 @@ $bcGlobalVariables['publisherID']=get_option('bc_pub_id');
 $bcGlobalVariables['playerID']=get_option('bc_player_id');
 //Default height & width for single video players
 $bcGlobalVariables['defaultHeight']=get_option('bc_default_height');
-if ($bcGlobalVariables['defaultHeight'] == '') {
-  $bcGlobalVariables['defaultHeight']='270';
-}
+	if ($bcGlobalVariables['defaultHeight'] == '') {
+		$bcGlobalVariables['defaultHeight']='270';
+  	}
 $bcGlobalVariables['defaultWidth']=get_option('bc_default_width');
-if ($bcGlobalVariables['defaultWidth'] == '') {
-  $bcGlobalVariables['defaultWidth']='480';
-}
+	if ($bcGlobalVariables['defaultWidth'] == '') {
+		$bcGlobalVariables['defaultWidth']='480';
+  	}
 //Player ID for playlists
 $bcGlobalVariables['playerKeyPlaylist']=get_option('bc_player_key_playlist');
 
 //Default height & width for playlist players
 $bcGlobalVariables['defaultHeightPlaylist']=get_option('bc_default_height_playlist');
-if ($bcGlobalVariables['defaultHeightPlaylist'] == '') {
-  $bcGlobalVariables['defaultHeightPlaylist']='400';
-}
+	if ($bcGlobalVariables['defaultHeightPlaylist'] == '') {
+		$bcGlobalVariables['defaultHeightPlaylist']='400';
+  	}
 $bcGlobalVariables['defaultWidthPlaylist']=get_option('bc_default_width_playlist');
-if ($bcGlobalVariables['defaultWidthPlaylist'] == '') {
-  $bcGlobalVariables['defaultWidthPlaylist']='940';
-}
+	if ($bcGlobalVariables['defaultWidthPlaylist'] == '') {
+		$bcGlobalVariables['defaultWidthPlaylist']='940';
+  	}
 //Checks to see if both those variables are set
-if ($bcGlobalVariables['playerID'] == '' || $bcGlobalVariables['playerKeyPlaylist'] == '' || $bcGlobalVariables['publisherID'] == '') {
-  $bcGlobalVariables['defaultSet']=false;
-} else  {
-  $bcGlobalVariables['defaultSet']=true;
-}
+	if ($bcGlobalVariables['playerID'] == '' || $bcGlobalVariables['playerKeyPlaylist'] == '' || $bcGlobalVariables['publisherID'] == '') {
+		$bcGlobalVariables['defaultSet']=false;
+	} else  {
+		$bcGlobalVariables['defaultSet']=true;
+	}
 
-if ( current_user_can('administrator') ) {
-    $bcGlobalVariables['defaultSetErrorMessage'] = "<div class='hidden error' id='defaults-not-set' data-defaultsSet='".$bcGlobalVariables['defaultSet']."'>
-     You have not set up your defaults for this plugin. Please click on the link to set your defaults.
-  <a target='_top' href='admin.php?page=brightcove_menu'>Brightcove Settings</a>
-  </div>";
-} else  {
-	 $bcGlobalVariables['defaultSetErrorMessage'] = "<div class='hidden error' id='defaults-not-set' data-defaultsSet='".$bcGlobalVariables['defaultSet']."'>
-    You have not set up your defaults for the Brightcove plugin. Please contact your site administrator to set these defaults.
-  </div>";	
-}
+	if ( current_user_can('administrator') ) {
+    	$bcGlobalVariables['defaultSetErrorMessage'] = 
+    		"<div class='hidden error' id='defaults-not-set' data-defaultsSet='".$bcGlobalVariables['defaultSet']."'>
+				You have not set up your defaults for this plugin. Please click on the link to set your defaults.
+					<a target='_top' href='admin.php?page=brightcove_menu'>Brightcove Settings</a>
+			</div>";
+	} else  {
+	 	$bcGlobalVariables['defaultSetErrorMessage'] = 
+	 		"<div class='hidden error' id='defaults-not-set' data-defaultsSet='".$bcGlobalVariables['defaultSet']."'>
+	 			You have not set up your defaults for the Brightcove plugin. Please contact your site administrator to set these defaults.
+	 		</div>";	
+	}
 
 
 
@@ -191,11 +196,11 @@ $bcGlobalVariables['loadingImg'] = "<img class='loading-img' src='/wp-includes/j
 
 function set_shortcode_button ($playlistOrVideo, $buttonText) {
 
-if ($playlistOrVideo == 'playlist') {
-	$id='playlist-shortcode-button';
-} else {
-	$id='video-shortcode-button';
-}
+	if ($playlistOrVideo == 'playlist') {
+		$id='playlist-shortcode-button';
+	} else {
+		$id='video-shortcode-button';
+	}
 
 ?>
 	<div class='media-item no-border insert-button-container'>
@@ -216,14 +221,16 @@ function add_player_settings($playlistOrVideo, $buttonText) {
 		$id='playlist-settings';
 		$class='playlist-hide';
 		$playerHTML="<tr class='bc-width-row'>
-            <th valign='top' scope='row' class='label'>
-              <span class=;alignleft;><label for=bcPlaylistKey'>Playlist Key</label></span>
-              <span class='alignright'></span>
-            </th>
-            <td>
-             <input class='player-data' type='text' name='bcPlaylistKey' id='bc-player-playlist-key' placeholder='Default is $playerKey ' />
-            </td>
-          </tr>";
+            			<th valign='top' scope='row' class='label'>
+							<span class=;alignleft;>
+								<label for=bcPlaylistKey'>Playlist Key</label>
+							</span>
+							<span class='alignright'></span>
+						</th>
+						<td>
+							<input class='player-data' type='text' name='bcPlaylistKey' id='bc-player-playlist-key' placeholder='Default is $playerKey ' />
+						</td>
+					</tr>";
 	} else {
 		$setting = '';
 		$height = $bcGlobalVariables['defaultHeight'];
@@ -233,14 +240,16 @@ function add_player_settings($playlistOrVideo, $buttonText) {
 		$class='video-hide';
 		$playerKey='';
 		$playerHTML="<tr class='bc-player-row'>
-            <th valign='top' scope='row' class='label'>
-              <span class='alignleft'><label for='bcPlayer'>Player ID:</label></span>
-              <span class='alignright'></span>
-            </th>
-            <td>
-             <input class='digits player-data' type='text' name='bcPlayer' id='bc-player-$setting ?>' placeholder='Default ID is $player'/>
-            </td>
-          </tr>";
+            			<th valign='top' scope='row' class='label'>
+							<span class='alignleft'>
+								<label for='bcPlayer'>Player ID:</label>
+							</span>
+							<span class='alignright'></span>
+						</th>
+						<td>
+							<input class='digits player-data' type='text' name='bcPlayer' id='bc-player-$setting ?>' placeholder='Default ID is $player'/>
+						</td>
+					</tr>";
 	}
 
 	?>
@@ -318,7 +327,6 @@ function bc_media_upload_form () {
 		echo $bcGlobalVariables['defaultsSection'];
 		echo $bcGlobalVariables['loadingImg'];
 	?>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
 	<div class='no-error'>
 	    <div id='tabs'>
@@ -417,7 +425,6 @@ function bc_media_api_upload_form () {
 
 	?>
 <input type='hidden' id='bc-api-key' name='bc-api-key' value='<?php echo $apiKey; ?>'>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <div class='no-error'>
 	<div id='tabs-api' class="tabs-api">
 		<ul>
@@ -443,5 +450,5 @@ function bc_media_api_upload_form () {
 	</div>
 </div>
 	<?php	
-}
+}}
 ?>
