@@ -1,0 +1,73 @@
+{
+  "name": "usabilitydynamics/wp-veneer",
+  "type": "wordpress-module",
+  "version": "0.6.2",
+  "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
+  "keywords": [
+    "wordpress",
+    "multisite",
+    "varnish"
+  ],
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Andy Potanin",
+      "homepage": "http://usabilitydynamics.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://repository.usabilitydynamics.com"
+    }
+  ],
+  "config": {
+    "preferred-install": "source",
+    "github-protocols": [ "ssh" ],
+    "vendor-dir": "vendor/libraries",
+    "bin-dir": "vendor/bin",
+    "component-dir": "vendor/components",
+    "optimize-autoloader": true
+  },
+  "require": {
+    "php": ">=5.3",
+    "composer/installers": "~1.0",
+    "usabilitydynamics/lib-installer": "master",
+    "monolog/monolog": "master",
+    "graze/monolog-extensions": "~1.4.0",
+    "mindscape/raygun4php": "dev-master",
+    "usabilitydynamics/lib-api": "master",
+    "usabilitydynamics/lib-settings": "master",
+    "usabilitydynamics/lib-ui": "master",
+    "usabilitydynamics/lib-utility": "master",
+    "matthiasmullie/minify": "1.2.0",
+    "mrclay/minify": "master"
+  },
+  "autoload": {
+    "classmap": [
+      "lib/class-api.php",
+      "lib/class-bootstrap.php",
+      "lib/class-w3.php",
+      "lib/class-cache.php",
+      "lib/class-documents.php",
+      "lib/class-utility.php",
+      "lib/class-rewrites.php",
+      "lib/class-image.php",
+      "lib/class-log.php",
+      "lib/class-media.php",
+      "lib/class-security.php",
+      "lib/class-varnish.php",
+      "lib/class-search.php"
+    ]
+  },
+  "dist": {
+    "url": "https://github.com/usabilitydynamics/wp-veneer/archive/master.zip",
+     "type": "zip"
+  },
+  "source": {
+    "url": "git@github.com:UsabilityDynamics/wp-veneer",
+    "type": "git",
+    "reference": "master"
+  }
+}
