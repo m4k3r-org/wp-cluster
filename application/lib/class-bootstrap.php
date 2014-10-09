@@ -106,14 +106,8 @@ namespace EDM\Application {
       // Instantiate Network.
       $this->network    = new \UsabilityDynamics\Network\Bootstrap;
 
-      // Instantiate WP-Simplify.
-      $this->simplify   = new \UsabilityDynamics\Simplify\Bootstrap;
-
       // Instantaite Settings.
       $this->settings   = new \UsabilityDynamics\Settings;
-
-      // Initialize WP-Elastic (Fantastic ElasticSearch).
-      // $this->elastic    = new \elasticsearch\Bootstrap;
 
       // Current Paths.
       $this->id         = 'edm'; // Utility::create_slug( __NAMESPACE__, array( 'separator' => '::' ) );

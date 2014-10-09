@@ -7,10 +7,12 @@ s3cmd put --no-check-md5 --reduced-redundancy edm_cluster_new.sql.tgz s3://rds.u
 
 ### GitHub Plugin Install
 ```
+wget --quiet --header "Authorization: token ${GITHUB_UPDATER_TOKEN}" -O /tmp/wp-simplify.zip https://api.github.com/repos/UsabilityDynamics/wp-simplify/zipball/master
 wget --quiet --header "Authorization: token ${GITHUB_UPDATER_TOKEN}" -O /tmp/wp-pagespeed.zip https://api.github.com/repos/UsabilityDynamics/wp-pagespeed/zipball/master
 wget --quiet --header "Authorization: token ${GITHUB_UPDATER_TOKEN}" -O /tmp/wp-revisr.zip https://api.github.com/repos/UsabilityDynamics/wp-revisr/zipball/master
 wget --quiet --header "Authorization: token ${GITHUB_UPDATER_TOKEN}" -O /tmp/wp-github-updater.zip https://api.github.com/repos/UsabilityDynamics/wp-github-updater/zipball/master
 
+wp plugin install /tmp/wp-simplify.zip --force
 wp plugin install /tmp/wp-pagespeed.zip --force
 wp plugin install /tmp/wp-revisr.zip --force
 wp plugin install /tmp/wp-github-updater.zip --force

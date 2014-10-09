@@ -2833,8 +2833,6 @@ return array(
     'UsabilityDynamics\\Shortcode\\Shortcode' => $vendorDir . '/usabilitydynamics/lib-wp-shortcode/lib/class-shortcode.php',
     'UsabilityDynamics\\Shortcode\\UI' => $vendorDir . '/usabilitydynamics/lib-wp-shortcode/lib/class-ui.php',
     'UsabilityDynamics\\Shortcode\\Utility' => $vendorDir . '/usabilitydynamics/lib-wp-shortcode/lib/class-utility.php',
-    'UsabilityDynamics\\Simplify\\Bootstrap' => $baseDir . '/vendor/plugins/wp-simplify/lib/class-bootstrap.php',
-    'UsabilityDynamics\\Simplify\\Simplify' => $baseDir . '/vendor/plugins/wp-simplify/lib/class-simplify.php',
     'UsabilityDynamics\\Structure' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-structure.php',
     'UsabilityDynamics\\Term' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-term.php',
     'UsabilityDynamics\\Theme\\Carrington' => $vendorDir . '/usabilitydynamics/lib-wp-theme/lib/class-carrington.php',
