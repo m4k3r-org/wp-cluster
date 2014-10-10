@@ -334,7 +334,11 @@ namespace UsabilityDynamics {
         'below-single-content' => array(
           'title' => __( 'Below Single Content' ),
           'description' => __( 'Below Single Content Section.' ),
-        )
+        ),
+					'hotel-header-widget' => array(
+							'title' => __( 'Hotel Header Aside' ),
+							'description' => __( 'Header Aside for the hotel page.' ),
+					)
       ));
 
       // Set Pluggable Module Directory.

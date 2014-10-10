@@ -1186,14 +1186,102 @@
 			]
 		},
 		{
+			"key": "page_hotels_leadin_headline_color",
+			"label": "Lead-in Headline Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "color",
+			"important": false,
+			"selector": [
+				".hotels-leadin h2"
+			]
+		},
+		{
+			"key": "page_hotels_leadin_text_color",
+			"label": "Lead-in Text Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "color",
+			"important": false,
+			"selector": [
+				".hotels-leadin p"
+			]
+		},
+		{
 			"key": "page_hotels_sidebar_background",
-			"label": "Room Type Background",
+			"label": "Room Type Background Color",
 			"priority": 10,
 			"section": "page_hotels",
 			"control": "background-color",
 			"important": false,
 			"selector": [
 				".hotel-item .room-types"
+			]
+		},
+		{
+			"key": "page_hotels_sidebar_color",
+			"label": "Room Type Text Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "color",
+			"important": false,
+			"selector": [
+				".hotel-item .room-types h3",
+				".hotel-item .room-types .room-type-content"
+			]
+		},
+		{
+			"key": "page_hotels_sidebar_button_color",
+			"label": "Room Type Button Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "color",
+			"important": false,
+			"selector": [
+				".hotel-item .room-types .room-type-content .button"
+			],
+			"extra_controls": {
+				"border-color": [
+					".hotel-item .room-types .room-type-content .button"
+				]
+			}
+		},
+		{
+			"key": "page_hotels_sidebar_button_hover_background",
+			"label": "Room Type Button Hover Background Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "background-color",
+			"important": false,
+			"selector": [
+				".hotel-item .room-types .room-type-content .button:hover"
+			],
+			"extra_controls": {
+				"border-color": [
+					".hotel-item .room-types .room-type-content .button:hover"
+				]
+			}
+		},
+		{
+			"key": "page_hotels_sidebar_button_hover_color",
+			"label": "Room Type Button Hover Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "color",
+			"important": false,
+			"selector": [
+				".hotel-item .room-types .room-type-content .button:hover"
+			]
+		},
+		{
+			"key": "page_hotels_sidebar_discountcolor",
+			"label": "Room Type Discount Text Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "color",
+			"important": false,
+			"selector": [
+				".hotel-item .room-types .discount"
 			]
 		},
 		{
@@ -1205,6 +1293,29 @@
 			"important": false,
 			"selector": [
 				".hotel-item .room-types .discount .coupon-code"
+			]
+		},
+		{
+			"key": "page_hotels_sidebar_border_color",
+			"label": "Horizontal Lines Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "border-color",
+			"important": false,
+			"selector": [
+				".hotel-item .room-types .room-type-content",
+				".hotel-item .room-types h3"
+			]
+		},
+		{
+			"key": "page_hotels_address_link_color",
+			"label": "Address Link Color",
+			"priority": 10,
+			"section": "page_hotels",
+			"control": "color",
+			"important": false,
+			"selector": [
+				".hotel-item .hotel-content address a"
 			]
 		},
 		{
