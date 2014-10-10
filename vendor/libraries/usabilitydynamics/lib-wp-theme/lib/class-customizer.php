@@ -89,9 +89,8 @@ namespace UsabilityDynamics\Theme {
        * @return type
        */
       public function update_option_rewrite_rules( $rules ) {
-        return array_unique( array(
-          '^' . $this->get( 'permalink' ) => 'index.php?' . $this->query_vars[0] . '=1',
-        ) + (array)$rules );
+        $rules[ '^' . $this->get( 'permalink' ) ] = 'index.php?' . $this->query_vars[0] . '=1';
+        return $rules;
       }
 
       /**
@@ -197,6 +196,11 @@ namespace UsabilityDynamics\Theme {
        */
       public function get_asset_url() {
         global $wp_rewrite;
+
+        /** If we don't have any rules, get them */
+        if( $wp_rewrite->rules === null ){
+          $wp_rewrite->wp_rewrite_rules();
+        }
 
         $url = home_url() . '?' . $this->query_vars[0] . '=1';
         switch( true ) {
