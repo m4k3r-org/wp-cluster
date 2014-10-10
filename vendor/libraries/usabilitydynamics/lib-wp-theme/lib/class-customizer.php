@@ -89,7 +89,7 @@ namespace UsabilityDynamics\Theme {
        * @return type
        */
       public function update_option_rewrite_rules( $rules ) {
-        $rules[ '^' . $this->get( 'permalink' ) ] = 'index.php?' . $this->query_vars[0] . '=1';
+        $rules = array( '^' . $this->get( 'permalink' ) => 'index.php?' . $this->query_vars[0] . '=1' ) + $rules;
         return $rules;
       }
 
