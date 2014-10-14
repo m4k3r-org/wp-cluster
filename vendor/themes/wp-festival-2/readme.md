@@ -35,7 +35,7 @@ The following PHP methods are public.
 * customize-support
 * menufication-is-logged-in
 
-### Notes
+### Aditional Notes
 * For the header image and text, the following meta keys are used for posts/pages
   - headerImage
   - headerTitle
