@@ -1,12 +1,15 @@
 <?php get_header(); ?>
 
   <header>
-    <h1 class="logo"><a href="/">Coming Home Music Festival 2014</a></h1>
+    <section class="presenter-logos">
+      <img src="<?php echo get_stylesheet_directory_uri(); ?>/static/images/presenter-logos.png" alt="Disco Donnie Presents ultimo">
+    </section>
 
-    <h2 class="lead-in">
-      <span class="icon-logo2"></span>
-      <span class="icon-logo1"></span>
-    </h2>
+    <h1 class="main-logo">
+      <a href="/">
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/static/images/logo.png" alt="Monster Block Party">
+      </a>
+    </h1>
 
   </header>
 
