@@ -18,3 +18,6 @@ vendor
 *.out
 *.pid
 *.gz
+
+.environment
+/application/static/etc/wp-config

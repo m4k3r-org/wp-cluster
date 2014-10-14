@@ -717,6 +717,7 @@ namespace UsabilityDynamics {
       add_action( 'admin_enqueue_scripts', function (){
         wp_enqueue_script( 'feature-item-widget-admin', get_template_directory_uri() . '/lib/modules/feature-item/static/scripts/feature-item-widget-admin.js' );
         wp_enqueue_script( 'company-item-widget-admin', get_template_directory_uri() . '/lib/modules/company-item/static/scripts/company-item-widget-admin.js' );
+        wp_enqueue_script( 'video-widget-admin', get_template_directory_uri() . '/lib/modules/video/static/scripts/video-admin.js' );
       } );
 
     }

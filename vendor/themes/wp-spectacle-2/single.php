@@ -19,7 +19,7 @@ get_template_part('single', 'header');
               <span><?php echo get_the_time('D, M d, Y'); ?></span>
             </span>
 
-            <span class="comments">
+            <span class="comments-count">
               <i class="icon-spectacle-comment"></i>
               <a href="#"><?php comments_number( 'no comments', '1 comment', '% comments' ); ?></a>
             </span>

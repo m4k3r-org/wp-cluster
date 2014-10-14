@@ -18,15 +18,19 @@ if ( has_post_thumbnail() )
   <?php
 
   $prev_post = get_previous_post();
-  $prev_post = get_permalink($prev_post->ID);
+  $prev_post_url = get_permalink($prev_post->ID);
 
   $next_post = get_next_post();
-  $next_post = get_permalink($next_post->ID);
+  $next_post_url = get_permalink($next_post->ID);
 
   ?>
 
-  <a href="<?php echo $prev_post; ?>" class="prev-next icon-spectacle-left-arrow"></a>
-  <a href="<?php echo $next_post; ?>" class="prev-next icon-spectacle-right-arrow"></a>
+  <?php if( ! empty( $next_post ) ) : ?>
+    <a href="<?php echo $next_post_url; ?>" class="prev-next icon-spectacle-left-arrow"></a>
+  <?php endif; ?>
 
+  <?php if( ! empty( $prev_post ) ) : ?>
+    <a href="<?php echo $prev_post_url; ?>" class="prev-next icon-spectacle-right-arrow"></a>
+  <?php endif; ?>
 
 </header>
