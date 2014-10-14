@@ -1,22 +1,32 @@
 
 .page-content {
 
-  background: -moz-linear-gradient(top,  rgba(0,0,0,0.7) 0, rgba(0,0,0,1) 285px);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(0,0,0,0.7)), color-stop(285px,rgba(0,0,0,1)));
-  background: -webkit-linear-gradient(top,  rgba(0,0,0,0.7) 0,rgba(0,0,0,1) 285px);
-  background: -o-linear-gradient(top,  rgba(0,0,0,0.7) 0,rgba(0,0,0,1) 285px);
-  background: -ms-linear-gradient(top,  rgba(0,0,0,0.7) 0,rgba(0,0,0,1) 285px);
-  background: linear-gradient(to bottom,  rgba(0,0,0,0.7) 0,rgba(0,0,0,1) 285px);
+  background: -moz-linear-gradient(top,  rgba(2,9,20,0.7) 0, rgba(2,9,20,1) 285px);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(2,9,20,0.7)), color-stop(285px,rgba(2,9,20,1)));
+  background: -webkit-linear-gradient(top,  rgba(2,9,20,0.7) 0,rgba(2,9,20,1) 285px);
+  background: -o-linear-gradient(top,  rgba(2,9,20,0.7) 0,rgba(2,9,20,1) 285px);
+  background: -ms-linear-gradient(top,  rgba(2,9,20,0.7) 0,rgba(2,9,20,1) 285px);
+  background: linear-gradient(to bottom,  rgba(2,9,20,0.7) 0,rgba(2,9,20,1) 285px);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3ffffff', endColorstr='#ffffff',GradientType=0 );
 
-  color: #fff;
+  color: #a7a9ac;
 
   a {
-    color: #fff;
+    color: #58595b;
   }
 
   h3, h4 {
     color: #fff;
+  }
+
+  h3 {
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+    text-transform: none;
+  }
+
+  h4 {
+    font-family: "Playfair Display", serif;
   }
 
   .diamond-box-container-widget {
@@ -41,7 +51,7 @@
       width: 228px;
       height: 228px;
 
-      border: 2px solid #ff0279;
+      border: 2px solid #58595b;
       margin: 47px auto;
 
       @media @large-desktop{
@@ -61,7 +71,7 @@
         height: 228px;
         overflow: hidden;
 
-        font-family: "audimat-regular", sans-serif;
+        font-family: "Playfair Display", serif;
         font-size: 17px;
         font-weight: normal;
 
@@ -82,9 +92,10 @@
         strong{
           display: block;
           font-size: 25px;
-          font-family: "audimat-bold", sans-serif;
-          font-weight: normal;
+          font-family: "Playfair Display", serif;
+          font-weight: 700;
           letter-spacing: -0.05em;
+          text-transform: none;
 
           @media @large-desktop{
             font-size: 45px;
@@ -105,7 +116,7 @@
           @media @large-desktop {
             display: block;
             border: 0;
-            background: #ff0279;
+            background: #58595b;
             width: 80px;
             height: 1px;
             margin: 35px auto 0 auto;
@@ -212,8 +223,16 @@
     }
 
     .buy-tickets {
-        background: #ff0279;
-        color: #FFF;
+      background: #c0183f;
+      color: #FFF;
+
+      .inner {
+        font-family: "Playfair Display", serif;
+        strong {
+          font-family: "Playfair Display", serif;
+          font-size: 48px;
+        }
       }
+    }
   }
 }
