@@ -20,6 +20,8 @@ class Core
   {
     add_action( 'init', function() {
       register_nav_menu( 'main-navigation', __( 'Main Navigation' ) );
+      register_nav_menu( 'footer-navigation', __( 'Footer Navigation' ) );
+      register_nav_menu( 'footer-profiles-navigation', __( 'Footer Profiles' ) );
     });
 
     return $this;

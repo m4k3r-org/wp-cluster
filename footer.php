@@ -1,22 +1,60 @@
 </div> <!-- #doc -->
+<?php
+$menu = new Spectacle_Navigation_Builder();
+?>
 
-<?php if ( has_nav_menu( 'main-navigation' ) ): ?>
+<?php if( has_nav_menu( 'footer-navigation' ) || has_nav_menu( 'footer-profiles-navigation' ) ): ?>
+  <footer>
 
-<div class="navigation-overlay overlay">
+    <?php if( has_nav_menu( 'footer-navigation' ) ): ?>
+      <div class="footer-navigation">
+        <?php
+        echo $menu->get( 'footer-navigation' );
+        ?>
+      </div>
+    <?php endif; ?>
 
-  <a href="#" class="overlay-close">
-    <span class="icon-spectacle-close"></span>
-    Close
-  </a>
-  <div class="overlay-content">
-    <nav class="clearfix">
-      <?php
-        $menu = new Spectacle_Navigation_Builder();
-        echo $menu->get( 'main-navigation' );
-      ?>
-    </nav>
-  </div>
-</div>
+    <?php if( has_nav_menu( 'footer-profiles-navigation' ) ): ?>
+      <div class="footer-profile-navigation">
+        <ul>
+          <?php
+          $social_menu = $menu->get( 'footer-profiles-navigation', false );
+          ?>
+          <?php foreach( $social_menu as $item ) : ?>
+            <?php if( in_array( $item->post_title, [ 'facebook', 'twitter', 'youtube', 'instagram' ] ) ): ?>
+              <li>
+                <a href="<?php echo $item->url; ?>">
+                  <span class="icon-spectacle-<?php echo $item->post_title; ?>"></span>
+                </a>
+              </li>
+            <?php endif; ?>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    <?php endif; ?>
+
+
+    <?php if( has_nav_menu( 'main-navigation' ) ): ?>
+
+      <div class="navigation-overlay overlay">
+
+        <a href="#" class="overlay-close">
+          <span class="icon-spectacle-close"></span>
+          Close
+        </a>
+
+        <div class="overlay-content">
+          <nav class="clearfix">
+            <?php
+            echo $menu->get( 'main-navigation' );
+            ?>
+          </nav>
+        </div>
+      </div>
+
+    <?php endif; ?>
+  </footer>
+<?php endif; ?>
 
 <?php
 $share_count = do_shortcode('[social_share_count total="true" url="http://' .$_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"] .'"]');
@@ -83,7 +121,6 @@ if (empty($image[0])) {
 
 </div>
 
-<?php endif; ?>
 <?php wp_footer(); ?>
 </body>
 </html>
