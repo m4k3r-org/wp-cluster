@@ -57,3 +57,132 @@ h1, h2{
 h1 {
   font-size: 60px;
 }
+
+// Share Overlay
+
+.share-overlay {
+  display: none;
+  overflow: auto;
+
+  .bg{
+    background: #090533;
+  }
+
+  .overlay-content {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 72000;
+
+    color: #ffffff;
+    text-align: center;
+
+    @media @tablet {
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+
+    .share-count {
+      margin: 100px auto 40px auto;
+
+      @media @tablet {
+        margin: 0px auto 60px auto;
+      }
+
+      h2 {
+        font-size: 70px;
+        color: #FFF;
+        text-transform: none;
+        margin: 0;
+
+        @media @tablet {
+          font-size: 140px;
+          font-weight: normal;
+        }
+      }
+
+      h3 {
+        font-size: 24px;
+        color: #FFF;
+      }
+    }
+
+    .share-wrapper {
+      display: block;
+
+      width: 280px;
+      margin: 0 auto 20px auto;
+
+      @media @tablet {
+        width: 100%;
+      }
+
+      a {
+       // .mixin-transition(all, 1s);
+
+        display: inline-block;
+        margin: 0 -4px 0 0;
+        padding: 35px 0 0 0;
+
+        width: 140px;
+        height: 140px;
+
+        @media @tablet {
+          width: 180px;
+          height: 180px;
+          padding: 52px 0 0 0;
+        }
+
+        &.twitter {
+          background: #00aaf3;
+
+          &:hover {
+            background-color: #20caff;
+          }
+        }
+
+        &.facebook {
+          background: #39579a;
+
+          &:hover {
+            background-color: #5775b8;
+          }
+        }
+
+        &.google-plus {
+          background: #e04a32;
+
+          &:hover {
+            background-color: #fb654d;
+          }
+        }
+
+        &.pinterest {
+          background: #d9332b;
+
+          &:hover {
+            background-color: #f8524a;
+          }
+        }
+
+        [class^="icon-"] {
+          font-size: 32px;
+          font-weight: normal;
+        }
+
+        em {
+          display: block;
+          clear: both;
+          font-style: normal;
+          font-family: "Droid Sans", sans-serif;
+          font-size: 16px;
+          font-weight: 100;
+          margin: 20px 0 0 0;
+        }
+      }
+    }
+  }
+}
