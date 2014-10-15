@@ -11,9 +11,9 @@ if ( has_post_thumbnail() )
 <header class="single-post-header" style="background-image: url('<?php echo $image_url; ?>');">
   <div class="gradient-fade"></div>
 
-  <section class="presenter-logos">
-    <img src="<?php echo get_stylesheet_directory_uri(); ?>/static/images/presenter-logos.png" alt="Disco Donnie Presents ultimo">
-  </section>
+  <a href="/">
+    <img src="<?php echo get_stylesheet_directory_uri(); ?>/static/images/logo.png" alt="Monster Block Party" style="width: 210px; padding-top: 20px;">
+  </a>
 
   <?php
 
