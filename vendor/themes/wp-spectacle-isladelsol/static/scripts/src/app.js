@@ -36,8 +36,9 @@ require( [
   'lib/equalheights',
   'lib/navigation',
   'lib/swipe',
+  'lib/share',
   'vendor/jquery-dotdotdot/jquery.dotdotdot.min'
-], function( $, isTouch, fancybox, fancyboxMedia, stream, countDown, contests, spectacleTabs, equalHeights, navigation, swipe, dotdotdot ){
+], function( $, isTouch, fancybox, fancyboxMedia, stream, countDown, contests, spectacleTabs, equalHeights, navigation, swipe, share, dotdotdot ){
 
   // Performance optimization for window resize event
   $( window ).resize( function() {
@@ -87,6 +88,9 @@ require( [
 
   // Initialize spectacle tabs
   spectacleTabs.init();
+
+  //Init Share
+  share.init();
 
 
   if ( $( '.equalize_col' ).length > 1 )
