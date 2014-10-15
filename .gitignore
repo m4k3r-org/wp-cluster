@@ -23,3 +23,4 @@ debug.log
 application/static/codex
 application/static/etc/wp-config
 vendor/libraries/composer/installers
+/hook.php

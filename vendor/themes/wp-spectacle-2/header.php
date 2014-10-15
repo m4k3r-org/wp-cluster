@@ -34,6 +34,10 @@
 <body <?php body_class(); ?>>
   <div id="doc">
 
-    <?php if ( has_nav_menu( 'main-navigation' ) ): ?>
-      <a href="#" class="main-menu"><span class="icon-spectacle-menu"></span><span class="text">Menu</span></a>
-    <?php endif;
+    <div class="main-nav-menu">
+      <?php if ( has_nav_menu( 'main-navigation' ) ): ?>
+        <a href="#" class="main-menu"><span class="icon-spectacle-menu"></span><span class="text">Menu</span></a>
+      <?php endif;?>
+
+      <a href="#" class="share-popup share-menu"><span class="icon-spectacle-share"></span><span class="text">Share</span></a>
+    </div>

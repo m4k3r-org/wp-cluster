@@ -45,5 +45,6 @@ $ids_shortcodes
   ->register_horizontal_line()
   ->register_icon()
   ->register_spacer()
-  ->register_box();
+  ->register_box()
+  ->register_share_counts();
 
