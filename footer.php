@@ -81,7 +81,6 @@ if (empty($image[0])) {
     </div>
   </div>
 
-  <div class="bg"></div>
 </div>
 
 <?php endif; ?>
