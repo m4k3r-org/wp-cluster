@@ -29,8 +29,9 @@ require( [
   'lib/stream',
   'lib/countdown',
   'lib/contests',
-  'lib/swipe'
-], function( $, isTouch, fancybox, fancyboxMedia, stream, countDown, contests, swipe ){
+  'lib/swipe',
+  'lib/share'
+], function( $, isTouch, fancybox, fancyboxMedia, stream, countDown, contests, swipe, share ){
 
 
   // Initialize top video popup
@@ -65,6 +66,9 @@ require( [
 
   // Initialize the contests section
   contests.init();
+
+  // Initialize the share overlay
+  share.init();
 
 
 } );

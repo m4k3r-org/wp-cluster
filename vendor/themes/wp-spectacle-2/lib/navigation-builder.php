@@ -14,10 +14,11 @@ class Spectacle_Navigation_Builder
    * Render the menu items based on the theme-location
    *
    * @param null $theme_location
+   * @param bool $rendered
    *
    * @return mixed
    */
-  public function get( $theme_location = null )
+  public function get( $theme_location = null, $rendered = true )
   {
     if ( $theme_location === null ) { return false; }
 
@@ -35,8 +36,15 @@ class Spectacle_Navigation_Builder
       // Get the menu items
       $this->_menu_items = $this->_get_menu_items();
 
+      if ( $rendered )
+      {
+        return $this->_render();
+      }
+      else
+      {
+        return $this->_menu_items;
+      }
 
-      return $this->_render();
     }
 
     return false;
