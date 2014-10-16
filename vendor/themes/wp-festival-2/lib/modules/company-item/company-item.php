@@ -124,17 +124,17 @@ if( !class_exists( 'UsabilityDynamics_Festival2_Widget_Company_Item' ) ){
      * @return array|bool
      */
     private function _get_images( $sel_image = null ){
-      $images = new \WP_Query( [
+      $images = new \WP_Query( array(
         'post_type' => 'attachment',
         'post_status' => 'inherit',
         'post_mime_type' => 'image',
         'posts_per_page' => -1
-      ] );
+      ) );
 
-      $ret_val = [
-        'meta' => [ ],
-        'data' => [ ]
-      ];
+      $ret_val = array(
+        'meta' => array(),
+        'data' => array()
+      );
 
       if( $images->have_posts() ){
         while( $images->have_posts() ){
@@ -149,12 +149,12 @@ if( !class_exists( 'UsabilityDynamics_Festival2_Widget_Company_Item' ) ){
             $ret_val[ 'meta' ][ 'sel_image_id' ] = get_the_ID();
           }
 
-          array_push( $ret_val[ 'data' ], [
+          array_push( $ret_val[ 'data' ], array(
             'id' => get_the_ID(),
             'src' => $src[ 0 ],
             'name' => get_the_title(),
             'selected' => $selected
-          ] );
+          ) );
         }
 
         // Populate default value, first image from the media library

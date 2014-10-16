@@ -29,6 +29,8 @@ if( !class_exists( 'UsabilityDynamics_Festival2_Widget_News_Block' ) ){
       extract( $args, EXTR_SKIP );
 
       $featured = $instance[ 'featured' ];
+      $title = $instance[ 'title' ];
+      $description = $instance[ 'description' ];
 
       // Display the widget
       include( plugin_dir_path( __FILE__ ) . '/views/display.php' );
@@ -46,6 +48,8 @@ if( !class_exists( 'UsabilityDynamics_Festival2_Widget_News_Block' ) ){
       $instance = $old_instance;
 
       $instance[ 'featured' ] = $new_instance[ 'featured' ];
+      $instance[ 'title' ] = $new_instance[ 'title' ];
+      $instance[ 'description' ] = $new_instance[ 'description' ];
 
       return $instance;
 
@@ -59,6 +63,8 @@ if( !class_exists( 'UsabilityDynamics_Festival2_Widget_News_Block' ) ){
     public function form( $instance ){
 
       $data[ 'featured' ] = isset ( $instance[ 'featured' ] ) ? $instance[ 'featured' ] : '0';
+      $data[ 'title' ] = isset ( $instance[ 'title' ] ) ? $instance[ 'title' ] : '';
+      $data[ 'description' ] = isset ( $instance[ 'description' ] ) ? $instance[ 'description' ] : '';
 
       // Display the admin form
       include( plugin_dir_path( __FILE__ ) . '/views/admin.php' );

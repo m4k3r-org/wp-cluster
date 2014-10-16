@@ -319,11 +319,20 @@
 p.latest-blog-posts,
 h2.latest-blog-posts{
   background-color: #c0183f;
-  color: white;
+  color: white !important;
   text-align: center;
+  margin-bottom: 0 !important;
 }
 h2.latest-blog-posts{
   padding: 75px 15px 25px 15px;
+
+  font-size: 30px !important;
+
+  @media @tablet {
+    font-size: 48px !important;
+    font-weight: 400 !important;
+  }
+
 }
 p.latest-blog-posts{
   padding: 0 15px 20px 15px;

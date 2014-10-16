@@ -1,3 +1,9 @@
+<?php if ( !empty( $title) ): ?>
+  <h2 id="main" class="latest-blog-posts container-fluid"><?php echo $title; ?></h2>
+<?php endif; ?>
+<?php if ( !empty( $description) ): ?>
+  <p class="latest-blog-posts container-fluid"><?php echo $description; ?></p>
+<?php endif; ?>
 <section id="latest-blog-posts">
   <div class="posts posts-list-container posts-list-container-widget">
     <?php
