@@ -49,12 +49,14 @@ define( ['jquery', 'http://www.youtube.com/iframe_api', '//wurfl.io/wurfl.js'], 
 
           $( '.video-container .background-content' ).hide();
 
-          $( '.video-container .video-content' ).slideToggle( 1000 );
+          $( '.video-container .video-content' ).slideToggle( 500, function(){
 
-          that.playFromStart();
+            $( 'html, body' ).animate( { scrollTop: $( '#video-module-container' ).offset().top - $( '.top-nav' ).outerHeight() - $('#wpadminbar' ).outerHeight() }, 500 );
+            $( '#video-module-container' ).focus();
+            that.playFromStart();
 
-          $( 'html, body' ).animate( {scrollTop: $( '#video-module-container' ).offset().top - 90}, 400 );
-          $( '#video-module-container' ).focus();
+          } );
+
         }
 
       } );
@@ -74,9 +76,12 @@ define( ['jquery', 'http://www.youtube.com/iframe_api', '//wurfl.io/wurfl.js'], 
 
         e.preventDefault();
 
-        $( '.video-container .video-content' ).slideUp( 400, function(){
+        $( '.video-container .video-content' ).slideUp( 500, function(){
+
           $( '.video-container .background-content' ).show();
+          $( 'html, body' ).animate( { scrollTop: $( '#video-module-container' ).offset().top - $( '.top-nav' ).outerHeight() - $('#wpadminbar' ).outerHeight() }, 500 );
           that.player.stopVideo();
+          
         } );
 
       } );
@@ -101,8 +106,15 @@ define( ['jquery', 'http://www.youtube.com/iframe_api', '//wurfl.io/wurfl.js'], 
     },
 
     initFrameVideoSize: function(){
-      vwidth = $( window ).innerWidth();
-      vheight = vwidth * 9 / 16;
+
+      vheight = $(window ).outerHeight() - $( '.top-nav' ).outerHeight() - $('#wpadminbar' ).outerHeight();
+      vwidth = vheight * 16 / 9;
+
+      if ( vwidth > $( window ).innerWidth() )
+      {
+        vwidth = $( window ).innerWidth();
+        vheight = vwidth * 9 / 16;
+      }
 
       $( '#video-module-frame' ).css( {
         width: vwidth + 'px', height: vheight + 'px'
@@ -110,20 +122,6 @@ define( ['jquery', 'http://www.youtube.com/iframe_api', '//wurfl.io/wurfl.js'], 
 
       $( '.video-content' ).css( {
         height: vheight + 'px'
-      } );
-
-      // If you want to keep full screen on window resize
-      $( window ).resize( function(){
-        vwidth = $( window ).innerWidth();
-        vheight = vwidth * 9 / 16;
-
-        $( '#video-module-frame' ).css( {
-          width: vwidth + 'px', height: vheight + 'px'
-        } );
-
-        $( '.video-content' ).css( {
-          height: vheight + 'px'
-        } );
       } );
 
     }
@@ -150,8 +148,14 @@ define( ['jquery', 'http://www.youtube.com/iframe_api', '//wurfl.io/wurfl.js'], 
       videoModule.eventPlay();
       videoModule.eventClose();
 
-    }
+      // If you want to keep full screen on window resize
+      $( window ).resize( function(){
 
+        videoModule.initFrameVideoSize();
+
+      });
+
+    }
   }
 
-} );
+});

@@ -64,7 +64,7 @@ $share_count = json_decode( $share_count, true );
 
             <?php $cats = get_the_category(); ?>
             <div class="category-icon">
-              <?php if( function_exists( 'z_taxonomy_image_url' ) && !empty( z_taxonomy_image_url( $cats[ 0 ]->term_id ) ) )  : ?>
+              <?php if( function_exists( 'z_taxonomy_image_url' ) && z_taxonomy_image_url( $cats[ 0 ]->term_id ) != '' )  : ?>
                 <img src="<?php echo z_taxonomy_image_url( $cats[ 0 ]->term_id ); ?>">
               <?php endif; ?>
             </div>
@@ -126,7 +126,7 @@ $share_count = json_decode( $share_count, true );
 
               <?php $cats = get_the_category(); ?>
               <div class="category-icon">
-                <?php if( function_exists( 'z_taxonomy_image_url' ) && !empty( z_taxonomy_image_url( $cats[ 0 ]->term_id ) ) )  : ?>
+                <?php if( function_exists( 'z_taxonomy_image_url' ) && z_taxonomy_image_url( $cats[ 0 ]->term_id ) != '' )  : ?>
                   <img src="<?php echo z_taxonomy_image_url( $cats[ 0 ]->term_id ); ?>">
                 <?php endif; ?>
               </div>

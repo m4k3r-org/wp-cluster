@@ -84,6 +84,11 @@ namespace UsabilityDynamics\Festival2 {
       }
       register_widget( 'UsabilityDynamics_Festival2_Widget_Video' );
 
+			if( !class_exists( 'UsabilityDynamics_Festival2_Widget_Hotel_Search' ) ){
+				require_once( __DIR__ . '/modules/hotel-search/hotel-search.php' );
+			}
+			register_widget( 'UsabilityDynamics_Festival2_Widget_Hotel_Search' );
+
       // Add shortcode for callout item widget
       add_shortcode( 'widget_callout_item', function( $atts ) {
         // Configure defaults and extract the attributes into variables
@@ -108,6 +113,8 @@ namespace UsabilityDynamics\Festival2 {
         // Configure defaults and extract the attributes into variables
         extract( shortcode_atts( array(
           'featured' => '',
+          'title' => '',
+          'description' => '',
         ), $atts ) );
 
         ob_start();

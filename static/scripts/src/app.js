@@ -51,9 +51,10 @@ define( 'app', [ 'module', 'require', 'exports' ], function( module, localRequir
         'lib/blog-main',
 				'lib/tabbed-content',
         'lib/module-video',
+        'lib/contact-form',
 				'components/fitvids/fitvids-built'
       ],
-      function( module, require, exports, $, developer, equalheights, swipe, countdown, ss, stickem, dotdotdot, stickynav, buytickets, navigation, masonry, carousel, account, streamFilter, artistProfile, collapse, share, imagelightbox, stream, fancybox, blogMain, tabbedContent, videoModule, fv ){
+      function( module, require, exports, $, developer, equalheights, swipe, countdown, ss, stickem, dotdotdot, stickynav, buytickets, navigation, masonry, carousel, account, streamFilter, artistProfile, collapse, share, imagelightbox, stream, fancybox, blogMain, tabbedContent, videoModule, contact,  fv ){
     
         var self = this, resizeTo = null;
       
@@ -311,6 +312,11 @@ define( 'app', [ 'module', 'require', 'exports' ], function( module, localRequir
 				{
 					tabbedContent.init();
 				}
+
+        if (  $('.page-contact').length > 0 )
+        {
+          contact.init();
+        }
 
 				// Panama Pages
 				if ( $('.tpl-panama').length > 0){

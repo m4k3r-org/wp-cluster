@@ -65,7 +65,7 @@ namespace UsabilityDynamics\Festival2 {
 			 */
 			public function call( $atts = "" ) {
 
-				$atts = shortcode_atts([
+				$atts = shortcode_atts(array(
 
 					'facebook' => false,
 					'twitter' => false,
@@ -74,7 +74,7 @@ namespace UsabilityDynamics\Festival2 {
 					'total' => false,
 					'url' => ''
 
-				], $atts);
+				), $atts);
 
 				// If no URL was specified
 				if ( empty( $atts[ 'url' ] ) )
@@ -82,14 +82,14 @@ namespace UsabilityDynamics\Festival2 {
 					return json_encode(false);
 				}
 
-				$shares = [
+				$shares = array(
 					'twitter' => 0,
 					'facebook' => 0,
 					'google_plus' => 0,
 					'pinterest' => 0,
 					'total' => 0,
 					'url' => null
-				];
+				);
 
 
 				if ( (bool) $atts['total'] === true )
@@ -216,13 +216,13 @@ namespace UsabilityDynamics\Festival2 {
 
 				$total = (int) $twitter + (int) $facebook + (int) $google_plus + (int) $pinterest;
 
-				return [
+				return array(
 					'twitter' => $twitter,
 					'facebook' => $facebook,
 					'google_plus' => $google_plus,
 					'pinterest' => $pinterest,
 					'total' => $total
-				];
+				);
 			}
 
 

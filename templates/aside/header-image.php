@@ -66,7 +66,7 @@
           <?php if( is_singular( 'post' ) ) : ?>
             <div class="category-image">
               <?php $cats = get_the_category(); ?>
-                <?php if( function_exists( 'z_taxonomy_image_url' ) && !empty( z_taxonomy_image_url( $cats[ 0 ]->term_id ) ) )  : ?>
+                <?php if( function_exists( 'z_taxonomy_image_url' ) && z_taxonomy_image_url( $cats[ 0 ]->term_id ) != '' )  : ?>
                   <img src="<?php echo z_taxonomy_image_url( $cats[ 0 ]->term_id ); ?>" alt="" />
                 <?php endif; ?>
             </div>
@@ -93,7 +93,7 @@
           </h4>
 				<?php endif; ?>
 
-				<?php if ( is_singular( [ 'post', 'artist' ] ) ): ?>
+				<?php if ( is_singular( array( 'post', 'artist' ) ) ): ?>
           <div class="posts-navigation-prev">
             <?php
                 next_post_link('%link', '<span class="icon-left">' . _x() . '</span>' );
@@ -108,14 +108,8 @@
 
 
         <div class="widget-area">
-          <?php if( $post->post_title == 'Contact' ) wp_festival2()->section( 'header-widgets' ); ?>
+          <?php wp_festival2()->section( 'header-widgets' ); ?>
         </div>
-
-				<?php if ( $post->post_title == 'Hotels' ): ?>
-					<div class="hotel-widget">
-						<?php wp_festival2()->section( 'hotel-header-widget' ); ?>
-					</div>
-				<?php endif; ?>
 
       </div>
     </div>
@@ -143,8 +137,5 @@
  * be moved. -williams@ud
  */ 
 if( is_front_page() || $post->post_title == 'Home' ): ?>
-  <h2 id="main" class="latest-blog-posts container-fluid">Latest News and Updates</h2>
-  <p class="latest-blog-posts container-fluid">Stay informed and be in the know! The most important festival updates are below.</p>
-
-  <?php echo do_shortcode( '[widget_news_block featured=1]' );?>
+  <?php echo do_shortcode( '[widget_news_block featured=1 title="Latest News and Updates" description="Stay informed and be in the know! The most important festival updates are below."]' );?>
 <?php endif;

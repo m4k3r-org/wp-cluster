@@ -50,7 +50,7 @@ jQuery(function($) {
 			},
 
 			roomsOverlayOpen: function(){
-				$( '.hotel-widget' ).on( 'change', '.hotel-rooms', function( e ){
+				$( '.hotel-widget .hotel-rooms-container' ).on( 'change', 'select', function( e ){
 
 					e.preventDefault();
 
@@ -86,6 +86,7 @@ jQuery(function($) {
 							$('.hotel-rooms-overlay select.hotel-room-' + i).selectBoxIt('enable');
 						}
 					}
+
 
 					$( '.hotel-rooms-overlay' ).css( 'display', 'block' );
 					$( 'html, body' ).addClass( 'overlay-open' );
