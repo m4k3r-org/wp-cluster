@@ -108,14 +108,8 @@
 
 
         <div class="widget-area">
-          <?php if( $post->post_title == 'Contact' ) wp_festival2()->section( 'header-widgets' ); ?>
+          <?php wp_festival2()->section( 'header-widgets' ); ?>
         </div>
-
-				<?php if ( $post->post_title == 'Hotels' ): ?>
-					<div class="hotel-widget">
-						<?php wp_festival2()->section( 'hotel-header-widget' ); ?>
-					</div>
-				<?php endif; ?>
 
       </div>
     </div>
