@@ -25,6 +25,10 @@ var components = {
             "main": "jquery-built.js"
         },
         {
+            "name": "jquery-selectBoxIt",
+            "main": "jquery-selectBoxIt-built.js"
+        },
+        {
             "name": "knockout",
             "main": "knockout-built.js"
         },
@@ -39,6 +43,10 @@ var components = {
         {
             "name": "sticky",
             "main": "sticky-built.js"
+        },
+        {
+            "name": "moment",
+            "main": "moment-built.js"
         },
         {
             "name": "lib-model",
@@ -86,6 +94,17 @@ var components = {
             ]
         },
         "components/fitvids/fitvids-built": {
+            "deps": [
+                "jquery"
+            ]
+        },
+        "components/jquery-selectBoxIt/jquery-selectBoxIt-built": {
+            "deps": [
+                "jquery",
+                "jquery.ui"
+            ]
+        },
+        "third-party/jquery-ui-1.11.1.custom/jquery-ui.min": {
             "deps": [
                 "jquery"
             ]

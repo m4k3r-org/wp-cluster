@@ -2044,6 +2044,10 @@ var components = {
             "main": "jquery-built.js"
         },
         {
+            "name": "jquery-selectBoxIt",
+            "main": "jquery-selectBoxIt-built.js"
+        },
+        {
             "name": "knockout",
             "main": "knockout-built.js"
         },
@@ -2058,6 +2062,10 @@ var components = {
         {
             "name": "sticky",
             "main": "sticky-built.js"
+        },
+        {
+            "name": "moment",
+            "main": "moment-built.js"
         },
         {
             "name": "lib-model",
@@ -2105,6 +2113,17 @@ var components = {
             ]
         },
         "components/fitvids/fitvids-built": {
+            "deps": [
+                "jquery"
+            ]
+        },
+        "components/jquery-selectBoxIt/jquery-selectboxit-built": {
+            "deps": [
+                "jquery",
+                "jquery.ui"
+            ]
+        },
+        "third-party/jquery-ui-1.11.1.custom/jquery-ui.min": {
             "deps": [
                 "jquery"
             ]
@@ -16311,6 +16330,3258 @@ return jQuery;
 }));
 });
 
+define('jquery-selectBoxIt', function (require, exports, module) {
+/*! jquery.selectBoxIt - v3.8.0 - 2013-08-13 
+* http://www.selectboxit.com
+* Copyright (c) 2013 Greg Franko; Licensed MIT*/
+
+// Immediately-Invoked Function Expression (IIFE) [Ben Alman Blog Post](http://benalman.com/news/2010/11/immediately-invoked-function-expression/) that calls another IIFE that contains all of the plugin logic.  I used this pattern so that anyone viewing this code would not have to scroll to the bottom of the page to view the local parameters that were passed to the main IIFE.
+
+;(function (selectBoxIt) {
+
+    //ECMAScript 5 Strict Mode: [John Resig Blog Post](http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/)
+    "use strict";
+
+    // Calls the second IIFE and locally passes in the global jQuery, window, and document objects
+    selectBoxIt(window.jQuery, window, document);
+
+}
+
+// Locally passes in `jQuery`, the `window` object, the `document` object, and an `undefined` variable.  The `jQuery`, `window` and `document` objects are passed in locally, to improve performance, since javascript first searches for a variable match within the local variables set before searching the global variables set.  All of the global variables are also passed in locally to be minifier friendly. `undefined` can be passed in locally, because it is not a reserved word in JavaScript.
+
+(function ($, window, document, undefined) {
+
+    // ECMAScript 5 Strict Mode: [John Resig Blog Post](http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/)
+    "use strict";
+
+    // Calling the jQueryUI Widget Factory Method
+    $.widget("selectBox.selectBoxIt", {
+
+        // Plugin version
+        VERSION: "3.8.0",
+
+        // These options will be used as defaults
+        options: {
+
+            // **showEffect**: Accepts String: "none", "fadeIn", "show", "slideDown", or any of the jQueryUI show effects (i.e. "bounce")
+            "showEffect": "none",
+
+            // **showEffectOptions**: Accepts an object literal.  All of the available properties are based on the jqueryUI effect options
+            "showEffectOptions": {},
+
+            // **showEffectSpeed**: Accepts Number (milliseconds) or String: "slow", "medium", or "fast"
+            "showEffectSpeed": "medium",
+
+            // **hideEffect**: Accepts String: "none", "fadeOut", "hide", "slideUp", or any of the jQueryUI hide effects (i.e. "explode")
+            "hideEffect": "none",
+
+            // **hideEffectOptions**: Accepts an object literal.  All of the available properties are based on the jqueryUI effect options
+            "hideEffectOptions": {},
+
+            // **hideEffectSpeed**: Accepts Number (milliseconds) or String: "slow", "medium", or "fast"
+            "hideEffectSpeed": "medium",
+
+            // **showFirstOption**: Shows the first dropdown list option within the dropdown list options list
+            "showFirstOption": true,
+
+            // **defaultText**: Overrides the text used by the dropdown list selected option to allow a user to specify custom text.  Accepts a String.
+            "defaultText": "",
+
+            // **defaultIcon**: Overrides the icon used by the dropdown list selected option to allow a user to specify a custom icon.  Accepts a String (CSS class name(s)).
+            "defaultIcon": "",
+
+            // **downArrowIcon**: Overrides the default down arrow used by the dropdown list to allow a user to specify a custom image.  Accepts a String (CSS class name(s)).
+            "downArrowIcon": "",
+
+            // **theme**: Provides theming support for Twitter Bootstrap and jQueryUI
+            "theme": "default",
+
+            // **keydownOpen**: Opens the dropdown if the up or down key is pressed when the dropdown is focused
+            "keydownOpen": true,
+
+            // **isMobile**: Function to determine if a user's browser is a mobile browser
+            "isMobile": function() {
+
+                // Adapted from http://www.detectmobilebrowsers.com
+                var ua = navigator.userAgent || navigator.vendor || window.opera;
+
+                // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
+                return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
+
+            },
+
+            // **native**: Triggers the native select box when a user interacts with the drop down
+            "native": false,
+
+            // **aggressiveChange**: Will select a drop down item (and trigger a change event) when a user navigates to the item via the keyboard (up and down arrow or search), before a user selects an option with a click or the enter key
+            "aggressiveChange": false,
+
+            // **selectWhenHidden: Will allow a user to select an option using the keyboard when the drop down list is hidden and focused
+            "selectWhenHidden": true,
+
+            // **viewport**: Allows for a custom domnode used for the viewport. Accepts a selector.  Default is $(window).
+            "viewport": $(window),
+
+            // **similarSearch**: Optimizes the search for lists with many similar values (i.e. State lists) by making it easier to navigate through
+            "similarSearch": false,
+
+            // **copyAttributes**: HTML attributes that will be copied over to the new drop down
+            "copyAttributes": [
+
+                "title",
+
+                "rel"
+
+            ],
+
+            // **copyClasses**: HTML classes that will be copied over to the new drop down.  The value indicates where the classes should be copied.  The default value is 'button', but you can also use 'container' (recommended) or 'none'.
+            "copyClasses": "button",
+
+            // **nativeMousedown**: Mimics native firefox drop down behavior by opening the drop down on mousedown and selecting the currently hovered drop down option on mouseup
+            "nativeMousedown": false,
+
+            // **customShowHideEvent**: Prevents the drop down from opening on click or mousedown, which allows a user to open/close the drop down with a custom event handler.
+            "customShowHideEvent": false,
+
+            // **autoWidth**: Makes sure the width of the drop down is wide enough to fit all of the drop down options
+            "autoWidth": true,
+
+            // **html**: Determines whether or not option text is rendered as html or as text
+            "html": true,
+
+            // **populate**: Convenience option that accepts JSON data, an array, a single object, or valid HTML string to add options to the drop down list
+            "populate": "",
+
+            // **dynamicPositioning**: Determines whether or not the drop down list should fit inside it's viewport
+            "dynamicPositioning": true,
+
+            // **hideCurrent**: Determines whether or not the currently selected drop down option is hidden in the list
+            "hideCurrent": false
+
+        },
+
+        // Get Themes
+        // ----------
+        //      Retrieves the active drop down theme and returns the theme object
+        "getThemes": function() {
+
+            var self = this,
+                theme = $(self.element).attr("data-theme") || "c";
+
+            return {
+
+                // Twitter Bootstrap Theme
+                "bootstrap": {
+
+                    "focus": "active",
+
+                    "hover": "",
+
+                    "enabled": "enabled",
+
+                    "disabled": "disabled",
+
+                    "arrow": "caret",
+
+                    "button": "btn",
+
+                    "list": "dropdown-menu",
+
+                    "container": "bootstrap",
+
+                    "open": "open"
+
+                },
+
+                // jQueryUI Theme
+                "jqueryui": {
+
+                    "focus": "ui-state-focus",
+
+                    "hover": "ui-state-hover",
+
+                    "enabled": "ui-state-enabled",
+
+                    "disabled": "ui-state-disabled",
+
+                    "arrow": "ui-icon ui-icon-triangle-1-s",
+
+                    "button": "ui-widget ui-state-default",
+
+                    "list": "ui-widget ui-widget-content",
+
+                    "container": "jqueryui",
+
+                    "open": "selectboxit-open"
+
+                },
+
+                // jQuery Mobile Theme
+                "jquerymobile": {
+
+                    "focus": "ui-btn-down-" + theme,
+
+                    "hover": "ui-btn-hover-" + theme,
+
+                    "enabled": "ui-enabled",
+
+                    "disabled": "ui-disabled",
+
+                    "arrow": "ui-icon ui-icon-arrow-d ui-icon-shadow",
+
+                    "button": "ui-btn ui-btn-icon-right ui-btn-corner-all ui-shadow ui-btn-up-" + theme,
+
+                    "list": "ui-btn ui-btn-icon-right ui-btn-corner-all ui-shadow ui-btn-up-" + theme,
+
+                    "container": "jquerymobile",
+
+                    "open": "selectboxit-open"
+
+                },
+
+                "default": {
+
+                    "focus": "selectboxit-focus",
+
+                    "hover": "selectboxit-hover",
+
+                    "enabled": "selectboxit-enabled",
+
+                    "disabled": "selectboxit-disabled",
+
+                    "arrow": "selectboxit-default-arrow",
+
+                    "button": "selectboxit-btn",
+
+                    "list": "selectboxit-list",
+
+                    "container": "selectboxit-container",
+
+                    "open": "selectboxit-open"
+
+                }
+
+            };
+
+        },
+
+        // isDeferred
+        // ----------
+        //      Checks if parameter is a defered object      
+        isDeferred: function(def) {
+            return $.isPlainObject(def) && def.promise && def.done;
+        },
+
+        // _Create
+        // -------
+        //      Sets the Plugin Instance variables and
+        //      constructs the plugin.  Only called once.
+        _create: function(internal) {
+
+            var self = this,
+                populateOption = self.options["populate"],
+                userTheme = self.options["theme"];
+
+            // If the element calling SelectBoxIt is not a select box or is not visible
+            if(!self.element.is("select")) {
+
+                // Exits the plugin
+                return;
+
+            }
+
+            // Stores a reference to the parent Widget class
+            self.widgetProto = $.Widget.prototype;
+
+            // The original select box DOM element
+            self.originalElem = self.element[0];
+
+            // The original select box DOM element wrapped in a jQuery object
+            self.selectBox = self.element;
+
+            if(self.options["populate"] && self.add && !internal) {
+
+                self.add(populateOption);
+
+            }
+
+            // All of the original select box options
+            self.selectItems = self.element.find("option");
+
+            // The first option in the original select box
+            self.firstSelectItem = self.selectItems.slice(0, 1);
+
+            // The html document height
+            self.documentHeight = $(document).height();
+
+            self.theme = $.isPlainObject(userTheme) ? $.extend({}, self.getThemes()["default"], userTheme) : self.getThemes()[userTheme] ? self.getThemes()[userTheme] : self.getThemes()["default"];
+
+            // The index of the currently selected dropdown list option
+            self.currentFocus = 0;
+
+            // Keeps track of which blur events will hide the dropdown list options
+            self.blur = true;
+
+             // Array holding all of the original select box options text
+            self.textArray = [];
+
+            // Maintains search order in the `search` method
+            self.currentIndex = 0;
+
+            // Maintains the current search text in the `search` method
+            self.currentText = "";
+
+            // Whether or not the dropdown list opens up or down (depending on how much room is on the page)
+            self.flipped = false;
+
+            // If the create method is not called internally by the plugin
+            if(!internal) {
+
+                // Saves the original select box `style` attribute within the `selectBoxStyles` plugin instance property
+                self.selectBoxStyles = self.selectBox.attr("style");
+
+            }
+
+            // Creates the dropdown elements that will become the dropdown
+            // Creates the ul element that will become the dropdown options list
+            // Add's all attributes (excluding id, class names, and unselectable properties) to the drop down and drop down items list
+            // Hides the original select box and adds the new plugin DOM elements to the page
+            // Adds event handlers to the new dropdown list
+            self._createDropdownButton()._createUnorderedList()._copyAttributes()._replaceSelectBox()._addClasses(self.theme)._eventHandlers();
+
+            if(self.originalElem.disabled && self.disable) {
+
+                // Disables the dropdown list if the original dropdown list had the `disabled` attribute
+                self.disable();
+
+            }
+
+            // If the Aria Accessibility Module has been included
+            if(self._ariaAccessibility) {
+
+                // Adds ARIA accessibillity tags to the dropdown list
+                self._ariaAccessibility();
+
+            }
+
+            self.isMobile = self.options["isMobile"]();
+
+            if(self._mobile) {
+
+                // Adds mobile support
+                self._mobile();
+
+            }
+
+            // If the native option is set to true
+            if(self.options["native"]) {
+
+                // Triggers the native select box when a user is interacting with the drop down
+                this._applyNativeSelect();
+
+            }
+
+            // Triggers a custom `create` event on the original dropdown list
+            self.triggerEvent("create");
+
+            // Maintains chainability
+            return self;
+
+        },
+
+        // _Create dropdown button
+        // -----------------------
+        //      Creates new dropdown and dropdown elements to replace
+        //      the original select box with a dropdown list
+        _createDropdownButton: function() {
+
+            var self = this,
+                originalElemId = self.originalElemId = self.originalElem.id || "",
+                originalElemValue = self.originalElemValue = self.originalElem.value || "",
+                originalElemName = self.originalElemName = self.originalElem.name || "",
+                copyClasses = self.options["copyClasses"],
+                selectboxClasses = self.selectBox.attr("class") || "";
+
+            // Creates a dropdown element that contains the dropdown list text value
+            self.dropdownText = $("<span/>", {
+
+                // Dynamically sets the dropdown `id` attribute
+                "id": originalElemId && originalElemId + "SelectBoxItText",
+
+                "class": "selectboxit-text",
+
+                // IE specific attribute to not allow the element to be selected
+                "unselectable": "on",
+
+                // Sets the dropdown `text` to equal the original select box default value
+                "text": self.firstSelectItem.text()
+
+            }).
+
+            // Sets the HTML5 data attribute on the dropdownText `dropdown` element
+            attr("data-val", originalElemValue);
+
+            self.dropdownImageContainer = $("<span/>", {
+
+                "class": "selectboxit-option-icon-container"
+
+            });
+
+            // Creates a dropdown element that contains the dropdown list text value
+            self.dropdownImage = $("<i/>", {
+
+                // Dynamically sets the dropdown `id` attribute
+                "id": originalElemId && originalElemId + "SelectBoxItDefaultIcon",
+
+                "class": "selectboxit-default-icon",
+
+                // IE specific attribute to not allow the element to be selected
+                "unselectable": "on"
+
+            });
+
+            // Creates a dropdown to act as the new dropdown list
+            self.dropdown = $("<span/>", {
+
+                // Dynamically sets the dropdown `id` attribute
+                "id": originalElemId && originalElemId + "SelectBoxIt",
+
+                "class": "selectboxit " + (copyClasses === "button" ? selectboxClasses: "") + " " + (self.selectBox.prop("disabled") ? self.theme["disabled"]: self.theme["enabled"]),
+
+                // Sets the dropdown `name` attribute to be the same name as the original select box
+                "name": originalElemName,
+
+                // Sets the dropdown `tabindex` attribute to 0 to allow the dropdown to be focusable
+                "tabindex": self.selectBox.attr("tabindex") || "0",
+
+                // IE specific attribute to not allow the element to be selected
+                "unselectable": "on"
+
+            }).
+
+            // Appends the default text to the inner dropdown list dropdown element
+            append(self.dropdownImageContainer.append(self.dropdownImage)).append(self.dropdownText);
+
+            // Create the dropdown container that will hold all of the dropdown list dom elements
+            self.dropdownContainer = $("<span/>", {
+
+                "id": originalElemId && originalElemId + "SelectBoxItContainer",
+
+                "class": self.theme.container + ' ' + (copyClasses === "container" ? selectboxClasses: "")
+
+            }).
+
+            // Appends the inner dropdown list dropdown element to the dropdown list container dropdown element
+            append(self.dropdown);
+
+            // Maintains chainability
+            return self;
+
+        },
+
+        // _Create Unordered List
+        // ----------------------
+        //      Creates an unordered list element to hold the
+        //        new dropdown list options that directly match
+        //        the values of the original select box options
+        _createUnorderedList: function() {
+
+            // Storing the context of the widget
+            var self = this,
+
+                dataDisabled,
+
+                optgroupClass,
+
+                optgroupElement,
+
+                iconClass,
+
+                iconUrl,
+
+                iconUrlClass,
+
+                iconUrlStyle,
+
+                // Declaring the variable that will hold all of the dropdown list option elements
+                currentItem = "",
+
+                originalElemId = self.originalElemId || "",
+
+                // Creates an unordered list element
+                createdList = $("<ul/>", {
+
+                    // Sets the unordered list `id` attribute
+                    "id": originalElemId && originalElemId + "SelectBoxItOptions",
+
+                    "class": "selectboxit-options",
+
+                    //Sets the unordered list `tabindex` attribute to -1 to prevent the unordered list from being focusable
+                    "tabindex": -1
+
+                }),
+
+                currentDataSelectedText,
+
+                currentDataText,
+
+                currentDataSearch,
+
+                currentText,
+
+                currentOption,
+
+                parent;
+
+            // Checks the `showFirstOption` plugin option to determine if the first dropdown list option should be shown in the options list.
+            if (!self.options["showFirstOption"]) {
+
+                // Disables the first select box option
+                self.selectItems.first().attr("disabled", "disabled");
+
+                // Excludes the first dropdown list option from the options list
+                self.selectItems = self.selectBox.find("option").slice(1);
+
+            }
+
+            // Loops through the original select box options list and copies the text of each
+            // into new list item elements of the new dropdown list
+            self.selectItems.each(function(index) {
+
+                currentOption = $(this);
+
+                optgroupClass = "";
+
+                optgroupElement = "";
+
+                dataDisabled = currentOption.prop("disabled");
+
+                iconClass = currentOption.attr("data-icon") || "";
+
+                iconUrl = currentOption.attr("data-iconurl") || "";
+
+                iconUrlClass = iconUrl ? "selectboxit-option-icon-url": "";
+
+                iconUrlStyle = iconUrl ? 'style="background-image:url(\'' + iconUrl + '\');"': "";
+
+                currentDataSelectedText = currentOption.attr("data-selectedtext");
+
+                currentDataText = currentOption.attr("data-text");
+
+                currentText = currentDataText ? currentDataText: currentOption.text();
+
+                parent = currentOption.parent();
+
+                // If the current option being traversed is within an optgroup
+
+                if(parent.is("optgroup")) {
+
+                    optgroupClass = "selectboxit-optgroup-option";
+
+                    if(currentOption.index() === 0) {
+
+                         optgroupElement = '<span class="selectboxit-optgroup-header ' + parent.first().attr("class") + '"data-disabled="true">' + parent.first().attr("label") + '</span>';
+
+                    }
+
+                }
+
+                // Uses string concatenation for speed (applies HTML attribute encoding)
+                currentItem += optgroupElement + '<li id="' + index + '" data-val="' + this.value + '" data-disabled="' + dataDisabled + '" class="' + optgroupClass + " selectboxit-option " + ($(this).attr("class") || "") + '"><a class="selectboxit-option-anchor"><span class="selectboxit-option-icon-container"><i class="selectboxit-option-icon ' + iconClass + ' ' + (iconUrlClass || self.theme["container"]) + '"' + iconUrlStyle + '></i></span>' + (self.options["html"] ? currentText: self.htmlEscape(currentText)) + '</a></li>';
+
+                currentDataSearch = currentOption.attr("data-search");
+
+                // Stores all of the original select box options text inside of an array
+                // (Used later in the `searchAlgorithm` method)
+                self.textArray[index] = dataDisabled ? "": currentDataSearch ? currentDataSearch: currentText;
+
+                // Checks the original select box option for the `selected` attribute
+                if (this.selected) {
+
+                    // Replaces the default text with the selected option text
+                    self._setText(self.dropdownText, currentDataSelectedText || currentText);
+
+                    //Set the currently selected option
+                    self.currentFocus = index;
+
+                }
+
+            });
+
+            // If the `defaultText` option is being used
+            if ((self.options["defaultText"] || self.selectBox.attr("data-text"))) {
+
+                var defaultedText = self.options["defaultText"] || self.selectBox.attr("data-text");
+
+                // Overrides the current dropdown default text with the value the user specifies in the `defaultText` option
+                self._setText(self.dropdownText, defaultedText);
+
+                self.options["defaultText"] = defaultedText;
+
+            }
+
+            // Append the list item to the unordered list
+            createdList.append(currentItem);
+
+            // Stores the dropdown list options list inside of the `list` instance variable
+            self.list = createdList;
+
+            // Append the dropdown list options list to the dropdown container element
+            self.dropdownContainer.append(self.list);
+
+            // Stores the individual dropdown list options inside of the `listItems` instance variable
+            self.listItems = self.list.children("li");
+
+            self.listAnchors = self.list.find("a");
+
+            // Sets the 'selectboxit-option-first' class name on the first drop down option
+            self.listItems.first().addClass("selectboxit-option-first");
+
+            // Sets the 'selectboxit-option-last' class name on the last drop down option
+            self.listItems.last().addClass("selectboxit-option-last");
+
+            // Set the disabled CSS class for select box options
+            self.list.find("li[data-disabled='true']").not(".optgroupHeader").addClass(self.theme["disabled"]);
+
+            self.dropdownImage.addClass(self.selectBox.attr("data-icon") || self.options["defaultIcon"] || self.listItems.eq(self.currentFocus).find("i").attr("class"));
+
+            self.dropdownImage.attr("style", self.listItems.eq(self.currentFocus).find("i").attr("style"));
+
+            //Maintains chainability
+            return self;
+
+        },
+
+        // _Replace Select Box
+        // -------------------
+        //      Hides the original dropdown list and inserts
+        //        the new DOM elements
+        _replaceSelectBox: function() {
+
+            var self = this,
+                height,
+                originalElemId = self.originalElem.id || "",
+                size = self.selectBox.attr("data-size"),
+                listSize = self.listSize = size === undefined ? "auto" : size === "0" || "size" === "auto" ? "auto" : +size,
+                downArrowContainerWidth,
+                dropdownImageWidth;
+
+            // Hides the original select box
+            self.selectBox.css("display", "none").
+
+            // Adds the new dropdown list to the page directly after the hidden original select box element
+            after(self.dropdownContainer);
+
+            self.dropdownContainer.appendTo('body').
+
+            addClass('selectboxit-rendering');
+
+            // The height of the dropdown list
+            height = self.dropdown.height();
+
+            // The down arrow element of the dropdown list
+            self.downArrow = $("<i/>", {
+
+                // Dynamically sets the dropdown `id` attribute of the dropdown list down arrow
+                "id": originalElemId && originalElemId + "SelectBoxItArrow",
+
+                "class": "selectboxit-arrow",
+
+                // IE specific attribute to not allow the dropdown list text to be selected
+                "unselectable": "on"
+
+            });
+
+            // The down arrow container element of the dropdown list
+            self.downArrowContainer = $("<span/>", {
+
+                // Dynamically sets the dropdown `id` attribute for the down arrow container element
+                "id": originalElemId && originalElemId + "SelectBoxItArrowContainer",
+
+                "class": "selectboxit-arrow-container",
+
+                // IE specific attribute to not allow the dropdown list text to be selected
+                "unselectable": "on"
+
+            }).
+
+            // Inserts the down arrow element inside of the down arrow container element
+            append(self.downArrow);
+
+            // Appends the down arrow element to the dropdown list
+            self.dropdown.append(self.downArrowContainer);
+
+            // Adds the `selectboxit-selected` class name to the currently selected drop down option
+            self.listItems.removeClass("selectboxit-selected").eq(self.currentFocus).addClass("selectboxit-selected");
+
+            // The full outer width of the down arrow container
+            downArrowContainerWidth = self.downArrowContainer.outerWidth(true);
+
+            // The full outer width of the dropdown image
+            dropdownImageWidth = self.dropdownImage.outerWidth(true);
+
+            // If the `autoWidth` option is true
+            if(self.options["autoWidth"]) {
+
+                // Sets the auto width of the drop down
+                self.dropdown.css({ "width": "auto" }).css({
+
+                    "width": self.list.outerWidth(true) + downArrowContainerWidth + dropdownImageWidth
+
+                });
+
+                self.list.css({
+
+                    "min-width": self.dropdown.width()
+
+                });
+
+            }
+
+            // Dynamically adds the `max-width` and `line-height` CSS styles of the dropdown list text element
+            self.dropdownText.css({
+
+                "max-width": self.dropdownContainer.outerWidth(true) - (downArrowContainerWidth + dropdownImageWidth)
+
+            });
+
+            // Adds the new dropdown list to the page directly after the hidden original select box element
+            self.selectBox.after(self.dropdownContainer);
+
+            self.dropdownContainer.removeClass('selectboxit-rendering');
+
+            if($.type(listSize) === "number") {
+
+                // Stores the new `max-height` for later
+                self.maxHeight = self.listAnchors.outerHeight(true) * listSize;
+
+            }
+
+            // Maintains chainability
+            return self;
+
+        },
+
+        // _Scroll-To-View
+        // ---------------
+        //      Updates the dropdown list scrollTop value
+        _scrollToView: function(type) {
+
+            var self = this,
+
+                currentOption = self.listItems.eq(self.currentFocus),
+
+                // The current scroll positioning of the dropdown list options list
+                listScrollTop = self.list.scrollTop(),
+
+                // The height of the currently selected dropdown list option
+                currentItemHeight = currentOption.height(),
+
+                // The relative distance from the currently selected dropdown list option to the the top of the dropdown list options list
+                currentTopPosition = currentOption.position().top,
+
+                absCurrentTopPosition = Math.abs(currentTopPosition),
+
+                // The height of the dropdown list option list
+                listHeight = self.list.height(),
+
+                currentText;
+
+            // Scrolling logic for a text search
+            if (type === "search") {
+
+                // Increases the dropdown list options `scrollTop` if a user is searching for an option
+                // below the currently selected option that is not visible
+                if (listHeight - currentTopPosition < currentItemHeight) {
+
+                    // The selected option will be shown at the very bottom of the visible options list
+                    self.list.scrollTop(listScrollTop + (currentTopPosition - (listHeight - currentItemHeight)));
+
+                }
+
+                // Decreases the dropdown list options `scrollTop` if a user is searching for an option above the currently selected option that is not visible
+                else if (currentTopPosition < -1) {
+
+                    self.list.scrollTop(currentTopPosition - currentItemHeight);
+
+                }
+            }
+
+            // Scrolling logic for the `up` keyboard navigation
+            else if (type === "up") {
+
+                // Decreases the dropdown list option list `scrollTop` if a user is navigating to an element that is not visible
+                if (currentTopPosition < -1) {
+
+                    self.list.scrollTop(listScrollTop - absCurrentTopPosition);
+
+                }
+            }
+
+            // Scrolling logic for the `down` keyboard navigation
+            else if (type === "down") {
+
+                // Increases the dropdown list options `scrollTop` if a user is navigating to an element that is not fully visible
+                if (listHeight - currentTopPosition < currentItemHeight) {
+
+                    // Increases the dropdown list options `scrollTop` by the height of the current option item.
+                    self.list.scrollTop((listScrollTop + (absCurrentTopPosition - listHeight + currentItemHeight)));
+
+                }
+            }
+
+            // Maintains chainability
+            return self;
+
+        },
+
+        // _Callback
+        // ---------
+        //      Call the function passed into the method
+        _callbackSupport: function(callback) {
+
+            var self = this;
+
+            // Checks to make sure the parameter passed in is a function
+            if ($.isFunction(callback)) {
+
+                // Calls the method passed in as a parameter and sets the current `SelectBoxIt` object that is stored in the jQuery data method as the context(allows for `this` to reference the SelectBoxIt API Methods in the callback function. The `dropdown` DOM element that acts as the new dropdown list is also passed as the only parameter to the callback
+                callback.call(self, self.dropdown);
+
+            }
+
+            // Maintains chainability
+            return self;
+
+        },
+
+        // _setText
+        // --------
+        //      Set's the text or html for the drop down
+        _setText: function(elem, currentText) {
+
+            var self = this;
+
+            if(self.options["html"]) {
+
+                elem.html(currentText);
+
+            }
+
+            else {
+
+                elem.text(currentText);
+
+            }
+
+            return self;
+
+        },
+
+        // Open
+        // ----
+        //      Opens the dropdown list options list
+        open: function(callback) {
+
+            var self = this,
+                showEffect = self.options["showEffect"],
+                showEffectSpeed = self.options["showEffectSpeed"],
+                showEffectOptions = self.options["showEffectOptions"],
+                isNative = self.options["native"],
+                isMobile = self.isMobile;
+
+            // If there are no select box options, do not try to open the select box
+            if(!self.listItems.length || self.dropdown.hasClass(self.theme["disabled"])) {
+
+                return self;
+
+            }
+
+            // If the new drop down is being used and is not visible
+            if((!isNative && !isMobile) && !this.list.is(":visible")) {
+
+                // Triggers a custom "open" event on the original select box
+                self.triggerEvent("open");
+
+                if (self._dynamicPositioning && self.options["dynamicPositioning"]) {
+
+                    // Dynamically positions the dropdown list options list
+                    self._dynamicPositioning();
+
+                }
+
+                // Uses `no effect`
+                if(showEffect === "none") {
+
+                    // Does not require a callback function because this animation will complete before the call to `scrollToView`
+                    self.list.show();
+
+                }
+
+                // Uses the jQuery `show` special effect
+                else if(showEffect === "show" || showEffect === "slideDown" || showEffect === "fadeIn") {
+
+                    // Requires a callback function to determine when the `show` animation is complete
+                    self.list[showEffect](showEffectSpeed);
+
+                }
+
+                // If none of the above options were passed, then a `jqueryUI show effect` is expected
+                else {
+
+                    // Allows for custom show effects via the [jQueryUI core effects](http://http://jqueryui.com/demos/show/)
+                    self.list.show(showEffect, showEffectOptions, showEffectSpeed);
+
+                }
+
+                self.list.promise().done(function() {
+
+                    // Updates the list `scrollTop` attribute
+                    self._scrollToView("search");
+
+                });
+
+            }
+
+            // Provide callback function support
+            self._callbackSupport(callback);
+
+            // Maintains chainability
+            return self;
+
+        },
+
+        // Close
+        // -----
+        //      Closes the dropdown list options list
+        close: function(callback) {
+
+            var self = this,
+                hideEffect = self.options["hideEffect"],
+                hideEffectSpeed = self.options["hideEffectSpeed"],
+                hideEffectOptions = self.options["hideEffectOptions"],
+                isNative = self.options["native"],
+                isMobile = self.isMobile;
+
+            // If the drop down is being used and is visible
+            if((!isNative && !isMobile) && self.list.is(":visible")) {
+
+                // Triggers a custom "close" event on the original select box
+                self.triggerEvent("close");
+
+                // Uses `no effect`
+                if(hideEffect === "none") {
+
+                    // Does not require a callback function because this animation will complete before the call to `scrollToView`
+                    self.list.hide();
+
+                }
+
+                // Uses the jQuery `hide` special effect
+                else if(hideEffect === "hide" || hideEffect === "slideUp" || hideEffect === "fadeOut") {
+
+                    self.list[hideEffect](hideEffectSpeed);
+
+                }
+
+                // If none of the above options were passed, then a `jqueryUI hide effect` is expected
+                else {
+
+                    // Allows for custom hide effects via the [jQueryUI core effects](http://http://jqueryui.com/demos/hide/)
+                    self.list.hide(hideEffect, hideEffectOptions, hideEffectSpeed);
+
+                }
+
+            }
+
+            // Provide callback function support
+            self._callbackSupport(callback);
+
+            // Maintains chainability
+            return self;
+
+        },
+
+        toggle: function() {
+
+            var self = this,
+                listIsVisible = self.list.is(":visible");
+
+            if(listIsVisible) {
+
+                self.close();
+
+            }
+
+            else if(!listIsVisible) {
+
+                self.open();
+
+            }
+
+        },
+
+        // _Key Mappings
+        // -------------
+        //      Object literal holding the string representation of each key code
+        _keyMappings: {
+
+            "38": "up",
+
+            "40": "down",
+
+            "13": "enter",
+
+            "8": "backspace",
+
+            "9": "tab",
+
+            "32": "space",
+
+            "27": "esc"
+
+        },
+
+        // _Key Down Methods
+        // -----------------
+        //      Methods to use when the keydown event is triggered
+        _keydownMethods: function() {
+
+            var self = this,
+                moveToOption = self.list.is(":visible") || !self.options["keydownOpen"];
+
+            return {
+
+                "down": function() {
+
+                    // If the plugin options allow keyboard navigation
+                    if (self.moveDown && moveToOption) {
+
+                        self.moveDown();
+
+                    }
+
+                },
+
+                "up": function() {
+
+                     // If the plugin options allow keyboard navigation
+                    if (self.moveUp && moveToOption) {
+
+                        self.moveUp();
+
+                    }
+
+                },
+
+                "enter": function() {
+
+                    var activeElem = self.listItems.eq(self.currentFocus);
+
+                    // Updates the dropdown list value
+                    self._update(activeElem);
+
+                    if (activeElem.attr("data-preventclose") !== "true") {
+
+                        // Closes the drop down list options list
+                        self.close();
+
+                    }
+
+                    // Triggers the `enter` events on the original select box
+                    self.triggerEvent("enter");
+
+                },
+
+                "tab": function() {
+
+                    // Triggers the custom `tab-blur` event on the original select box
+                    self.triggerEvent("tab-blur");
+
+                    // Closes the drop down list
+                    self.close();
+
+                },
+
+                "backspace": function() {
+
+                    // Triggers the custom `backspace` event on the original select box
+                    self.triggerEvent("backspace");
+
+                },
+
+                "esc": function() {
+
+                    // Closes the dropdown options list
+                    self.close();
+
+                }
+
+            };
+
+        },
+
+
+        // _Event Handlers
+        // ---------------
+        //      Adds event handlers to the new dropdown and the original select box
+        _eventHandlers: function() {
+
+            // LOCAL VARIABLES
+            var self = this,
+                nativeMousedown = self.options["nativeMousedown"],
+                customShowHideEvent = self.options["customShowHideEvent"],
+                currentDataText,
+                currentText,
+                focusClass = self.focusClass,
+                hoverClass = self.hoverClass,
+                openClass = self.openClass;
+
+            // Select Box events
+            this.dropdown.on({
+
+                // `click` event with the `selectBoxIt` namespace
+                "click.selectBoxIt": function() {
+
+                    // Used to make sure the dropdown becomes focused (fixes IE issue)
+                    self.dropdown.trigger("focus", true);
+
+                    // The `click` handler logic will only be applied if the dropdown list is enabled
+                    if (!self.originalElem.disabled) {
+
+                        // Triggers the `click` event on the original select box
+                        self.triggerEvent("click");
+
+                        if(!nativeMousedown && !customShowHideEvent) {
+
+                            self.toggle();
+
+                        }
+
+                    }
+
+                },
+
+                // `mousedown` event with the `selectBoxIt` namespace
+                "mousedown.selectBoxIt": function() {
+
+                    // Stores data in the jQuery `data` method to help determine if the dropdown list gains focus from a click or tabstop.  The mousedown event fires before the focus event.
+                    $(this).data("mdown", true);
+
+                    self.triggerEvent("mousedown");
+
+                    if(nativeMousedown && !customShowHideEvent) {
+
+                        self.toggle();
+
+                    }
+
+                },
+
+                // `mouseup` event with the `selectBoxIt` namespace
+                "mouseup.selectBoxIt": function() {
+
+                    self.triggerEvent("mouseup");
+
+                },
+
+                // `blur` event with the `selectBoxIt` namespace.  Uses special blur logic to make sure the dropdown list closes correctly
+                "blur.selectBoxIt": function() {
+
+                    // If `self.blur` property is true
+                    if (self.blur) {
+
+                        // Triggers both the `blur` and `focusout` events on the original select box.
+                        // The `focusout` event is also triggered because the event bubbles
+                        // This event has to be used when using event delegation (such as the jQuery `delegate` or `on` methods)
+                        // Popular open source projects such as Backbone.js utilize event delegation to bind events, so if you are using Backbone.js, use the `focusout` event instead of the `blur` event
+                        self.triggerEvent("blur");
+
+                        // Closes the dropdown list options list
+                        self.close();
+
+                        $(this).removeClass(focusClass);
+
+                    }
+
+                },
+
+                "focus.selectBoxIt": function(event, internal) {
+
+                    // Stores the data associated with the mousedown event inside of a local variable
+                    var mdown = $(this).data("mdown");
+
+                    // Removes the jQuery data associated with the mousedown event
+                    $(this).removeData("mdown");
+
+                    // If a mousedown event did not occur and no data was passed to the focus event (this correctly triggers the focus event), then the dropdown list gained focus from a tabstop
+                    if (!mdown && !internal) {
+
+                        setTimeout(function() {
+
+                            // Triggers the `tabFocus` custom event on the original select box
+                            self.triggerEvent("tab-focus");
+
+                        }, 0);
+
+                    }
+
+                    // Only trigger the `focus` event on the original select box if the dropdown list is hidden (this verifies that only the correct `focus` events are used to trigger the event on the original select box
+                    if(!internal) {
+
+                        if(!$(this).hasClass(self.theme["disabled"])) {
+
+                            $(this).addClass(focusClass);
+
+                        }
+
+                        //Triggers the `focus` default event on the original select box
+                        self.triggerEvent("focus");
+
+                    }
+
+                },
+
+                // `keydown` event with the `selectBoxIt` namespace.  Catches all user keyboard navigations
+                "keydown.selectBoxIt": function(e) {
+
+                    // Stores the `keycode` value in a local variable
+                    var currentKey = self._keyMappings[e.keyCode],
+
+                        keydownMethod = self._keydownMethods()[currentKey];
+
+                    if(keydownMethod) {
+
+                        keydownMethod();
+
+                        if(self.options["keydownOpen"] && (currentKey === "up" || currentKey === "down")) {
+
+                            self.open();
+
+                        }
+
+                    }
+
+                    if(keydownMethod && currentKey !== "tab") {
+
+                        e.preventDefault();
+
+                    }
+
+                },
+
+                // `keypress` event with the `selectBoxIt` namespace.  Catches all user keyboard text searches since you can only reliably get character codes using the `keypress` event
+                "keypress.selectBoxIt": function(e) {
+
+                    // Sets the current key to the `keyCode` value if `charCode` does not exist.  Used for cross
+                    // browser support since IE uses `keyCode` instead of `charCode`.
+                    var currentKey = e.charCode || e.keyCode,
+
+                        key = self._keyMappings[e.charCode || e.keyCode],
+
+                        // Converts unicode values to characters
+                        alphaNumericKey = String.fromCharCode(currentKey);
+
+                    // If the plugin options allow text searches
+                    if (self.search && (!key || (key && key === "space"))) {
+
+                        // Calls `search` and passes the character value of the user's text search
+                        self.search(alphaNumericKey, true, true);
+
+                    }
+
+                    if(key === "space") {
+
+                        e.preventDefault();
+
+                    }
+
+                },
+
+                // `mousenter` event with the `selectBoxIt` namespace .The mouseenter JavaScript event is proprietary to Internet Explorer. Because of the event's general utility, jQuery simulates this event so that it can be used regardless of browser.
+                "mouseenter.selectBoxIt": function() {
+
+                    // Trigger the `mouseenter` event on the original select box
+                    self.triggerEvent("mouseenter");
+
+                },
+
+                // `mouseleave` event with the `selectBoxIt` namespace. The mouseleave JavaScript event is proprietary to Internet Explorer. Because of the event's general utility, jQuery simulates this event so that it can be used regardless of browser.
+                "mouseleave.selectBoxIt": function() {
+
+                    // Trigger the `mouseleave` event on the original select box
+                    self.triggerEvent("mouseleave");
+
+                }
+
+            });
+
+            // Select box options events that set the dropdown list blur logic (decides when the dropdown list gets
+            // closed)
+            self.list.on({
+
+                // `mouseover` event with the `selectBoxIt` namespace
+                "mouseover.selectBoxIt": function() {
+
+                    // Prevents the dropdown list options list from closing
+                    self.blur = false;
+
+                },
+
+                // `mouseout` event with the `selectBoxIt` namespace
+                "mouseout.selectBoxIt": function() {
+
+                    // Allows the dropdown list options list to close
+                    self.blur = true;
+
+                },
+
+                // `focusin` event with the `selectBoxIt` namespace
+                "focusin.selectBoxIt": function() {
+
+                    // Prevents the default browser outline border to flicker, which results because of the `blur` event
+                    self.dropdown.trigger("focus", true);
+
+                }
+
+            });
+
+            // Select box individual options events bound with the jQuery `delegate` method.  `Delegate` was used because binding indropdownidual events to each list item (since we don't know how many there will be) would decrease performance.  Instead, we bind each event to the unordered list, provide the list item context, and allow the list item events to bubble up (`event bubbling`). This greatly increases page performance because we only have to bind an event to one element instead of x number of elements. Delegates the `click` event with the `selectBoxIt` namespace to the list items
+            self.list.on({
+
+                "mousedown.selectBoxIt": function() {
+
+                    self._update($(this));
+
+                    self.triggerEvent("option-click");
+
+                    // If the current drop down option is not disabled
+                    if ($(this).attr("data-disabled") === "false" && $(this).attr("data-preventclose") !== "true") {
+
+                        // Closes the drop down list
+                        self.close();
+
+                    }
+
+                    setTimeout(function() {
+
+                        self.dropdown.trigger('focus', true);
+
+                    }, 0);
+
+                },
+
+               // Delegates the `focusin` event with the `selectBoxIt` namespace to the list items
+               "focusin.selectBoxIt": function() {
+
+                    // Removes the hover class from the previous drop down option
+                    self.listItems.not($(this)).removeAttr("data-active");
+
+                    $(this).attr("data-active", "");
+
+                    var listIsHidden = self.list.is(":hidden");
+
+                    if((self.options["searchWhenHidden"] && listIsHidden) || self.options["aggressiveChange"] || (listIsHidden && self.options["selectWhenHidden"])) {
+
+                        self._update($(this));
+
+                    }
+
+                    // Adds the focus CSS class to the currently focused dropdown list option
+                   $(this).addClass(focusClass);
+
+                },
+
+                // Delegates the `focus` event with the `selectBoxIt` namespace to the list items
+                "mouseup.selectBoxIt": function() {
+
+                    if(nativeMousedown && !customShowHideEvent) {
+
+                        self._update($(this));
+
+                        self.triggerEvent("option-mouseup");
+
+                        // If the current drop down option is not disabled
+                        if ($(this).attr("data-disabled") === "false" && $(this).attr("data-preventclose") !== "true") {
+
+                            // Closes the drop down list
+                            self.close();
+
+                        }
+
+                    }
+
+                },
+
+                // Delegates the `mouseenter` event with the `selectBoxIt` namespace to the list items
+                "mouseenter.selectBoxIt": function() {
+
+                    // If the currently moused over drop down option is not disabled
+                    if($(this).attr("data-disabled") === "false") {
+
+                        self.listItems.removeAttr("data-active");
+
+                        $(this).addClass(focusClass).attr("data-active", "");
+
+                        // Sets the dropdown list indropdownidual options back to the default state and sets the focus CSS class on the currently hovered option
+                        self.listItems.not($(this)).removeClass(focusClass);
+
+                        $(this).addClass(focusClass);
+
+                        self.currentFocus = +$(this).attr("id");
+
+                    }
+
+                },
+
+                // Delegates the `mouseleave` event with the `selectBoxIt` namespace to the list items
+                "mouseleave.selectBoxIt": function() {
+
+                    // If the currently moused over drop down option is not disabled
+                    if($(this).attr("data-disabled") === "false") {
+
+                        // Removes the focus class from the previous drop down option
+                        self.listItems.not($(this)).removeClass(focusClass).removeAttr("data-active");
+
+                        $(this).addClass(focusClass);
+
+                        self.currentFocus = +$(this).attr("id");
+
+                    }
+
+                },
+
+                // Delegates the `blur` event with the `selectBoxIt` namespace to the list items
+                "blur.selectBoxIt": function() {
+
+                    // Removes the focus CSS class from the previously focused dropdown list option
+                    $(this).removeClass(focusClass);
+
+                }
+
+            }, ".selectboxit-option");
+
+            // Select box individual option anchor events bound with the jQuery `delegate` method.  `Delegate` was used because binding indropdownidual events to each list item (since we don't know how many there will be) would decrease performance.  Instead, we bind each event to the unordered list, provide the list item context, and allow the list item events to bubble up (`event bubbling`). This greatly increases page performance because we only have to bind an event to one element instead of x number of elements. Delegates the `click` event with the `selectBoxIt` namespace to the list items
+            self.list.on({
+
+                "click.selectBoxIt": function(ev) {
+
+                    // Prevents the internal anchor tag from doing anything funny
+                    ev.preventDefault();
+
+                }
+
+            }, "a");
+
+            // Original dropdown list events
+            self.selectBox.on({
+
+                // `change` event handler with the `selectBoxIt` namespace
+                "change.selectBoxIt, internal-change.selectBoxIt": function(event, internal) {
+
+                    var currentOption,
+                        currentDataSelectedText;
+
+                    // If the user called the change method
+                    if(!internal) {
+
+                        currentOption = self.list.find('li[data-val="' + self.originalElem.value + '"]');
+
+                        // If there is a dropdown option with the same value as the original select box element
+                        if(currentOption.length) {
+
+                            self.listItems.eq(self.currentFocus).removeClass(self.focusClass);
+
+                            self.currentFocus = +currentOption.attr("id");
+
+                        }
+
+                    }
+
+                    currentOption = self.listItems.eq(self.currentFocus);
+
+                    currentDataSelectedText = currentOption.attr("data-selectedtext");
+
+                    currentDataText = currentOption.attr("data-text");
+
+                    currentText = currentDataText ?  currentDataText: currentOption.find("a").text();
+
+                    // Sets the new dropdown list text to the value of the current option
+                    self._setText(self.dropdownText, currentDataSelectedText || currentText);
+
+                    self.dropdownText.attr("data-val", self.originalElem.value);
+
+                    if(currentOption.find("i").attr("class")) {
+
+                        self.dropdownImage.attr("class", currentOption.find("i").attr("class")).addClass("selectboxit-default-icon");
+
+                        self.dropdownImage.attr("style", currentOption.find("i").attr("style"));
+                    }
+
+                    // Triggers a custom changed event on the original select box
+                    self.triggerEvent("changed");
+
+                },
+
+                // `disable` event with the `selectBoxIt` namespace
+                "disable.selectBoxIt": function() {
+
+                    // Adds the `disabled` CSS class to the new dropdown list to visually show that it is disabled
+                    self.dropdown.addClass(self.theme["disabled"]);
+
+                },
+
+                // `enable` event with the `selectBoxIt` namespace
+                "enable.selectBoxIt": function() {
+
+                    // Removes the `disabled` CSS class from the new dropdown list to visually show that it is enabled
+                    self.dropdown.removeClass(self.theme["disabled"]);
+
+                },
+
+                // `open` event with the `selectBoxIt` namespace
+                "open.selectBoxIt": function() {
+
+                    var currentElem = self.list.find("li[data-val='" + self.dropdownText.attr("data-val") + "']"),
+                        activeElem;
+
+                    // If no current element can be found, then select the first drop down option
+                    if(!currentElem.length) {
+
+                        // Sets the default value of the dropdown list to the first option that is not disabled
+                        currentElem = self.listItems.not("[data-disabled=true]").first();
+
+                    }
+
+                    self.currentFocus = +currentElem.attr("id");
+
+                    activeElem = self.listItems.eq(self.currentFocus);
+
+                    self.dropdown.addClass(openClass).
+
+                    // Removes the focus class from the dropdown list and adds the library focus class for both the dropdown list and the currently selected dropdown list option
+                    removeClass(hoverClass).addClass(focusClass);
+
+                    self.listItems.removeClass(self.selectedClass).
+
+                    removeAttr("data-active").not(activeElem).removeClass(focusClass);
+
+                    activeElem.addClass(self.selectedClass).addClass(focusClass);
+
+                    if(self.options.hideCurrent) {
+
+                        self.listItems.show();
+
+                        activeElem.hide();
+
+                    }
+
+                },
+
+                "close.selectBoxIt": function() {
+
+                    // Removes the open class from the dropdown container
+                    self.dropdown.removeClass(openClass);
+
+                },
+
+                "blur.selectBoxIt": function() {
+
+                    self.dropdown.removeClass(focusClass);
+
+                },
+
+                // `mousenter` event with the `selectBoxIt` namespace
+                "mouseenter.selectBoxIt": function() {
+
+                    if(!$(this).hasClass(self.theme["disabled"])) {
+                        self.dropdown.addClass(hoverClass);
+                    }
+
+                },
+
+                // `mouseleave` event with the `selectBoxIt` namespace
+                "mouseleave.selectBoxIt": function() {
+
+                    // Removes the hover CSS class on the previously hovered dropdown list option
+                    self.dropdown.removeClass(hoverClass);
+
+                },
+
+                // `destroy` event
+                "destroy": function(ev) {
+
+                    // Prevents the default action from happening
+                    ev.preventDefault();
+
+                    // Prevents the destroy event from propagating
+                    ev.stopPropagation();
+
+                }
+
+            });
+
+            // Maintains chainability
+            return self;
+
+        },
+
+        // _update
+        // -------
+        //      Updates the drop down and select box with the current value
+        _update: function(elem) {
+
+            var self = this,
+                currentDataSelectedText,
+                currentDataText,
+                currentText,
+                defaultText = self.options["defaultText"] || self.selectBox.attr("data-text"),
+                currentElem = self.listItems.eq(self.currentFocus);
+
+            if (elem.attr("data-disabled") === "false") {
+
+                currentDataSelectedText = self.listItems.eq(self.currentFocus).attr("data-selectedtext");
+
+                currentDataText = currentElem.attr("data-text");
+
+                currentText = currentDataText ? currentDataText: currentElem.text();
+
+                // If the default text option is set and the current drop down option is not disabled
+                if ((defaultText && self.options["html"] ? self.dropdownText.html() === defaultText: self.dropdownText.text() === defaultText) && self.selectBox.val() === elem.attr("data-val")) {
+
+                    self.triggerEvent("change");
+
+                }
+
+                else {
+
+                    // Sets the original dropdown list value and triggers the `change` event on the original select box
+                    self.selectBox.val(elem.attr("data-val"));
+
+                    // Sets `currentFocus` to the currently focused dropdown list option.
+                    // The unary `+` operator casts the string to a number
+                    // [James Padolsey Blog Post](http://james.padolsey.com/javascript/terse-javascript-101-part-2/)
+                    self.currentFocus = +elem.attr("id");
+
+                    // Triggers the dropdown list `change` event if a value change occurs
+                    if (self.originalElem.value !== self.dropdownText.attr("data-val")) {
+
+                        self.triggerEvent("change");
+
+                    }
+
+                }
+
+            }
+
+        },
+
+        // _addClasses
+        // -----------
+        //      Adds SelectBoxIt CSS classes
+        _addClasses: function(obj) {
+
+            var self = this,
+
+                focusClass = self.focusClass = obj.focus,
+
+                hoverClass = self.hoverClass = obj.hover,
+
+                buttonClass = obj.button,
+
+                listClass = obj.list,
+
+                arrowClass = obj.arrow,
+
+                containerClass = obj.container,
+
+                openClass = self.openClass = obj.open;
+
+            self.selectedClass = "selectboxit-selected";
+
+            self.downArrow.addClass(self.selectBox.attr("data-downarrow") || self.options["downArrowIcon"] || arrowClass);
+
+            // Adds the correct container class to the dropdown list
+            self.dropdownContainer.addClass(containerClass);
+
+            // Adds the correct class to the dropdown list
+            self.dropdown.addClass(buttonClass);
+
+            // Adds the default class to the dropdown list options
+            self.list.addClass(listClass);
+
+            // Maintains chainability
+            return self;
+
+        },
+
+        // Refresh
+        // -------
+        //    The dropdown will rebuild itself.  Useful for dynamic content.
+        refresh: function(callback, internal) {
+
+            var self = this;
+
+            // Destroys the plugin and then recreates the plugin
+            self._destroySelectBoxIt()._create(true);
+
+            if(!internal) {
+                self.triggerEvent("refresh");
+            }
+
+            self._callbackSupport(callback);
+
+            //Maintains chainability
+            return self;
+
+        },
+
+        // HTML Escape
+        // -----------
+        //      HTML encodes a string
+        htmlEscape: function(str) {
+
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+
+        },
+
+        // triggerEvent
+        // ------------
+        //      Trigger's an external event on the original select box element
+        triggerEvent: function(eventName) {
+
+            var self = this,
+                // Finds the currently option index
+                currentIndex = self.options["showFirstOption"] ? self.currentFocus : ((self.currentFocus - 1) >= 0 ? self.currentFocus: 0);
+
+            // Triggers the custom option-click event on the original select box and passes the select box option
+            self.selectBox.trigger(eventName, { "selectbox": self.selectBox, "selectboxOption": self.selectItems.eq(currentIndex), "dropdown": self.dropdown, "dropdownOption": self.listItems.eq(self.currentFocus) });
+
+            // Maintains chainability
+            return self;
+
+        },
+
+        // _copyAttributes
+        // ---------------
+        //      Copies HTML attributes from the original select box to the new drop down 
+        _copyAttributes: function() {
+
+            var self = this;
+
+            if(self._addSelectBoxAttributes) {
+
+                self._addSelectBoxAttributes();
+
+            }
+
+            return self;
+
+        },
+
+        // _realOuterWidth
+        // ---------------
+        //      Retrieves the true outerWidth dimensions of a hidden DOM element
+        _realOuterWidth: function(elem) {
+
+            if(elem.is(":visible")) {
+
+                return elem.outerWidth(true);
+
+            }
+
+            var self = this,
+                clonedElem = elem.clone(),
+                outerWidth;
+
+            clonedElem.css({
+
+                "visibility": "hidden",
+
+                "display": "block",
+
+                "position": "absolute"
+
+            }).appendTo("body");
+
+            outerWidth = clonedElem.outerWidth(true);
+
+            clonedElem.remove();
+
+            return outerWidth;
+        }
+
+    });
+
+    // Stores the plugin prototype object in a local variable
+    var selectBoxIt = $.selectBox.selectBoxIt.prototype;
+
+    // Add Options Module
+    // ==================
+
+    // add
+    // ---
+    //    Adds drop down options
+    //    using JSON data, an array,
+    //    a single object, or valid HTML string
+
+    selectBoxIt.add = function(data, callback) {
+
+        this._populate(data, function(data) {
+
+            var self = this,
+                dataType = $.type(data),
+                value,
+                x = 0,
+                dataLength,
+                elems = [],
+                isJSON = self._isJSON(data),
+                parsedJSON = isJSON && self._parseJSON(data);
+
+            // If the passed data is a local or JSON array
+            if(data && (dataType === "array" || (isJSON && parsedJSON.data && $.type(parsedJSON.data) === "array")) || (dataType === "object" && data.data && $.type(data.data) === "array")) {
+
+                // If the data is JSON
+                if(self._isJSON(data)) {
+
+                    // Parses the JSON and stores it in the data local variable
+                    data = parsedJSON;
+
+                }
+
+                // If there is an inner `data` property stored in the first level of the JSON array
+                if(data.data) {
+
+                    // Set's the data to the inner `data` property
+                    data = data.data;
+
+                }
+
+                // Loops through the array
+                for(dataLength = data.length; x <= dataLength - 1; x += 1) {
+
+                    // Stores the currently traversed array item in the local `value` variable
+                    value = data[x];
+
+                    // If the currently traversed array item is an object literal
+                    if($.isPlainObject(value)) {
+
+                        // Adds an option to the elems array
+                        elems.push($("<option/>", value));
+
+                    }
+
+                    // If the currently traversed array item is a string
+                    else if($.type(value) === "string") {
+
+                        // Adds an option to the elems array
+                        elems.push($("<option/>", { text: value, value: value }));
+
+                    }
+
+                }
+
+                // Appends all options to the drop down (with the correct object configurations)
+                self.selectBox.append(elems);
+
+            }
+
+            // if the passed data is an html string and not a JSON string
+            else if(data && dataType === "string" && !self._isJSON(data)) {
+
+                // Appends the html string options to the original select box
+                self.selectBox.append(data);
+
+            }
+
+            else if(data && dataType === "object") {
+
+                // Appends an option to the original select box (with the object configurations)
+                self.selectBox.append($("<option/>", data));
+
+            }
+
+            else if(data && self._isJSON(data) && $.isPlainObject(self._parseJSON(data))) {
+
+                // Appends an option to the original select box (with the object configurations)
+                self.selectBox.append($("<option/>", self._parseJSON(data)));
+
+            }
+
+            // If the dropdown property exists
+            if(self.dropdown) {
+
+                // Rebuilds the dropdown
+                self.refresh(function() {
+
+                    // Provide callback function support
+                    self._callbackSupport(callback);
+
+                }, true);
+
+            } else {
+
+                // Provide callback function support
+                self._callbackSupport(callback);
+
+            }
+
+            // Maintains chainability
+            return self;
+
+        });
+
+    };
+
+    // parseJSON
+    // ---------
+    //      Detects JSON support and parses JSON data
+    selectBoxIt._parseJSON = function(data) {
+
+        return (JSON && JSON.parse && JSON.parse(data)) || $.parseJSON(data);
+
+    };
+
+    // isjSON
+    // ------
+    //    Determines if a string is valid JSON
+
+    selectBoxIt._isJSON = function(data) {
+
+        var self = this,
+            json;
+
+        try {
+
+            json = self._parseJSON(data);
+
+            // Valid JSON
+            return true;
+
+        } catch (e) {
+
+            // Invalid JSON
+            return false;
+
+        }
+
+    };
+
+    // _populate
+    // --------
+    //    Handles asynchronous and synchronous data
+    //    to populate the select box
+
+    selectBoxIt._populate = function(data, callback) {
+
+        var self = this;
+
+        data = $.isFunction(data) ? data.call() : data;
+
+        if(self.isDeferred(data)) {
+
+            data.done(function(returnedData) {
+
+                callback.call(self, returnedData);
+
+            });
+
+        }
+
+        else {
+
+            callback.call(self, data);
+
+        }
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Accessibility Module
+    // ====================
+
+    // _ARIA Accessibility
+    // ------------------
+    //      Adds ARIA (Accessible Rich Internet Applications)
+    //      Accessibility Tags to the Select Box
+
+    selectBoxIt._ariaAccessibility = function() {
+
+        var self = this,
+            dropdownLabel = $("label[for='" + self.originalElem.id + "']");
+
+        // Adds `ARIA attributes` to the dropdown list
+        self.dropdownContainer.attr({
+
+            // W3C `combobox` description: A presentation of a select; usually similar to a textbox where users can type ahead to select an option.
+            "role": "combobox",
+
+            //W3C `aria-autocomplete` description: Indicates whether user input completion suggestions are provided.
+            "aria-autocomplete": "list",
+
+            "aria-haspopup": "true",
+
+            // W3C `aria-expanded` description: Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed.
+            "aria-expanded": "false",
+
+            // W3C `aria-owns` description: The value of the aria-owns attribute is a space-separated list of IDREFS that reference one or more elements in the document by ID. The reason for adding aria-owns is to expose a parent/child contextual relationship to assistive technologies that is otherwise impossible to infer from the DOM.
+            "aria-owns": self.list[0].id
+
+        });
+
+        self.dropdownText.attr({
+
+            "aria-live": "polite"
+
+        });
+
+        // Dynamically adds `ARIA attributes` if the new dropdown list is enabled or disabled
+        self.dropdown.on({
+
+            //Select box custom `disable` event with the `selectBoxIt` namespace
+            "disable.selectBoxIt" : function() {
+
+                // W3C `aria-disabled` description: Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable.
+                self.dropdownContainer.attr("aria-disabled", "true");
+
+            },
+
+            // Select box custom `enable` event with the `selectBoxIt` namespace
+            "enable.selectBoxIt" : function() {
+
+                // W3C `aria-disabled` description: Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable.
+                self.dropdownContainer.attr("aria-disabled", "false");
+
+            }
+
+        });
+
+        if(dropdownLabel.length) {
+
+            // MDN `aria-labelledby` description:  Indicates the IDs of the elements that are the labels for the object.
+            self.dropdownContainer.attr("aria-labelledby", dropdownLabel[0].id);
+
+        }
+
+        // Adds ARIA attributes to the dropdown list options list
+        self.list.attr({
+
+            // W3C `listbox` description: A widget that allows the user to select one or more items from a list of choices.
+            "role": "listbox",
+
+            // Indicates that the dropdown list options list is currently hidden
+            "aria-hidden": "true"
+
+        });
+
+        // Adds `ARIA attributes` to the dropdown list options
+        self.listItems.attr({
+
+            // This must be set for each element when the container element role is set to `listbox`
+            "role": "option"
+
+        });
+
+        // Dynamically updates the new dropdown list `aria-label` attribute after the original dropdown list value changes
+        self.selectBox.on({
+
+            // Custom `open` event with the `selectBoxIt` namespace
+            "open.selectBoxIt": function() {
+
+                // Indicates that the dropdown list options list is currently visible
+                self.list.attr("aria-hidden", "false");
+
+                // Indicates that the dropdown list is currently expanded
+                self.dropdownContainer.attr("aria-expanded", "true");
+
+            },
+
+            // Custom `close` event with the `selectBoxIt` namespace
+            "close.selectBoxIt": function() {
+
+                // Indicates that the dropdown list options list is currently hidden
+                self.list.attr("aria-hidden", "true");
+
+                // Indicates that the dropdown list is currently collapsed
+                self.dropdownContainer.attr("aria-expanded", "false");
+
+            }
+
+        });
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Copy Attributes Module
+    // ======================
+
+    // addSelectBoxAttributes
+    // ----------------------
+    //      Add's all attributes (excluding id, class names, and the style attribute) from the default select box to the new drop down
+
+    selectBoxIt._addSelectBoxAttributes = function() {
+
+        // Stores the plugin context inside of the self variable
+        var self = this;
+
+        // Add's all attributes to the currently traversed drop down option
+        self._addAttributes(self.selectBox.prop("attributes"), self.dropdown);
+
+        // Add's all attributes to the drop down items list
+        self.selectItems.each(function(iterator) {
+
+            // Add's all attributes to the currently traversed drop down option
+            self._addAttributes($(this).prop("attributes"), self.listItems.eq(iterator));
+
+        });
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // addAttributes
+    // -------------
+    //  Add's attributes to a DOM element
+    selectBoxIt._addAttributes = function(arr, elem) {
+
+        // Stores the plugin context inside of the self variable
+        var self = this,
+            whitelist = self.options["copyAttributes"];
+
+        // If there are array properties
+        if(arr.length) {
+
+            // Iterates over all of array properties
+            $.each(arr, function(iterator, property) {
+
+                // Get's the property name and property value of each property
+                var propName = (property.name).toLowerCase(), propValue = property.value;
+
+                // If the currently traversed property value is not "null", is on the whitelist, or is an HTML 5 data attribute
+                if(propValue !== "null" && ($.inArray(propName, whitelist) !== -1 || propName.indexOf("data") !== -1)) {
+
+                    // Set's the currently traversed property on element
+                    elem.attr(propName, propValue);
+
+                }
+
+            });
+
+        }
+
+        // Maintains chainability
+        return self;
+
+    };
+// Destroy Module
+// ==============
+
+// Destroy
+// -------
+//    Removes the plugin from the page
+
+selectBoxIt.destroy = function(callback) {
+
+    // Stores the plugin context inside of the self variable
+    var self = this;
+
+    self._destroySelectBoxIt();
+
+    // Calls the jQueryUI Widget Factory destroy method
+    self.widgetProto.destroy.call(self);
+
+    // Provides callback function support
+    self._callbackSupport(callback);
+
+    // Maintains chainability
+    return self;
+
+};
+
+// Internal Destroy Method
+// -----------------------
+//    Removes the plugin from the page
+
+selectBoxIt._destroySelectBoxIt = function() {
+
+    // Stores the plugin context inside of the self variable
+    var self = this;
+
+    // Unbinds all of the dropdown list event handlers with the `selectBoxIt` namespace
+    self.dropdown.off(".selectBoxIt");
+
+    // If the original select box has been placed inside of the new drop down container
+    if ($.contains(self.dropdownContainer[0], self.originalElem)) {
+
+        // Moves the original select box before the drop down container
+        self.dropdownContainer.before(self.selectBox);
+
+    }
+
+    // Remove all of the `selectBoxIt` DOM elements from the page
+    self.dropdownContainer.remove();
+
+    // Resets the style attributes for the original select box
+    self.selectBox.removeAttr("style").attr("style", self.selectBoxStyles);
+
+    // Shows the original dropdown list
+    self.selectBox.show();
+
+    // Triggers the custom `destroy` event on the original select box
+    self.triggerEvent("destroy");
+
+    // Maintains chainability
+    return self;
+
+};
+
+    // Disable Module
+    // ==============
+
+    // Disable
+    // -------
+    //      Disables the new dropdown list
+
+    selectBoxIt.disable = function(callback) {
+
+        var self = this;
+
+        if(!self.options["disabled"]) {
+
+            // Makes sure the dropdown list is closed
+            self.close();
+
+            // Sets the `disabled` attribute on the original select box
+            self.selectBox.attr("disabled", "disabled");
+
+            // Makes the dropdown list not focusable by removing the `tabindex` attribute
+            self.dropdown.removeAttr("tabindex").
+
+            // Disables styling for enabled state
+            removeClass(self.theme["enabled"]).
+
+            // Enabled styling for disabled state
+            addClass(self.theme["disabled"]);
+
+            self.setOption("disabled", true);
+
+            // Triggers a `disable` custom event on the original select box
+            self.triggerEvent("disable");
+
+        }
+
+        // Provides callback function support
+        self._callbackSupport(callback);
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Disable Option
+    // --------------
+    //      Disables a single drop down option
+
+    selectBoxIt.disableOption = function(index, callback) {
+
+        var self = this, currentSelectBoxOption, hasNextEnabled, hasPreviousEnabled, type = $.type(index);
+
+        // If an index is passed to target an indropdownidual drop down option
+        if(type === "number") {
+
+            // Makes sure the dropdown list is closed
+            self.close();
+
+            // The select box option being targeted
+            currentSelectBoxOption = self.selectBox.find("option").eq(index);
+
+            // Triggers a `disable-option` custom event on the original select box and passes the disabled option
+            self.triggerEvent("disable-option");
+
+            // Disables the targeted select box option
+            currentSelectBoxOption.attr("disabled", "disabled");
+
+            // Disables the drop down option
+            self.listItems.eq(index).attr("data-disabled", "true").
+
+            // Applies disabled styling for the drop down option
+            addClass(self.theme["disabled"]);
+
+            // If the currently selected drop down option is the item being disabled
+            if(self.currentFocus === index) {
+
+                hasNextEnabled = self.listItems.eq(self.currentFocus).nextAll("li").not("[data-disabled='true']").first().length;
+
+                hasPreviousEnabled = self.listItems.eq(self.currentFocus).prevAll("li").not("[data-disabled='true']").first().length;
+
+                // If there is a currently enabled option beneath the currently selected option
+                if(hasNextEnabled) {
+
+                    // Selects the option beneath the currently selected option
+                    self.moveDown();
+
+                }
+
+                // If there is a currently enabled option above the currently selected option
+                else if(hasPreviousEnabled) {
+
+                    // Selects the option above the currently selected option
+                    self.moveUp();
+
+                }
+
+                // If there is not a currently enabled option
+                else {
+
+                    // Disables the entire drop down list
+                    self.disable();
+
+                }
+
+            }
+
+        }
+
+        // Provides callback function support
+        self._callbackSupport(callback);
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // _Is Disabled
+    // -----------
+    //      Checks the original select box for the
+    //    disabled attribute
+
+    selectBoxIt._isDisabled = function(callback) {
+
+        var self = this;
+
+        // If the original select box is disabled
+        if (self.originalElem.disabled) {
+
+            // Disables the dropdown list
+            self.disable();
+
+        }
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Dynamic Positioning Module
+    // ==========================
+
+    // _Dynamic positioning
+    // --------------------
+    //      Dynamically positions the dropdown list options list
+
+    selectBoxIt._dynamicPositioning = function() {
+
+        var self = this;
+
+        // If the `size` option is a number
+        if($.type(self.listSize) === "number") {
+
+            // Set's the max-height of the drop down list
+            self.list.css("max-height", self.maxHeight || "none");
+
+        }
+
+        // If the `size` option is not a number
+        else {
+
+            // Returns the x and y coordinates of the dropdown list options list relative to the document
+            var listOffsetTop = self.dropdown.offset().top,
+
+                // The height of the dropdown list options list
+                listHeight = self.list.data("max-height") || self.list.outerHeight(),
+
+                // The height of the dropdown list DOM element
+                selectBoxHeight = self.dropdown.outerHeight(),
+
+                viewport = self.options["viewport"],
+
+                viewportHeight = viewport.height(),
+
+                viewportScrollTop = $.isWindow(viewport.get(0)) ? viewport.scrollTop() : viewport.offset().top,
+
+                topToBottom = (listOffsetTop + selectBoxHeight + listHeight <= viewportHeight + viewportScrollTop),
+
+                bottomReached = !topToBottom;
+
+            if(!self.list.data("max-height")) {
+
+              self.list.data("max-height", self.list.outerHeight());
+
+            }
+
+            // If there is room on the bottom of the viewport to display the drop down options
+            if (!bottomReached) {
+
+                self.list.css("max-height", listHeight);
+
+                // Sets custom CSS properties to place the dropdown list options directly below the dropdown list
+                self.list.css("top", "auto");
+
+            }
+
+            // If there is room on the top of the viewport
+            else if((self.dropdown.offset().top - viewportScrollTop) >= listHeight) {
+
+                self.list.css("max-height", listHeight);
+
+                // Sets custom CSS properties to place the dropdown list options directly above the dropdown list
+                self.list.css("top", (self.dropdown.position().top - self.list.outerHeight()));
+
+            }
+
+            // If there is not enough room on the top or the bottom
+            else {
+
+                var outsideBottomViewport = Math.abs((listOffsetTop + selectBoxHeight + listHeight) - (viewportHeight + viewportScrollTop)),
+
+                    outsideTopViewport = Math.abs((self.dropdown.offset().top - viewportScrollTop) - listHeight);
+
+                // If there is more room on the bottom
+                if(outsideBottomViewport < outsideTopViewport) {
+
+                    self.list.css("max-height", listHeight - outsideBottomViewport - (selectBoxHeight/2));
+
+                    self.list.css("top", "auto");
+
+                }
+
+                // If there is more room on the top
+                else {
+
+                    self.list.css("max-height", listHeight - outsideTopViewport - (selectBoxHeight/2));
+
+                    // Sets custom CSS properties to place the dropdown list options directly above the dropdown list
+                    self.list.css("top", (self.dropdown.position().top - self.list.outerHeight()));
+
+                }
+
+            }
+
+        }
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Enable Module
+    // =============
+
+    // Enable
+    // ------
+    //      Enables the new dropdown list
+
+    selectBoxIt.enable = function(callback) {
+
+        var self = this;
+
+        if(self.options["disabled"]) {
+
+            // Triggers a `enable` custom event on the original select box
+            self.triggerEvent("enable");
+
+            // Removes the `disabled` attribute from the original dropdown list
+            self.selectBox.removeAttr("disabled");
+
+            // Make the dropdown list focusable
+            self.dropdown.attr("tabindex", 0).
+
+            // Disable styling for disabled state
+            removeClass(self.theme["disabled"]).
+
+            // Enables styling for enabled state
+            addClass(self.theme["enabled"]);
+
+            self.setOption("disabled", false);
+
+            // Provide callback function support
+            self._callbackSupport(callback);
+
+        }
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Enable Option
+    // -------------
+    //      Disables a single drop down option
+
+    selectBoxIt.enableOption = function(index, callback) {
+
+        var self = this, currentSelectBoxOption, currentIndex = 0, hasNextEnabled, hasPreviousEnabled, type = $.type(index);
+
+        // If an index is passed to target an indropdownidual drop down option
+        if(type === "number") {
+
+            // The select box option being targeted
+            currentSelectBoxOption = self.selectBox.find("option").eq(index);
+
+            // Triggers a `enable-option` custom event on the original select box and passes the enabled option
+            self.triggerEvent("enable-option");
+
+            // Disables the targeted select box option
+            currentSelectBoxOption.removeAttr("disabled");
+
+            // Disables the drop down option
+            self.listItems.eq(index).attr("data-disabled", "false").
+
+            // Applies disabled styling for the drop down option
+            removeClass(self.theme["disabled"]);
+
+        }
+
+        // Provides callback function support
+        self._callbackSupport(callback);
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Keyboard Navigation Module
+    // ==========================
+
+    // Move Down
+    // ---------
+    //      Handles the down keyboard navigation logic
+
+    selectBoxIt.moveDown = function(callback) {
+
+        var self = this;
+
+        // Increments `currentFocus`, which represents the currently focused list item `id` attribute.
+        self.currentFocus += 1;
+
+        // Determines whether the dropdown option the user is trying to go to is currently disabled
+        var disabled = self.listItems.eq(self.currentFocus).attr("data-disabled") === "true" ? true: false,
+
+            hasNextEnabled = self.listItems.eq(self.currentFocus).nextAll("li").not("[data-disabled='true']").first().length;
+
+        // If the user has reached the top of the list
+        if (self.currentFocus === self.listItems.length) {
+
+            // Does not allow the user to continue to go up the list
+            self.currentFocus -= 1;
+
+        }
+
+        // If the option the user is trying to go to is disabled, but there is another enabled option
+        else if (disabled && hasNextEnabled) {
+
+            // Blur the previously selected option
+            self.listItems.eq(self.currentFocus - 1).blur();
+
+           // Call the `moveDown` method again
+            self.moveDown();
+
+            // Exit the method
+            return;
+
+        }
+
+        // If the option the user is trying to go to is disabled, but there is not another enabled option
+        else if (disabled && !hasNextEnabled) {
+
+            self.currentFocus -= 1;
+
+        }
+
+        // If the user has not reached the bottom of the unordered list
+        else {
+
+            // Blurs the previously focused list item
+            // The jQuery `end()` method allows you to continue chaining while also using a different selector
+            self.listItems.eq(self.currentFocus - 1).blur().end().
+
+            // Focuses the currently focused list item
+            eq(self.currentFocus).focusin();
+
+            // Calls `scrollToView` to make sure the `scrollTop` is correctly updated. The `down` user action
+            self._scrollToView("down");
+
+            // Triggers the custom `moveDown` event on the original select box
+            self.triggerEvent("moveDown");
+
+        }
+
+        // Provide callback function support
+        self._callbackSupport(callback);
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Move Up
+    // ------
+    //      Handles the up keyboard navigation logic
+    selectBoxIt.moveUp = function(callback) {
+
+        var self = this;
+
+        // Increments `currentFocus`, which represents the currently focused list item `id` attribute.
+        self.currentFocus -= 1;
+
+        // Determines whether the dropdown option the user is trying to go to is currently disabled
+        var disabled = self.listItems.eq(self.currentFocus).attr("data-disabled") === "true" ? true: false,
+
+            hasPreviousEnabled = self.listItems.eq(self.currentFocus).prevAll("li").not("[data-disabled='true']").first().length;
+
+        // If the user has reached the top of the list
+        if (self.currentFocus === -1) {
+
+            // Does not allow the user to continue to go up the list
+            self.currentFocus += 1;
+
+        }
+
+        // If the option the user is trying to go to is disabled and the user is not trying to go up after the user has reached the top of the list
+        else if (disabled && hasPreviousEnabled) {
+
+            // Blur the previously selected option
+            self.listItems.eq(self.currentFocus + 1).blur();
+
+            // Call the `moveUp` method again
+            self.moveUp();
+
+            // Exits the method
+            return;
+
+        }
+
+        else if (disabled && !hasPreviousEnabled) {
+
+            self.currentFocus += 1;
+
+        }
+
+        // If the user has not reached the top of the unordered list
+        else {
+
+            // Blurs the previously focused list item
+            // The jQuery `end()` method allows you to continue chaining while also using a different selector
+            self.listItems.eq(this.currentFocus + 1).blur().end().
+
+            // Focuses the currently focused list item
+            eq(self.currentFocus).focusin();
+
+            // Calls `scrollToView` to make sure the `scrollTop` is correctly updated. The `down` user action
+            self._scrollToView("up");
+
+            // Triggers the custom `moveDown` event on the original select box
+            self.triggerEvent("moveUp");
+
+        }
+
+        // Provide callback function support
+        self._callbackSupport(callback);
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Keyboard Search Module
+    // ======================
+
+    // _Set Current Search Option
+    // -------------------------
+    //      Sets the currently selected dropdown list search option
+
+    selectBoxIt._setCurrentSearchOption = function(currentOption) {
+
+        var self = this;
+
+        // Does not change the current option if `showFirstOption` is false and the matched search item is the hidden first option.
+        // Otherwise, the current option value is updated
+        if ((self.options["aggressiveChange"] || self.options["selectWhenHidden"] || self.listItems.eq(currentOption).is(":visible")) && self.listItems.eq(currentOption).data("disabled") !== true) {
+
+            // Calls the `blur` event of the currently selected dropdown list option
+            self.listItems.eq(self.currentFocus).blur();
+
+            // Sets `currentIndex` to the currently selected dropdown list option
+            self.currentIndex = currentOption;
+
+            // Sets `currentFocus` to the currently selected dropdown list option
+            self.currentFocus = currentOption;
+
+            // Focuses the currently selected dropdown list option
+            self.listItems.eq(self.currentFocus).focusin();
+
+            // Updates the scrollTop so that the currently selected dropdown list option is visible to the user
+            self._scrollToView("search");
+
+            // Triggers the custom `search` event on the original select box
+            self.triggerEvent("search");
+
+        }
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // _Search Algorithm
+    // -----------------
+    //      Uses regular expressions to find text matches
+    selectBoxIt._searchAlgorithm = function(currentIndex, alphaNumeric) {
+
+        var self = this,
+
+            // Boolean to determine if a pattern match exists
+            matchExists = false,
+
+            // Iteration variable used in the outermost for loop
+            x,
+
+            // Iteration variable used in the nested for loop
+            y,
+
+            // Variable used to cache the length of the text array (Small enhancement to speed up traversing)
+            arrayLength,
+
+            // Variable storing the current search
+            currentSearch,
+
+            // Variable storing the textArray property
+            textArray = self.textArray,
+
+            // Variable storing the current text property
+            currentText = self.currentText;
+
+        // Loops through the text array to find a pattern match
+        for (x = currentIndex, arrayLength = textArray.length; x < arrayLength; x += 1) {
+
+            currentSearch = textArray[x];
+
+            // Nested for loop to help search for a pattern match with the currently traversed array item
+            for (y = 0; y < arrayLength; y += 1) {
+
+                // Searches for a match
+                if (textArray[y].search(alphaNumeric) !== -1) {
+
+                    // `matchExists` is set to true if there is a match
+                    matchExists = true;
+
+                    // Exits the nested for loop
+                    y = arrayLength;
+
+                }
+
+            } // End nested for loop
+
+            // If a match does not exist
+            if (!matchExists) {
+
+                // Sets the current text to the last entered character
+                self.currentText = self.currentText.charAt(self.currentText.length - 1).
+
+                // Escapes the regular expression to make sure special characters are seen as literal characters instead of special commands
+                replace(/[|()\[{.+*?$\\]/g, "\\$0");
+
+                currentText = self.currentText;
+
+            }
+
+            // Resets the regular expression with the new value of `self.currentText`
+            alphaNumeric = new RegExp(currentText, "gi");
+
+            // Searches based on the first letter of the dropdown list options text if the currentText < 3 characters
+            if (currentText.length < 3) {
+
+                alphaNumeric = new RegExp(currentText.charAt(0), "gi");
+
+                // If there is a match based on the first character
+                if ((currentSearch.charAt(0).search(alphaNumeric) !== -1)) {
+
+                    // Sets properties of that dropdown list option to make it the currently selected option
+                    self._setCurrentSearchOption(x);
+
+                    if((currentSearch.substring(0, currentText.length).toLowerCase() !== currentText.toLowerCase()) || self.options["similarSearch"]) {
+
+                        // Increments the current index by one
+                        self.currentIndex += 1;
+
+                    }
+
+                    // Exits the search
+                    return false;
+
+                }
+
+            }
+
+            // If `self.currentText` > 1 character
+            else {
+
+                // If there is a match based on the entire string
+                if ((currentSearch.search(alphaNumeric) !== -1)) {
+
+                    // Sets properties of that dropdown list option to make it the currently selected option
+                    self._setCurrentSearchOption(x);
+
+                    // Exits the search
+                    return false;
+
+                }
+
+            }
+
+            // If the current text search is an exact match
+            if (currentSearch.toLowerCase() === self.currentText.toLowerCase()) {
+
+                // Sets properties of that dropdown list option to make it the currently selected option
+                self._setCurrentSearchOption(x);
+
+                // Resets the current text search to a blank string to start fresh again
+                self.currentText = "";
+
+                // Exits the search
+                return false;
+
+            }
+
+        }
+
+       // Returns true if there is not a match at all
+        return true;
+
+    };
+
+    // Search
+    // ------
+    //      Calls searchAlgorithm()
+    selectBoxIt.search = function(alphaNumericKey, callback, rememberPreviousSearch) {
+
+        var self = this;
+
+        // If the search method is being called internally by the plugin, and not externally as a method by a user
+        if (rememberPreviousSearch) {
+
+            // Continued search with history from past searches.  Properly escapes the regular expression
+            self.currentText += alphaNumericKey.replace(/[|()\[{.+*?$\\]/g, "\\$0");
+
+        }
+
+        else {
+
+            // Brand new search.  Properly escapes the regular expression
+            self.currentText = alphaNumericKey.replace(/[|()\[{.+*?$\\]/g, "\\$0");
+
+        }
+
+        // Searches globally
+        var searchResults = self._searchAlgorithm(self.currentIndex, new RegExp(self.currentText, "gi"));
+
+        // Searches the list again if a match is not found.  This is needed, because the first search started at the array indece of the currently selected dropdown list option, and does not search the options before the current array indece.
+        // If there are many similar dropdown list options, starting the search at the indece of the currently selected dropdown list option is needed to properly traverse the text array.
+        if (searchResults) {
+
+            // Searches the dropdown list values starting from the beginning of the text array
+            self._searchAlgorithm(0, self.currentText);
+
+        }
+
+        // Provide callback function support
+        self._callbackSupport(callback);
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Mobile Module
+    // =============
+
+    // Set Mobile Text
+    // ---------------
+    //      Updates the text of the drop down
+    selectBoxIt._updateMobileText = function() {
+
+        var self = this,
+            currentOption,
+            currentDataText,
+            currentText;
+
+        currentOption = self.selectBox.find("option").filter(":selected");
+
+        currentDataText = currentOption.attr("data-text");
+
+        currentText = currentDataText ? currentDataText: currentOption.text();
+
+        // Sets the new dropdown list text to the value of the original dropdown list
+        self._setText(self.dropdownText, currentText);
+
+        if(self.list.find('li[data-val="' + currentOption.val() + '"]').find("i").attr("class")) {
+
+           self.dropdownImage.attr("class", self.list.find('li[data-val="' + currentOption.val() + '"]').find("i").attr("class")).addClass("selectboxit-default-icon");
+
+        }
+
+    };
+
+    // Apply Native Select
+    // -------------------
+    //      Applies the original select box directly over the new drop down
+
+    selectBoxIt._applyNativeSelect = function() {
+
+        // Stores the plugin context inside of the self variable
+        var self = this;
+
+        // Appends the native select box to the drop down (allows for relative positioning using the position() method)
+        self.dropdownContainer.append(self.selectBox);
+
+        self.dropdown.attr("tabindex", "-1");
+
+        // Positions the original select box directly over top the new dropdown list using position absolute and "hides" the original select box using an opacity of 0.  This allows the mobile browser "wheel" interface for better usability.
+        self.selectBox.css({
+
+            "display": "block",
+
+            "visibility": "visible",
+
+            "width": self._realOuterWidth(self.dropdown),
+
+            "height": self.dropdown.outerHeight(),
+
+            "opacity": "0",
+
+            "position": "absolute",
+
+            "top": "0",
+
+            "left": "0",
+
+            "cursor": "pointer",
+
+            "z-index": "999999",
+
+            "margin": self.dropdown.css("margin"),
+
+            "padding": "0",
+
+            "-webkit-appearance": "menulist-button"
+
+        });
+
+        if(self.originalElem.disabled) {
+
+            self.triggerEvent("disable");
+
+        }
+
+        return this;
+
+    };
+
+    // Mobile Events
+    // -------------
+    //      Listens to mobile-specific events
+    selectBoxIt._mobileEvents = function() {
+
+        var self = this;
+
+        self.selectBox.on({
+
+            "changed.selectBoxIt": function() {
+
+                self.hasChanged = true;
+
+                self._updateMobileText();
+
+                // Triggers the `option-click` event on mobile
+                self.triggerEvent("option-click");
+
+            },
+
+            "mousedown.selectBoxIt": function() {
+
+                // If the select box has not been changed, the defaultText option is being used
+                if(!self.hasChanged && self.options.defaultText && !self.originalElem.disabled) {
+
+                    self._updateMobileText();
+
+                    self.triggerEvent("option-click");
+
+                }
+
+            },
+
+            "enable.selectBoxIt": function() {
+
+                // Moves SelectBoxIt onto the page
+                self.selectBox.removeClass('selectboxit-rendering');
+
+            },
+
+            "disable.selectBoxIt": function() {
+
+                // Moves SelectBoxIt off the page
+                self.selectBox.addClass('selectboxit-rendering');
+
+            }
+
+        });
+
+    };
+
+    // Mobile
+    // ------
+    //      Applies the native "wheel" interface when a mobile user is interacting with the dropdown
+
+    selectBoxIt._mobile = function(callback) {
+
+        // Stores the plugin context inside of the self variable
+        var self = this;
+
+            if(self.isMobile) {
+
+                self._applyNativeSelect();
+
+                self._mobileEvents();
+
+            }
+
+            // Maintains chainability
+            return this;
+
+    };
+
+    // Remove Options Module
+    // =====================
+
+    // remove
+    // ------
+    //    Removes drop down list options
+    //    using an index
+
+    selectBoxIt.remove = function(indexes, callback) {
+
+        var self = this,
+            dataType = $.type(indexes),
+            value,
+            x = 0,
+            dataLength,
+            elems = "";
+
+        // If an array is passed in
+        if(dataType === "array") {
+
+            // Loops through the array
+            for(dataLength = indexes.length; x <= dataLength - 1; x += 1) {
+
+                // Stores the currently traversed array item in the local `value` variable
+                value = indexes[x];
+
+                // If the currently traversed array item is an object literal
+                if($.type(value) === "number") {
+
+                    if(elems.length) {
+
+                        // Adds an element to the removal string
+                        elems += ", option:eq(" + value + ")";
+
+                    }
+
+                    else {
+
+                        // Adds an element to the removal string
+                        elems += "option:eq(" + value + ")";
+
+                    }
+
+                }
+
+            }
+
+            // Removes all of the appropriate options from the select box
+            self.selectBox.find(elems).remove();
+
+        }
+
+        // If a number is passed in
+        else if(dataType === "number") {
+
+            self.selectBox.find("option").eq(indexes).remove();
+
+        }
+
+        // If anything besides a number or array is passed in
+        else {
+
+            // Removes all of the options from the original select box
+            self.selectBox.find("option").remove();
+
+        }
+
+        // If the dropdown property exists
+        if(self.dropdown) {
+
+            // Rebuilds the dropdown
+            self.refresh(function() {
+
+                // Provide callback function support
+                self._callbackSupport(callback);
+
+            }, true);
+
+        } else {
+
+            // Provide callback function support
+            self._callbackSupport(callback);
+
+        }
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Select Option Module
+    // ====================
+
+    // Select Option
+    // -------------
+    //      Programatically selects a drop down option by either index or value
+
+    selectBoxIt.selectOption = function(val, callback) {
+
+        // Stores the plugin context inside of the self variable
+        var self = this,
+            type = $.type(val);
+
+        // Makes sure the passed in position is a number
+        if(type === "number") {
+
+            // Set's the original select box value and triggers the change event (which SelectBoxIt listens for)
+            self.selectBox.val(self.selectItems.eq(val).val()).change();
+
+        }
+
+        else if(type === "string") {
+
+            // Set's the original select box value and triggers the change event (which SelectBoxIt listens for)
+            self.selectBox.val(val).change();
+
+        }
+
+        // Calls the callback function
+        self._callbackSupport(callback);
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Set Option Module
+    // =================
+
+    // Set Option
+    // ----------
+    //      Accepts an string key, a value, and a callback function to replace a single
+    //      property of the plugin options object
+
+    selectBoxIt.setOption = function(key, value, callback) {
+
+        var self = this;
+
+        //Makes sure a string is passed in
+        if($.type(key) === "string") {
+
+            // Sets the plugin option to the new value provided by the user
+            self.options[key] = value;
+
+        }
+
+        // Rebuilds the dropdown
+        self.refresh(function() {
+
+            // Provide callback function support
+            self._callbackSupport(callback);
+
+        }, true);
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Set Options Module
+    // ==================
+
+    // Set Options
+    // ----------
+    //      Accepts an object to replace plugin options
+    //      properties of the plugin options object
+
+    selectBoxIt.setOptions = function(newOptions, callback) {
+
+        var self = this;
+
+        // If the passed in parameter is an object literal
+        if($.isPlainObject(newOptions)) {
+
+            self.options = $.extend({}, self.options, newOptions);
+
+        }
+
+        // Rebuilds the dropdown
+        self.refresh(function() {
+
+            // Provide callback function support
+            self._callbackSupport(callback);
+
+        }, true);
+
+        // Maintains chainability
+        return self;
+
+    };
+
+    // Wait Module
+    // ===========
+
+    // Wait
+    // ----
+    //    Delays execution by the amount of time
+    //    specified by the parameter
+
+    selectBoxIt.wait = function(time, callback) {
+
+        var self = this;
+
+        self.widgetProto._delay.call(self, callback, time);
+
+        // Maintains chainability
+        return self;
+
+    };
+})); // End of all modules
+});
+
 define('knockout', function (require, exports, module) {
 // Knockout JavaScript library v3.1.0
 // (c) Steven Sanderson - http://knockoutjs.com/
@@ -16629,6 +19900,2866 @@ define('sticky', function (require, exports, module) {
 
 }));
 
+
+});
+
+define('moment', function (require, exports, module) {
+//! moment.js
+//! version : 2.8.3
+//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
+//! license : MIT
+//! momentjs.com
+
+(function (undefined) {
+    /************************************
+        Constants
+    ************************************/
+
+    var moment,
+        VERSION = '2.8.3',
+        // the global-scope this is NOT the global object in Node.js
+        globalScope = typeof global !== 'undefined' ? global : this,
+        oldGlobalMoment,
+        round = Math.round,
+        hasOwnProperty = Object.prototype.hasOwnProperty,
+        i,
+
+        YEAR = 0,
+        MONTH = 1,
+        DATE = 2,
+        HOUR = 3,
+        MINUTE = 4,
+        SECOND = 5,
+        MILLISECOND = 6,
+
+        // internal storage for locale config files
+        locales = {},
+
+        // extra moment internal properties (plugins register props here)
+        momentProperties = [],
+
+        // check for nodeJS
+        hasModule = (typeof module !== 'undefined' && module.exports),
+
+        // ASP.NET json date format regex
+        aspNetJsonRegex = /^\/?Date\((\-?\d+)/i,
+        aspNetTimeSpanJsonRegex = /(\-)?(?:(\d*)\.)?(\d+)\:(\d+)(?:\:(\d+)\.?(\d{3})?)?/,
+
+        // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
+        // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
+        isoDurationRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/,
+
+        // format tokens
+        formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|X|zz?|ZZ?|.)/g,
+        localFormattingTokens = /(\[[^\[]*\])|(\\)?(LT|LL?L?L?|l{1,4})/g,
+
+        // parsing token regexes
+        parseTokenOneOrTwoDigits = /\d\d?/, // 0 - 99
+        parseTokenOneToThreeDigits = /\d{1,3}/, // 0 - 999
+        parseTokenOneToFourDigits = /\d{1,4}/, // 0 - 9999
+        parseTokenOneToSixDigits = /[+\-]?\d{1,6}/, // -999,999 - 999,999
+        parseTokenDigits = /\d+/, // nonzero number of digits
+        parseTokenWord = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i, // any word (or two) characters or numbers including two/three word month in arabic.
+        parseTokenTimezone = /Z|[\+\-]\d\d:?\d\d/gi, // +00:00 -00:00 +0000 -0000 or Z
+        parseTokenT = /T/i, // T (ISO separator)
+        parseTokenTimestampMs = /[\+\-]?\d+(\.\d{1,3})?/, // 123456789 123456789.123
+        parseTokenOrdinal = /\d{1,2}/,
+
+        //strict parsing regexes
+        parseTokenOneDigit = /\d/, // 0 - 9
+        parseTokenTwoDigits = /\d\d/, // 00 - 99
+        parseTokenThreeDigits = /\d{3}/, // 000 - 999
+        parseTokenFourDigits = /\d{4}/, // 0000 - 9999
+        parseTokenSixDigits = /[+-]?\d{6}/, // -999,999 - 999,999
+        parseTokenSignedNumber = /[+-]?\d+/, // -inf - inf
+
+        // iso 8601 regex
+        // 0000-00-00 0000-W00 or 0000-W00-0 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000 or +00)
+        isoRegex = /^\s*(?:[+-]\d{6}|\d{4})-(?:(\d\d-\d\d)|(W\d\d$)|(W\d\d-\d)|(\d\d\d))((T| )(\d\d(:\d\d(:\d\d(\.\d+)?)?)?)?([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/,
+
+        isoFormat = 'YYYY-MM-DDTHH:mm:ssZ',
+
+        isoDates = [
+            ['YYYYYY-MM-DD', /[+-]\d{6}-\d{2}-\d{2}/],
+            ['YYYY-MM-DD', /\d{4}-\d{2}-\d{2}/],
+            ['GGGG-[W]WW-E', /\d{4}-W\d{2}-\d/],
+            ['GGGG-[W]WW', /\d{4}-W\d{2}/],
+            ['YYYY-DDD', /\d{4}-\d{3}/]
+        ],
+
+        // iso time formats and regexes
+        isoTimes = [
+            ['HH:mm:ss.SSSS', /(T| )\d\d:\d\d:\d\d\.\d+/],
+            ['HH:mm:ss', /(T| )\d\d:\d\d:\d\d/],
+            ['HH:mm', /(T| )\d\d:\d\d/],
+            ['HH', /(T| )\d\d/]
+        ],
+
+        // timezone chunker '+10:00' > ['10', '00'] or '-1530' > ['-15', '30']
+        parseTimezoneChunker = /([\+\-]|\d\d)/gi,
+
+        // getter and setter names
+        proxyGettersAndSetters = 'Date|Hours|Minutes|Seconds|Milliseconds'.split('|'),
+        unitMillisecondFactors = {
+            'Milliseconds' : 1,
+            'Seconds' : 1e3,
+            'Minutes' : 6e4,
+            'Hours' : 36e5,
+            'Days' : 864e5,
+            'Months' : 2592e6,
+            'Years' : 31536e6
+        },
+
+        unitAliases = {
+            ms : 'millisecond',
+            s : 'second',
+            m : 'minute',
+            h : 'hour',
+            d : 'day',
+            D : 'date',
+            w : 'week',
+            W : 'isoWeek',
+            M : 'month',
+            Q : 'quarter',
+            y : 'year',
+            DDD : 'dayOfYear',
+            e : 'weekday',
+            E : 'isoWeekday',
+            gg: 'weekYear',
+            GG: 'isoWeekYear'
+        },
+
+        camelFunctions = {
+            dayofyear : 'dayOfYear',
+            isoweekday : 'isoWeekday',
+            isoweek : 'isoWeek',
+            weekyear : 'weekYear',
+            isoweekyear : 'isoWeekYear'
+        },
+
+        // format function strings
+        formatFunctions = {},
+
+        // default relative time thresholds
+        relativeTimeThresholds = {
+            s: 45,  // seconds to minute
+            m: 45,  // minutes to hour
+            h: 22,  // hours to day
+            d: 26,  // days to month
+            M: 11   // months to year
+        },
+
+        // tokens to ordinalize and pad
+        ordinalizeTokens = 'DDD w W M D d'.split(' '),
+        paddedTokens = 'M D H h m s w W'.split(' '),
+
+        formatTokenFunctions = {
+            M    : function () {
+                return this.month() + 1;
+            },
+            MMM  : function (format) {
+                return this.localeData().monthsShort(this, format);
+            },
+            MMMM : function (format) {
+                return this.localeData().months(this, format);
+            },
+            D    : function () {
+                return this.date();
+            },
+            DDD  : function () {
+                return this.dayOfYear();
+            },
+            d    : function () {
+                return this.day();
+            },
+            dd   : function (format) {
+                return this.localeData().weekdaysMin(this, format);
+            },
+            ddd  : function (format) {
+                return this.localeData().weekdaysShort(this, format);
+            },
+            dddd : function (format) {
+                return this.localeData().weekdays(this, format);
+            },
+            w    : function () {
+                return this.week();
+            },
+            W    : function () {
+                return this.isoWeek();
+            },
+            YY   : function () {
+                return leftZeroFill(this.year() % 100, 2);
+            },
+            YYYY : function () {
+                return leftZeroFill(this.year(), 4);
+            },
+            YYYYY : function () {
+                return leftZeroFill(this.year(), 5);
+            },
+            YYYYYY : function () {
+                var y = this.year(), sign = y >= 0 ? '+' : '-';
+                return sign + leftZeroFill(Math.abs(y), 6);
+            },
+            gg   : function () {
+                return leftZeroFill(this.weekYear() % 100, 2);
+            },
+            gggg : function () {
+                return leftZeroFill(this.weekYear(), 4);
+            },
+            ggggg : function () {
+                return leftZeroFill(this.weekYear(), 5);
+            },
+            GG   : function () {
+                return leftZeroFill(this.isoWeekYear() % 100, 2);
+            },
+            GGGG : function () {
+                return leftZeroFill(this.isoWeekYear(), 4);
+            },
+            GGGGG : function () {
+                return leftZeroFill(this.isoWeekYear(), 5);
+            },
+            e : function () {
+                return this.weekday();
+            },
+            E : function () {
+                return this.isoWeekday();
+            },
+            a    : function () {
+                return this.localeData().meridiem(this.hours(), this.minutes(), true);
+            },
+            A    : function () {
+                return this.localeData().meridiem(this.hours(), this.minutes(), false);
+            },
+            H    : function () {
+                return this.hours();
+            },
+            h    : function () {
+                return this.hours() % 12 || 12;
+            },
+            m    : function () {
+                return this.minutes();
+            },
+            s    : function () {
+                return this.seconds();
+            },
+            S    : function () {
+                return toInt(this.milliseconds() / 100);
+            },
+            SS   : function () {
+                return leftZeroFill(toInt(this.milliseconds() / 10), 2);
+            },
+            SSS  : function () {
+                return leftZeroFill(this.milliseconds(), 3);
+            },
+            SSSS : function () {
+                return leftZeroFill(this.milliseconds(), 3);
+            },
+            Z    : function () {
+                var a = -this.zone(),
+                    b = '+';
+                if (a < 0) {
+                    a = -a;
+                    b = '-';
+                }
+                return b + leftZeroFill(toInt(a / 60), 2) + ':' + leftZeroFill(toInt(a) % 60, 2);
+            },
+            ZZ   : function () {
+                var a = -this.zone(),
+                    b = '+';
+                if (a < 0) {
+                    a = -a;
+                    b = '-';
+                }
+                return b + leftZeroFill(toInt(a / 60), 2) + leftZeroFill(toInt(a) % 60, 2);
+            },
+            z : function () {
+                return this.zoneAbbr();
+            },
+            zz : function () {
+                return this.zoneName();
+            },
+            X    : function () {
+                return this.unix();
+            },
+            Q : function () {
+                return this.quarter();
+            }
+        },
+
+        deprecations = {},
+
+        lists = ['months', 'monthsShort', 'weekdays', 'weekdaysShort', 'weekdaysMin'];
+
+    // Pick the first defined of two or three arguments. dfl comes from
+    // default.
+    function dfl(a, b, c) {
+        switch (arguments.length) {
+            case 2: return a != null ? a : b;
+            case 3: return a != null ? a : b != null ? b : c;
+            default: throw new Error('Implement me');
+        }
+    }
+
+    function hasOwnProp(a, b) {
+        return hasOwnProperty.call(a, b);
+    }
+
+    function defaultParsingFlags() {
+        // We need to deep clone this object, and es5 standard is not very
+        // helpful.
+        return {
+            empty : false,
+            unusedTokens : [],
+            unusedInput : [],
+            overflow : -2,
+            charsLeftOver : 0,
+            nullInput : false,
+            invalidMonth : null,
+            invalidFormat : false,
+            userInvalidated : false,
+            iso: false
+        };
+    }
+
+    function printMsg(msg) {
+        if (moment.suppressDeprecationWarnings === false &&
+                typeof console !== 'undefined' && console.warn) {
+            console.warn('Deprecation warning: ' + msg);
+        }
+    }
+
+    function deprecate(msg, fn) {
+        var firstTime = true;
+        return extend(function () {
+            if (firstTime) {
+                printMsg(msg);
+                firstTime = false;
+            }
+            return fn.apply(this, arguments);
+        }, fn);
+    }
+
+    function deprecateSimple(name, msg) {
+        if (!deprecations[name]) {
+            printMsg(msg);
+            deprecations[name] = true;
+        }
+    }
+
+    function padToken(func, count) {
+        return function (a) {
+            return leftZeroFill(func.call(this, a), count);
+        };
+    }
+    function ordinalizeToken(func, period) {
+        return function (a) {
+            return this.localeData().ordinal(func.call(this, a), period);
+        };
+    }
+
+    while (ordinalizeTokens.length) {
+        i = ordinalizeTokens.pop();
+        formatTokenFunctions[i + 'o'] = ordinalizeToken(formatTokenFunctions[i], i);
+    }
+    while (paddedTokens.length) {
+        i = paddedTokens.pop();
+        formatTokenFunctions[i + i] = padToken(formatTokenFunctions[i], 2);
+    }
+    formatTokenFunctions.DDDD = padToken(formatTokenFunctions.DDD, 3);
+
+
+    /************************************
+        Constructors
+    ************************************/
+
+    function Locale() {
+    }
+
+    // Moment prototype object
+    function Moment(config, skipOverflow) {
+        if (skipOverflow !== false) {
+            checkOverflow(config);
+        }
+        copyConfig(this, config);
+        this._d = new Date(+config._d);
+    }
+
+    // Duration Constructor
+    function Duration(duration) {
+        var normalizedInput = normalizeObjectUnits(duration),
+            years = normalizedInput.year || 0,
+            quarters = normalizedInput.quarter || 0,
+            months = normalizedInput.month || 0,
+            weeks = normalizedInput.week || 0,
+            days = normalizedInput.day || 0,
+            hours = normalizedInput.hour || 0,
+            minutes = normalizedInput.minute || 0,
+            seconds = normalizedInput.second || 0,
+            milliseconds = normalizedInput.millisecond || 0;
+
+        // representation for dateAddRemove
+        this._milliseconds = +milliseconds +
+            seconds * 1e3 + // 1000
+            minutes * 6e4 + // 1000 * 60
+            hours * 36e5; // 1000 * 60 * 60
+        // Because of dateAddRemove treats 24 hours as different from a
+        // day when working around DST, we need to store them separately
+        this._days = +days +
+            weeks * 7;
+        // It is impossible translate months into days without knowing
+        // which months you are are talking about, so we have to store
+        // it separately.
+        this._months = +months +
+            quarters * 3 +
+            years * 12;
+
+        this._data = {};
+
+        this._locale = moment.localeData();
+
+        this._bubble();
+    }
+
+    /************************************
+        Helpers
+    ************************************/
+
+
+    function extend(a, b) {
+        for (var i in b) {
+            if (hasOwnProp(b, i)) {
+                a[i] = b[i];
+            }
+        }
+
+        if (hasOwnProp(b, 'toString')) {
+            a.toString = b.toString;
+        }
+
+        if (hasOwnProp(b, 'valueOf')) {
+            a.valueOf = b.valueOf;
+        }
+
+        return a;
+    }
+
+    function copyConfig(to, from) {
+        var i, prop, val;
+
+        if (typeof from._isAMomentObject !== 'undefined') {
+            to._isAMomentObject = from._isAMomentObject;
+        }
+        if (typeof from._i !== 'undefined') {
+            to._i = from._i;
+        }
+        if (typeof from._f !== 'undefined') {
+            to._f = from._f;
+        }
+        if (typeof from._l !== 'undefined') {
+            to._l = from._l;
+        }
+        if (typeof from._strict !== 'undefined') {
+            to._strict = from._strict;
+        }
+        if (typeof from._tzm !== 'undefined') {
+            to._tzm = from._tzm;
+        }
+        if (typeof from._isUTC !== 'undefined') {
+            to._isUTC = from._isUTC;
+        }
+        if (typeof from._offset !== 'undefined') {
+            to._offset = from._offset;
+        }
+        if (typeof from._pf !== 'undefined') {
+            to._pf = from._pf;
+        }
+        if (typeof from._locale !== 'undefined') {
+            to._locale = from._locale;
+        }
+
+        if (momentProperties.length > 0) {
+            for (i in momentProperties) {
+                prop = momentProperties[i];
+                val = from[prop];
+                if (typeof val !== 'undefined') {
+                    to[prop] = val;
+                }
+            }
+        }
+
+        return to;
+    }
+
+    function absRound(number) {
+        if (number < 0) {
+            return Math.ceil(number);
+        } else {
+            return Math.floor(number);
+        }
+    }
+
+    // left zero fill a number
+    // see http://jsperf.com/left-zero-filling for performance comparison
+    function leftZeroFill(number, targetLength, forceSign) {
+        var output = '' + Math.abs(number),
+            sign = number >= 0;
+
+        while (output.length < targetLength) {
+            output = '0' + output;
+        }
+        return (sign ? (forceSign ? '+' : '') : '-') + output;
+    }
+
+    function positiveMomentsDifference(base, other) {
+        var res = {milliseconds: 0, months: 0};
+
+        res.months = other.month() - base.month() +
+            (other.year() - base.year()) * 12;
+        if (base.clone().add(res.months, 'M').isAfter(other)) {
+            --res.months;
+        }
+
+        res.milliseconds = +other - +(base.clone().add(res.months, 'M'));
+
+        return res;
+    }
+
+    function momentsDifference(base, other) {
+        var res;
+        other = makeAs(other, base);
+        if (base.isBefore(other)) {
+            res = positiveMomentsDifference(base, other);
+        } else {
+            res = positiveMomentsDifference(other, base);
+            res.milliseconds = -res.milliseconds;
+            res.months = -res.months;
+        }
+
+        return res;
+    }
+
+    // TODO: remove 'name' arg after deprecation is removed
+    function createAdder(direction, name) {
+        return function (val, period) {
+            var dur, tmp;
+            //invert the arguments, but complain about it
+            if (period !== null && !isNaN(+period)) {
+                deprecateSimple(name, 'moment().' + name  + '(period, number) is deprecated. Please use moment().' + name + '(number, period).');
+                tmp = val; val = period; period = tmp;
+            }
+
+            val = typeof val === 'string' ? +val : val;
+            dur = moment.duration(val, period);
+            addOrSubtractDurationFromMoment(this, dur, direction);
+            return this;
+        };
+    }
+
+    function addOrSubtractDurationFromMoment(mom, duration, isAdding, updateOffset) {
+        var milliseconds = duration._milliseconds,
+            days = duration._days,
+            months = duration._months;
+        updateOffset = updateOffset == null ? true : updateOffset;
+
+        if (milliseconds) {
+            mom._d.setTime(+mom._d + milliseconds * isAdding);
+        }
+        if (days) {
+            rawSetter(mom, 'Date', rawGetter(mom, 'Date') + days * isAdding);
+        }
+        if (months) {
+            rawMonthSetter(mom, rawGetter(mom, 'Month') + months * isAdding);
+        }
+        if (updateOffset) {
+            moment.updateOffset(mom, days || months);
+        }
+    }
+
+    // check if is an array
+    function isArray(input) {
+        return Object.prototype.toString.call(input) === '[object Array]';
+    }
+
+    function isDate(input) {
+        return Object.prototype.toString.call(input) === '[object Date]' ||
+            input instanceof Date;
+    }
+
+    // compare two arrays, return the number of differences
+    function compareArrays(array1, array2, dontConvert) {
+        var len = Math.min(array1.length, array2.length),
+            lengthDiff = Math.abs(array1.length - array2.length),
+            diffs = 0,
+            i;
+        for (i = 0; i < len; i++) {
+            if ((dontConvert && array1[i] !== array2[i]) ||
+                (!dontConvert && toInt(array1[i]) !== toInt(array2[i]))) {
+                diffs++;
+            }
+        }
+        return diffs + lengthDiff;
+    }
+
+    function normalizeUnits(units) {
+        if (units) {
+            var lowered = units.toLowerCase().replace(/(.)s$/, '$1');
+            units = unitAliases[units] || camelFunctions[lowered] || lowered;
+        }
+        return units;
+    }
+
+    function normalizeObjectUnits(inputObject) {
+        var normalizedInput = {},
+            normalizedProp,
+            prop;
+
+        for (prop in inputObject) {
+            if (hasOwnProp(inputObject, prop)) {
+                normalizedProp = normalizeUnits(prop);
+                if (normalizedProp) {
+                    normalizedInput[normalizedProp] = inputObject[prop];
+                }
+            }
+        }
+
+        return normalizedInput;
+    }
+
+    function makeList(field) {
+        var count, setter;
+
+        if (field.indexOf('week') === 0) {
+            count = 7;
+            setter = 'day';
+        }
+        else if (field.indexOf('month') === 0) {
+            count = 12;
+            setter = 'month';
+        }
+        else {
+            return;
+        }
+
+        moment[field] = function (format, index) {
+            var i, getter,
+                method = moment._locale[field],
+                results = [];
+
+            if (typeof format === 'number') {
+                index = format;
+                format = undefined;
+            }
+
+            getter = function (i) {
+                var m = moment().utc().set(setter, i);
+                return method.call(moment._locale, m, format || '');
+            };
+
+            if (index != null) {
+                return getter(index);
+            }
+            else {
+                for (i = 0; i < count; i++) {
+                    results.push(getter(i));
+                }
+                return results;
+            }
+        };
+    }
+
+    function toInt(argumentForCoercion) {
+        var coercedNumber = +argumentForCoercion,
+            value = 0;
+
+        if (coercedNumber !== 0 && isFinite(coercedNumber)) {
+            if (coercedNumber >= 0) {
+                value = Math.floor(coercedNumber);
+            } else {
+                value = Math.ceil(coercedNumber);
+            }
+        }
+
+        return value;
+    }
+
+    function daysInMonth(year, month) {
+        return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+    }
+
+    function weeksInYear(year, dow, doy) {
+        return weekOfYear(moment([year, 11, 31 + dow - doy]), dow, doy).week;
+    }
+
+    function daysInYear(year) {
+        return isLeapYear(year) ? 366 : 365;
+    }
+
+    function isLeapYear(year) {
+        return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+    }
+
+    function checkOverflow(m) {
+        var overflow;
+        if (m._a && m._pf.overflow === -2) {
+            overflow =
+                m._a[MONTH] < 0 || m._a[MONTH] > 11 ? MONTH :
+                m._a[DATE] < 1 || m._a[DATE] > daysInMonth(m._a[YEAR], m._a[MONTH]) ? DATE :
+                m._a[HOUR] < 0 || m._a[HOUR] > 23 ? HOUR :
+                m._a[MINUTE] < 0 || m._a[MINUTE] > 59 ? MINUTE :
+                m._a[SECOND] < 0 || m._a[SECOND] > 59 ? SECOND :
+                m._a[MILLISECOND] < 0 || m._a[MILLISECOND] > 999 ? MILLISECOND :
+                -1;
+
+            if (m._pf._overflowDayOfYear && (overflow < YEAR || overflow > DATE)) {
+                overflow = DATE;
+            }
+
+            m._pf.overflow = overflow;
+        }
+    }
+
+    function isValid(m) {
+        if (m._isValid == null) {
+            m._isValid = !isNaN(m._d.getTime()) &&
+                m._pf.overflow < 0 &&
+                !m._pf.empty &&
+                !m._pf.invalidMonth &&
+                !m._pf.nullInput &&
+                !m._pf.invalidFormat &&
+                !m._pf.userInvalidated;
+
+            if (m._strict) {
+                m._isValid = m._isValid &&
+                    m._pf.charsLeftOver === 0 &&
+                    m._pf.unusedTokens.length === 0;
+            }
+        }
+        return m._isValid;
+    }
+
+    function normalizeLocale(key) {
+        return key ? key.toLowerCase().replace('_', '-') : key;
+    }
+
+    // pick the locale from the array
+    // try ['en-au', 'en-gb'] as 'en-au', 'en-gb', 'en', as in move through the list trying each
+    // substring from most specific to least, but move to the next array item if it's a more specific variant than the current root
+    function chooseLocale(names) {
+        var i = 0, j, next, locale, split;
+
+        while (i < names.length) {
+            split = normalizeLocale(names[i]).split('-');
+            j = split.length;
+            next = normalizeLocale(names[i + 1]);
+            next = next ? next.split('-') : null;
+            while (j > 0) {
+                locale = loadLocale(split.slice(0, j).join('-'));
+                if (locale) {
+                    return locale;
+                }
+                if (next && next.length >= j && compareArrays(split, next, true) >= j - 1) {
+                    //the next array item is better than a shallower substring of this one
+                    break;
+                }
+                j--;
+            }
+            i++;
+        }
+        return null;
+    }
+
+    function loadLocale(name) {
+        var oldLocale = null;
+        if (!locales[name] && hasModule) {
+            try {
+                oldLocale = moment.locale();
+                require('./locale/' + name);
+                // because defineLocale currently also sets the global locale, we want to undo that for lazy loaded locales
+                moment.locale(oldLocale);
+            } catch (e) { }
+        }
+        return locales[name];
+    }
+
+    // Return a moment from input, that is local/utc/zone equivalent to model.
+    function makeAs(input, model) {
+        return model._isUTC ? moment(input).zone(model._offset || 0) :
+            moment(input).local();
+    }
+
+    /************************************
+        Locale
+    ************************************/
+
+
+    extend(Locale.prototype, {
+
+        set : function (config) {
+            var prop, i;
+            for (i in config) {
+                prop = config[i];
+                if (typeof prop === 'function') {
+                    this[i] = prop;
+                } else {
+                    this['_' + i] = prop;
+                }
+            }
+        },
+
+        _months : 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
+        months : function (m) {
+            return this._months[m.month()];
+        },
+
+        _monthsShort : 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
+        monthsShort : function (m) {
+            return this._monthsShort[m.month()];
+        },
+
+        monthsParse : function (monthName) {
+            var i, mom, regex;
+
+            if (!this._monthsParse) {
+                this._monthsParse = [];
+            }
+
+            for (i = 0; i < 12; i++) {
+                // make the regex if we don't have it already
+                if (!this._monthsParse[i]) {
+                    mom = moment.utc([2000, i]);
+                    regex = '^' + this.months(mom, '') + '|^' + this.monthsShort(mom, '');
+                    this._monthsParse[i] = new RegExp(regex.replace('.', ''), 'i');
+                }
+                // test the regex
+                if (this._monthsParse[i].test(monthName)) {
+                    return i;
+                }
+            }
+        },
+
+        _weekdays : 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
+        weekdays : function (m) {
+            return this._weekdays[m.day()];
+        },
+
+        _weekdaysShort : 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
+        weekdaysShort : function (m) {
+            return this._weekdaysShort[m.day()];
+        },
+
+        _weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
+        weekdaysMin : function (m) {
+            return this._weekdaysMin[m.day()];
+        },
+
+        weekdaysParse : function (weekdayName) {
+            var i, mom, regex;
+
+            if (!this._weekdaysParse) {
+                this._weekdaysParse = [];
+            }
+
+            for (i = 0; i < 7; i++) {
+                // make the regex if we don't have it already
+                if (!this._weekdaysParse[i]) {
+                    mom = moment([2000, 1]).day(i);
+                    regex = '^' + this.weekdays(mom, '') + '|^' + this.weekdaysShort(mom, '') + '|^' + this.weekdaysMin(mom, '');
+                    this._weekdaysParse[i] = new RegExp(regex.replace('.', ''), 'i');
+                }
+                // test the regex
+                if (this._weekdaysParse[i].test(weekdayName)) {
+                    return i;
+                }
+            }
+        },
+
+        _longDateFormat : {
+            LT : 'h:mm A',
+            L : 'MM/DD/YYYY',
+            LL : 'MMMM D, YYYY',
+            LLL : 'MMMM D, YYYY LT',
+            LLLL : 'dddd, MMMM D, YYYY LT'
+        },
+        longDateFormat : function (key) {
+            var output = this._longDateFormat[key];
+            if (!output && this._longDateFormat[key.toUpperCase()]) {
+                output = this._longDateFormat[key.toUpperCase()].replace(/MMMM|MM|DD|dddd/g, function (val) {
+                    return val.slice(1);
+                });
+                this._longDateFormat[key] = output;
+            }
+            return output;
+        },
+
+        isPM : function (input) {
+            // IE8 Quirks Mode & IE7 Standards Mode do not allow accessing strings like arrays
+            // Using charAt should be more compatible.
+            return ((input + '').toLowerCase().charAt(0) === 'p');
+        },
+
+        _meridiemParse : /[ap]\.?m?\.?/i,
+        meridiem : function (hours, minutes, isLower) {
+            if (hours > 11) {
+                return isLower ? 'pm' : 'PM';
+            } else {
+                return isLower ? 'am' : 'AM';
+            }
+        },
+
+        _calendar : {
+            sameDay : '[Today at] LT',
+            nextDay : '[Tomorrow at] LT',
+            nextWeek : 'dddd [at] LT',
+            lastDay : '[Yesterday at] LT',
+            lastWeek : '[Last] dddd [at] LT',
+            sameElse : 'L'
+        },
+        calendar : function (key, mom) {
+            var output = this._calendar[key];
+            return typeof output === 'function' ? output.apply(mom) : output;
+        },
+
+        _relativeTime : {
+            future : 'in %s',
+            past : '%s ago',
+            s : 'a few seconds',
+            m : 'a minute',
+            mm : '%d minutes',
+            h : 'an hour',
+            hh : '%d hours',
+            d : 'a day',
+            dd : '%d days',
+            M : 'a month',
+            MM : '%d months',
+            y : 'a year',
+            yy : '%d years'
+        },
+
+        relativeTime : function (number, withoutSuffix, string, isFuture) {
+            var output = this._relativeTime[string];
+            return (typeof output === 'function') ?
+                output(number, withoutSuffix, string, isFuture) :
+                output.replace(/%d/i, number);
+        },
+
+        pastFuture : function (diff, output) {
+            var format = this._relativeTime[diff > 0 ? 'future' : 'past'];
+            return typeof format === 'function' ? format(output) : format.replace(/%s/i, output);
+        },
+
+        ordinal : function (number) {
+            return this._ordinal.replace('%d', number);
+        },
+        _ordinal : '%d',
+
+        preparse : function (string) {
+            return string;
+        },
+
+        postformat : function (string) {
+            return string;
+        },
+
+        week : function (mom) {
+            return weekOfYear(mom, this._week.dow, this._week.doy).week;
+        },
+
+        _week : {
+            dow : 0, // Sunday is the first day of the week.
+            doy : 6  // The week that contains Jan 1st is the first week of the year.
+        },
+
+        _invalidDate: 'Invalid date',
+        invalidDate: function () {
+            return this._invalidDate;
+        }
+    });
+
+    /************************************
+        Formatting
+    ************************************/
+
+
+    function removeFormattingTokens(input) {
+        if (input.match(/\[[\s\S]/)) {
+            return input.replace(/^\[|\]$/g, '');
+        }
+        return input.replace(/\\/g, '');
+    }
+
+    function makeFormatFunction(format) {
+        var array = format.match(formattingTokens), i, length;
+
+        for (i = 0, length = array.length; i < length; i++) {
+            if (formatTokenFunctions[array[i]]) {
+                array[i] = formatTokenFunctions[array[i]];
+            } else {
+                array[i] = removeFormattingTokens(array[i]);
+            }
+        }
+
+        return function (mom) {
+            var output = '';
+            for (i = 0; i < length; i++) {
+                output += array[i] instanceof Function ? array[i].call(mom, format) : array[i];
+            }
+            return output;
+        };
+    }
+
+    // format date using native date object
+    function formatMoment(m, format) {
+        if (!m.isValid()) {
+            return m.localeData().invalidDate();
+        }
+
+        format = expandFormat(format, m.localeData());
+
+        if (!formatFunctions[format]) {
+            formatFunctions[format] = makeFormatFunction(format);
+        }
+
+        return formatFunctions[format](m);
+    }
+
+    function expandFormat(format, locale) {
+        var i = 5;
+
+        function replaceLongDateFormatTokens(input) {
+            return locale.longDateFormat(input) || input;
+        }
+
+        localFormattingTokens.lastIndex = 0;
+        while (i >= 0 && localFormattingTokens.test(format)) {
+            format = format.replace(localFormattingTokens, replaceLongDateFormatTokens);
+            localFormattingTokens.lastIndex = 0;
+            i -= 1;
+        }
+
+        return format;
+    }
+
+
+    /************************************
+        Parsing
+    ************************************/
+
+
+    // get the regex to find the next token
+    function getParseRegexForToken(token, config) {
+        var a, strict = config._strict;
+        switch (token) {
+        case 'Q':
+            return parseTokenOneDigit;
+        case 'DDDD':
+            return parseTokenThreeDigits;
+        case 'YYYY':
+        case 'GGGG':
+        case 'gggg':
+            return strict ? parseTokenFourDigits : parseTokenOneToFourDigits;
+        case 'Y':
+        case 'G':
+        case 'g':
+            return parseTokenSignedNumber;
+        case 'YYYYYY':
+        case 'YYYYY':
+        case 'GGGGG':
+        case 'ggggg':
+            return strict ? parseTokenSixDigits : parseTokenOneToSixDigits;
+        case 'S':
+            if (strict) {
+                return parseTokenOneDigit;
+            }
+            /* falls through */
+        case 'SS':
+            if (strict) {
+                return parseTokenTwoDigits;
+            }
+            /* falls through */
+        case 'SSS':
+            if (strict) {
+                return parseTokenThreeDigits;
+            }
+            /* falls through */
+        case 'DDD':
+            return parseTokenOneToThreeDigits;
+        case 'MMM':
+        case 'MMMM':
+        case 'dd':
+        case 'ddd':
+        case 'dddd':
+            return parseTokenWord;
+        case 'a':
+        case 'A':
+            return config._locale._meridiemParse;
+        case 'X':
+            return parseTokenTimestampMs;
+        case 'Z':
+        case 'ZZ':
+            return parseTokenTimezone;
+        case 'T':
+            return parseTokenT;
+        case 'SSSS':
+            return parseTokenDigits;
+        case 'MM':
+        case 'DD':
+        case 'YY':
+        case 'GG':
+        case 'gg':
+        case 'HH':
+        case 'hh':
+        case 'mm':
+        case 'ss':
+        case 'ww':
+        case 'WW':
+            return strict ? parseTokenTwoDigits : parseTokenOneOrTwoDigits;
+        case 'M':
+        case 'D':
+        case 'd':
+        case 'H':
+        case 'h':
+        case 'm':
+        case 's':
+        case 'w':
+        case 'W':
+        case 'e':
+        case 'E':
+            return parseTokenOneOrTwoDigits;
+        case 'Do':
+            return parseTokenOrdinal;
+        default :
+            a = new RegExp(regexpEscape(unescapeFormat(token.replace('\\', '')), 'i'));
+            return a;
+        }
+    }
+
+    function timezoneMinutesFromString(string) {
+        string = string || '';
+        var possibleTzMatches = (string.match(parseTokenTimezone) || []),
+            tzChunk = possibleTzMatches[possibleTzMatches.length - 1] || [],
+            parts = (tzChunk + '').match(parseTimezoneChunker) || ['-', 0, 0],
+            minutes = +(parts[1] * 60) + toInt(parts[2]);
+
+        return parts[0] === '+' ? -minutes : minutes;
+    }
+
+    // function to convert string input to date
+    function addTimeToArrayFromToken(token, input, config) {
+        var a, datePartArray = config._a;
+
+        switch (token) {
+        // QUARTER
+        case 'Q':
+            if (input != null) {
+                datePartArray[MONTH] = (toInt(input) - 1) * 3;
+            }
+            break;
+        // MONTH
+        case 'M' : // fall through to MM
+        case 'MM' :
+            if (input != null) {
+                datePartArray[MONTH] = toInt(input) - 1;
+            }
+            break;
+        case 'MMM' : // fall through to MMMM
+        case 'MMMM' :
+            a = config._locale.monthsParse(input);
+            // if we didn't find a month name, mark the date as invalid.
+            if (a != null) {
+                datePartArray[MONTH] = a;
+            } else {
+                config._pf.invalidMonth = input;
+            }
+            break;
+        // DAY OF MONTH
+        case 'D' : // fall through to DD
+        case 'DD' :
+            if (input != null) {
+                datePartArray[DATE] = toInt(input);
+            }
+            break;
+        case 'Do' :
+            if (input != null) {
+                datePartArray[DATE] = toInt(parseInt(input, 10));
+            }
+            break;
+        // DAY OF YEAR
+        case 'DDD' : // fall through to DDDD
+        case 'DDDD' :
+            if (input != null) {
+                config._dayOfYear = toInt(input);
+            }
+
+            break;
+        // YEAR
+        case 'YY' :
+            datePartArray[YEAR] = moment.parseTwoDigitYear(input);
+            break;
+        case 'YYYY' :
+        case 'YYYYY' :
+        case 'YYYYYY' :
+            datePartArray[YEAR] = toInt(input);
+            break;
+        // AM / PM
+        case 'a' : // fall through to A
+        case 'A' :
+            config._isPm = config._locale.isPM(input);
+            break;
+        // 24 HOUR
+        case 'H' : // fall through to hh
+        case 'HH' : // fall through to hh
+        case 'h' : // fall through to hh
+        case 'hh' :
+            datePartArray[HOUR] = toInt(input);
+            break;
+        // MINUTE
+        case 'm' : // fall through to mm
+        case 'mm' :
+            datePartArray[MINUTE] = toInt(input);
+            break;
+        // SECOND
+        case 's' : // fall through to ss
+        case 'ss' :
+            datePartArray[SECOND] = toInt(input);
+            break;
+        // MILLISECOND
+        case 'S' :
+        case 'SS' :
+        case 'SSS' :
+        case 'SSSS' :
+            datePartArray[MILLISECOND] = toInt(('0.' + input) * 1000);
+            break;
+        // UNIX TIMESTAMP WITH MS
+        case 'X':
+            config._d = new Date(parseFloat(input) * 1000);
+            break;
+        // TIMEZONE
+        case 'Z' : // fall through to ZZ
+        case 'ZZ' :
+            config._useUTC = true;
+            config._tzm = timezoneMinutesFromString(input);
+            break;
+        // WEEKDAY - human
+        case 'dd':
+        case 'ddd':
+        case 'dddd':
+            a = config._locale.weekdaysParse(input);
+            // if we didn't get a weekday name, mark the date as invalid
+            if (a != null) {
+                config._w = config._w || {};
+                config._w['d'] = a;
+            } else {
+                config._pf.invalidWeekday = input;
+            }
+            break;
+        // WEEK, WEEK DAY - numeric
+        case 'w':
+        case 'ww':
+        case 'W':
+        case 'WW':
+        case 'd':
+        case 'e':
+        case 'E':
+            token = token.substr(0, 1);
+            /* falls through */
+        case 'gggg':
+        case 'GGGG':
+        case 'GGGGG':
+            token = token.substr(0, 2);
+            if (input) {
+                config._w = config._w || {};
+                config._w[token] = toInt(input);
+            }
+            break;
+        case 'gg':
+        case 'GG':
+            config._w = config._w || {};
+            config._w[token] = moment.parseTwoDigitYear(input);
+        }
+    }
+
+    function dayOfYearFromWeekInfo(config) {
+        var w, weekYear, week, weekday, dow, doy, temp;
+
+        w = config._w;
+        if (w.GG != null || w.W != null || w.E != null) {
+            dow = 1;
+            doy = 4;
+
+            // TODO: We need to take the current isoWeekYear, but that depends on
+            // how we interpret now (local, utc, fixed offset). So create
+            // a now version of current config (take local/utc/offset flags, and
+            // create now).
+            weekYear = dfl(w.GG, config._a[YEAR], weekOfYear(moment(), 1, 4).year);
+            week = dfl(w.W, 1);
+            weekday = dfl(w.E, 1);
+        } else {
+            dow = config._locale._week.dow;
+            doy = config._locale._week.doy;
+
+            weekYear = dfl(w.gg, config._a[YEAR], weekOfYear(moment(), dow, doy).year);
+            week = dfl(w.w, 1);
+
+            if (w.d != null) {
+                // weekday -- low day numbers are considered next week
+                weekday = w.d;
+                if (weekday < dow) {
+                    ++week;
+                }
+            } else if (w.e != null) {
+                // local weekday -- counting starts from begining of week
+                weekday = w.e + dow;
+            } else {
+                // default to begining of week
+                weekday = dow;
+            }
+        }
+        temp = dayOfYearFromWeeks(weekYear, week, weekday, doy, dow);
+
+        config._a[YEAR] = temp.year;
+        config._dayOfYear = temp.dayOfYear;
+    }
+
+    // convert an array to a date.
+    // the array should mirror the parameters below
+    // note: all values past the year are optional and will default to the lowest possible value.
+    // [year, month, day , hour, minute, second, millisecond]
+    function dateFromConfig(config) {
+        var i, date, input = [], currentDate, yearToUse;
+
+        if (config._d) {
+            return;
+        }
+
+        currentDate = currentDateArray(config);
+
+        //compute day of the year from weeks and weekdays
+        if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
+            dayOfYearFromWeekInfo(config);
+        }
+
+        //if the day of the year is set, figure out what it is
+        if (config._dayOfYear) {
+            yearToUse = dfl(config._a[YEAR], currentDate[YEAR]);
+
+            if (config._dayOfYear > daysInYear(yearToUse)) {
+                config._pf._overflowDayOfYear = true;
+            }
+
+            date = makeUTCDate(yearToUse, 0, config._dayOfYear);
+            config._a[MONTH] = date.getUTCMonth();
+            config._a[DATE] = date.getUTCDate();
+        }
+
+        // Default to current date.
+        // * if no year, month, day of month are given, default to today
+        // * if day of month is given, default month and year
+        // * if month is given, default only year
+        // * if year is given, don't default anything
+        for (i = 0; i < 3 && config._a[i] == null; ++i) {
+            config._a[i] = input[i] = currentDate[i];
+        }
+
+        // Zero out whatever was not defaulted, including time
+        for (; i < 7; i++) {
+            config._a[i] = input[i] = (config._a[i] == null) ? (i === 2 ? 1 : 0) : config._a[i];
+        }
+
+        config._d = (config._useUTC ? makeUTCDate : makeDate).apply(null, input);
+        // Apply timezone offset from input. The actual zone can be changed
+        // with parseZone.
+        if (config._tzm != null) {
+            config._d.setUTCMinutes(config._d.getUTCMinutes() + config._tzm);
+        }
+    }
+
+    function dateFromObject(config) {
+        var normalizedInput;
+
+        if (config._d) {
+            return;
+        }
+
+        normalizedInput = normalizeObjectUnits(config._i);
+        config._a = [
+            normalizedInput.year,
+            normalizedInput.month,
+            normalizedInput.day,
+            normalizedInput.hour,
+            normalizedInput.minute,
+            normalizedInput.second,
+            normalizedInput.millisecond
+        ];
+
+        dateFromConfig(config);
+    }
+
+    function currentDateArray(config) {
+        var now = new Date();
+        if (config._useUTC) {
+            return [
+                now.getUTCFullYear(),
+                now.getUTCMonth(),
+                now.getUTCDate()
+            ];
+        } else {
+            return [now.getFullYear(), now.getMonth(), now.getDate()];
+        }
+    }
+
+    // date from string and format string
+    function makeDateFromStringAndFormat(config) {
+        if (config._f === moment.ISO_8601) {
+            parseISO(config);
+            return;
+        }
+
+        config._a = [];
+        config._pf.empty = true;
+
+        // This array is used to make a Date, either with `new Date` or `Date.UTC`
+        var string = '' + config._i,
+            i, parsedInput, tokens, token, skipped,
+            stringLength = string.length,
+            totalParsedInputLength = 0;
+
+        tokens = expandFormat(config._f, config._locale).match(formattingTokens) || [];
+
+        for (i = 0; i < tokens.length; i++) {
+            token = tokens[i];
+            parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0];
+            if (parsedInput) {
+                skipped = string.substr(0, string.indexOf(parsedInput));
+                if (skipped.length > 0) {
+                    config._pf.unusedInput.push(skipped);
+                }
+                string = string.slice(string.indexOf(parsedInput) + parsedInput.length);
+                totalParsedInputLength += parsedInput.length;
+            }
+            // don't parse if it's not a known token
+            if (formatTokenFunctions[token]) {
+                if (parsedInput) {
+                    config._pf.empty = false;
+                }
+                else {
+                    config._pf.unusedTokens.push(token);
+                }
+                addTimeToArrayFromToken(token, parsedInput, config);
+            }
+            else if (config._strict && !parsedInput) {
+                config._pf.unusedTokens.push(token);
+            }
+        }
+
+        // add remaining unparsed input length to the string
+        config._pf.charsLeftOver = stringLength - totalParsedInputLength;
+        if (string.length > 0) {
+            config._pf.unusedInput.push(string);
+        }
+
+        // handle am pm
+        if (config._isPm && config._a[HOUR] < 12) {
+            config._a[HOUR] += 12;
+        }
+        // if is 12 am, change hours to 0
+        if (config._isPm === false && config._a[HOUR] === 12) {
+            config._a[HOUR] = 0;
+        }
+
+        dateFromConfig(config);
+        checkOverflow(config);
+    }
+
+    function unescapeFormat(s) {
+        return s.replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function (matched, p1, p2, p3, p4) {
+            return p1 || p2 || p3 || p4;
+        });
+    }
+
+    // Code from http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
+    function regexpEscape(s) {
+        return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    }
+
+    // date from string and array of format strings
+    function makeDateFromStringAndArray(config) {
+        var tempConfig,
+            bestMoment,
+
+            scoreToBeat,
+            i,
+            currentScore;
+
+        if (config._f.length === 0) {
+            config._pf.invalidFormat = true;
+            config._d = new Date(NaN);
+            return;
+        }
+
+        for (i = 0; i < config._f.length; i++) {
+            currentScore = 0;
+            tempConfig = copyConfig({}, config);
+            if (config._useUTC != null) {
+                tempConfig._useUTC = config._useUTC;
+            }
+            tempConfig._pf = defaultParsingFlags();
+            tempConfig._f = config._f[i];
+            makeDateFromStringAndFormat(tempConfig);
+
+            if (!isValid(tempConfig)) {
+                continue;
+            }
+
+            // if there is any input that was not parsed add a penalty for that format
+            currentScore += tempConfig._pf.charsLeftOver;
+
+            //or tokens
+            currentScore += tempConfig._pf.unusedTokens.length * 10;
+
+            tempConfig._pf.score = currentScore;
+
+            if (scoreToBeat == null || currentScore < scoreToBeat) {
+                scoreToBeat = currentScore;
+                bestMoment = tempConfig;
+            }
+        }
+
+        extend(config, bestMoment || tempConfig);
+    }
+
+    // date from iso format
+    function parseISO(config) {
+        var i, l,
+            string = config._i,
+            match = isoRegex.exec(string);
+
+        if (match) {
+            config._pf.iso = true;
+            for (i = 0, l = isoDates.length; i < l; i++) {
+                if (isoDates[i][1].exec(string)) {
+                    // match[5] should be 'T' or undefined
+                    config._f = isoDates[i][0] + (match[6] || ' ');
+                    break;
+                }
+            }
+            for (i = 0, l = isoTimes.length; i < l; i++) {
+                if (isoTimes[i][1].exec(string)) {
+                    config._f += isoTimes[i][0];
+                    break;
+                }
+            }
+            if (string.match(parseTokenTimezone)) {
+                config._f += 'Z';
+            }
+            makeDateFromStringAndFormat(config);
+        } else {
+            config._isValid = false;
+        }
+    }
+
+    // date from iso format or fallback
+    function makeDateFromString(config) {
+        parseISO(config);
+        if (config._isValid === false) {
+            delete config._isValid;
+            moment.createFromInputFallback(config);
+        }
+    }
+
+    function map(arr, fn) {
+        var res = [], i;
+        for (i = 0; i < arr.length; ++i) {
+            res.push(fn(arr[i], i));
+        }
+        return res;
+    }
+
+    function makeDateFromInput(config) {
+        var input = config._i, matched;
+        if (input === undefined) {
+            config._d = new Date();
+        } else if (isDate(input)) {
+            config._d = new Date(+input);
+        } else if ((matched = aspNetJsonRegex.exec(input)) !== null) {
+            config._d = new Date(+matched[1]);
+        } else if (typeof input === 'string') {
+            makeDateFromString(config);
+        } else if (isArray(input)) {
+            config._a = map(input.slice(0), function (obj) {
+                return parseInt(obj, 10);
+            });
+            dateFromConfig(config);
+        } else if (typeof(input) === 'object') {
+            dateFromObject(config);
+        } else if (typeof(input) === 'number') {
+            // from milliseconds
+            config._d = new Date(input);
+        } else {
+            moment.createFromInputFallback(config);
+        }
+    }
+
+    function makeDate(y, m, d, h, M, s, ms) {
+        //can't just apply() to create a date:
+        //http://stackoverflow.com/questions/181348/instantiating-a-javascript-object-by-calling-prototype-constructor-apply
+        var date = new Date(y, m, d, h, M, s, ms);
+
+        //the date constructor doesn't accept years < 1970
+        if (y < 1970) {
+            date.setFullYear(y);
+        }
+        return date;
+    }
+
+    function makeUTCDate(y) {
+        var date = new Date(Date.UTC.apply(null, arguments));
+        if (y < 1970) {
+            date.setUTCFullYear(y);
+        }
+        return date;
+    }
+
+    function parseWeekday(input, locale) {
+        if (typeof input === 'string') {
+            if (!isNaN(input)) {
+                input = parseInt(input, 10);
+            }
+            else {
+                input = locale.weekdaysParse(input);
+                if (typeof input !== 'number') {
+                    return null;
+                }
+            }
+        }
+        return input;
+    }
+
+    /************************************
+        Relative Time
+    ************************************/
+
+
+    // helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
+    function substituteTimeAgo(string, number, withoutSuffix, isFuture, locale) {
+        return locale.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
+    }
+
+    function relativeTime(posNegDuration, withoutSuffix, locale) {
+        var duration = moment.duration(posNegDuration).abs(),
+            seconds = round(duration.as('s')),
+            minutes = round(duration.as('m')),
+            hours = round(duration.as('h')),
+            days = round(duration.as('d')),
+            months = round(duration.as('M')),
+            years = round(duration.as('y')),
+
+            args = seconds < relativeTimeThresholds.s && ['s', seconds] ||
+                minutes === 1 && ['m'] ||
+                minutes < relativeTimeThresholds.m && ['mm', minutes] ||
+                hours === 1 && ['h'] ||
+                hours < relativeTimeThresholds.h && ['hh', hours] ||
+                days === 1 && ['d'] ||
+                days < relativeTimeThresholds.d && ['dd', days] ||
+                months === 1 && ['M'] ||
+                months < relativeTimeThresholds.M && ['MM', months] ||
+                years === 1 && ['y'] || ['yy', years];
+
+        args[2] = withoutSuffix;
+        args[3] = +posNegDuration > 0;
+        args[4] = locale;
+        return substituteTimeAgo.apply({}, args);
+    }
+
+
+    /************************************
+        Week of Year
+    ************************************/
+
+
+    // firstDayOfWeek       0 = sun, 6 = sat
+    //                      the day of the week that starts the week
+    //                      (usually sunday or monday)
+    // firstDayOfWeekOfYear 0 = sun, 6 = sat
+    //                      the first week is the week that contains the first
+    //                      of this day of the week
+    //                      (eg. ISO weeks use thursday (4))
+    function weekOfYear(mom, firstDayOfWeek, firstDayOfWeekOfYear) {
+        var end = firstDayOfWeekOfYear - firstDayOfWeek,
+            daysToDayOfWeek = firstDayOfWeekOfYear - mom.day(),
+            adjustedMoment;
+
+
+        if (daysToDayOfWeek > end) {
+            daysToDayOfWeek -= 7;
+        }
+
+        if (daysToDayOfWeek < end - 7) {
+            daysToDayOfWeek += 7;
+        }
+
+        adjustedMoment = moment(mom).add(daysToDayOfWeek, 'd');
+        return {
+            week: Math.ceil(adjustedMoment.dayOfYear() / 7),
+            year: adjustedMoment.year()
+        };
+    }
+
+    //http://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
+    function dayOfYearFromWeeks(year, week, weekday, firstDayOfWeekOfYear, firstDayOfWeek) {
+        var d = makeUTCDate(year, 0, 1).getUTCDay(), daysToAdd, dayOfYear;
+
+        d = d === 0 ? 7 : d;
+        weekday = weekday != null ? weekday : firstDayOfWeek;
+        daysToAdd = firstDayOfWeek - d + (d > firstDayOfWeekOfYear ? 7 : 0) - (d < firstDayOfWeek ? 7 : 0);
+        dayOfYear = 7 * (week - 1) + (weekday - firstDayOfWeek) + daysToAdd + 1;
+
+        return {
+            year: dayOfYear > 0 ? year : year - 1,
+            dayOfYear: dayOfYear > 0 ?  dayOfYear : daysInYear(year - 1) + dayOfYear
+        };
+    }
+
+    /************************************
+        Top Level Functions
+    ************************************/
+
+    function makeMoment(config) {
+        var input = config._i,
+            format = config._f;
+
+        config._locale = config._locale || moment.localeData(config._l);
+
+        if (input === null || (format === undefined && input === '')) {
+            return moment.invalid({nullInput: true});
+        }
+
+        if (typeof input === 'string') {
+            config._i = input = config._locale.preparse(input);
+        }
+
+        if (moment.isMoment(input)) {
+            return new Moment(input, true);
+        } else if (format) {
+            if (isArray(format)) {
+                makeDateFromStringAndArray(config);
+            } else {
+                makeDateFromStringAndFormat(config);
+            }
+        } else {
+            makeDateFromInput(config);
+        }
+
+        return new Moment(config);
+    }
+
+    moment = function (input, format, locale, strict) {
+        var c;
+
+        if (typeof(locale) === 'boolean') {
+            strict = locale;
+            locale = undefined;
+        }
+        // object construction must be done this way.
+        // https://github.com/moment/moment/issues/1423
+        c = {};
+        c._isAMomentObject = true;
+        c._i = input;
+        c._f = format;
+        c._l = locale;
+        c._strict = strict;
+        c._isUTC = false;
+        c._pf = defaultParsingFlags();
+
+        return makeMoment(c);
+    };
+
+    moment.suppressDeprecationWarnings = false;
+
+    moment.createFromInputFallback = deprecate(
+        'moment construction falls back to js Date. This is ' +
+        'discouraged and will be removed in upcoming major ' +
+        'release. Please refer to ' +
+        'https://github.com/moment/moment/issues/1407 for more info.',
+        function (config) {
+            config._d = new Date(config._i);
+        }
+    );
+
+    // Pick a moment m from moments so that m[fn](other) is true for all
+    // other. This relies on the function fn to be transitive.
+    //
+    // moments should either be an array of moment objects or an array, whose
+    // first element is an array of moment objects.
+    function pickBy(fn, moments) {
+        var res, i;
+        if (moments.length === 1 && isArray(moments[0])) {
+            moments = moments[0];
+        }
+        if (!moments.length) {
+            return moment();
+        }
+        res = moments[0];
+        for (i = 1; i < moments.length; ++i) {
+            if (moments[i][fn](res)) {
+                res = moments[i];
+            }
+        }
+        return res;
+    }
+
+    moment.min = function () {
+        var args = [].slice.call(arguments, 0);
+
+        return pickBy('isBefore', args);
+    };
+
+    moment.max = function () {
+        var args = [].slice.call(arguments, 0);
+
+        return pickBy('isAfter', args);
+    };
+
+    // creating with utc
+    moment.utc = function (input, format, locale, strict) {
+        var c;
+
+        if (typeof(locale) === 'boolean') {
+            strict = locale;
+            locale = undefined;
+        }
+        // object construction must be done this way.
+        // https://github.com/moment/moment/issues/1423
+        c = {};
+        c._isAMomentObject = true;
+        c._useUTC = true;
+        c._isUTC = true;
+        c._l = locale;
+        c._i = input;
+        c._f = format;
+        c._strict = strict;
+        c._pf = defaultParsingFlags();
+
+        return makeMoment(c).utc();
+    };
+
+    // creating with unix timestamp (in seconds)
+    moment.unix = function (input) {
+        return moment(input * 1000);
+    };
+
+    // duration
+    moment.duration = function (input, key) {
+        var duration = input,
+            // matching against regexp is expensive, do it on demand
+            match = null,
+            sign,
+            ret,
+            parseIso,
+            diffRes;
+
+        if (moment.isDuration(input)) {
+            duration = {
+                ms: input._milliseconds,
+                d: input._days,
+                M: input._months
+            };
+        } else if (typeof input === 'number') {
+            duration = {};
+            if (key) {
+                duration[key] = input;
+            } else {
+                duration.milliseconds = input;
+            }
+        } else if (!!(match = aspNetTimeSpanJsonRegex.exec(input))) {
+            sign = (match[1] === '-') ? -1 : 1;
+            duration = {
+                y: 0,
+                d: toInt(match[DATE]) * sign,
+                h: toInt(match[HOUR]) * sign,
+                m: toInt(match[MINUTE]) * sign,
+                s: toInt(match[SECOND]) * sign,
+                ms: toInt(match[MILLISECOND]) * sign
+            };
+        } else if (!!(match = isoDurationRegex.exec(input))) {
+            sign = (match[1] === '-') ? -1 : 1;
+            parseIso = function (inp) {
+                // We'd normally use ~~inp for this, but unfortunately it also
+                // converts floats to ints.
+                // inp may be undefined, so careful calling replace on it.
+                var res = inp && parseFloat(inp.replace(',', '.'));
+                // apply sign while we're at it
+                return (isNaN(res) ? 0 : res) * sign;
+            };
+            duration = {
+                y: parseIso(match[2]),
+                M: parseIso(match[3]),
+                d: parseIso(match[4]),
+                h: parseIso(match[5]),
+                m: parseIso(match[6]),
+                s: parseIso(match[7]),
+                w: parseIso(match[8])
+            };
+        } else if (typeof duration === 'object' &&
+                ('from' in duration || 'to' in duration)) {
+            diffRes = momentsDifference(moment(duration.from), moment(duration.to));
+
+            duration = {};
+            duration.ms = diffRes.milliseconds;
+            duration.M = diffRes.months;
+        }
+
+        ret = new Duration(duration);
+
+        if (moment.isDuration(input) && hasOwnProp(input, '_locale')) {
+            ret._locale = input._locale;
+        }
+
+        return ret;
+    };
+
+    // version number
+    moment.version = VERSION;
+
+    // default format
+    moment.defaultFormat = isoFormat;
+
+    // constant that refers to the ISO standard
+    moment.ISO_8601 = function () {};
+
+    // Plugins that add properties should also add the key here (null value),
+    // so we can properly clone ourselves.
+    moment.momentProperties = momentProperties;
+
+    // This function will be called whenever a moment is mutated.
+    // It is intended to keep the offset in sync with the timezone.
+    moment.updateOffset = function () {};
+
+    // This function allows you to set a threshold for relative time strings
+    moment.relativeTimeThreshold = function (threshold, limit) {
+        if (relativeTimeThresholds[threshold] === undefined) {
+            return false;
+        }
+        if (limit === undefined) {
+            return relativeTimeThresholds[threshold];
+        }
+        relativeTimeThresholds[threshold] = limit;
+        return true;
+    };
+
+    moment.lang = deprecate(
+        'moment.lang is deprecated. Use moment.locale instead.',
+        function (key, value) {
+            return moment.locale(key, value);
+        }
+    );
+
+    // This function will load locale and then set the global locale.  If
+    // no arguments are passed in, it will simply return the current global
+    // locale key.
+    moment.locale = function (key, values) {
+        var data;
+        if (key) {
+            if (typeof(values) !== 'undefined') {
+                data = moment.defineLocale(key, values);
+            }
+            else {
+                data = moment.localeData(key);
+            }
+
+            if (data) {
+                moment.duration._locale = moment._locale = data;
+            }
+        }
+
+        return moment._locale._abbr;
+    };
+
+    moment.defineLocale = function (name, values) {
+        if (values !== null) {
+            values.abbr = name;
+            if (!locales[name]) {
+                locales[name] = new Locale();
+            }
+            locales[name].set(values);
+
+            // backwards compat for now: also set the locale
+            moment.locale(name);
+
+            return locales[name];
+        } else {
+            // useful for testing
+            delete locales[name];
+            return null;
+        }
+    };
+
+    moment.langData = deprecate(
+        'moment.langData is deprecated. Use moment.localeData instead.',
+        function (key) {
+            return moment.localeData(key);
+        }
+    );
+
+    // returns locale data
+    moment.localeData = function (key) {
+        var locale;
+
+        if (key && key._locale && key._locale._abbr) {
+            key = key._locale._abbr;
+        }
+
+        if (!key) {
+            return moment._locale;
+        }
+
+        if (!isArray(key)) {
+            //short-circuit everything else
+            locale = loadLocale(key);
+            if (locale) {
+                return locale;
+            }
+            key = [key];
+        }
+
+        return chooseLocale(key);
+    };
+
+    // compare moment object
+    moment.isMoment = function (obj) {
+        return obj instanceof Moment ||
+            (obj != null && hasOwnProp(obj, '_isAMomentObject'));
+    };
+
+    // for typechecking Duration objects
+    moment.isDuration = function (obj) {
+        return obj instanceof Duration;
+    };
+
+    for (i = lists.length - 1; i >= 0; --i) {
+        makeList(lists[i]);
+    }
+
+    moment.normalizeUnits = function (units) {
+        return normalizeUnits(units);
+    };
+
+    moment.invalid = function (flags) {
+        var m = moment.utc(NaN);
+        if (flags != null) {
+            extend(m._pf, flags);
+        }
+        else {
+            m._pf.userInvalidated = true;
+        }
+
+        return m;
+    };
+
+    moment.parseZone = function () {
+        return moment.apply(null, arguments).parseZone();
+    };
+
+    moment.parseTwoDigitYear = function (input) {
+        return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
+    };
+
+    /************************************
+        Moment Prototype
+    ************************************/
+
+
+    extend(moment.fn = Moment.prototype, {
+
+        clone : function () {
+            return moment(this);
+        },
+
+        valueOf : function () {
+            return +this._d + ((this._offset || 0) * 60000);
+        },
+
+        unix : function () {
+            return Math.floor(+this / 1000);
+        },
+
+        toString : function () {
+            return this.clone().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ');
+        },
+
+        toDate : function () {
+            return this._offset ? new Date(+this) : this._d;
+        },
+
+        toISOString : function () {
+            var m = moment(this).utc();
+            if (0 < m.year() && m.year() <= 9999) {
+                return formatMoment(m, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+            } else {
+                return formatMoment(m, 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+            }
+        },
+
+        toArray : function () {
+            var m = this;
+            return [
+                m.year(),
+                m.month(),
+                m.date(),
+                m.hours(),
+                m.minutes(),
+                m.seconds(),
+                m.milliseconds()
+            ];
+        },
+
+        isValid : function () {
+            return isValid(this);
+        },
+
+        isDSTShifted : function () {
+            if (this._a) {
+                return this.isValid() && compareArrays(this._a, (this._isUTC ? moment.utc(this._a) : moment(this._a)).toArray()) > 0;
+            }
+
+            return false;
+        },
+
+        parsingFlags : function () {
+            return extend({}, this._pf);
+        },
+
+        invalidAt: function () {
+            return this._pf.overflow;
+        },
+
+        utc : function (keepLocalTime) {
+            return this.zone(0, keepLocalTime);
+        },
+
+        local : function (keepLocalTime) {
+            if (this._isUTC) {
+                this.zone(0, keepLocalTime);
+                this._isUTC = false;
+
+                if (keepLocalTime) {
+                    this.add(this._dateTzOffset(), 'm');
+                }
+            }
+            return this;
+        },
+
+        format : function (inputString) {
+            var output = formatMoment(this, inputString || moment.defaultFormat);
+            return this.localeData().postformat(output);
+        },
+
+        add : createAdder(1, 'add'),
+
+        subtract : createAdder(-1, 'subtract'),
+
+        diff : function (input, units, asFloat) {
+            var that = makeAs(input, this),
+                zoneDiff = (this.zone() - that.zone()) * 6e4,
+                diff, output, daysAdjust;
+
+            units = normalizeUnits(units);
+
+            if (units === 'year' || units === 'month') {
+                // average number of days in the months in the given dates
+                diff = (this.daysInMonth() + that.daysInMonth()) * 432e5; // 24 * 60 * 60 * 1000 / 2
+                // difference in months
+                output = ((this.year() - that.year()) * 12) + (this.month() - that.month());
+                // adjust by taking difference in days, average number of days
+                // and dst in the given months.
+                daysAdjust = (this - moment(this).startOf('month')) -
+                    (that - moment(that).startOf('month'));
+                // same as above but with zones, to negate all dst
+                daysAdjust -= ((this.zone() - moment(this).startOf('month').zone()) -
+                        (that.zone() - moment(that).startOf('month').zone())) * 6e4;
+                output += daysAdjust / diff;
+                if (units === 'year') {
+                    output = output / 12;
+                }
+            } else {
+                diff = (this - that);
+                output = units === 'second' ? diff / 1e3 : // 1000
+                    units === 'minute' ? diff / 6e4 : // 1000 * 60
+                    units === 'hour' ? diff / 36e5 : // 1000 * 60 * 60
+                    units === 'day' ? (diff - zoneDiff) / 864e5 : // 1000 * 60 * 60 * 24, negate dst
+                    units === 'week' ? (diff - zoneDiff) / 6048e5 : // 1000 * 60 * 60 * 24 * 7, negate dst
+                    diff;
+            }
+            return asFloat ? output : absRound(output);
+        },
+
+        from : function (time, withoutSuffix) {
+            return moment.duration({to: this, from: time}).locale(this.locale()).humanize(!withoutSuffix);
+        },
+
+        fromNow : function (withoutSuffix) {
+            return this.from(moment(), withoutSuffix);
+        },
+
+        calendar : function (time) {
+            // We want to compare the start of today, vs this.
+            // Getting start-of-today depends on whether we're zone'd or not.
+            var now = time || moment(),
+                sod = makeAs(now, this).startOf('day'),
+                diff = this.diff(sod, 'days', true),
+                format = diff < -6 ? 'sameElse' :
+                    diff < -1 ? 'lastWeek' :
+                    diff < 0 ? 'lastDay' :
+                    diff < 1 ? 'sameDay' :
+                    diff < 2 ? 'nextDay' :
+                    diff < 7 ? 'nextWeek' : 'sameElse';
+            return this.format(this.localeData().calendar(format, this));
+        },
+
+        isLeapYear : function () {
+            return isLeapYear(this.year());
+        },
+
+        isDST : function () {
+            return (this.zone() < this.clone().month(0).zone() ||
+                this.zone() < this.clone().month(5).zone());
+        },
+
+        day : function (input) {
+            var day = this._isUTC ? this._d.getUTCDay() : this._d.getDay();
+            if (input != null) {
+                input = parseWeekday(input, this.localeData());
+                return this.add(input - day, 'd');
+            } else {
+                return day;
+            }
+        },
+
+        month : makeAccessor('Month', true),
+
+        startOf : function (units) {
+            units = normalizeUnits(units);
+            // the following switch intentionally omits break keywords
+            // to utilize falling through the cases.
+            switch (units) {
+            case 'year':
+                this.month(0);
+                /* falls through */
+            case 'quarter':
+            case 'month':
+                this.date(1);
+                /* falls through */
+            case 'week':
+            case 'isoWeek':
+            case 'day':
+                this.hours(0);
+                /* falls through */
+            case 'hour':
+                this.minutes(0);
+                /* falls through */
+            case 'minute':
+                this.seconds(0);
+                /* falls through */
+            case 'second':
+                this.milliseconds(0);
+                /* falls through */
+            }
+
+            // weeks are a special case
+            if (units === 'week') {
+                this.weekday(0);
+            } else if (units === 'isoWeek') {
+                this.isoWeekday(1);
+            }
+
+            // quarters are also special
+            if (units === 'quarter') {
+                this.month(Math.floor(this.month() / 3) * 3);
+            }
+
+            return this;
+        },
+
+        endOf: function (units) {
+            units = normalizeUnits(units);
+            return this.startOf(units).add(1, (units === 'isoWeek' ? 'week' : units)).subtract(1, 'ms');
+        },
+
+        isAfter: function (input, units) {
+            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
+            if (units === 'millisecond') {
+                input = moment.isMoment(input) ? input : moment(input);
+                return +this > +input;
+            } else {
+                return +this.clone().startOf(units) > +moment(input).startOf(units);
+            }
+        },
+
+        isBefore: function (input, units) {
+            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
+            if (units === 'millisecond') {
+                input = moment.isMoment(input) ? input : moment(input);
+                return +this < +input;
+            } else {
+                return +this.clone().startOf(units) < +moment(input).startOf(units);
+            }
+        },
+
+        isSame: function (input, units) {
+            units = normalizeUnits(units || 'millisecond');
+            if (units === 'millisecond') {
+                input = moment.isMoment(input) ? input : moment(input);
+                return +this === +input;
+            } else {
+                return +this.clone().startOf(units) === +makeAs(input, this).startOf(units);
+            }
+        },
+
+        min: deprecate(
+                 'moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548',
+                 function (other) {
+                     other = moment.apply(null, arguments);
+                     return other < this ? this : other;
+                 }
+         ),
+
+        max: deprecate(
+                'moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548',
+                function (other) {
+                    other = moment.apply(null, arguments);
+                    return other > this ? this : other;
+                }
+        ),
+
+        // keepLocalTime = true means only change the timezone, without
+        // affecting the local hour. So 5:31:26 +0300 --[zone(2, true)]-->
+        // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist int zone
+        // +0200, so we adjust the time as needed, to be valid.
+        //
+        // Keeping the time actually adds/subtracts (one hour)
+        // from the actual represented time. That is why we call updateOffset
+        // a second time. In case it wants us to change the offset again
+        // _changeInProgress == true case, then we have to adjust, because
+        // there is no such time in the given timezone.
+        zone : function (input, keepLocalTime) {
+            var offset = this._offset || 0,
+                localAdjust;
+            if (input != null) {
+                if (typeof input === 'string') {
+                    input = timezoneMinutesFromString(input);
+                }
+                if (Math.abs(input) < 16) {
+                    input = input * 60;
+                }
+                if (!this._isUTC && keepLocalTime) {
+                    localAdjust = this._dateTzOffset();
+                }
+                this._offset = input;
+                this._isUTC = true;
+                if (localAdjust != null) {
+                    this.subtract(localAdjust, 'm');
+                }
+                if (offset !== input) {
+                    if (!keepLocalTime || this._changeInProgress) {
+                        addOrSubtractDurationFromMoment(this,
+                                moment.duration(offset - input, 'm'), 1, false);
+                    } else if (!this._changeInProgress) {
+                        this._changeInProgress = true;
+                        moment.updateOffset(this, true);
+                        this._changeInProgress = null;
+                    }
+                }
+            } else {
+                return this._isUTC ? offset : this._dateTzOffset();
+            }
+            return this;
+        },
+
+        zoneAbbr : function () {
+            return this._isUTC ? 'UTC' : '';
+        },
+
+        zoneName : function () {
+            return this._isUTC ? 'Coordinated Universal Time' : '';
+        },
+
+        parseZone : function () {
+            if (this._tzm) {
+                this.zone(this._tzm);
+            } else if (typeof this._i === 'string') {
+                this.zone(this._i);
+            }
+            return this;
+        },
+
+        hasAlignedHourOffset : function (input) {
+            if (!input) {
+                input = 0;
+            }
+            else {
+                input = moment(input).zone();
+            }
+
+            return (this.zone() - input) % 60 === 0;
+        },
+
+        daysInMonth : function () {
+            return daysInMonth(this.year(), this.month());
+        },
+
+        dayOfYear : function (input) {
+            var dayOfYear = round((moment(this).startOf('day') - moment(this).startOf('year')) / 864e5) + 1;
+            return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
+        },
+
+        quarter : function (input) {
+            return input == null ? Math.ceil((this.month() + 1) / 3) : this.month((input - 1) * 3 + this.month() % 3);
+        },
+
+        weekYear : function (input) {
+            var year = weekOfYear(this, this.localeData()._week.dow, this.localeData()._week.doy).year;
+            return input == null ? year : this.add((input - year), 'y');
+        },
+
+        isoWeekYear : function (input) {
+            var year = weekOfYear(this, 1, 4).year;
+            return input == null ? year : this.add((input - year), 'y');
+        },
+
+        week : function (input) {
+            var week = this.localeData().week(this);
+            return input == null ? week : this.add((input - week) * 7, 'd');
+        },
+
+        isoWeek : function (input) {
+            var week = weekOfYear(this, 1, 4).week;
+            return input == null ? week : this.add((input - week) * 7, 'd');
+        },
+
+        weekday : function (input) {
+            var weekday = (this.day() + 7 - this.localeData()._week.dow) % 7;
+            return input == null ? weekday : this.add(input - weekday, 'd');
+        },
+
+        isoWeekday : function (input) {
+            // behaves the same as moment#day except
+            // as a getter, returns 7 instead of 0 (1-7 range instead of 0-6)
+            // as a setter, sunday should belong to the previous week.
+            return input == null ? this.day() || 7 : this.day(this.day() % 7 ? input : input - 7);
+        },
+
+        isoWeeksInYear : function () {
+            return weeksInYear(this.year(), 1, 4);
+        },
+
+        weeksInYear : function () {
+            var weekInfo = this.localeData()._week;
+            return weeksInYear(this.year(), weekInfo.dow, weekInfo.doy);
+        },
+
+        get : function (units) {
+            units = normalizeUnits(units);
+            return this[units]();
+        },
+
+        set : function (units, value) {
+            units = normalizeUnits(units);
+            if (typeof this[units] === 'function') {
+                this[units](value);
+            }
+            return this;
+        },
+
+        // If passed a locale key, it will set the locale for this
+        // instance.  Otherwise, it will return the locale configuration
+        // variables for this instance.
+        locale : function (key) {
+            var newLocaleData;
+
+            if (key === undefined) {
+                return this._locale._abbr;
+            } else {
+                newLocaleData = moment.localeData(key);
+                if (newLocaleData != null) {
+                    this._locale = newLocaleData;
+                }
+                return this;
+            }
+        },
+
+        lang : deprecate(
+            'moment().lang() is deprecated. Use moment().localeData() instead.',
+            function (key) {
+                if (key === undefined) {
+                    return this.localeData();
+                } else {
+                    return this.locale(key);
+                }
+            }
+        ),
+
+        localeData : function () {
+            return this._locale;
+        },
+
+        _dateTzOffset : function () {
+            // On Firefox.24 Date#getTimezoneOffset returns a floating point.
+            // https://github.com/moment/moment/pull/1871
+            return Math.round(this._d.getTimezoneOffset() / 15) * 15;
+        }
+    });
+
+    function rawMonthSetter(mom, value) {
+        var dayOfMonth;
+
+        // TODO: Move this out of here!
+        if (typeof value === 'string') {
+            value = mom.localeData().monthsParse(value);
+            // TODO: Another silent failure?
+            if (typeof value !== 'number') {
+                return mom;
+            }
+        }
+
+        dayOfMonth = Math.min(mom.date(),
+                daysInMonth(mom.year(), value));
+        mom._d['set' + (mom._isUTC ? 'UTC' : '') + 'Month'](value, dayOfMonth);
+        return mom;
+    }
+
+    function rawGetter(mom, unit) {
+        return mom._d['get' + (mom._isUTC ? 'UTC' : '') + unit]();
+    }
+
+    function rawSetter(mom, unit, value) {
+        if (unit === 'Month') {
+            return rawMonthSetter(mom, value);
+        } else {
+            return mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value);
+        }
+    }
+
+    function makeAccessor(unit, keepTime) {
+        return function (value) {
+            if (value != null) {
+                rawSetter(this, unit, value);
+                moment.updateOffset(this, keepTime);
+                return this;
+            } else {
+                return rawGetter(this, unit);
+            }
+        };
+    }
+
+    moment.fn.millisecond = moment.fn.milliseconds = makeAccessor('Milliseconds', false);
+    moment.fn.second = moment.fn.seconds = makeAccessor('Seconds', false);
+    moment.fn.minute = moment.fn.minutes = makeAccessor('Minutes', false);
+    // Setting the hour should keep the time, because the user explicitly
+    // specified which hour he wants. So trying to maintain the same hour (in
+    // a new timezone) makes sense. Adding/subtracting hours does not follow
+    // this rule.
+    moment.fn.hour = moment.fn.hours = makeAccessor('Hours', true);
+    // moment.fn.month is defined separately
+    moment.fn.date = makeAccessor('Date', true);
+    moment.fn.dates = deprecate('dates accessor is deprecated. Use date instead.', makeAccessor('Date', true));
+    moment.fn.year = makeAccessor('FullYear', true);
+    moment.fn.years = deprecate('years accessor is deprecated. Use year instead.', makeAccessor('FullYear', true));
+
+    // add plural methods
+    moment.fn.days = moment.fn.day;
+    moment.fn.months = moment.fn.month;
+    moment.fn.weeks = moment.fn.week;
+    moment.fn.isoWeeks = moment.fn.isoWeek;
+    moment.fn.quarters = moment.fn.quarter;
+
+    // add aliased format methods
+    moment.fn.toJSON = moment.fn.toISOString;
+
+    /************************************
+        Duration Prototype
+    ************************************/
+
+
+    function daysToYears (days) {
+        // 400 years have 146097 days (taking into account leap year rules)
+        return days * 400 / 146097;
+    }
+
+    function yearsToDays (years) {
+        // years * 365 + absRound(years / 4) -
+        //     absRound(years / 100) + absRound(years / 400);
+        return years * 146097 / 400;
+    }
+
+    extend(moment.duration.fn = Duration.prototype, {
+
+        _bubble : function () {
+            var milliseconds = this._milliseconds,
+                days = this._days,
+                months = this._months,
+                data = this._data,
+                seconds, minutes, hours, years = 0;
+
+            // The following code bubbles up values, see the tests for
+            // examples of what that means.
+            data.milliseconds = milliseconds % 1000;
+
+            seconds = absRound(milliseconds / 1000);
+            data.seconds = seconds % 60;
+
+            minutes = absRound(seconds / 60);
+            data.minutes = minutes % 60;
+
+            hours = absRound(minutes / 60);
+            data.hours = hours % 24;
+
+            days += absRound(hours / 24);
+
+            // Accurately convert days to years, assume start from year 0.
+            years = absRound(daysToYears(days));
+            days -= absRound(yearsToDays(years));
+
+            // 30 days to a month
+            // TODO (iskren): Use anchor date (like 1st Jan) to compute this.
+            months += absRound(days / 30);
+            days %= 30;
+
+            // 12 months -> 1 year
+            years += absRound(months / 12);
+            months %= 12;
+
+            data.days = days;
+            data.months = months;
+            data.years = years;
+        },
+
+        abs : function () {
+            this._milliseconds = Math.abs(this._milliseconds);
+            this._days = Math.abs(this._days);
+            this._months = Math.abs(this._months);
+
+            this._data.milliseconds = Math.abs(this._data.milliseconds);
+            this._data.seconds = Math.abs(this._data.seconds);
+            this._data.minutes = Math.abs(this._data.minutes);
+            this._data.hours = Math.abs(this._data.hours);
+            this._data.months = Math.abs(this._data.months);
+            this._data.years = Math.abs(this._data.years);
+
+            return this;
+        },
+
+        weeks : function () {
+            return absRound(this.days() / 7);
+        },
+
+        valueOf : function () {
+            return this._milliseconds +
+              this._days * 864e5 +
+              (this._months % 12) * 2592e6 +
+              toInt(this._months / 12) * 31536e6;
+        },
+
+        humanize : function (withSuffix) {
+            var output = relativeTime(this, !withSuffix, this.localeData());
+
+            if (withSuffix) {
+                output = this.localeData().pastFuture(+this, output);
+            }
+
+            return this.localeData().postformat(output);
+        },
+
+        add : function (input, val) {
+            // supports only 2.0-style add(1, 's') or add(moment)
+            var dur = moment.duration(input, val);
+
+            this._milliseconds += dur._milliseconds;
+            this._days += dur._days;
+            this._months += dur._months;
+
+            this._bubble();
+
+            return this;
+        },
+
+        subtract : function (input, val) {
+            var dur = moment.duration(input, val);
+
+            this._milliseconds -= dur._milliseconds;
+            this._days -= dur._days;
+            this._months -= dur._months;
+
+            this._bubble();
+
+            return this;
+        },
+
+        get : function (units) {
+            units = normalizeUnits(units);
+            return this[units.toLowerCase() + 's']();
+        },
+
+        as : function (units) {
+            var days, months;
+            units = normalizeUnits(units);
+
+            if (units === 'month' || units === 'year') {
+                days = this._days + this._milliseconds / 864e5;
+                months = this._months + daysToYears(days) * 12;
+                return units === 'month' ? months : months / 12;
+            } else {
+                // handle milliseconds separately because of floating point math errors (issue #1867)
+                days = this._days + yearsToDays(this._months / 12);
+                switch (units) {
+                    case 'week': return days / 7 + this._milliseconds / 6048e5;
+                    case 'day': return days + this._milliseconds / 864e5;
+                    case 'hour': return days * 24 + this._milliseconds / 36e5;
+                    case 'minute': return days * 24 * 60 + this._milliseconds / 6e4;
+                    case 'second': return days * 24 * 60 * 60 + this._milliseconds / 1000;
+                    // Math.floor prevents floating point math errors here
+                    case 'millisecond': return Math.floor(days * 24 * 60 * 60 * 1000) + this._milliseconds;
+                    default: throw new Error('Unknown unit ' + units);
+                }
+            }
+        },
+
+        lang : moment.fn.lang,
+        locale : moment.fn.locale,
+
+        toIsoString : deprecate(
+            'toIsoString() is deprecated. Please use toISOString() instead ' +
+            '(notice the capitals)',
+            function () {
+                return this.toISOString();
+            }
+        ),
+
+        toISOString : function () {
+            // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
+            var years = Math.abs(this.years()),
+                months = Math.abs(this.months()),
+                days = Math.abs(this.days()),
+                hours = Math.abs(this.hours()),
+                minutes = Math.abs(this.minutes()),
+                seconds = Math.abs(this.seconds() + this.milliseconds() / 1000);
+
+            if (!this.asSeconds()) {
+                // this is the same as C#'s (Noda) and python (isodate)...
+                // but not other JS (goog.date)
+                return 'P0D';
+            }
+
+            return (this.asSeconds() < 0 ? '-' : '') +
+                'P' +
+                (years ? years + 'Y' : '') +
+                (months ? months + 'M' : '') +
+                (days ? days + 'D' : '') +
+                ((hours || minutes || seconds) ? 'T' : '') +
+                (hours ? hours + 'H' : '') +
+                (minutes ? minutes + 'M' : '') +
+                (seconds ? seconds + 'S' : '');
+        },
+
+        localeData : function () {
+            return this._locale;
+        }
+    });
+
+    moment.duration.fn.toString = moment.duration.fn.toISOString;
+
+    function makeDurationGetter(name) {
+        moment.duration.fn[name] = function () {
+            return this._data[name];
+        };
+    }
+
+    for (i in unitMillisecondFactors) {
+        if (hasOwnProp(unitMillisecondFactors, i)) {
+            makeDurationGetter(i.toLowerCase());
+        }
+    }
+
+    moment.duration.fn.asMilliseconds = function () {
+        return this.as('ms');
+    };
+    moment.duration.fn.asSeconds = function () {
+        return this.as('s');
+    };
+    moment.duration.fn.asMinutes = function () {
+        return this.as('m');
+    };
+    moment.duration.fn.asHours = function () {
+        return this.as('h');
+    };
+    moment.duration.fn.asDays = function () {
+        return this.as('d');
+    };
+    moment.duration.fn.asWeeks = function () {
+        return this.as('weeks');
+    };
+    moment.duration.fn.asMonths = function () {
+        return this.as('M');
+    };
+    moment.duration.fn.asYears = function () {
+        return this.as('y');
+    };
+
+    /************************************
+        Default Locale
+    ************************************/
+
+
+    // Set default locale, other locale will inherit from English.
+    moment.locale('en', {
+        ordinal : function (number) {
+            var b = number % 10,
+                output = (toInt(number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
+            return number + output;
+        }
+    });
+
+    /* EMBED_LOCALES */
+
+    /************************************
+        Exposing Moment
+    ************************************/
+
+    function makeGlobal(shouldDeprecate) {
+        /*global ender:false */
+        if (typeof ender !== 'undefined') {
+            return;
+        }
+        oldGlobalMoment = globalScope.moment;
+        if (shouldDeprecate) {
+            globalScope.moment = deprecate(
+                    'Accessing Moment through the global scope is ' +
+                    'deprecated, and will be removed in an upcoming ' +
+                    'release.',
+                    moment);
+        } else {
+            globalScope.moment = moment;
+        }
+    }
+
+    // CommonJS module is defined
+    if (hasModule) {
+        module.exports = moment;
+    } else if (typeof define === 'function' && define.amd) {
+        define('moment', function (require, exports, module) {
+            if (module.config && module.config() && module.config().noGlobal === true) {
+                // release the global variable
+                globalScope.moment = oldGlobalMoment;
+            }
+
+            return moment;
+        });
+        makeGlobal(true);
+    } else {
+        makeGlobal();
+    }
+}).call(this);
 
 });
 

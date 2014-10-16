@@ -1,189 +1,221 @@
-jQuery(function($) {
+/**
+ * Handles the initialization of our hotel widget
+ */
+define( [
+    'jquery',
+    'components/jquery-selectBoxIt/jquery-selectBoxIt-built',
+    'third-party/jquery-ui-1.11.1.custom/jquery-ui.min',
+    'components/moment/moment',
+    '//wurfl.io/wurfl.js'
+  ],
+  function( jQuery, sbi, dp, moment ){
 
-	//'//raw.githubusercontent.com/jquery/jquery-ui/1.11.1/ui/datepicker.js'
-	require(['//cdnjs.cloudflare.com/ajax/libs/jquery.selectboxit/3.8.0/jquery.selectBoxIt.min.js', '/vendor/themes/wp-festival-2/static/scripts/src/third-party/jquery-ui-1.11.1.custom/jquery-ui.min.js'], function(sbi, dp) {
+    function HotelWidget(){
 
-		var hotelWidget = {
+      this.init = function(){
+        var self = this;
 
-			init : function() {
-				$('.custom-select').selectBoxIt({
-					'autoWidth': false,
-					'copyClasses': 'container'
-				});
+        this.selectBoxIt = jQuery( '.custom-select' ).selectBoxIt( {
+          'autoWidth': false,
+          'copyClasses': 'container'
+        } );
 
-				// For some reason $ is not working with datepicker when noConflict
-				// is enabled adn reassigned in the function scope
-				var datepickerOpts = {
-					dateFormat: 'yy-mm-dd',
-					minDate: new Date()
-				};
+        // Setup our dates @todo make this based off widget options
+        var festivalStartDate = new Date( 2015, 0, 16 );
+        var festivalEndDate = new Date( 2015, 0, 18 );
 
-				jQuery('.hotel-widget .start-date').datepicker({
-					dateFormat: 'yy-mm-dd',
-					minDate: new Date(),
+        jQuery( '.hotel-widget .start-date' ).datepicker( {
+          dateFormat: 'yy-mm-dd',
+          defaultDate: festivalStartDate,
 
-					onSelect : function(date) {
-						// End Date cannot be smaller than start date
-						// and cannot exceed 30 days into the future from the start date
+          onSelect: function( date ){
+            moment = window.moment;
 
-						var endDateControl = jQuery('.hotel-widget .end-date');
-						var startDate = jQuery(this).datepicker('getDate');
+            // Setup some of our vars
+            var endDateControl = jQuery( '.hotel-widget .end-date' );
+            var startDate = jQuery( this ).datepicker( 'getDate' );
+            var minDate = moment( startDate ).add( 1, 'days' );
 
-						// Add the same date to the end date if no date was set
-						if ( endDateControl.datepicker('getDate') == null )
-						{
-							endDateControl.datepicker('setDate', startDate);
-						}
-						else
-						{
-							endDateControl.datepicker('setDate', '');
-						}
+            // Add the same date to the end date if no date was set
+            if( endDateControl.datepicker( 'getDate' ) == null ){
+              endDateControl.datepicker( 'setDate', minDate.format( 'YYYY-MM-DD' ) );
+            }else if( moment( endDateControl.datepicker( 'getDate' ) ).isBefore( startDate ) ){
+              endDateControl.datepicker( 'setDate', minDate.format( 'YYYY-MM-DD' ) );
+            }
 
-						endDateControl.datepicker('option', 'minDate', startDate);
-						endDateControl.datepicker('option', 'maxDate', startDate.getDate() + 30);
-					}
-				});
+            // Set the min max dates for this date picker
+            endDateControl.datepicker( 'option', 'minDate', minDate.format( 'YYYY-MM-DD' ) );
+            endDateControl.datepicker( 'option', 'maxDate', minDate.add( 29, 'days' ).format( 'YYYY-MM-DD' ) );
+          },
 
-				jQuery('.hotel-widget .end-date').datepicker({
-					dateFormat: 'yy-mm-dd',
-				});
-			},
+          beforeShowDay: function( date ){
+            if( date >= festivalStartDate && date <= festivalEndDate ){
+              return [ true, 'hotel-widget-date-highlighted', '' ];
+            }
+            return [ true, '', '' ];
+          }
+        } );
 
-			roomsOverlayOpen: function(){
-				$( '.hotel-widget .hotel-rooms-container' ).on( 'change', 'select', function( e ){
+        jQuery( '.hotel-widget .end-date' ).datepicker( {
+          dateFormat: 'yy-mm-dd',
+          defaultDate: festivalEndDate,
 
-					e.preventDefault();
+          onSelect: function( date ){
+            moment = window.moment;
 
-					var selectValue = $(this).val();
+            // Setup some of our vars
+            var startDateControl = jQuery( '.hotel-widget .start-date' );
+            var endDate = jQuery( this ).datepicker( 'getDate' );
+            var maxDate = moment( endDate ).subtract( 1, 'days' );
 
-					if ( selectValue == 'select-rooms' )
-					{
-						return false;
-					}
+            // Add the same date to the end date if no date was set
+            if( startDateControl.datepicker( 'getDate' ) == null ){
+              startDateControl.datepicker( 'setDate', maxDate.format( 'YYYY-MM-DD' ) );
+            }else if( moment( startDateControl.datepicker( 'getDate' ) ).isAfter( endDate ) ){
+              startDateControl.datepicker( 'setDate', maxDate.format( 'YYYY-MM-DD' ) );
+            }
 
-					// Verify the number of rooms selected, and disable the rest
-					selectValue = parseInt(selectValue);
-					if ( (selectValue <= 0) || (selectValue > 4) )
-					{
-						$(this).val('select-rooms');
-						$('.validation-error em').html('Invalid room number selected');
-						$('.validation-error').show();
+            // Set the min max dates for this date picker
+            startDateControl.datepicker( 'option', 'maxDate', maxDate.format( 'YYYY-MM-DD' ) );
+          },
 
-						return false;
-					}
-					else
-					{
-						// Disable all
-						$('.hotel-rooms-overlay label, .hotel-rooms-overlay .select-container').addClass('disabled');
-						$('.hotel-rooms-overlay select').attr('disabled', 'disabled');
-						$('.hotel-rooms-overlay select').selectBoxIt('disable');
+          beforeShowDay: function( date ){
+            if( date >= festivalStartDate && date <= festivalEndDate ){
+              return [ true, 'hotel-widget-date-highlighted', '' ];
+            }
+            return [ true, '', '' ];
+          }
+        } );
 
-						// Re-enable
-						for ( var i = 1; i <= selectValue; i++ )
-						{
-							$('.hotel-rooms-overlay label[for="hotel-room-' + i + '"]').removeClass('disabled');
-							$('.hotel-rooms-overlay .hotel-room-' + i + '-container').removeClass('disabled');
-							$('.hotel-rooms-overlay select.hotel-room-' + i).selectBoxIt('enable');
-						}
-					}
+        /** Alright, show the div now */
+        jQuery( '.hotel-widget' ).show( function(){
+          self.selectBoxIt.each( function( i, e ){
+            jQuery( e ).data( 'selectBox-selectBoxIt' ).refresh();
+          } );
+        });
 
+        this.roomsOverlayOpen();
+        this.roomsOverlayClose();
+        this.buildQuery();
+      };
 
-					$( '.hotel-rooms-overlay' ).css( 'display', 'block' );
-					$( 'html, body' ).addClass( 'overlay-open' );
+      this.roomsOverlayOpen = function(){
+        $( '.hotel-widget .hotel-rooms-container' ).on( 'change', 'select', function( e ){
 
-				});
-			},
+          e.preventDefault();
 
-			roomsOverlayClose : function()
-			{
-				$('.hotel-widget .hotel-rooms-overlay').on('click', '.ok-button', function(e) {
+          var selectValue = $( this ).val();
 
-					e.preventDefault();
+          if( selectValue == 'select-rooms' ){
+            return false;
+          }
 
-					$( '.hotel-rooms-overlay' ).css( 'display', 'none' );
-					$( 'html, body' ).removeClass( 'overlay-open' );
+          // Verify the number of rooms selected, and disable the rest
+          selectValue = parseInt( selectValue );
+          if( (selectValue <= 0) || (selectValue > 4) ){
+            $( this ).val( 'select-rooms' );
+            $( '.validation-error em' ).html( 'Invalid room number selected' );
+            $( '.validation-error' ).show();
 
-				});
-			},
+            return false;
+          } else{
+            // Disable all
+            $( '.hotel-rooms-overlay label, .hotel-rooms-overlay .select-container' ).addClass( 'disabled' );
+            $( '.hotel-rooms-overlay select' ).attr( 'disabled', 'disabled' );
+            $( '.hotel-rooms-overlay select' ).selectBoxIt( 'disable' );
 
-			/**
-			 * Build the query based on the selected values
-			 */
-			buildQuery : function()
-			{
-				var that = this;
+            // Re-enable
+            for( var i = 1; i <= selectValue; i++ ){
+              $( '.hotel-rooms-overlay label[for="hotel-room-' + i + '"]' ).removeClass( 'disabled' );
+              $( '.hotel-rooms-overlay .hotel-room-' + i + '-container' ).removeClass( 'disabled' );
+              $( '.hotel-rooms-overlay select.hotel-room-' + i ).selectBoxIt( 'enable' );
+            }
+          }
 
-				$('.hotel-widget').on('click', '.search-button', function(e) {
+          $( '.hotel-rooms-overlay' ).css( 'display', 'block' );
+          $( 'html, body' ).addClass( 'overlay-open' );
 
-					e.preventDefault();
+        } );
+      };
 
-					// Clear the validation
-					$('.validation-error').hide();
+      this.roomsOverlayClose = function(){
+        $( '.hotel-widget .hotel-rooms-overlay' ).on( 'click', '.ok-button', function( e ){
 
-					// Close the overlay if it's opened
-					$( '.hotel-rooms-overlay' ).css( 'display', 'none' );
-					$( 'html, body' ).removeClass( 'overlay-open' );
+          e.preventDefault();
 
-					// Validate first
-					if ( that.validate() === true )
-					{
-						// Build the query
-						var hotelWidget = $('.hotel-widget');
-						$url = 'https://dayafter.findor.com/results/list?';
+          $( '.hotel-rooms-overlay' ).css( 'display', 'none' );
+          $( 'html, body' ).removeClass( 'overlay-open' );
 
-						// start date / end date
-						$url += 'checkIn=' + $('.start-date', hotelWidget).val();
-						$url += '&checkOut=' + $('.end-date', hotelWidget).val();
+        } );
+      };
 
-						// Add the type if the value is not hotel
-						if ( $('.hotel-type', hotelWidget).val() == 'package' )
-						{
-							$url += '&type=package';
-						}
+      /**
+       * Build the query based on the selected values
+       */
+      this.buildQuery = function(){
+        var that = this;
 
-						// Add the rooms and people
-						var roomNr = parseInt( $('.hotel-rooms', hotelWidget).val() );
-						for ( var i = 1; i <= roomNr; i++ )
-						{
-							$url += '&room' + i +'=' + $('.hotel-room-' + i, hotelWidget).val();
-						}
+        $( '.hotel-widget' ).on( 'click', '.search-button', function( e ){
 
-						// Redirect
-						window.open($url, "_blank");
-					}
-				});
+          e.preventDefault();
 
-			},
+          // Clear the validation
+          $( '.validation-error' ).hide();
 
-			validate : function()
-			{
-				var hotelWidget = $('.hotel-widget');
+          // Close the overlay if it's opened
+          $( '.hotel-rooms-overlay' ).css( 'display', 'none' );
+          $( 'html, body' ).removeClass( 'overlay-open' );
 
-				if ( ($('.start-date', hotelWidget).val().length == 0) || ($('.end-date', hotelWidget).val().length == 0) )
-				{
-					$('.validation-error em').html('Please choose your dates');
-					$('.validation-error').show();
-					return false;
-				}
+          // Validate first
+          if( that.validate() === true ){
+            // Build the query
+            var hotelWidget = $( '.hotel-widget' );
+            $url = 'https://dayafter.findor.com/results/list?';
 
-				var roomsValue = $('.hotel-rooms', hotelWidget).val();
-				if ( (roomsValue == 'select-rooms') || (parseInt(roomsValue) <= 0) || (parseInt(roomsValue) > 4) )
-				{
-					$('.validation-error em').html('Please select a valid room number');
-					$('.validation-error').show();
-					return false;
-				}
+            // start date / end date
+            $url += 'checkIn=' + $( '.start-date', hotelWidget ).val();
+            $url += '&checkOut=' + $( '.end-date', hotelWidget ).val();
 
-				return true;
-			}
-		};
+            // Add the type if the value is not hotel
+            if( $( '.hotel-type', hotelWidget ).val() == 'package' ){
+              $url += '&type=package';
+            }
 
-		// Initialize
-		hotelWidget.init();
-		hotelWidget.roomsOverlayOpen();
-		hotelWidget.roomsOverlayClose();
-		hotelWidget.buildQuery();
+            // Add the rooms and people
+            var roomNr = parseInt( $( '.hotel-rooms', hotelWidget ).val() );
+            for( var i = 1; i <= roomNr; i++ ){
+              $url += '&room' + i + '=' + $( '.hotel-room-' + i, hotelWidget ).val();
+            }
 
-	});
-})(jQuery);
+            // Redirect
+            window.open( $url, "_blank" );
+          }
+        } );
 
+      };
+
+      this.validate = function(){
+        var hotelWidget = $( '.hotel-widget' );
+
+        if( ($( '.start-date', hotelWidget ).val().length == 0) || ($( '.end-date', hotelWidget ).val().length == 0) ){
+          $( '.validation-error em' ).html( 'Please choose your dates' );
+          $( '.validation-error' ).show();
+          return false;
+        }
+
+        var roomsValue = $( '.hotel-rooms', hotelWidget ).val();
+        if( (roomsValue == 'select-rooms') || (parseInt( roomsValue ) <= 0) || (parseInt( roomsValue ) > 4) ){
+          $( '.validation-error em' ).html( 'Please select a valid room number' );
+          $( '.validation-error' ).show();
+          return false;
+        }
+
+        return true;
+      };
+    };
+
+    // Initialize
+    return new HotelWidget();
+
+  }
+);
