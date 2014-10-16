@@ -13,18 +13,18 @@ class Winner extends \WP_Widget
   private $_mustache_engine = null;
 
   public function __construct(){
-    parent::__construct( 'wp_spectacle_winner_widget', __( 'Winner', 'wp_spectacle_widget_domain' ), [
+    parent::__construct( 'wp_spectacle_winner_widget', __( 'Winner', 'wp_spectacle_widget_domain' ), array(
       'description' => __( 'Part of WP Spectacle', 'wp_spectacle_widget_domain' )
-    ] );
+    ) );
 
     // Set up the mustache engine
-    $this->_mustache_engine = new \Mustache_Engine( [
+    $this->_mustache_engine = new \Mustache_Engine( array(
       'loader' => new \Mustache_Loader_FilesystemLoader( dirname( __FILE__ ) . '/templates' ),
       'escape' => function ( $value ){
           return esc_attr( $value );
         },
       'strict_callables' => true
-    ] );
+    ) );
   }
 
   /**
@@ -37,10 +37,10 @@ class Winner extends \WP_Widget
 
     require_once 'socials.php';
 
-    $data = [ ];
+    $data = array();
 
     for( $i = 0, $mi = count( $instance[ 'urls' ] ); $i < $mi; $i++ ){
-      $current_data = [ ];
+      $current_data = array();
 
       if( strpos( $instance[ 'urls' ][ $i ], 'instagram.com/p/' ) !== false ){
 
@@ -144,9 +144,9 @@ class Winner extends \WP_Widget
 
     }
 
-    echo $this->_mustache_engine->render( 'json', [
+    echo $this->_mustache_engine->render( 'json', array(
       'data' => json_encode( $data )
-    ] );
+    ) );
   }
 
   /**
@@ -221,22 +221,22 @@ class Winner extends \WP_Widget
    */
   public function form( $instance ){
 
-    $data[ 'urls' ] = [ ];
+    $data[ 'urls' ] = array();
 
     if( isset( $instance[ 'urls' ] ) && is_array( $instance[ 'urls' ] ) && !empty( $instance[ 'urls' ] ) ){
       for( $i = 0, $mi = count( $instance[ 'urls' ] ); $i < $mi; $i++ ){
-        $data[ 'urls' ][ ] = [ 'value' => $instance[ 'urls' ][ $i ] ];
+        $data[ 'urls' ][ ] = array( 'value' => $instance[ 'urls' ][ $i ] );
       }
     } else{
-      $data[ 'urls' ][ ] = [ [ 'value' => '' ] ];
+      $data[ 'urls' ][ ] = array( array( 'value' => '' ) );
     }
 
     // Populate the template data
-    $data = [
+    $data = array(
       'urls_id' => $this->get_field_id( 'urls' ),
       'urls_name' => $this->get_field_name( 'urls' ),
       'urls' => $data[ 'urls' ]
-    ];
+    );
 
     echo $this->_mustache_engine->render( 'admin-form', $data );
   }
@@ -252,7 +252,7 @@ class Winner extends \WP_Widget
   public function update( $new_instance, $old_instance ){
     $instance = array();
 
-    $instance[ 'urls' ] = ( !empty( $new_instance[ 'urls' ] ) ) ? $new_instance[ 'urls' ] : [ ];
+    $instance[ 'urls' ] = ( !empty( $new_instance[ 'urls' ] ) ) ? $new_instance[ 'urls' ] : array();
 
     if( isset( $instance[ 'urls' ] ) && is_array( $instance[ 'urls' ] ) && !empty( $instance[ 'urls' ] ) ){
       for( $i = 0, $mi = count( $instance[ 'urls' ] ); $i < $mi; $i++ ){

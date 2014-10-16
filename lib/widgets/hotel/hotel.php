@@ -12,18 +12,18 @@ class Hotel extends \WP_Widget
   private $_mustache_engine = null;
 
   public function __construct(){
-    parent::__construct( 'wp_spectacle_hotel_widget', __( 'Spectacle Hotel', 'wp_spectacle_widget_domain' ), [
+    parent::__construct( 'wp_spectacle_hotel_widget', __( 'Spectacle Hotel', 'wp_spectacle_widget_domain' ), array(
       'description' => __( 'Part of WP Spectacle', 'wp_spectacle_widget_domain' )
-    ] );
+    ) );
 
     // Set up the mustache engine
-    $this->_mustache_engine = new \Mustache_Engine( [
+    $this->_mustache_engine = new \Mustache_Engine( array(
       'loader' => new \Mustache_Loader_FilesystemLoader( dirname( __FILE__ ) . '/templates' ),
       'escape' => function ( $value ){
           return esc_attr( $value );
         },
       'strict_callables' => true
-    ] );
+    ) );
   }
 
 
@@ -65,7 +65,7 @@ class Hotel extends \WP_Widget
       $data[ 'image_id_value' ] = $instance[ 'image_id' ];
     }
 
-    $data = [
+    $data = array(
       'image_id' => $this->get_field_id( 'image' ),
       'image_name' => $this->get_field_name( 'image' ),
       'image_image_id' => $this->get_field_id( 'image_image_id' ),
@@ -101,57 +101,57 @@ class Hotel extends \WP_Widget
       'price_name' => $this->get_field_name('price'),
       'price_value' => (! empty($instance['price'])) ? $instance['price'] : '$0',
 
-      'services' => [
-        [
+      'services' => array(
+        array(
           'label' => 'Internet/Wi-fi',
           'id' => $this->get_field_id('services_internet_wifi'),
           'name' => $this->get_field_name('services_internet_wifi'),
           'value' => ( (isset($instance['services_internet_wifi'])) && ($instance['services_internet_wifi'] == 'on') ) ? true : false
-        ],
-        [
+        ),
+        array(
           'label' => 'Swimming Pool',
           'id' => $this->get_field_id('services_swimming_pool'),
           'name' => $this->get_field_name('services_swimming_pool'),
           'value' => ( (isset($instance['services_swimming_pool'])) && ($instance['services_swimming_pool'] == 'on') ) ? true : false
-        ],
-        [
+        ),
+        array(
           'label' => 'Spa/Massage/Wellness',
           'id' => $this->get_field_id('services_wellness'),
           'name' => $this->get_field_name('services_wellness'),
           'value' => ( (isset($instance['services_wellness'])) && ($instance['services_wellness'] == 'on') ) ? true : false
-        ],
-        [
+        ),
+        array(
           'label' => 'Restaurant/Bar',
           'id' => $this->get_field_id('services_restaurant_bar'),
           'name' => $this->get_field_name('services_restaurant_bar'),
           'value' => ( (isset($instance['services_restaurant_bar'])) && ($instance['services_restaurant_bar'] == 'on') ) ? true : false
-        ],
-        [
+        ),
+        array(
           'label' => 'Travel &amp; Transfers',
           'id' => $this->get_field_id('services_transfers'),
           'name' => $this->get_field_name('services_transfers'),
           'value' => ( (isset($instance['services_transfers'])) && ($instance['services_transfers'] == 'on') ) ? true : false
-        ],
-        [
+        ),
+        array(
           'label' => 'Gym',
           'id' => $this->get_field_id('services_gym'),
           'name' => $this->get_field_name('services_gym'),
           'value' => ( (isset($instance['services_gym'])) && ($instance['services_gym'] == 'on') ) ? true : false
-        ],
-        [
+        ),
+        array(
           'label' => 'Parking',
           'id' => $this->get_field_id('services_parking'),
           'name' => $this->get_field_name('services_parking'),
           'value' => ( (isset($instance['services_parking'])) && ($instance['services_parking'] == 'on') ) ? true : false
-        ],
-        [
+        ),
+        array(
           'label' => 'Business Facilities',
           'id' => $this->get_field_id('services_business_facilities'),
           'name' => $this->get_field_name('services_business_facilities'),
           'value' => ( (isset($instance['services_business_facilities'])) && ($instance['services_business_facilities'] == 'on') ) ? true : false
-        ]
-      ] // services
-    ];
+        )
+      ) // services
+    );
 
     // No images found in the media library
     if( $data[ 'images' ] === false ){
@@ -209,17 +209,17 @@ class Hotel extends \WP_Widget
    * @return array|bool
    */
   private function _get_images( $sel_image = null ){
-    $images = new \WP_Query( [
+    $images = new \WP_Query( array(
       'post_type' => 'attachment',
       'post_status' => 'inherit',
       'post_mime_type' => 'image',
       'posts_per_page' => -1
-    ] );
+    ) );
 
-    $ret_val = [
-      'meta' => [ ],
-      'data' => [ ]
-    ];
+    $ret_val = array(
+      'meta' => array(),
+      'data' => array()
+    );
 
     if( $images->have_posts() ){
       while( $images->have_posts() ){
@@ -234,12 +234,12 @@ class Hotel extends \WP_Widget
           $ret_val[ 'meta' ][ 'sel_image_id' ] = get_the_ID();
         }
 
-        array_push( $ret_val[ 'data' ], [
+        array_push( $ret_val[ 'data' ], array(
           'id' => get_the_ID(),
           'src' => $src[ 0 ],
           'name' => get_the_title(),
           'selected' => $selected
-        ] );
+        ) );
       }
 
       // Populate default value, first image from the media library

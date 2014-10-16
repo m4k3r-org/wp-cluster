@@ -21,7 +21,7 @@ $menu = new Spectacle_Navigation_Builder();
           $social_menu = $menu->get( 'footer-profiles-navigation', false );
           ?>
           <?php foreach( $social_menu as $item ) : ?>
-            <?php if( in_array( $item->post_title, [ 'facebook', 'twitter', 'youtube', 'instagram' ] ) ): ?>
+            <?php if( in_array( $item->post_title, array( 'facebook', 'twitter', 'youtube', 'instagram' ) ) ): ?>
               <li>
                 <a href="<?php echo $item->url; ?>">
                   <span class="icon-spectacle-<?php echo $item->post_title; ?>"></span>

@@ -13,18 +13,18 @@ class ContestCountdown extends \WP_Widget
   private $_mustache_engine = null;
 
   public function __construct(){
-    parent::__construct( 'wp_spectacle_contest_countdown_widget', __( 'Contest Countdown', 'wp_spectacle_widget_domain' ), [
+    parent::__construct( 'wp_spectacle_contest_countdown_widget', __( 'Contest Countdown', 'wp_spectacle_widget_domain' ), array(
       'description' => __( 'Part of WP Spectacle', 'wp_spectacle_widget_domain' )
-    ] );
+    ) );
 
     // Set up the mustache engine
-    $this->_mustache_engine = new \Mustache_Engine( [
+    $this->_mustache_engine = new \Mustache_Engine( array(
       'loader' => new \Mustache_Loader_FilesystemLoader( dirname( __FILE__ ) . '/templates' ),
       'escape' => function ( $value ){
           return esc_attr( $value );
         },
       'strict_callables' => true
-    ] );
+    ) );
   }
 
   /**
@@ -36,9 +36,9 @@ class ContestCountdown extends \WP_Widget
   public function widget( $args, $instance ){
     $title = null;
     $description = null;
-    $dates = [ ];
+    $dates = array();
     $valid_widget = true;
-    $errors = [ ];
+    $errors = array();
 
     if( array_key_exists( 'title', $instance ) ){
       $title = $instance[ 'title' ];
@@ -63,12 +63,12 @@ class ContestCountdown extends \WP_Widget
 
     if( $valid_widget ){
 
-      echo $this->_mustache_engine->render( 'json', [
-        'json' => json_encode( [
+      echo $this->_mustache_engine->render( 'json', array(
+        'json' => json_encode( array(
           'data' => $instance,
           'type' => 'widget_contest_countdown'
-        ] )
-      ] );
+        ) )
+      ) );
 
     } else{
       echo 'Broken widget: ' . implode( ', ', $errors );
@@ -86,43 +86,43 @@ class ContestCountdown extends \WP_Widget
   public function form( $instance ){
     // Get the selected image if any
 
-    $timezones = [
-      [ 'value' => '-12' ],
-      [ 'value' => '-11' ],
-      [ 'value' => '-9' ],
-      [ 'value' => '-8' ],
-      [ 'value' => '-7' ],
-      [ 'value' => '-6' ],
-      [ 'value' => '-5' ],
-      [ 'value' => '-4' ],
-      [ 'value' => '-3' ],
-      [ 'value' => '-2' ],
-      [ 'value' => '-1' ],
-      [ 'value' => '0' ],
-      [ 'value' => '+1' ],
-      [ 'value' => '+2' ],
-      [ 'value' => '+3' ],
-      [ 'value' => '+4' ],
-      [ 'value' => '+5' ],
-      [ 'value' => '+6' ],
-      [ 'value' => '+7' ],
-      [ 'value' => '+8' ],
-      [ 'value' => '+9' ],
-      [ 'value' => '+10' ],
-      [ 'value' => '+11' ],
-      [ 'value' => '+12' ]
-    ];
+    $timezones = array(
+      array( 'value' => '-12' ),
+      array( 'value' => '-11' ),
+      array( 'value' => '-9' ),
+      array( 'value' => '-8' ),
+      array( 'value' => '-7' ),
+      array( 'value' => '-6' ),
+      array( 'value' => '-5' ),
+      array( 'value' => '-4' ),
+      array( 'value' => '-3' ),
+      array( 'value' => '-2' ),
+      array( 'value' => '-1' ),
+      array( 'value' => '0' ),
+      array( 'value' => '+1' ),
+      array( 'value' => '+2' ),
+      array( 'value' => '+3' ),
+      array( 'value' => '+4' ),
+      array( 'value' => '+5' ),
+      array( 'value' => '+6' ),
+      array( 'value' => '+7' ),
+      array( 'value' => '+8' ),
+      array( 'value' => '+9' ),
+      array( 'value' => '+10' ),
+      array( 'value' => '+11' ),
+      array( 'value' => '+12' )
+    );
 
     $data[ 'title' ] = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] : '';
     $data[ 'description' ] = isset( $instance[ 'description' ] ) ? $instance[ 'description' ] : '';
-    $data[ 'dates' ] = [ ];
+    $data[ 'dates' ] = array();
 
     if( isset( $instance[ 'dates' ] ) && is_array( $instance[ 'dates' ] ) && !empty( $instance[ 'dates' ] ) ){
       for( $i = 0, $mi = count( $instance[ 'dates' ] ); $i < $mi; $i++ ){
-        $data[ 'dates' ][ ] = [ 'value' => $instance[ 'dates' ][ $i ], 'cnt' => $i ];
+        $data[ 'dates' ][ ] = array( 'value' => $instance[ 'dates' ][ $i ], 'cnt' => $i );
       }
     } else{
-      $data[ 'dates' ][ ] = [ [ 'value' => '', 'cnt' => 0 ] ];
+      $data[ 'dates' ][ ] = array( array( 'value' => '', 'cnt' => 0 ) );
     }
 
     if( array_key_exists( 'timezone', $instance ) ){
@@ -135,7 +135,7 @@ class ContestCountdown extends \WP_Widget
     }
 
     // Populate the template data
-    $data = [
+    $data = array(
       'title_id' => $this->get_field_id( 'title' ),
       'title_name' => $this->get_field_name( 'title' ),
       'description_id' => $this->get_field_id( 'description' ),
@@ -148,7 +148,7 @@ class ContestCountdown extends \WP_Widget
       'description' => $data[ 'description' ],
       'dates' => $data[ 'dates' ],
       'timezones' => $timezones
-    ];
+    );
 
     echo $this->_mustache_engine->render( 'admin-form', $data );
   }
@@ -165,7 +165,7 @@ class ContestCountdown extends \WP_Widget
     $instance = array();
     $instance[ 'title' ] = ( !empty( $new_instance[ 'title' ] ) ) ? strip_tags( $new_instance[ 'title' ] ) : '';
     $instance[ 'description' ] = ( !empty( $new_instance[ 'description' ] ) ) ? strip_tags( $new_instance[ 'description' ] ) : '';
-    $instance[ 'dates' ] = ( !empty( $new_instance[ 'dates' ] ) ) ? $new_instance[ 'dates' ] : [ ];
+    $instance[ 'dates' ] = ( !empty( $new_instance[ 'dates' ] ) ) ? $new_instance[ 'dates' ] : array();
     $instance[ 'timezone' ] = ( isset( $new_instance[ 'timezone' ] ) ) ? $new_instance[ 'timezone' ] : '0';
 
     if( isset( $instance[ 'dates' ] ) && is_array( $instance[ 'dates' ] ) && !empty( $instance[ 'dates' ] ) ){
