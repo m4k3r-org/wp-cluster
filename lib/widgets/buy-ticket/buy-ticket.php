@@ -13,18 +13,18 @@ class BuyTicket extends \WP_Widget
   private $_mustache_engine = null;
 
   public function __construct(){
-    parent::__construct( 'wp_spectacle_buy_ticket_widget', __( 'Buy Ticket', 'wp_spectacle_widget_domain' ), [
+    parent::__construct( 'wp_spectacle_buy_ticket_widget', __( 'Buy Ticket', 'wp_spectacle_widget_domain' ), array(
       'description' => __( 'Part of WP Spectacle', 'wp_spectacle_widget_domain' )
-    ] );
+    ) );
 
     // Set up the mustache engine
-    $this->_mustache_engine = new \Mustache_Engine( [
+    $this->_mustache_engine = new \Mustache_Engine( array(
       'loader' => new \Mustache_Loader_FilesystemLoader( dirname( __FILE__ ) . '/templates' ),
       'escape' => function ( $value ){
           return esc_attr( $value );
         },
       'strict_callables' => true
-    ] );
+    ) );
   }
 
   /**
@@ -39,7 +39,7 @@ class BuyTicket extends \WP_Widget
 
     $valid_widget = true;
 
-    $errors = [ ];
+    $errors = array();
 
     if( array_key_exists( 'title', $instance ) ){
       $title = $instance[ 'title' ];
@@ -57,10 +57,10 @@ class BuyTicket extends \WP_Widget
 
     if( $valid_widget ){
 
-        echo $this->_mustache_engine->render( 'json', [
+        echo $this->_mustache_engine->render( 'json', array(
           'title' => $title,
           'url' => $url
-        ] );
+        ) );
 
     } else{
       echo 'Broken widget: ' . implode( ', ', $errors );
@@ -81,14 +81,14 @@ class BuyTicket extends \WP_Widget
     $data[ 'url' ] = isset( $instance[ 'url' ] ) ? $instance[ 'url' ] : '';
 
     // Populate the template data
-    $data = [
+    $data = array(
       'title_id' => $this->get_field_id( 'title' ),
       'title_name' => $this->get_field_name( 'title' ),
       'url_id' => $this->get_field_id( 'url' ),
       'url_name' => $this->get_field_name( 'url' ),
       'title' => $data[ 'title' ],
       'url' => $data[ 'url' ]
-    ];
+    );
 
     echo $this->_mustache_engine->render( 'admin-form', $data );
   }
