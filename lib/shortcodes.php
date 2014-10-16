@@ -280,7 +280,10 @@ class Shortcodes
 
   public function register_share_counts()
   {
-    add_shortcode('social_share_count', function( $atts, $content = null ){
+    add_shortcode('social_share_count', array( $this, 'shortcode_social_share_count' ) );
+  }
+    
+  public function shortcode_social_share_count( $atts, $content = null ){
 
       $atts = shortcode_atts( array(
 
@@ -337,7 +340,6 @@ class Shortcodes
 
       return json_encode($shares);
 
-    });
   }
 
 
