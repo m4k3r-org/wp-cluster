@@ -194,9 +194,10 @@ footer{
 
   ul{
     list-style-type: none;
+    padding: 0px;
 
     li{
-      display: inline;
+      display: inline-block;
 
       a{
         padding: 15px;
@@ -207,6 +208,16 @@ footer{
 
   .footer-navigation{
     margin-bottom: 40px;
+
+    li{
+      width: 100%;
+      padding: 3px;
+
+      @media @tablet {
+        width: auto;
+      }
+    }
+
   }
 
   .footer-profile-navigation{
