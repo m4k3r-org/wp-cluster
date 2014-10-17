@@ -123,7 +123,7 @@ class Spectacle_Navigation_Builder
   {
     if ( $menu_item === null ) { return false; }
 
-    $children = [];
+    $children = array();
 
     foreach ( $this->_menu_items as $key => $child )
     {

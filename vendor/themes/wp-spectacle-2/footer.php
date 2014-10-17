@@ -21,7 +21,7 @@ $menu = new Spectacle_Navigation_Builder();
           $social_menu = $menu->get( 'footer-profiles-navigation', false );
           ?>
           <?php foreach( $social_menu as $item ) : ?>
-            <?php if( in_array( $item->post_title, [ 'facebook', 'twitter', 'youtube', 'instagram' ] ) ): ?>
+            <?php if( in_array( $item->post_title, array( 'facebook', 'twitter', 'youtube', 'instagram' ) ) ): ?>
               <li>
                 <a href="<?php echo $item->url; ?>">
                   <span class="icon-spectacle-<?php echo $item->post_title; ?>"></span>
@@ -33,27 +33,27 @@ $menu = new Spectacle_Navigation_Builder();
       </div>
     <?php endif; ?>
 
-
-    <?php if( has_nav_menu( 'main-navigation' ) ): ?>
-
-      <div class="navigation-overlay overlay">
-
-        <a href="#" class="overlay-close">
-          <span class="icon-spectacle-close"></span>
-          Close
-        </a>
-
-        <div class="overlay-content">
-          <nav class="clearfix">
-            <?php
-            echo $menu->get( 'main-navigation' );
-            ?>
-          </nav>
-        </div>
-      </div>
-
-    <?php endif; ?>
   </footer>
+<?php endif; ?>
+
+<?php if( has_nav_menu( 'main-navigation' ) ): ?>
+
+  <div class="navigation-overlay overlay">
+
+    <a href="#" class="overlay-close">
+      <span class="icon-spectacle-close"></span>
+      Close
+    </a>
+
+    <div class="overlay-content">
+      <nav class="clearfix">
+        <?php
+        echo $menu->get( 'main-navigation' );
+        ?>
+      </nav>
+    </div>
+  </div>
+
 <?php endif; ?>
 
 <?php

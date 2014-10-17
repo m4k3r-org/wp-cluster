@@ -13,18 +13,18 @@ class ArtistLineup extends \WP_Widget
   private $_mustache_engine = null;
 
   public function __construct(){
-    parent::__construct( 'wp_spectacle_artist_lineup_widget', __( 'Artist Lineup', 'wp_spectacle_widget_domain' ), [
+    parent::__construct( 'wp_spectacle_artist_lineup_widget', __( 'Artist Lineup', 'wp_spectacle_widget_domain' ), array(
       'description' => __( 'Part of WP Spectacle', 'wp_spectacle_widget_domain' )
-    ] );
+    ) );
 
     // Set up the mustache engine
-    $this->_mustache_engine = new \Mustache_Engine( [
+    $this->_mustache_engine = new \Mustache_Engine( array(
       'loader' => new \Mustache_Loader_FilesystemLoader( dirname( __FILE__ ) . '/templates' ),
       'escape' => function ( $value ){
           return esc_attr( $value );
         },
       'strict_callables' => true
-    ] );
+    ) );
   }
 
   /**
@@ -35,17 +35,17 @@ class ArtistLineup extends \WP_Widget
    * @return array|bool
    */
   private function _get_images( $sel_image = null ){
-    $images = new \WP_Query( [
+    $images = new \WP_Query( array(
       'post_type' => 'attachment',
       'post_status' => 'inherit',
       'post_mime_type' => 'image',
       'posts_per_page' => -1
-    ] );
+    ) );
 
-    $ret_val = [
-      'meta' => [ ],
-      'data' => [ ]
-    ];
+    $ret_val = array(
+      'meta' => array(),
+      'data' => array()
+    );
 
     if( $images->have_posts() ){
       while( $images->have_posts() ){
@@ -60,12 +60,12 @@ class ArtistLineup extends \WP_Widget
           $ret_val[ 'meta' ][ 'sel_image_id' ] = get_the_ID();
         }
 
-        array_push( $ret_val[ 'data' ], [
+        array_push( $ret_val[ 'data' ], array(
           'id' => get_the_ID(),
           'src' => $src[ 0 ],
           'name' => get_the_title(),
           'selected' => $selected
-        ] );
+        ) );
       }
 
       // Populate default value, first image from the media library
@@ -94,7 +94,7 @@ class ArtistLineup extends \WP_Widget
 
     $valid_widget = true;
 
-    $errors = [ ];
+    $errors = array();
 
     if( array_key_exists( 'date', $instance ) ){
       $date = $instance[ 'date' ];
@@ -125,21 +125,21 @@ class ArtistLineup extends \WP_Widget
     if( $valid_widget ){
       if( array_key_exists( 'output', $instance ) && $instance[ 'output' ] == 'html' ){
 
-        echo $this->_mustache_engine->render( 'widget', [
+        echo $this->_mustache_engine->render( 'widget', array(
           'image_source' => $image_source,
           'date' => $date,
           'time' => $time,
           'location' => $location
-        ] );
+        ) );
 
       } else{
 
-        echo $this->_mustache_engine->render( 'json', [
+        echo $this->_mustache_engine->render( 'json', array(
           'image_source' => $image_source,
           'date' => $date,
           'time' => $time,
           'location' => $location
-        ] );
+        ) );
 
       }
 
@@ -174,7 +174,7 @@ class ArtistLineup extends \WP_Widget
     }
 
     // Populate the template data
-    $data = [
+    $data = array(
       'date_id' => $this->get_field_id( 'date' ),
       'date_name' => $this->get_field_name( 'date' ),
       'location_id' => $this->get_field_id( 'location' ),
@@ -192,7 +192,7 @@ class ArtistLineup extends \WP_Widget
       'time' => $data[ 'time' ],
       'location' => $data[ 'location' ],
       'output' => $data[ 'output' ]
-    ];
+    );
 
     // No images found in the media library
     if( $data[ 'images' ] === false ){
