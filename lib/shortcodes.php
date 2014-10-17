@@ -15,9 +15,9 @@ class Shortcodes
   {
     add_shortcode('spectacle_highlighted_note', function( $atts, $content = null){
 
-      $attributes = shortcode_atts( [
+      $attributes = shortcode_atts( array(
         'type' => 'notice'
-      ], $atts );
+      ), $atts );
 
       return '<aside class="' .esc_attr( $attributes[ 'type' ] ) .'">' .do_shortcode($content) .'</aside>';
 
@@ -73,9 +73,9 @@ class Shortcodes
     // Register the heading inside the list content
     add_shortcode('spectacle_heading', function( $atts){
 
-      $attributes = shortcode_atts( [
+      $attributes = shortcode_atts( array(
         'title' => ''
-      ], $atts );
+      ), $atts );
 
       return '<h4 class="spectacle_heading">' .esc_attr( $attributes[ 'title' ] ) .'</h4>';
 
@@ -115,10 +115,10 @@ class Shortcodes
     // Register the navigation items
     add_shortcode('spectacle_tab', function( $atts ){
 
-      $attributes = shortcode_atts( [
+      $attributes = shortcode_atts( array(
         'id' => '',
         'title' => ''
-      ], $atts );
+      ), $atts );
 
       return '<a href="#spectacle_tab_' .esc_attr( $attributes[ 'id' ] ) .'" class="spectacle_navigation_tab">' .esc_attr( $attributes[ 'title' ] ) .'</a>';
 
@@ -127,9 +127,9 @@ class Shortcodes
     // Register the tab content
     add_shortcode('spectacle_tab_content', function( $atts, $content = null){
 
-      $attributes = shortcode_atts( [
+      $attributes = shortcode_atts( array(
         'id' => ''
-      ], $atts );
+      ), $atts );
 
       return '<div id="spectacle_tab_' .esc_attr( $attributes[ 'id' ] ) .'" class="spectacle_tab_content">' .do_shortcode( $content ) .'</div>';
 
@@ -161,9 +161,9 @@ class Shortcodes
       }
       $content = '[' . implode( ',', $content ) . ']';
       $content = json_decode( $content, true );
-      $attributes = shortcode_atts( [
+      $attributes = shortcode_atts( array(
         'buy_tickets_link' => ''
-      ], $atts );
+      ), $atts );
 
       if ( isset( $content[0] ) ) { $content[0]['class'] = 'diamond-box-left'; }
       if ( isset( $content[1] ) ) { $content[1]['class'] = 'diamond-box-right'; }
@@ -206,9 +206,9 @@ class Shortcodes
     // Register the list content
     add_shortcode('spectacle_highlighted_background', function( $atts, $content = null){
 
-      $attributes = shortcode_atts( [
+      $attributes = shortcode_atts( array(
         'class' => ''
-      ], $atts );
+      ), $atts );
 
       return '<div class="spectacle_highlighted_background ' .esc_attr( $attributes[ 'class' ] ) .'">' .do_shortcode( $content ) .'</div>';
 
@@ -234,9 +234,9 @@ class Shortcodes
     // Register the list content
     add_shortcode('spectacle_icon', function( $atts ){
 
-      $attributes = shortcode_atts( [
+      $attributes = shortcode_atts( array(
         'name' => ''
-      ], $atts );
+      ), $atts );
 
       return '<span class="spectacle_icon spectacle_icon_' .esc_attr( $attributes[ 'name' ] ) .'"></span>';
 
@@ -251,9 +251,9 @@ class Shortcodes
     // Register the list content
     add_shortcode('spectacle_spacer', function( $atts ){
 
-      $attributes = shortcode_atts( [
+      $attributes = shortcode_atts( array(
         'height' => ''
-      ], $atts );
+      ), $atts );
 
       return '<div class="spectacle_spacer clearfix" style="height:' .esc_attr( $attributes[ 'height' ]) .'px"></div>';
 
@@ -267,9 +267,9 @@ class Shortcodes
     // Register the list content
     add_shortcode('spectacle_box', function( $atts, $content = null ){
 
-      $attributes = shortcode_atts( [
+      $attributes = shortcode_atts( array(
         'space' => 0
-      ], $atts );
+      ), $atts );
 
       return '<div class="spectacle_box clearfix" style="padding-left:' .esc_attr( $attributes[ 'space' ]) .'px; padding-right: ' .esc_attr( $attributes[ 'space' ]) .'px">' .do_shortcode( $content ) .'</div>';
 
@@ -280,9 +280,12 @@ class Shortcodes
 
   public function register_share_counts()
   {
-    add_shortcode('social_share_count', function( $atts, $content = null ){
+    add_shortcode('social_share_count', array( $this, 'shortcode_social_share_count' ) );
+  }
+    
+  public function shortcode_social_share_count( $atts, $content = null ){
 
-      $atts = shortcode_atts([
+      $atts = shortcode_atts( array(
 
         'facebook' => false,
         'twitter' => false,
@@ -291,7 +294,7 @@ class Shortcodes
         'total' => false,
         'url' => ''
 
-      ], $atts);
+      ), $atts);
 
       // If no URL was specified
       if ( empty( $atts[ 'url' ] ) )
@@ -299,14 +302,14 @@ class Shortcodes
         return json_encode(false);
       }
 
-      $shares = [
+      $shares = array(
         'twitter' => 0,
         'facebook' => 0,
         'google_plus' => 0,
         'pinterest' => 0,
         'total' => 0,
         'url' => null
-      ];
+      );
 
 
       if ( (bool) $atts['total'] === true )
@@ -337,7 +340,6 @@ class Shortcodes
 
       return json_encode($shares);
 
-    });
   }
 
 
@@ -435,13 +437,13 @@ class Shortcodes
 
     $total = (int) $twitter + (int) $facebook + (int) $google_plus + (int) $pinterest;
 
-    return [
+    return array(
       'twitter' => $twitter,
       'facebook' => $facebook,
       'google_plus' => $google_plus,
       'pinterest' => $pinterest,
       'total' => $total
-    ];
+    );
   }
 
   private function _curl_get_data( $data_url )

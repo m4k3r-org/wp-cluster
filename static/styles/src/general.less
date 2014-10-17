@@ -69,6 +69,8 @@ h1 {
 
   .overlay-content {
     position: absolute;
+    font-family: "Droid Sans", sans-serif;
+    font-weight: 400;
 
     top: 0;
     left: 0;
@@ -92,6 +94,8 @@ h1 {
       }
 
       h2 {
+        font-family: "Droid Sans", sans-serif;
+        font-weight: 400;
         font-size: 70px;
         color: #FFF;
         text-transform: none;
@@ -104,8 +108,11 @@ h1 {
       }
 
       h3 {
+        font-family: "Droid Sans", sans-serif;
+        font-weight: 400;
         font-size: 24px;
         color: #FFF;
+        text-transform: uppercase;
       }
     }
 
@@ -121,7 +128,8 @@ h1 {
 
       a {
        // .mixin-transition(all, 1s);
-
+        font-family: "Droid Sans", sans-serif;
+        font-weight: 400;
         display: inline-block;
         margin: 0 -5px 0 0;
         padding: 35px 0 0 0;
@@ -194,9 +202,10 @@ footer{
 
   ul{
     list-style-type: none;
+    padding: 0px;
 
     li{
-      display: inline;
+      display: inline-block;
 
       a{
         padding: 15px;
@@ -207,6 +216,16 @@ footer{
 
   .footer-navigation{
     margin-bottom: 40px;
+
+    li{
+      width: 100%;
+      padding: 3px;
+
+      @media @tablet {
+        width: auto;
+      }
+    }
+
   }
 
   .footer-profile-navigation{
