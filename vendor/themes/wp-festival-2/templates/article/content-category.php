@@ -24,19 +24,19 @@ $share_count = json_decode( $share_count, true );
           <span class="description">
 
             <span class="text">
-              <h3 class="post_title"><?php echo wp_trim_words( get_the_title(), 9 ); ?></h3>
+              <h3 class="post_title"><?php echo wp_trim_words( get_the_title(), 8 ); ?></h3>
             </span>
 
             <hr class="divider">
 
             <span class="meta row">
 
-              <span class="col-xs-7 col-sm-12 col-lg-7 date">
+              <span class="col-xs-12 col-sm-12 col-lg-7 date">
                 <i class="icon-time"></i>
                 <span><?php the_time( get_option( 'date_format' ) ); ?></span>
               </span>
 
-              <span class="col-xs-5 col-sm-12 col-lg-5 comments-count">
+              <span class="col-xs-12 col-sm-12 col-lg-5 comments-count">
                 <i class="icon-comments"></i>
                 <span>
                   <?php
@@ -87,19 +87,19 @@ $share_count = json_decode( $share_count, true );
           <span class="description">
 
             <span class="text">
-              <h3 class="post_title"><?php echo wp_trim_words( get_the_title(), 9 ); ?></h3>
+              <h3 class="post_title"><?php echo wp_trim_words( get_the_title(), 8 ); ?></h3>
             </span>
 
             <hr class="divider">
 
             <span class="meta row">
 
-              <span class="col-xs-7 col-sm-12 col-lg-7 date">
+              <span class="col-xs-12 col-sm-12 col-lg-7 date">
                 <i class="icon-time"></i>
                 <span><?php the_time( get_option( 'date_format' ) ); ?></span>
               </span>
 
-              <span class="col-xs-5 col-sm-12 col-lg-5">
+              <span class="col-xs-12 col-sm-12 col-lg-5">
                 <i class="icon-comments"></i>
                 <span>
                   <?php

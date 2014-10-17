@@ -5,7 +5,9 @@
     </div>
   </div>
 
-  <h3><?php echo $title; ?></h3>
+  <div class="feature-text">
+    <h3><?php echo $title; ?></h3>
 
-  <p><?php echo $description; ?></p>
+    <p><?php echo $description; ?></p>
+  </div>
 </a>
