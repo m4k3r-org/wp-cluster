@@ -41,60 +41,87 @@
         }
       }
     },
-		{
-			"type": "package",
-			"package": {
-				"name": "components/imagesloaded",
-				"type": "component",
-				"version": "3.1.8",
-				"dist": {
-					"url": "https://github.com/desandro/imagesloaded/archive/v3.1.8.zip",
-					"type": "zip"
-				},
-				"source": {
-					"url": "https://github.com/desandro/imagesloaded",
-					"type": "git",
-					"reference": "3.1.8"
-				},
-				"extra": {
-					"component": {
-						"scripts": [
-							"imagesloaded.pkgd.js"
-						]
-					}
-				},
-				"require": {
-					"robloach/component-installer": "*"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "components/fitvids",
-				"type": "component",
-				"version": "1.1.0",
-				"dist": {
-					"url": "https://github.com/davatron5000/FitVids.js/archive/v1.1.0.zip",
-					"type": "zip"
-				},
-				"source": {
-					"url": "https://github.com/davatron5000/FitVids.js",
-					"type": "git",
-					"reference": "1.1.0"
-				},
-				"extra": {
-					"component": {
-						"scripts": [
-							"jquery.fitvids.js"
-						]
-					}
-				},
-				"require": {
-					"robloach/component-installer": "*"
-				}
-			}
-		}
+    {
+      "type": "package",
+      "package": {
+        "name": "components/imagesloaded",
+        "type": "component",
+        "version": "3.1.8",
+        "dist": {
+          "url": "https://github.com/desandro/imagesloaded/archive/v3.1.8.zip",
+          "type": "zip"
+        },
+        "source": {
+          "url": "https://github.com/desandro/imagesloaded",
+          "type": "git",
+          "reference": "3.1.8"
+        },
+        "extra": {
+          "component": {
+            "scripts": [
+              "imagesloaded.pkgd.js"
+            ]
+          }
+        },
+        "require": {
+          "robloach/component-installer": "*"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "components/fitvids",
+        "type": "component",
+        "version": "1.1.0",
+        "dist": {
+          "url": "https://github.com/davatron5000/FitVids.js/archive/v1.1.0.zip",
+          "type": "zip"
+        },
+        "source": {
+          "url": "https://github.com/davatron5000/FitVids.js",
+          "type": "git",
+          "reference": "1.1.0"
+        },
+        "extra": {
+          "component": {
+            "scripts": [
+              "jquery.fitvids.js"
+            ]
+          }
+        },
+        "require": {
+          "robloach/component-installer": "*"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "components/jquery-selectBoxIt",
+        "type": "component",
+        "version": "3.8.0",
+        "dist": {
+          "url": "https://github.com/gfranko/jquery.selectBoxIt.js/archive/3.8.0.zip",
+          "type": "zip"
+        },
+        "source": {
+          "url": "https://github.com/gfranko/jquery.selectBoxIt.js",
+          "type": "git",
+          "reference": "3.8.0"
+        },
+        "extra": {
+          "component": {
+            "scripts": [
+              "src/javascripts/jquery.selectBoxIt.js"
+            ]
+          }
+        },
+        "require": {
+          "robloach/component-installer": "*"
+        }
+      }
+    }
   ],
   "config": {
     "preferred-install": "source",
@@ -130,10 +157,15 @@
         "components/fancybox2/fancybox2-built": {
           "deps": [ "jquery" ]
         },
-				"components/fitvids/fitvids-built": {
-					"deps": [ "jquery" ]
-				}
-
+        "components/fitvids/fitvids-built": {
+          "deps": [ "jquery" ]
+        },
+        "components/jquery-selectBoxIt/jquery-selectBoxIt-built": {
+          "deps": [ "jquery", "jquery.ui" ]
+        },
+        "third-party/jquery-ui-1.11.1.custom/jquery-ui.min": {
+          "deps": [ "jquery" ]
+        }
       }
     }
   },
@@ -145,13 +177,15 @@
     "usabilitydynamics/lib-carrington": "master",
     "usabilitydynamics/lib-wp-shortcode": "master",
     "usabilitydynamics/lib-meta-box": "master",
+    "moment/moment": "~2.8",
+    "components/jquery-selectBoxIt": "~3.8",
     "components/knockout": "3.1.0",
     "components/iscroll": "5.1.1",
     "components/dotdotdot": "1.6.14",
     "components/sticky": "1.0.0",
     "components/masonry": "3.1.5",
-		"components/imagesloaded": "3.1.8",
-		"components/fitvids": "1.1.0",
+    "components/imagesloaded": "3.1.8",
+    "components/fitvids": "1.1.0",
     "components/fancybox2": "2.1.5",
     "components/malihu-custom-scrollbar-plugin": "3.x",
     "components/jquery": "~2.1"

@@ -22,41 +22,28 @@
         'orderby' => 'term_id'
       );
       $categories = get_categories( $args );
+
+      $selected_text = null;
+      
       ?>
 
       <nav class="category">
-        <a <?php if( get_site_url() . '/news' == home_url( add_query_arg( array() ) ) ) echo 'class="selected" '; ?> href="/news">All</a>
+        <a <?php if( get_permalink( get_option('page_for_posts' ) ) == home_url( add_query_arg( array() ) ) ) { echo 'class="selected" '; $selected_text = 'All'; } ?> href="<?php echo get_permalink( get_option('page_for_posts' ) ) ?>">All</a>
         <?php foreach( $categories as $category ): ?>
-          <a <?php if( get_site_url() . '/category/' . $category->slug == home_url( add_query_arg( array() ) ) ) echo 'class="selected" '; ?> href="/category/<?php echo $category->slug; ?>"><?php echo $category->name; ?></a>
+          <a <?php if( get_category_link( $category->term_id ) == home_url( add_query_arg( array() ) ) ) { echo 'class="selected" '; $selected_text = $category->name; } ?> href="<?php echo get_category_link( $category->term_id ); ?>"><?php echo $category->name; ?></a>
         <?php endforeach; ?>
       </nav>
-
-      <?php
-
-      $selected_text = null;
-
-      if( get_site_url() . '/news' == home_url( add_query_arg( array() ) ) ){
-        $selected_text = 'All';
-      } else{
-        foreach( $categories as $category ){
-          if( get_site_url() . '/category/' . $category->slug == home_url( add_query_arg( array() ) ) ){
-            $selected_text = $category->name;
-          }
-        }
-      }
-
-      ?>
 
       <div class="mobile-nav">
         <a href="#" class="selected-category nav-closed"><?php echo $selected_text; ?>
           <span class="icon-triangle-down"></span></a>
         <?php if( $selected_text != 'All' ): ?>
-          <a href="/news">All</a>
+          <a href="<?php echo get_permalink( get_option('page_for_posts' ) ) ?>">All</a>
         <?php endif; ?>
         <?php
         foreach( $categories as $category ):
           if( $selected_text != $category->name ): ?>
-            <a href="/category/<?php echo $category->slug; ?>"><?php echo $category->name; ?></a>
+            <a href="<?php echo get_category_link( $category->term_id ); ?>"><?php echo $category->name; ?></a>
           <?php endif; ?>
         <?php endforeach; ?>
       </div>

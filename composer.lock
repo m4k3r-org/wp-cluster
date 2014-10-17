@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "303d7ed6a6f7cc5f61f8c0782c2e23a7",
+    "hash": "d5af8c23a737bb74adc134e26b00cde3",
     "packages": [
         {
             "name": "components/dotdotdot",
@@ -183,6 +183,32 @@
             "time": "2014-07-02 11:52:43"
         },
         {
+            "name": "components/jquery-selectBoxIt",
+            "version": "3.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gfranko/jquery.selectBoxIt.js",
+                "reference": "3.8.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/gfranko/jquery.selectBoxIt.js/archive/3.8.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "src/javascripts/jquery.selectBoxIt.js"
+                    ]
+                }
+            }
+        },
+        {
             "name": "components/knockout",
             "version": "3.1.0",
             "source": {
@@ -292,12 +318,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "5ed225fe8545c4e4bf502d56fdd87791ecfdd078"
+                "reference": "09e2192a7cd08008e273355fddd38942d8de2992"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/5ed225fe8545c4e4bf502d56fdd87791ecfdd078",
-                "reference": "5ed225fe8545c4e4bf502d56fdd87791ecfdd078",
+                "url": "https://api.github.com/repos/composer/installers/zipball/09e2192a7cd08008e273355fddd38942d8de2992",
+                "reference": "09e2192a7cd08008e273355fddd38942d8de2992",
                 "shasum": ""
             },
             "replace": {
@@ -376,7 +402,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-09-25 03:36:45"
+            "time": "2014-10-15 03:40:33"
         },
         {
             "name": "hanamura/wp-model",
@@ -420,12 +446,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "52eff4c53d6fb47b1eddb3df0597a8f1be6447b4"
+                "reference": "df991c124a2212371443b586a1be767500036dee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/52eff4c53d6fb47b1eddb3df0597a8f1be6447b4",
-                "reference": "52eff4c53d6fb47b1eddb3df0597a8f1be6447b4",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/df991c124a2212371443b586a1be767500036dee",
+                "reference": "df991c124a2212371443b586a1be767500036dee",
                 "shasum": ""
             },
             "require": {
@@ -440,8 +466,8 @@
                 "leafo/scssphp": "*",
                 "leafo/scssphp-compass": "*",
                 "mrclay/minify": "*",
-                "patchwork/jsqueeze": "*",
-                "phpunit/phpunit": "~3.7",
+                "patchwork/jsqueeze": "~1.0",
+                "phpunit/phpunit": "~4",
                 "psr/log": "~1.0",
                 "ptachoire/cssembed": "*",
                 "twig/twig": "~1.6"
@@ -486,7 +512,61 @@
                 "compression",
                 "minification"
             ],
-            "time": "2014-09-27 20:24:07"
+            "time": "2014-10-14 14:45:32"
+        },
+        {
+            "name": "moment/moment",
+            "version": "2.8.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moment/moment.git",
+                "reference": "d5ff2cfc0000010c37cc5ebe75a5905c943368e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moment/moment/zipball/d5ff2cfc0000010c37cc5ebe75a5905c943368e4",
+                "reference": "d5ff2cfc0000010c37cc5ebe75a5905c943368e4",
+                "shasum": ""
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "moment.js"
+                    ],
+                    "files": [
+                        "min/*.js",
+                        "locale/*.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tim Wood",
+                    "email": "washwithcare@gmail.com"
+                }
+            ],
+            "description": "Parse, validate, manipulate, and display dates in javascript.",
+            "homepage": "http://github.com/moment/moment/",
+            "keywords": [
+                "date",
+                "ender",
+                "format",
+                "i18n",
+                "l10n",
+                "moment",
+                "parse",
+                "time",
+                "validate"
+            ],
+            "time": "2014-09-05 07:49:45"
         },
         {
             "name": "robloach/component-installer",
@@ -604,8 +684,7 @@
             },
             "license": [
                 "MIT"
-            ],
-            "time": "2014-06-03 15:01:06"
+            ]
         },
         {
             "name": "usabilitydynamics/lib-carrington",
@@ -621,16 +700,12 @@
                 "reference": null,
                 "shasum": null
             },
-            "require": {
-                "php": ">=5.3"
-            },
             "type": "library",
             "autoload": {
                 "classmap": [
                     "lib/classes"
                 ]
-            },
-            "time": "2014-05-02 06:30:34"
+            }
         },
         {
             "name": "usabilitydynamics/lib-meta-box",
@@ -661,8 +736,7 @@
                     "inc/helpers.php",
                     "inc/meta-box.php"
                 ]
-            },
-            "time": "2014-06-03 12:04:11"
+            }
         },
         {
             "name": "usabilitydynamics/lib-model",
@@ -725,8 +799,7 @@
                 "models",
                 "shema",
                 "validation"
-            ],
-            "time": "2014-07-22 16:35:58"
+            ]
         },
         {
             "name": "usabilitydynamics/lib-requires",
@@ -743,15 +816,38 @@
                 "shasum": null
             },
             "require": {
-                "usabilitydynamics/lib-utility": "*"
+                "usabilitydynamics/lib-utility": "master"
             },
             "type": "library",
             "autoload": {
                 "classmap": [
                     "lib"
                 ]
+            }
+        },
+        {
+            "name": "usabilitydynamics/lib-rpc",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-rpc",
+                "reference": "master"
             },
-            "time": "2014-06-25 22:11:12"
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/lib-rpc/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "component",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            }
         },
         {
             "name": "usabilitydynamics/lib-settings",
@@ -788,8 +884,7 @@
                 "classmap": [
                     "lib"
                 ]
-            },
-            "time": "2014-06-02 15:22:26"
+            }
         },
         {
             "name": "usabilitydynamics/lib-ui",
@@ -806,7 +901,6 @@
                 "shasum": null
             },
             "require": {
-                "php": ">=5.3",
                 "usabilitydynamics/lib-utility": "master"
             },
             "type": "library",
@@ -827,8 +921,7 @@
                 "classmap": [
                     "lib"
                 ]
-            },
-            "time": "2014-07-23 11:51:09"
+            }
         },
         {
             "name": "usabilitydynamics/lib-utility",
@@ -861,8 +954,7 @@
                 "classmap": [
                     "lib"
                 ]
-            },
-            "time": "2014-08-18 15:06:59"
+            }
         },
         {
             "name": "usabilitydynamics/lib-wp-shortcode",
@@ -883,8 +975,7 @@
                 "classmap": [
                     "lib"
                 ]
-            },
-            "time": "2014-01-20 16:48:17"
+            }
         },
         {
             "name": "usabilitydynamics/lib-wp-theme",
@@ -901,12 +992,14 @@
                 "shasum": null
             },
             "require": {
+                "composer/installers": "~1.0",
                 "usabilitydynamics/lib-api": "master",
+                "usabilitydynamics/lib-meta-box": "master",
                 "usabilitydynamics/lib-model": "master",
                 "usabilitydynamics/lib-requires": "master",
+                "usabilitydynamics/lib-rpc": "master",
                 "usabilitydynamics/lib-settings": "master",
-                "usabilitydynamics/lib-ui": "master",
-                "usabilitydynamics/lib-utility": "master"
+                "usabilitydynamics/lib-ui": "master"
             },
             "type": "library",
             "autoload": {
@@ -922,25 +1015,14 @@
                     "lib/class-settings.php",
                     "lib/class-utility.php"
                 ]
-            },
-            "time": "2014-08-14 19:13:58"
+            }
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ],
+    "stability-flags": [],
     "prefer-stable": false,
-    "platform": [
-
-    ],
-    "platform-dev": [
-
-    ]
+    "platform": [],
+    "platform-dev": []
 }
