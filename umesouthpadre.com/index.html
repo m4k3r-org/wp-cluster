@@ -17,6 +17,10 @@ if( !headers_sent() ) {
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<META HTTP-EQUIV="Pragma" CONTENT="public">
+	<META HTTP-EQUIV="Cache-Control" CONTENT="public, max-age=1800, must-revalidate">
+	<META HTTP-EQUIV="Expires" CONTENT="<?php echo gmdate('D, d M Y H:i:s', time() + (60*30)); ?> GMT">
+
 	<link rel="shortcut icon" href="favicon.ico">
 
 	<link rel="stylesheet" href="static/styles/app.css">
