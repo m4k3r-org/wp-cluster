@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 * * *
 [![Issues - Bug](https://badge.waffle.io/DiscoDonniePresents/wp-disco.png?label=bug&title=Bugs)](http://waffle.io/discodonniepresents/wp-disco)
 [![Issues - Backlog](https://badge.waffle.io/DiscoDonniePresents/wp-disco.png?label=backlog&title=Backlog)](http://waffle.io/discodonniepresents/wp-disco/)
@@ -28,15 +27,7 @@
 * wp_disco()->get_current_sidebars()
 * wp_disco()->widget_area_tabs()
 
-### Legacy Code
-// add_action( 'wp_ajax_nopriv_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ));
-// add_action( 'wp_ajax_ud_df_post_query', create_function( '', ' die( json_encode( hddp::df_post_query( $_REQUEST )));' ));
-// add_action( 'wp_ajax_elasticsearch_query', array( 'UsabilityDynamics\Disco', 'elasticsearch_query' ) );
-// add_action( 'wp_ajax_nopriv_elasticsearch_query', array( 'UsabilityDynamics\Disco', 'elasticsearch_query' ) );
-
-=======
 ### Used Options
 app:api:url
 app:api:key
 app:debug
->>>>>>> 12265cfedcb57ef95b331ed3b203a3ba91f51ddf
