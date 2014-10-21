@@ -1,6 +1,7 @@
+vendor/composer/installers
+vendor/composer/installed.json
 composer.lock
 node_modules
-/vendor
 npm-debug.log
 static/codex
 .svn
