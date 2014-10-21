@@ -147,6 +147,11 @@ Instead of the `GitHub Theme URI` header you will need to use the `Bitbucket The
 
 In order to specify a private repository you will need to obtain a [personal access token](https://github.com/settings/tokens/new). Once you have this, simply add the header `GitHub Access Token: xxxxxxxxx` to your plugin or theme.
 
+Alternatively, you may set the token as a constant, in wp-config.php:
+```
+define( 'GITHUB_UPDATER_TOKEN', 'my-secret-token' ):
+```
+
 ### Bitbucket Private Repositories
 
 The header should be in the following format: `Bitbucket Plugin URI: https://<user>:<password>@bitbucket.org/<owner>/<repo>` or `Bitbucket Theme URI: https://<user>:<password>@bitbucket.org/<owner>/<repo>`
