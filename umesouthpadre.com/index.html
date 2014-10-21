@@ -1,3 +1,14 @@
+<?php
+
+// Set Varnish-compliant response headers. We cache for 30 mnutes and use the GitHub commit ID as ETag.
+if( !headers_sent() ) { 
+  header( 'Cache-Control: public, max-age=1800, must-revalidate' );
+  header( 'ETag: e13bb619fb76745c52371130ed2806a9455b51ce' );
+  header( 'Expires: ' . gmdate('D, d M Y H:i:s', time() + (60*30)) . ' GMT');
+  header( 'X-Static: true' );
+}
+ 
+?>
 <!DOCTYPE html>
 <html class="no-js">
 <head>
