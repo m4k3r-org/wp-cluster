@@ -1,0 +1,122 @@
+.content {
+	margin-top: -18%;
+	text-align: center;
+
+	.ic {
+		display: inline-block;
+		font-size: 28px;
+		margin: 0 0 28px 0;
+
+		@media @desktop {
+			font-size: 42px;
+			margin: 0 0 42px 0;
+		}
+	}
+
+	h2 {
+		font-size: 28px;
+		margin: 0 0 15px 0;
+
+		@media @desktop {
+			font-size: 48px;
+			margin: 0 0 25px 0;
+		}
+	}
+
+	h3 {
+		font-size: 14px;
+		margin: 0 0 48px 0;
+
+		@media @desktop {
+			font-size: 18px;
+		}
+	}
+
+	em {
+		font-family: "Josefin Slab", sans-serif;
+		font-weight: "300italic";
+		font-size: 20px;
+	}
+
+	.ribbon-container {
+		margin: 0 auto 25px auto;
+
+		.ribbon-wrapper {
+			float: left;
+			width: 100%;
+
+			.ribbon-content {
+				margin: 0 22px;
+				height: 60px;
+				background: #FFF;
+				color: #329aa8;
+				text-transform: uppercase;
+				text-align: center;
+				font-size: 13px;
+				font-weight: 700;
+				overflow: hidden;
+				white-space: nowrap;
+				line-height: 67px;
+
+				@media @phone-landscape {
+					font-size: 18px;
+				}
+
+				@media @desktop {
+					margin: 0 190px;
+					font-size: 26px;
+				}
+
+				@media @large-desktop {
+					font-size: 30px;
+				}
+			}
+		}
+
+		.ribbon-left,
+		.ribbon-right {
+			float: left;
+			width: 22px;
+			background-image: url("@{imagesPath}/ribbon-corners.png");
+			background-repeat: no-repeat;
+			background-position: 0 0;
+			height: 60px;
+
+			@media @desktop {
+				width: 190px;
+				background-position: 168px 0;
+			}
+
+			.faux-line {
+				display: none;
+				height: 1px;
+				background: #FFF;
+				margin-top: 30px;
+				width: 145px;
+
+				@media @desktop {
+					display: block;
+				}
+			}
+		}
+
+		.ribbon-left {
+			margin-left: -100%;
+		}
+
+		.ribbon-right {
+			margin-left: -22px;
+			background-position: 0 -60px;
+
+			@media @desktop {
+				margin-left: -190px;
+			}
+
+			.faux-line {
+				margin-left: 45px;
+			}
+		}
+	}
+
+
+}

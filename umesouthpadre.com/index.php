@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+	<meta charset="utf-8">
+	<title>Ultimate Music Experience 2015 in South Padre Island, Texas</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link rel="stylesheet" href="static/styles/app.css">
+	<script type="text/javascript" data-main="static/scripts/src/app" src="http://cdn.udx.io/udx.requires.js"></script>
+</head>
+
+<body>
+	<header class="main-header">
+
+		<a href="#" class="share share-popup">
+			<span class="icon-share"></span>
+			<span class="text">Share</span>
+		</a>
+
+		<div class="organizer-logos clearfix">
+			<a href="http://discodonniepresents.com" target="_blank" class="disco-donnie">
+				<img src="static/images/organizer-logo-disco-donnie.png" alt="Disco Donnie Presents">
+			</a>
+			<a href="http://globalgrooveevents.com" target="_blank" class="global-groove">
+				<img src="static/images/organizer-logo-global-groove.png" alt="Global Groove">
+			</a>
+		</div>
+
+	</header>
+
+	<div class="content container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-4">
+				<span class="ic icon-date"></span>
+				<h2>19 &middot; 20 &middot; 21</h2>
+				<h3>March 2015</h3>
+			</div>
+
+			<div class="col-xs-12 col-sm-4">
+				<span class="ic icon-place"></span>
+				<h2>Texas</h2>
+				<h3>South Padre Island</h3>
+			</div>
+
+			<div class="col-xs-12 col-sm-4">
+				<span class="ic icon-tickets"></span>
+				<h2>Tickets</h2>
+				<h3>Early Sale Nov 8th</h3>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="ribbon-container clearfix">
+					<div class="ribbon-wrapper">
+						<div class="ribbon-content">Exclusive pre-party / March 18</div>
+					</div>
+
+					<div class="ribbon-left"><div class="faux-line"></div></div>
+					<div class="ribbon-right"><div class="faux-line"></div></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<em>More info to be announced</em>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<a href="https://www.facebook.com/UltimateMusicExperience" target="_blank" class="icon-facebook hover-pop"></a>
+					<a href="https://twitter.com/UMESouthPadre" target="_blank" class="icon-twitter hover-pop"></a>
+					<a href="https://www.youtube.com/channel/UC17AVS-axW6YecuumgxtC2g" target="_blank" class="icon-youtube hover-pop"></a>
+					<a href="http://instagram.com/UMEfestival" target="_blank" class="icon-instagram hover-pop"></a>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<?php
+
+	require_once "lib/social-share-count.php";
+	$ssc = new Social_Share_Count();
+
+	$url = 'http://' .$_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+	$share_count = $ssc->get_total( $url );
+
+	foreach ($share_count as $key => $value )
+	{
+		if ( ($value >= 1000) && ($value < 1000000) )
+		{
+			$share_count[ $key ] = number_format( $value / 1000, 1) .'k';
+		}
+		elseif ( ($value >= 1000000) && ($num < 1000000000) )
+		{
+			$share_count[ $key ] = number_format( $value / 1000000, 1) . 'm';
+		}
+	}
+	?>
+	<div class="share-overlay overlay">
+		<a href="#" class="icon-close"></a>
+
+		<div class="overlay-content">
+
+			<div class="share-count">
+				<h2><?php echo $share_count['total']; ?></h2>
+				<h3>Total Shares</h3>
+			</div>
+
+			<div class="share-wrapper clearfix">
+				<a href="https://twitter.com/intent/tweet?original_referer=http://<?php echo $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]; ?>&text=Ultimate Music Experience 2015 in South Padre Island, Texas&url=http://<?php echo $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]; ?>" target="_blank" class="twitter">
+					<span class="icon-twitter"></span>
+					<em><?php echo $share_count['twitter']; ?></em>
+				</a>
+
+				<a href="https://www.facebook.com/sharer/sharer.php?u=http://<?php echo $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]; ?>" target="_blank" class="facebook">
+					<span class="icon-facebook"></span>
+					<em><?php echo $share_count['facebook']; ?></em>
+				</a>
+
+				<a href="https://plus.google.com/share?url=http://<?php echo $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]; ?>" target="_blank" class="google-plus">
+					<span class="icon-google-plus"></span>
+					<em><?php echo $share_count['google_plus']; ?></em>
+				</a>
+
+				<a href="http://pinterest.com/pin/create/button/?url=http://<?php echo $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]; ?>&media=/static/images/background-1600.jpg&description=Ultimate Music Experience 2015 in South Padre Island, Texas" target="_blank" class="pinterest">
+					<span class="icon-pinterest"></span>
+					<em><?php echo $share_count['pinterest']; ?></em>
+				</a>
+			</div>
+		</div>
+
+		<div class="bg"></div>
+	</div>
+</body>
+</html>
