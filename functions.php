@@ -117,7 +117,7 @@ class hddp extends Flawless_F {
     wp_register_script( 'jquery-fitvids', get_stylesheet_directory_uri() . '/js/jquery.fitvids.js', array( 'jquery' ), HDDP_Version, true );
 
     //** DDP Elastic */
-    wp_register_script( 'jquery-ddp-elastic-suggest', includes_url( '/vendor/libraries/usabilitydynamics/lib-js-elastic-filter/scripts/jquery.elasticSearch.js' ), array( 'jquery', 'jquery-cookie' ), HDDP_Version, true );
+    wp_register_script( 'jquery-ddp-elastic-suggest', get_stylesheet_directory_uri() . '/components/lib-js-elastic-filter/lib-js-elastic-filter-built.js', array( 'jquery', 'jquery-cookie' ), HDDP_Version, true );
     wp_register_script( 'elastic-dsl', get_stylesheet_directory_uri() . '/js/elastic.dsl.js', array(), HDDP_Version, true );
     wp_register_script( 'xmlhttpclient', get_stylesheet_directory_uri() . '/js/xmlhttpclient.js', array(), HDDP_Version, true );
 
