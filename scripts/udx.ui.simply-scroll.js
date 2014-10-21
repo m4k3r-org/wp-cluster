@@ -1,1 +1,0 @@
-$(function(){$("#sponsors_scroller").simplyScroll()});

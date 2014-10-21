@@ -1,114 +1,58 @@
 /**
- * Theme Build.
+ * Build Theme
  *
- * @author potanin@UD
- * @version 1.1.2
+ * @author Usability Dynamics
+ * @version 1.0.0
  * @param grunt
  */
-module.exports = function build( grunt ) {
+module.exports = function( grunt ) {
 
-  grunt.initConfig( {
+  // Automatically Load Tasks
+  require( 'load-grunt-tasks' )( grunt, {
+    pattern: 'grunt-*',
+    config: './package.json',
+    scope: 'devDependencies'
+  } );
 
-    // Read Composer File.
-    pkg: grunt.file.readJSON( 'composer.json' ),
+  // Build Configuration.
+  grunt.initConfig({
 
-    // Generate Documentation.
-    yuidoc: {
-      compile: {
-        name: '<%= pkg.name %>',
-        description: '<%= pkg.description %>',
-        version: '<%= pkg.version %>',
-        url: '<%= pkg.homepage %>',
-        options: {
-          paths: [ 'lib', 'scripts' ],
-          outdir: 'static/codex/'
-        }
-      }
-    },
+    // Get Project Package.
+    composer: grunt.file.readJSON( 'composer.json' ),
 
-    // Compile LESS.
+    // LESS Compilation.
     less: {
-      development: {
-        options: {
-          relativeUrls: true
-        },
-        files: {
-          'styles/app.content.dev.css': [ 'styles/src/app.content.less' ],
-          'styles/app.editor.dev.css': [ 'styles/src/app.editor.less' ],
-          'styles/app.bootstrap.dev.css': [ 'styles/src/app.bootstrap.less' ],
-          'styles/app.main.dev.css': [ 'styles/src/app.main.less' ],
-          'styles/app.admin.dev.css': [ 'styles/src/app.admin.less' ]
-        }
-      },
       production: {
         options: {
           yuicompress: true,
-          relativeUrls: true
+          relativeUrls: true,
+          paths: [
+            'static/styles/src'
+          ]
         },
         files: {
-          'styles/app.content.css': [ 'styles/src/app.content.less' ],
-          'styles/app.editor.css': [ 'styles/src/app.editor.less' ],
-          'styles/app.bootstrap.css': [ 'styles/src/app.bootstrap.less' ],
-          'styles/app.main.css': [ 'styles/src/app.main.less' ],
-          'styles/app.admin.css': [ 'styles/src/app.admin.less' ]
+          'static/styles/app.css' : [
+            'static/styles/src/app.less'
+          ]
+        }
+      },
+      development: {
+        options: {
+          yuicompress: false,
+          relativeUrls: true,
+          paths: [
+            'static/styles/src'
+          ]
+        },
+        files: {
+          'static/styles/app.css' : [
+            'static/styles/src/app.less'
+          ]
         }
       }
     },
 
-    // Development Watch.
-    watch: {
-      options: {
-        interval: 100,
-        debounceDelay: 500
-      },
-      less: {
-        files: [
-          'styles/src/*.*'
-        ],
-        tasks: [ 'less' ]
-      },
-      js: {
-        files: [
-          'scripts/src/*.*'
-        ],
-        tasks: [ 'uglify' ]
-      }
-    },
-
-    // Uglify Scripts.
-    uglify: {
-      development: {
-        options: {
-          preserveComments: true,
-          beautify: true,
-          wrap: false
-        },
-        files: [
-          {
-            expand: true,
-            cwd: 'scripts/src',
-            src: [ '*.js' ],
-            dest: 'scripts'
-          }
-        ]
-      },
-      production: {
-        options: {
-          preserveComments: false,
-          wrap: false
-        },
-        files: [
-          {
-            expand: true,
-            cwd: 'scripts/src',
-            src: [ '*.js' ],
-            dest: 'scripts'
-          }
-        ]
-      }
-    },
-
-    // Generate Markdown.
+    // Markdown Generation.
     markdown: {
       all: {
         files: [
@@ -131,74 +75,19 @@ module.exports = function build( grunt ) {
       }
     },
 
-    // Clean for Development.
-    clean: {
-      all: [
-        "vendor",
-        "static/readme.md",
-        "composer.lock",
-        "styles/*.css",
-        "scripts/*.js"
-      ],
-      update: [
-        "composer.lock"
-      ]
-    },
-
-    // CLI Commands.
-    shell: {
-      update: {
-        options: {
-          stdout: true
-        },
-        command: 'composer update --prefer-source'
-      }
-    },
-
-    // Coverage Tests.
-    mochacov: {
-      options: {
-        reporter: 'list',
-        requires: [ 'should' ]
-      },
-      all: [ 'test/*.js' ]
-    },
-
-    // Usage Tests.
-    mochacli: {
-      options: {
-        requires: [ 'should' ],
-        reporter: 'list',
-        ui: 'exports',
-        bail: false
-      },
-      all: [
-        'test/*.js'
-      ]
-    }
+    // Remove Things.
+    clean: [
+      "vendor"
+    ]
 
   });
 
-  // Load NPM Tasks.
-  grunt.loadNpmTasks( 'grunt-markdown' );
-  grunt.loadNpmTasks( 'grunt-requirejs' );
-  grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
-  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-  grunt.loadNpmTasks( 'grunt-contrib-watch' );
-  grunt.loadNpmTasks( 'grunt-contrib-less' );
-  grunt.loadNpmTasks( 'grunt-contrib-concat' );
-  grunt.loadNpmTasks( 'grunt-contrib-clean' );
-  grunt.loadNpmTasks( 'grunt-shell' );
-  grunt.loadNpmTasks( 'grunt-mocha-cli' );
-  grunt.loadNpmTasks( 'grunt-mocha-cov' );
+  // Build Assets
+  grunt.registerTask( 'default', [ 'build' ] );
 
-  // Register NPM Tasks.
-  grunt.registerTask( 'default', [ 'markdown', 'less' , 'yuidoc', 'uglify' ] );
+  // Build Theme
+  grunt.registerTask( 'build', [ 'compile' ], function() {
 
-  // Build Distribution.
-  grunt.registerTask( 'distribution', [ 'mochacli:all', 'mochacov:all', 'clean:all', 'markdown', 'less:production', 'uglify:production' ] );
-
-  // Update Environment.
-  grunt.registerTask( 'update', [ 'clean:update', 'shell:update' ] );
+  });
 
 };
