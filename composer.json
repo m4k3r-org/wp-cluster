@@ -1,0 +1,37 @@
+{
+  "name": "usabilitydynamics/wp-disco",
+  "version": "0.1.0",
+  "type": "wordpress-theme",
+  "description": "DiscoDonniePresents theme for the EDM Network",
+  "author": {
+    "name": "Usability Dynamics",
+    "url": "http://UsabilityDynamics.com"
+  },
+  "license": "GPL-2.0",
+  "license_url": "http://www.gnu.org/licenses/gpl-2.0.html",
+  "tags": [ "one-column", "two-column", "translation-ready", "responsive", "wordpress", "theme" ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://repository.usabilitydynamics.com"
+    }
+  ],
+  "require": {
+    "composer/installers": "~1.0",
+    "UsabilityDynamics/lib-settings": "master",
+    "UsabilityDynamics/lib-carrington": "master",
+    "UsabilityDynamics/lib-wp-theme": "master",
+    "UsabilityDynamics/wp-meta-box": "master",
+    "UsabilityDynamics/wp-menufication": "master"
+  },
+  "autoload": {
+    "classmap": [
+      "lib/class-bootstrap.php",
+      "lib/class-utility.php",
+      "lib/class-disco.php",
+      "lib/class-search.php",
+      "lib/widgets/class-latest-posts.php"
+    ]
+  },
+  "minimum-stability": "dev"
+}

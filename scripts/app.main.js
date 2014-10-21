@@ -1,0 +1,1 @@
+require(["/assets/models/locale","/assets/models/settings"],function(){return void console.log("app","loaded")});
