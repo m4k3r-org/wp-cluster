@@ -5,7 +5,7 @@
  * Plugin URI: http://wpCloud.io
  * Description: EDM Vertical for wpCloud.io
  * Author: Usability Dynamics, Inc
- * Version: 1.1.0
+ * Version: 1.1.1
  * Network: true
  * Vertical: true
  * Author URI: http://wpCloud.io
