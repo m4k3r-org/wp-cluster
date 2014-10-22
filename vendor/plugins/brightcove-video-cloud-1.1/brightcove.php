@@ -6,6 +6,7 @@
 /*
 Plugin Name: Brightcove Video Cloud
 Plugin URL: 
+Version: 100
 Description: An easy to use plugin that inserts Brightcove Video into your Wordpress site. 
 Author: Brightcove
 */
