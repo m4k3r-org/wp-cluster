@@ -9,52 +9,7 @@ machine:
   php:
     version: 5.3.3
 
-  hosts:
-    # domain.tld 127.0.0.1
-
   environment:
+    WP_ENV: development
     NODE_ENV: development
     PHP_ENV: development
-    # DATABASE_URL: mysql://ubuntu:@127.0.0.1:5432/circle_test
-
-database:
-  override:
-    # - mysql -u ubuntu circle_test < my-database-setup.sql
-
-dependencies:
-  pre:
-    - echo "memory_limit = 512M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
-    # - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
-    # - cp config/custom.ini ~/.phpenv/versions/$(phpenv global)/etc/conf.d/
-    # - npm install mocha --global
-    # - npm install grunt-cli --global
-
-  post:
-    # - cp application/tests/fixtures/apache-sites.conf /etc/apache2
-    # - a2ensite /etc/apache2/apache-sites.conf
-    # - sudo service apache2 restart
-
-  override:
-    # - mysql -u test test < application/static/fixtures/baseline-db.sql
-
-test:
-  override:
-    - grunt mochacli
-    # - php ./app/run-server.php --daemon
-    # - phpunit application/tests/php
-    # - mocha application/tests/mocha --reporter list --ui exports --require should
-
-  post:
-    - grunt clean:test
-
-notify:
-  webhooks:
-    - url: "http://208.52.164.217/webhook.php"
-    # - url: "http://domain.tld/path/to/webhook"
-
-general:
-  # build_dir: .build
-
-  branches:
-    ignore:
-      - gh-pages
