@@ -517,7 +517,7 @@ namespace UsabilityDynamics\Cluster {
        *
        */
       public function admin_enqueue_scripts() {
-        wp_enqueue_style( 'wp-cluster', plugins_url( '/static/styles/wp-cluster.css', dirname( __FILE__ ) ), array(), self::$version );
+        wp_enqueue_style( 'wp-cluster', plugins_url( '/static/styles/wp-cluster.css', dirname( __DIR__ ) ), array(), self::$version );
       }
 
       /**
