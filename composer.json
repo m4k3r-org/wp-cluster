@@ -1,7 +1,6 @@
 {
   "name": "wpCloud/wp-vertical-edm",
   "type": "wordpress-plugin",
-  "version": "0.1.0",
   "repositories": [
     {
       "type": "composer",
@@ -15,6 +14,7 @@
     "autoloader-suffix": "VendorPackages"
   },
   "require": {
+    "composer/installers": "~1.0",
     "usabilitydynamics/lib-utility": "~0.3",
     "usabilitydynamics/lib-model": "~0.3"
   },
