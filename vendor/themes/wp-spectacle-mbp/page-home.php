@@ -53,31 +53,32 @@ $artist_lineup = json_decode( $artist_lineup, true );
   <div class="diamond-box-container">
 
     <div class="container">
+
+    <?php if ( isset( $artist_lineup[0] ) ): ?>
+
       <div class="diamond-box diamond-box-left">
         <div class="inner">
           <span class="icon-calendar"></span>
 
-          <?php echo date( 'l', strtotime( $artist_lineup[0]['data'][ 'date' ] ) ); ?>
-          <strong><?php echo date( 'M d', strtotime( $artist_lineup[0]['data'][ 'date' ] ) ); ?></strong>
+          <?php echo $artist_lineup[0]['data'][ 'text1' ]; ?>
+          <strong><?php echo $artist_lineup[0]['data'][ 'text2' ]; ?></strong>
         </div>
       </div>
+
+    <?php endif; ?>
+
+    <?php if ( isset( $artist_lineup[1] ) ): ?>
 
       <div class="diamond-box diamond-box-right diamond-box-last">
         <div class="inner">
           <span class="icon-location"></span>
 
-          <?php
-            $loc = $artist_lineup[0]['data'][ 'location' ];
-            $loc = explode( ' ', $loc );
-            $last_word = array_pop( $loc );
-
-            $loc = implode( ' ', $loc );
-          ?>
-
-          <?php echo $loc; ?>
-          <strong><?php echo $last_word; ?></strong>
+          <?php echo $artist_lineup[1]['data'][ 'text1' ]; ?>
+          <strong><?php echo $artist_lineup[1]['data'][ 'text2' ]; ?></strong>
         </div>
       </div>
+
+      <?php endif; ?>
 
       <div class="faux-line faux-line-left"></div>
       <div class="faux-line faux-line-right"></div>

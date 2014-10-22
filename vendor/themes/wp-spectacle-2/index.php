@@ -18,9 +18,9 @@
       <h3>Blogs</h3>
 
       <?php
-      $categories = get_categories([
+      $categories = get_categories( array(
         'hierarchical' => 0
-      ]);
+      ));
 
       // Select the category
       $selected_category_id = get_query_var( 'cat' );
@@ -43,10 +43,10 @@
       <?php
 
       // Custom post query to disable pagination
-      $the_query = new WP_Query([
+      $the_query = new WP_Query(array(
         'nopaging' => true,
         'cat' => $selected_category_id
-      ]);
+      ));
 
       if ( $the_query->have_posts() ): ?>
 

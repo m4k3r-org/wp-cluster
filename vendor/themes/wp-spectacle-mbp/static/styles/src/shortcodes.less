@@ -38,6 +38,7 @@
     padding: 0 0 35px 0;
     border-bottom: 1px solid #b6bdd0;
     color: #a7a9ac;
+    line-height: 170%;
 
   }
 }
@@ -45,12 +46,34 @@
 // [hr]
 .horizontal_line {
   hr {
-    background: #a7a9ac;
+    background: #58595b;
   }
 }
 
 // Ex. Blue background on information page
 .spectacle_highlighted_background {
   background: #58595b;
+  color: #a7a9ac;
+  margin-bottom: -30px;
+
+  @media @desktop {
+    margin-bottom: 0;
+  }
+
+  h5 {
+    font-size: 24px;
+    color: #FFF;
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+  }
+
+  hr {
+    background: #a7a9ac;
+  }
+
+}
+
+.spectacle_box {
   color: #a7a9ac;
 }
