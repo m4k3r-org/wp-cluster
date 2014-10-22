@@ -167,6 +167,8 @@ namespace UsabilityDynamics\Cluster {
       /**
        * Connects to a DB, possibly overriding the $wpdb object
        *
+       * @todo I believe the same "Invalid credentials" error is thrown even when credentials are valid but the database is simply empty. Verify. - potanin@UD
+       *
        * @param array $creds The DB info we're connecting with
        * @returns boolean Whether or not it was successful
        * @throws \Exception Throws error if it can't connect
@@ -191,7 +193,8 @@ namespace UsabilityDynamics\Cluster {
 
         /** Create the DB */
         $wpdb = new WPDB( $creds[ 'DB_USER' ], $creds[ 'DB_PASSWORD' ], $creds[ 'DB_NAME' ], $creds[ 'DB_HOST' ] );
-        /** Make sure we have a connection */
+
+	      /** Make sure we have a connection */
         if( !( $wpdb && is_object( $wpdb ) && $wpdb->ready ) ){
           throw new \Exception( 'Invalid credentials, cannot connect to DB.' );
         }
