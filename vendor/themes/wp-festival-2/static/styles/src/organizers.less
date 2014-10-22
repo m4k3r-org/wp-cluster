@@ -13,11 +13,28 @@
   padding-left: 35px;
   padding-right: 35px;
 
+  .organizer-photo-container{
+    height: 280px;
+    position: relative;
+    margin: 0 0 40px 0;
+
+    img{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      max-height: 250px;
+    }
+  }
+
   .photo{
     display: inline-block;
     position: relative;
     overflow: hidden;
     width: 100%;
+    vertical-align: middle;
 
     .resp-content{
       position: absolute;
@@ -46,23 +63,15 @@
     }
   }
 
-  img{
-    margin: 60px 0 40px 0;
+  .organizer-title-container{
+    height: 85px;
+    margin: 0 0 40px 0 !important;
   }
-
-  /* h3{
-     display: inline-block;
-     color: #ffffff;
-     font-size: 180px;
-     margin: 60px 0 40px 0;
-     font-weight: normal;
-   }*/
 
   h3{
     display: block !important;
     color: #ffffff !important;
     font-size: 32px !important;
-    margin: 0 0 40px 0;
     line-height: 42px !important;
     font-weight: normal !important;
   }
@@ -113,9 +122,21 @@
 }
 .sponsor-lead-in{
 
+  min-height: 400px;
+
+  .leadin-container{
+    top: 50%;
+    .mixin-transform(translateY(-50%));
+    left: 0;
+    right: 0;
+    margin: auto;
+    position: absolute;
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+
   h3{
     display: inline-block !important;
-    margin: 60px 20px 40px 20px !important;
   }
 
   .button{
@@ -130,15 +151,6 @@
     &:hover{
       background: #ffffff;
       color: #000000;
-    }
-  }
-
-}
-@media @tablet {
-
-  .sponsor-lead-in{
-    h3{
-      margin: 200px 20px 40px 20px !important;
     }
   }
 

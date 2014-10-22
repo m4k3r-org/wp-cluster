@@ -33,7 +33,7 @@
 
 <p>
   <input type="checkbox" name="<?php echo $this->get_field_name( 'is_sponsor_leadin' ); ?>" id="<?php echo $this->get_field_id( 'is_sponsor_leadin' ); ?>" value="1" <?php if ( isset($data['is_sponsor_leadin']) && $data['is_sponsor_leadin'] == '1' ) echo 'checked="checked"'; ?> >
-  <label for="<?php echo $this->get_field_id( 'is_sponsor_leadin' ); ?>">Is Leadin</label>
+  <label for="<?php echo $this->get_field_id( 'is_sponsor_leadin' ); ?>">Is Contact Box ( Only Title and Button )</label>
 </p>
 
 <?php if( !empty( $data[ 'images' ][ 'meta' ][ 'sel_image' ] ) ): ?>
