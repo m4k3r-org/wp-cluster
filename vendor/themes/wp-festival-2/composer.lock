@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c7ad16e415c7a831ede95fb4980dbabc",
+    "hash": "d5af8c23a737bb74adc134e26b00cde3",
     "packages": [
         {
             "name": "components/dotdotdot",
@@ -446,12 +446,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "f8a41b17522dadccbaeb422d4c6617b46c4c52f5"
+                "reference": "df991c124a2212371443b586a1be767500036dee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/f8a41b17522dadccbaeb422d4c6617b46c4c52f5",
-                "reference": "f8a41b17522dadccbaeb422d4c6617b46c4c52f5",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/df991c124a2212371443b586a1be767500036dee",
+                "reference": "df991c124a2212371443b586a1be767500036dee",
                 "shasum": ""
             },
             "require": {
@@ -512,7 +512,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2014-10-21 16:08:58"
+            "time": "2014-10-14 14:45:32"
         },
         {
             "name": "moment/moment",
@@ -570,19 +570,20 @@
         },
         {
             "name": "robloach/component-installer",
-            "version": "0.0.12",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobLoach/component-installer.git",
-                "reference": "1864f25db21fc173e02a359f646acd596c1b0460"
+                "reference": "7aaa3d20fce87030d5f4094f4394c7c1e1f0e19d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/1864f25db21fc173e02a359f646acd596c1b0460",
-                "reference": "1864f25db21fc173e02a359f646acd596c1b0460",
+                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/7aaa3d20fce87030d5f4094f4394c7c1e1f0e19d",
+                "reference": "7aaa3d20fce87030d5f4094f4394c7c1e1f0e19d",
                 "shasum": ""
             },
             "require": {
+                "composer-plugin-api": "1.0.0",
                 "kriswallsmith/assetic": "1.*",
                 "php": ">=5.3.2"
             },
@@ -605,12 +606,11 @@
             "authors": [
                 {
                     "name": "Rob Loach",
-                    "email": "robloach@gmail.com",
                     "homepage": "http://robloach.net"
                 }
             ],
             "description": "Allows installation of Components via Composer.",
-            "time": "2013-08-31 23:46:48"
+            "time": "2014-09-16 17:57:47"
         },
         {
             "name": "symfony/process",
@@ -688,7 +688,7 @@
         },
         {
             "name": "usabilitydynamics/lib-carrington",
-            "version": "1.2.10",
+            "version": "master",
             "source": {
                 "type": "git",
                 "url": "git@github.com:UsabilityDynamics/lib-carrington",
@@ -706,36 +706,6 @@
                     "lib/classes"
                 ]
             }
-        },
-        {
-            "name": "usabilitydynamics/lib-js-elastic-filter",
-            "version": "3.0.3",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-js-elastic-filter",
-                "reference": "3.0.3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-js-elastic-filter/archive/3.0.3.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "robloach/component-installer": "0.0.12"
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "scripts": [
-                        "scripts/jquery.elasticSearch.js"
-                    ]
-                }
-            },
-            "license": [
-                "GPL-2.0"
-            ],
-            "description": "Allows to implement ElasticSearch filter. Uses jQuery, KnockoutJS and XMLHttpRequest client. Supports facets and range filters."
         },
         {
             "name": "usabilitydynamics/lib-meta-box",
@@ -824,7 +794,7 @@
                     "role": "Developer"
                 }
             ],
-            "homepage": "http://github.com/usabilitydynamics/lib-model",
+            "homepage": "http://github.com/usabilitydynamics/lib-models",
             "keywords": [
                 "models",
                 "shema",
@@ -1009,19 +979,20 @@
         },
         {
             "name": "usabilitydynamics/lib-wp-theme",
-            "version": "0.2.0",
+            "version": "master",
             "source": {
                 "type": "git",
                 "url": "git@github.com:UsabilityDynamics/lib-wp-theme",
-                "reference": "0.2.0"
+                "reference": "master"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-wp-theme/archive/0.2.0.zip",
+                "url": "https://github.com/usabilitydynamics/lib-wp-theme/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
+                "composer/installers": "~1.0",
                 "usabilitydynamics/lib-api": "master",
                 "usabilitydynamics/lib-meta-box": "master",
                 "usabilitydynamics/lib-model": "master",
@@ -1036,6 +1007,7 @@
                     "lib/plugins",
                     "lib/class-carrington.php",
                     "lib/class-customizer.php",
+                    "lib/class-nav-menu.php",
                     "lib/class-module.php",
                     "lib/class-requires.php",
                     "lib/class-scaffold.php",

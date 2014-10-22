@@ -266,9 +266,6 @@ namespace UsabilityDynamics {
         'social'  => array(
           'name' => __( 'Social', $this->domain )
         ),
-				'header' => array(
-						'name' => __( 'Header', $this->domain)
-				),
         'footer'  => array(
           'name' => __( 'Footer', $this->domain )
         ),

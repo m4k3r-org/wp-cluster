@@ -48,27 +48,12 @@
           <span class="seconds"><strong>0</strong>S</span>
         </div>
 
-				<?php
-					// Need to use a custom function here instead of wp_festival2->nav()
-					$header_nav_items = wp_get_nav_menu_items('header');
-					if ( $header_nav_items !== false ):
-				?>
-
-						<nav class="main-navigation clearfix">
-							<?php for ( $i = 0, $mi = count($header_nav_items); $i < $mi; $i++ ): ?>
-								<a href="<?php echo $header_nav_items[$i]->url; ?>" class="<?php echo implode(' ', $header_nav_items[ $i ]->classes); ?>">
-									<?php if ( in_array('menu', $header_nav_items[ $i ]->classes ) ): ?>
-										<span class="icon-menu"></span>
-									<?php elseif ( in_array('buy-tickets', $header_nav_items[ $i ]->classes ) ): ?>
-											<span class="icon-tickets"></span>
-									<?php elseif ( in_array('share-popup', $header_nav_items[ $i ]->classes ) ): ?>
-										<span class="icon-share"></span>
-									<?php endif; ?>
-									<span class="text"><?php echo $header_nav_items[ $i ]->title; ?></span>
-								</a>
-							<?php endfor; ?>
-						</nav>
-				<?php endif; ?>
+        <nav class="main-navigation clearfix">
+          <a href="#" class="menu"><span class="icon-menu"></span><span class="text">Menu</span></a>
+          <a href="#" class="share-popup"><span class="icon-share"></span><span class="text">Share</span></a>
+          <!-- <a href="#" class="my-account"><span class="icon-user"></span><span class="text">My Account</span></a> -->
+          <a href="#" class="buy-tickets"><span class="icon-tickets"></span><span class="text">Buy Tickets</span></a>
+        </nav>
       </div>
 
       <div class="clearfix"></div>

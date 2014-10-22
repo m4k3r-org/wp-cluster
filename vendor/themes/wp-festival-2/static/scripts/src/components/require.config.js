@@ -49,10 +49,6 @@ var components = {
             "main": "moment-built.js"
         },
         {
-            "name": "lib-js-elastic-filter",
-            "main": "lib-js-elastic-filter-built.js"
-        },
-        {
             "name": "lib-model",
             "main": "lib-model-built.js"
         },
