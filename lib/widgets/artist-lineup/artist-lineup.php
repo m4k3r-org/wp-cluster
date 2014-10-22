@@ -21,8 +21,8 @@ class ArtistLineup extends \WP_Widget
     $this->_mustache_engine = new \Mustache_Engine( array(
       'loader' => new \Mustache_Loader_FilesystemLoader( dirname( __FILE__ ) . '/templates' ),
       'escape' => function ( $value ){
-          return esc_attr( $value );
-        },
+        return esc_attr( $value );
+      },
       'strict_callables' => true
     ) );
   }
@@ -88,63 +88,36 @@ class ArtistLineup extends \WP_Widget
    */
   public function widget( $args, $instance ){
     $image_source = null;
-    $date = null;
-    $time = null;
-    $location = null;
 
-    $valid_widget = true;
+    $text1 = $instance[ 'text1' ];
+    $text2 = $instance[ 'text2' ];
+    $text3 = $instance[ 'text3' ];
 
-    $errors = array();
-
-    if( array_key_exists( 'date', $instance ) ){
-      $date = $instance[ 'date' ];
-    } else{
-      $valid_widget = false;
-      $errors[ ] = 'missing date';
-    }
-
-    if( array_key_exists( 'location', $instance ) ){
-      $location = $instance[ 'location' ];
-    } else{
-      $valid_widget = false;
-      $errors[ ] = 'missing location';
-    }
-
-    if( array_key_exists( 'time', $instance ) ){
-      $time = $instance[ 'time' ];
-    }
-
-    if( array_key_exists( 'image_image_id', $instance ) ){
+    if( array_key_exists( 'image_image_id', $instance ) && $instance[ 'image_image_id' ] != '' ){
       $image_src = wp_get_attachment_image_src( $instance[ 'image_image_id' ], 'full' );
       $image_source = $image_src[ 0 ];
     } else{
-      $valid_widget = false;
-      $errors[ ] = 'missing image id';
+      $image_source = false;
     }
 
-    if( $valid_widget ){
-      if( array_key_exists( 'output', $instance ) && $instance[ 'output' ] == 'html' ){
+    if( array_key_exists( 'output', $instance ) && $instance[ 'output' ] == 'html' ){
 
-        echo $this->_mustache_engine->render( 'widget', array(
-          'image_source' => $image_source,
-          'date' => $date,
-          'time' => $time,
-          'location' => $location
-        ) );
-
-      } else{
-
-        echo $this->_mustache_engine->render( 'json', array(
-          'image_source' => $image_source,
-          'date' => $date,
-          'time' => $time,
-          'location' => $location
-        ) );
-
-      }
+      echo $this->_mustache_engine->render( 'widget', array(
+        'image_source' => $image_source,
+        'text1' => $text1,
+        'text2' => $text2,
+        'text3' => $text3
+      ) );
 
     } else{
-      echo 'Broken widget: ' . implode( ', ', $errors );
+
+      echo $this->_mustache_engine->render( 'json', array(
+        'image_source' => $image_source,
+        'text1' => $text1,
+        'text2' => $text2,
+        'text3' => $text3
+      ) );
+
     }
 
   }
@@ -158,10 +131,10 @@ class ArtistLineup extends \WP_Widget
    */
   public function form( $instance ){
     // Get the selected image if any
-    $data[ 'date' ] = isset( $instance[ 'date' ] ) ? $instance[ 'date' ] : '';
-    $data[ 'location' ] = isset( $instance[ 'location' ] ) ? $instance[ 'location' ] : '';
-    $data[ 'time' ] = isset( $instance[ 'time' ] ) ? $instance[ 'time' ] : '';
-    $data[ 'output' ] = ( isset( $instance[ 'output' ] ) && $instance['output'] == 'html' ) ? true : false;
+    $data[ 'text1' ] = isset( $instance[ 'text1' ] ) ? $instance[ 'text1' ] : '';
+    $data[ 'text2' ] = isset( $instance[ 'text2' ] ) ? $instance[ 'text2' ] : '';
+    $data[ 'text3' ] = isset( $instance[ 'text3' ] ) ? $instance[ 'text3' ] : '';
+    $data[ 'output' ] = ( isset( $instance[ 'output' ] ) && $instance[ 'output' ] == 'html' ) ? true : false;
     $data[ 'selected_image' ] = null;
 
     // Get saved data
@@ -175,12 +148,12 @@ class ArtistLineup extends \WP_Widget
 
     // Populate the template data
     $data = array(
-      'date_id' => $this->get_field_id( 'date' ),
-      'date_name' => $this->get_field_name( 'date' ),
-      'location_id' => $this->get_field_id( 'location' ),
-      'location_name' => $this->get_field_name( 'location' ),
-      'time_id' => $this->get_field_id( 'time' ),
-      'time_name' => $this->get_field_name( 'time' ),
+      'text1' => $this->get_field_id( 'text1' ),
+      'text1_name' => $this->get_field_name( 'text1' ),
+      'text2_id' => $this->get_field_id( 'text2' ),
+      'text2_name' => $this->get_field_name( 'text2' ),
+      'text3_id' => $this->get_field_id( 'text3' ),
+      'text3_name' => $this->get_field_name( 'text3' ),
       'image_id' => $this->get_field_id( 'image' ),
       'image_name' => $this->get_field_name( 'image' ),
       'image_image_id' => $this->get_field_id( 'image_image_id' ),
@@ -188,16 +161,11 @@ class ArtistLineup extends \WP_Widget
       'output_id' => $this->get_field_id( 'output' ),
       'output_name' => $this->get_field_name( 'output' ),
       'images' => $this->_get_images( $data[ 'selected_image' ] ),
-      'date' => $data[ 'date' ],
-      'time' => $data[ 'time' ],
-      'location' => $data[ 'location' ],
+      'text1' => $data[ 'text1' ],
+      'text2' => $data[ 'text2' ],
+      'text3' => $data[ 'text3' ],
       'output' => $data[ 'output' ]
     );
-
-    // No images found in the media library
-    if( $data[ 'images' ] === false ){
-      $data[ 'error' ] = true;
-    }
 
     echo $this->_mustache_engine->render( 'admin-form', $data );
   }
@@ -213,9 +181,9 @@ class ArtistLineup extends \WP_Widget
   public function update( $new_instance, $old_instance ){
     $instance = array();
 
-    $instance[ 'date' ] = ( !empty( $new_instance[ 'date' ] ) ) ? strip_tags( $new_instance[ 'date' ] ) : '';
-    $instance[ 'location' ] = ( !empty( $new_instance[ 'location' ] ) ) ? strip_tags( $new_instance[ 'location' ] ) : '';
-    $instance[ 'time' ] = ( !empty( $new_instance[ 'time' ] ) ) ? strip_tags( $new_instance[ 'time' ] ) : '';
+    $instance[ 'text1' ] = ( !empty( $new_instance[ 'text1' ] ) ) ? strip_tags( $new_instance[ 'text1' ] ) : '';
+    $instance[ 'text2' ] = ( !empty( $new_instance[ 'text2' ] ) ) ? strip_tags( $new_instance[ 'text2' ] ) : '';
+    $instance[ 'text3' ] = ( !empty( $new_instance[ 'text3' ] ) ) ? strip_tags( $new_instance[ 'text3' ] ) : '';
     $instance[ 'output' ] = ( !empty( $new_instance[ 'output' ] ) && $new_instance[ 'output' ] == 'html' ) ? 'html' : 'json';
 
     if( array_key_exists( 'image', $new_instance ) ){

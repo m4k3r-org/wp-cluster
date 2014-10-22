@@ -1,20 +1,19 @@
 <p>
-  <label for="{{date_id}}">Date</label>
+  <label for="{{text1_id}}">Text 1</label>
   <br><br>
-  <input class="datepicker widefat" type="text" name="{{date_name}}" id="{{date_id}}" value="{{date}}" placeholder="YYYY-MM-DD" />
-</p>
-
-
-<p>
-  <label for="{{time_id}}">Time</label>
-  <br><br>
-  <input class="widefat" type="text" name="{{time_name}}" id="{{time_id}}" value="{{time}}" />
+  <input class="widefat" type="text" name="{{text1_name}}" id="{{text1_id}}" value="{{text1}}"/>
 </p>
 
 <p>
-  <label for="{{location_id}}">Location</label>
+  <label for="{{text2_id}}">Text 2</label>
   <br><br>
-  <input class="widefat" type="text" name="{{location_name}}" id="{{location_id}}" value="{{location}}" />
+  <input class="widefat" type="text" name="{{text2_name}}" id="{{text2_id}}" value="{{text2}}" />
+</p>
+
+<p>
+  <label for="{{text3_id}}">Text 3</label>
+  <br><br>
+  <input class="widefat" type="text" name="{{text3_name}}" id="{{text3_id}}" value="{{text3}}" />
 </p>
 
 <p>
@@ -23,12 +22,6 @@
   <br>
   <em>Generate HTML widget output</em>
 </p>
-
-{{# error}}
-There are no images in the media library. You need to upload an image first.
-{{/error}}
-
-{{^ error}}
 
 {{# images.meta.sel_image}}
 <p>
@@ -41,6 +34,7 @@ There are no images in the media library. You need to upload an image first.
   <br><br>
 
   <select class="widefat artist-lineup-widget-image" name="{{image_name}}" id="{{image_id}}">
+    <option value="">No image</option>
     {{# images.data}}
     <option value="{{src}}"
     {{#selected}} selected="selected" {{/selected}}>{{name}}</option>
@@ -49,12 +43,4 @@ There are no images in the media library. You need to upload an image first.
 </p>
 
 <input type="hidden" value="{{images.meta.sel_image_id}}" name="{{image_image_name}}" id="{{image_image_id}}">
-{{/error}}
 
-<script type="text/javascript">
-  jQuery(document).ready(function() {
-    jQuery('.datepicker').removeClass( 'hasDatepicker' ).removeData( 'datepicker' ).unbind().datepicker({
-      dateFormat : 'yy-mm-dd'
-    });
-  });
-</script>
