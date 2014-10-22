@@ -14,8 +14,11 @@ require.config({
 
 
 require( [
-	'lib/share'
-], function( share ){
+	'lib/share',
+	'lib/countdown'
+], function( share, countdown ){
 
 	share.init();
+	countdown.init();
+
 } );
