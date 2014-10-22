@@ -3,19 +3,20 @@
  * Plugin Name: WP-Cluster
  * Plugin URI: http://usabilitydynamics.com/
  * Description: Application managing must-use plugins and obfuscation rewrites.
- * Version: 0.2.0
+ * Version: 0.4.3
  * Author: Usability Dynamics
  * Author URI: http://usabilitydynamics.com/
  * License: GPLv2 or later
  * Network: True
+ * GitHub Plugin URI: https://github.com/UsabilityDynamics/wp-cluster
  *
  * The Loder class is self-initializing.
  *
  * @example
  *
  *      // Get Settings Object
- *      Veneer::get_instance()->state->settings;
- *      Veneer::get_instance()->get()
+ *      UsabilityDynamics\Cluster::get_instance()->state->settings;
+ *      UsabilityDynamics\Cluster::get_instance()->get()
  *
  * @namespace Veneer
  * @module Veneer

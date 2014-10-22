@@ -167,6 +167,8 @@ namespace UsabilityDynamics\Cluster {
       /**
        * Connects to a DB, possibly overriding the $wpdb object
        *
+       * @todo I believe the same "Invalid credentials" error is thrown even when credentials are valid but the database is simply empty. Verify. - potanin@UD
+       *
        * @param array $creds The DB info we're connecting with
        * @returns boolean Whether or not it was successful
        * @throws \Exception Throws error if it can't connect
@@ -188,10 +190,10 @@ namespace UsabilityDynamics\Cluster {
         }
         /** Overwrite the globals */
         $table_prefix = $creds[ 'DB_PREFIX' ];
-
         /** Create the DB */
         $wpdb = new WPDB( $creds[ 'DB_USER' ], $creds[ 'DB_PASSWORD' ], $creds[ 'DB_NAME' ], $creds[ 'DB_HOST' ] );
-        /** Make sure we have a connection */
+
+	      /** Make sure we have a connection */
         if( !( $wpdb && is_object( $wpdb ) && $wpdb->ready ) ){
           throw new \Exception( 'Invalid credentials, cannot connect to DB.' );
         }
@@ -322,6 +324,7 @@ namespace UsabilityDynamics\Cluster {
        */
       function __construct( $do_stuff = true ){
         global $wp_cluster;
+
         if( !( is_bool( $do_stuff ) && $do_stuff ) ){
           return;
         }
@@ -336,6 +339,7 @@ namespace UsabilityDynamics\Cluster {
           'DB_PASSWORD' => ( defined( 'CLUSTER_PASSWORD' ) ? CLUSTER_PASSWORD : defined( 'DB_PASSWORD' ) ? DB_PASSWORD : false ),
           'DB_HOST' => ( defined( 'CLUSTER_HOST' ) ? CLUSTER_HOST : defined( 'DB_HOST' ) ? DB_HOST : false )
         );
+
         /** Attempt to connect with these creds */
         $this->_connect_to_db( $creds );
         /** If we have a CLUSTER_USER, we should set the multi_db config */
