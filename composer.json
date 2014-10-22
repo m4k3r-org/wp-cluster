@@ -1,6 +1,5 @@
 {
   "name": "discodonniepresents/wp-festival",
-  "version": "2.0.0",
   "type": "wordpress-theme",
   "description": "Festival Theme for the Drop Network",
   "author": {
@@ -124,7 +123,7 @@
     }
   ],
   "config": {
-    "preferred-install": "source",
+    "preferred-install": "dist",
     "github-protocols": [ "ssh" ],
     "vendor-dir": "vendor/libraries",
     "bin-dir": "vendor/bin",
@@ -172,12 +171,10 @@
   "minimum-stability": "dev",
   "require": {
     "composer/installers": "~1.0",
-    "usabilitydynamics/lib-wp-theme": "master",
-    "usabilitydynamics/lib-settings": "master",
-    "usabilitydynamics/lib-carrington": "master",
+    "UsabilityDynamics/lib-carrington": "~1.2",
+    "UsabilityDynamics/lib-wp-theme": "~0.2",
+    "UsabilityDynamics/lib-js-elastic-filter": "~3.0",
     "usabilitydynamics/lib-wp-shortcode": "master",
-    "usabilitydynamics/lib-meta-box": "master",
-    "moment/moment": "~2.8",
     "components/jquery-selectBoxIt": "~3.8",
     "components/knockout": "3.1.0",
     "components/iscroll": "5.1.1",
@@ -188,7 +185,8 @@
     "components/fitvids": "1.1.0",
     "components/fancybox2": "2.1.5",
     "components/malihu-custom-scrollbar-plugin": "3.x",
-    "components/jquery": "~2.1"
+    "components/jquery": "~2.1",
+    "moment/moment": "~2.8"
   },
   "autoload": {
     "classmap": [ "lib" ]
@@ -199,16 +197,9 @@
       "vendor/libraries/{$vendor}/{$name}": [
         "type:wordpress-library"
       ],
-      "vendor/modules/{$name}": [
-        "type:wordpress-muplugin",
-        "type:wordpress-module"
-      ],
       "vendor/plugins/{$name}": [
         "type:wordpress-plugin",
         "type:wpackagist-plugin"
-      ],
-      "vendor/themes/{$name}": [
-        "type:wordpress-theme"
       ]
     },
     "settings": {

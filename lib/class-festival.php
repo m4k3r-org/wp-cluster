@@ -188,7 +188,7 @@ namespace UsabilityDynamics {
           'name'    => 'viewport',
           'content' => 'width=device-width, initial-scale=1.0'
         ),
-        array(
+/*        array(
           'tag'     => 'link',
           'rel'     => 'apple-touch-icon',
           'href'    => content_url( '/apple-touch-icon-72x72.png' )
@@ -218,7 +218,7 @@ namespace UsabilityDynamics {
           'tag'     => 'link',
           'rel'     => 'shortcut icon',
           'href'    => content_url( '/favicon.png' )
-        ),
+        ),*/
         array(
           'tag'     => 'link',
           'rel'     => 'api',
@@ -266,6 +266,9 @@ namespace UsabilityDynamics {
         'social'  => array(
           'name' => __( 'Social', $this->domain )
         ),
+				'header' => array(
+						'name' => __( 'Header', $this->domain)
+				),
         'footer'  => array(
           'name' => __( 'Footer', $this->domain )
         ),
