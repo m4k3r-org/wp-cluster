@@ -1,0 +1,31 @@
+{
+  "name": "lib-saas",
+  "version": "0.1.2",
+  "homepage": "http://github.com/UsabilityDynamics/lib-saas",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UsabilityDynamics/lib-saas"
+  },
+  "dependencies": {
+    "usabilitydynamics/lib-utility": "*"
+  },
+  "schemas": [
+    "static/schemas/saas.json",
+    "static/schemas/saas.document.json"
+  ],
+  "files": [
+    "static/files/saas.config.json"
+  ],
+  "lib": [
+    "lib/saas.php",
+    "lib/saas.document.php",
+    "lib/raas.php",
+    "lib/raas.job.php"
+  ],
+  "scripts": [
+    "static/scripts/saas.js",
+    "static/scripts/saas.document.js",
+    "static/scripts/model.js",
+    "static/scripts/socket.js"
+  ]
+}
