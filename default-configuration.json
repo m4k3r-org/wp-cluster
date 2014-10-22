@@ -277,10 +277,7 @@
   "have_blog_home": false,
   "protocol": "http://",
   "deregister_empty_widget_areas": false,
-  "asset_directories": {
-    "C:\\wamp\\www\\discodonnie.com/wp-content/themes/flawless": "http://localhost/discodonnie.com/wp-content/themes/flawless",
-    "C:\\wamp\\www\\discodonnie.com/wp-content/themes/flawless-hddp": "http://localhost/discodonnie.com/wp-content/themes/flawless-hddp"
-  },
+  "asset_directories": {},
   "default_header": {
     "style": {
       "name": "Name",
