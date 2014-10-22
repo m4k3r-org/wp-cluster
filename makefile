@@ -26,6 +26,7 @@ install:
 release:
 	@echo Releasing $(NAME).
 	make install
+	rm -rf vendor/composer/installed.json
 	rm -rf vendor/composer/installers
 	git rm --cached -r --ignore-unmatch vendor/plugins/siteorigin-panels
 	git rm --cached -r --ignore-unmatch vendor/usabilitydynamics/lib-api
@@ -37,4 +38,5 @@ release:
 	git rm --cached -r --ignore-unmatch vendor/usabilitydynamics/lib-ui
 	git rm --cached -r --ignore-unmatch vendor/usabilitydynamics/lib-utility
 	git rm --cached -r --ignore-unmatch vendor/usabilitydynamics/lib-wp-theme
+	lessc -x ./static/styles/src/app.less > ./static/styles/app.css
 	git add . --all && git commit -m 'Release build. [ci skip]' && git push
