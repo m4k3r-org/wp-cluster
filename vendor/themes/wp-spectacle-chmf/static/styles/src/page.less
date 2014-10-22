@@ -1,25 +1,25 @@
 
-.page-content {
+.page-content{
 
-  background: -moz-linear-gradient(top,  rgba(0,0,0,0.7) 0, rgba(0,0,0,1) 285px);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(0,0,0,0.7)), color-stop(285px,rgba(0,0,0,1)));
-  background: -webkit-linear-gradient(top,  rgba(0,0,0,0.7) 0,rgba(0,0,0,1) 285px);
-  background: -o-linear-gradient(top,  rgba(0,0,0,0.7) 0,rgba(0,0,0,1) 285px);
-  background: -ms-linear-gradient(top,  rgba(0,0,0,0.7) 0,rgba(0,0,0,1) 285px);
-  background: linear-gradient(to bottom,  rgba(0,0,0,0.7) 0,rgba(0,0,0,1) 285px);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3ffffff', endColorstr='#ffffff',GradientType=0 );
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.7) 0, rgba(0, 0, 0, 1) 285px);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(0, 0, 0, 0.7)), color-stop(285px, rgba(0, 0, 0, 1)));
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.7) 0, rgba(0, 0, 0, 1) 285px);
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0.7) 0, rgba(0, 0, 0, 1) 285px);
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.7) 0, rgba(0, 0, 0, 1) 285px);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0, rgba(0, 0, 0, 1) 285px);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b3ffffff', endColorstr='#ffffff', GradientType=0);
 
   color: #fff;
 
-  a {
+  a{
     color: #fff;
   }
 
-  h3, h4 {
+  h3, h4{
     color: #fff;
   }
 
-  .diamond-box-container-widget {
+  .diamond-box-container-widget{
 
     @media @tablet {
       position: relative;
@@ -30,7 +30,7 @@
       height: 540px;
     }
 
-    .diamond-box {
+    .diamond-box{
 
       .mixin-rotate(45deg);
 
@@ -52,6 +52,10 @@
       }
 
       .inner{
+
+        [class^="icon-"]{
+          margin-bottom: 15px;
+        }
 
         .mixin-rotate(-45deg);
 
@@ -92,14 +96,14 @@
           }
         }
 
-        img {
+        img{
           width: 65%;
           height: auto;
           display: block;
           margin: 0 auto;
         }
 
-        hr {
+        hr{
           display: none;
 
           @media @large-desktop {
@@ -113,14 +117,13 @@
           }
         }
 
-        .time {
+        .time{
           margin: 30px 0 0 0;
         }
       }
     }
 
-
-    .diamond-box-left {
+    .diamond-box-left{
       margin-bottom: 94px;
 
       @media @tablet {
@@ -134,8 +137,8 @@
         margin-left: -425px;
       }
 
-      .inner {
-        img {
+      .inner{
+        img{
           margin-top: 10px;
           max-width: 300px;
 
@@ -152,7 +155,7 @@
       }
     }
 
-    .diamond-box-right {
+    .diamond-box-right{
       margin-bottom: 45px;
 
       @media @tablet {
@@ -166,8 +169,8 @@
         margin-left: 76px;
       }
 
-      .inner {
-        img {
+      .inner{
+        img{
           margin-top: 10px;
           max-width: 250px;
           width: 54%;
@@ -180,23 +183,23 @@
             margin: 15px 0 0 110px;
           }
         }
+        /*
+                span {
+                  display: block;
+                  color: #a63134;
+                  text-transform: uppercase;
+                  font-size: 15px;
+                  text-align: center;
+                  margin: 20px 0 0 0;
+                  text-shadow: none;
 
-        span {
-          display: block;
-          color: #a63134;
-          text-transform: uppercase;
-          font-size: 15px;
-          text-align: center;
-          margin: 20px 0 0 0;
-          text-shadow: none;
-
-          @media @large-desktop {
-            font-size: 24px;
-            margin: 20px 0 0 0;
-          }
-        }
-
-        small {
+                  @media @large-desktop {
+                    font-size: 24px;
+                    margin: 20px 0 0 0;
+                  }
+                }
+        */
+        small{
           display: none;
 
           @media @large-desktop {
@@ -211,9 +214,9 @@
       }
     }
 
-    .buy-tickets {
-        background: #ff0279;
-        color: #FFF;
-      }
+    .buy-tickets{
+      background: #ff0279;
+      color: #FFF;
+    }
   }
 }

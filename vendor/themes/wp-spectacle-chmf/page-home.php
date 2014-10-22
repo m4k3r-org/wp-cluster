@@ -7,11 +7,11 @@ get_header();
 the_post();
 
 ob_start();
-dynamic_sidebar('header_widget_area');
+dynamic_sidebar( 'header_widget_area' );
 $artist_lineup = ob_get_clean();
 
-$artist_lineup = str_replace('}{', '},{', $artist_lineup);
-$artist_lineup = '[' . $artist_lineup .']';
+$artist_lineup = str_replace( '}{', '},{', $artist_lineup );
+$artist_lineup = '[' . $artist_lineup . ']';
 
 $artist_lineup = json_decode( $artist_lineup, true );
 ?>
@@ -26,44 +26,45 @@ $artist_lineup = json_decode( $artist_lineup, true );
 
   <a href="https://www.youtube.com/watch?v=zLL_PFjbAkI" class="play-video icon-video hover-pop"></a>
 
-  <?php if (! empty( $artist_lineup) ): ?>
+  <?php if (!empty( $artist_lineup )): ?>
 
-  <img src="<?php echo $artist_lineup[0]['data']['image_source']; ?>" alt="Artist Lineup" class="main-artists">
+  <img src="<?php echo $artist_lineup[ 0 ][ 'data' ][ 'image_source' ]; ?>" alt="Artist Lineup" class="main-artists">
 </header>
 
-<div class="diamond-box-container">
+  <div class="diamond-box-container">
 
-  <div class="container">
-    <div class="diamond-box diamond-box-left">
-      <div class="inner">
-        <span class="icon-calendar"></span>
+    <div class="container">
 
-        <?php echo date( 'l', strtotime( $artist_lineup[0]['data'][ 'date' ] ) ); ?>
-        <strong><?php echo date( 'M d', strtotime( $artist_lineup[0]['data'][ 'date' ] ) ); ?></strong>
-      </div>
+      <?php if( isset( $artist_lineup[ 0 ] ) ): ?>
+
+        <div class="diamond-box diamond-box-left">
+          <div class="inner">
+            <span class="icon-calendar"></span>
+
+            <?php echo $artist_lineup[ 0 ][ 'data' ][ 'text1' ]; ?>
+            <strong><?php echo $artist_lineup[ 0 ][ 'data' ][ 'text2' ]; ?></strong>
+          </div>
+        </div>
+
+      <?php endif; ?>
+
+      <?php if( isset( $artist_lineup[ 1 ] ) ): ?>
+
+        <div class="diamond-box diamond-box-right diamond-box-last">
+          <div class="inner">
+            <span class="icon-location"></span>
+
+            <?php echo $artist_lineup[ 1 ][ 'data' ][ 'text1' ]; ?>
+            <strong><?php echo $artist_lineup[ 1 ][ 'data' ][ 'text2' ]; ?></strong>
+          </div>
+        </div>
+
+      <?php endif; ?>
+
+      <div class="faux-line faux-line-left"></div>
+      <div class="faux-line faux-line-right"></div>
     </div>
-
-    <div class="diamond-box diamond-box-right diamond-box-last">
-      <div class="inner">
-        <span class="icon-location"></span>
-
-        <?php
-          $loc = $artist_lineup[0]['data'][ 'location' ];
-          $loc = explode( ' ', $loc );
-          $last_word = array_pop( $loc );
-
-          $loc = implode( ' ', $loc );
-        ?>
-
-        <?php echo $loc; ?>
-        <strong><?php echo $last_word; ?></strong>
-      </div>
-    </div>
-
-    <div class="faux-line faux-line-left"></div>
-    <div class="faux-line faux-line-right"></div>
   </div>
-</div>
 
 <?php endif; ?>
 
@@ -98,8 +99,8 @@ $artist_lineup = json_decode( $artist_lineup, true );
 
 
 <?php
-  get_template_part('page-home', 'contest');
-  get_footer();
+get_template_part( 'page-home', 'contest' );
+get_footer();
 ?>
 
 
