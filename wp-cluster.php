@@ -15,8 +15,8 @@
  * @example
  *
  *      // Get Settings Object
- *      Veneer::get_instance()->state->settings;
- *      Veneer::get_instance()->get()
+ *      UsabilityDynamics\Cluster::get_instance()->state->settings;
+ *      UsabilityDynamics\Cluster::get_instance()->get()
  *
  * @namespace Veneer
  * @module Veneer
