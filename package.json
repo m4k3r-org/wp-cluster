@@ -1,11 +1,7 @@
 {
   "name": "wp-festival",
   "description": "Festival Theme for the Drop Network",
-<<<<<<< HEAD
-  "version": "0.4.0",
-=======
-  "version": "2.0.1",
->>>>>>> 8857cfee30ed08580a8404822af49ae8bff0397d
+  "version": "1.2.3",
   "repository": {
     "type": "git",
     "url": "https://ud.git.beanstalkapp.com/wp-festival.git"
