@@ -8,7 +8,6 @@ cgi-bin
 node_modules
 cache
 w3tc-config
-vendor
 upgrade
 uploads
 themes

@@ -41,7 +41,6 @@
       ]
     }
   },
-  "scripts": {},
   "minimum-stability": "dev",
   "license": "GPLv2"
 }
