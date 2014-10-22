@@ -12,20 +12,6 @@ module.exports = function build( grunt ) {
     // Read Composer File.
     package: grunt.file.readJSON( 'composer.json' ),
 
-    // Generate Documentation.
-    yuidoc: {
-      compile: {
-        name: '<%= package.name %>',
-        description: '<%= package.description %>',
-        version: '<%= package.version %>',
-        url: '<%= package.homepage %>',
-        options: {
-          paths: 'lib',
-          outdir: 'static/codex/'
-        }
-      }
-    },
-
     // Compile LESS in app.css
     less: {
       production: {
@@ -130,24 +116,20 @@ module.exports = function build( grunt ) {
   });
 
   // Load tasks
-  grunt.loadNpmTasks( 'grunt-spritefiles' );
   grunt.loadNpmTasks( 'grunt-markdown' );
-  grunt.loadNpmTasks( 'grunt-requirejs' );
-  grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
+  grunt.loadNpmTasks( 'grunt-shell' );
   grunt.loadNpmTasks( 'grunt-contrib-uglify' );
   grunt.loadNpmTasks( 'grunt-contrib-watch' );
   grunt.loadNpmTasks( 'grunt-contrib-less' );
-  grunt.loadNpmTasks( 'grunt-contrib-concat' );
   grunt.loadNpmTasks( 'grunt-contrib-clean' );
-  grunt.loadNpmTasks( 'grunt-shell' );
 
   // Register default task
-  grunt.registerTask( 'default', [ 'markdown', 'less' , 'yuidoc', 'uglify' ] );
+  grunt.registerTask( 'default', [ 'markdown', 'less', 'uglify' ] );
 
   grunt.registerTask( 'install', [ 'default' ] );
   grunt.registerTask( 'build', [ 'default' ] );
 
   // Build Distribution
-  grunt.registerTask( 'distribution', [] );
+  grunt.registerTask( 'release', [] );
 
 };
