@@ -375,7 +375,6 @@ namespace UsabilityDynamics\Cluster {
         //$this->_media = new Media( $this->get( 'media' ) );
         //$this->_varnish = new Varnish($this->get( 'varnish' ));
 
-
         // Initialize Settings.
         $this->set( array(
           "store" => "options",

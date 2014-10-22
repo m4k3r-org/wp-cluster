@@ -6,6 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    'WPModel' => array($vendorDir . '/hanamura/wp-model/src'),
+    'JsonSchema' => array($vendorDir . '/justinrainbow/json-schema/src'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src'),
 );

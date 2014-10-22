@@ -5,6 +5,7 @@
  * @copyright Copyright (c) 2010 - 2013, Usability Dynamics, Inc.
  *
  * @author team@UD
+ * @version 0.2.5
  * @namespace UsabilityDynamics
  * @module Utility
  */
@@ -22,13 +23,13 @@ namespace UsabilityDynamics {
     class Utility {
 
       /**
-       * Class version.
+       * Veneer core version.
        *
        * @static
        * @property $version
-       * @type string
+       * @type {Object}
        */
-      public static $version = '0.3.6';
+      public static $version = '0.3.2';
 
       /**
        * Textdomain String
@@ -55,78 +56,6 @@ namespace UsabilityDynamics {
        * @author potanin@UD
        */
       public function __construct() {}
-
-      /**
-       *
-       * call_user_func( 'UsabilityDynamics\Utility::optimizeDatabase', 'flush-duplicate-meta' );
-       *
-       * UsabilityDynamics\Utility::optimizeDatabase( 'flush-duplicate-meta' );
-       *
-       * @param $action
-       */
-      static public function optimizeDatabase( $action ) {
-        global $wpdb;
-        //die('optimizeDatabase');
-
-        switch( $action ) {
-
-          case 'flush-duplicate-meta':
-
-            $allposts = get_posts(array(
-              "numberposts" => 10,
-              "offset" => 10,
-              "post_type" => 'any',
-              "post_status" => 'any'
-            ));
-
-            foreach ( $allposts as $_post ) {
-
-              $postmeta = get_post_meta($postinfo->ID, $key);
-
-              die( '<pre>' . print_r( $postmeta, true ) . '</pre>');
-
-            }
-
-            $keys = array('address', 'address2', 'city', 'state', 'zip'); //Add post meta keys here
-
-            foreach ( $keys as $key ) {
-
-              foreach( $allposts as $postinfo) {
-
-                // Fetch array of custom field values
-
-
-                //print_r($postinfo);
-
-                if (!empty($postmeta) ) {
-
-                  // Delete the custom field for this post (all occurrences)
-                  delete_post_meta($postinfo->ID, $key);
-
-                  // Insert one and only one custom field
-                  update_post_meta($postinfo->ID, $key, $postmeta[0]);
-
-                }
-              }
-
-            }
-
-
-            break;
-
-          default:
-
-          break;
-
-        }
-
-        //$wpdb->query( "DELETE a,b,c FROM {$wpdb->posts} a LEFT JOIN wp_term_relationships b ON (a.ID = b.object_id) LEFT JOIN {$wpdb->postmeta} c ON (a.ID = c.post_id) WHERE a.post_type = 'revision'" );
-        //$wpdb->query( "DELETE pm FROM wp_postmeta pm LEFT JOIN wp_posts wp ON wp.ID = pm.post_id WHERE wp.ID IS NULL;" );
-        //$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE ('_site_transient_%');" );
-        //$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE ('_transient_%');" );
-
-
-      }
 
       /**
        * Looks for a json or a php file in specified directory, if the file is not found traverse up and look for it again until its found or until a document root is reached
@@ -300,20 +229,21 @@ namespace UsabilityDynamics {
       /**
        * Parses Query.
        * HACK. The current logic solves the issue of max_input_vars in the case if query is huge.
-       * 
+       * For example, user can set more than 150 property attributes (WP-Property) where every attribute has own set of params.
+       *
        * @see parse_str() Default PHP function
-       * @param mixed $request
-       * @version 1.1
+       * @version 1.0
        * @author peshkov@UD
        */
-      static public function parse_str( $request ) {
-        $data = array();
+      static public function parse_str( $request, $data = array() ) {
+        $hash = md5( '%2B' );
+        $request = str_replace( '%2B', $hash, $request );
+        $request = urldecode( $request );
+        $request = str_replace( $hash, '%2B', $request );
         $tokens = explode( "&", $request );
         foreach ( $tokens as $token ) {
-          $token = str_replace( '%2B', md5( '%2B' ), $token );
           $arr = array();
           parse_str( $token, $arr );
-          array_walk_recursive( $arr, create_function( '&$value,$key', '$value = str_replace( md5( "%2B" ), "+", $value );' ) );
           $data = self::extend( $data, $arr );
         }
         return $data;
@@ -2011,12 +1941,15 @@ namespace UsabilityDynamics {
        * @uses add_action() Calls 'admin_menu' hook with an anonymous ( lambda-style ) function which uses add_menu_page to create a UI Log page
        */
       static public function add_log_page() {
+
         if( did_action( 'admin_menu' ) ) {
           _doing_it_wrong( __FUNCTION__, sprintf( __( 'You cannot call UD\Utility::add_log_page() after the %1$s hook.' ), 'init' ), '3.4' );
 
           return false;
         }
-        add_action( 'admin_menu', create_function( '', "add_menu_page( __( 'Log' ,UD_API_Transdomain ), __( 'Log',UD_API_Transdomain ), current_user_can( 'manage_options' ), 'ud_log', array( 'UD_API', 'show_log_page' ) );" ) );
+
+        add_action( 'admin_menu', create_function( '', "add_menu_page( __( 'Log' ,self::$text_domain ), __( 'Log', self::$text_domain ), 10, 'ud_log', array( 'UD_Utility', 'show_log_page' ) );" ) );
+
       }
 
       /**
@@ -2133,7 +2066,7 @@ namespace UsabilityDynamics {
           }
 
           if ( !empty( $args[ 'trigger_action' ] ) && is_callable( 'WP_CRM_N', 'get_trigger_action_notification' ) ) {
-            $notifications = \WP_CRM_N::get_trigger_action_notification( $args[ 'trigger_action' ] );
+            $notifications = WP_CRM_N::get_trigger_action_notification( $args[ 'trigger_action' ] );
             if ( !empty( $notifications ) ) {
               return wp_crm_send_notification( $args[ 'trigger_action' ], $args[ 'data' ] );
             }
@@ -2508,7 +2441,7 @@ namespace UsabilityDynamics {
         //** Replace l10n entries */
         foreach( $data as $k => $v ) {
           if ( is_array( $v ) ) {
-            $data[ $k ] = self::l10n_localize( $v, $l10n );
+            $data[ $k ] = self::l10n_localize( $v );
           } elseif ( is_string( $v ) ) {
             if ( strpos( $v, 'l10n' ) !== false ) {
               preg_match_all( '/l10n\.([^\s]*)/', $v, $matches );
@@ -2524,55 +2457,6 @@ namespace UsabilityDynamics {
         }
 
         return $data;
-      }
-      
-      /**
-       * Wrapper for json_encode function.
-       * Emulates JSON_UNESCAPED_UNICODE.
-       *
-       * @param type $arr
-       * @return JSON
-       * @author peshkov@UD
-       */
-      static public function json_encode( $arr ) {
-        // convmap since 0x80 char codes so it takes all multibyte codes (above ASCII 127). So such characters are being "hidden" from normal json_encoding
-        array_walk_recursive( $arr, create_function( '&$item, $key', 'if (is_string($item)) $item = mb_encode_numericentity($item, array (0x80, 0xffff, 0, 0xffff), "UTF-8");' ) );
-        return mb_decode_numericentity( json_encode( $arr ), array( 0x80, 0xffff, 0, 0xffff ), 'UTF-8' );
-      }
-      
-      /**
-       * Merges any number of arrays / parameters recursively,
-       *
-       * Replacing entries with string keys with values from latter arrays.
-       * If the entry or the next value to be assigned is an array, then it
-       * automagically treats both arguments as an array.
-       * Numeric entries are appended, not replaced, but only if they are
-       * unique
-       *
-       * @source http://us3.php.net/array_merge_recursive
-       * @version 0.4
-       */
-      static public function array_merge_recursive_distinct() {
-        $arrays = func_get_args();
-        $base = array_shift( $arrays );
-        if ( !is_array( $base ) ) $base = empty( $base ) ? array() : array( $base );
-        foreach ( (array)$arrays as $append ) {
-          if ( !is_array( $append ) ) $append = empty( $append ) ? array() : array( $append );
-          foreach ( (array)$append as $key => $value ) {
-            if ( !array_key_exists( $key, $base ) and !is_numeric( $key ) ) {
-              $base[ $key ] = $append[ $key ];
-              continue;
-            }
-            if ( @is_array( $value ) && isset( $base[ $key ] ) && isset( $append[ $key ] ) && is_array( $base[ $key ] ) && is_array( $append[ $key ] ) ) {
-              $base[ $key ] = self::array_merge_recursive_distinct( $base[ $key ], $append[ $key ] );
-            } else if ( is_numeric( $key ) ) {
-              if ( !in_array( $value, $base ) ) $base[ ] = $value;
-            } else {
-              $base[ $key ] = $value;
-            }
-          }
-        }
-        return $base;
       }
 
     }

@@ -12,6 +12,7 @@
   <?php endif; ?>
   <div class="settings-content" style="display:none;">
     <form id="uis_form" action="" method="post" >
+      <?php do_action( 'ud:ui:settings:view:main:top' ); ?>
       <?php wp_nonce_field( 'ui_settings' ); ?>
       <?php if( $this->get( 'menu', 'schema', false ) ) : ?>
         <div class="tabs-wrap">
@@ -20,12 +21,14 @@
               <?php foreach( $this->get( 'menu', 'schema' ) as $menu ) : ?>
                 <li><a href="#tab-<?php echo $menu[ 'id' ]; ?>"><?php echo $menu[ 'name' ]; ?></a></li>
               <?php endforeach; ?>
+              <?php do_action( 'ud:ui:settings:view:tab_link' ); ?>
             </ul>
             <?php foreach( $this->get( 'menu', 'schema' ) as $menu ) : ?>
               <div id="tab-<?php echo $menu[ 'id' ]; ?>" >
                 <?php $this->get_template_part( 'tab', array( 'menu' => $menu ) ); ?>
               </div>
             <?php endforeach; ?>
+            <?php do_action( 'ud:ui:settings:view:tab_container' ); ?>
           </div>
         </div>
       <?php else : ?>
@@ -33,7 +36,11 @@
           <?php $this->get_template_part( 'tab', array( 'menu' => false ) ); ?>
         </div>
       <?php endif; ?>
-      <?php submit_button( __( 'Submit' ), 'button' ); ?>
+      <?php do_action( 'ud:ui:settings:view:main:bottom' ); ?>
+      <div class="actions">
+        <?php submit_button( __( 'Save' ), 'button' ); ?>
+        <?php do_action( 'ud:ui:settings:view:main:actions' ); ?>
+      </div>
     </form>
   </div>
 </div>

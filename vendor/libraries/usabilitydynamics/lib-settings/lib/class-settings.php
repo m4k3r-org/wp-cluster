@@ -161,22 +161,21 @@ namespace UsabilityDynamics {
         ));
 
         // Load Schema.
-        if( isset( $args->schema ) && $args->schema ) {
+        if( $args->schema ) {
           $this->set_schema( $args->schema );
         }
 
         // Set Storage Location(s).
-        if( isset( $args->store ) && $args->store ) {
+        if( $args->store ) {
           $this->_store = $args->store;
         }
 
         // Set Storage Key.
-        if( isset( $args->key ) && $args->key ) {
+        if( $args->key ) {
           $this->_key = $args->key;
         }
-
         // Set transient vxpiration value.
-        if( isset( $args->expiration ) && $args->expiration ) {
+        if( $args->expiration ) {
           $this->_expiration = $args->expiration;
         }
 
@@ -488,11 +487,6 @@ namespace UsabilityDynamics {
        *
        */
       public function _validate() {
-
-        if( !class_exists( 'JsonSchema\Validator' ) ) {
-          return;
-        }
-
         $validator = new \JsonSchema\Validator();
 
         // Process Validation.
