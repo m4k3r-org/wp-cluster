@@ -7,6 +7,10 @@ header{
   }
 
   @media @tablet {
+    min-height: 500px;
+  }
+
+  @media @desktop {
     min-height: 700px;
   }
 
@@ -15,7 +19,7 @@ header{
   }
 
   @media @tv {
-    min-height: 1400px;
+    min-height: 1077px;
   }
 
   .presenter-logos {
@@ -37,9 +41,17 @@ header{
     margin: 0 40px;
 
     img {
-      width: 100%;
+      width: 300px;
       max-width: 564px;
       height: auto;
+
+      @media @desktop {
+        width: 400px;
+      }
+
+      @media @large-desktop {
+        width: 500px;
+      }
     }
   }
 
