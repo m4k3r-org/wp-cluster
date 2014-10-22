@@ -64,6 +64,7 @@
         "nonce_salt": "2]%rCV OEx#XNn&l:+9x--FM+!vSbRtsYIzQ<Za:+_8.a@d0rgzhb9k=ixGTh/pW",
         "secret_key": "N)6&-NfF%rC;.ic) Ua0BAyB;gT\\%L1i]PRmA9Pd7H!w1jO4qEo_sV@71!-[W}r&",
         "force_ssl_admin": false,
+        "github_updater_token": "fa1942c87f9b2a7314636d520d8697fb0d9447f3",
         "wp_elastic_service_index": "no-api.discodonniepresents.com",
         "wp_elastic_service_url": "qccj-nxwm-etsk-niuu",
         "wp_elastic_secret_key": "qccj-nxwm-etsk-niuu-chdq-tvek-desl-izlf",
