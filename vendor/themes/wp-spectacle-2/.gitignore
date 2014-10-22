@@ -1,6 +1,5 @@
 composer.lock
 npm-debug.log
-core/premium
 .svn
 .idea
 .idea/workspace.xml
@@ -17,5 +16,3 @@ core/premium
 *.out
 *.pid
 *.gz
-
-vendor
