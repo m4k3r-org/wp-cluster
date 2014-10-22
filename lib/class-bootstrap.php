@@ -29,7 +29,7 @@ namespace UsabilityDynamics\Cluster {
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.4.1';
+      public static $version = '0.4.3';
 
       /**
        * Textdomain String
