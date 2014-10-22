@@ -8,8 +8,6 @@ Plugin Name: Brightcove Video Cloud
 Plugin URL: 
 Description: An easy to use plugin that inserts Brightcove Video into your Wordpress site. 
 Author: Brightcove
-Version: 1.1
-Author URI: 
 */
 
 require dirname( __FILE__ ) . '/admin/brightcove_admin.php';
