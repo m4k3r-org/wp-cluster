@@ -85,4 +85,40 @@
 		}
 	}
 
+	.video-popup {
+		display: block;
+		position: absolute;
+		z-index: 2;
+
+		width: 42px;
+		height: 42px;
+
+		top: 35%;
+		left: 50%;
+		margin-left: -21px;
+
+		background: #FFF;
+		border-radius: 42px;
+		box-shadow: 0 0 6px #666;
+		text-align: center;
+
+		@media @tablet {
+			width: 64px;
+			height: 64px;
+			margin-left: -32px;
+			top: 40%;
+		}
+
+		.icon-video {
+			color: #329aa8;
+			font-size: 16px;
+			line-height: 42px;
+			padding-left: 5px;
+
+			@media @tablet {
+				font-size: 24px;
+				line-height: 64px;
+			}
+		}
+	}
 }
