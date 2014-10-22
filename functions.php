@@ -35,7 +35,7 @@ include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/promoter.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/credit.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/event-taxonomy.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/venue-taxonomy.php' );
-include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/flawless_page_statsartist-taxonomy.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/artist-taxonomy.php' );
 
 /* Define Child Theme Version */
 define( 'HDDP_Version', '2.1.5' );
