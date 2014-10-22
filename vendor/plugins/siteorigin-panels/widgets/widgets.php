@@ -22,7 +22,7 @@ function origin_widgets_init(){
 add_action('widgets_init', 'origin_widgets_init');
 
 function origin_widgets_enqueue($prefix){
-	if($prefix == 'widgets.php') wp_enqueue_script('origin-widgets-admin-script', plugin_dir_url(SITEORIGIN_PANELS_BASE_FILE) . 'widgets/js/admin.min.js', array('jquery'), SITEORIGIN_PANELS_VERSION);
+	if($prefix == 'widgets.php') wp_enqueue_script('origin-widgets-admin-script', plugin_dir_url(SITEORIGIN_PANELS_BASE_FILE).'/widgets/js/admin.min.js', array('jquery'), SITEORIGIN_PANELS_VERSION);
 }
 add_action('admin_enqueue_scripts', 'origin_widgets_enqueue');
 
