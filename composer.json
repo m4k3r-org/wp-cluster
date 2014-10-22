@@ -35,11 +35,10 @@
     }
   },
   "require": {
-    "php": ">=5.3",
-    "zaininnari/html-minifier": "*",
-    "composer/installers": "*",
-    "usabilitydynamics/lib-ui": "*",
-    "siteorigin/panels": "master"
+    "composer/installers": "~1.0",
+    "zaininnari/html-minifier": "~0.4",
+    "usabilitydynamics/lib-ui": "~0.2",
+    "siteorigin/panels": "~1.4"
   },
   "repositories": [
     {
