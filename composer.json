@@ -84,7 +84,7 @@
         "db_charset": "utf8",
         "db_collate": "utf8_general_ci",
         "disallow_file_edit": true,
-        "disallow_file_mods": true,
+        "disallow_file_mods": false,
         "wp_post_revisions": 30,
         "empty_trash_days": 7,
         "disable_wp_cron": true,
