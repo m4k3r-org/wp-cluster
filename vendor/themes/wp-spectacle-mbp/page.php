@@ -4,9 +4,7 @@
   <section class="presenter-logos">
     <img src="<?php echo get_stylesheet_directory_uri(); ?>/static/images/presenter-logos.png" alt="Disco Donnie Presents ultimo">
   </section>
-
-  <a href="https://www.youtube.com/watch?v=9qB21tkD7Ro" class="play-video icon-video hover-pop"></a>
-
+  
   <h1 class="main-logo">
     <a href="/">
       <img src="<?php echo get_stylesheet_directory_uri(); ?>/static/images/logo.png" alt="Monster Block Party">
