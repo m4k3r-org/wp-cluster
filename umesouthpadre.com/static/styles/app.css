@@ -1529,9 +1529,32 @@ footer a.icon-twitter {
     font-size: 18px;
   }
 }
+.content .button {
+  -webkit-transition: background 200ms ease;
+  -moz-transition: background 200ms ease;
+  -o-transition: background 200ms ease;
+  transition: background 200ms ease;
+  -webkit-transition-property: background;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-family: "Josefin Slab", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 20px;
+  color: #FFF;
+  padding: 0 32px;
+  margin: 0 0 48px 0;
+}
+.content .button:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
 .content em {
   font-family: "Josefin Slab", sans-serif;
-  font-weight: "300italic";
+  font-weight: 300;
+  font-style: italic;
   font-size: 20px;
 }
 .content .ribbon-container {
@@ -1614,4 +1637,45 @@ footer a.icon-twitter {
 }
 .content .ribbon-container .ribbon-right .faux-line {
   margin-left: 45px;
+}
+.content .countdown {
+  margin: 0 auto 48px auto;
+}
+.content .countdown .timer {
+  width: 185px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  color: #FFF;
+  font-family: "Josefin Slab", serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+  margin: 0 auto 10px auto;
+}
+.content .countdown .timer > div {
+  width: 45px;
+  height: 38px;
+  float: left;
+}
+.content .countdown .timer .days {
+  padding-left: 4px;
+}
+.content .countdown .timer .hours,
+.content .countdown .timer .minutes,
+.content .countdown .timer .seconds {
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+}
+.content .countdown .timer-meta {
+  width: 180px;
+  margin: 0 auto;
+  font-size: 12px;
+  color: #d0f4f9;
+}
+.content .countdown .timer-meta > div {
+  width: 45px;
+  text-align: center;
+  float: left;
 }
