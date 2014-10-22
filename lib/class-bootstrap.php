@@ -201,6 +201,9 @@ namespace UsabilityDynamics\Cluster {
         // Sent common response headers.
         $this->_send_headers();
 
+	      // Enable CLI, if in CLI mode
+	      $this->_cli();
+
 	      // Initialize all else.
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
         add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
@@ -758,7 +761,27 @@ namespace UsabilityDynamics\Cluster {
 
       }
 
-      /**
+	    /**
+	     * Enable CLI, if available.
+	     *
+	     * @method _cli
+	     * @author potanin@UD
+	     */
+	    public function _cli() {
+
+		    if( defined( 'WP_CLI' ) && WP_CLI && class_exists( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) ) {
+
+			    include_once( __DIR__ . DIRECTORY_SEPARATOR . 'class-cli.php' );
+
+			    if( class_exists( 'UsabilityDynamics\Cluster\CLI' ) ) {
+				    \WP_CLI::add_command( 'cluster', 'UsabilityDynamics\Cluster\CLI' );
+			    }
+
+		    }
+
+	    }
+
+	    /**
        * Add Frontend Headers
        *
        */

@@ -322,6 +322,7 @@ namespace UsabilityDynamics\Cluster {
        */
       function __construct( $do_stuff = true ){
         global $wp_cluster;
+
         if( !( is_bool( $do_stuff ) && $do_stuff ) ){
           return;
         }
@@ -336,6 +337,7 @@ namespace UsabilityDynamics\Cluster {
           'DB_PASSWORD' => ( defined( 'CLUSTER_PASSWORD' ) ? CLUSTER_PASSWORD : defined( 'DB_PASSWORD' ) ? DB_PASSWORD : false ),
           'DB_HOST' => ( defined( 'CLUSTER_HOST' ) ? CLUSTER_HOST : defined( 'DB_HOST' ) ? DB_HOST : false )
         );
+
         /** Attempt to connect with these creds */
         $this->_connect_to_db( $creds );
         /** If we have a CLUSTER_USER, we should set the multi_db config */
