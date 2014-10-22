@@ -1,6 +1,6 @@
 {
   "name": "wpCloud/wp-vertical-edm",
-  "type": "library",
+  "type": "wordpress-plugin",
   "version": "0.1.0",
   "repositories": [
     {
@@ -15,8 +15,8 @@
     "autoloader-suffix": "VendorPackages"
   },
   "require": {
-    "usabilitydynamics/lib-utility": "master",
-    "usabilitydynamics/lib-model": "master"
+    "usabilitydynamics/lib-utility": "~0.3",
+    "usabilitydynamics/lib-model": "~0.3"
   },
   "autoload": {
     "classmap": [ "lib" ]
