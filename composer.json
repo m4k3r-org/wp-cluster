@@ -44,10 +44,10 @@
     "settings":{
       "site": {
         "db_prefix": "edm_",
-        "db_name": "edm_cluster_new",
-        "db_user": "edm_cluster",
-        "db_password": "Gbq@anViLNsa",
-        "db_host": "10.88.135.7",
+        "db_name": "edm_production",
+        "db_user": "edm_production",
+        "db_password": "psxcazdhbpoxbkfl",
+        "db_host": "rds.wpcloud.io",
         "wp_debug": true,
         "wp_debug_display": false,
         "wp_debug_log": false,
