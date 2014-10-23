@@ -166,7 +166,7 @@ if (! class_exists('WP_Social_Stream') ) {
       );
       $this->data = shortcode_atts( $defaults, $attrs );
 
-      $this->data['callback'] = admin_url('admin-ajax.php?action=social_stream_twitter&shortcode='.base64_encode($data['twitter_consumer_key'].':'.$data['twitter_consumer_secret'].':'.$data['twitter_access_token'].':'.$data['twitter_access_token_secret']));
+      $this->data['callback'] = admin_url('admin-ajax.php?action=social_stream_twitter&shortcode='.base64_encode($this->data['twitter_consumer_key'].':'.$this->data['twitter_consumer_secret'].':'.$this->data['twitter_access_token'].':'.$this->data['twitter_access_token_secret']));
       $this->data['moderate'] = current_user_can('manage_options')?'1':'0';
       $this->data['remove'] = $this->get_removed_items();
 
