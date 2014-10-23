@@ -121,55 +121,26 @@ if( !headers_sent() ) {
 		</div>
 	</footer>
 
-	<?php
-
-	require_once "lib/social-share-count.php";
-	$ssc = new Social_Share_Count();
-
-	$url = 'http://' .$_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
-	$share_count = $ssc->get_total( $url );
-
-	foreach ($share_count as $key => $value )
-	{
-		if ( ($value >= 1000) && ($value < 1000000) )
-		{
-			$share_count[ $key ] = number_format( $value / 1000, 1) .'k';
-		}
-		elseif ( ($value >= 1000000) && ($num < 1000000000) )
-		{
-			$share_count[ $key ] = number_format( $value / 1000000, 1) . 'm';
-		}
-	}
-	?>
 	<div class="share-overlay overlay">
 		<a href="#" class="icon-close"></a>
 
 		<div class="overlay-content">
 
-			<div class="share-count">
-				<h2><?php echo $share_count['total']; ?></h2>
-				<h3>Total Shares</h3>
-			</div>
-
 			<div class="share-wrapper clearfix">
 				<a href="https://twitter.com/intent/tweet?original_referer=http://<?php echo $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]; ?>&text=Ultimate Music Experience 2015 in South Padre Island, Texas&url=http://<?php echo $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]; ?>" target="_blank" class="twitter">
 					<span class="icon-twitter"></span>
-					<em><?php echo $share_count['twitter']; ?></em>
 				</a>
 
 				<a href="https://www.facebook.com/sharer/sharer.php?u=http://<?php echo $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]; ?>" target="_blank" class="facebook">
 					<span class="icon-facebook"></span>
-					<em><?php echo $share_count['facebook']; ?></em>
 				</a>
 
 				<a href="https://plus.google.com/share?url=http://<?php echo $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]; ?>" target="_blank" class="google-plus">
 					<span class="icon-google-plus"></span>
-					<em><?php echo $share_count['google_plus']; ?></em>
 				</a>
 
 				<a href="http://pinterest.com/pin/create/button/?url=http://<?php echo $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]; ?>&media=/static/images/background-1600.jpg&description=Ultimate Music Experience 2015 in South Padre Island, Texas" target="_blank" class="pinterest">
 					<span class="icon-pinterest"></span>
-					<em><?php echo $share_count['pinterest']; ?></em>
 				</a>
 			</div>
 		</div>

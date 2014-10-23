@@ -80,10 +80,11 @@
 			display: block;
 
 			width: 280px;
-			margin: 0 auto 20px auto;
+			margin: 110px auto 20px auto;
 
 			@media @tablet {
 				width: 100%;
+				margin-top: 0;
 			}
 
 			a {
@@ -91,15 +92,14 @@
 
 				display: inline-block;
 				margin: 0 -4px 0 0;
-				padding: 35px 0 0 0;
-
 				width: 140px;
 				height: 140px;
+				line-height: 160px;
 
 				@media @tablet {
 					width: 180px;
 					height: 180px;
-					padding: 52px 0 0 0;
+					line-height: 195px;
 				}
 
 				&.twitter {
@@ -137,16 +137,6 @@
 				[class^="icon-"] {
 					font-size: 32px;
 					font-weight: normal;
-				}
-
-				em {
-					display: block;
-					clear: both;
-					font-style: normal;
-					font-family: "Droid Sans", sans-serif;
-					font-size: 16px;
-					font-weight: 100;
-					margin: 20px 0 0 0;
 				}
 			}
 		}

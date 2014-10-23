@@ -1281,11 +1281,12 @@ th {
 .share-overlay .overlay-content .share-wrapper {
   display: block;
   width: 280px;
-  margin: 0 auto 20px auto;
+  margin: 110px auto 20px auto;
 }
 @media only screen and (min-width: 768px) {
   .share-overlay .overlay-content .share-wrapper {
     width: 100%;
+    margin-top: 0;
   }
 }
 .share-overlay .overlay-content .share-wrapper a {
@@ -1296,15 +1297,15 @@ th {
   -webkit-transition-property: all;
   display: inline-block;
   margin: 0 -4px 0 0;
-  padding: 35px 0 0 0;
   width: 140px;
   height: 140px;
+  line-height: 160px;
 }
 @media only screen and (min-width: 768px) {
   .share-overlay .overlay-content .share-wrapper a {
     width: 180px;
     height: 180px;
-    padding: 52px 0 0 0;
+    line-height: 195px;
   }
 }
 .share-overlay .overlay-content .share-wrapper a.twitter {
@@ -1334,15 +1335,6 @@ th {
 .share-overlay .overlay-content .share-wrapper a [class^="icon-"] {
   font-size: 32px;
   font-weight: normal;
-}
-.share-overlay .overlay-content .share-wrapper a em {
-  display: block;
-  clear: both;
-  font-style: normal;
-  font-family: "Droid Sans", sans-serif;
-  font-size: 16px;
-  font-weight: 100;
-  margin: 20px 0 0 0;
 }
 body {
   background-color: #329aa8;
