@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Josefin+Sans:700|Josefin+Slab:700,300italic);
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans:700|Josefin+Slab:700,300italic,600italic);
 @charset "UTF-8";
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 html {
@@ -1368,6 +1368,15 @@ a {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
+h1 {
+  margin: 0;
+  padding: 0;
+  font-family: "Josefin Slab", serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 60px;
+  line-height: 66px;
+}
 h2,
 h3 {
   font-weight: 700;
@@ -1533,7 +1542,7 @@ footer a.icon-twitter {
   }
 }
 .content {
-  margin-top: -18%;
+  margin-top: -22%;
   text-align: center;
 }
 .content .ic {
@@ -1545,6 +1554,18 @@ footer a.icon-twitter {
   .content .ic {
     font-size: 42px;
     margin: 0 0 42px 0;
+  }
+}
+.content h1 {
+  font-size: 38px;
+  line-height: 44px;
+  margin: 0 0 40px 0;
+}
+@media only screen and (min-width: 992px) {
+  .content h1 {
+    font-size: 60px;
+    line-height: 66px;
+    margin: 0 0 60px 0;
   }
 }
 .content h2 {
@@ -1569,6 +1590,19 @@ footer a.icon-twitter {
 @media only screen and (min-width: 992px) {
   .content h3 {
     font-size: 18px;
+  }
+}
+.content hr.wide {
+  border: 0;
+  height: 1px;
+  background: #FFF;
+  width: 80%;
+  max-width: 390px;
+  margin: 0 auto 40px auto;
+}
+@media only screen and (min-width: 992px) {
+  .content hr.wide {
+    margin: 0 auto 60px auto;
   }
 }
 .content .button {
