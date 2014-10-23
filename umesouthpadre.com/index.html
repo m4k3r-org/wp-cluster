@@ -23,13 +23,13 @@ if( !headers_sent() ) {
   <meta property="og:url" content="http://umesouthpadre.com/" />
   <meta property="og:site_name" content="Ultimate Music Experience 2015" />
   <meta property="article:publisher" content="https://www.facebook.com/UltimateMusicExperience" />
-  <meta property="og:image" content="/static/images/meta.jpg" />
+  <meta property="og:image" content="http://<?php echo $_SERVER["HTTP_HOST"]; ?>/static/images/meta.jpg" />
 
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:site" content="@UMESouthPadre"/>
   <meta name="twitter:domain" content="Ultimate Music Experience 2015"/>
   <meta name="twitter:creator" content="@UMESouthPadre"/>
-  <meta name="twitter:image:src" content="/static/images/meta.jpg">
+  <meta name="twitter:image:src" content="http://<?php echo $_SERVER["HTTP_HOST"]; ?>/static/images/meta.jpg">
 
 	<META HTTP-EQUIV="Pragma" CONTENT="public">
 	<META HTTP-EQUIV="Cache-Control" CONTENT="public, max-age=1800, must-revalidate">
