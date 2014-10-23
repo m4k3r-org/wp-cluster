@@ -466,29 +466,6 @@
         }
     },
     {
-        "name": "usabilitydynamics/lib-carrington",
-        "version": "1.2.10",
-        "version_normalized": "1.2.10.0",
-        "source": {
-            "type": "git",
-            "url": "git@github.com:UsabilityDynamics/lib-carrington",
-            "reference": "master"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://github.com/usabilitydynamics/lib-carrington/archive/master.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "lib/classes"
-            ]
-        }
-    },
-    {
         "name": "usabilitydynamics/lib-wp-shortcode",
         "version": "master",
         "version_normalized": "9999999-dev",
@@ -505,29 +482,6 @@
         },
         "type": "component",
         "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "lib"
-            ]
-        }
-    },
-    {
-        "name": "usabilitydynamics/wp-menufication",
-        "version": "master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "git@github.com:UsabilityDynamics/wp-menufication",
-            "reference": "master"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://github.com/UsabilityDynamics/wp-menufication/archive/master.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "type": "wordpress-plugin",
-        "installation-source": "source",
         "autoload": {
             "classmap": [
                 "lib"
@@ -561,6 +515,52 @@
             "installer-name": "wp-amd"
         },
         "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "lib"
+            ]
+        }
+    },
+    {
+        "name": "usabilitydynamics/lib-carrington",
+        "version": "1.2.10",
+        "version_normalized": "1.2.10.0",
+        "source": {
+            "type": "git",
+            "url": "git@github.com:UsabilityDynamics/lib-carrington",
+            "reference": "master"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/usabilitydynamics/lib-carrington/archive/master.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "lib/classes"
+            ]
+        }
+    },
+    {
+        "name": "usabilitydynamics/wp-menufication",
+        "version": "master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "git@github.com:UsabilityDynamics/wp-menufication",
+            "reference": "master"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/UsabilityDynamics/wp-menufication/archive/master.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "type": "wordpress-plugin",
+        "installation-source": "source",
         "autoload": {
             "classmap": [
                 "lib"
