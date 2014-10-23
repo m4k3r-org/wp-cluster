@@ -6,9 +6,7 @@ if( !headers_sent() ) {
   header( 'ETag: e13bb619fb76745c52371130ed2806a9455b51ce' );
   header( 'Expires: ' . gmdate('D, d M Y H:i:s', time() + (60*30)) . ' GMT');
   header( 'X-Static: true' );
-}
- 
-?>
+} ?>
 <!DOCTYPE html>
 <html class="no-js">
 <head>
@@ -44,7 +42,7 @@ if( !headers_sent() ) {
 			</a>
 		</div>
 
-		<a href="https://www.youtube.com/watch?v=foMWFAkXtGM" class="video-popup"><span class="icon-video"></span></a>
+		<?php /** <a href="https://www.youtube.com/watch?v=foMWFAkXtGM" class="video-popup"><span class="icon-video"></span></a> */ ?>
 	</header>
 
 	<div class="content container">
