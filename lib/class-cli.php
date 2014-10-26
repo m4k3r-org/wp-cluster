@@ -7,7 +7,7 @@
  */
 namespace UsabilityDynamics\Cluster {
 
-  if( !class_exists( 'UsabilityDynamics\Cluster\CLI' ) || !class_exists( 'WP_CLI_Command' ) ) {
+  if( !class_exists( 'UsabilityDynamics\Cluster\CLI' ) && class_exists( 'WP_CLI_Command' ) ) {
 
     /**
      * Manager WordPress cluster.
