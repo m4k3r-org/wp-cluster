@@ -47,6 +47,7 @@ class GitHub_Theme_Updater extends GitHub_Updater {
 		}
 
 		foreach ( (array) $this->config as $theme ) {
+
 			switch( $theme->type ) {
 				case 'github_theme':
 					$repo_api = new GitHub_Updater_GitHub_API( $theme );

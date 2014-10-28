@@ -4,8 +4,7 @@
  */
 try {
 
-
-	header( 'PageSpeed:off' );
+	header( 'PageSpeed:on' );
 
   /** Try to pull in our local debug file if it exists */
   if( file_exists( 'local-debug.php' ) ){

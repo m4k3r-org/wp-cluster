@@ -94,7 +94,6 @@ class GitHub_Plugin_Updater extends GitHub_Updater {
 		}
 
 		if ( is_wp_error( $wp_repo_data ) ) { return false; }
-
 		if ( ! empty( $wp_repo_data['body'] ) ) {
 			$wp_repo_body = unserialize( $wp_repo_data['body'] );
 			if ( is_object( $wp_repo_body ) ) {
