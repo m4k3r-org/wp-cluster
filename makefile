@@ -21,11 +21,3 @@ install:
 	npm install --development
 	php /usr/bin/composer.phar install --prefer-source
 	grunt install
-
-# Build for repository commit
-release:
-	@echo Releasing $(NAME).
-	@rm -rf vendor/composer/installers
-	@rm -rf vendor/composer/installed.json
-	@composer update --prefer-dist --no-dev --no-interaction
-	@git add . --all && git commit -m '[ci skip]' && git push

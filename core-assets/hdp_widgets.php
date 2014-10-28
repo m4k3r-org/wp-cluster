@@ -58,7 +58,7 @@ class HDP_Latest_Posts_Widget extends WP_Widget {
 
     $posts = array();
 
-    foreach( (array) $settings[ 'post_types' ] as $pt ) {
+    foreach( $settings[ 'post_types' ] as $pt ) {
       $params = array();
 
       $params[ 'post_type' ]      = $pt;
