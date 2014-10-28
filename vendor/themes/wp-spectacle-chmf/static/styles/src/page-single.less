@@ -1,24 +1,30 @@
-.single-post-header {
-  .gradient-fade {
-    background-image: linear-gradient(to bottom, rgba(0,0,0, 0) 70%, rgba(0,0,0, 0.6) 80%, rgba(0,0,0, 1) 90% );
+.blog-single {
+  background: rgb(0,0,0);
+
+  .blog-single-featured-image {
+    .logo-mini {
+      max-width: 144px;
+    }
+
+    .blog-single-gradient-fade {
+      .mixin-gradient-background(0,0,0);
+    }
   }
 
-  .logo-mini {
-    margin-left: -72px;
-  }
-
-  .prev-next {
- //   background: rgba(0,0,0,0.8);
-  }
-}
-
-.single-post {
-
-  .title {
-    color: #ff0279;
-  }
-
-  .single-post-content {
+  .blog-single-content {
     color: #f6e7dc;
+
+    .title {
+      color: #ff0279;
+      text-transform: uppercase;
+    }
+
+    hr {
+      background: #b6bdd0;
+    }
+
+    .blog-single-content-container{
+      color: #f6e7dc;
+    }
   }
 }
