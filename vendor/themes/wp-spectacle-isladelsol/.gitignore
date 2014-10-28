@@ -17,4 +17,3 @@ static/codex
 *.out
 *.pid
 *.gz
-/static/styles/app.css

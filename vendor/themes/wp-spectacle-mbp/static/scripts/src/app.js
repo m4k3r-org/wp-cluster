@@ -37,8 +37,9 @@ require( [
   'lib/navigation',
   'lib/swipe',
   'lib/share',
+  'lib/blog',
   'vendor/jquery-dotdotdot/jquery.dotdotdot.min'
-], function( $, isTouch, fancybox, fancyboxMedia, stream, countDown, contests, spectacleTabs, equalHeights, navigation, swipe, share, dotdotdot ){
+], function( $, isTouch, fancybox, fancyboxMedia, stream, countDown, contests, spectacleTabs, equalHeights, navigation, swipe, share, blog, dotdotdot ){
 
   // Performance optimization for window resize event
   $( window ).resize( function() {
@@ -129,7 +130,7 @@ require( [
     });
 
     $('.blog-posts .card .title' ).dotdotdot({
-      height: 34
+      height: 160
     })
   }
 
@@ -147,5 +148,7 @@ require( [
     });
   }
 
+  // Initialize the blog
+  blog.init();
 
 } );

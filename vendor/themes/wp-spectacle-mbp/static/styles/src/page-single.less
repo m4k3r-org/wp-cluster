@@ -1,51 +1,27 @@
-body.single-post {
-  background: rgb(30,30,28);
-}
+.blog-single {
+   background: rgb(30,29,27);
 
-.single-post-header {
-  .gradient-fade {
-    background-image: linear-gradient(to bottom, rgba(30,30,28, 0) 70%, rgba(30,30,28, 0.6) 80%, rgba(30,30,28, 1) 90% );
+   .blog-single-featured-image {
+     .logo-mini {
+       max-width: 210px;
+     }
 
-  }
+     .blog-single-gradient-fade {
+       .mixin-gradient-background(30,29,27);
+     }
+   }
 
-  .logo-mini {
-    margin-left: -105px;
+   .blog-single-content {
+     color: #a7a9ac;
 
-    img {
-      width: 210px;
-    }
-  }
+     .title {
+       font-family: "Playfair Display", serif;
+       color: #FFF;
+       text-transform: none;
+     }
 
-  .prev-next {
-   // background: rgba(0,0,0,0.8);
-  }
-}
-
-.single-post {
-  .page-content {
-    //background: rgba(30,30,28, 0.8);
-
-
-    background: -moz-linear-gradient(top,  rgba(30,30,28,0) 0, rgba(30,29,27,1) 285px);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(30,30,28,0)), color-stop(285px,rgba(30,29,27,1)));
-    background: -webkit-linear-gradient(top,  rgba(30,30,28,0) 0,rgba(30,29,27,1) 285px);
-    background: -o-linear-gradient(top,  rgba(30,30,28,0) 0,rgba(30,29,27,1) 285px);
-    background: -ms-linear-gradient(top,  rgba(30,30,28,0) 0,rgba(30,29,27,1) 285px);
-    background: linear-gradient(to bottom,  rgba(30,30,28,0) 0,rgba(30,29,27,1) 285px);
-
-  }
-
-  .title {
-    font-family: "Playfair Display", serif;
-    color: #FFF;
-    text-transform: none;
-  }
-
-  .single-post-content {
-    color: #a7a9ac;
-  }
-
-  hr {
-    background: #58595b;
-  }
-}
+     hr {
+       background: #58595b;
+     }
+   }
+ }
