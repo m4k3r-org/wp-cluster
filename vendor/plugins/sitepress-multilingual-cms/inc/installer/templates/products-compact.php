@@ -98,8 +98,18 @@ if(!isset($args['product_name'])) $args['product_name'] = $product['name'];
     
 <?php endif; ?>
 
-<?php if(!empty($args['support_link'])): ?>
-<p><?php echo $args['support_link']  ?></p>
+<?php
+if( isset( $args[ 'name' ] ) ):
+    $support_link = $this->get_support_tag_by_name($args['name'], $args['repository']); ?>
+
+    <?php if($support_link): ?>
+<p><a href="<?php echo $support_link ?>" target="_blank"><?php printf(__('%s support on wpml.org', 'installer'), $args['name'] ) ?></a></p>
+
+<?php endif; ?>
+<?php
+// compatibility for installer 1.1
+elseif( isset( $args[ 'support_link' ] ) ): ?>
+    <p><?php echo $args[ 'support_link' ]; ?></p>
 <?php endif; ?>
 
 </div>

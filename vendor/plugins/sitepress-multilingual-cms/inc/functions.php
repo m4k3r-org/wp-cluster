@@ -328,3 +328,45 @@ function wpml_like_escape($text) {
 	/** @noinspection PhpDeprecationInspection */
 	return like_escape($text);
 }
+
+/**
+ * @param $url
+ * Removes the subdirectory in which wordpress is installed from a path.
+ * If wordpress is not installed in a subdirectory, then then input is returned unaltered.
+ * @return string
+ */
+function wpml_strip_subdir_from_url( $url ) {
+
+    //Remove potentially existing subdir slug before checking the url
+    $subdir       = parse_url( home_url(), PHP_URL_PATH );
+    $subdir_slugs = explode( '/', $subdir );
+
+    $url_path  = parse_url( $url, PHP_URL_PATH );
+    $url_slugs = explode( '/', $url_path );
+
+    foreach ( (array) $url_slugs as $key => $slug ) {
+        if ( ! trim( $slug ) ) {
+            unset( $url_slugs[ $key ] );
+        }
+    }
+
+    foreach ( (array) $subdir_slugs as $key => $slug ) {
+        if ( ! trim( $slug ) ) {
+            unset( $subdir_slugs[ $key ] );
+        }
+    }
+
+    if ( ! empty( $subdir_slugs ) && ! empty( $url_slugs ) ) {
+        foreach ( $subdir_slugs as $key => $slug ) {
+            if ( isset( $url_slugs[ $key ] ) && $slug == $url_slugs[ $key ] ) {
+                unset( $url_slugs[ $key ] );
+            }
+        }
+
+        $url_path_new = join( '/', $url_slugs );
+
+        $url = str_replace( $url_path, $url_path_new, $url );
+    }
+
+    return $url;
+}

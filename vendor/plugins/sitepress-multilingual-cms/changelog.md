@@ -1,10 +1,69 @@
+**3.1.8.2**
+
+* **Fixes**
+	* Fixed compatibility issue of json_encode() function with PHP < 5.3.0 not accepting the options argument
+	* Fixed an issue with some terms not being properly displayed on the Taxonomy Translations Screen.
+	
+**3.1.8.1**
+
+* **Fixes**
+	* Fixed a compatibility issue with WooCommerce, showing up when upgrading to 3.1.8
+
+**3.1.8**
+
+* **Improvements**
+	* Added template tag to display HTML input with current language wpml_the_language_input_field()
+	* Added support for translation of string packages
+	* Minor speed improvements related to operations on arrays
+	* Minor speed improvements related to string caching
+	* Minor speed and compatibility improvement: JS files are now called from footer.
+	* Installer: Added pagination for site keys list of Account -> My Sites
+	* Installer: Allow registering new sites by clicking a link in the WordPress admin instead of copying and pasting the site url in the Account -> My Sites section
+	* Installer: Display more detailed debug information related to connectivity issues with the WPML repository
+	* Button "Post type assignments" added to Troubleshooting page allowing to synchronise post types and languages in translation table
+	* Added functionality to allow the same term name across multiple languages without the use of @lang suffixes.
+	* Added functionality to remove existing language suffixes to the troubleshooting menu.
+
+* **Compatibility**
+	* Fixed category setting for Woocommerce products
+
+* **Fixes**
+	* Fixed some PHP notices and warnings
+	* Fixed search form on secondary language
+	* Fixed issue with caching on page set as front page
+	* Fixed: Taxonomy terms are not showing on the WPML->Taxonomy Translation page 
+	* icl_object_id function now works well also with unregistered custom post types
+	* Minor issues with language switcher on mobile devices
+	* Fixed problem with language switcher options during installation
+	* Textarea for additional CSS for language switcher was too wide, now it fits into screen. 
+	* Fixed influence of admin language on settings for language switcher in menu
+	* wp_nav_menu now always displays language switcher when configured
+	* Fixed custom queries while using a root page
+	* Fixed DB error when fetching completed translations from ICanLocalize
+	* Installer: Fixed problem with WPML registration information (site key) not being saved when the option_value field in the wp_options table used a different charset than the default WordPress charset defined in wp-config.php
+	* Installer: Reversed the order in which the site keys are displayed.
+	* Fixed pagination on root page
+	* Fixed root page permalink on post edit screen
+	* Fixed root page preview
+	* Fixed minor issues in wp-admin with RTL languages 
+	* Fix for conflicting values of context when registering strings for translation
+	* Fixed: Archive of untranslated custom post type should not display <link rel="alternate" hreflang="" href=""/> in header
+	* Fixed language filters for get_terms() function
+	* Fixed problem with taxonomy (e.g. category) parents synchronization
+	* Fixed problem with editing post slug
+	* Removed unnecessary taxonomy selector from Taxonomy translation page
+	* Fixed some PHP notices on WPML Languages page with "All Languages" selected on language switcher
+	* Fixed problem with adding categories by simply pressing "Enter" key (post edit screen).
+	* Removed option to delete default category translations
+	* Fixed missing terms filtering by current language in admin panel
+	* Fixed problem with comments quick edit
+
 **3.1.7.2**
 
 * **Improvements**
-  * Installer support for WordPress Multisite
+	* Installer support for WordPress Multisite
 * **Fixes**
-	* Fixed: Caching issue when duplicating posts 
-	
+	* Fixed: Caching issue when duplicating posts
 
 **3.1.7.1**
 
@@ -13,7 +72,6 @@
 	* Fixed: WordPress database error: Duplicate entry during post delete
 	* Fixed: Preview page does not work on Root page
 	* Fixed: Fatal error: Call to a member function get_setting() on a non-object
-
 
 **3.1.7**
 

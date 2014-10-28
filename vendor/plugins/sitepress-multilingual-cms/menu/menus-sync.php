@@ -4,6 +4,7 @@
 $active_languages = $sitepress->get_active_languages();
 $default_language = $sitepress->get_default_language();
 $default_language_details = $sitepress->get_language_details( $default_language );
+$secondary_languages = array();
 
 foreach ( $active_languages as $lang ) {
 	if ( $lang[ 'code' ] != $default_language_details[ 'code' ] ) {

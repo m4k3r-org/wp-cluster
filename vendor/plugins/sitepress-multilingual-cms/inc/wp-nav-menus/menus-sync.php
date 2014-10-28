@@ -412,6 +412,8 @@ class ICLMenusSync
 		if ( is_array( $this->menus ) ) {
 			foreach ( $this->menus as $menu_id => $menu ) {
 
+                if(!is_array($menu['translations'])) continue;
+
 				foreach ( $menu[ 'translations' ] as $language => $tmenu ) {
 					if ( !empty( $tmenu ) ) {
 						foreach ( $tmenu[ 'items' ] as $titem ) {
@@ -811,19 +813,21 @@ class ICLMenusSync
 			// deleted items #2 (menu order beyond)
 			static $d2_items = array();
 			$deleted_items = array();
-			foreach ( $this->menus[ $menu_id ][ 'translations' ] as $language => $tmenu ) {
+			if ( isset( $this->menus[ $menu_id ][ 'translation' ] ) && is_array( $this->menus[ $menu_id ][ 'translation' ] ) ) {
+				foreach ( $this->menus[ $menu_id ][ 'translations' ] as $language => $tmenu ) {
 
-				if ( !isset( $d2_items[ $language ] ) )
-					$d2_items[ $language ] = array();
-
-				if ( !empty( $this->menus[ $menu_id ][ 'translations' ][ $language ][ 'deleted_items' ] ) ) {
-					foreach ( $this->menus[ $menu_id ][ 'translations' ][ $language ][ 'deleted_items' ] as $deleted_item ) {
-						if ( !in_array( $deleted_item[ 'ID' ], $d2_items[ $language ] ) && $deleted_item[ 'menu_order' ] > count( $this->menus[ $menu_id ][ 'items' ] ) ) {
-							$deleted_items[ $language ][ ] = $deleted_item;
-							$d2_items[ $language ][ ]      = $deleted_item[ 'ID' ];
-						}
+					if ( ! isset( $d2_items[ $language ] ) ) {
+						$d2_items[ $language ] = array();
 					}
 
+					if ( ! empty( $this->menus[ $menu_id ][ 'translations' ][ $language ][ 'deleted_items' ] ) ) {
+						foreach ( $this->menus[ $menu_id ][ 'translations' ][ $language ][ 'deleted_items' ] as $deleted_item ) {
+							if ( ! in_array( $deleted_item[ 'ID' ], $d2_items[ $language ] ) && $deleted_item[ 'menu_order' ] > count( $this->menus[ $menu_id ][ 'items' ] ) ) {
+								$deleted_items[ $language ][ ] = $deleted_item;
+								$d2_items[ $language ][ ]      = $deleted_item[ 'ID' ];
+							}
+						}
+					}
 				}
 			}
 			if ( $deleted_items ) {
@@ -852,23 +856,25 @@ class ICLMenusSync
 			// show deleted item?
 			static $mo_added = array();
 			$deleted_items = array();
-			foreach ( $this->menus[ $menu_id ][ 'translations' ] as $language => $tmenu ) {
+            if(isset($this->menus[$menu_id]['translation']) && is_array($this->menus[$menu_id]['translation'])) {
+                foreach ( $this->menus[ $menu_id ][ 'translations' ] as $language => $tmenu ) {
 
-				if ( !isset( $mo_added[ $language ] ) )
-					$mo_added[ $language ] = array();
+                    if ( !isset( $mo_added[ $language ] ) )
+                        $mo_added[ $language ] = array();
 
-				if ( !empty( $this->menus[ $menu_id ][ 'translations' ][ $language ][ 'deleted_items' ] ) ) {
-					foreach ( $this->menus[ $menu_id ][ 'translations' ][ $language ][ 'deleted_items' ] as $deleted_item ) {
+                    if ( !empty( $this->menus[ $menu_id ][ 'translations' ][ $language ][ 'deleted_items' ] ) ) {
+                        foreach ( $this->menus[ $menu_id ][ 'translations' ][ $language ][ 'deleted_items' ] as $deleted_item ) {
 
-						if ( !in_array( $item[ 'menu_order' ], $mo_added[ $language ] ) && $deleted_item[ 'menu_order' ] == $item[ 'menu_order' ] ) {
-							$deleted_items[ $language ] = $deleted_item;
-							$mo_added[ $language ][ ]   = $item[ 'menu_order' ];
-							$need_sync++;
-						}
+                            if ( !in_array( $item[ 'menu_order' ], $mo_added[ $language ] ) && $deleted_item[ 'menu_order' ] == $item[ 'menu_order' ] ) {
+                                $deleted_items[ $language ] = $deleted_item;
+                                $mo_added[ $language ][ ]   = $item[ 'menu_order' ];
+                                $need_sync++;
+                            }
 
-					}
-				}
-			}
+                        }
+                    }
+                }
+            }
 
 			if ( $deleted_items ) {
 				?>

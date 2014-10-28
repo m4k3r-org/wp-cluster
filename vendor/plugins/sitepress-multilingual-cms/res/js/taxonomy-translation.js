@@ -49,6 +49,7 @@ var WPML_Translate_taxonomy = {
             success:    
                 function(ret){                
                     jQuery('#wpml_tt_taxonomy_translation_wrap').html(ret);
+	                  WPML_Translate_taxonomy.working_end();
                 }   
                 
             });    
@@ -183,7 +184,8 @@ var WPML_Translate_taxonomy = {
                         this_form.find('.errors').html(ret.errors);    
                         
                     }else{                        
-                        this_form.find('input[name=slug]').val(ret.slug);                        
+                        this_form.find('input[name=slug]').val(ret.slug);
+                        this_form.find('input[name=submit]').val('Update');
                         WPML_Translate_taxonomy.hide_form(this_form);
 //                        this_form.prev().html(this_form.find('input[name=name]').val()).removeClass('lowlight');
 						this_form.prev().html(this_form.find('input[name=term_leveled]').val() + this_form.find('input[name=name]').val()).removeClass('lowlight');

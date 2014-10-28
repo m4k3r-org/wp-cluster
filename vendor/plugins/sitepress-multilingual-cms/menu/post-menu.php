@@ -269,7 +269,7 @@ if (isset($translations) && count($translations) == 1 && count(SitePress::get_or
         <?php else: ?>
             <p style="clear:both;"><b><?php _e('Translate yourself', 'sitepress'); ?></b></p>
         <?php endif; ?>
-        <table width="100%" class="icl_translations_table">
+	    <table width="100%" id="icl_untranslated_table" class="icl_translations_table">
         <tr>
             <th>&nbsp;</th>
             <th align="right"><?php _e('Translate', 'sitepress') ?></th>
@@ -492,7 +492,7 @@ if (isset($translations) && count($translations) == 1 && count(SitePress::get_or
                 <?php if($edit_link == '#'):
                     icl_pop_info($edit_anchor, ICL_PLUGIN_URL . '/res/img/' .$img, array('icon_size' => 16, 'but_style'=>array('icl_pop_info_but_noabs')));
                 else: ?>
-                <a href="<?php echo $edit_link ?>" title="<?php echo esc_attr($edit_anchor) ?>"><img border="0" src="<?php
+	            <a href="<?php echo $edit_link?>" title="<?php echo esc_attr($edit_anchor) ?>" class="add_translation_link"><img  border="0" src="<?php
                     echo ICL_PLUGIN_URL . '/res/img/' . $img ?>" alt="<?php echo esc_attr($edit_anchor) ?>" width="16" height="16" /></a>
                 <?php endif; ?>
 

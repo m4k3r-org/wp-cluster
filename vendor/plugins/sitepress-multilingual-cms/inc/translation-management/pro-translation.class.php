@@ -711,8 +711,8 @@ class ICL_Pro_Translation{
                 $iclq->cms_update_request_status($request_id, CMS_TARGET_LANGUAGE_DONE, $language_server);
                 
                 $translations = $sitepress->get_element_translations($tinfo->trid, $tinfo->element_type);
-                
-                if(isset($translations[$tinfo->language_code])){
+
+	            if ( isset( $translations[ $tinfo->language_code ] ) && is_numeric( $ret ) ) {
                     $iclq->report_back_permalink($request_id, $language_server, $translations[$tinfo->language_code]);
                 }
                 

@@ -42,6 +42,8 @@ class SitePress
 
 	function __construct()
 	{
+		do_action('wpml_before_startup');
+
 		global $wpdb, $pagenow;
 
 		$this->settings = get_option( 'icl_sitepress_settings' );
@@ -110,7 +112,7 @@ class SitePress
 
 		//add_filter('tag_template', array($this, 'load_taxonomy_template'));
 
-		if ( $this->settings[ 'existing_content_language_verified' ] && $this->settings[ 'setup_complete' ] ) {
+		if ( $this->settings[ 'existing_content_language_verified' ] && ( $this->settings[ 'setup_complete' ] || ( !empty($_GET[ 'page' ]) && $this->settings['setup_wizard_step']==3 && $_GET[ 'page' ] == ICL_PLUGIN_FOLDER . '/menu/languages.php'  ) ) ) {
 
 		// Post/page language box
 			if ( $pagenow == 'post.php' || $pagenow == 'post-new.php' || $pagenow == 'edit.php' ) {
@@ -122,17 +124,12 @@ class SitePress
 			// Post/page save actions
 			add_action( 'save_post', array( $this, 'save_post_actions' ), 100, 2 );
 
-			//post/page delete taxonomy
-			add_action( 'deleted_term_relationships', array( $this, 'deleted_term_relationships' ), 10, 2 );
-
 			add_action( 'updated_post_meta', array( $this, 'update_post_meta' ), 100, 4 );
 			add_action( 'added_post_meta', array( $this, 'update_post_meta' ), 100, 4 );
 			add_action( 'updated_postmeta', array( $this, 'update_post_meta' ), 100, 4 ); // ajax
 			add_action( 'added_postmeta', array( $this, 'update_post_meta' ), 100, 4 ); // ajax
 			add_action( 'delete_postmeta', array( $this, 'delete_post_meta' ) ); // ajax
 
-			// filter user taxonomy input
-			add_filter( 'pre_post_tax_input', array( $this, 'validate_taxonomy_input' ) );
 
 			// Post/page delete actions
 			//            add_action('delete_post', array($this,'delete_post_actions'));
@@ -154,8 +151,12 @@ class SitePress
 			add_filter( 'the_posts', array( $this, 'the_posts' ), 10 );
 			add_filter( 'get_pages', array( $this, 'get_pages' ), 100, 2 );
 
+			// Filter links to the root page
+			add_filter('page_link', array($this, 'filter_root_permalink'), 10, 2);
+
 			if ( $pagenow == 'edit.php' ) {
 				add_action( 'admin_footer', array( $this, 'language_filter' ) );
+				add_action( 'quick_edit_custom_box', array( 'WPML_Terms_Translations', 'quick_edit_terms_removal' ), 10, 2 );
 			}
 
 			add_filter( 'get_pages', array( $this, 'exclude_other_language_pages2' ) );
@@ -168,56 +169,41 @@ class SitePress
 
 			add_filter( 'get_comment_link', array( $this, 'get_comment_link_filter' ) );
 
-			//Taxonomies
-			if ( version_compare( preg_replace( '#-RC[0-9]+(-[0-9]+)?$#', '', $GLOBALS[ 'wp_version' ] ), '3.1', '<' ) ) {
-				add_filter( 'category_link', array( $this, 'category_permalink_filter' ), 1, 2 );
-				add_filter( 'tag_link', array( $this, 'tax_permalink_filter' ), 1, 2 );
+			// filter the saving of terms so that the taxonomy_ids of translated terms are correctly adjusted across taxonomies
+			add_action('created_term_translation', array( 'WPML_Terms_Translations', 'sync_ttid_action' ), 10, 3 );
+			// filters terms by language for the term/tag-box autoselect
+			if ( ( isset( $_GET[ 'action' ] ) && ( $_GET[ 'action' ] == 'ajax-tag-search' )
+			       || isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'get-tagcloud' ) ) {
+				add_filter( 'get_terms', array( 'WPML_Terms_Translations', 'get_terms_filter' ), 10, 2 );
 			}
 
-			add_filter( 'term_link', array( $this, 'tax_permalink_filter' ), 1, 2 );
+			$this->set_term_filters_and_hooks();
 
-			add_action( 'create_term', array( $this, 'create_term' ), 1, 2 );
-			add_action( 'edit_term', array( $this, 'create_term' ), 1, 2 );
-			add_action( 'delete_term', array( $this, 'delete_term' ), 1, 3 );
+			// The delete filter only ensures the synchronizing of delete actions beween translations of a term.
+			add_action( 'delete_term', array( 'WPML_Terms_Translations', 'delete_term_filter' ), 1, 3 );
+		    add_filter('pre_term_slug', array( 'WPML_Terms_Translations', 'pre_term_slug_filter' ), 10, 2 );
+			add_action( 'set_object_terms', array( 'WPML_Terms_Translations', 'set_object_terms_action' ), 10, 6 );
 
-			add_action( 'get_term', array( $this, 'get_term_filter' ), 1, 2 );
-			add_filter( 'get_terms_args', array( $this, 'get_terms_args_filter' ) );
+			// AJAX Actions for the post edit screen
+			add_action( 'wp_ajax_wpml_get_post_parent_id_by_lang', array( 'WPML_Post_Edit_Ajax', 'wpml_get_post_parent_id_by_lang' ) );
+			add_action( 'wp_ajax_wpml_get_taxonomy_terms_json', array( 'WPML_Post_Edit_Ajax', 'wpml_get_taxonomy_terms_json' ) );
+			add_action( 'wp_ajax_wpml_add_term_to_post', array( 'WPML_Post_Edit_Ajax', 'wpml_add_term_to_post' ) );
+			add_action( 'wp_ajax_wpml_remove_terms_from_post', array( 'WPML_Post_Edit_Ajax', 'wpml_remove_terms_from_post' ) );
+			add_action( 'wp_ajax_wpml_switch_post_language', array( 'WPML_Post_Edit_Ajax', 'wpml_switch_post_language' ) );
+			add_action( 'wp_ajax_wpml_before_switch_post_language', array( 'WPML_Post_Edit_Ajax', 'wpml_before_switch_post_language' ) );
+			add_action( 'wp_ajax_wpml_set_post_edit_lang', array( 'WPML_Post_Edit_Ajax', 'wpml_set_post_edit_lang' ) );
+			add_action( 'wp_ajax_wpml_get_translated_taxonomies', array( 'WPML_Post_Edit_Ajax', 'wpml_get_translated_taxonomies' ) );
+			add_action( 'wp_ajax_wpml_get_translations_table_data', array( 'WPML_Post_Edit_Ajax', 'wpml_get_translations_table_data' ) );
+			add_action( 'wp_ajax_wpml_get_post_permalink', array( 'WPML_Post_Edit_Ajax', 'wpml_get_post_permalink' ) );
+			add_action( 'wp_ajax_wpml_get_default_lang', array( 'WPML_Post_Edit_Ajax', 'wpml_get_default_lang' ) );
 
-			// filters terms by language
-			add_filter( 'terms_clauses', array( $this, 'terms_clauses' ), 10, 4 );
-			add_filter( 'list_terms_exclusions', array( $this, 'exclude_other_terms' ), 1, 2 );
-
-			// allow adding terms with the same name in different languages
-			add_filter( "pre_term_name", array( $this, 'pre_term_name' ), 1, 2 );
-			// allow adding categories with the same name in different languages
-			add_action( 'admin_init', array( $this, 'pre_save_category' ) );
-
-			//Hooking to 'option_{taxonomy}_children' to translate taxonomy children
-//			global $wp_taxonomies;
-//			foreach ( $wp_taxonomies as $tax_key => $tax ) {
-//				if ( $this->is_translated_taxonomy( $tax_key ) && is_taxonomy_hierarchical($tax_key) ) {
-//					add_filter("option_{$tax_key}_children", array($this, 'option_taxonomy_children'), 10 );
-//					add_filter("pre_update_option_{$tax_key}_children", array($this, 'pre_update_option_taxonomy_children'), 10, 2 );
-//				}
-//			}
-
-			add_filter( 'get_edit_term_link', array( $this, 'get_edit_term_link' ), 1, 4 );
+			// Ajax Action for the updating of term names on the troubleshooting page
+			add_action( 'wp_ajax_wpml_update_term_names_troubleshoot', array( 'WPML_Troubleshooting_Terms_Menu', 'wpml_update_term_names_troubleshoot' ) );
 
 			// short circuit get default category
 			add_filter( 'pre_option_default_category', array( $this, 'pre_option_default_category' ) );
 			add_filter( 'update_option_default_category', array( $this, 'update_option_default_category' ), 1, 2 );
-
-			add_filter( 'the_category', array( $this, 'the_category_name_filter' ) );
-			add_filter( 'get_terms', array( $this, 'get_terms_filter' ) );
-			add_filter( 'get_the_terms', array( $this, 'get_the_terms_filter' ), 10, 3 );
-
-			add_filter( 'single_cat_title', array( $this, 'the_category_name_filter' ) );
-			add_filter( 'term_links-category', array( $this, 'the_category_name_filter' ) );
-
-			add_filter( 'term_links-post_tag', array( $this, 'the_category_name_filter' ) );
-			add_filter( 'tags_to_edit', array( $this, 'the_category_name_filter' ) );
-			add_filter( 'single_tag_title', array( $this, 'the_category_name_filter' ) );
-
+			add_action( 'after-category-table', array( 'WPML_Terms_Translations', 'category_display_action' ), 1, 1 );
 
 			// custom hook for adding the language selector to the template
 			add_action( 'icl_language_selector', array( $this, 'language_selector' ) );
@@ -294,18 +280,6 @@ class SitePress
 			// column with links to translations (or add translation) - low priority
 			add_action( 'init', array( $this, 'configure_custom_column' ), 1010 ); // accommodate Types init@999
 
-			// adjust queried categories and tags ids according to the language
-			if ( $this->settings[ 'auto_adjust_ids' ] ) {
-				add_action( 'parse_query', array( $this, 'parse_query' ) );
-				add_action( 'wp_list_pages_excludes', array( $this, 'adjust_wp_list_pages_excludes' ) );
-				if ( !is_admin() ) {
-					add_filter( 'get_term', array( $this, 'get_term_adjust_id' ), 1, 1 );
-					add_filter( 'category_link', array( $this, 'category_link_adjust_id' ), 1, 2 );
-					add_filter( 'get_terms', array( $this, 'get_terms_adjust_ids' ), 1, 3 );
-					add_filter( 'get_pages', array( $this, 'get_pages_adjust_ids' ), 1, 2 );
-				}
-			}
-
 			if ( !is_admin() ) {
 				add_action( 'wp_head', array( $this, 'meta_generator_tag' ) );
 			}
@@ -324,8 +298,6 @@ class SitePress
 			if ( $this->settings[ 'seo' ][ 'canonicalization_duplicates' ] ) {
 				add_action( 'template_redirect', array( $this, 'setup_canonical_urls' ), 100 );
 			}
-			add_filter( 'taxonomy_template', array($this, 'slug_template') );
-			add_filter( 'category_template', array($this, 'slug_template') );
 
 			add_action( 'init', array( $this, '_taxonomy_languages_menu' ), 99 ); //allow hooking in
 
@@ -344,7 +316,6 @@ class SitePress
 			add_action( 'icl_dashboard_widget_notices', array( $this, 'print_translatable_custom_content_status' ) );
 		}
 
-
 		add_filter( 'core_version_check_locale', array( $this, 'wp_upgrade_locale' ) );
 
 		if ( $pagenow == 'post.php' && isset( $_REQUEST[ 'action' ] ) && $_REQUEST[ 'action' ] == 'edit' && isset( $_GET[ 'post' ] ) ) {
@@ -356,7 +327,7 @@ class SitePress
 		add_filter( 'get_pagenum_link', array( $this, 'get_pagenum_link' ) );
 	
 		add_action('switch_blog', array($this, 'init_settings'));
-	add_filter('url_to_postid', array($this, 'url_to_postid'));
+		add_filter('url_to_postid', array($this, 'url_to_postid'));
 	
 		//cron job to update WPML config index file from CDN
 		add_action('update_wpml_config_index', array($this,'update_wpml_config_index_event'));
@@ -367,8 +338,13 @@ class SitePress
 
 		add_action('core_upgrade_preamble', array($this, 'update_index_screen'));
 				
-				add_shortcode('wpml_language_selector_widget', 'icl_language_selector');
-				add_shortcode('wpml_language_selector_footer', 'icl_language_selector_footer');
+		add_shortcode('wpml_language_selector_widget', 'icl_language_selector');
+		add_shortcode('wpml_language_selector_footer', 'icl_language_selector_footer');
+		
+		add_filter('get_search_form', array($this, 'get_search_form_filter'));
+
+		add_action('plugins_loaded', array($this, 'load_dependencies'), 10000);
+		do_action('wpml_after_startup');
 	}
 
 	function get_pagenum_link( $url ) {
@@ -395,6 +371,8 @@ class SitePress
 
 	function init()
 	{
+		do_action('wpml_before_init');
+
 		global $wpdb;
 
 		$this->get_user_preferences();
@@ -457,7 +435,11 @@ class SitePress
 					if ( isset( $_POST[ 'lang' ] ) && isset( $al[ $_POST[ 'lang' ] ] ) ) {
 						$this->this_lang = $_POST[ 'lang' ];
 					} else {
-						$this->this_lang = $this->get_admin_language_cookie();
+						if ($this->check_if_admin_action_from_referer()){
+							$this->this_lang = $this->get_admin_language_cookie();
+						} elseif(isset($_SERVER['HTTP_REFERER'])) {
+							$this->this_lang = $this->get_language_from_url($_SERVER['HTTP_REFERER']);
+						}
 					}
 				} elseif ( $lang = $this->get_admin_language_cookie() ) {
 					$this->this_lang = $lang;
@@ -529,7 +511,18 @@ class SitePress
 							$this->this_lang = $default_language;
 						}
 
-						if ( !trim( $path, '/' ) && $this->settings[ 'urls' ][ 'directory_for_default_language' ] ) {
+						/* If we access the root url via a non root slug/parameter combination,
+						 * we redirect accordingly.
+						 */
+						if ( $this->settings[ 'language_negotiation_type' ] == 1 && $this->settings[ 'urls' ][ 'directory_for_default_language' ] && $this->settings[ 'urls' ][ 'show_on_root' ] == 'page' ) {
+							$filtered_root_url = $this->filter_root_permalink( wpml_strip_subdir_from_url( site_url() ) . $_SERVER[ 'REQUEST_URI' ] );
+							if ( $filtered_root_url != wpml_strip_subdir_from_url( site_url() ) . $_SERVER[ 'REQUEST_URI' ] ) {
+								wp_redirect( $filtered_root_url, 302 );
+								exit();
+							}
+						}
+
+						if ( $this->is_root_page() ) {
 							if ( $this->settings[ 'urls' ][ 'show_on_root' ] == 'html_file' ) {
 								// html file
 								if ( false === strpos( $this->settings[ 'urls' ][ 'root_html_file_path' ], '/' ) ) {
@@ -538,15 +531,11 @@ class SitePress
 									$html_file = $this->settings[ 'urls' ][ 'root_html_file_path' ];
 								}
 
+								/** @noinspection PhpIncludeInspection */
 								include $html_file;
 								exit;
-
 							} else {
-								//page
-								if ( !trim( $path, '/' ) ) {
-									wpml_home_url_setup_root_page();
-								}
-
+								wpml_home_url_setup_root_page();
 							}
 						}
 
@@ -651,6 +640,8 @@ class SitePress
 				}
 			}
 
+			WPML_Troubleshooting_Terms_Menu::display_terms_with_suffix_admin_notice();
+
 			// filter some queries
 			add_filter( 'query', array( $this, 'filter_queries' ) );
 
@@ -749,19 +740,308 @@ class SitePress
 				//$this->switch_lang($default_language, true);
 			}
 		}
-		// Disable the Admin language switcher when in Taxonomy Translation page
+		// set language to default and remove language switcher when in Taxonomy Translation page
 		// If the page uses AJAX and the language must be forced to default, please use the
 		// if ( $pagenow == 'admin-ajax.php' )above
-		if ( is_admin() && isset( $_GET[ 'page' ] ) && $_GET[ 'page' ] == ICL_PLUGIN_FOLDER . '/menu/taxonomy-translation.php' ) {
-				//@todo: remove the following live after WPML 3.5 release
-			//$this->switch_lang($default_language, true);
+		if ( is_admin() && isset( $_GET[ 'page' ] ) && ( $_GET[ 'page' ] == ICL_PLUGIN_FOLDER . '/menu/taxonomy-translation.php' || $_GET[ 'page' ] == ICL_PLUGIN_FOLDER . '/menu/menus-sync.php' )  ) {
+			$default_language = $this->get_admin_language();
+			$this->switch_lang($default_language, true);
 			add_action( 'init', array( $this, 'remove_admin_language_switcher'));
+		}
+
+		/* Posts and new inline created terms, can only be saved in an active language.
+		 * Also the content of the post-new.php should always be filtered for one specific
+		 * active language, so to display the correct taxonomy terms for selection.
+		 */
+		if ( $pagenow == 'post-new.php' ) {
+			if ( ! $this->is_active_language( $this->get_current_language() ) ) {
+				$default_language = $this->get_admin_language();
+				$this->switch_lang( $default_language, true );
+			}
 		}
 
 		//Code to run when reactivating the plugin
 		$recently_activated = $this->get_setting('just_reactivated');
 		if($recently_activated) {
 			add_action( 'init', array( $this, 'rebuild_language_information' ), 1000 );
+		}
+
+		do_action('wpml_after_init');
+	}
+
+	/**
+	 * @param bool|String $requested_url String If this is specified the value of $url will be checked for whether it's the root page.
+	 *                       Checks whether the currently requested page is the root page.
+	 *
+	 * @return bool
+	 */
+	function is_root_page( $requested_url = false ) {
+
+		/*
+		 * A request leads to the root page under the following conditions.
+		 *
+		 * 1. The get parameter on it specifically requests the root page via either:
+		 *  ?preview_id = {root_page_id}
+		 *  ?page_id = {root_page_id}
+		 *  ?p = {root_page_id}
+		 *
+		 * 2. The root page slug is the first slug after the domain.
+		 *
+		 * 3. There is no slug after the domain and the get parameters are not set as to redirect
+		 *    to another page meaning:
+		 *  no ?p, ?page_id or similar query parameter redirects to another post/page
+		 *  no get parameter such as ?cat redirects to an archive page
+		 *
+		 */
+
+		$is_root = true;
+
+		// before checking anything see if the site even uses a root page
+
+		$urls = $this->get_setting( 'urls' );
+
+		if ( ! $urls
+		     || ! isset( $urls[ 'directory_for_default_language' ] )
+		     || ! $urls[ 'directory_for_default_language' ]
+		     || ! isset( $urls[ 'root_page' ] )
+		     || $urls[ 'root_page' ] == 0
+		) {
+			$is_root = false;
+		} elseif ( isset( $_SERVER[ 'REQUEST_URI' ] ) || $requested_url !== false ) {
+
+			$root_id   = $urls[ 'root_page' ];
+			$root_slug = false;
+			if ( $root_id ) {
+				$root_page_object = get_post( $root_id );
+				if ( $root_page_object && isset( $root_page_object->post_name ) ) {
+					$root_slug = $root_page_object->post_name;
+				}
+			}
+
+			if ( $root_slug === false ) {
+				$is_root = false;
+			} else {
+
+				if ( $requested_url ) {
+					$request_uri = parse_url( $requested_url, PHP_URL_PATH );
+                    $query_string = parse_url( $requested_url, PHP_URL_QUERY );
+                    if( $query_string ) {
+                        $request_uri .= '?' . $query_string;
+                    }
+				} else {
+					$request_uri = $_SERVER[ 'REQUEST_URI' ];
+				}
+
+                //If the get parameter ? is not preceeded by a /, add a '/'
+                if ( strpos( $request_uri, '?' ) !== false && strpos( $request_uri, '/?' ) === false ) {
+                    $request_uri = str_replace( '?', '/?', $request_uri );
+                }
+
+				$request_uri = wpml_strip_subdir_from_url( $request_uri );
+
+				//First get the slug of the requested url, should there be one.
+				$slugs_and_get_params = explode( '/', $request_uri );
+
+				foreach ( $slugs_and_get_params as $key => $slug ) {
+					if ( ! trim( $slug ) ) {
+						unset( $slugs_and_get_params[ $key ] );
+					}
+				}
+
+				// if we have any slugs or get parameters it could be we are not on the root page
+
+				if ( ! empty( $slugs_and_get_params ) ) {
+					$get_query_string = '';
+					// First of all see if we have get parameters
+					if ( isset( $_GET ) && ! empty( $_GET ) ) {
+						$get_query_string = array_pop( $slugs_and_get_params );
+						/* In case we have get parameters we can instantly be sure to be on the root page
+						 * This can be done by either id parameters or by slug/name parameters.
+						 * ID parametes as of WP 4.1 are : p, page_id
+						 * Name parameters as of WP 4.1 are: name, pagename
+						 */
+
+						if ( ( isset( $_GET[ 'p' ] ) && $_GET[ 'p' ] != $root_id )
+						     || ( isset( $_GET[ 'page_id' ] ) && $_GET[ 'page_id' ] != $root_id )
+						     || ( isset( $_GET[ 'name' ] ) && $_GET[ 'name' ] != $root_slug )
+						     || ( isset( $_GET[ 'pagename' ] ) && $_GET[ 'pagename' ] != $root_slug )
+						) {
+							$is_root = false;
+						}
+					}
+
+					/*
+					 * Next up there are other get parameters that allow us to recognize not being on the root page for certain.
+					 * These only come into play when neither of the above page parameters is set and therefore no specific page is queried for.
+					 */
+					if ( ! ( isset( $_GET[ 'pagename' ] ) || isset( $_GET[ 'name' ] ) || isset( $_GET[ 'page_id' ] ) || isset( $_GET[ 'p' ] ) ) ) {
+
+						/* The under these conditions excluded parameters, that ensure the root page to not be queried for, are determined in this way:
+						 * First we fetch all rewrite rules. This has to be done from the options cache since the actual rewrite object is not initialized yet.
+						 * Initializing it would impose a siginificant performance hit too.
+						 */
+						$query = new WP_Query( str_replace( '?', '', $get_query_string ) );
+
+						if ( ( $query->is_archive() ) ) {
+							$is_root = false;
+						}
+					}
+
+
+					// In case we have slugs, we need to check the last slug for whether it is the slug of the root page
+
+					if ( $is_root && ! empty( $slugs_and_get_params ) ) {
+						$slugs       = $slugs_and_get_params;
+						$last_slug   = array_pop( $slugs );
+						$second_slug = array_pop( $slugs );
+						if ( ( $root_slug != $last_slug && ! is_numeric( $last_slug )
+						       || ( is_numeric( $last_slug ) && $second_slug != null && $root_slug != $second_slug && 'page' != $second_slug ) )
+						     && ( ! ( isset( $_GET[ 'p' ] ) && $_GET[ 'p' ] == $root_id )
+						          || ! ( isset( $_GET[ 'page_id' ] ) && $_GET[ 'page_id' ] == $root_id )
+						          || ! ( isset( $_GET[ 'name' ] ) && $_GET[ 'name' ] == $root_slug )
+						          || ! ( isset( $_GET[ 'pagename' ] ) && $_GET[ 'pagename' ] == $root_slug ) )
+						) {
+							/* If the last slug is not the root slug or numeric,
+							 * then the current page is not the root page. This condition only holds though
+							 * in case no page/post parameters are appended to the request, that point towards the root page.
+							 */
+							$is_root = false;
+						}
+					}
+				}
+			}
+		}
+
+		return $is_root;
+	}
+
+	/**
+	 * @param $url
+	 * Filters links to the root page, so that they are displayed properly in the front-end.
+	 *
+	 * @return mixed
+	 */
+	function filter_root_permalink( $url ) {
+		$urls             = $this->get_setting( 'urls' );
+		$root_id          = $urls[ 'root_page' ];
+		$root_page_object = get_post( $root_id );
+		$url              = str_replace( ' ', '', $url );
+		$url              = str_replace( '%20/', '/', $url );
+
+		if ( $this->is_root_page( $url ) ) {
+			$root_slug = $root_page_object->post_name;
+
+			// Remove all whitespaces from urls
+			$method  = '';
+			$new_url = str_replace( 'http://', '', $url );
+			if ( $new_url != $url ) {
+				$method = 'http://';
+			} else {
+				$new_url = str_replace( 'https://', '', $url );
+				if ( $new_url != $url ) {
+					$method = 'https://';
+				}
+			}
+
+			$query = '';
+
+			if ( strpos( $new_url, '?' ) !== false ) {
+
+				$split_by_get_url  = explode( '?', $new_url );
+				$url_without_query = array_shift( $split_by_get_url );
+				$query             = implode( '?', $split_by_get_url );
+			} else {
+				$url_without_query = $new_url;
+			}
+
+			$slugs       = explode( '/', $url_without_query );
+
+			foreach ( $slugs as $key => $slug ) {
+				if ( $slug == '' || strpos( $slug, parse_url( $url, PHP_URL_HOST ) ) !== false ) {
+					unset( $slugs[ $key ] );
+				}
+			}
+
+			$last_slug   = array_pop( $slugs );
+			$second_slug = array_pop( $slugs );
+
+			if ( $second_slug == $root_slug && ( is_numeric( $last_slug ) || $last_slug == "" ) ) {
+				$url_without_query   = str_replace( '/' . $second_slug . '/', '/', $url_without_query );
+				$potential_lang_slug = array_pop( $slugs );
+			} elseif ( $last_slug == $root_slug ) {
+				$url_without_query   = str_replace( '/' . $last_slug, '/', $url_without_query );
+				$potential_lang_slug = $second_slug;
+			} else {
+				$potential_lang_slug = array_pop( $slugs );
+			}
+
+			$all_langs = $this->get_active_languages();
+
+			foreach ( $all_langs as $lang ) {
+				if ( $lang[ 'code' ] == $potential_lang_slug ) {
+					$url_without_query = str_replace( '/' . $potential_lang_slug, '/', $url_without_query );
+					break;
+				}
+			}
+			$new_url = trailingslashit($url_without_query);
+
+			if ( $query != '' ) {
+				$new_url = $new_url . '?' . $query;
+			}
+
+			/* Only if we actually have a root url, do we filter the url here.
+			 * This is to ensure that cases like url/wp-admin/members/root-slug are properly
+			 * differentiated from actualy root page calls, in case of root-slug's with
+			 * generic names potentially causing collisions.
+			 */
+
+			if ( empty( $slugs ) ) {
+				$url = $method . $new_url;
+			}
+		}
+
+		return $url;
+	}
+
+	function load_dependencies() {
+		do_action('wpml_load_dependencies');
+	}
+
+	/**
+	 * Sets up all term/taxonomy actions for use outside Translations Management or the Post Edit screen
+	 */
+	function set_term_filters_and_hooks(){
+		add_filter( 'terms_clauses', array( $this, 'terms_clauses' ), 10, 4 );
+		add_filter( 'list_terms_exclusions', array( $this, 'exclude_other_terms' ), 1, 2 );
+		add_filter( 'term_link', array( $this, 'tax_permalink_filter' ), 1, 2 );
+		add_action( 'create_term', array( $this, 'create_term' ), 1, 2 );
+		add_action( 'edit_term', array( $this, 'create_term' ), 1, 2 );
+		add_filter( 'get_terms_args', array( $this, 'get_terms_args_filter' ) );
+		add_filter( 'get_edit_term_link', array( $this, 'get_edit_term_link' ), 1, 4 );
+
+		add_action('wp_ajax_icl_repair_broken_type_and_language_assignments', 'icl_repair_broken_type_and_language_assignments');
+
+		//Taxonomies
+		if ( version_compare( preg_replace( '#-RC[0-9]+(-[0-9]+)?$#', '', $GLOBALS[ 'wp_version' ] ), '3.1', '<' ) ) {
+			add_filter( 'category_link', array( $this, 'category_permalink_filter' ), 1, 2 );
+			add_filter( 'tag_link', array( $this, 'tax_permalink_filter' ), 1, 2 );
+		}
+		add_filter( 'taxonomy_template', array( $this, 'slug_template' ) );
+		add_filter( 'category_template', array( $this, 'slug_template' ) );
+
+		//post/page delete taxonomy
+		add_action( 'deleted_term_relationships', array( $this, 'deleted_term_relationships' ), 10, 2 );
+
+		// adjust queried categories and tags ids according to the language
+		if ( $this->settings[ 'auto_adjust_ids' ] ) {
+			add_action( 'parse_query', array( $this, 'parse_query' ) );
+			add_action( 'wp_list_pages_excludes', array( $this, 'adjust_wp_list_pages_excludes' ) );
+			if ( !is_admin() ) {
+				add_filter( 'get_term', array( $this, 'get_term_adjust_id' ), 1, 1 );
+				add_filter( 'category_link', array( $this, 'category_link_adjust_id' ), 1, 2 );
+				add_filter( 'get_terms', array( $this, 'get_terms_adjust_ids' ), 1, 3 );
+				add_filter( 'get_pages', array( $this, 'get_pages_adjust_ids' ), 1, 2 );
+			}
 		}
 	}
 
@@ -838,6 +1118,21 @@ class SitePress
 	{
 		require ICL_PLUGIN_PATH . '/ajax.php';
 	}
+
+	function check_if_admin_action_from_referer() {
+
+		$result = false;
+		if ( isset( $_SERVER[ 'HTTP_REFERER' ] ) ) {
+			$http_referer  = parse_url( $_SERVER[ 'HTTP_REFERER' ] );
+			$referer_path  = $http_referer[ 'path' ];
+			$referer_parts = explode( '/', $referer_path );
+			if ( in_array( 'wp-admin', $referer_parts ) ) {
+				$result = true;
+			}
+		}
+
+		return $result;
+}
 
 	function configure_custom_column()
 	{
@@ -1804,6 +2099,24 @@ class SitePress
 		return true;
 	}
 
+	/**
+	 * @param $lang_code
+	 * Checks if a given language code belongs to a currently active language.
+	 * @return bool
+	 */
+	function is_active_language( $lang_code ) {
+		$result = false;
+		$active_languages = $this->get_active_languages();
+		foreach ( $active_languages as $lang ) {
+			if ( $lang_code == $lang[ 'code' ] ) {
+				$result = true;
+				break;
+			}
+		}
+
+		return $result;
+	}
+
 	function get_languages( $lang = false )
 	{
 		global $wpdb;
@@ -2558,15 +2871,54 @@ class SitePress
 			} else {
 				$page_basename = false;
 			}
+
+			if ( isset( $_SERVER[ 'SCRIPT_NAME' ] ) && ( strpos( $_SERVER[ 'SCRIPT_NAME' ], 'post-new.php' ) || strpos( $_SERVER[ 'SCRIPT_NAME' ], 'post.php' ) ) ) {
+				wp_register_script( 'sitepress-post-edit-tags', ICL_PLUGIN_URL . '/res/js/post-edit-terms.js', array( 'jquery', 'underscore' ) );
+				$post_edit_messages = array(
+					'switch_language_title' => __( 'You are about to change the language of {post_name}.', 'sitepress' ),
+					'switch_language_alert' => __( 'All categories and tags will be translated if possible.', 'sitepress' ),
+					'connection_loss_alert' => __( 'The following terms do not have a translation in the chosen language and will be disconnected from this post:', 'sitepress' ),
+					'loading'               => __( 'Loading Language Data for {post_name}', 'sitepress' ),
+					'switch_language_message' => __( 'Please make sure that you\'ve saved all the changes. We will have to reload the page.', 'sitepress' ),
+					'switch_language_confirm' => __( 'Do you want to continue?', 'sitepress' ),
+				);
+				wp_localize_script( 'sitepress-post-edit-tags', 'icl_post_edit_messages', $post_edit_messages );
+				wp_enqueue_script( 'sitepress-post-edit-tags' );
+			}
+
+			if ( isset( $_SERVER[ 'SCRIPT_NAME' ] ) &&  strpos( $_SERVER[ 'SCRIPT_NAME' ], 'edit.php' ) ) {
+				wp_register_script( 'sitepress-post-list-quickedit', ICL_PLUGIN_URL . '/res/js/post-list-quickedit.js', array( 'jquery') );
+				wp_enqueue_script( 'sitepress-post-list-quickedit' );
+			}
+
 			wp_enqueue_script( 'sitepress-scripts', ICL_PLUGIN_URL . '/res/js/scripts.js', array( 'jquery' ), ICL_SITEPRESS_VERSION );
 			if ( isset( $page_basename ) && file_exists( ICL_PLUGIN_PATH . '/res/js/' . $page_basename . '.js' ) ) {
 				$dependencies = array();
+				$localization = false;
 				switch ( $page_basename ) {
 					case 'languages':
 						$dependencies[ ] = 'colorpicker';
 						break;
+					case 'troubleshooting':
+						$dependencies [ ] = 'jquery-ui-dialog';
+						$localization = array(
+							'object_name' => 'troubleshooting_strings',
+							'strings'     => array(
+								'success_1'       => __( "Post type and source language assignment have been fixed for ", 'sitepress' ),
+								'success_2'       => __( " elements", 'sitepress' ),
+								'no_problems'     => __( "No errors were found in the assignment of post types." ),
+								'suffixesRemoved' => __( "Language suffixes were removed from the selected terms." )
+							)
+						);
+						wp_enqueue_style("wp-jquery-ui-dialog");
+						break;
 				}
-				wp_enqueue_script( 'sitepress-' . $page_basename, ICL_PLUGIN_URL . '/res/js/' . $page_basename . '.js', $dependencies, ICL_SITEPRESS_VERSION );
+				$handle = 'sitepress-' . $page_basename;
+				wp_register_script( $handle, ICL_PLUGIN_URL . '/res/js/' . $page_basename . '.js', $dependencies, ICL_SITEPRESS_VERSION );
+				if ( $localization ) {
+					wp_localize_script( $handle, $localization[ 'object_name' ], $localization[ 'strings' ] );
+				}
+				wp_enqueue_script( $handle );
 			} else {
 				wp_enqueue_script( 'translate-taxonomy', ICL_PLUGIN_URL . '/res/js/taxonomy-translation.js', array( 'jquery' ), ICL_SITEPRESS_VERSION );
 			}
@@ -3079,7 +3431,7 @@ class SitePress
 		global $wpdb;
 
 		// Do not set language for the front page, if defined
-		$is_root_page = isset( $this->settings[ 'urls' ][ 'root_page' ] ) && $this->settings[ 'urls' ][ 'root_page' ] === $el_id;
+		$is_root_page = isset( $this->settings[ 'urls' ][ 'root_page' ] ) && $this->settings[ 'urls' ][ 'root_page' ] != 0 && $this->settings[ 'urls' ][ 'root_page' ] == $el_id;
 		if ( $is_root_page ) {
 			$trid = $this->get_element_trid($el_id, $el_type);
 			if($trid) {
@@ -3113,7 +3465,7 @@ class SitePress
 				WHERE   trid = '{$trid}'
 					AND language_code = '{$language_code}'
 					AND element_id <> '{$el_id}'
-					AND source_language_code <> NULL
+					AND source_language_code IS NOT NULL
 			" );
 
 			if ( $translation_id ) {
@@ -3177,6 +3529,11 @@ class SitePress
 
 			$wpdb->insert( $wpdb->prefix . 'icl_translations', $new );
 			$translation_id = $wpdb->insert_id;
+		}
+
+		if ( $translation_id && substr( $el_type, 0, 4 ) === 'tax_' ) {
+			$taxonomy = substr( $el_type, 4 );
+			do_action( 'created_term_translation', $taxonomy, $el_id, $language_code );
 		}
 
 		return $translation_id;
@@ -3429,6 +3786,10 @@ class SitePress
 			}
 		}
 
+		if ( ! $this->is_active_language( $language_code ) ) {
+			$language_code = $default_language;
+		}
+
 		// set trid if front-end translation creating
 		$trid = apply_filters( 'wpml_save_post_trid_value', $trid, $post_status );
 		// set post language if front-end translation creating
@@ -3445,7 +3806,37 @@ class SitePress
 			}
 		}
 
-		$translation_id = $this->set_element_language_details( $post_id, $element_type, $trid, $language_code, $source_language );
+		/* Before setting the language of the post to be saved, check if a translation in this language already exists
+		 * This check is necessary, so that synchronization actions like thrashing or un-trashing of posts, do not lead to
+		 * database corruption, due to erroneously changing a posts language into a state,
+		 * where it collides with an existing translation. While the UI prevents this sort of action for the most part,
+		 * this is not necessarily the case for other plugins like TM.
+		 * The logic here first of all checks if an existing translation id is present in the desired language_code.
+		 * If so but this translation is actually not the currently to be saved post,
+		 * then this post will be saved to its current language. If the translation already exists,
+		 * the existing translation id will be used. In all other cases a new entry in icl_translations will be created.
+		 */
+		$existing_translations = $this->get_element_translations( $trid, $element_type );
+
+		if ( $existing_translations && isset( $existing_translations[ $language_code ] ) ) {
+			$current_language_details = $this->get_element_language_details( $post_id, $element_type );
+			$existing_translation     = $existing_translations[ $language_code ];
+			if ( $current_language_details
+			     && isset( $current_language_details->language_code )
+			     && $existing_translation
+			     && isset( $existing_translation->element_id )
+			     && isset( $current_language_details->element_id )
+			     && $existing_translation->element_id != $current_language_details->element_id
+			) {
+				$translation_id = $existing_translations[ $current_language_details->language_code ]->translation_id;
+				$language_code  = $current_language_details->language_code;
+			} else {
+				$translation_id = $existing_translations[ $existing_translation->language_code ]->translation_id;
+			}
+		} else {
+			$translation_id = $this->set_element_language_details( $post_id, $element_type, $trid, $language_code, $source_language );
+		}
+
 		//get trid of $translation_id
 		$translated_id_trid = $wpdb->get_var( $wpdb->prepare( "SELECT trid FROM {$wpdb->prefix}icl_translations WHERE translation_id=%d", array( $translation_id) ) );
 		//get all translations
@@ -3459,9 +3850,11 @@ class SitePress
 		}
 
 		// synchronize the page order for translations
-		if ( $trid && $this->settings[ 'sync_page_ordering' ] && $translated_element_id && is_array($translated_element_id)) {
+		if ( $trid && $this->settings[ 'sync_page_ordering' ] && $translated_element_id && is_array( $translated_element_id ) ) {
 			$menu_order = esc_sql( $post_vars[ 'menu_order' ] );
-			$wpdb->query( "UPDATE {$wpdb->posts} SET menu_order={$menu_order} WHERE ID IN (" . join( ',', $translated_element_id ) . ")" );
+			// Only use non-null element ids for the menu ordering.
+			$non_null_eids = array_filter( $translated_element_id );
+			$wpdb->query( "UPDATE {$wpdb->posts} SET menu_order={$menu_order} WHERE ID IN (" . join( ',', $non_null_eids ) . ")" );
 		}
 
 			// synchronize the page parent for translations
@@ -3585,37 +3978,6 @@ class SitePress
 			}
 		}
 
-		// sync taxonomies (ONE WAY)
-		if ( !empty( $this->settings[ 'sync_post_taxonomies' ] ) && $language_code == $default_language ) {
-			$translatable_taxs = $this->get_translatable_taxonomies( true, $post_vars[ 'post_type' ] );
-			$all_taxs          = get_object_taxonomies( $post_vars[ 'post_type' ] );
-			if ( !empty( $all_taxs ) ) {
-				$translations = $this->get_element_translations( $trid, 'post_' . $post_vars[ 'post_type' ] );
-				foreach ( $all_taxs as $tt ) {
-					$terms = get_the_terms( $post_id, $tt );
-					if ( !empty( $terms ) ) {
-						foreach ( $translations as $target_lang => $translation ) {
-							if ( $target_lang != $language_code ) {
-								$tax_sync = array();
-								foreach ( $terms as $term ) {
-									if ( in_array( $tt, $translatable_taxs ) ) {
-										$term_id = icl_object_id( $term->term_id, $tt, false, $target_lang );
-									} else {
-										$term_id = $term->term_id;
-									}
-									if ( $term_id ) {
-										$tax_sync[ ] = intval( $term_id );
-									}
-								}
-								//set the fourth parameter in 'true' because we need to add new terms, instead of replacing all
-								wp_set_object_terms( $translation->element_id, $tax_sync, $tt, true );
-							}
-						}
-					}
-				}
-			}
-		}
-
 		// sync post dates
 		if ( !empty( $this->settings[ 'sync_post_date' ] ) ) {
 			if ( $language_code == $default_language ) {
@@ -3643,20 +4005,6 @@ class SitePress
 						$wpdb->update( $wpdb->posts, array( 'post_date' => $post_date, 'post_date_gmt' => get_gmt_from_date( $post_date ) ), array( 'ID' => $post_id ) );
 					}
 				}
-			}
-		}
-
-		// new categories created inline go to the correct language
-		if ( isset( $post_vars[ 'post_category' ] ) && is_array( $post_vars[ 'post_category' ] ) && $post_vars[ 'action' ] != 'inline-save' && isset( $post_vars[ 'icl_post_language' ] ) && $post_vars[ 'icl_post_language' ] ) {
-			foreach ( $post_vars[ 'post_category' ] as $cat ) {
-				$ttid = $wpdb->get_var( "SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy} WHERE term_id={$cat} AND taxonomy='category'" );
-				$translations_data = array( 'language_code' => $post_vars[ 'icl_post_language' ] );
-				if ( $source_language ) {
-					//in case a source language is set we add it to the category entry in icl_translations
-					$translations_data[ 'source_language_code' ] = $source_language;
-				}
-				$translations_where = array( 'element_id' => $ttid, 'element_type' => 'tax_category' );
-				$wpdb->update( $wpdb->prefix . 'icl_translations', $translations_data, $translations_where );
 			}
 		}
 
@@ -4255,15 +4603,17 @@ class SitePress
 		}
 
 
-		if ( ( empty( $deleted_posts ) || ( is_array( $deleted_posts ) && !isset( $deleted_posts[ $post_id ] ) ) ) ) {
-			$translations = $this->get_element_translations( $trid, $element_type );
-			foreach ( $translations as $t ) {
-				if ( $t->element_id != $post_id ) {
-					$deleted_posts[ ] = $post_id;
-					$post_exists_sql  = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE id = %d", $t->element_id );
-					$post_exists      = $wpdb->get_col( $post_exists_sql );
-					if ( $post_exists ) {
-						wp_delete_post( $t->element_id );
+		if ( !isset( $_REQUEST['delete_all'] ) && !isset( $_REQUEST['delete_all2'] ) ) {
+			if ( ( empty( $deleted_posts ) || ( is_array( $deleted_posts ) && !isset( $deleted_posts[ $post_id ] ) ) ) ) {
+				$translations = $this->get_element_translations( $trid, $element_type );
+				foreach ( $translations as $t ) {
+					if ( $t->element_id != $post_id ) {
+						$deleted_posts[ ] = $post_id;
+						$post_exists_sql  = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE id = %d", $t->element_id );
+						$post_exists      = $wpdb->get_col( $post_exists_sql );
+						if ( $post_exists ) {
+							wp_delete_post( $t->element_id );
+						}
 					}
 				}
 			}
@@ -4313,19 +4663,20 @@ class SitePress
 		$post_type = $wpdb->get_var( "SELECT post_type FROM {$wpdb->posts} WHERE ID={$post_id}" );
 
 		if ( $this->settings[ 'sync_delete' ] ) {
-			static $untrashed_posts = array();
-
-			if ( isset( $untrashed_posts[ $post_id ] ) ) {
-				return; // avoid infinite loop
-			}
-
-			$untrashed_posts[ $post_id ] = $post_id;
 
 			$trid         = $this->get_element_trid( $post_id, 'post_' . $post_type );
 			$translations = $this->get_element_translations( $trid, 'post_' . $post_type );
 			foreach ( $translations as $t ) {
-				if ( $t->element_id != $post_id ) {
+				/* The first line of these checks ensures, that we are actually restoring a trashed post.
+				 * The second line ensures, that this post is not going to be restored anyways through a bulk
+				 * action from the UI.
+				 */
+				if ( isset( $t->element_id ) && $t->element_id != $post_id && get_post_status( $t->element_id ) == 'trash'
+				     && ! ( isset( $_REQUEST[ 'post' ] ) && is_array( $_REQUEST[ 'post' ] ) && in_array( $t->element_id, $_REQUEST[ 'post' ] ) )
+				) {
+					remove_action( 'untrashed_post', array( $this, 'untrashed_post_actions' ) );
 					wp_untrash_post( $t->element_id );
+					add_action( 'untrashed_post', array( $this, 'untrashed_post_actions' ) );
 				}
 			}
 		}
@@ -4334,42 +4685,6 @@ class SitePress
 		icl_cache_clear( $post_type . 's_per_language', true );
 	}
 
-	function validate_taxonomy_input( $input )
-	{
-		global $wpdb;
-		static $runonce;
-
-
-		if ( empty( $runonce ) ) {
-			$post_language = isset( $_POST[ 'icl_post_language' ] ) ? $_POST[ 'icl_post_language' ] : $this->get_current_language();
-			if ( !empty( $input ) && is_array( $input ) ) {
-				foreach ( $input as $taxonomy => $values ) {
-					if ( is_string( $values ) ) { // only not-hierarchical
-						$values = array_map( 'trim', explode( ',', $values ) );
-						foreach ( $values as $k => $term ) {
-
-							// if the term exists in another language, apply the language suffix
-							$term_info = term_exists( $term, $taxonomy );
-							if ( $term_info ) {
-								$term_language = $wpdb->get_var( $wpdb->prepare( "SELECT language_code FROM {$wpdb->prefix}icl_translations
-										WHERE element_type=%s AND element_id=%d", 'tax_' . $taxonomy, $term_info[ 'term_taxonomy_id' ] ) );
-								if ( $term_language && $term_language != $post_language ) {
-									$term = $term . ' @' . $post_language;
-								}
-							}
-
-							$values[ $k ] = $term;
-						}
-						$values             = join( ',', $values );
-						$input[ $taxonomy ] = $values;
-					}
-				}
-			}
-			$runonce = true;
-		}
-
-		return $input;
-	}
 
 	/**
 	 * @param int    $trid
@@ -4396,23 +4711,23 @@ class SitePress
 		if ( $trid ) {
 			if ( 0 === strpos( $el_type, 'post_' ) ) {
 
-					$sel_add     = ', p.post_title, p.post_status';
-					$join_add    = " LEFT JOIN {$wpdb->posts} p ON t.element_id=p.ID";
-					$groupby_add = "";
+				$sel_add     = ', p.post_title, p.post_status';
+				$join_add    = " LEFT JOIN {$wpdb->posts} p ON t.element_id=p.ID";
+				$groupby_add = "";
 
-					if ( !is_admin() && empty( $all_statuses ) && $el_type != 'post_attachment' ) {
-						// the current user may not be the admin but may have read private post/page caps!
-						if ( current_user_can( 'read_private_pages' ) || current_user_can( 'read_private_posts' ) ) {
-							$where_add .= " AND (p.post_status = 'publish' OR p.post_status = 'private')";
-						} else {
-							$where_add .= " AND (";
-							$where_add .= "p.post_status = 'publish'";
-							if ( $uid = $this->get_current_user()->ID ) {
-								$where_add .= " OR (post_status in ('draft', 'private') AND  post_author = {$uid})";
-							}
-							$where_add .= ") ";
+				if ( ! is_admin() && empty( $all_statuses ) && $el_type != 'post_attachment' ) {
+					// the current user may not be the admin but may have read private post/page caps!
+					if ( current_user_can( 'read_private_pages' ) || current_user_can( 'read_private_posts' ) ) {
+						$where_add .= " AND (p.post_status = 'publish' OR p.post_status = 'private' OR p.post_status = 'pending')";
+					} else {
+						$where_add .= " AND (";
+						$where_add .= "p.post_status = 'publish' OR p.post_status = 'pending' ";
+						if ( $uid = $this->get_current_user()->ID ) {
+							$where_add .= " OR (post_status in ('draft', 'private', 'pending') AND  post_author = {$uid})";
 						}
+						$where_add .= ") ";
 					}
+				}
 
 			} elseif ( preg_match( '#^tax_(.+)$#', $el_type ) ) {
 				$sel_add     = ', tm.name, tm.term_id, COUNT(tr.object_id) AS instances';
@@ -5604,6 +5919,76 @@ class SitePress
 		endif;
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @deprecated deprecated since version 3.1.8
+	 * @return array|mixed
+	 */
+	function the_category_name_filter( $name ) {
+		if ( is_array( $name ) ) {
+			foreach ( $name as $k => $v ) {
+				$name[ $k ] = $this->the_category_name_filter( $v );
+			}
+
+			return $name;
+		}
+		if ( false === strpos( $name, '@' ) ) {
+			return $name;
+		}
+		if ( false !== strpos( $name, '<a' ) ) {
+			$int = preg_match_all( '|<a([^>]+)>([^<]+)</a>|i', $name, $matches );
+			if ( $int && count( $matches[ 0 ] ) > 1 ) {
+				$originals = $filtered = array();
+				foreach ( $matches[ 0 ] as $m ) {
+					$originals[ ] = $m;
+					$filtered[ ]  = $this->the_category_name_filter( $m );
+				}
+				$name = str_replace( $originals, $filtered, $name );
+			} else {
+				$name_sh = strip_tags( $name );
+				$exp     = explode( '@', $name_sh );
+				$name    = str_replace( $name_sh, trim( $exp[ 0 ] ), $name );
+			}
+		} else {
+			$name = preg_replace( '#(.*) @(.*)#i', '$1', $name );
+		}
+
+		return $name;
+	}
+
+	/**
+	 * @param $terms
+	 *
+	 * @deprecated deprecated since version 3.1.8
+	 * @return mixed
+	 */
+	function get_terms_filter( $terms ) {
+		if ( is_wp_error( $terms ) ) {
+			return $terms;
+		}
+		foreach ( $terms as $k => $v ) {
+			if ( isset( $terms[ $k ]->name ) ) {
+				$terms[ $k ]->name = $this->the_category_name_filter( $terms[ $k ]->name );
+			}
+		}
+
+		return $terms;
+	}
+
+	/**
+	 * @param $terms
+	 * @param $id
+	 * @param $taxonomy
+	 *
+	 * @deprecated deprecated since version 3.1.8
+	 * @return mixed
+	 */
+	function get_the_terms_filter( $terms, $id, $taxonomy ) {
+		return $terms;
+	}
+
+
 	function create_term( $cat_id, $tt_id )
 	{
 		global $wpdb, $wp_taxonomies;
@@ -5688,6 +6073,10 @@ class SitePress
 
 		$term_lang = apply_filters( 'wpml_create_term_lang', $term_lang );
 
+		if ( ! $this->is_active_language( $term_lang ) ) {
+			$term_lang = $default_language;
+		}
+
 		$this->set_element_language_details( $tt_id, $icl_el_type, $trid, $term_lang, $src_language );
 
 		// sync translations parent
@@ -5718,87 +6107,15 @@ class SitePress
 	function get_language_for_term( $term_id, $el_type )
 	{
 		global $wpdb;
-		$term_id = $wpdb->get_var( "SELECT term_taxonomy_id FROM {$wpdb->prefix}term_taxonomy WHERE term_id = {$term_id}" );
-		if ( $term_id ) {
-			return $wpdb->get_var( "SELECT language_code FROM {$wpdb->prefix}icl_translations WHERE element_id = {$term_id} AND element_type = '{$el_type}'" );
+		$ttid = $wpdb->get_var( "SELECT term_taxonomy_id FROM {$wpdb->prefix}term_taxonomy WHERE term_id = {$term_id} AND taxonomy = '{$el_type}' " );
+		if ( $ttid ) {
+			$el_type = 'tax_' . $el_type;
+			return $wpdb->get_var( "SELECT language_code FROM {$wpdb->prefix}icl_translations WHERE element_id = {$ttid} AND element_type = '{$el_type}'" );
 		} else {
 			return $this->get_default_language();
 		}
 	}
 
-	function pre_term_name( $value, $taxonomy )
-	{
-		//allow adding terms with the same name in different languages
-		global $wpdb;
-		//check if term exists
-		$term_id = $wpdb->get_var( "SELECT term_id FROM {$wpdb->terms} WHERE name='" . esc_sql( $value ) . "'" );
-		// translate to WPML notation
-		$taxonomy = 'tax_' . $taxonomy;
-		if ( !empty( $term_id ) ) {
-			if ( isset( $_POST[ 'icl_' . $taxonomy . '_language' ] ) ) {
-				// see if the term_id is for a different language
-				$this_lang = $_POST[ 'icl_' . $taxonomy . '_language' ];
-				if ( $this_lang != $this->get_language_for_term( $term_id, $taxonomy ) ) {
-					if ( $this_lang != $this->get_default_language() ) {
-						$value .= ' @' . $_POST[ 'icl_' . $taxonomy . '_language' ];
-					}
-				}
-			}
-		}
-
-		return $value;
-	}
-
-	function pre_save_category()
-	{
-		// allow adding categories with the same name in different languages
-		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'add-cat' ) {
-			if ( category_exists( $_POST[ 'cat_name' ] ) && isset( $_POST[ 'icl_category_language' ] ) && $_POST[ 'icl_category_language' ] != $this->get_default_language() ) {
-				$_POST[ 'cat_name' ] .= ' @' . $_POST[ 'icl_category_language' ];
-			}
-		}
-	}
-
-	function delete_term( $cat, $tt_id, $taxonomy )
-	{
-		global $wpdb;
-		$icl_el_type = 'tax_' . $taxonomy;
-
-		static $recursion;
-		if ( $this->settings[ 'sync_delete_tax' ] && empty( $recursion ) ) {
-
-			// only for translated
-			$lang_details = $this->get_element_language_details( $tt_id, $icl_el_type );
-			if ( empty( $lang_details->source_language_code ) ) {
-
-				// get translations
-				$trid         = $this->get_element_trid( $tt_id, $icl_el_type );
-				$translations = $this->get_element_translations( $trid, $icl_el_type );
-
-				$recursion = true;
-				// delete translations
-				foreach ( $translations as $translation ) {
-					if ( $translation->element_id != $tt_id ) {
-						wp_delete_term( $translation->term_id, $taxonomy );
-					}
-				}
-				$recursion = false;
-			}
-		}
-
-		$wpdb->query( $wpdb->prepare("DELETE FROM {$wpdb->prefix}icl_translations WHERE element_type =%s AND element_id=%d LIMIT 1", array($icl_el_type, $tt_id) ) );
-	}
-
-	function get_term_filter( $_term, $taxonomy )
-	{
-		// case of calling from get_category_parents
-		$debug_backtrace = $this->get_backtrace( 6 ); //Limit to first 6 stack frames, since 5 is the highest index we use
-		if ( isset( $debug_backtrace[ 5 ][ 'function' ] ) && $debug_backtrace[ 5 ][ 'function' ] == 'get_category_parents' ) {
-			$_term->name = $this->the_category_name_filter( $_term->name );
-		}
-
-		return $_term;
-	}
 
 	function terms_language_filter()
 	{
@@ -6073,6 +6390,8 @@ class SitePress
 	 * @return bool|string
 	 */
 	function convert_url( $url, $code = null ) {
+		global $wpdb;
+
 		if(!$url) return false;
 
 		$default_language          = $this->get_default_language();
@@ -6108,7 +6427,7 @@ class SitePress
 
 			$new_url = $url;
 
-			if ( $code && ( $code != $default_language || $language_negotiation_type == 1 ) ) {
+			if ( $code && ( $code != $default_language || in_array( $language_negotiation_type, array( 1, 2 ) ) ) ) {
 				remove_filter( 'home_url', array( $this, 'home_url' ), 1 );
 				$absolute_home_url = preg_replace( '@\?lang=' . $code . '@i', '', get_home_url() );
 				add_filter( 'home_url', array( $this, 'home_url' ), 1, 4 );
@@ -6141,6 +6460,7 @@ class SitePress
 						if ( $is_https ) {
 							preg_replace( '#^http://#', 'https://', $new_url );
 						} // normalize protocol
+						$this->settings[ 'language_domains' ][ $default_language ] = $wpdb->get_var( "SELECT option_value FROM $wpdb->options WHERE option_name = 'siteurl'");
 						$new_url = str_replace( $absolute_home_url, $this->settings[ 'language_domains' ][ $code ], $new_url );
 						if ( $is_https ) {
 							preg_replace( '#^http://#', 'https://', $new_url );
@@ -6206,6 +6526,8 @@ class SitePress
 
 	function permalink_filter( $p, $pid )
 	{
+		global $wp_query;
+
 		if ( is_object( $pid ) ) {
 			$post_type = $pid->post_type;
 			$pid       = $pid->ID;
@@ -6241,7 +6563,7 @@ class SitePress
 				}
 			}
 		}
-		if ( is_feed() ) {
+		if ( isset( $wp_query ) && is_feed() ) {
 			$p = str_replace( "&lang=", "&#038;lang=", $p );
 		}
 
@@ -6287,8 +6609,7 @@ class SitePress
 	
 	function adjust_cpt_in_url($link, $post_type) {
 		global $sitepress_settings;
-		$current_language          = $this->get_current_language();
-		
+
 		if ( function_exists('icl_t') && isset($sitepress_settings['st']['strings_language']) && $this->get_current_language() != $sitepress_settings['st']['strings_language']) {
 			if ( isset($this->settings['posts_slug_translation']['types'][$post_type]) && $this->settings['posts_slug_translation']['types'][$post_type] ) {
 				$post_type_object = get_post_type_object($post_type);
@@ -6640,13 +6961,16 @@ class SitePress
 						gmdate( 'Y', current_time( 'timestamp' ) ); //force wp_timezone_override_offset to be called
 					}
 					$lang[ 'translated_url' ] = $this->archive_url( get_day_link( $this->wp_query->query_vars[ 'year' ], $this->wp_query->query_vars[ 'monthnum' ], $this->wp_query->query_vars[ 'day' ] ), $lang[ 'code' ] );
-				} else if ( isset( $this->wp_query->query_vars[ 'post_type' ] ) ) {
+				} else if ( isset( $this->wp_query->query_vars[ 'post_type' ] ) ) {				
 					do_action( '_icl_before_archive_url', $this->wp_query->query_vars[ 'post_type' ], $lang[ 'code' ] );
 					if ( $this->is_translated_post_type( $this->wp_query->query_vars[ 'post_type' ] ) && function_exists( 'get_post_type_archive_link' ) ) {
 						remove_filter( 'post_type_archive_link', array( $this, 'post_type_archive_link_filter' ), 10 );
 						$lang[ 'translated_url' ] = $this->convert_url( get_post_type_archive_link( $this->wp_query->query_vars[ 'post_type' ] ), $lang[ 'code' ] );
 					} else {
-						$lang[ 'translated_url' ] = $this->language_url( $lang[ 'code' ] );
+						if($k != $this->get_default_language()){
+							$skip_lang = true;
+							unset( $w_active_languages[ $k ] );
+						}
 					}
 					do_action( '_icl_after_archive_url', $this->wp_query->query_vars[ 'post_type' ], $lang[ 'code' ] );
 				}
@@ -6657,7 +6981,7 @@ class SitePress
 				$lang[ 'translated_url' ] = $this->language_url( $lang[ 'code' ] ) . $url_glue . 's=' . urlencode( $wp_query->query[ 's' ] );
 			} else {
 				global $icl_language_switcher_preview;
-				if ( $icl_lso_link_empty || is_home() || is_404() || ( 'page' == get_option( 'show_on_front' ) && ( $this->wp_query->queried_object_id == get_option( 'page_on_front' ) || $this->wp_query->queried_object_id == get_option( 'page_for_posts' ) ) ) || $icl_language_switcher_preview ) {
+				if ( $icl_lso_link_empty || is_home() || is_404() || ( 'page' == get_option( 'show_on_front' ) && ( $this->wp_query->queried_object_id == get_option( 'page_on_front' ) || $this->wp_query->queried_object_id == get_option( 'page_for_posts' ) ) ) || $icl_language_switcher_preview || $this->is_root_page() ) {
 					$lang[ 'translated_url' ] = $this->language_url( $lang[ 'code' ] );
 					$skip_lang                = false;
 				} else {
@@ -6737,6 +7061,13 @@ class SitePress
 		$w_active_languages = apply_filters( 'icl_ls_languages', $w_active_languages );
 
 		$w_active_languages = $this->sort_ls_languages( $w_active_languages, $template_args );
+
+		// Change the url, in case languages in subdomains are set.
+		if ( $this->settings[ 'language_negotiation_type' ] == 2 ) {
+			foreach ( $w_active_languages as $lang => $element ) {
+				$w_active_languages[ $lang ][ 'url' ] = $this->convert_url( $element[ 'url' ], $lang );
+			}
+		}
 
 		wp_reset_query();
 
@@ -6838,7 +7169,7 @@ class SitePress
 			if ( ( $this->settings[ 'icl_lang_sel_stype' ] == 'mobile-auto' && ( !empty( $this->is_mobile ) || !empty( $this->is_tablet ) ) ) || $this->settings[ 'icl_lang_sel_stype' ] == 'mobile'
 			) {
 				if(!defined('ICL_DONT_LOAD_LANGUAGES_JS') || !ICL_DONT_LOAD_LANGUAGES_JS) {
-					wp_enqueue_script( 'language-selector', ICL_PLUGIN_URL . '/res/js/language-selector.js', ICL_SITEPRESS_VERSION );
+					wp_enqueue_script( 'language-selector', ICL_PLUGIN_URL . '/res/js/language-selector.js', false, ICL_SITEPRESS_VERSION, true );
 				}
 				if(!defined('ICL_DONT_LOAD_LANGUAGE_SELECTOR_CSS') || !ICL_DONT_LOAD_LANGUAGE_SELECTOR_CSS) {
 					wp_enqueue_style( 'language-selector', ICL_PLUGIN_URL . '/res/css/language-selector-click.css', ICL_SITEPRESS_VERSION );
@@ -6869,21 +7200,14 @@ class SitePress
 		global $icl_language_switcher_preview;
 
 		if($w_this_lang['code']=='all'){
-				$main_language['native_name'] = __('All languages', 'sitepress');
+			$main_language['native_name'] = __('All languages', 'sitepress');
+			$main_language['translated_name'] = $main_language['native_name'];
+			$main_language['language_code'] = 'all';
 		}
 		if(empty($main_language)){
-				$main_language['native_name'] = $w_this_lang['display_name'];
-				$main_language['translated_name'] = $w_this_lang['display_name'];
-				$main_language['language_code'] = $w_this_lang['code'];
-				if( $this->settings['icl_lso_flags'] || $icl_language_switcher_preview){
-						$flag = $this->get_flag($w_this_lang['code']);
-						if($flag->from_template){
-								$wp_upload_dir = wp_upload_dir();
-								$main_language['country_flag_url'] = $wp_upload_dir['baseurl'] . '/flags/' . $flag->flag;
-						}else{
-								$main_language['country_flag_url'] = ICL_PLUGIN_URL . '/res/flags/'.$flag->flag;
-						}
-				}
+			$main_language['native_name'] = $w_this_lang['display_name'];
+			$main_language['translated_name'] = $w_this_lang['display_name'];
+			$main_language['language_code'] = $w_this_lang['code'];
 		}
 
 		$style_display_none_icl_lang_sel_type = $this->settings['icl_lang_sel_type'] == 'list' ? ' style="display:none;"' : '';
@@ -6893,14 +7217,27 @@ class SitePress
 				<ul>
 						<li><a href="#" class="lang_sel_sel icl-'.$w_this_lang['code'].'">';
 
-		if( $this->settings['icl_lso_flags'] || $icl_language_switcher_preview):
+		if ( $this->settings[ 'icl_lso_flags' ] || $icl_language_switcher_preview ) {
+
+
+			$flag = $this->get_flag($w_this_lang['code']);
+			if ( isset( $flag->from_template ) && $flag->from_template && isset( $flag->flag ) ) {
+				$wp_upload_dir = wp_upload_dir();
+				$main_language['country_flag_url'] = $wp_upload_dir['baseurl'] . '/flags/' . $flag->flag;
+			}else{
+				if(isset($flag->flag)){
+					$main_language['country_flag_url'] = ICL_PLUGIN_URL . '/res/flags/'.$flag->flag;
+				} else {
+					$main_language['country_flag_url'] = ICL_PLUGIN_URL . '/res/img/icon16.png';
+				}
+			}
 			$language_selector .= '<img ' . ( !$this->settings['icl_lso_flags'] ? 'style="display:none"' : '' ) 
 						. ' class="iclflag" '
 						. 'src="'.$main_language['country_flag_url'].'" '
 						. 'alt="'.$main_language['language_code'].'"  '
 						. 'title="'. ($this->settings['icl_lso_display_lang'] ? esc_attr($main_language['translated_name']) : esc_attr($main_language['native_name']) ) .'" />                                
 								&nbsp;';
-		endif;
+		}
 
 		if($icl_language_switcher_preview){
 				$lang_native = $main_language['native_name'];
@@ -7093,7 +7430,7 @@ class SitePress
 
 	function get_language_selector() {
 		// Mobile or auto
-		$is_mobile = $this->settings[ 'icl_lang_sel_stype' ] == 'mobile' || ( $this->settings[ 'icl_lang_sel_stype' ] == 'mobile-auto' && ! empty( $this->is_tablet ) && ! empty( $this->is_mobile ) );
+		$is_mobile = $this->settings[ 'icl_lang_sel_stype' ] == 'mobile' || ( $this->settings[ 'icl_lang_sel_stype' ] == 'mobile-auto' && (!empty( $this->is_tablet ) || !empty( $this->is_mobile ) ) );
 		if ( $this->settings[ 'icl_lang_sel_type' ] == 'dropdown' && ( $is_mobile )
 		) {
 			return $this->get_mobile_language_selector();;
@@ -7194,69 +7531,6 @@ class SitePress
 		}
 	}
 
-	function the_category_name_filter( $name )
-	{
-		if ( is_array( $name ) ) {
-			foreach ( $name as $k => $v ) {
-				$name[ $k ] = $this->the_category_name_filter( $v );
-			}
-
-			return $name;
-		}
-		if ( false === strpos( $name, '@' ) )
-			return $name;
-		if ( false !== strpos( $name, '<a' ) ) {
-			$int = preg_match_all( '|<a([^>]+)>([^<]+)</a>|i', $name, $matches );
-			if ( $int && count( $matches[ 0 ] ) > 1 ) {
-				$originals = $filtered = array();
-				foreach ( $matches[ 0 ] as $m ) {
-					$originals[ ] = $m;
-					$filtered[ ]  = $this->the_category_name_filter( $m );
-				}
-				$name = str_replace( $originals, $filtered, $name );
-			} else {
-				$name_sh = strip_tags( $name );
-				$exp     = explode( '@', $name_sh );
-				$name    = str_replace( $name_sh, trim( $exp[ 0 ] ), $name );
-			}
-		} else {
-			$name = preg_replace( '#(.*) @(.*)#i', '$1', $name );
-		}
-
-		return $name;
-	}
-
-	function get_terms_filter( $terms )
-	{
-		if (is_wp_error($terms)) {
-			return $terms;
-		}
-		foreach ( $terms as $k => $v ) {
-			if ( isset( $terms[ $k ]->name ) )
-				$terms[ $k ]->name = $this->the_category_name_filter( $terms[ $k ]->name );
-		}
-		return $terms;
-	}
-
-	function get_the_terms_filter( $terms, $id, $taxonomy )
-	{
-		if (is_wp_error($terms)) {
-			return $terms;
-		}
-
-		if ( !is_array( $taxonomy ) ) {
-			$taxonomy = (array) $taxonomy;
-		}
-
-		foreach ( $taxonomy as $taxonomy_item ) {
-			if ( !empty( $this->settings[ 'taxonomies_sync_option' ][ $taxonomy_item ] ) ) {
-				$terms = $this->get_terms_filter( $terms );
-				//We have found synchronized terms: no need to loop rough the other taxonomies
-				break;
-			}
-		}
-		return $terms;
-	}
 
 	function get_term_adjust_id( $term ) {
 		//TODO: To remove? I couldn't find a single place where this is used, since $term->term_id == $translated_id. Testing always returning the passed value.
@@ -7302,32 +7576,6 @@ class SitePress
 		wp_cache_set( $cache_key, $term, $cache_group );
 
 		return $term;
-	}
-
-	function get_term_by_name_and_lang( &$name, $type, $lang )
-	{
-		global $wpdb;
-
-		//decode name
-		// $name = htmlspecialchars_decode($name);
-
-		$the_term = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->terms} t JOIN {$wpdb->term_taxonomy} x ON x.term_id = t.term_id WHERE name=%s AND taxonomy=%s", array( $name , $type) ) );
-
-		if ( $the_term ) {
-			$term_lang = $wpdb->get_var( $wpdb->prepare( "SELECT language_code FROM {$wpdb->prefix}icl_translations
-															WHERE element_id=%d AND element_type=%s", $the_term->term_taxonomy_id, 'tax_' . $type ) );
-
-			if ( $term_lang != $lang ) {
-				// term is in the wrong language
-				// Add lang code to term name.
-
-				$name .= ' @' . $lang;
-
-				$the_term = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->terms} t JOIN {$wpdb->term_taxonomy} x ON x.term_id = t.term_id WHERE name=%s AND taxonomy=%s", array( $name , $type) ) );
-			}
-		}
-
-		return $the_term;
 	}
 
 	function set_term_translation( $original_term, $translation_id, $type, $lang, $original_lang )
@@ -8234,7 +8482,7 @@ class SitePress
 		$found  = false;
 		$result = wp_cache_get( $cache_key, $cache_group, false, $found );
 
-		if ( !$found || ICL_DISABLE_CACHE ) {
+		if ( !$found || $result == false || ICL_DISABLE_CACHE ) {
 			$result        = false;
 			$page_on_front = $wpdb->get_var( "SELECT option_value FROM {$wpdb->options} WHERE option_name='page_on_front'" );
 			if ( $page_on_front ) {
@@ -8253,7 +8501,7 @@ class SitePress
 						$cache_key = $t->language_code;
 						$found     = false;
 						wp_cache_get( $cache_key, $cache_group, false, $found );
-						if ( !$found ) {
+						if ( !$found && $result !== false ) {
 							wp_cache_set( $cache_key, $result, $cache_group );
 						}
 					}
@@ -10082,12 +10330,20 @@ class SitePress
 				if ( isset( $_GET[ 'action' ] ) && $_GET[ 'action' ] == 'edit' ) {
 					$all_languages_enabled = false;
 				}
-				$term_id     = @intval( $_GET[ 'tag_ID' ] );
-				$taxonomy    = $_GET[ 'taxonomy' ];
-				$term_tax_id = $wpdb->get_var( $wpdb->prepare( "SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy} WHERE taxonomy=%s AND term_id=%d", $taxonomy, $term_id ) );
 
-				$trid         = $this->get_element_trid( $term_tax_id, 'tax_' . $taxonomy );
-				$translations = $this->get_element_translations( $trid, 'tax_' . $taxonomy, true );
+				$taxonomy = $_GET['taxonomy'];
+				$term_tax_id = 0;
+
+				if ( isset( $_GET[ 'tag_ID' ] ) ) {
+					$term_id     = @intval( $_GET[ 'tag_ID' ] );
+					$term_tax_id = $wpdb->get_var( $wpdb->prepare( "SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy} WHERE taxonomy=%s AND term_id=%d", $taxonomy, $term_id ) );
+				}
+				if ( $term_tax_id ) {
+					$trid = $this->get_element_trid( $term_tax_id, 'tax_' . $taxonomy );
+				}
+				if ( $trid ) {
+					$translations = $this->get_element_translations( $trid, 'tax_' . $taxonomy, true );
+				}
 
 				break;
 			case 'nav-menus.php':
@@ -10771,14 +11027,12 @@ class SitePress
 	 */
 	public function update_terms_relationship_cache( $terms_ids, $taxonomy ) {
 
-		remove_action( 'get_term', array( $this, 'get_term_filter' ), 1 );
 		remove_filter( 'get_terms_args', array( $this, 'get_terms_args_filter' ) );
 		remove_filter( 'terms_clauses', array( $this, 'terms_clauses' ), 10 );
 		remove_filter( 'list_terms_exclusions', array( $this, 'exclude_other_terms' ), 1 );
 
 		clean_term_cache( $terms_ids, $taxonomy );
 
-		add_action( 'get_term', array( $this, 'get_term_filter' ), 1, 2 );
 		add_filter( 'get_terms_args', array( $this, 'get_terms_args_filter' ) );
 		// filters terms by language
 		add_filter( 'terms_clauses', array( $this, 'terms_clauses' ), 10, 4 );
@@ -11182,6 +11436,19 @@ class SitePress
 
 	function update_index_screen(){
 		return include ICL_PLUGIN_PATH . '/menu/theme-plugins-compatibility.php';
+	}
+	
+	/**
+	 * Filter to add language field to WordPress search form
+	 * 
+	 * @param string $form HTML code of search for before filtering
+	 * @return string HTML code of search form
+	 */
+	function get_search_form_filter($form) {
+		if ( strpos($form, wpml_get_language_input_field() ) === false ) {
+			$form = str_replace("</form>", wpml_get_language_input_field() . "</form>", $form);
+		}
+		return $form;
 	}
 		
 }

@@ -4,7 +4,6 @@ global $sitepress, $sitepress_settings;
 
 $active_languages = $sitepress->get_active_languages();
 $default_language = $sitepress->get_default_language();
-$current_language = $sitepress->get_current_language();
 
 global $wp_taxonomies;
 ?>
@@ -30,6 +29,7 @@ global $wp_taxonomies;
 <div class="icl_tt_tools">
 	<form id="wpml_tt_filters">
 		<input type="hidden" name="taxonomy" value="<?php echo $this->taxonomy ?>"/>
+		<input type="hidden" name="taxonomy_selector" value="<?php echo $this->show_selector ?>"/>
 		<?php _e( 'Show', 'sitepress' ) ?>
 		<select name="status">
 			<option value="<?php echo WPML_TT_TAXONOMIES_NOT_TRANSLATED ?>" <?php if ($this->status == WPML_TT_TAXONOMIES_NOT_TRANSLATED):
@@ -52,7 +52,7 @@ global $wp_taxonomies;
 				<option value=""><?php _e( 'any language', 'sitepress' ) ?></option>
 			<?php endif; ?>
 			<?php
-			foreach ( $active_languages as $language ): if ( $language[ 'code' ] != $current_language ): ?>
+			foreach ( $active_languages as $language ): if ( $language[ 'code' ] != $default_language ): ?>
 				<option value="<?php echo $language[ 'code' ] ?>"
 						<?php if (isset($the_language) && $language[ 'code' ] == $the_language[ 'code' ]): ?>selected="selected"<?php endif; ?>><?php echo $language[ 'display_name' ] ?></option>
 			<?php endif; endforeach; ?>
@@ -80,76 +80,104 @@ global $wp_taxonomies;
 	<table class="wp-list-table widefat fixed">
 		<thead>
 		<tr>
-			<?php
-			$current_language_name = $sitepress->get_display_language_name( $default_language, $current_language );
-			?>
-			<th><?php echo $this->taxonomy_obj->labels->singular_name . ' (' . $current_language_name . ')'; ?></th>
-			<?php foreach ( $this->selected_languages as $language ): if ( $language[ 'code' ] != $current_language ): ?>
+			<?php foreach ( $this->selected_languages as $language ): ?>
 				<th><?php echo $language[ 'display_name' ] ?></th>
-			<?php endif; endforeach; ?>
+			<?php endforeach; ?>
 		</tr>
 		</thead>
 		<tbody>
 		<?php if ( $this->terms ): ?>
-			<?php foreach ( $this->terms as $term ): ?>
+			<?php foreach ( $this->terms as $trid => $term_translations ): ?>
 				<tr>
-					<td>
-						<?php
-						echo $pad = str_repeat( '&#8212; ', max( 0, $term->level ) );
-						echo $term->name
-						?>
-					</td>
-					<?php foreach ( $this->selected_languages as $language ): if ( $language[ 'code' ] != $current_language ): ?>
+					<?php foreach ( $this->selected_languages as $language ): ?>
 						<td>
+							<?php
+							$lang_code = $language[ 'code' ];
+							if ( isset( $term_translations[ $language[ 'code' ] ] ) ) {
+								$term = $term_translations[ $language[ 'code' ] ];
+							} else {
+								$term = false;
+							}
+							?>
+							<?php $class = $term ? '' : ' lowlight';
+							if ( ! $term ) {
+								$term = new stdClass();
 
-							<?php $class = isset( $term->translations ) && !empty( $term->translations[ $language[ 'code' ] ] ) ? '' : ' lowlight'; ?>
-							<a class="icl_tt_term_name<?php echo $class ?>" href="#" onclick="WPML_Translate_taxonomy.show_form(<?php echo $term->term_taxonomy_id ?>,'<?php echo $language[ 'code' ] ?>');return false;">
-								<?php if ( isset( $term->translations ) && !empty( $term->translations[ $language[ 'code' ] ] ) ): ?>
+								if ( isset( $term_translations[ $term_translations[ 'source_lang' ] ] ) ) {
+									$original_term = $term_translations[ $term_translations[ 'source_lang' ] ];
+								} else {
+									$original_term = false;
+									foreach ( $term_translations as $term ) {
+										if ( is_object( $term ) ) {
+											$original_term = $term;
+											break;
+										}
+									}
+								}
+
+								$term->translation_of = $original_term;
+								$pad                  = str_repeat( '&#8212; ', max( 0, $original_term->level ) );
+							} else {
+								if ( isset( $term_translations[ $term_translations[ 'source_lang' ] ] ) ) {
+									$original_term = $term_translations[ $term_translations[ 'source_lang' ] ];
+								} else {
+									$original_term = $term;
+								}
+							}?>
+							<a class="icl_tt_term_name<?php echo $class ?>" href="#" onclick="WPML_Translate_taxonomy.show_form(<?php echo $original_term->term_taxonomy_id ?>,'<?php echo $lang_code ?>');return false;">
+								<?php if ( isset( $term->level ) && isset($term->name) ): ?>
 									<?php echo $pad = str_repeat( '&#8212; ', max( 0, $term->level ) ); ?>
-									<?php echo $sitepress->the_category_name_filter( $term->translations[ $language[ 'code' ] ]->name ); ?>
+									<?php echo $term->name; ?>
 								<?php else: ?>
 									<?php _e( 'translate', 'sitepress' ); ?>
 								<?php endif; ?>
 							</a>
 
-							<form class="icl_tt_form hidden" id="icl_tt_form_<?php echo $term->term_taxonomy_id . '_' . $language[ 'code' ] ?>">
+							<form class="icl_tt_form hidden" id="icl_tt_form_<?php echo $original_term->term_taxonomy_id . '_' . $language[ 'code' ] ?>">
 								<img src="<?php echo ICL_PLUGIN_URL . '/res/img/ajax-loader.gif' ?>" alt="loading" height="16" width="16" class="wpml_tt_spinner"/>
-								<input type="hidden" name="translation_of" value="<?php echo $term->term_taxonomy_id ?>"/>
+								<input type="hidden" name="translation_of" value="<?php echo $original_term->term_taxonomy_id ?>"/>
 								<input type="hidden" name="taxonomy" value="<?php echo $this->taxonomy ?>"/>
 								<input type="hidden" name="language" value="<?php echo $language[ 'code' ] ?>"/>
 								<input type="hidden" name="term_leveled" value="<?php echo $pad; ?>"/>
 								<table class="icl_tt_popup">
 									<tr>
-										<th colspan="2"><?php printf( __( 'Translate %s in %s', 'sitepress' ), '<strong>' . $term->name . '</strong>', $this->selected_languages[ $language[ 'code' ] ][ 'display_name' ] ); ?></th>
+										<th colspan="2"><?php printf( __( 'Translate %s in %s', 'sitepress' ), '<strong>' . $original_term->name . '</strong>', $this->selected_languages[ $language[ 'code' ] ][ 'display_name' ] ); ?></th>
 									</tr>
 									<tr>
 										<td><?php _e( 'Name', 'sitepress' ) ?></td>
 										<td><input name="name" type="text"
-												   value="<?php echo isset( $term->translations ) && !empty( $term->translations[ $language[ 'code' ] ] ) ? esc_attr( $sitepress->the_category_name_filter( $term->translations[ $language[ 'code' ] ]->name ) ) : '' ?>"/></td>
+												   value="<?php echo isset($term->name) ? esc_attr( $term->name ) : '' ?>"/></td>
 									</tr>
 									<tr>
 										<td><?php _e( 'Slug', 'sitepress' ) ?></td>
 										<td><input name="slug" type="text"
-												   value="<?php echo isset( $term->translations ) && !empty( $term->translations[ $language[ 'code' ] ] ) ? urldecode( $term->translations[ $language[ 'code' ] ]->slug ) : '' ?>"/></td>
+												   value="<?php echo isset($term->slug) ? urldecode( $term->slug ) : '' ?>"/></td>
 									</tr>
 									<tr>
 										<td><?php _e( 'Description', 'sitepress' ) ?></td>
 										<td><textarea name="description" cols="22"
-													  rows="2"><?php echo isset( $term->translations ) && !empty( $term->translations[ $language[ 'code' ] ] ) ? esc_attr( $term->translations[ $language[ 'code' ] ]->description ) : '' ?></textarea>
+													  rows="2"><?php echo isset( $term->description ) ? esc_attr( $term->description ) : '' ?></textarea>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2" align="right">
 											<span class="errors icl_error_text"></span>
 											<input class="button-secondary cancel" type="button" value="<?php esc_attr_e( 'cancel', 'sitepress' ) ?>"/>
+											<input type="hidden" name="submit"
+											<?php
+											if ( isset( $term->name ) && $term->name ) {
+												echo 'value="Update"/>';
+											} else {
+												echo 'value="Save"/>';
+											}
+											?>
 											<input class="button-primary" type="submit" value="<?php esc_attr_e( 'Ok', 'sitepress' ) ?>"/>
 										</td>
 									</tr>
 								</table>
 							</form>
-
 						</td>
-					<?php endif; endforeach; ?>
+					<?php endforeach; ?>
 				</tr>
 			<?php endforeach; ?>
 		<?php else: ?>
@@ -160,7 +188,7 @@ global $wp_taxonomies;
 		</tbody>
 	</table>
 
-	<?php if ( $this->terms_count > WPML_TT_TERMS_PER_PAGE ): ?>
+	<?php if ( $this->trid_count > floor ( WPML_TT_TERMS_PER_PAGE / count ( $this->selected_languages ) ) ): ?>
 		<div class="tablenav bottom">
 			<div class="tablenav-pages">
 				<span class="displaying-num"><?php printf( __( '%d items', 'sitepress' ), $this->terms_count ) ?></span>
@@ -169,7 +197,7 @@ global $wp_taxonomies;
                 <span class="paging-input">
                     <input class="current-page" type="text" size="1" value="<?php echo $this->current_page ?>" name="paged" title="<?php esc_attr_e( 'Current page', 'sitepress' ) ?>"/>
 					<?php _e( 'of', 'sitepress' ) ?>
-					<span class="total-pages"><?php echo $total_pages = ceil( $this->terms_count / WPML_TT_TERMS_PER_PAGE ) ?></span>
+					<span class="total-pages"><?php echo $total_pages = ceil( $this->trid_count / WPML_TT_TERMS_PER_PAGE * count( $this->selected_languages )) ?></span>
                 </span>
 				<a class="next-page<?php if ( $this->current_page == $total_pages ): ?> disabled<?php endif; ?>" href="#" title="<?php esc_attr_e( 'Go to the next page', 'sitepress' ) ?>">&rsaquo;</a>
 				<a class="last-page<?php if ( $this->current_page == $total_pages ): ?> disabled<?php endif; ?>" href="#" title="<?php esc_attr_e( 'Go to the last page', 'sitepress' ) ?>">&raquo;</a>

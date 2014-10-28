@@ -13,8 +13,7 @@
 
     <tr>
         <td>&nbsp;</td>
-        <td class="otgsi_register_product_wrap" align="center" valign="top">
-            
+        <td class="otgsi_register_product_wrap" align="center" valign="top">            
             <?php // IF NO SUBSCRIPTION ?>
             <?php if(!$this->repository_has_subscription($repository_id)): ?>            
             
@@ -31,7 +30,7 @@
                 <input class="button-secondary cancel_site_key_js" type="button" value="<?php esc_attr_e('Cancel', 'installer') ?>" />
                 
                 <div class="alignleft" style="margin-top:6px;"><?php printf(__('1. Go to your %s%s account%s and add this site URL: %s', 'installer'), 
-                    '<a href="' . $this->settings['repositories'][$repository_id]['data']['url'] . '">',
+                    '<a href="' . $this->settings['repositories'][$repository_id]['data']['site_keys_management_url'] . '?add='.urlencode($this->site_url).'">',
                       $generic_product_name, '</a>', $this->site_url); ?></div>
                 </form>
             </div>            

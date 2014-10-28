@@ -1,7 +1,7 @@
 <?php 
-define('WP_INSTALLER_VERSION', '1.0');
+define('WP_INSTALLER_VERSION', '1.2');
   
-include_once (dirname(__FILE__) . '/includes/installer.class.php');
+include_once dirname(__FILE__) . '/includes/installer.class.php';
 
 function WP_Installer() {
     return WP_Installer::instance();
