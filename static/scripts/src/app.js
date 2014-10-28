@@ -30,8 +30,9 @@ require( [
   'lib/countdown',
   'lib/contests',
   'lib/swipe',
-  'lib/share'
-], function( $, isTouch, fancybox, fancyboxMedia, stream, countDown, contests, swipe, share ){
+  'lib/share',
+  'lib/blog'
+], function( $, isTouch, fancybox, fancyboxMedia, stream, countDown, contests, swipe, share, blog ){
 
 
   // Initialize top video popup
@@ -69,6 +70,9 @@ require( [
 
   // Initialize the share overlay
   share.init();
+
+  // Initialize the blog
+  blog.init();
 
 
 } );
