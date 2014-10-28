@@ -29,6 +29,19 @@ snapshot:
 	@s3cmd put --no-check-md5 --reduced-redundancy ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
 	@echo "MySQL snapshot available at s3://rds.uds.io/DiscoDonniePresents/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz."
 
+# Create MySQL Snapshot
+#
+#
+snapshotImport:
+	@echo "Downloading MySQL snapshot for <${CURRENT_BRANCH}> database branch to ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
+	@rm -rf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
+	@s3cmd get --no-check-md5 --skip-existing s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
+	@tar -xvf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz -C ~/tmp
+	@wp --allow-root db import ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
+	@wp cache flush
+	@wp transient delete-all
+	@echo "MySQL snapshot downloaded from s3://rds.uds.io/DiscoDonniePresents/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz and imported."
+
 #
 # - Import MySQL Snapshot
 #
