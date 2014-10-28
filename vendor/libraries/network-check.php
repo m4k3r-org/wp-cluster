@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Prevent Archived/Deleted blogs warning in Multisite
+ * Plugin Name: Disable Archived/Deleted Blogs
  * Plugin Url: http://wordpress.stackexchange.com/q/98151/1261
  * Version: 1.0
  * Author: Rodolfo Buaiz

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Plugin Name: Various Hacks
+ * Plugin Name: Stateless Media
  * Plugin URI: http://usabilitydynamics.com/plugins/
  * Description: Main plugin to handle all site specific bootstrap tasks
  * Author: Usability Dynamics, Inc.
@@ -8,73 +9,7 @@
  * Author URI: http://usabilitydynamics.com
  */
 
-add_action( 'template_redirect', function() {
-	// die( current_action() . ' - ' . time() );
-}, 12 );
-
-add_action( 'init', function() {
-	global $wp_veneer;
-
-	// Ignore "develop" and "hotfix" environment-branches.
-	if( defined( 'WP_ENV' ) && in_array( WP_ENV, array( 'develop', 'hotfix' ) ) && function_exists( 'newrelic_ignore_transaction' ) ) {
-		newrelic_ignore_transaction();
-	}
-
-	if( isset( $wp_veneer ) && method_exists ($wp_veneer, 'set' ) ) {
-		$wp_veneer->set( 'rewrites.login', false );
-		$wp_veneer->set( 'rewrites.manage', false );
-		$wp_veneer->set( 'rewrites.api', true );
-
-		$wp_veneer->set( 'static.enabled', false );
-		$wp_veneer->set( 'cdn.enabled', false );
-		$wp_veneer->set( 'cache.enabled', false );
-
-		$wp_veneer->set( 'media.shard.enabled', false );
-		$wp_veneer->set( 'scripts.shard.enabled', false );
-		$wp_veneer->set( 'styles.shard.enabled', false );
-	}
-
-});
-
-add_filter( 'upgrader_pre_download', function( $false, $package, $this ) {
-
-	return $false;
-}, 10, 3 );
-
-add_filter( 'downloading_package', function( $package ) {
-
-	return $package;
-});
-
-add_filter( 'automatic_updates_is_vcs_checkout', function( $checkout, $context ) {
-
-	return $checkout;
-}, 10, 2);
-
-add_filter( 'auto_update_plugin', function( $update, $item ) {
-
-	return $update;
-}, 10, 2);
-
-add_filter( 'auto_update_theme', function( $update, $item ) {
-
-	return $update;
-}, 10, 2);
-
-add_filter( 'auto_update_translation', function( $update, $item ) {
-	return $update;
-}, 10, 2);
-
-
-if( defined( 'WP_CLI' ) ) {
-
-	//$command = WP_CLI::get_root_command();
-	//$command->add_subcommand( $subcommand_name, $subcommand );
-
-	add_action( 'wp', function() {
-
-	});
-	//die( '<pre>' . print_r( $command, true ) . '</pre>' );
+if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'Stateless_Media_Command' ) ) {
 
 	/**
 	 * DreamHost Migrate Plugin
@@ -83,7 +18,7 @@ if( defined( 'WP_CLI' ) ) {
 	 * @subpackage commands/community
 	 * @maintainer Mike Schroder
 	 */
-	class TEST_Migrate_Command extends WP_CLI_Command {
+	class Stateless_Media_Command extends WP_CLI_Command {
 
 		/**
 		 * Backup entire WordPress install, including core, plugins and database.
@@ -107,9 +42,6 @@ if( defined( 'WP_CLI' ) ) {
 			$_test = WP_CLI::launch($_cmd, false, true);
 
 			WP_CLI::print_value( $_test->return_code );
-
-
-
 
 		}
 
@@ -167,7 +99,7 @@ if( defined( 'WP_CLI' ) ) {
 		}
 	}
 
-	WP_CLI::add_command( 'gcs', 'TEST_Migrate_Command' );
+	WP_CLI::add_command( 'stateless', 'Stateless_Media_Command' );
 
 	//die( '<pre>' . print_r( $_test, true ) . '</pre>');
 

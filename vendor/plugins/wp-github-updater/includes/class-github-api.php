@@ -260,6 +260,15 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 			$endpoint .= $this->type->newest_tag;
 		}
 
+		if( empty( $this->type->access_token ) && defined( 'GITHUB_UPDATER_TOKEN' ) ) {
+			$this->type->access_token = GITHUB_UPDATER_TOKEN;
+		}
+
+		$this->type->access_token = apply_filters( 'github_updater:access_token', ( isset( $this->type->access_token ) ? $this->type->access_token : null ), array(
+			'endpoint' => $endpoint,
+			'this' => $this
+		));
+
 		if ( ! empty( $this->type->access_token ) ) {
 			$endpoint .= '?access_token=' . $this->type->access_token;
 		}
