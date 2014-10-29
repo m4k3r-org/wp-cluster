@@ -17,6 +17,7 @@
 * Added "wp utility" command for seeing useful lists such as cross-network active theme.
 * Fixed "lib-settings" and "lib-utility" deps to have fixed versions.
 * Added "wp utility dns" to see list of sites and the resolved IPs.
+* Created post-deployment script [https://gist.github.com/andypotanin/648f2ba3e6acada05b1d]
 
 #### 2.1.3
 * Added changes.md
