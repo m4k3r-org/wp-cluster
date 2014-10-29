@@ -86,7 +86,7 @@ namespace UsabilityDynamics\Cluster {
 
 				/** Try to lookup the blog */
 				if( $possible_domains ) {
-					$query = $wpdb->prepare( "SELECT blog_id, site_id, domain, path  FROM {$wpdb->blogs} WHERE domain IN (" . implode( ',', array_fill( 0, count( $possible_domains ), '%s' ) ) . ") AND public=1 ORDER BY CHAR_LENGTH( path ) DESC", $possible_domains );
+					$query = $wpdb->prepare( "SELECT blog_id, site_id, domain, path  FROM {$wpdb->blogs} WHERE domain IN (" . implode( ',', array_fill( 0, count( $possible_domains ), '%s' ) ) . ") AND public=1 ORDER BY CHAR_LENGTH( domain ) + CHAR_LENGTH( path ) DESC", $possible_domains );
 				}
 
 				if( isset( $query ) ) {
@@ -110,7 +110,9 @@ namespace UsabilityDynamics\Cluster {
 
 					foreach ( $_matches as $_key => $_potential ) {
 
-						$_matches[ $_key ]->_position = $_position = strpos( $_potential->path, $_SERVER[ 'REQUEST_URI' ] );
+						if( isset( $_SERVER[ 'REQUEST_URI' ] ) && !empty( $_SERVER[ 'REQUEST_URI' ] ) ) {
+							$_matches[ $_key ]->_position = $_position = strpos( $_potential->path, $_SERVER[ 'REQUEST_URI' ] );
+						}
 
 						if ( $_matches[ $_key ]->_position !== 0 ) {
 							unset( $_matches[ $_key ] );
