@@ -1,0 +1,1 @@
+define("wp-elastic.utility",function(){return console.debug("wp-elastic.utility"),{}});
