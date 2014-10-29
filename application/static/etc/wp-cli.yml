@@ -1,7 +1,5 @@
 path: vendor/libraries/automattic/wordpress
-url: http://discodonniepresents.com
-user: reidwilliams
-password: LJzflMVaGpWV
+url: http://discodonniepresents.com/
 color: true
 disabled_commands:
   - eval-file

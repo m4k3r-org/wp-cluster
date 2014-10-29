@@ -1,7 +1,7 @@
 #### 2.2.0
 * Moved MU plugins to be loaded from ./application
 * Added autoload.php MU plugin for loading vendor libs
-
+* Re-installed wp-cluster, wp-veneer and wp-network as valid plugins, removing ./vendor/modules completely.
 
 #### 2.1.3
 * Added changes.md
