@@ -66,13 +66,13 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 					'site' => $site['domain'],
 					'theme' => get_option( 'stylesheet' ), // . ' ' . $_stylesheet->get( 'Version' ),
 					'template' => $_templateActual,
-					'path' => str_replace( getcwd(), '.', $_template->get_stylesheet_directory() ),
+					'path' => str_replace( getcwd(), '.', $_stylesheet->get_stylesheet_directory() ),
 					'status' => join( ' ', $_status )
 				);
 
 			}
 
-			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'network', 'site', 'theme', 'template', 'path', 'status' ) );
+			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'network', 'site', 'theme', 'path', 'template', 'status' ) );
 
 		}
 
@@ -108,7 +108,7 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 
 				$_template = wp_get_theme( get_option( 'template' ) );
 				$_stylesheet= wp_get_theme( get_option( 'stylesheet' ) );
-				$_status = array();
+				$_status = '';
 
 				$_templateActual = get_option( 'stylesheet' ) !== get_option( 'template' ) ? get_option( 'template' ) : null;
 
@@ -122,16 +122,19 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 
 				$_network = (array) wp_get_network( $site['site_id'] );
 
+				$_status = $site['public'] ? 'Public' : null;
+
 				$_results[ $site['domain'] ] = array(
+					'id' => $site['blog_id'],
 					'network' => $_network['domain'],
-					'site' => $site['domain'],
+					'domain' => $site['domain'],
 					'ip' => gethostbyname( $site['domain'] ),
-					'status' => ''
+					'status' => $_status
 				);
 
 			}
 
-			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'network', 'site', 'ip', 'status' ) );
+			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'id','network', 'domain', 'ip', 'status' ) );
 
 			//die( '<pre>' . print_r( $_results, true ) . '</pre>');
 

@@ -47,7 +47,7 @@ namespace wpCloud\Statless {
 		 * @subpackage commands/community
 		 * @maintainer Mike Schroder
 		 */
-		class GitHub_Command extends WP_CLI_Command {
+		class GitHub_Command extends \WP_CLI_Command {
 
 			/**
 			 * Backup entire WordPress install, including core, plugins and database.
@@ -68,7 +68,7 @@ namespace wpCloud\Statless {
 				$_cmd = '/Users/andy.potanin/devtools/gsutil/gsutil -m cp -a public-read -L gce.log -v /Users/andy.potanin/Sites/www.wpcloud.io/wp-content/public/www.wpcloud.io/stereo-cat.jpg gs://media.wpcloud.io';
 				// $_cmd = '/Users/andy.potanin/devtools/gsutil/gsutil -m cp -a public-read -v /Users/andy.potanin/Sites/www.wpcloud.io/wp-content/public/www.wpcloud.io/stereo-cat.jpg gs://media.wpcloud.io';
 
-				$_test = WP_CLI::launch($_cmd, false, true);
+				$_test = \WP_CLI::launch($_cmd, false, true);
 
 				WP_CLI::print_value( $_test->return_code );
 
@@ -106,7 +106,7 @@ namespace wpCloud\Statless {
 				// Using esc_cmd to automatically escape parameters.
 				// We can't use --exclude-vcs, because it's not available on OSX.
 				WP_CLI::line( "Backing up to $filename ..." );
-				$result = WP_CLI::launch( WP_CLIUtilsesc_cmd( "
+				$result = \WP_CLI::launch( WP_CLIUtilsesc_cmd( "
 				tar
 					--exclude '.git'
 					--exclude '.svn'
@@ -128,7 +128,7 @@ namespace wpCloud\Statless {
 			}
 		}
 
-		WP_CLI::add_command( 'github', 'GitHub_Command' );
+		\WP_CLI::add_command( 'github', 'wpCloud\Statless\GitHub_Command' );
 
 
 	}
