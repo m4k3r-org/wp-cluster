@@ -6,7 +6,7 @@
  * Author: Usability Dynamics, Inc
  * Version: 0.1.4
  * Author URI: http://UsabilityDynamics.com
- * GitHub Plugin URI: UsabilityDynamics/wp-eventbrite
+ * GitHub Plugin URI: DiscoDonniePresents/wp-eventbrite
  *
  * Copyright 2011-2014  Usability Dynamics, Inc.   (email : info@UsabilityDynamics.com)
  *
