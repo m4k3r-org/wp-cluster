@@ -20,6 +20,12 @@ if( isset( $_SERVER[ 'HTTP_X_UDS_DEBUG' ] ) ) {
   }, 1000 );
 }
 
+
+if( !is_dir( TEMPLATEPATH ) ) {
+	wp_die(TEMPLATEPATH);
+	return;
+}
+
 include_once( untrailingslashit( TEMPLATEPATH ) . '/core-assets/class_ud.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_saas.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_functions.php' );
