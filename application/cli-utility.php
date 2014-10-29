@@ -47,17 +47,29 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 
 				$_template = wp_get_theme( get_option( 'template' ) );
 				$_stylesheet= wp_get_theme( get_option( 'stylesheet' ) );
+				$_status = array();
+
+				$_templateActual = get_option( 'stylesheet' ) !== get_option( 'template' ) ? get_option( 'template' ) : null;
+
+				if( $_templateActual && !is_dir( $_template->get_stylesheet_directory() ) ) {
+					$_status[] = 'Template missing.';
+				}
+
+				if( !is_dir( $_stylesheet->get_stylesheet_directory() ) ) {
+					$_status[] = 'Theme missing.';
+				}
 
 				$_results[ $site['domain'] ] = array(
 					'site' => $site['domain'],
 					'theme' => get_option( 'stylesheet' ), // . ' ' . $_stylesheet->get( 'Version' ),
-					'template' => get_option( 'stylesheet' ) !== get_option( 'template' ) ? get_option( 'template' ) : '', // . ' ' .$_template->get( 'Version' ),
-					'path' => str_replace( getcwd(), '.', $_template->get_stylesheet_directory() )
+					'template' => $_templateActual,
+					'path' => str_replace( getcwd(), '.', $_template->get_stylesheet_directory() ),
+					'status' => join( ' ', $_status )
 				);
 
 			}
 
-			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'site', 'theme', 'template', 'path' ) );
+			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'site', 'theme', 'template', 'path', 'status' ) );
 
 			//die( '<pre>' . print_r( $_results, true ) . '</pre>');
 
