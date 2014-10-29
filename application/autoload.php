@@ -39,6 +39,7 @@ if ( ! is_file( WP_VENDOR_AUTOLOAD_PATH ) ) {
 
 }
 
-if ( file_exists( WP_VENDOR_AUTOLOAD_PATH ) ) {
+// We don't autoload if we are currently in CLI mode because it'll cause a class conflict. Let's see if we can work around this.
+if ( !defined( 'WP_CLI' ) && file_exists( WP_VENDOR_AUTOLOAD_PATH ) ) {
 	require_once( WP_VENDOR_AUTOLOAD_PATH );
 }

@@ -9,7 +9,7 @@
  *
  *
  */
-namespace wpCloud\Statless {
+namespace wpCloud\Stateless {
 
 	function add_plugin( $path, $message ) {
 
@@ -128,7 +128,7 @@ namespace wpCloud\Statless {
 			}
 		}
 
-		\WP_CLI::add_command( 'github', 'wpCloud\Statless\GitHub_Command' );
+		\WP_CLI::add_command( 'github', 'wpCloud\Stateless\GitHub_Command' );
 
 
 	}
@@ -156,7 +156,6 @@ namespace wpCloud\Statless {
 	add_filter( 'auto_update_translation', function( $update, $item ) {
 		return $update;
 	}, 10, 2);
-
 
 	// Notice messages
 	add_action('admin_notices', function(){

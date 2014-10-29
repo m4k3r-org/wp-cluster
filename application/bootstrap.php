@@ -16,6 +16,14 @@ if( defined( 'WP_PLUGIN_DIR' ) && ( isset( $current_blog ) && $current_blog->dom
 add_action( 'plugins_loaded', function() {
 	global $wp_veneer, $current_blog;
 
+	if( defined( 'WP_CLI' ) ) {
+		// wp_die( 'am cli' );
+	}
+
+	if( class_exists( 'WP_CLI' ) ) {
+		//wp_die( 'have cli' );
+	}
+
 	if( isset( $wp_veneer ) && method_exists( $wp_veneer, 'set' )) {
 		$wp_veneer->set( 'rewrites.login', true );
 		$wp_veneer->set( 'rewrites.manage', true );
