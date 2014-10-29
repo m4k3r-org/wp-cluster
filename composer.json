@@ -5,7 +5,7 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "http://wordpress-site:fa1942c87f9b2a7314636d520d8697fb0d9447f3@repository.usabilitydynamics.com"
+      "url": "https://wordpress-site:fa1942c87f9b2a7314636d520d8697fb0d9447f3@repository.usabilitydynamics.com"
     },
     {
       "type":"composer",
@@ -118,32 +118,19 @@
   "require": {
     "php": ">=5.3",
     "automattic/wordpress": "4.0",
-    "discodonniepresents/wp-disco": "master",
-    "discodonniepresents/wp-spectacle": "v1.0",
-    "discodonniepresents/wp-eventbrite": "master",
+
+    "usabilitydynamics/wp-flawless/v1.0": "master",
+    "discodonniepresents/wp-disco/v1.0": "master",
+    "discodonniepresents/wp-disco/v2.0": "master",
+    "discodonniepresents/wp-festival/v1.0": "master",
+    "discodonniepresents/wp-festival/v2.0": "master",
+    "discodonniepresents/wp-spectacle/v1.0": "master",
+    "discodonniepresents/wp-spectacle/v2.0": "master",
+    "discodonniepresents/wp-spectacle-fbt": "master",
     "discodonniepresents/wp-spectacle-mbp": "master",
-    "usabilitydynamics/lib-settings": "~0.2",
-    "usabilitydynamics/wp-veneer": "master",
-    "usabilitydynamics/wp-network": "master",
-    "usabilitydynamics/wp-elastic": "master",
-    "usabilitydynamics/wp-cluster": "master",
-    "usabilitydynamics/wp-github-updater": "master",
-    "usabilitydynamics/wp-splash": "master",
-    "usabilitydynamics/wp-simplify": "master",
-    "wpackagist-plugin/debug-bar": "trunk",
-    "wpackagist-plugin/debug-bar-constants": "trunk",
-    "wpackagist-plugin/debug-bar-post-types": "trunk",
-    "wpackagist-plugin/debug-bar-slow-actions": "trunk",
-    "wpackagist-plugin/debug-bar-actions-and-filters-addon": "trunk",
-    "wpackagist-plugin/jetpack": "trunk",
-    "wpackagist-plugin/wpmandrill": "1.33",
-    "wpcloud/wp-vertical-edm": "master"
-  },
-  "require-dev": {
-    "usabilitydynamics/wp-flawless": "dev-legacy",
-    "discodonniepresents/wp-festival": "v1.0",
     "discodonniepresents/wp-spectacle-chmf": "master",
     "discodonniepresents/wp-spectacle-isladelsol": "master",
+
     "discodonniepresents/wp-bassoddysey": "master",
     "discodonniepresents/wp-braxton": "master",
     "discodonniepresents/wp-kboom": "master",
@@ -154,25 +141,45 @@
     "discodonniepresents/wp-monsterblockparty": "master",
     "discodonniepresents/wp-thegift": "master",
     "discodonniepresents/wp-winterfantasy": "master",
-    "wpackagist-plugin/wp-amd": "1.0.4",
+
+    "wpackagist-plugin/akismet": "trunk",
     "wpackagist-plugin/public-post-preview": "2.4",
     "wpackagist-plugin/widget-css-classes": "1.2.6",
-    "wpackagist-plugin/w3-total-cache": "0.9.4",
+    "wpackagist-plugin/w3-total-cache": "trunk",
     "wpackagist-plugin/google-analytics-for-wordpress": "4.3.5",
-    "wpackagist-plugin/wordpress-seo": "1.5.3.3",
-    "wpackagist-plugin/akismet": "3.0.2",
+    "wpackagist-plugin/wordpress-seo": "trunk",
     "wpackagist-plugin/real-user-monitoring-by-pingdom": "1.0",
     "wpackagist-plugin/video": "1.5.6",
     "wpackagist-plugin/wp-pagenavi": "2.85",
-    "wpackagist-plugin/wordpress-importer": "0.6.1",
     "wpackagist-plugin/redirection": "2.3.6",
     "wpackagist-plugin/fantastic-elasticsearch": "2.1.0",
-    "usabilitydynamics/wp-jf3-maintenance-mode": "2.0",
-    "usabilitydynamics/wp-wpml-translation-management": "1.9.6",
-    "usabilitydynamics/wp-wpml": "3.1.7.2",
-    "usabilitydynamics/wp-gravityforms": "master",
+    "wpackagist-plugin/wp-amd": "trunk",
+    "wpackagist-plugin/jetpack": "trunk",
+    "wpackagist-plugin/wpmandrill": "trunk",
+
+    "usabilitydynamics/lib-settings": "~0.2",
+
     "usabilitydynamics/wp-seo-addon": "master",
-    "usabilitydynamics/wp-social-stream": "dev-develop"
+    "usabilitydynamics/wp-veneer": "master",
+    "usabilitydynamics/wp-network": "master",
+    "usabilitydynamics/wp-elastic": "master",
+    "usabilitydynamics/wp-cluster": "master",
+    "usabilitydynamics/wp-github-updater": "master",
+    "usabilitydynamics/wp-splash": "master",
+    "usabilitydynamics/wp-simplify": "master",
+    "usabilitydynamics/wp-social-stream": "master",
+
+    "wpackagist-plugin/debug-bar": "trunk",
+    "wpackagist-plugin/debug-bar-constants": "trunk",
+    "wpackagist-plugin/debug-bar-post-types": "trunk",
+    "wpackagist-plugin/debug-bar-slow-actions": "trunk",
+    "wpackagist-plugin/debug-bar-actions-and-filters-addon": "trunk",
+    "wpcloud/wp-vertical-edm": "master"
+  },
+  "require-dev": {
+    "discodonniepresents/wp-eventbrite": "0.1.3",
+
+    "wpackagist-plugin/wordpress-importer": "0.6.1"
   },
   "autoload": {
     "classmap": [ "application/lib" ]

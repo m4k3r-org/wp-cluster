@@ -1,8 +1,4 @@
 <?php
-namespace {
-    date_default_timezone_set('UTC');
-}
-
 namespace elasticsearch{
 	error_reporting(E_ALL | E_STRICT);
 
@@ -309,10 +305,6 @@ namespace {
 
 	function is_tax(){
 		return isset(elasticsearch\TestContext::$is['is_tax']) ? elasticsearch\TestContext::$is['is_tax'] : false;
-	}
-
-	function is_category(){
-		return isset(elasticsearch\TestContext::$is['is_category']) ? elasticsearch\TestContext::$is['is_category'] : false;
 	}
 
 	require __DIR__ . '/../../elasticsearch.php';

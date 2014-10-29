@@ -3,9 +3,7 @@
 namespace Elastica\Transport;
 
 use Elastica\Exception\InvalidException;
-use Elastica\Exception\PartialShardFailureException;
 use Elastica\Exception\ResponseException;
-use Elastica\JSON;
 use Elastica\Request;
 use Elastica\Response;
 
@@ -39,9 +37,9 @@ class Memcache extends AbstractTransport
 
         $content = '';
 
-        if (!empty($data) || '0' === $data) {
+        if (!empty($data)) {
             if (is_array($data)) {
-                $content = JSON::stringify($data);
+                $content = json_encode($data);
             } else {
                 $content = $data;
             }
@@ -59,6 +57,7 @@ class Memcache extends AbstractTransport
                 break;
             case 'get':
                 $responseString = $memcache->get($request->getPath() . '?source=' . $content);
+                echo $responseString . PHP_EOL;
                 break;
             case 'delete':
                 break;
@@ -71,10 +70,6 @@ class Memcache extends AbstractTransport
 
         if ($response->hasError()) {
             throw new ResponseException($request, $response);
-        }
-
-        if ($response->hasFailedShards()) {
-            throw new PartialShardFailureException($request, $response);
         }
 
         return $response;

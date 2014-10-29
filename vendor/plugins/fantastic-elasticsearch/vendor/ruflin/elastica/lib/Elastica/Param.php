@@ -100,7 +100,7 @@ class Param
     }
 
     /**
-     * Adds a param to the list.
+     * Adds a param to the list
      *
      * This function can be used to add an array of params
      *
@@ -110,15 +110,11 @@ class Param
      */
     public function addParam($key, $value)
     {
-        if($key != null) {
-            if (!isset($this->_params[$key])) {
-                $this->_params[$key] = array();
-            }
-
-            $this->_params[$key][] = $value;
-        } else {
-            $this->_params = $value;            
+        if (!isset($this->_params[$key])) {
+            $this->_params[$key] = array();
         }
+
+        $this->_params[$key][] = $value;
 
         return $this;
     }
@@ -132,7 +128,7 @@ class Param
      */
     public function getParam($key)
     {
-        if (!$this->hasParam($key)) {
+        if (!isset($this->_params[$key])) {
             throw new InvalidException('Param ' . $key . ' does not exist');
         }
 

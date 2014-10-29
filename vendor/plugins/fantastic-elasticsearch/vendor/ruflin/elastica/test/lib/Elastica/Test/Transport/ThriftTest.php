@@ -33,8 +33,6 @@ class ThriftTest extends BaseTest
      */
     public function testSearchRequest($config)
     {
-        $this->_checkPlugin();
-
         // Creates a new index 'xodoa' and a type 'user' inside this index
         $client = new Client($config);
 
@@ -68,12 +66,10 @@ class ThriftTest extends BaseTest
     }
 
     /**
-     * @expectedException \Elastica\Exception\ConnectionException
+     * @expectedException \Elastica\Exception\ClientException
      */
     public function testInvalidHostRequest()
     {
-        $this->_checkPlugin();
-
         $client = new Client(array('host' => 'unknown', 'port' => 9555, 'transport' => 'Thrift'));
         $client->getStatus();
     }
@@ -83,8 +79,6 @@ class ThriftTest extends BaseTest
      */
     public function testInvalidElasticRequest()
     {
-        $this->_checkPlugin();
-
         $connection = new Connection();
         $connection->setHost('localhost');
         $connection->setPort(9500);
@@ -120,13 +114,5 @@ class ThriftTest extends BaseTest
                 )
             )
         );
-    }
-
-    protected function _checkPlugin()
-    {
-        $nodes = $this->_getClient()->getCluster()->getNodes();
-        if (!$nodes[0]->getInfo()->hasPlugin('transport-thrift')) {
-            $this->markTestSkipped("transport-thrift plugin not installed.");
-        }
     }
 }

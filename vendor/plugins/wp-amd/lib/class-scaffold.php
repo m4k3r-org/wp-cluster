@@ -337,7 +337,7 @@ namespace UsabilityDynamics\AMD {
        */
       public static function return_asset( $template ) {
         global $wp_query;
-
+        
         if ( ( $type = get_query_var( self::$query_vars[0] ) ) && in_array( $type, array( 'script', 'style' ) ) ) {
         
           $headers = apply_filters( 'amd:' . $type . ':headers', array(
@@ -359,7 +359,7 @@ namespace UsabilityDynamics\AMD {
           foreach( (array) $headers as $_key => $field_value ) {
             @header( "{$_key}: {$field_value}" );
           }
-
+          
           $data = self::get_asset( $type );
           if ( !empty( $data[ 'post_content' ] ) ) {
             die( $data[ 'post_content' ] );

@@ -4,11 +4,11 @@ Theme URI: http://mexico.lightsallnight.com/
 Description: Spectacle Child Theme for Lights All Night Mexico.
 Author: Usability Dynamics, Inc.
 Author URI: http://www.usabilitydynamics.com/
-Template: wp-spectacle
+Template: spectacle
 Version: 1.0.0
 */
 
-@import url("../wp-spectacle/style.css");
+@import url("../spectacle/style.css");
 
 body {
   background: #020204 url('img/bg.jpg') no-repeat center top;

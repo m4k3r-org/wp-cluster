@@ -33,7 +33,6 @@ class Client
         'port'            => null,
         'path'            => null,
         'url'             => null,
-        'proxy'           => null,
         'transport'       => null,
         'persistent'      => true,
         'timeout'         => null,
@@ -247,30 +246,6 @@ class Client
      * @throws \Elastica\Exception\InvalidException If docs is empty
      * @link http://www.elasticsearch.org/guide/reference/api/bulk.html
      */
-    public function updateDocuments(array $docs) {
-        if (empty($docs)) {
-            throw new InvalidException('Array has to consist of at least one element');
-        }
-
-        $bulk = new Bulk($this);
-
-        $bulk->addDocuments($docs, \Elastica\Bulk\Action::OP_TYPE_UPDATE);
-
-        return $bulk->send();
-    }
-
-    /**
-     * Uses _bulk to send documents to the server
-     *
-     * Array of \Elastica\Document as input. Index and type has to be
-     * set inside the document, because for bulk settings documents,
-     * documents can belong to any type and index
-     *
-     * @param  array|\Elastica\Document[]           $docs Array of Elastica\Document
-     * @return \Elastica\Bulk\ResponseSet                   Response object
-     * @throws \Elastica\Exception\InvalidException If docs is empty
-     * @link http://www.elasticsearch.org/guide/reference/api/bulk.html
-     */
     public function addDocuments(array $docs)
     {
         if (empty($docs)) {
@@ -301,15 +276,16 @@ class Client
 
         if ($data instanceof Script) {
             $requestData = $data->toArray();
-
         } elseif ($data instanceof Document) {
-
-            $requestData = array('doc' => $data->getData());
-
-            if ($data->getDocAsUpsert()) {
-                $requestData['doc_as_upsert'] = true;
+            if ($data->hasScript()) {
+                $requestData = $data->getScript()->toArray();
+                $documentData = $data->getData();
+                if (!empty($documentData)) {
+                    $requestData['upsert'] = $documentData;
+                }
+            } else {
+                $requestData = array('doc' => $data->getData());
             }
-
             $docOptions = $data->getOptions(
                 array(
                     'version',
@@ -327,7 +303,7 @@ class Client
             );
             $options += $docOptions;
             // set fields param to source only if options was not set before
-            if ($data instanceof Document && ($data->isAutoPopulate()
+            if (($data->isAutoPopulate()
                 || $this->getConfigValue(array('document', 'autoPopulate'), false))
                 && !isset($options['fields'])
             ) {
@@ -335,14 +311,6 @@ class Client
             }
         } else {
             $requestData = $data;
-        }
-
-        //If an upsert document exists
-        if ($data instanceof Script || $data instanceof Document) {
-
-            if ($data->hasUpsert()) {
-                $requestData['upsert'] = $data->getUpsert()->getData();
-            }
         }
 
         if (!isset($options['retry_on_conflict'])) {
@@ -445,24 +413,6 @@ class Client
     }
 
     /**
-     * Determines whether a valid connection is available for use.
-     * 
-     * @return bool
-     */
-    public function hasConnection()
-    {
-        foreach ($this->_connections as $connection)
-        {
-            if ($connection->isEnabled())
-            {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-
-    /**
      * @throws \Elastica\Exception\ClientException
      * @return \Elastica\Connection
      */
@@ -506,15 +456,14 @@ class Client
     /**
      * Deletes documents with the given ids, index, type from the index
      *
-     * @param  array                                $ids      Document ids
-     * @param  string|\Elastica\Index               $index    Index name
-     * @param  string|\Elastica\Type                $type     Type of documents
-     * @param  string|false                         $routing  Optional routing key for all ids
+     * @param  array                               $ids   Document ids
+     * @param  string|\Elastica\Index               $index Index name
+     * @param  string|\Elastica\Type                $type  Type of documents
      * @throws \Elastica\Exception\InvalidException
-     * @return \Elastica\Bulk\ResponseSet           Response  object
+     * @return \Elastica\Bulk\ResponseSet                   Response object
      * @link http://www.elasticsearch.org/guide/reference/api/bulk.html
      */
-    public function deleteIds(array $ids, $index, $type, $routing = false)
+    public function deleteIds(array $ids, $index, $type)
     {
         if (empty($ids)) {
             throw new InvalidException('Array has to consist of at least one id');
@@ -527,10 +476,6 @@ class Client
         foreach ($ids as $id) {
             $action = new Action(Action::OP_TYPE_DELETE);
             $action->setId($id);
-
-            if (!empty($routing)) {
-                $action->setRouting($routing);
-            }
 
             $bulk->addAction($action);
         }
@@ -578,7 +523,6 @@ class Client
      * @param  string            $method Rest method to use (GET, POST, DELETE, PUT)
      * @param  array             $data   OPTIONAL Arguments as array
      * @param  array             $query  OPTIONAL Query params
-     * @throws Exception\ConnectionException|\Exception
      * @return \Elastica\Response Response object
      */
     public function request($path, $method = Request::GET, $data = array(), array $query = array())
@@ -601,14 +545,9 @@ class Client
 
             // Calls callback with connection as param to make it possible to persist invalid connections
             if ($this->_callback) {
-                call_user_func($this->_callback, $connection, $e, $this);
+                call_user_func($this->_callback, $connection, $e);
             }
 
-            // In case there is no valid connection left, throw exception which caused the disabling of the connection.
-            if (!$this->hasConnection())
-            {
-                throw $e;
-            }
             return $this->request($path, $method, $data, $query);
         }
     }
@@ -622,18 +561,7 @@ class Client
      */
     public function optimizeAll($args = array())
     {
-        return $this->request('_optimize', Request::POST, array(), $args);
-    }
-
-    /**
-     * Refreshes all search indices
-     *
-     * @return \Elastica\Response Response object
-     * @link http://www.elasticsearch.org/guide/reference/api/admin-indices-refresh.html
-     */
-    public function refreshAll()
-    {
-        return $this->request('_refresh', Request::POST);
+        return $this->request('_optimize', Request::POST, $args);
     }
 
     /**
@@ -656,7 +584,7 @@ class Client
             } else {
                 $data = array('message' => $context);
             }
-            $this->_logger->debug('logging Request', $data);
+            $this->_logger->info('logging Request', $data);
         }
     }
 

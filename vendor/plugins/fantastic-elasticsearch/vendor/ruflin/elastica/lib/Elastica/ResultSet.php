@@ -1,7 +1,6 @@
 <?php
 
 namespace Elastica;
-use Elastica\Exception\InvalidException;
 
 /**
  * Elastica result set
@@ -13,7 +12,7 @@ use Elastica\Exception\InvalidException;
  * @package Elastica
  * @author Nicolas Ruflin <spam@ruflin.com>
  */
-class ResultSet implements \Iterator, \Countable, \ArrayAccess
+class ResultSet implements \Iterator, \Countable
 {
     /**
      * Results
@@ -99,31 +98,11 @@ class ResultSet implements \Iterator, \Countable, \ArrayAccess
     /**
      * Returns all results
      *
-     * @return Result[] Results
+     * @return array Results
      */
     public function getResults()
     {
         return $this->_results;
-    }
-
-    /**
-     * Returns true if the response contains suggestion results; false otherwise
-     * @return bool
-     */
-    public function hasSuggests(){
-        $data = $this->_response->getData();
-        return isset($data['suggest']);
-    }
-
-    /**
-    * Return all suggests
-    *
-    * @return array suggest results
-    */
-    public function getSuggests() 
-    {
-        $data = $this->_response->getData();
-        return isset($data['suggest']) ? $data['suggest'] : array();
     }
 
     /**
@@ -136,46 +115,6 @@ class ResultSet implements \Iterator, \Countable, \ArrayAccess
         $data = $this->_response->getData();
 
         return isset($data['facets']);
-    }
-
-    /**
-     * Returns whether aggregations exist
-     *
-     * @return boolean Aggregation existence
-     */
-    public function hasAggregations()
-    {
-        $data = $this->_response->getData();
-
-        return isset($data['aggregations']);
-    }
-
-    /**
-     * Returns all aggregation results
-     *
-     * @return array
-     */
-    public function getAggregations()
-    {
-        $data = $this->_response->getData();
-
-        return isset($data['aggregations']) ? $data['aggregations'] : array();
-    }
-
-    /**
-     * Retrieve a specific aggregation from this result set
-     * @param string $name the name of the desired aggregation
-     * @return array
-     * @throws Exception\InvalidException if an aggregation by the given name cannot be found
-     */
-    public function getAggregation($name)
-    {
-        $data = $this->_response->getData();
-
-        if (isset($data['aggregations']) && isset($data['aggregations'][$name])) {
-            return $data['aggregations'][$name];
-        }
-        throw new InvalidException("This result set does not contain an aggregation named {$name}.");
     }
 
     /**
@@ -259,16 +198,6 @@ class ResultSet implements \Iterator, \Countable, \ArrayAccess
     }
 
     /**
-     * Returns size of current suggests
-     *
-     * @return int Size of suggests
-     */
-    public function countSuggests()
-    {
-        return sizeof($this->getSuggests());
-    }
-
-    /**
      * Returns the current object of the set
      *
      * @return \Elastica\Result|bool Set object or false if not valid (no more entries)
@@ -318,66 +247,5 @@ class ResultSet implements \Iterator, \Countable, \ArrayAccess
     public function rewind()
     {
         $this->_position = 0;
-    }
-
-    /**
-     * Whether a offset exists
-     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
-     *
-     * @param   integer $offset
-     * @return  boolean true on success or false on failure.
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->_results[$offset]);
-    }
-
-    /**
-     * Offset to retrieve
-     * @link http://php.net/manual/en/arrayaccess.offsetget.php
-     *
-     * @param   integer $offset
-     * @throws  Exception\InvalidException
-     * @return  Result|null
-     */
-    public function offsetGet($offset)
-    {
-        if ($this->offsetExists($offset)) {
-            return $this->_results[$offset];
-        } else {
-            throw new InvalidException("Offset does not exist.");
-        }
-    }
-
-    /**
-     * Offset to set
-     * @link http://php.net/manual/en/arrayaccess.offsetset.php
-     *
-     * @param   integer $offset
-     * @param   Result  $value
-     * @throws  Exception\InvalidException
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (!($value instanceof Result)) {
-            throw new InvalidException("ResultSet is a collection of Result only.");
-        }
-
-        if (!isset($this->_results[$offset])) {
-            throw new InvalidException("Offset does not exist.");
-        }
-
-        $this->_results[$offset] = $value;
-    }
-
-    /**
-     * Offset to unset
-     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
-     *
-     * @param integer $offset
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->_results[$offset]);
     }
 }

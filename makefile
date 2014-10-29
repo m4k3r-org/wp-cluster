@@ -22,6 +22,19 @@ default: install
 # Create MySQL Snapshot
 #
 #
+clean:
+	rm -rf composer.lock
+	rm -rf vendor/libraries/composer
+	rm -rf vendor/themes/wp-disco**
+	rm -rf vendor/themes/wp-disco**
+	rm -rf vendor/themes/wp-festival**
+	composer clear-cache
+	@echo "Cleared out vendor crap."
+
+update:
+	composer update --no-dev
+	@echo "Updated comoser."
+
 snapshot:
 	@echo "Creating MySQL snapshot for <${CURRENT_BRANCH}> database branch to ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
 	@wp --allow-root db export ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql

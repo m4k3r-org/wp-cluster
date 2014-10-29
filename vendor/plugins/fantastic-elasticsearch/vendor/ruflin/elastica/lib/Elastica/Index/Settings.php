@@ -1,7 +1,6 @@
 <?php
 
 namespace Elastica\Index;
-
 use Elastica\Index as BaseIndex;
 use Elastica\Request;
 
@@ -59,32 +58,19 @@ class Settings
      * If param is set, only specified setting is return.
      * 'index.' is added in front of $setting.
      *
-     * @param  string $setting OPTIONAL Setting name to return
+     * @param  string            $setting OPTIONAL Setting name to return
      * @return array|string|null Settings data
      * @link http://www.elasticsearch.org/guide/reference/api/admin-indices-update-settings.html
      */
     public function get($setting = '')
     {
-        $requestData = $this->request()->getData();
-        $data = reset($requestData);
-        $settings = $data['settings']['index'];
+        $data = $this->request()->getData();
+        $settings = $data[$this->_index->getName()]['settings'];
 
         if (!empty($setting)) {
-            if (isset($settings[$setting])) {
-                return $settings[$setting];
+            if (isset($settings['index.' . $setting])) {
+                return $settings['index.' . $setting];
             } else {
-                if (strpos($setting, '.') !== false) {
-                    // translate old dot-notation settings to nested arrays
-                    $keys = explode('.', $setting);
-                    foreach ($keys as $key) {
-                        if (isset($settings[$key])) {
-                            $settings = $settings[$key];
-                        } else {
-                            return null;
-                        }
-                    }
-                    return $settings;
-                }
                 return null;
             }
         }
@@ -95,12 +81,12 @@ class Settings
     /**
      * Sets the number of replicas
      *
-     * @param  int $replicas Number of replicas
+     * @param  int               $replicas Number of replicas
      * @return \Elastica\Response Response object
      */
     public function setNumberOfReplicas($replicas)
     {
-        $replicas = (int)$replicas;
+        $replicas = (int) $replicas;
 
         $data = array('number_of_replicas' => $replicas);
 
@@ -110,7 +96,7 @@ class Settings
     /**
      * Sets the index to read only
      *
-     * @param  bool $readOnly (default = true)
+     * @param  bool              $readOnly (default = true)
      * @return \Elastica\Response
      */
     public function setReadOnly($readOnly = true)
@@ -123,11 +109,11 @@ class Settings
      */
     public function getBlocksRead()
     {
-        return (bool)$this->get('blocks.read');
+        return (bool) $this->get('blocks.read');
     }
 
     /**
-     * @param  bool $state OPTIONAL (default = true)
+     * @param  bool              $state OPTIONAL (default = true)
      * @return \Elastica\Response
      */
     public function setBlocksRead($state = true)
@@ -142,18 +128,18 @@ class Settings
      */
     public function getBlocksWrite()
     {
-        return (bool)$this->get('blocks.write');
+        return (bool) $this->get('blocks.write');
     }
 
     /**
-     * @param  bool $state OPTIONAL (default = true)
+     * @param  bool              $state OPTIONAL (default = true)
      * @return \Elastica\Response
      */
     public function setBlocksWrite($state = true)
     {
         $state = $state ? 1 : 0;
 
-        return $this->set(array('blocks.write' => (int)$state));
+        return $this->set(array('blocks.write' => (int) $state));
     }
 
     /**
@@ -161,18 +147,18 @@ class Settings
      */
     public function getBlocksMetadata()
     {
-        return (bool)$this->get('blocks.metadata');
+        return (bool) $this->get('blocks.metadata');
     }
 
     /**
-     * @param  bool $state OPTIONAL (default = true)
+     * @param  bool              $state OPTIONAL (default = true)
      * @return \Elastica\Response
      */
     public function setBlocksMetadata($state = true)
     {
         $state = $state ? 1 : 0;
 
-        return $this->set(array('blocks.metadata' => (int)$state));
+        return $this->set(array('blocks.metadata' => (int) $state));
     }
 
     /**
@@ -181,7 +167,7 @@ class Settings
      * Value can be for example 3s for 3 seconds or
      * 5m for 5 minutes. -1 refreshing is disabled.
      *
-     * @param  int $interval Number of seconds
+     * @param  int               $interval Number of seconds
      * @return \Elastica\Response Response object
      */
     public function setRefreshInterval($interval)
@@ -214,14 +200,13 @@ class Settings
      */
     public function getMergePolicyType()
     {
-
         return $this->get('merge.policy.type');
     }
 
     /**
      * Sets merge policy
      *
-     * @param  string $type Merge policy type
+     * @param  string            $type Merge policy type
      * @return \Elastica\Response Response object
      * @link http://www.elasticsearch.org/guide/reference/index-modules/merge.html
      */
@@ -239,8 +224,8 @@ class Settings
      *
      * To have this changes made the index has to be closed and reopened
      *
-     * @param  string $key Merge policy key (for ex. expunge_deletes_allowed)
-     * @param  string $value
+     * @param  string            $key   Merge policy key (for ex. expunge_deletes_allowed)
+     * @param  string            $value
      * @return \Elastica\Response
      * @link http://www.elasticsearch.org/guide/reference/index-modules/merge.html
      */
@@ -262,17 +247,13 @@ class Settings
      */
     public function getMergePolicy($key)
     {
-        $settings = $this->get();
-        if (isset($settings['merge']['policy'][$key])) {
-            return $settings['merge']['policy'][$key];
-        }
-        return null;
+        return $this->get('merge.policy.' . $key);
     }
 
     /**
      * Can be used to set/update settings
      *
-     * @param  array $data Arguments
+     * @param  array             $data Arguments
      * @return \Elastica\Response Response object
      */
     public function set(array $data)
@@ -303,8 +284,8 @@ class Settings
      * - index.merge.policy
      * - index.auto_expand_replicas
      *
-     * @param  array $data OPTIONAL Data array
-     * @param  string $method OPTIONAL Transfer method (default = \Elastica\Request::GET)
+     * @param  array             $data   OPTIONAL Data array
+     * @param  string            $method OPTIONAL Transfer method (default = \Elastica\Request::GET)
      * @return \Elastica\Response Response object
      */
     public function request(array $data = array(), $method = Request::GET)

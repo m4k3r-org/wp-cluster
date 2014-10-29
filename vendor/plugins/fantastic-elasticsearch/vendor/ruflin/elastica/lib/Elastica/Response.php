@@ -1,10 +1,7 @@
 <?php
 
 namespace Elastica;
-
-use Elastica\Exception\JSONParseException;
 use Elastica\Exception\NotFoundException;
-use Elastica\JSON;
 
 /**
  * Elastica Response object
@@ -53,26 +50,17 @@ class Response
     protected $_response = null;
 
     /**
-     * HTTP response status code
-     *
-     * @var int
-     */
-    protected $_status = null;
-
-    /**
      * Construct
      *
      * @param string|array $responseString Response string (json)
-     * @param int $responseStatus http status code
      */
-    public function __construct($responseString, $responseStatus = null)
+    public function __construct($responseString)
     {
         if (is_array($responseString)) {
             $this->_response = $responseString;
         } else {
             $this->_responseString = $responseString;
         }
-        $this->_status = $responseStatus;
     }
 
     /**
@@ -109,22 +97,6 @@ class Response
     }
 
     /**
-     * True if response has failed shards
-     *
-     * @return bool True if response has failed shards
-     */
-    public function hasFailedShards()
-    {
-        try {
-            $shardsStatistics = $this->getShardsStatistics();
-        } catch (NotFoundException $e) {
-            return false;
-        }
-
-        return array_key_exists('failures', $shardsStatistics);
-    }
-
-    /**
      * Checks if the query returned ok
      *
      * @return bool True if ok
@@ -134,38 +106,18 @@ class Response
         $data = $this->getData();
 
         // Bulk insert checks. Check every item
-        if (isset($data['status'])) {
-            if ($data['status'] >= 200 && $data['status'] <= 300) {
-                return true;
-            }
-            return false;
-        }
         if (isset($data['items'])) {
             foreach ($data['items'] as $item) {
                 if (false == $item['index']['ok']) {
                     return false;
-                }
+                 }
             }
 
-            return true;
-        }
-
-        if ($this->_status >= 200 && $this->_status <= 300) {
-            // http status is ok
             return true;
         }
 
         return (isset($data['ok']) && $data['ok']);
     }
-
-    /**
-     * @return int
-     */
-    public function getStatus()
-    {
-        return $this->_status;
-    }
-
 
     /**
      * Response data array
@@ -179,10 +131,11 @@ class Response
             if ($response === false) {
                 $this->_error = true;
             } else {
-                try {
-                    $response = JSON::parse($response);
-                } catch (JSONParseException $e) {
-                    // leave reponse as is if parse fails
+
+                $tempResponse = json_decode($response, true);
+                // If error is returned, json_decode makes empty string of string
+                if (!empty($tempResponse)) {
+                    $response = $tempResponse;
                 }
             }
 
@@ -214,7 +167,7 @@ class Response
      * Sets the transfer info of the curl request. This function is called
      * from the \Elastica\Client::_callService .
      *
-     * @param  array $transferInfo The curl transfer information.
+     * @param  array             $transferInfo The curl transfer information.
      * @return \Elastica\Response Current object
      */
     public function setTransferInfo(array $transferInfo)
@@ -236,7 +189,7 @@ class Response
     /**
      * Sets the query time
      *
-     * @param  float $queryTime Query time
+     * @param  float             $queryTime Query time
      * @return \Elastica\Response Current object
      */
     public function setQueryTime($queryTime)

@@ -1,8 +1,12 @@
 temp
 node_modules
+static/cache
+static/codex
 npm-debug.log
-vendor
+wp-test-config.php
+composer.lock
 
+.git
 .svn
 .idea
 .idea/workspace.xml

@@ -50,17 +50,6 @@ class Result
     }
 
     /**
-     * Test if a param from the result hit is set
-     *
-     * @param  string  $name Param name to test
-     * @return boolean True if the param is set, false otherwise
-     */
-    public function hasParam($name)
-    {
-        return isset($this->_hit[$name]);
-    }    
-    
-    /**
      * Returns the hit id
      *
      * @return string Hit id
@@ -90,16 +79,6 @@ class Result
         return $this->getParam('fields');
     }
 
-    /**
-     * Returns whether result has fields
-     * 
-     * @return bool
-     */
-    public function hasFields()
-    {
-        return $this->hasParam('fields');
-    }    
-    
     /**
      * Returns the index name of the result
      *
@@ -199,18 +178,5 @@ class Result
         $source = $this->getData();
 
         return array_key_exists($key, $source) ? $source[$key] : null;
-    }
-    
-    /**
-     * Magic function to support isset() calls
-     *
-     * @param string $key Key name
-     * @return bool
-     */
-    public function __isset($key)
-    {
-        $source = $this->getData();
-
-        return array_key_exists($key, $source) && $source[$key] !== null;
     }
 }

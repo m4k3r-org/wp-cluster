@@ -24,30 +24,6 @@ class SettingsTest extends BaseTest
         $this->assertNotNull($settings->get('number_of_replicas'));
         $this->assertNotNull($settings->get('number_of_shards'));
         $this->assertNull($settings->get('kjqwerjlqwer'));
-
-        $index->delete();
-    }
-
-    public function testGetWithAlias()
-    {
-        $indexName = 'elasticatest';
-        $aliasName = 'elasticatest_alias';
-
-        $client = $this->_getClient();
-        $index = $client->getIndex($indexName);
-        $index->create(array(), true);
-        $index->refresh();
-
-        $index->addAlias($aliasName);
-        $index = $client->getIndex($aliasName);
-        $settings = $index->getSettings();
-
-        $this->assertInternalType('array', $settings->get());
-        $this->assertNotNull($settings->get('number_of_replicas'));
-        $this->assertNotNull($settings->get('number_of_shards'));
-        $this->assertNull($settings->get('kjqwerjlqwer'));
-
-        $index->delete();
     }
 
     public function testSetNumberOfReplicas()
@@ -66,8 +42,6 @@ class SettingsTest extends BaseTest
         $settings->setNumberOfReplicas(3);
         $index->refresh();
         $this->assertEquals(3, $settings->get('number_of_replicas'));
-
-        $index->delete();
     }
 
     public function testSetRefreshInterval()
@@ -87,8 +61,6 @@ class SettingsTest extends BaseTest
         $settings->setRefreshInterval('5s');
         $index->refresh();
         $this->assertEquals('5s', $settings->get('refresh_interval'));
-
-        $index->delete();
     }
 
     public function testGetRefreshInterval()
@@ -108,8 +80,6 @@ class SettingsTest extends BaseTest
         $index->refresh();
         $this->assertEquals($interval, $settings->getRefreshInterval());
         $this->assertEquals($interval, $settings->get('refresh_interval'));
-
-        $index->delete();
     }
 
     public function testSetMergePolicy()
@@ -119,8 +89,6 @@ class SettingsTest extends BaseTest
         $client = $this->_getClient();
         $index = $client->getIndex($indexName);
         $index->create(array(), true);
-        //wait for the shards to be allocated
-        $this->_waitForAllocation($index);
 
         $settings = $index->getSettings();
 
@@ -129,8 +97,6 @@ class SettingsTest extends BaseTest
 
         $settings->setMergePolicy('expunge_deletes_allowed', 10);
         $this->assertEquals(10, $settings->getMergePolicy('expunge_deletes_allowed'));
-
-        $index->delete();
     }
 
     public function testSetMergeFactor()
@@ -141,20 +107,16 @@ class SettingsTest extends BaseTest
         $index = $client->getIndex($indexName);
         $index->create(array(), true);
 
-        //wait for the shards to be allocated
-        $this->_waitForAllocation($index);
-
         $settings = $index->getSettings();
 
         $response = $settings->setMergePolicy('merge_factor', 15);
         $this->assertEquals(15, $settings->getMergePolicy('merge_factor'));
         $this->assertInstanceOf('Elastica\Response', $response);
-        $this->assertTrue($response->isOk());
+        $data = $response->getData();
+        $this->assertTrue($data['ok']);
 
         $settings->setMergePolicy('merge_factor', 10);
         $this->assertEquals(10, $settings->getMergePolicy('merge_factor'));
-
-        $index->delete();
     }
 
     public function testSetMergePolicyType()
@@ -165,29 +127,26 @@ class SettingsTest extends BaseTest
         $index = $client->getIndex($indexName);
         $index->create(array(), true);
 
-        //wait for the shards to be allocated
-        $this->_waitForAllocation($index);
-
         $settings = $index->getSettings();
 
-        $settings->setMergePolicyType('log_byte_size');
+        //$response = $settings->setMergePolicyType('LogByteSizeMergePolicyProvider');
+        $response = $settings->setMergePolicyType('log_byte_size');
         $this->assertEquals('log_byte_size', $settings->getMergePolicyType());
 
         $response = $settings->setMergePolicy('merge_factor', 15);
         $this->assertEquals(15, $settings->getMergePolicy('merge_factor'));
         $this->assertInstanceOf('Elastica\Response', $response);
-        $this->assertTrue($response->isOk());
-
-        $index->delete();
+        $data = $response->getData();
+        $this->assertTrue($data['ok']);
     }
 
     public function testSetReadOnly()
     {
-        $index = $this->_createIndex('test');
-        //wait for the shards to be allocated
-        $this->_waitForAllocation($index);
+        $client = $this->_getClient();
+        $index = new Index($client, 'elastica_test');
         $index->getSettings()->setReadOnly(false);
 
+        $index = $this->_createIndex();
 
         // Add document to normal index
         $doc1 = new Document(null, array('hello' => 'world'));
@@ -196,11 +155,11 @@ class SettingsTest extends BaseTest
 
         $type = $index->getType('test');
         $type->addDocument($doc1);
-        $this->assertEquals('false', $index->getSettings()->get('blocks.read_only')); //ES returns a string for this setting
+        $this->assertFalse((bool) $index->getSettings()->get('blocks.read_only'));
 
         // Try to add doc to read only index
         $index->getSettings()->setReadOnly(true);
-        $this->assertEquals('true', $index->getSettings()->get('blocks.read_only'));
+        $this->assertTrue((bool) $index->getSettings()->get('blocks.read_only'));
 
         try {
             $type->addDocument($doc2);
@@ -219,14 +178,14 @@ class SettingsTest extends BaseTest
         $index->refresh();
 
         $this->assertEquals(2, $type->count());
-
-        $index->delete();
     }
 
 
     public function testGetSetBlocksRead()
     {
-        $index = $this->_createIndex('elastica-test');
+        $client = $this->_getClient();
+        $index = $client->getIndex('elastica-test');
+        $index->create();
         $index->refresh();
         $settings = $index->getSettings();
 
@@ -246,7 +205,9 @@ class SettingsTest extends BaseTest
 
     public function testGetSetBlocksWrite()
     {
-        $index = $this->_createIndex('elastica-test');
+        $client = $this->_getClient();
+        $index = $client->getIndex('elastica-test');
+        $index->create();
         $index->refresh();
         $settings = $index->getSettings();
 
@@ -266,7 +227,9 @@ class SettingsTest extends BaseTest
 
     public function testGetSetBlocksMetadata()
     {
-        $index = $this->_createIndex('elastica-test');
+        $client = $this->_getClient();
+        $index = $client->getIndex('elastica-test');
+        $index->create();
         $index->refresh();
         $settings = $index->getSettings();
 
@@ -283,18 +246,5 @@ class SettingsTest extends BaseTest
 
         $settings->setBlocksMetadata(false); // Cannot delete index otherwise
         $index->delete();
-    }
-
-    protected function _waitForAllocation(Index $index)
-    {
-        do {
-            $settings = $index->getStatus()->get();
-            $allocated = true;
-            foreach ($settings['shards'] as $shard) {
-                if ($shard[0]['routing']['state'] != 'STARTED') {
-                    $allocated = false;
-                }
-            }
-        } while (!$allocated);
     }
 }

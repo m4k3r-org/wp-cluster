@@ -12,7 +12,7 @@ use Elastica\Exception\InvalidException;
  * @author avasilenko <aa.vasilenko@gmail.com>
  * @link http://www.elasticsearch.org/guide/reference/modules/scripting.html
  */
-class Script extends AbstractUpdateAction
+class Script extends Param
 {
     const LANG_MVEL   = 'mvel';
     const LANG_JS     = 'js';
@@ -24,7 +24,6 @@ class Script extends AbstractUpdateAction
      * @var string
      */
     private $_script;
-
     /**
      * @var string
      */
@@ -35,7 +34,7 @@ class Script extends AbstractUpdateAction
      * @param array|null  $params
      * @param string|null $lang
      */
-    public function __construct($script, array $params = null, $lang = null, $id = null)
+    public function __construct($script, array $params = null, $lang = null)
     {
         $this->setScript($script);
         if ($params) {
@@ -43,10 +42,6 @@ class Script extends AbstractUpdateAction
         }
         if ($lang) {
             $this->setLang($lang);
-        }
-
-        if ($id) {
-            $this->setId($id);
         }
     }
 

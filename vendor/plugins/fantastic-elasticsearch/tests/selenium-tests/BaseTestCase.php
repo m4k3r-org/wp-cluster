@@ -31,15 +31,6 @@ abstract class BaseTestCase extends PHPUnit_Extensions_Selenium2TestCase
 			
 			$this->url('http://localhost:8080/wordpress/wp-admin/admin.php?page=elastic_search&tab=index');
 			$this->assertEquals('ElasticSearch ‹ Vagrant — WordPress', $this->title());
-
-			sleep(1); // some reason too fast?
-
-			$this->byId('wipedata')->click();
-
-			$this->byId('nhp-opts-save');
-
-			sleep(1);
-			
 			$this->byId('reindex')->click();
 
 			$this->byCssSelector(".complete");

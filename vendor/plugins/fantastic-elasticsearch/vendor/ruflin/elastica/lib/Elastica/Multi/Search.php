@@ -3,7 +3,6 @@
 namespace Elastica\Multi;
 
 use Elastica\Client;
-use Elastica\JSON;
 use Elastica\Request;
 use Elastica\Search as BaseSearch;
 
@@ -171,8 +170,8 @@ class Search
         $header = (empty($header)) ? new \stdClass : $header;
         $query = $search->getQuery();
 
-        $data = JSON::stringify($header) . "\n";
-        $data.= JSON::stringify($query->toArray()) . "\n";
+        $data = json_encode($header) . "\n";
+        $data.= json_encode($query->toArray()) . "\n";
 
         return $data;
     }

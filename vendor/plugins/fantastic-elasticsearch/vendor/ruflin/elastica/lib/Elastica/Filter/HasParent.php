@@ -2,6 +2,8 @@
 
 namespace Elastica\Filter;
 
+use Elastica\Query;
+
 /**
  * Returns child documents having parent docs matching the query
  *
@@ -14,16 +16,12 @@ class HasParent extends AbstractFilter
     /**
      * Construct HasParent filter
      *
-     * @param string|\Elastica\Query|\Elastica\Filter\AbstractFilter $query Query string or a Query object or a filter
+     * @param string|\Elastica\Query $query Query string or a Query object
      * @param string                $type  Parent document type
      */
     public function __construct($query, $type)
     {
-        if ($query instanceof AbstractFilter) {
-            $this->setFilter($query);
-        } else {
-            $this->setQuery($query);
-        }
+        $this->setQuery($query);
         $this->setType($type);
     }
 
@@ -35,22 +33,10 @@ class HasParent extends AbstractFilter
      */
     public function setQuery($query)
     {
-        $query = \Elastica\Query::create($query);
+        $query = Query::create($query);
         $data = $query->toArray();
 
         return $this->setParam('query', $data['query']);
-    }
-
-    /**
-     * Sets query object
-     *
-     * @param  \Elastica\Filter\AbstractFilter $filter
-     * @return \Elastica\Filter\HasParent Current object
-     */
-    public function setFilter($filter)
-    {
-        $data = $filter->toArray();
-        return $this->setParam('filter', $data);
     }
 
     /**

@@ -1,10 +1,7 @@
 <?php
 
 namespace Elastica\Query;
-
 use Elastica\Exception\InvalidException;
-use Elastica\Exception\JSONParseException;
-use Elastica\JSON;
 
 /**
  * Query Builder.
@@ -62,11 +59,13 @@ class Builder extends AbstractQuery
      */
     public function toArray()
     {
-        try {
-            return JSON::parse($this->__toString());
-        } catch (JSONParseException $e) {
+        $array = json_decode($this->__toString(), true);
+
+        if (is_null($array)) {
             throw new InvalidException('The query produced is invalid');
         }
+
+        return $array;
     }
 
     /**
@@ -286,7 +285,7 @@ class Builder extends AbstractQuery
      * In the simple case, a facet can return facet counts for various facet
      * values for a specific field.
      *
-     * Elasticsearch supports more advanced facet implementations, such as
+     * ElasticSearch supports more advanced facet implementations, such as
      * statistical or date histogram facets.
      *
      * @return \Elastica\Query\Builder

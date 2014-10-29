@@ -3,7 +3,7 @@
 Plugin Name: Fantastic ElasticSearch
 Plugin URI: http://wordpress.org/extend/plugins/fantastic-elasticsearch/
 Description: Improve wordpress search performance and accuracy by leveraging an ElasticSearch server.
-Version: 3.1.1
+Version: 2.1.0
 Author: Paris Holley
 Author URI: http://www.linkedin.com/in/parisholley
 Author Email: mail@parisholley.com
@@ -44,14 +44,9 @@ if(!class_exists('NHP_Options')){
 
 require 'src/bootstrap.php';
 
-require 'wp/theme/AbstractArchive.php';
 require 'wp/theme/search.php';
 require 'wp/theme/category.php';
-require 'wp/theme/archive.php';
-require 'wp/theme/taxonomy.php';
-require 'wp/theme/tag.php';
-require 'wp/theme/widget-options.php';
-require 'wp/theme/widget-selected.php';
+require 'wp/theme/widget.php';
 require 'wp/admin/hooks.php';
 
 add_action( 'admin_enqueue_scripts', function() {
@@ -60,21 +55,15 @@ add_action( 'admin_enqueue_scripts', function() {
 });
 
 add_action('admin_init', function(){
-	$options = get_option('elasticsearch', array());
+	$options = get_option('elasticsearch');
 
-	if(!is_array($options)){
-		$options = array();
-	}
+	$keys = array_keys($options);
 
 	$hasScore = false;
 
-	if($options != null){
-		$keys = array_keys($options);
-
-		foreach ($keys as $key) {
-			if(strpos($key, 'score_') > -1 && $options[$key]){
-				$hasScore = true;
-			}
+	foreach ($keys as $key) {
+		if(strpos($key, 'score_') > -1 && $options[$key]){
+			$hasScore = true;
 		}
 	}
 
@@ -108,8 +97,6 @@ add_action('admin_init', function(){
 });
 
 add_action('init', function(){
-	Theme::enableAjaxHooks();
-
 	$args = array();
 
 	$args['share_icons']['twitter'] = array(
@@ -145,10 +132,7 @@ add_action('init', function(){
 
 	global $NHP_Options;
 
-    	$tabs = array();
-
-	$sections = Config::apply_filters("nhp_options_section_setup", $sections);
-	$args = Config::apply_filters("nhp_options_args_setup", $args);
+    $tabs = array();
 
 	$NHP_Options = new \NHP_Options($sections, $args, $tabs);
 }, 10241988);

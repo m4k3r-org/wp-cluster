@@ -6,6 +6,12 @@
 * Reinstalled plugins from GitHub: wp-github-updater, wp-network, wp-veneer, wp-cluster, wp-elastic, wp-event-post-type-v0.5, wp-pagespeed and wp-revisr.
 * Setup automatic plugin activation for required plugins.
 * Fixed commenting with wp-comments-post.php
+* Replaced wp-spectacle with wp-spectable-v1.0
+* Replaced wp-spectacle-2 with wp-spectable-v2.0
+* Replaced wp-disco with wp-disco-v2.0
+* Replaced flawless with wp-flawless-v1.0
+* Replaced wp-festival with wp-festival-v1.0
+* Replaced wp-festival-2 with wp-festival-v2.0
 
 #### 2.1.3
 * Added changes.md

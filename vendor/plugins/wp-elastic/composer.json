@@ -10,11 +10,7 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "http://repository.usabilitydynamics.com"
-    },
-    {
-      "type": "git",
-      "url": "git@github.com:UsabilityDynamics/wp-elastic.git"
+      "url": "https://repository.usabilitydynamics.com"
     }
   ],
   "authors": [
@@ -28,6 +24,8 @@
     }
   ],
   "config": {
+    "preferred-install": "dist",
+    "github-protocols": [ "ssh" ],
     "vendor-dir": "vendor/libraries",
     "optimize-autoloader": true,
     "autoloader-suffix": "VendorPackages"
@@ -36,9 +34,6 @@
     "installer-paths": {
       "vendor/plugins/{$name}": [
         "type:wordpress-plugin"
-      ],
-      "vendor/modules/{$name}": [
-        "type:wordpress-module"
       ],
       "vendor/themes/{$name}": [
         "type:wordpress-theme"
@@ -54,13 +49,7 @@
     "composer/installers": "~1.0",
     "usabilitydynamics/lib-settings": "~0.2",
     "usabilitydynamics/lib-ui": "~0.2",
-    "usabilitydynamics/lib-utility": "~0.3",
-    "usabilitydynamics/lib-api": "~0.5",
-    "UsabilityDynamics/lib-carrington": "~1.2",
-    "usabilitydynamics/lib-utility": "~0.3",
-    "usabilitydynamics/lib-ui": "~0.2",
-    "UsabilityDynamics/lib-model": "~0.4",
-    "usabilitydynamics/wp-meta-box": "~4.3"
+    "usabilitydynamics/lib-model": "~0.4"
   },
   "license": "GPLv2",
   "minimum-stability": "dev"
