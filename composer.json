@@ -1,0 +1,69 @@
+{
+  "name": "usabilitydynamics/wp-veneer",
+  "type": "wordpress-plugin",
+  "homepage": "https://github.com/UsabilityDynamics/wp-veneer",
+  "description": "https://github.com/UsabilityDynamics/wp-veneer",
+  "keywords": [
+    "wordpress",
+    "multisite",
+    "varnish"
+  ],
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Andy Potanin",
+      "homepage": "http://usabilitydynamics.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repository.usabilitydynamics.com"
+    },
+    {
+      "type":"composer",
+      "url":"http://wpackagist.org"
+    }
+  ],
+  "config": {
+    "preferred-install": "source",
+    "github-protocols": [ "ssh" ],
+    "vendor-dir": "vendor",
+    "bin-dir": "vendor/bin",
+    "component-dir": "vendor/components",
+    "optimize-autoloader": true
+  },
+  "require": {
+    "php": ">=5.3",
+    "composer/installers": "v1.0.18",
+    "usabilitydynamics/lib-api": "~0.5",
+    "usabilitydynamics/lib-settings": "~0.2",
+    "usabilitydynamics/lib-ui": "~0.2"
+  },
+  "require-dev": {},
+  "require-disabled": {
+    "monolog/monolog": "1.10.0",
+    "graze/monolog-extensions": "~1.4.0",
+    "mindscape/raygun4php": "dev-master",
+    "matthiasmullie/minify": "1.2.0",
+    "mrclay/minify": "2.2.0"
+  },
+  "autoload": {
+    "classmap": [
+      "lib/class-api.php",
+      "lib/class-bootstrap.php",
+      "lib/class-w3.php",
+      "lib/class-cache.php",
+      "lib/class-documents.php",
+      "lib/class-utility.php",
+      "lib/class-rewrites.php",
+      "lib/class-image.php",
+      "lib/class-log.php",
+      "lib/class-media.php",
+      "lib/class-security.php",
+      "lib/class-varnish.php",
+      "lib/class-search.php"
+    ]
+  }
+}

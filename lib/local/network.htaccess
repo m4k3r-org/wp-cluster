@@ -1,0 +1,221 @@
+# WordPress Network
+#
+# Examples:
+# * http://capitaldealsonline.com/assets/scripts/admin-bar.js
+# * http://capitaldealsonline.com/assets/styles/admin-bar.css
+#
+# @version 3.0.1
+# @author potanin@UD
+
+# BEGIN Environment
+<IfModule mod_setenvif.c>
+  SetEnvIfNoCase X-UDS-Environment "(.*)" APPLICATION_ENVIRONMENT=$1
+</IfModule>
+# END Environment
+
+# Required at beginning
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+</IfModule>
+
+# BEGIN Mimes
+<IfModule mod_mime.c>
+  AddEncoding gzip svgz
+  AddType audio/mp4 m4a f4a f4b
+  AddType audio/ogg oga ogg
+  AddType application/javascript js
+  AddType application/json json
+  AddType video/mp4 mp4 m4v f4v f4p
+  AddType video/ogg ogv
+  AddType video/webm webm
+  AddType video/x-flv flv
+  AddType application/font-woff woff
+  AddType application/vnd.ms-fontobject eot
+  AddType application/x-font-ttf ttc ttf
+  AddType font/opentype otf
+  AddType application/octet-stream safariextz
+  AddType application/x-chrome-extension crx
+  AddType application/x-opera-extension oex
+  AddType application/x-shockwave-flash swf
+  AddType application/x-web-app-manifest+json webapp
+  AddType application/x-xpinstall xpi
+  AddType application/xml atom rdf rss xml
+  AddType image/webp webp
+  AddType image/x-icon ico
+  AddType text/cache-manifest appcache manifest
+  AddType text/vtt vtt
+  AddType text/x-component htc
+  AddType text/x-vcard vcf
+
+</IfModule>
+# END Mimes
+
+# BEGIN Format
+<IfModule mod_mime.c>
+  AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml .html .htm
+</IfModule>
+# END Format
+
+# BEGIN Security
+<FilesMatch "(^#.*#|\.(md|lock|yml|json|bak|config|dist|fla|inc|ini|log|psd|sh|sql|sw[op])|~)$">
+
+  Order allow,deny
+  Deny from all
+  Satisfy All
+
+</FilesMatch>
+# END Security
+
+# BEGIN W3TC CDN
+<FilesMatch "\.(ttf|ttc|otf|eot|woff|font.css)$">
+
+  <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+  </IfModule>
+
+</FilesMatch>
+# END W3TC CDN
+
+# BEGIN Browser Optimization
+<IfModule mod_deflate.c>
+
+    <IfModule mod_headers.c>
+        Header append Vary User-Agent env=!dont-vary
+    </IfModule>
+        AddOutputFilterByType DEFLATE text/css text/x-component application/x-javascript application/javascript text/javascript text/x-js text/html text/richtext image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon application/json
+    <IfModule mod_mime.c>
+        # DEFLATE by extension
+        AddOutputFilter DEFLATE js css htm html xml
+    </IfModule>
+
+</IfModule>
+# END Browser Optimization
+
+# BEGIN Static and Media
+<IfModule mod_rewrite.c>
+
+  # Rewrite any of our content URLs to media, so that it is uniform
+  RewriteRule ^wp-content/uploads/(.*)$ /media/$1 [L]
+  RewriteRule ^system/files/(.*)$ /media/$1 [L]
+  RewriteRule ^system/media/(.*)$ /media/$1 [L]
+  RewriteRule ^files/(.*)$ /media/$1 [L]
+  RewriteRule ^uploads/(.*)$ /media/$1 [L]
+
+  # Now, we're going to look in the public directory to see if the file exists, and serve
+  # it if it does
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$
+  RewriteCond %{DOCUMENT_ROOT}/storage/public/%1/%2 -f
+  RewriteRule ^.*$ /storage/public/%1/%2 [L]
+
+  # Ok, now we're going to rewrite to static html files if they exist
+  # for the request
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$
+  RewriteCond %{DOCUMENT_ROOT}/storage/public/%1/%2.html -f
+  RewriteRule ^.*$ /storage/public/%1/%2.html [L]
+
+  # Look to rewrite for the root specifically to index.html if it exists,
+  # but only if we don't actually have a query string
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{DOCUMENT_ROOT}/storage/public/%{HTTP_HOST}/index\.html -f
+  RewriteCond %{QUERY_STRING} ^$
+  RewriteRule ^$ /storage/public/%{HTTP_HOST}/index.html [L]
+
+</IfModule>
+# END Static and Media
+
+# BEGIN Public API
+<IfModule mod_rewrite.c>
+
+  RewriteRule ^api/rpc.xml$     /vendor/libraries/automattic/wordpress/xmlrpc.php [QSA,L]
+  RewriteRule ^api/(.*).xml$ /manage/admin-ajax.php?action=/$1&format=xml [QSA,L]
+  RewriteRule ^api/(.*).json$ /manage/admin-ajax.php?action=/$1&format=json [QSA,L]
+  RewriteRule ^api/(.*)$ /manage/admin-ajax.php?action=/$1&format=json [QSA,L]
+
+</IfModule>
+# END Public API
+
+# BEGIN Modules
+<IfModule mod_rewrite.c>
+
+  # Just do a standard rewrite for plugins to vendor conversion
+  RewriteRule ^libraries/(.*)$ vendor/libraries/$1 [QSA,L]
+  #RewriteRule ^modules(.*)$ vendor/modules$1 [QSA,L]
+  RewriteRule ^plugins(.*)$ vendor/plugins$1 [QSA,L]
+  RewriteRule ^wp-content/plugins/(.*)$ vendor/plugins/$1 [L]
+
+</IfModule>
+# END Modules
+
+# BEGIN Theme
+<IfModule mod_rewrite.c>
+
+  # Just do a standard rewrite for wp-content to vendor conversion
+  RewriteRule ^themes(.*)$ vendor/themes$1 [QSA,L]
+  RewriteRule ^wp-content/themes/(.*)$ vendor/themes/$1 [L]
+
+</IfModule>
+# END Theme
+
+# BEGIN Management
+<IfModule mod_rewrite.c>
+
+  # Ensure that we're forwarding all manage requests to the right place
+  RewriteRule ^manage/(login|signup)/?(.*)$ /vendor/libraries/automattic/wordpress/wp-$1.php [QSA,L]
+  RewriteRule ^manage/?(.*)$ /vendor/libraries/automattic/wordpress/wp-admin/$1 [QSA,L]
+
+  RewriteRule ^wp-admin/?(.*)$        /manage/$1 [R=301,L] #
+  RewriteRule ^wp-admin/css/?(.*)$    /manage/css/$1 [QSA,L] #
+  RewriteRule ^wp-admin/images/?(.*)$ /manage/images/$1 [QSA,L] #
+
+  # Without this, Media Libary can't make admin-ajax requests...
+  RewriteRule ^vendor/libraries/automattic/wordpress/manage/?(.*)$ /manage/$1 [QSA,L]
+
+  # Script Builders.
+  RewriteRule ^wp-admin/load-styles.php?(.*)$ /vendor/libraries/automattic/wordpress/wp-admin/load-styles.php$1 [QSA,L]
+  RewriteRule ^wp-admin/load-scripts.php?(.*)$ /vendor/libraries/automattic/wordpress/wp-admin/load-scripts.php$1 [R=301,L]
+
+</IfModule>
+# END Management
+
+# BEGIN Assets
+<IfModule mod_rewrite.c>
+
+  RewriteRule ^includes/js/(.*)$ /assets/scripts/$1 [QSA,L]
+  RewriteRule ^includes/css/(.*)$ /assets/styles/$1 [QSA,L]
+
+  RewriteRule ^wp-includes/js/(.*)$ /assets/scripts/$1 [QSA,L]
+  RewriteRule ^wp-includes/images/(.*)$ /assets/images/$1 [QSA,L]
+  RewriteRule ^wp-includes/css/(.*)$ /assets/styles/$1 [R=301,L]
+
+  RewriteRule ^assets/styles/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/css/$1 [QSA,L]
+  RewriteRule ^assets/scripts/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/js/$1 [QSA,L]
+  RewriteRule ^assets/images/(.*)$ /vendor/libraries/automattic/wordpress/wp-includes/images/$1 [QSA,L]
+
+</IfModule>
+# END Assets
+
+# BEGIN PHP-FPM
+<IfModule mod_proxy_fcgi.c>
+  <IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_FILENAME} ^.*\.php$
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/$1 [P,L]
+  </IfModule>
+</IfModule>
+# END PHP-FPM
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.php$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
