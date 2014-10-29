@@ -18,4 +18,4 @@ static/codex
 *.out
 *.pid
 *.gz
-vendor
+vendor/composer/installed.json
