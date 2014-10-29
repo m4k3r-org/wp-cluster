@@ -1,1 +1,0 @@
-require(["skrollr","scrollReveal","udx.utility.imagesloaded"],function(a,b,c){console.log("ready");var d={body:document.body.className.split(" "),height:window.screen.availHeight,width:window.screen.availWidth,reveal:void 0,skrollr:void 0};d.reveal=new b({after:"0s",reset:!1,init:!0}),c(document.body,function(){console.log("have images",d.body)})});
