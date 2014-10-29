@@ -6,14 +6,17 @@
 * Reinstalled plugins from GitHub: wp-github-updater, wp-network, wp-veneer, wp-cluster, wp-elastic, wp-event-post-type-v0.5, wp-pagespeed and wp-revisr.
 * Setup automatic plugin activation for required plugins.
 * Fixed commenting with wp-comments-post.php
-* Replaced wp-spectacle with wp-spectable-v1.0
-* Replaced wp-spectacle-2 with wp-spectable-v2.0
-* Replaced wp-disco with wp-disco-v2.0
-* Replaced flawless with wp-flawless-v1.0
-* Replaced wp-festival with wp-festival-v1.0
-* Replaced wp-festival-2 with wp-festival-v2.0
+* Re-installed wp-splash. [wp theme enable wp-splash --network]
+* Replaced wp-spectacle with wp-spectacle-v1.0 [wp theme enable wp-spectacle-v1.0 --network]
+* Replaced wp-spectacle-2 with wp-spectacle-v2.0 [wp theme enable wp-spectable-v2.0 --network]
+* Replaced wp-disco with wp-disco-v2.0 [wp theme activate wp-disco-v2.0].
+* Copy wp-disco settings [wp option get theme_mods_wp-disco --format=json | wp option update theme_mods_wp-disco-v2.0 --format=json]
+* Replaced flawless with wp-flawless-v1.0 [wp theme enable wp-flawless-v1.0 --network]
+* Replaced wp-festival with wp-festival-v1.0 [wp theme enable wp-festival-v1.0 --network]
+* Replaced wp-festival-2 with wp-festival-v2.0 [wp theme enable wp-festival-v2.0 --network]
 * Added "wp utility" command for seeing useful lists such as cross-network active theme.
 * Fixed "lib-settings" and "lib-utility" deps to have fixed versions.
+* 
 
 #### 2.1.3
 * Added changes.md
