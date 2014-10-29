@@ -1,0 +1,167 @@
+<!DOCTYPE  html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>doc</title>
+    <style>
+      /*github.com style (c) Vasily Polovnyov <vast@whiteants.net>*/
+      pre code {
+        display: block; padding: 0.5em;
+        color: #333;
+        background: #f8f8ff
+      }
+      pre .comment,
+      pre .template_comment,
+      pre .diff .header,
+      pre .javadoc {
+        color: #998;
+        font-style: italic
+      }
+      pre .keyword,
+      pre .css .rule .keyword,
+      pre .winutils,
+      pre .javascript .title,
+      pre .nginx .title,
+      pre .subst,
+      pre .request,
+      pre .status {
+        color: #333;
+        font-weight: bold
+      }
+      pre .number,
+      pre .hexcolor,
+      pre .ruby .constant {
+        color: #099;
+      }
+      pre .string,
+      pre .tag .value,
+      pre .phpdoc,
+      pre .tex .formula {
+        color: #d14
+      }
+      pre .title,
+      pre .id {
+        color: #900;
+        font-weight: bold
+      }
+      pre .javascript .title,
+      pre .lisp .title,
+      pre .clojure .title,
+      pre .subst {
+        font-weight: normal
+      }
+      pre .class .title,
+      pre .haskell .type,
+      pre .vhdl .literal,
+      pre .tex .command {
+        color: #458;
+        font-weight: bold
+      }
+      pre .tag,
+      pre .tag .title,
+      pre .rules .property,
+      pre .django .tag .keyword {
+        color: #000080;
+        font-weight: normal
+      }
+      pre .attribute,
+      pre .variable,
+      pre .lisp .body {
+        color: #008080
+      }
+      pre .regexp {
+        color: #009926
+      }
+      pre .class {
+        color: #458;
+        font-weight: bold
+      }
+      pre .symbol,
+      pre .ruby .symbol .string,
+      pre .lisp .keyword,
+      pre .tex .special,
+      pre .prompt {
+        color: #990073
+      }
+      pre .built_in,
+      pre .lisp .title,
+      pre .clojure .built_in {
+        color: #0086b3
+      }
+      pre .preprocessor,
+      pre .pi,
+      pre .doctype,
+      pre .shebang,
+      pre .cdata {
+        color: #999;
+        font-weight: bold
+      }
+      pre .deletion {
+        background: #fdd
+      }
+      pre .addition {
+        background: #dfd
+      }
+      pre .diff .change {
+        background: #0086b3
+      }
+      pre .chunk {
+        color: #aaa
+      }
+    </style>
+  </head>
+  <body>  
+    <hr>
+<p><a href="http://waffle.io/usabilitydynamics/wp-veneer"><img src="https://badge.waffle.io/usabilitydynamics/wp-veneer.png?label=bug&amp;title=Bugs" alt="Issues - Bug"></a>
+<a href="http://waffle.io/usabilitydynamics/wp-veneer/"><img src="https://badge.waffle.io/usabilitydynamics/wp-veneer.png?label=backlog&amp;title=Backlog" alt="Issues - Backlog"></a>
+<a href="http://waffle.io/usabilitydynamics/wp-veneer/"><img src="https://badge.waffle.io/usabilitydynamics/wp-veneer.png?label=in progress&amp;title=Active" alt="Issues - Active"></a></p>
+<hr>
+<p><a href="https://gemnasium.com/UsabilityDynamics/wp-veneer"><img src="https://gemnasium.com/UsabilityDynamics/wp-veneer.svg" alt="Dependency Status"></a>
+<a href="https://scrutinizer-ci.com/g/UsabilityDynamics/wp-veneer"><img src="http://img.shields.io/scrutinizer/g/UsabilityDynamics/wp-veneer.svg" alt="Scrutinizer Quality"></a>
+<a href="https://scrutinizer-ci.com/g/UsabilityDynamics/wp-veneer"><img src="http://img.shields.io/scrutinizer/coverage/g/UsabilityDynamics/wp-veneer.svg" alt="Scrutinizer Coverage"></a>
+<a href="https://circleci.com/gh/UsabilityDynamics/wp-veneer"><img src="https://circleci.com/gh/UsabilityDynamics/wp-veneer.png?circle-token=08ed40a6f722782ae229774ee7a208a1167b012f" alt="CircleCI"></a></p>
+<hr>
+<h2 id="features">Features</h2>
+<ul>
+<li>Varnish Purging</li>
+<li>URL Rewrites</li>
+<li>vElasic Search</li>
+</ul>
+<h2 id="constants">Constants</h2>
+<ul>
+<li>WP_THEMES_DIR - Absolute path to storage directory.</li>
+<li>WP_THEME_DIR - Absolute path to theme directory.</li>
+<li>WP_THEME_URL  - URL to themes directory.</li>
+<li>WP_VENEER_STORAGE - Absolute path to storage directory.</li>
+<li>WP_VENEER_PUBLIC  - Absolute path to &quot;public&quot; directory. If multisite is enabled, assets should be organized by apex domains.</li>
+</ul>
+<h2 id="instance-properties">Instance Properties</h2>
+<p>Properties set by Bootstrap class to the global $wp_veneer object.</p>
+<ul>
+<li>site      - Current site&#39;s domain.</li>
+<li>apex      - Current site&#39;s apex domain.</li>
+<li>network   - Network&#39;s (if applicable) apex domain.</li>
+<li>site_id   - Current site&#39;s blog ID.</li>
+</ul>
+<h2 id="w3-total-cache-issues-notes">W3 Total Cache Issues &amp; Notes</h2>
+<ul>
+<li>Verified for seperate Networks: Plugin Activation,</li>
+<li>Ideally &quot;cache&quot; should be located in static/storage/{domain}/cache</li>
+<li>Only single hostname is allowed in settings - stereolivehouston.com images go to direct.nightculture.com</li>
+<li>Files uploaded to &quot;CDN&quot; must be somehow organized by domain.</li>
+<li>Theme files are uploaded into a /system/themes directory. Where does &quot;system&quot; come from?</li>
+<li>The system/.htaccess file.</li>
+<li>Theme file upload only looks for minified files.</li>
+<li>Upgrade Network must be ran after W3 is activated to create tables.</li>
+<li>minified cache broken because URLs go to <a href="http://direct.nightculture.com/cache/minify/">http://direct.nightculture.com/cache/minify/</a>... while uploads go to /system/minify/... (could be fixed w/ &quot;static&quot; hostname)</li>
+<li>supports_full_page_mirroring is disabled on FTP... why?</li>
+</ul>
+<h2 id="changelog">Changelog</h2>
+<h3 id="0-7-1">0.7.1</h3>
+<ul>
+<li>Added WP_VENEER_PUBLIC constant to allow explicit setting of directory to be used for uploads.</li>
+</ul>
+
+  </body>
+</html>

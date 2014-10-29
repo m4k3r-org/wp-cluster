@@ -1,0 +1,81 @@
+
+/*** ESSENTIAL STYLES ***/
+
+#topMenu .sf-menu ul {
+	position:		absolute;
+	top:			-999em;
+	 width:			200px; /*left offset of submenus need to match (see below) */
+	text-align:left;
+	background:#ccc;
+	margin:0;
+	padding:5px 0 10px;
+	background:#F9F9F9 url(../images/bk_submenu.jpg) 0 100% repeat-x;
+	-moz-box-shadow:0 0 3px 2px #DDDDDD;
+	-webkit-box-shadow:0 0 3px 2px #DDDDDD;
+	box-shadow:0 0 3px 1px #DDDDDD;
+	border:1px solid #dedede;
+	border-top:none;
+}
+#topMenu .sf-menu ul li {
+	width:90%;
+	background:none;
+	position:relative;
+	display:block;
+	padding:7px;
+	border-bottom:1px dotted #dcdcdc;
+}
+
+#topMenu .sf-menu li:hover {
+	visibility:		inherit; /* fixes IE7 'sticky bug' */
+}
+#topMenu .sf-menu li {
+	/*float:			left;*/
+	position:		relative;
+}
+#topMenu .sf-menu a {
+	/*display:		block;*/
+	position:		relative;
+}
+
+#topMenu .sf-menu li ul li  a {
+	font-size:11px;
+	padding:0 5px;
+	display:block;
+	color:#737373;
+}
+
+#topMenu .sf-menu li ul li  a:hover {
+	color:#F60B51;
+}
+
+#topMenu .sf-menu li:hover ul,
+#topMenu .sf-menu li.sfHover ul {
+	left:			0;
+	top:			29px; /* match top ul list item height */
+	z-index:		101;
+}
+#topMenu ul.sf-menu li:hover li ul,
+#topMenu ul.sf-menu li.sfHover li ul {
+	top:			-999em;
+}
+#topMenu ul.sf-menu li li:hover ul,
+#topMenu ul.sf-menu li li.sfHover ul {
+	left:			190px; /* match ul width */
+	top:			0;
+}
+#topMenu ul.sf-menu li li:hover li ul,
+#topMenu ul.sf-menu li li.sfHover li ul {
+	top:			-999em;
+}
+#topMenu ul.sf-menu li li li:hover ul,
+#topMenu ul.sf-menu li li li.sfHover ul {
+	left:			10em; /* match ul width */
+	top:			0;
+}
+
+/*** arrows **/
+.sf-menu a.sf-with-ul {
+	padding-right: 	2.25em;
+	min-width:		1px; /* trigger IE7 hasLayout so spans position accurately */
+}
+

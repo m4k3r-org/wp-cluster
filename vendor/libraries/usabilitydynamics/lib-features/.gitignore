@@ -1,0 +1,17 @@
+debug.log
+.dev
+.ftpquota
+.idea
+.logs
+application/static/codex
+cgi-bin
+node_modules
+vendor
+
+wp-cli.yml
+error_log
+
+local-debug.php
+request_log.txt
+.DS_Store
+*/.DS_Store

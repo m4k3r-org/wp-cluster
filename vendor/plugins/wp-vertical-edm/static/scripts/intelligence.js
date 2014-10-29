@@ -1,0 +1,1 @@
+define("intelligence-app",["analysis.visualizer","analysis.client"],function(){console.debug("intelligence-app","loaded");require("analysis.client"),require("analysis.visualizer")});
