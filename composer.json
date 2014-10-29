@@ -1,0 +1,21 @@
+{
+  "name": "wpcloud/wp-event-post-type",
+  "description": "Event object type.",
+  "type": "wordpress-plugin",
+  "homepage": "https://github.com/wpCloud/wp-event-post-type",
+  "keywords": [
+    "wordpress",
+    "events"
+  ],
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [ { "name": "Andy Potanin", "homepage": "http://usabilitydynamics.com" } ],
+  "repositories": [ { "type": "composer", "url": "http://repository.usabilitydynamics.com" } ],
+  "require": {
+    "composer/installers": "~1.0",
+    "UsabilityDynamics/lib-model": "~0.4"
+  },
+  "extra": {
+    "installer-name": "wp-event-post-type-v0.5"
+  }
+}
