@@ -1,3 +1,4 @@
+vendor/libraries/automattic/wordpress/wp-settings.php
 vendor/themes/flawless-hddp
 /*.sql
 /*.sql.tgz
