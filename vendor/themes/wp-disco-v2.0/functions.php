@@ -22,7 +22,7 @@ if( isset( $_SERVER[ 'HTTP_X_UDS_DEBUG' ] ) ) {
 
 
 if( !is_dir( TEMPLATEPATH ) ) {
-	wp_die(TEMPLATEPATH);
+//	wp_die(TEMPLATEPATH);
 	return;
 }
 

@@ -467,7 +467,7 @@ namespace UsabilityDynamics {
       }else{
         $file = '/static/scripts/app.js';
       } ?>
-      <script type="text/javascript" data-main="<?php echo '/vendor/themes/wp-festival-2' . $file; ?>" src="http://cdn.udx.io/udx.requires.js"></script> <?php
+      <script type="text/javascript" data-main="<?php echo '/vendor/themes/wp-festival-v2.0' . $file; ?>" src="http://cdn.udx.io/udx.requires.js"></script> <?php
     }
 
     public function get_gallery_template( $attr ){
