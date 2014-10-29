@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cf51546a32b1652ad5d1ac302df61722",
+    "hash": "145dc2b48c7ff9ef60e69624e70fe69f",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -720,15 +720,15 @@
         },
         {
             "name": "usabilitydynamics/lib-utility",
-            "version": "0.3.2",
+            "version": "0.3.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:usabilitydynamics/lib-utility",
-                "reference": "0.3.2"
+                "reference": "0.3.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/usabilitydynamics/lib-utility/zipball/0.3.2?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "url": "https://api.github.com/repos/usabilitydynamics/lib-utility/zipball/0.3.6?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
                 "reference": null,
                 "shasum": null
             },
@@ -1117,15 +1117,15 @@
         },
         {
             "name": "wpackagist-plugin/fantastic-elasticsearch",
-            "version": "2.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "svn",
                 "url": "http://plugins.svn.wordpress.org/fantastic-elasticsearch/",
-                "reference": "tags/2.1.0"
+                "reference": "tags/3.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/fantastic-elasticsearch.2.1.0.zip",
+                "url": "http://downloads.wordpress.org/plugin/fantastic-elasticsearch.3.1.1.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1140,15 +1140,15 @@
         },
         {
             "name": "wpackagist-plugin/google-analytics-for-wordpress",
-            "version": "4.3.5",
+            "version": "5.0.7",
             "source": {
                 "type": "svn",
                 "url": "http://plugins.svn.wordpress.org/google-analytics-for-wordpress/",
-                "reference": "tags/4.3.5"
+                "reference": "tags/5.0.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/google-analytics-for-wordpress.4.3.5.zip",
+                "url": "http://downloads.wordpress.org/plugin/google-analytics-for-wordpress.5.0.7.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1374,15 +1374,15 @@
         },
         {
             "name": "wpackagist-plugin/wp-pagenavi",
-            "version": "2.85",
+            "version": "2.86",
             "source": {
                 "type": "svn",
                 "url": "http://plugins.svn.wordpress.org/wp-pagenavi/",
-                "reference": "tags/2.85"
+                "reference": "tags/2.86"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/wp-pagenavi.2.85.zip",
+                "url": "http://downloads.wordpress.org/plugin/wp-pagenavi.2.86.zip",
                 "reference": null,
                 "shasum": null
             },
