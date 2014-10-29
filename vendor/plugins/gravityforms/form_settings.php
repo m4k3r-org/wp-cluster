@@ -1431,10 +1431,7 @@ class GFConfirmationTable extends WP_List_Table {
     }
 
     function display() {
-        //extract( $this->_args );
-
-        $singular = $this->_args['singular'];
-
+        extract( $this->_args );
         ?>
         <table class="wp-list-table <?php echo implode( ' ', $this->get_table_classes() ); ?>" cellspacing="0">
             <thead>
