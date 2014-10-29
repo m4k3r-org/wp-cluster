@@ -19,8 +19,10 @@ makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival v1.0
 makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-2 v2.0
 makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle v1.0
 makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-2 v2.0
+makeSubtree DiscoDonniePresents/wp-spectacle-chmf  vendor/themes/wp-spectacle-chmf
 makeSubtree DiscoDonniePresents/wp-spectacle-mbp  vendor/themes/wp-spectacle-mbp
 makeSubtree DiscoDonniePresents/wp-spectacle-fbt  vendor/themes/wp-spectacle-fbt
+makeSubtree DiscoDonniePresents/wp-spectacle-isladelsol  vendor/themes/wp-spectacle-isladelsol
 ```
 
 ```
