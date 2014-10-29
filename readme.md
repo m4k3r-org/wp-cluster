@@ -31,11 +31,13 @@ git subtree push --prefix=vendor/themes/wp-festival-2 git@github.com:DiscoDonnie
 
 If themes are installed using composer (e.g. composer update --prefer-source --dev) then they may be converted into non-git submodules like so:
 ```
-git subtree pull --prefix=vendor/plugins/wp-cluster git@github.com:UsabilityDynamics/wp-cluster.git master --squash
-git subtree pull --prefix=vendor/plugins/wp-veneer git@github.com:UsabilityDynamics/wp-veneer.git master --squash
-git subtree pull --prefix=vendor/plugins/wp-elastic git@github.com:UsabilityDynamics/wp-elastic.git master --squash
-git subtree pull --prefix=vendor/plugins/wp-vertical-edm git@github.com:wpCloud/wp-vertical-edm.git master --squash
-git subtree pull --prefix=vendor/plugins/wp-event-post-type git@github.com:wpCloud/wp-event-post-type.git master --squash
+makeSubtree DiscoDonniePresents/wp-festival   vendor/themes/wp-festival-2   v2.0
+makeSubtree DiscoDonniePresents/wp-spectacle  vendor/themes/wp-spectacle-2  v2.0
+makeSubtree UsabilityDynamics/wp-veneer       vendor/plugins/wp-veneer
+makeSubtree UsabilityDynamics/wp-cluster      vendor/plugins/wp-cluster
+makeSubtree wpCloud/wp-vertical-edm           vendor/plugins/wp-vertical-edm
+makeSubtree wpCloud/wp-event-post-type        vendor/plugins/wp-event-post-type
+makeSubtree UsabilityDynamics/lib-settings    vendor/libraries/usabilitydynamics/lib-settings
 
 git subtree pull --prefix=vendor/themes/wp-festival-2 wp-festival v2.0 --squash
 git subtree pull --prefix=vendor/themes/wp-spectacle-2 wp-spectacle v2.0 --squash
