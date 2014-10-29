@@ -1,8 +1,0 @@
-{
-    "name": "usabilitydynamics/wp-github-updater",
-    "type": "wordpress-plugin",
-    "license": "GPLv2",
-    "require": {
-        "composer/installers": "v1.0.18"
-    }
-}

@@ -1,1 +1,0 @@
-The current WordPress plugin adds some customizations to Wordpress SEO plugin.

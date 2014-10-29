@@ -1,1 +1,0 @@
-define(["knockout"],function(a){return console.debug("wp-elastic",a),function(){function b(){console.debug("ViewModel"),this.title="wpElastic",this.version="3.3.2",jQuery(c).attr("data-view-model","ready")}var c=this;a.applyBindings(new b,c)}});
