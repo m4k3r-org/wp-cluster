@@ -24,7 +24,6 @@
     "installer-paths": {
       "vendor/plugins/{$name}": [
         "type:wordpress-muplugin",
-        "type:wordpress-module",
         "type:wordpress-plugin",
         "type:wpackagist-plugin"
       ],
@@ -98,8 +97,6 @@
         "wp_vendor_url": "{wp_base_url}/vendor",
         "wp_plugin_dir": "{wp_vendor_dir}/plugins",
         "wp_plugin_url": "{wp_vendor_url}/plugins",
-        "wp_module_dir": "{wp_vendor_dir}/modules",
-        "wp_module_url": "{wp_vendor_url}/modules",
         "wp_vendor_library_dir": "{wp_vendor_dir}/libraries",
         "wp_vendor_library_url": "{wp_vendor_url}/libraries",
         "wpmu_plugin_dir": "{wp_base_dir}/application",

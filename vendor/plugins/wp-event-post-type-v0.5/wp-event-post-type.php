@@ -1,3 +1,4 @@
+<?php
 /**
  * Plugin Name: Post Type: Event
  * Plugin URI: http://usabilitydynamics.com/

@@ -11,7 +11,7 @@
 add_action( 'init', function() {
 	global $wp_veneer, $current_blog;
 
-	if( isset( $wp_veneer ) ) {
+	if( isset( $wp_veneer ) && method_exists( '$wp_veneer', 'set' )) {
 		$wp_veneer->set( 'rewrites.login', true );
 		$wp_veneer->set( 'rewrites.manage', true );
 		$wp_veneer->set( 'rewrites.api', true );
@@ -25,12 +25,12 @@ add_action( 'init', function() {
 		$wp_veneer->set( 'styles.shard.enabled', false );
 	}
 
-});
+	/** Ok, this action is hackish so we can load this functionality only on DDP! */
+	if( defined( 'WP_VENDOR_LIBRARY_DIR' ) && ( isset( $current_blog ) && $current_blog->domain == 'discodonniepresents.com' ) &&  is_dir( WP_VENDOR_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/static/schemas' ) ) {
+		define( 'WP_ELASTIC_SCHEMAS_DIR', WP_VENDOR_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/static/schemas' );
+	}
 
-/** Ok, this action is hackish so we can load this functionality only on DDP! */
-if( defined( 'WP_VENDOR_LIBRARY_DIR' ) && ( isset( $current_blog ) && $current_blog->domain == 'discodonniepresents.com' ) &&  is_dir( WP_VENDOR_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/static/schemas' ) ) {
-  define( 'WP_ELASTIC_SCHEMAS_DIR', WP_VENDOR_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/static/schemas' );
-}
+});
 
 /** Init the application */
 if( class_exists( 'EDM\Application\Bootstrap' ) ) {
