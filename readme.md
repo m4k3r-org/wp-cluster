@@ -33,8 +33,9 @@ If themes are installed using composer (e.g. composer update --prefer-source --d
 ```
 git subtree pull --prefix=vendor/plugins/wp-cluster git@github.com:UsabilityDynamics/wp-cluster.git master --squash
 git subtree pull --prefix=vendor/plugins/wp-veneer git@github.com:UsabilityDynamics/wp-veneer.git master --squash
+git subtree pull --prefix=vendor/plugins/wp-elastic git@github.com:UsabilityDynamics/wp-elastic.git master --squash
 git subtree pull --prefix=vendor/plugins/wp-vertical-edm git@github.com:wpCloud/wp-vertical-edm.git master --squash
-git subtree pull --prefix=vendor/plugins/wp-vertical-edm git@github.com:wpCloud/wp-event-post-type.git master --squash
+git subtree pull --prefix=vendor/plugins/wp-event-post-type git@github.com:wpCloud/wp-event-post-type.git master --squash
 
 git subtree pull --prefix=vendor/themes/wp-festival-2 wp-festival v2.0 --squash
 git subtree pull --prefix=vendor/themes/wp-spectacle-2 wp-spectacle v2.0 --squash
