@@ -1,1 +1,0 @@
-!function(a,b){define("wp-elastic.customizer",function(){}),wp.customize(b.name,function(a){a.bind(require("wp-elastic.customizer"))})}(jQuery,wp_elastic_customizer);
