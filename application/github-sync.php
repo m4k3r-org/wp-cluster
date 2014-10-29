@@ -16,16 +16,16 @@ namespace wpCloud\Statless {
 		$absolutePath = wp_normalize_path( $_SERVER[ 'DOCUMENT_ROOT' ] . '/' .  $path );
 		$commitMessage = "$message [ci skip]";
 
+		passthru( "git add $absolutePath --all 2>&1", $_add );
+
+		//passthru( "git commit -m $commitMessage 2>&1", $_commit );
+		//passthru( "git push  2>&1", $_push );
+
 		$_actions = (object) array(
-			"add" => null,
-			"commit" => null
+			"add" => $_add,
+			"commit" => $_commit,
+			"push" => $_push
 		);
-
-		passthru( "git add $absolutePath --all 2>&1", $_actions->add );
-
-		passthru( "git commit -m $commitMessage 2>&1", $_actions->commit );
-
-		passthru( "git push  2>&1", $_actions->push );
 
 		die( '<pre>' . print_r( $_actions, true ) . '</pre>');
 
@@ -34,11 +34,9 @@ namespace wpCloud\Statless {
 		} else {
 			die( 'Composer was attempted to be installed, but an error occured' );
 		}
-
 	}
 
-
-	add_plugin( 'vendor/plugins/gravityforms', 'Updated gravityforms plugin.' );
+	// add_plugin( 'vendor/plugins/gravityforms', 'Updated gravityforms plugin.' );
 
 	if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'GitHub_Command' ) ) {
 

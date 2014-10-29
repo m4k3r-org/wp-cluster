@@ -118,7 +118,6 @@
   "require": {
     "php": ">=5.3",
     "automattic/wordpress": "4.0",
-
     "usabilitydynamics/wp-flawless/v1.0": "master",
     "discodonniepresents/wp-disco/v1.0": "master",
     "discodonniepresents/wp-disco/v2.0": "master",
