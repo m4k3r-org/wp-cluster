@@ -17,34 +17,20 @@ wp db import edm_production.sql
 ```
 
 ### Subtrees
-Can you see the forrest past the subtrees?
-
-```
-git subtree add --prefix=vendor/themes/wp-festival-2 git@github.com:DiscoDonniePresents/wp-festival.git v2.0
-git subtree add --prefix=vendor/themes/wp-spectacle-2 git@github.com:DiscoDonniePresents/wp-spectacle.git v2.0
-```
-
-To push changes back into the WP-Festival repository:
-```
-git subtree push --prefix=vendor/themes/wp-festival-2 git@github.com:DiscoDonniePresents/wp-festival.git v2.0
-```
-
+Add "subtree helpers" to your bash profile. (https://gist.github.com/andypotanin/e54a7322da3fa33ada7e) to simplify subtree adding/pulling/pushing:
 If themes are installed using composer (e.g. composer update --prefer-source --dev) then they may be converted into non-git submodules like so:
 ```
-makeSubtree DiscoDonniePresents/wp-festival   vendor/themes/wp-festival-2   v2.0
-makeSubtree DiscoDonniePresents/wp-spectacle  vendor/themes/wp-spectacle-2  v2.0
-makeSubtree UsabilityDynamics/wp-veneer       vendor/plugins/wp-veneer
-makeSubtree UsabilityDynamics/wp-cluster      vendor/plugins/wp-cluster
-makeSubtree wpCloud/wp-vertical-edm           vendor/plugins/wp-vertical-edm
-makeSubtree wpCloud/wp-event-post-type        vendor/plugins/wp-event-post-type
-makeSubtree UsabilityDynamics/lib-settings    vendor/libraries/usabilitydynamics/lib-settings
-
-git subtree pull --prefix=vendor/themes/wp-festival-2 wp-festival v2.0 --squash
-git subtree pull --prefix=vendor/themes/wp-spectacle-2 wp-spectacle v2.0 --squash
-git subtree pull --prefix=vendor/themes/wp-spectacle-mbp wp-spectacle-mbp master --squash
-git subtree pull --prefix=vendor/themes/wp-spectacle-fbt wp-spectacle-fbt master
-git subtree pull --prefix=vendor/themes/wp-spectacle-isladelsol wp-spectacle-isladelsol develop --squash
-git subtree pull --prefix=vendor/themes/wp-spectacle-chmf wp-spectacle-chmf develop --squash
+makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival v1.0
+makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-2 v2.0
+makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle v1.0
+makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-2 v2.0
+makeSubtree DiscoDonniePresents/wp-spectacle-mbp  vendor/themes/wp-spectacle-mbp
+makeSubtree DiscoDonniePresents/wp-spectacle-fbt  vendor/themes/wp-spectacle-fbt
+makeSubtree UsabilityDynamics/wp-veneer           vendor/plugins/wp-veneer
+makeSubtree UsabilityDynamics/wp-cluster          vendor/plugins/wp-cluster
+makeSubtree wpCloud/wp-vertical-edm               vendor/plugins/wp-vertical-edm
+makeSubtree wpCloud/wp-event-post-type            vendor/plugins/wp-event-post-type
+makeSubtree UsabilityDynamics/lib-settings        vendor/libraries/usabilitydynamics/lib-settings
 ```
 
 ### GitHub Plugin Install

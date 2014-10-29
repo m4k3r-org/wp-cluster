@@ -8,11 +8,13 @@
  * Author URI: http://usabilitydynamics.com
  */
 
-add_action( 'init', function() {
+/**
+ *
+ * The methods "is_plugin_active" and "activate_plugin" are only available on control panel.
+ *
+ */
+add_action( 'admin_init', function() {
 
-	if( !function_exists( 'is_plugin_active' ) ) {
-		return;
-	}
 	if( !is_plugin_active( 'wpmandrill/wpmandrill.php' ) ) {
 		activate_plugin( 'wpmandrill/wpmandrill.php', null, true );
 	}
