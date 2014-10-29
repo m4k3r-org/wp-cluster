@@ -13,12 +13,12 @@ makeSubtree wpCloud/wp-event-post-type            vendor/plugins/wp-event-post-t
 ```
 
 ```
-makeSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v1.0 v1.0
-makeSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v2.0 v2.0
-makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival v1.0
-makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-2 v2.0
-makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle v1.0
-makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-2 v2.0
+makeSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v1.0       v1.0
+makeSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v2.0       v2.0
+makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-v1.0    v1.0
+makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-v2.0    v2.0
+makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-v1.0   v1.0
+makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-v2.0   v2.0
 makeSubtree DiscoDonniePresents/wp-spectacle-chmf  vendor/themes/wp-spectacle-chmf
 makeSubtree DiscoDonniePresents/wp-spectacle-mbp  vendor/themes/wp-spectacle-mbp
 makeSubtree DiscoDonniePresents/wp-spectacle-fbt  vendor/themes/wp-spectacle-fbt
@@ -26,14 +26,9 @@ makeSubtree DiscoDonniePresents/wp-spectacle-isladelsol  vendor/themes/wp-specta
 ```
 
 ```
-pushSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v2.0 v2.0
-pushSubtree DiscoDonniePresents/wp-spectacle-mbp   vendor/themes/wp-spectacle-mbp
-```
-
-There seem to be issues with pushing changes back to a lib-settings, probably because it's actually a tag.
-```
-makeSubtree UsabilityDynamics/lib-settings        vendor/libraries/usabilitydynamics/lib-settings 0.2.2
-makeSubtree UsabilityDynamics/lib-utility         vendor/libraries/usabilitydynamics/lib-utility
+pushSubtree UsabilityDynamics/wp-cluster            vendor/plugins/wp-cluster
+pushSubtree DiscoDonniePresents/wp-spectacle-mbp    vendor/themes/wp-spectacle-mbp
+pushSubtree DiscoDonniePresents/wp-disco            vendor/themes/wp-disco-v2.0 v2.0
 ```
 
 Show installed libs:
