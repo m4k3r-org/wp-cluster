@@ -5,7 +5,7 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "https://repository.usabilitydynamics.com"
+      "url": "http://wordpress-site:fa1942c87f9b2a7314636d520d8697fb0d9447f3@repository.usabilitydynamics.com"
     },
     {
       "type":"composer",
@@ -22,11 +22,9 @@
   },
   "extra": {
     "installer-paths": {
-      "vendor/modules/{$name}": [
-        "type:wordpress-muplugin",
-        "type:wordpress-module"
-      ],
       "vendor/plugins/{$name}": [
+        "type:wordpress-muplugin",
+        "type:wordpress-module",
         "type:wordpress-plugin",
         "type:wpackagist-plugin"
       ],
@@ -96,6 +94,7 @@
         "wp_veneer_theme_dir": "{wp_veneer_storage}/themes",
         "wp_logs_dir": "{wp_base_dir}/application/.logs",
         "wp_vendor_dir": "{wp_base_dir}/vendor",
+        "WP_VENDOR_AUTOLOAD_PATH": "{wp_base_dir}/vendor/libraries/autoload.php",
         "wp_vendor_url": "{wp_base_url}/vendor",
         "wp_plugin_dir": "{wp_vendor_dir}/plugins",
         "wp_plugin_url": "{wp_vendor_url}/plugins",
@@ -103,8 +102,10 @@
         "wp_module_url": "{wp_vendor_url}/modules",
         "wp_vendor_library_dir": "{wp_vendor_dir}/libraries",
         "wp_vendor_library_url": "{wp_vendor_url}/libraries",
-        "wpmu_plugin_dir": "{wp_vendor_dir}/application",
-        "wpmu_plugin_url": "{wp_vendor_url}/application",
+        "wpmu_plugin_dir": "{wp_base_dir}/application",
+        "MUPLUGINDIR": "{wp_base_dir}/application",
+        "PLUGINDIR": "{wp_base_dir}/vendor/plugins",
+        "wpmu_plugin_url": "{wp_base_url}/application",
         "wp_theme_dir": "{wp_vendor_dir}/themes",
         "wp_theme_url": "{wp_vendor_url}/themes",
         "wp_system_directory": "{wp_vendor_dir}/libraries/automattic/wordpress",
@@ -119,6 +120,7 @@
   },
   "require": {
     "php": ">=5.3",
+    "usabilitydynamics/lib-settings": "~0.2",
     "automattic/wordpress": "4.0",
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-network": "master",
@@ -126,12 +128,12 @@
     "usabilitydynamics/wp-cluster": "master",
     "usabilitydynamics/wp-github-updater": "master",
     "usabilitydynamics/wp-splash": "master",
+    "discodonniepresents/wp-disco": "master",
     "wpcloud/wp-vertical-edm": "master"
   },
   "require-dev": {
     "usabilitydynamics/wp-flawless": "dev-legacy",
     "usabilitydynamics/wp-simplify": "master",
-    "discodonniepresents/wp-disco": "master",
     "discodonniepresents/wp-eventbrite": "0.1.3",
     "discodonniepresents/wp-spectacle/v1": "v1.0",
     "discodonniepresents/wp-spectacle": "v2.0",
@@ -173,13 +175,12 @@
     "usabilitydynamics/wp-social-stream": "dev-develop"
   },
   "autoload": {
-    "classmap": [ "application/lib" ],
-    "files": [ "application/bootstrap.php" ]
+    "classmap": [ "application/lib" ]
   },
   "scripts": {
-    "pre-update-cmd": [ "rm -rf vendor/libraries/composer" ],
-    "post-update-cmd": [ "grunt symlink:essential" ],
-    "post-install-cmd": [ "grunt symlink:cluster" ]
+    "pre-update-cmd": [ "rm -rf vendor/libraries/composer/installed.json" ],
+    "post-update-cmd": [ "grunt symlink:vendor" ],
+    "post-install-cmd": [ "grunt symlink:essential", "grunt symlink:cluster" ]
   },
   "minimum-stability": "dev",
   "license": "GPLv2"

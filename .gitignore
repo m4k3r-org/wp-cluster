@@ -21,5 +21,6 @@ migrate.log
 debug.log
 application/static/codex
 application/static/etc/wp-config
+vendor/libraries/composer/installed.json
 vendor/libraries/composer/installers
 /hook.php

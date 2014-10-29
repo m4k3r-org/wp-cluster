@@ -6,6 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    $baseDir . '/vendor/plugins/wp-elastic/lib/api/autoload.php',
     $baseDir . '/application/bootstrap.php',
 );

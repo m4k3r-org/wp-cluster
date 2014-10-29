@@ -14,7 +14,7 @@
  * @todo Use jQuery.load() if available to fetch seondary pages.
  * @todo bindNavigation should be live.
  */
-define( 'udx.spa', [ 'module', 'require', 'exports', 'knockout', 'knockout.mapping', 'knockout.localStorage', 'pace', 'udx.utility', 'udx.utility.imagesloaded' ], function spaReady( module, require, exports ) {
+define( 'udx.spa', [ 'knockout', 'knockout.mapping', 'knockout.localStorage', 'pace', 'udx.utility', 'udx.utility.imagesloaded' ], function spaReady() {
   console.debug( 'udx.spa', 'spaReady' );
 
   // Modules.

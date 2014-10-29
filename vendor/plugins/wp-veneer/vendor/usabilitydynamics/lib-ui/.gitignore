@@ -1,7 +1,7 @@
 temp
 node_modules
 npm-debug.log
-
+static/codex
 .svn
 .idea
 .idea/workspace.xml

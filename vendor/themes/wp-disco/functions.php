@@ -38,7 +38,7 @@ include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/venue-taxonomy.ph
 include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/artist-taxonomy.php' );
 
 /* Define Child Theme Version */
-define( 'HDDP_Version', '2.1.5' );
+define( 'HDDP_Version', '1.0.0' );
 
 /* Transdomain */
 define( 'HDDP', 'HDDP' );
@@ -66,10 +66,6 @@ class hddp extends Flawless_F {
    */
   static function theme_setup() {
 
-    if( !defined( 'WP_THEME_VERSION' ) ) {
-      define( 'WP_THEME_VERSION', HDDP_Version );
-    }
-
     remove_theme_support( 'header-dropdowns' );
     remove_theme_support( 'custom-header' );
     remove_theme_support( 'custom-background' );
@@ -81,9 +77,6 @@ class hddp extends Flawless_F {
 
     load_theme_textdomain( HDDP, get_template_directory() . '/lang' );
 
-    add_action( 'init', function() {
-      remove_action( 'wp_footer', array( 'flawless_theme', 'wp_footer' ), 500 );
-    }, 510 );
   }
 
   /**

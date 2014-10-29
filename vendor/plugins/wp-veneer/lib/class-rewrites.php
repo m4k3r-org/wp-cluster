@@ -33,18 +33,18 @@ namespace UsabilityDynamics\Veneer {
 	      // Don't apply anything if MS is not installed at the moment.
 	      if( isset( $current_blog ) && isset( $current_blog->_default ) ) {
 		      return;
+        }
+
+        if( !defined( 'WP_BASE_DOMAIN' ) && defined( 'WP_HOME' ) ) {
+          define( 'WP_BASE_DOMAIN', str_replace( array( 'https://', 'http://' ), '', WP_HOME ) );
+        }
+
+	      if( !defined( 'WP_BASE_DOMAIN' ) && isset( $current_blog ) && isset( $current_blog->domain ) ) {
+		      define( 'WP_BASE_DOMAIN', str_replace( array( 'https://', 'http://' ), '', $current_blog->domain ) );
 	      }
 
-	      if( !defined( 'WP_BASE_DOMAIN' ) ) {
-
-          if( defined( 'WP_HOME' ) ) {
-            define( 'WP_BASE_DOMAIN', str_replace( array( 'https://', 'http://' ), '', WP_HOME ) );
-          }
-
-          if( !defined( 'WP_BASE_DOMAIN' ) ) {
-            wp_die( '<h1>Veneer Error</h1><p>The WP_BASE_DOMAIN constant is not defined.</p>' );
-          }
-
+        if( !defined( 'WP_BASE_DOMAIN' ) ) {
+          wp_die( '<h1>Veneer Error</h1><p>The WP_BASE_DOMAIN constant is not defined.</p>' );
         }
 
         // Replace Network URL with Site URL.
@@ -525,15 +525,15 @@ namespace UsabilityDynamics\Veneer {
         $_home_url = defined( 'WP_HOME' ) ? WP_HOME : ( defined( 'WP_SITE_URL' ) ? WP_SITE_URL : '' );
 
         // Relative URLs are opoosite, we actually try to strip our URL.
-        if( $schema === 'relative' && ( strpos( $url, $_home_url ) === 0 ) ) {
+        if( $_home_url && $schema === 'relative' && ( strpos( $url, $_home_url ) === 0 ) ) {
           return str_replace( $_home_url, '', $url );
         }
 
-        if( $schema !== 'relative' && $_home_url ) {
+        if( $_home_url && $schema !== 'relative' && $_home_url ) {
           $url = str_replace( $_home_url, $wp_veneer->site, $url );
         }
 
-        if( $schema !== 'relative' ) {
+        if( $_home_url && $schema !== 'relative' ) {
           $url = str_replace( $_home_url, $wp_veneer->site, $url );
         }
 

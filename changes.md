@@ -3,7 +3,13 @@
 * Added autoload.php MU plugin for loading vendor libs
 * Re-installed wp-cluster, wp-veneer and wp-network as valid plugins, removing ./vendor/modules completely.
 * Removed automatic loading of wp-vertical-edm and wp-elastic, should be enabled as a plugin.
-* Reinstalled git-controlled plugins: wp-github-updater, wp-network, wp-veneer, wp-cluster, wp-elastic, wp-event-post-type-v0.5, wp-pagespeed and wp-revisr.
+* Reinstalled plugins from GitHub: wp-github-updater, wp-network, wp-veneer, wp-cluster, wp-elastic, wp-event-post-type-v0.5, wp-pagespeed and wp-revisr.
+* Fixed commenting with wp-comments-post.php
+* [wp plugin activate wp-veneer --network]
+* [wp plugin activate wp-elastic --network]
+* [wp plugin activate wp-network --network]
+* [wp plugin activate wp-cluster --network]
+* [wp plugin activate wp-vertical-edm --network]
 
 #### 2.1.3
 * Added changes.md

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "49cf0a9195947e4f309508ef6485cc05",
+    "hash": "b7d01b26f5a80b5cf433ef659284effc",
     "packages": [
         {
             "name": "composer/installers",
@@ -152,32 +152,6 @@
             "time": "2012-01-03 00:33:17"
         },
         {
-            "name": "udx/ace",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ajaxorg/ace.git",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/ajaxorg/ace/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "scripts": [
-                        "src-noconflict/*.*"
-                    ],
-                    "files": [
-                        "src-noconflict/snippets/*.*"
-                    ]
-                }
-            }
-        },
-        {
             "name": "usabilitydynamics/lib-api",
             "version": "0.5.0",
             "source": {
@@ -302,27 +276,96 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:UsabilityDynamics/lib-ui",
-                "reference": "0.2.0"
+                "reference": "0.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-ui/archive/0.2.0.zip",
+                "url": "https://github.com/UsabilityDynamics/lib-ui/archive/0.2.1.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
-                "udx/ace": "*",
-                "usabilitydynamics/lib-utility": "*"
+                "php": ">=5.3",
+                "usabilitydynamics/lib-utility": "~0.3"
             },
             "type": "library",
             "extra": {
+                "installer-name": "lib-ui",
+                "text_domain": "lib-ui",
+                "main-file": "lib/class-ui.php",
+                "class": "UsabilityDynamics\\UI",
                 "component": {
                     "scripts": [
-                        "scripts/ui.js"
+                        "static/scripts/ui.js",
+                        "static/scripts/ui.markdown.js",
+                        "static/scripts/ui.jquery-tabs.js"
                     ],
                     "styles": [
-                        "styles/ui.css",
-                        "styles/ui.less"
+                        "static/styles/ui.css",
+                        "static/styles/ui.less"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "GNU"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "email": "andy.potanin@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Maxim Peshkov",
+                    "email": "maxim.peshkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anton Korotkov",
+                    "email": "anton.korotkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "http://github.com/UsabilityDynamics/wp-ui",
+            "keywords": [
+                "css-editor",
+                "editor",
+                "script-editor",
+                "ui"
+            ]
+        },
+        {
+            "name": "usabilitydynamics/lib-utility",
+            "version": "0.3.2",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:UsabilityDynamics/lib-utility",
+                "reference": "0.3.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/UsabilityDynamics/lib-utility/archive/0.3.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "library",
+            "extra": {
+                "installer-name": "lib-utility",
+                "component": {
+                    "name": "utility",
+                    "scripts": [
+                        "scripts/*.js"
                     ]
                 }
             },
@@ -354,43 +397,11 @@
                     "role": "Developer"
                 }
             ],
-            "homepage": "http://github.com/usabilitydynamics/lib-ui",
             "keywords": [
-                "ui"
+                "job",
+                "process",
+                "utility"
             ]
-        },
-        {
-            "name": "usabilitydynamics/lib-utility",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-utility",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-utility/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.1.*"
-            },
-            "type": "library",
-            "extra": {
-                "installer-name": "lib-utility",
-                "component": {
-                    "name": "utility",
-                    "scripts": [
-                        "scripts/*.js"
-                    ]
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            }
         }
     ],
     "packages-dev": [],

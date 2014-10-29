@@ -1,0 +1,599 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "c254f2370ac42537584665c256413bea",
+    "packages": [
+        {
+            "name": "automattic/wordpress",
+            "version": "4.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:WordPress/WordPress.git",
+                "reference": "4.0-branch"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/WordPress/WordPress/archive/4.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "extra": {
+                "installer-name": "wordpress-4.0"
+            },
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "composer/installers",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "27697a73b7a68b4a834e45fe560bea23ec3b3435"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/27697a73b7a68b4a834e45fe560bea23ec3b3435",
+                "reference": "27697a73b7a68b4a834e45fe560bea23ec3b3435",
+                "shasum": ""
+            },
+            "replace": {
+                "roundcube/plugin-installer": "*",
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Composer\\Installers\\Installer",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Composer\\Installers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "http://composer.github.com/installers/",
+            "keywords": [
+                "Craft",
+                "Dolibarr",
+                "Hurad",
+                "MODX Evo",
+                "OXID",
+                "Thelia",
+                "WolfCMS",
+                "agl",
+                "annotatecms",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "drupal",
+                "elgg",
+                "fuelphp",
+                "grav",
+                "installer",
+                "joomla",
+                "kohana",
+                "laravel",
+                "lithium",
+                "magento",
+                "mako",
+                "mediawiki",
+                "modulework",
+                "moodle",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "puppet",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "symfony",
+                "typo3",
+                "wordpress",
+                "zend",
+                "zikula"
+            ],
+            "time": "2014-10-25 22:13:47"
+        },
+        {
+            "name": "discodonniepresents/wp-disco",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:DiscoDonniePresents/wp-disco",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/discodonniepresents/wp-disco/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-theme",
+            "extra": {
+                "installer-name": "wp-disco"
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "DiscoDonniePresents theme for the EDM Network",
+            "keywords": [
+                "one-column",
+                "responsive",
+                "theme",
+                "translation-ready",
+                "two-column",
+                "wordpress"
+            ]
+        },
+        {
+            "name": "justinrainbow/json-schema",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/justinrainbow/json-schema.git",
+                "reference": "05ff6d8d79fe3ad190b0663d80d3f9deee79416c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/05ff6d8d79fe3ad190b0663d80d3f9deee79416c",
+                "reference": "05ff6d8d79fe3ad190b0663d80d3f9deee79416c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JsonSchema": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "NewBSD"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch",
+                    "homepage": "http://wiedler.ch/igor/"
+                },
+                {
+                    "name": "Bruno Prieto Reis",
+                    "email": "bruno.p.reis@gmail.com"
+                },
+                {
+                    "name": "Justin Rainbow",
+                    "email": "justin.rainbow@gmail.com"
+                },
+                {
+                    "name": "Robert Schönthal",
+                    "email": "robert.schoenthal@gmail.com",
+                    "homepage": "http://digitalkaoz.net"
+                }
+            ],
+            "description": "A library to validate a json schema.",
+            "homepage": "https://github.com/justinrainbow/json-schema",
+            "keywords": [
+                "json",
+                "schema"
+            ],
+            "time": "2012-01-03 00:33:17"
+        },
+        {
+            "name": "usabilitydynamics/lib-settings",
+            "version": "0.2.2",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/lib-settings",
+                "reference": "0.2.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usabilitydynamics/lib-settings/zipball/0.2.2?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "justinrainbow/json-schema": "1.1.*",
+                "usabilitydynamics/lib-utility": "*"
+            },
+            "type": "library",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "static/scripts/settings.js"
+                    ],
+                    "templates": [
+                        "static/views/new-installation.xhtml"
+                    ],
+                    "files": [
+                        "static/schemas/settings.json"
+                    ]
+                },
+                "installer-name": "lib-settings"
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "email": "andy.potanin@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Maxim Peshkov",
+                    "email": "maxim.peshkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anton Korotkov",
+                    "email": "anton.korotkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "http://github.com/usabilitydynamics/lib-settings",
+            "keywords": [
+                "settings"
+            ]
+        },
+        {
+            "name": "usabilitydynamics/lib-utility",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/lib-utility",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usabilitydynamics/lib-utility/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "library",
+            "extra": {
+                "installer-name": "lib-utility",
+                "component": {
+                    "name": "utility",
+                    "scripts": [
+                        "scripts/*.js"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "email": "andy.potanin@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Maxim Peshkov",
+                    "email": "maxim.peshkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anton Korotkov",
+                    "email": "anton.korotkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                }
+            ],
+            "keywords": [
+                "job",
+                "process",
+                "utility"
+            ]
+        },
+        {
+            "name": "usabilitydynamics/wp-cluster",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/wp-cluster",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usabilitydynamics/wp-cluster/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wp-cluster"
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "homepage": "http://usabilitydynamics.com"
+                }
+            ],
+            "description": "WP-Cluster.",
+            "homepage": "https://github.com/usabilitydynamics/wp-cluster",
+            "keywords": [
+                "multisite",
+                "varnish",
+                "wordpress"
+            ]
+        },
+        {
+            "name": "usabilitydynamics/wp-elastic",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/wp-elastic",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usabilitydynamics/wp-elastic/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wp-elastic"
+            },
+            "license": [
+                "GPLv2"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "homepage": "http://usabilitydynamics.com"
+                },
+                {
+                    "name": "Paris Holley",
+                    "homepage": "http://parisholley.com"
+                }
+            ],
+            "description": "Improve WordPress search performance/accuracy and enable faceted search by leveraging an ElasticSearch server.",
+            "keywords": [
+                "elasticsearch",
+                "search",
+                "wordpress"
+            ]
+        },
+        {
+            "name": "usabilitydynamics/wp-github-updater",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/wp-github-updater",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usabilitydynamics/wp-github-updater/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wp-github-updater"
+            },
+            "license": [
+                "GPLv2"
+            ]
+        },
+        {
+            "name": "usabilitydynamics/wp-network",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/wp-network",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usabilitydynamics/wp-network/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wp-network"
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "homepage": "http://usabilitydynamics.com"
+                }
+            ],
+            "description": "WordPress Network",
+            "homepage": "https://github.com/usabilitydynamics/wp-network",
+            "keywords": [
+                "multisite",
+                "varnish",
+                "wordpress"
+            ]
+        },
+        {
+            "name": "usabilitydynamics/wp-splash",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/wp-splash",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usabilitydynamics/wp-splash/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-theme",
+            "extra": {
+                "installer-name": "wp-splash",
+                "installer-paths": {
+                    "vendor/libraries/{$name}": [
+                        "type:ibrary"
+                    ],
+                    "vendor/modules/{$name}": [
+                        "type:wordpress-modules"
+                    ],
+                    "vendor/plugins/{$name}": [
+                        "type:wordpress-plugin"
+                    ],
+                    "vendor/themes/{$name}": [
+                        "type:wordpress-theme"
+                    ]
+                }
+            },
+            "license": [
+                "GPL-2.0"
+            ],
+            "description": "Wordpress Splash Theme."
+        },
+        {
+            "name": "usabilitydynamics/wp-veneer",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/wp-veneer",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usabilitydynamics/wp-veneer/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wp-veneer"
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "homepage": "http://usabilitydynamics.com"
+                }
+            ],
+            "description": "https://github.com/usabilitydynamics/wp-veneer",
+            "homepage": "https://github.com/usabilitydynamics/wp-veneer",
+            "keywords": [
+                "multisite",
+                "varnish",
+                "veneer",
+                "wordpress"
+            ]
+        },
+        {
+            "name": "wpcloud/wp-vertical-edm",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:wpCloud/wp-vertical-edm",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wpCloud/wp-vertical-edm/zipball/master?access_token=dfb7e688a4f52c7fd97794d8f5d0ede11666a91b",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-paths": {
+                    "application/vendor/{$name}": [
+                        "type:wpcloud-application"
+                    ],
+                    "storage/vendor/{$name}": [
+                        "type:wpcloud-storage"
+                    ],
+                    "vendor/libraries/{$name}": [
+                        "type:wordpress-library"
+                    ],
+                    "vendor/modules/{$name}": [
+                        "type:wordpress-muplugin",
+                        "type:wordpress-plugin"
+                    ],
+                    "vendor/themes/{$name}": [
+                        "type:wordpress-theme"
+                    ]
+                },
+                "installer-name": "wp-vertical-edm"
+            },
+            "license": [
+                "GPLv2"
+            ]
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "usabilitydynamics/wp-flawless": 20,
+        "discodonniepresents/wp-spectacle-chmf": 20,
+        "discodonniepresents/wp-spectacle-isladelsol": 20,
+        "discodonniepresents/wp-festival": 20,
+        "usabilitydynamics/wp-social-stream": 20
+    },
+    "prefer-stable": false,
+    "platform": {
+        "php": ">=5.3"
+    },
+    "platform-dev": []
+}

@@ -86,23 +86,14 @@ namespace EDM\Application {
      */
     public function __construct() {
 
-      // Make WordPress scan UsabilityDynamics and WordPress core directories for themes.
-
       register_theme_directory( WP_CONTENT_DIR . '/themes' );
-      register_theme_directory( WP_CONTENT_DIR . '/vendor/usabilitydynamics' );
 
       add_filter( 'wp_cache_themes_persistently', function( $current, $callee ) {
         return 43200; // 6 hours
       }, 10, 2);
 
-      // Instantiate Cluster.
-      $this->cluster    = new \UsabilityDynamics\Cluster\Bootstrap;
-
-      // Instantiate Veneer.
-      $this->veneer     = new \UsabilityDynamics\Veneer\Bootstrap;
-
       // Instantaite Settings.
-      $this->settings   = new \UsabilityDynamics\Settings;
+      $this->settings   = class_exists( '\UsabilityDynamics\Settings' ) ? new \UsabilityDynamics\Settings : null;
 
       // Current Paths.
       $this->id         = 'edm'; // Utility::create_slug( __NAMESPACE__, array( 'separator' => '::' ) );

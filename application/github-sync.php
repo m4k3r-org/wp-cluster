@@ -5,10 +5,29 @@
  * Author: Pierre Bertet
  * Version: 1.0.0
  * Author URI: http://pierrebertet.net/
+ *
+ *
+ *
  */
 
-if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'GitHub_Command' ) ) {
 
+function test_github_sync() {
+	die('sdf');
+	passthru( "git add status 2>&1", $return_code );
+
+	die($return_code);
+	if ( $return_code == 0 ) {
+		die( "\n\nComposer has been ran. Please reload." );
+	} else {
+		die( 'Composer was attempted to be installed, but an error occured' );
+	}
+
+}
+
+
+//test_github_sync();
+
+if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'GitHub_Command' ) ) {
 
 	/**
 	 * DreamHost Migrate Plugin
