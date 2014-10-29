@@ -1,7 +1,7 @@
 {
   "name": "wp-eventbrite",
   "description": "Eventbrite Attendees Notifications",
-  "version": "0.0.1",
+  "version": "0.1.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/DiscoDonniePresents/wp-eventbrite.git"

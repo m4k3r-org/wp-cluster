@@ -1,16 +1,10 @@
 {
   "name": "discodonniepresents/wp-eventbrite",
-  "version": "0.1.3",
   "type": "wordpress-plugin",
   "description": "Eventbrite Attendees Notifications",
   "keywords": [ "eventbrite", "notifications", "organizers" ],
-  "tags": [ "eventbrite", "notifications", "organizers" ],
+  "keywords": [ "eventbrite", "notifications", "organizers" ],
   "homepage": "https://github.com/DiscoDonniePresents/wp-eventbrite",
-  "private": true,
-  "author": {
-    "name": "UsabilityDynamics, Inc.",
-    "url": "https://usabilitydynamics.com/"
-  },
   "minimum-stability": "dev",
   "repositories": [
     {
@@ -18,18 +12,14 @@
       "url": "http://repository.usabilitydynamics.com"
     }
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/DiscoDonniePresents/wp-eventbrite.git"
-  },
+  "license": "proprietary",
   "require": {
     "php": ">=5.3",
     "composer/installers": "~1.0",
-    "usabilitydynamics/lib-installer": "master",
-    "usabilitydynamics/lib-ui": "master",
-    "usabilitydynamics/lib-settings": "master",
+    "usabilitydynamics/lib-ui": "~0.2",
+    "usabilitydynamics/lib-settings": "~0.2",
     "usabilitydynamics/lib-eventbrite-client": "1.0.0",
-    "usabilitydynamics/lib-model": "master"
+    "usabilitydynamics/lib-model": "~0.4"
   },
   "autoload": {
     "classmap": [ "lib" ]

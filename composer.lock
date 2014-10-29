@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e4aa9e6677d7a7dca79795badd0294ca",
+    "hash": "cf51546a32b1652ad5d1ac302df61722",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -253,6 +253,35 @@
                 "translation-ready",
                 "two-column",
                 "wordpress"
+            ]
+        },
+        {
+            "name": "discodonniepresents/wp-eventbrite",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:DiscoDonniePresents/wp-eventbrite",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/discodonniepresents/wp-eventbrite/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wp-eventbrite"
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "Eventbrite Attendees Notifications",
+            "homepage": "https://github.com/DiscoDonniePresents/wp-eventbrite",
+            "keywords": [
+                "eventbrite",
+                "notifications",
+                "organizers"
             ]
         },
         {
@@ -1087,126 +1116,6 @@
             "time": "2014-10-07 17:55:25"
         },
         {
-            "name": "wpackagist-plugin/debug-bar",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/debug-bar/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/debug-bar.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/debug-bar": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/debug-bar/",
-            "time": "2014-09-02 05:19:55"
-        },
-        {
-            "name": "wpackagist-plugin/debug-bar-actions-and-filters-addon",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/debug-bar-actions-and-filters-addon/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/debug-bar-actions-and-filters-addon.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/debug-bar-actions-and-filters-addon": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/debug-bar-actions-and-filters-addon/",
-            "time": "2014-09-04 15:01:31"
-        },
-        {
-            "name": "wpackagist-plugin/debug-bar-constants",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/debug-bar-constants/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/debug-bar-constants.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/debug-bar-constants": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/debug-bar-constants/",
-            "time": "2014-09-05 07:14:13"
-        },
-        {
-            "name": "wpackagist-plugin/debug-bar-post-types",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/debug-bar-post-types/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/debug-bar-post-types.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/debug-bar-post-types": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/debug-bar-post-types/",
-            "time": "2014-09-05 07:22:01"
-        },
-        {
-            "name": "wpackagist-plugin/debug-bar-slow-actions",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/debug-bar-slow-actions/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/debug-bar-slow-actions.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/debug-bar-slow-actions": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/debug-bar-slow-actions/",
-            "time": "2014-09-05 06:35:06"
-        },
-        {
             "name": "wpackagist-plugin/fantastic-elasticsearch",
             "version": "2.1.0",
             "source": {
@@ -1553,33 +1462,124 @@
     ],
     "packages-dev": [
         {
-            "name": "discodonniepresents/wp-eventbrite",
-            "version": "0.1.3",
+            "name": "wpackagist-plugin/debug-bar",
+            "version": "dev-trunk",
             "source": {
-                "type": "git",
-                "url": "git@github.com:DiscoDonniePresents/wp-eventbrite",
-                "reference": "0.1.3"
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/debug-bar/",
+                "reference": "trunk"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/discodonniepresents/wp-eventbrite/zipball/0.1.3?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "url": "http://downloads.wordpress.org/plugin/debug-bar.zip",
                 "reference": null,
                 "shasum": null
             },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "wp-eventbrite"
+            "require": {
+                "composer/installers": "~1.0"
             },
-            "license": [
-                "MIT"
-            ],
-            "description": "Eventbrite Attendees Notifications",
-            "homepage": "https://github.com/DiscoDonniePresents/wp-eventbrite",
-            "keywords": [
-                "eventbrite",
-                "notifications",
-                "organizers"
-            ]
+            "replace": {
+                "wpackagist/debug-bar": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/debug-bar/",
+            "time": "2014-09-02 05:19:55"
+        },
+        {
+            "name": "wpackagist-plugin/debug-bar-actions-and-filters-addon",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/debug-bar-actions-and-filters-addon/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/debug-bar-actions-and-filters-addon.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/debug-bar-actions-and-filters-addon": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/debug-bar-actions-and-filters-addon/",
+            "time": "2014-09-04 15:01:31"
+        },
+        {
+            "name": "wpackagist-plugin/debug-bar-constants",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/debug-bar-constants/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/debug-bar-constants.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/debug-bar-constants": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/debug-bar-constants/",
+            "time": "2014-09-05 07:14:13"
+        },
+        {
+            "name": "wpackagist-plugin/debug-bar-post-types",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/debug-bar-post-types/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/debug-bar-post-types.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/debug-bar-post-types": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/debug-bar-post-types/",
+            "time": "2014-09-05 07:22:01"
+        },
+        {
+            "name": "wpackagist-plugin/debug-bar-slow-actions",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/debug-bar-slow-actions/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/debug-bar-slow-actions.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/debug-bar-slow-actions": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/debug-bar-slow-actions/",
+            "time": "2014-09-05 06:35:06"
         },
         {
             "name": "wpackagist-plugin/wordpress-importer",

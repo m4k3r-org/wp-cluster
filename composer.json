@@ -141,6 +141,7 @@
     "discodonniepresents/wp-monsterblockparty": "master",
     "discodonniepresents/wp-thegift": "master",
     "discodonniepresents/wp-winterfantasy": "master",
+    "discodonniepresents/wp-eventbrite": "master",
 
     "wpackagist-plugin/akismet": "trunk",
     "wpackagist-plugin/public-post-preview": "2.4",
@@ -156,9 +157,7 @@
     "wpackagist-plugin/wp-amd": "trunk",
     "wpackagist-plugin/jetpack": "trunk",
     "wpackagist-plugin/wpmandrill": "trunk",
-
     "usabilitydynamics/lib-settings": "~0.2",
-
     "usabilitydynamics/wp-seo-addon": "master",
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-network": "master",
@@ -168,17 +167,14 @@
     "usabilitydynamics/wp-splash": "master",
     "usabilitydynamics/wp-simplify": "master",
     "usabilitydynamics/wp-social-stream": "master",
-
+    "wpcloud/wp-vertical-edm": "master"
+  },
+  "require-dev": {
     "wpackagist-plugin/debug-bar": "trunk",
     "wpackagist-plugin/debug-bar-constants": "trunk",
     "wpackagist-plugin/debug-bar-post-types": "trunk",
     "wpackagist-plugin/debug-bar-slow-actions": "trunk",
     "wpackagist-plugin/debug-bar-actions-and-filters-addon": "trunk",
-    "wpcloud/wp-vertical-edm": "master"
-  },
-  "require-dev": {
-    "discodonniepresents/wp-eventbrite": "0.1.3",
-
     "wpackagist-plugin/wordpress-importer": "0.6.1"
   },
   "autoload": {

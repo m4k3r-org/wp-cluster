@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e844f2653249388892e767ae7d40ca79",
+    "hash": "0cfd923794099a0b8ffb0d61876ec325",
     "packages": [
         {
             "name": "composer/installers",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "41cf781ed1271e25bf31b715416a349996aa2527"
+                "reference": "27697a73b7a68b4a834e45fe560bea23ec3b3435"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/41cf781ed1271e25bf31b715416a349996aa2527",
-                "reference": "41cf781ed1271e25bf31b715416a349996aa2527",
+                "url": "https://api.github.com/repos/composer/installers/zipball/27697a73b7a68b4a834e45fe560bea23ec3b3435",
+                "reference": "27697a73b7a68b4a834e45fe560bea23ec3b3435",
                 "shasum": ""
             },
             "replace": {
@@ -59,6 +59,7 @@
                 "Hurad",
                 "MODX Evo",
                 "OXID",
+                "Thelia",
                 "WolfCMS",
                 "agl",
                 "annotatecms",
@@ -71,6 +72,7 @@
                 "drupal",
                 "elgg",
                 "fuelphp",
+                "grav",
                 "installer",
                 "joomla",
                 "kohana",
@@ -94,7 +96,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-07-22 17:04:15"
+            "time": "2014-10-25 22:13:47"
         },
         {
             "name": "hanamura/wp-model",
@@ -137,12 +139,12 @@
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-eventbrite-client",
+                "url": "git@github.com:usabilitydynamics/lib-eventbrite-client",
                 "reference": "1.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-eventbrite-client/archive/1.0.0.zip",
+                "url": "https://github.com/usabilitydynamics/lib-eventbrite-client/archive/1.0.0.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -150,13 +152,19 @@
                 "php": ">=5.3"
             },
             "type": "library",
+            "extra": {
+                "installer-name": "lib-eventbrite-client"
+            },
             "autoload": {
                 "classmap": [
                     "lib"
                 ]
             },
+            "license": [
+                "proprietary"
+            ],
             "description": "PHP client for the Eventbrite API http://eventbrite.github.com",
-            "homepage": "https://github.com/UsabilityDynamics/lib-eventbrite-client",
+            "homepage": "https://github.com/usabilitydynamics/lib-eventbrite-client",
             "keywords": [
                 "api",
                 "client",
@@ -165,55 +173,25 @@
             ]
         },
         {
-            "name": "usabilitydynamics/lib-meta-box",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/wp-meta-box",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/wp-meta-box/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "library",
-            "extra": {
-                "installer-name": "lib-meta-box"
-            },
-            "autoload": {
-                "classmap": [
-                    "inc/fields",
-                    "inc/common.php",
-                    "inc/field.php",
-                    "inc/helpers.php",
-                    "inc/meta-box.php"
-                ]
-            },
-            "time": "2014-06-03 12:04:11"
-        },
-        {
             "name": "usabilitydynamics/lib-model",
-            "version": "master",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-model",
-                "reference": "master"
+                "url": "git@github.com:usabilitydynamics/lib-model",
+                "reference": "0.4.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-model/archive/master.zip",
+                "url": "https://github.com/usabilitydynamics/lib-model/archive/0.4.0.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
                 "hanamura/wp-model": "1.1.1",
-                "usabilitydynamics/lib-meta-box": "*",
-                "usabilitydynamics/lib-utility": "*"
+                "usabilitydynamics/lib-utility": "~0.3"
+            },
+            "require-dev": {
+                "usabilitydynamics/lib-meta-box": "master"
             },
             "type": "library",
             "extra": {
@@ -221,6 +199,198 @@
                     "scripts": [
                         "static/scripts/udx.model.js",
                         "static/scripts/udx.model.validation.js"
+                    ]
+                },
+                "installer-name": "lib-model"
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "email": "andy.potanin@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Maxim Peshkov",
+                    "email": "maxim.peshkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anton Korotkov",
+                    "email": "anton.korotkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "http://github.com/usabilitydynamics/lib-model",
+            "keywords": [
+                "models",
+                "shema",
+                "validation"
+            ]
+        },
+        {
+            "name": "usabilitydynamics/lib-settings",
+            "version": "0.2.3",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/lib-settings",
+                "reference": "0.2.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-settings/archive/0.2.3.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "usabilitydynamics/lib-utility": "~0.3"
+            },
+            "require-dev": {
+                "justinrainbow/json-schema": "1.1.*"
+            },
+            "type": "library",
+            "extra": {
+                "installer-name": "lib-settings"
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "email": "andy.potanin@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Maxim Peshkov",
+                    "email": "maxim.peshkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anton Korotkov",
+                    "email": "anton.korotkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "http://github.com/usabilitydynamics/lib-settings",
+            "keywords": [
+                "settings"
+            ]
+        },
+        {
+            "name": "usabilitydynamics/lib-ui",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/lib-ui",
+                "reference": "0.2.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-ui/archive/0.2.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.3",
+                "usabilitydynamics/lib-utility": "~0.3"
+            },
+            "type": "library",
+            "extra": {
+                "installer-name": "lib-ui",
+                "text_domain": "lib-ui",
+                "main-file": "lib/class-ui.php",
+                "class": "UsabilityDynamics\\UI",
+                "component": {
+                    "scripts": [
+                        "static/scripts/ui.js",
+                        "static/scripts/ui.markdown.js",
+                        "static/scripts/ui.jquery-tabs.js"
+                    ],
+                    "styles": [
+                        "static/styles/ui.css",
+                        "static/styles/ui.less"
+                    ]
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "license": [
+                "GNU"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "email": "andy.potanin@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Maxim Peshkov",
+                    "email": "maxim.peshkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anton Korotkov",
+                    "email": "anton.korotkov@usabilitydynamics.com",
+                    "homepage": "http://usabilitydynamics.com",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "http://github.com/usabilitydynamics/wp-ui",
+            "keywords": [
+                "css-editor",
+                "editor",
+                "script-editor",
+                "ui"
+            ]
+        },
+        {
+            "name": "usabilitydynamics/lib-utility",
+            "version": "0.3.2",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/lib-utility",
+                "reference": "0.3.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/usabilitydynamics/lib-utility/archive/0.3.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "library",
+            "extra": {
+                "installer-name": "lib-utility",
+                "component": {
+                    "name": "utility",
+                    "scripts": [
+                        "scripts/*.js"
                     ]
                 }
             },
@@ -252,123 +422,11 @@
                     "role": "Developer"
                 }
             ],
-            "homepage": "http://github.com/usabilitydynamics/lib-models",
             "keywords": [
-                "models",
-                "shema",
-                "validation"
-            ],
-            "time": "2014-07-22 16:35:58"
-        },
-        {
-            "name": "usabilitydynamics/lib-settings",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-settings",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-settings/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "usabilitydynamics/lib-utility": "*"
-            },
-            "require-dev": {
-                "justinrainbow/json-schema": "1.1.*"
-            },
-            "type": "library",
-            "extra": {
-                "component": {
-                    "scripts": [
-                        "scripts/settings.js"
-                    ],
-                    "templates": [
-                        "views/new-installation.xhtml"
-                    ]
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "time": "2014-06-02 15:22:26"
-        },
-        {
-            "name": "usabilitydynamics/lib-ui",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-ui",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-ui/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "usabilitydynamics/lib-utility": "master"
-            },
-            "type": "library",
-            "extra": {
-                "component": {
-                    "scripts": [
-                        "scripts/ui.js",
-                        "scripts/ui.markdown.js",
-                        "scripts/ui.jquery-tabs.js"
-                    ],
-                    "styles": [
-                        "styles/ui.css",
-                        "styles/ui.less"
-                    ]
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "time": "2014-07-23 11:51:09"
-        },
-        {
-            "name": "usabilitydynamics/lib-utility",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-utility",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/usabilitydynamics/lib-utility/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.1.*"
-            },
-            "type": "library",
-            "extra": {
-                "installer-name": "lib-utility",
-                "component": {
-                    "name": "utility",
-                    "scripts": [
-                        "scripts/*.js"
-                    ]
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "time": "2014-07-22 16:38:24"
+                "job",
+                "process",
+                "utility"
+            ]
         }
     ],
     "packages-dev": [],
