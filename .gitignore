@@ -1,8 +1,7 @@
 vendor/themes/flawless-hddp
 /*.sql
 /*.sql.tgz
-application/logs
-application/logs/*
+application/.logs
 .idea
 w3tc-config
 .environment
