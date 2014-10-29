@@ -1,0 +1,147 @@
+/**
+ * Eventually login styling will probably be migrated into wp-veneer
+ *
+ */
+
+html {
+
+  @login-width: 500px;
+  @login-height: 60px;
+  @background-color: rgb(233, 233, 233);
+
+  .hidden {
+    display: none;
+  }
+
+  body.login {
+    max-width: 950px;
+    margin: 0 auto;
+    background-color: #DDDDDD;
+
+    // Modal Window Login
+    &.interim-login {
+
+      padding: 0em;
+
+      h1 {
+        display: none;
+      }
+
+      #login {
+        padding-top: 10px;
+        width: 370px
+      }
+
+    }
+
+    .login-info {
+      display: none;
+      padding-top: 70px;
+      width: 50%;
+      float: left;
+
+      h1 {
+        text-align: left;
+        margin-bottom: 0.5em;
+        font-weight: normal;
+        border-bottom: 1px dotted #d6d6d6;
+        padding-bottom: 0.5em;
+      }
+
+      p {
+        margin-bottom: 1em;
+      }
+    }
+
+    #login {
+      width: @login-width;
+      padding: 70px 0 0px 0;
+      //float: right;
+
+      form {
+        background-color: @background-color;
+        border: 0;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        //margin: 0;
+        //padding: 2em 0;
+        // background: #006396;
+        // background: -moz-linear-gradient(top, #006396 0%, #004073 100%);
+        // background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #006396), color-stop(100%, #004073));
+        // background: -webkit-linear-gradient(top, #006396 0%, #004073 100%);
+        // background: -o-linear-gradient(top, #006396 0%, #004073 100%);
+        // background: -ms-linear-gradient(top, #006396 0%, #004073 100%);
+        // background: linear-gradient(to bottom, #006396 0%, #004073 100%);
+        // filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#006396', endColorstr='#004073', GradientType=0);
+      }
+
+      form#loginform{}
+
+      form#lostpasswordform{}
+
+      #backtoblog,
+      #nav {
+        margin: 1em 0;
+        color: #21759b !important;
+        text-shadow: none;
+        width: 50%;
+        float: left;
+        background: transparent;
+        line-height: 1em;
+        display: block;
+        padding: 1em 0em;
+
+        &:hover {
+          background: #D7D7D7;
+        }
+
+        a {
+          text-align: center;
+          display: block;
+
+        }
+
+      }
+
+      h1 {
+        width: @login-width;
+        height: @login-height;
+        margin-bottom: 40px;
+        display: none;
+
+        a {
+          background-image: none;
+          background-size: auto;
+          background-position: center center;
+          width: @login-width;
+          height: @login-height;
+        }
+
+        #resetpassform {
+
+          .description.indicator-hint {
+            display: block;
+            clear: both;
+          }
+
+        }
+      }
+
+      .message {
+        background-color: @background-color;
+        color: #000;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+      }
+
+      .intro_text {
+        margin-bottom: 1em;
+      }
+
+    }
+
+  }
+
+}
