@@ -20,28 +20,21 @@ wp db import edm_production.sql
 Add "subtree helpers" to your bash profile. (https://gist.github.com/andypotanin/e54a7322da3fa33ada7e) to simplify subtree adding/pulling/pushing:
 If themes are installed using composer (e.g. composer update --prefer-source --dev) then they may be converted into non-git submodules like so:
 ```
+makeSubtree UsabilityDynamics/wp-veneer           vendor/plugins/wp-veneer
+makeSubtree UsabilityDynamics/wp-cluster          vendor/plugins/wp-cluster
+makeSubtree UsabilityDynamics/wp-elastic          vendor/plugins/wp-elastic
+makeSubtree UsabilityDynamics/wp-network          vendor/plugins/wp-network
+makeSubtree wpCloud/wp-vertical-edm               vendor/plugins/wp-vertical-edm
+makeSubtree wpCloud/wp-event-post-type            vendor/plugins/wp-event-post-type
+```
+
+```
 makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival v1.0
 makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-2 v2.0
 makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle v1.0
 makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-2 v2.0
 makeSubtree DiscoDonniePresents/wp-spectacle-mbp  vendor/themes/wp-spectacle-mbp
 makeSubtree DiscoDonniePresents/wp-spectacle-fbt  vendor/themes/wp-spectacle-fbt
-makeSubtree UsabilityDynamics/wp-veneer           vendor/plugins/wp-veneer
-makeSubtree UsabilityDynamics/wp-cluster          vendor/plugins/wp-cluster
-makeSubtree wpCloud/wp-vertical-edm               vendor/plugins/wp-vertical-edm
-makeSubtree wpCloud/wp-event-post-type            vendor/plugins/wp-event-post-type
-makeSubtree UsabilityDynamics/lib-settings        vendor/libraries/usabilitydynamics/lib-settings
-```
-
-### GitHub Plugin Install
-```
-wget --quiet --header "Authorization: token ${GITHUB_UPDATER_TOKEN}" -O /tmp/wp-simplify.zip https://api.github.com/repos/UsabilityDynamics/wp-simplify/zipball/master
-wget --quiet --header "Authorization: token ${GITHUB_UPDATER_TOKEN}" -O /tmp/wp-pagespeed.zip https://api.github.com/repos/UsabilityDynamics/wp-pagespeed/zipball/master
-wget --quiet --header "Authorization: token ${GITHUB_UPDATER_TOKEN}" -O /tmp/wp-revisr.zip https://api.github.com/repos/UsabilityDynamics/wp-revisr/zipball/dev
-
-wp plugin install /tmp/wp-simplify.zip --force
-wp plugin install /tmp/wp-pagespeed.zip --force
-wp plugin install /tmp/wp-revisr.zip --force
 ```
 
 ### Environment Setup
