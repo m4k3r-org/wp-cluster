@@ -7,6 +7,7 @@ makeSubtree UsabilityDynamics/wp-cluster          vendor/plugins/wp-cluster
 makeSubtree UsabilityDynamics/wp-elastic          vendor/plugins/wp-elastic
 makeSubtree UsabilityDynamics/wp-network          vendor/plugins/wp-network
 makeSubtree UsabilityDynamics/wp-github-updater   vendor/plugins/wp-network
+makeSubtree UsabilityDynamics/wp-splash           vendor/themes/wp-splash
 makeSubtree wpCloud/wp-vertical-edm               vendor/plugins/wp-vertical-edm
 makeSubtree wpCloud/wp-event-post-type            vendor/plugins/wp-event-post-type
 ```
