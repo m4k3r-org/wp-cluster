@@ -99,7 +99,7 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'S
 		}
 	}
 
-	WP_CLI::add_command( 'stateless', 'Stateless_Media_Command' );
+	WP_CLI::add_command( 'stateless media', 'Stateless_Media_Command' );
 
 	//die( '<pre>' . print_r( $_test, true ) . '</pre>');
 

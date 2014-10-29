@@ -49,11 +49,16 @@ add_action( 'admin_init', function() {
 
 });
 
-ob_start( function( $buffer ) {
+add_action( 'template_redirect', function() {
 
-	$buffer = str_replace( '/wp-login.php', '/manage/login/', $buffer );
+	ob_start( function( $buffer ) {
 
-	return $buffer;
+		// $buffer = str_replace( 'cities across', 'blah blah blah', $buffer );
+		$buffer = str_replace( '/wp-login.php', '/manage/login/', $buffer );
+
+		return $buffer;
+
+	});
 
 });
 
