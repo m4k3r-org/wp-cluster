@@ -1,0 +1,1 @@
+define("edm",function(){});
