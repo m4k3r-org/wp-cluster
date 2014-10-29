@@ -29,7 +29,7 @@
                 "installer-name": "wordpress-4.0"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ]
         },
         {
@@ -143,7 +143,7 @@
                 "installer-name": "wp-bassoddysey"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Baseline theme composer.json for composer requirements."
         },
@@ -166,7 +166,7 @@
                 "installer-name": "wp-braxton"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Baseline theme composer.json for composer requirements."
         },
@@ -189,7 +189,7 @@
                 "installer-name": "wp-dayafter"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Baseline theme composer.json for composer requirements."
         },
@@ -365,7 +365,7 @@
                 "installer-name": "wp-freaksbeatstreats"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Baseline theme composer.json for composer requirements."
         },
@@ -388,7 +388,7 @@
                 "installer-name": "wp-hififest"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Baseline theme composer.json for composer requirements."
         },
@@ -411,7 +411,7 @@
                 "installer-name": "wp-kboom"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Baseline theme composer.json for composer requirements."
         },
@@ -434,7 +434,7 @@
                 "installer-name": "wp-lanmexico"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Baseline theme composer.json for composer requirements."
         },
@@ -457,7 +457,7 @@
                 "installer-name": "wp-monsterblockparty"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Baseline theme composer.json for composer requirements."
         },
@@ -480,7 +480,7 @@
                 "installer-name": "wp-spectacle-chmf"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Spectacle child theme for Coming Home Music Festival"
         },
@@ -503,7 +503,7 @@
                 "installer-name": "wp-spectacle-fbt"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Spectacle child theme for FBT"
         },
@@ -526,7 +526,7 @@
                 "installer-name": "wp-spectacle-isladelsol"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Spectacle child theme for Isla Del Sol Festival"
         },
@@ -549,7 +549,7 @@
                 "installer-name": "wp-spectacle-mbp"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Spectacle child theme for Monster Block Party"
         },
@@ -634,7 +634,7 @@
                 "installer-name": "wp-thegift"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Baseline theme composer.json for composer requirements."
         },
@@ -657,7 +657,7 @@
                 "installer-name": "wp-winterfantasy"
             },
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "Baseline theme composer.json for composer requirements."
         },
@@ -1460,151 +1460,7 @@
             ]
         }
     ],
-    "packages-dev": [
-        {
-            "name": "wpackagist-plugin/debug-bar",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/debug-bar/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/debug-bar.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/debug-bar": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/debug-bar/",
-            "time": "2014-09-02 05:19:55"
-        },
-        {
-            "name": "wpackagist-plugin/debug-bar-actions-and-filters-addon",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/debug-bar-actions-and-filters-addon/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/debug-bar-actions-and-filters-addon.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/debug-bar-actions-and-filters-addon": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/debug-bar-actions-and-filters-addon/",
-            "time": "2014-09-04 15:01:31"
-        },
-        {
-            "name": "wpackagist-plugin/debug-bar-constants",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/debug-bar-constants/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/debug-bar-constants.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/debug-bar-constants": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/debug-bar-constants/",
-            "time": "2014-09-05 07:14:13"
-        },
-        {
-            "name": "wpackagist-plugin/debug-bar-post-types",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/debug-bar-post-types/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/debug-bar-post-types.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/debug-bar-post-types": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/debug-bar-post-types/",
-            "time": "2014-09-05 07:22:01"
-        },
-        {
-            "name": "wpackagist-plugin/debug-bar-slow-actions",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/debug-bar-slow-actions/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/debug-bar-slow-actions.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/debug-bar-slow-actions": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/debug-bar-slow-actions/",
-            "time": "2014-09-05 06:35:06"
-        },
-        {
-            "name": "wpackagist-plugin/wordpress-importer",
-            "version": "0.6.1",
-            "source": {
-                "type": "svn",
-                "url": "http://plugins.svn.wordpress.org/wordpress-importer/",
-                "reference": "tags/0.6.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://downloads.wordpress.org/plugin/wordpress-importer.0.6.1.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "replace": {
-                "wpackagist/wordpress-importer": "self.version"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "http://wordpress.org/plugins/wordpress-importer/"
-        }
-    ],
+    "packages-dev": null,
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": [],

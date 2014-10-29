@@ -1,10 +1,21 @@
-define( ['jquery'], function( $ ){
+define( ['jquery', 'lib/swipe'], function( $, swipe ){
 
   var scmfStream = {
 
     init: function(){
 
       this.hideEmptyFilters();
+
+      if( $( '.social-stream-module-home' ).length ){
+        this.arrangeItems();
+        this.initSwipe();
+
+        var that = this;
+
+        $( window ).on( 'resizeEnd', function(){
+          that.initSwipe();
+        } );
+      }
 
     },
 
@@ -60,6 +71,41 @@ define( ['jquery'], function( $ ){
         } );
       }
 
+    },
+
+    arrangeItems: function(){
+
+      var tw_cnt = 0;
+
+      $( '.info-stream .single-item' ).each( function(){
+
+        if( $( this ).hasClass( 'twitter-streams' ) ){
+
+          tw_cnt++;
+
+          if( tw_cnt % 2 == 1 ){
+
+            $( this ).next().andSelf().wrapAll( '<div class="social-item-column">' );
+
+          }
+        } else
+          if( $( this ).hasClass( 'instagram-streams' ) ){
+
+            $( this ).wrapAll( '<div class="social-item-column">' );
+
+          }
+
+      } );
+
+    },
+
+    initSwipe: function(){
+
+      if( document.documentElement.clientWidth <= 480 ){
+        swipe.init( '.wp-social-stream', '.info-stream', '.single-item', '.wp-social-stream .indicator-parent' );
+      } else{
+        swipe.init( '.wp-social-stream', '.info-stream', '.social-item-column', '.wp-social-stream .indicator-parent' );
+      }
     },
 
     /**

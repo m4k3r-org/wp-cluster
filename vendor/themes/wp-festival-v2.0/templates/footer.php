@@ -33,5 +33,10 @@ $disabled_sections = get_post_meta( $post->ID, 'disabledSections' ); ?>
     <?php get_template_part( 'templates/overlays/imagelightbox', get_post_type() ); ?>
     
     <?php wp_footer(); ?>
+
+    <?php if( is_front_page() ) : ?>
+      <script src="<?php echo get_stylesheet_directory_uri(); ?>/static/scripts/src/wp-social-stream/wp-social-stream-ordering-home.js"></script>
+    <?php endif; ?>
+
   </body>
 </html>

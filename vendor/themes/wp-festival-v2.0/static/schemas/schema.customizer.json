@@ -50,6 +50,10 @@
       "title": "Module: Video",
       "priority": 73
     },
+    "feature_module": {
+      "title": "Module: Features",
+      "priority": 74
+    },
     "page_blog_single": {
       "title": "Page: Blog Single",
       "priority": 75
@@ -66,6 +70,10 @@
 			"title": "Page: Hotels",
 			"priority": 90
 		},
+    "social_stream_homepage": {
+      "title": "Homepage Social Stream",
+      "priority": 95
+    },
 
     "misc": {
       "title": {
@@ -1145,6 +1153,40 @@
         ".video-module-container .video-content"
       ]
     },
+    {
+      "key": "feature_module_background_standard",
+      "label": "Standard - Background Color",
+      "priority": 180,
+      "section": "feature_module",
+      "control": "background-color",
+      "important": true,
+      "selector": [
+        ".feature-item"
+      ]
+    },
+    {
+      "key": "feature_module_background_alternate",
+      "label": "Alternate - Background Color",
+      "priority": 180,
+      "section": "feature_module",
+      "control": "background-color",
+      "important": true,
+      "selector": [
+        ".feature-item-darker"
+      ]
+    },
+    {
+      "key": "feature_module_text_color",
+      "label": "Text Color",
+      "priority": 180,
+      "section": "feature_module",
+      "control": "color",
+      "important": true,
+      "selector": [
+        ".feature-item .feature-text",
+        ".feature-item .feature-text h3"
+      ]
+    },
 		{
 			"key": "page_artist_single_profile_button_border_color",
 			"label": "Profile Button Border Color",
@@ -1365,12 +1407,72 @@
 			"selector": [
 				".hotel-item .hotel-content .services li span.icon-hotel-unchecked"
 			]
-		}
-
-
-
-
-
-
+		},
+    {
+      "key": "social_stream_homepage_background_color",
+      "label": "Background Color",
+      "priority": 10,
+      "section": "social_stream_homepage",
+      "control": "background-color",
+      "important": false,
+      "selector": [
+        ".social-stream-module-home"
+      ]
+    },
+    {
+      "key": "social_stream_homepage_title_color",
+      "label": "Title Color",
+      "priority": 20,
+      "section": "social_stream_homepage",
+      "control": "color",
+      "important": false,
+      "selector": [
+        ".social-stream-module-home .info-meta .social-stream-title"
+      ]
+    },
+    {
+      "key": "social_stream_homepage_description_color",
+      "label": "Description Color",
+      "priority": 30,
+      "section": "social_stream_homepage",
+      "control": "color",
+      "important": false,
+      "selector": [
+        ".social-stream-module-home .info-meta .social-stream-description"
+      ]
+    },
+    {
+      "key": "social_stream_scroller_background_color",
+      "label": "Scroller Background Color",
+      "priority": 40,
+      "section": "social_stream_homepage",
+      "control": "background-color",
+      "important": false,
+      "selector": [
+        ".social-stream-module-home .indicator-container"
+      ]
+    },
+    {
+      "key": "social_stream_scroller_color",
+      "label": "Scroller Color",
+      "priority": 50,
+      "section": "social_stream_homepage",
+      "control": "background-color",
+      "important": false,
+      "selector": [
+        ".social-stream-module-home .indicator-container .indicator-parent .indicator"
+      ]
+    },
+    {
+      "key": "social_stream_scroller_icon_color",
+      "label": "Scroller Icon Color",
+      "priority": 50,
+      "section": "social_stream_homepage",
+      "control": "color",
+      "important": false,
+      "selector": [
+        ".social-stream-module-home .indicator-container .indicator-parent .indicator span"
+      ]
+    }
 	]
 }
