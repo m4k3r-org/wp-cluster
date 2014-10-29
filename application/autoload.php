@@ -12,11 +12,6 @@
  *
  */
 
-if( WP_DEBUG && defined( 'WP_ENV' ) && WP_ENV == 'develop') {
-	error_reporting( E_ALL );
-	ini_set( 'display_errors', 1 );
-}
-
 if ( ! defined( 'WP_VENDOR_LIBRARY_DIR' ) ) {
 	define( 'WP_VENDOR_LIBRARY_DIR', ABSPATH . 'wp-vendor/' );
 }

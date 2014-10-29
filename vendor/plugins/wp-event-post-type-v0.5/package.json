@@ -1,7 +1,0 @@
-{
-  "name": "wp-event-post-type",
-  "version": "0.5.0",
-  "devDependencies": {
-    "grunt": "~0.4.1"
-  }
-}

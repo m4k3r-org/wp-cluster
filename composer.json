@@ -117,20 +117,20 @@
   },
   "require": {
     "php": ">=5.3",
-    "usabilitydynamics/lib-settings": "~0.2",
     "automattic/wordpress": "4.0",
+    "discodonniepresents/wp-disco": "master",
+    "usabilitydynamics/lib-settings": "~0.2",
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-network": "master",
     "usabilitydynamics/wp-elastic": "master",
     "usabilitydynamics/wp-cluster": "master",
     "usabilitydynamics/wp-github-updater": "master",
     "usabilitydynamics/wp-splash": "master",
-    "discodonniepresents/wp-disco": "master",
+    "usabilitydynamics/wp-simplify": "master",
     "wpcloud/wp-vertical-edm": "master"
   },
   "require-dev": {
     "usabilitydynamics/wp-flawless": "dev-legacy",
-    "usabilitydynamics/wp-simplify": "master",
     "discodonniepresents/wp-eventbrite": "0.1.3",
     "discodonniepresents/wp-spectacle/v1": "v1.0",
     "discodonniepresents/wp-spectacle": "v2.0",
