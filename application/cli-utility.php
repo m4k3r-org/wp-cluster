@@ -41,7 +41,7 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 
 			$_results = array();
 
-			foreach( (array) wp_get_sites( array( 'public' => true) ) as $site ) {
+			foreach( (array) wp_get_sites( array( 'public' => true, 'network_id' => null ) ) as $site ) {
 
 				switch_to_blog( $site[ 'blog_id' ] );
 
@@ -59,7 +59,10 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 					$_status[] = 'Theme missing.';
 				}
 
+				$_network = (array) wp_get_network( $site['site_id'] );
+
 				$_results[ $site['domain'] ] = array(
+					'network' => $_network['domain'],
 					'site' => $site['domain'],
 					'theme' => get_option( 'stylesheet' ), // . ' ' . $_stylesheet->get( 'Version' ),
 					'template' => $_templateActual,
@@ -69,7 +72,66 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 
 			}
 
-			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'site', 'theme', 'template', 'path', 'status' ) );
+			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'network', 'site', 'theme', 'template', 'path', 'status' ) );
+
+		}
+
+
+		/**
+		 * Display active themes accross the network including relative path.
+		 *
+		 * ## OPTIONS
+		 *
+		 * <stage>
+		 * : Which migration stage we want to do, defaults to all
+		 *
+		 * ## EXAMPLES
+		 *
+		 *     wp utility dns
+		 *
+		 * @synopsis [<stage>]
+		 */
+		function dns( $args ) {
+			global $wpdb, $current_blog;
+
+			//WP_CLI::line( 'DB_NAME: ' . DB_NAME );
+			//WP_CLI::line( 'DB_USER: ' . DB_USER );
+			//WP_CLI::line( 'DB_HOST: ' . DB_HOST );
+
+			// WP_CLI::line( 'Generating list of sites with themes.' );
+
+			$_results = array();
+
+			foreach( (array) wp_get_sites( array( 'network_id' => null ) ) as $site ) {
+
+				switch_to_blog( $site[ 'blog_id' ] );
+
+				$_template = wp_get_theme( get_option( 'template' ) );
+				$_stylesheet= wp_get_theme( get_option( 'stylesheet' ) );
+				$_status = array();
+
+				$_templateActual = get_option( 'stylesheet' ) !== get_option( 'template' ) ? get_option( 'template' ) : null;
+
+				if( $_templateActual && !is_dir( $_template->get_stylesheet_directory() ) ) {
+					$_status[] = 'Template missing.';
+				}
+
+				if( !is_dir( $_stylesheet->get_stylesheet_directory() ) ) {
+					$_status[] = 'Theme missing.';
+				}
+
+				$_network = (array) wp_get_network( $site['site_id'] );
+
+				$_results[ $site['domain'] ] = array(
+					'network' => $_network['domain'],
+					'site' => $site['domain'],
+					'ip' => gethostbyname( $site['domain'] ),
+					'status' => ''
+				);
+
+			}
+
+			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'network', 'site', 'ip', 'status' ) );
 
 			//die( '<pre>' . print_r( $_results, true ) . '</pre>');
 

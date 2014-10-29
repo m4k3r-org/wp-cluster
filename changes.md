@@ -16,7 +16,7 @@
 * Replaced wp-festival-2 with wp-festival-v2.0 [wp theme enable wp-festival-v2.0 --network]
 * Added "wp utility" command for seeing useful lists such as cross-network active theme.
 * Fixed "lib-settings" and "lib-utility" deps to have fixed versions.
-* 
+* Added "wp utility dns" to see list of sites and the resolved IPs.
 
 #### 2.1.3
 * Added changes.md
