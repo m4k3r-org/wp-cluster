@@ -12,6 +12,8 @@
 * Replaced flawless with wp-flawless-v1.0
 * Replaced wp-festival with wp-festival-v1.0
 * Replaced wp-festival-2 with wp-festival-v2.0
+* Added "wp utility" command for seeing useful lists such as cross-network active theme.
+* Fixed "lib-settings" and "lib-utility" deps to have fixed versions.
 
 #### 2.1.3
 * Added changes.md
