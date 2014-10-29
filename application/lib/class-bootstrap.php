@@ -82,7 +82,6 @@ namespace EDM\Application {
     /**
      * Initializer.
      *
-     * @internal param $ potanin@UD
      * @return \EDM\Application\Bootstrap EDMNetwork
      */
     public function __construct() {
@@ -91,7 +90,6 @@ namespace EDM\Application {
 
       register_theme_directory( WP_CONTENT_DIR . '/themes' );
       register_theme_directory( WP_CONTENT_DIR . '/vendor/usabilitydynamics' );
-      register_theme_directory( WP_CONTENT_DIR . '/vendor/wordpress/core/wp-content/themes' );
 
       add_filter( 'wp_cache_themes_persistently', function( $current, $callee ) {
         return 43200; // 6 hours
@@ -102,9 +100,6 @@ namespace EDM\Application {
 
       // Instantiate Veneer.
       $this->veneer     = new \UsabilityDynamics\Veneer\Bootstrap;
-
-      // Instantiate Network.
-      $this->network    = new \UsabilityDynamics\Network\Bootstrap;
 
       // Instantaite Settings.
       $this->settings   = new \UsabilityDynamics\Settings;
@@ -118,13 +113,9 @@ namespace EDM\Application {
       add_action( 'init', array( &$this, 'init' ), 100 );
       add_action( 'admin_init', array( &$this, 'admin' ), 100 );
       add_action( 'upload_mimes', array( &$this, 'upload_mimes' ), 100 );
-      add_action( 'muplugins_loaded', array( &$this, 'muplugins_loaded' ), 0 );
-      add_action( 'plugins_loaded', array( &$this, 'plugins_loaded' ) );
-      add_action( 'template_redirect', array( &$this, 'redirect' ), 0 );
       add_action( 'login_footer', array( &$this, 'login_footer' ), 30 );
       add_filter( 'login_headerurl', array( &$this, 'login_headerurl' ), 30 );
       add_filter( 'wp_mail_from', array( &$this, 'wp_mail_from' ), 10 );
-      add_filter( 'wp_mail_from_name', array( &$this, 'wp_mail_from_name' ), 10 );
       add_action( 'login_enqueue_scripts', array( $this, 'login_enqueue_scripts' ), 30 );
 
     }
@@ -157,11 +148,9 @@ namespace EDM\Application {
       add_shortcode( 'wp_login_form', array( &$this, 'wp_login_form_shortcode' ) );
 
       // Enable JavaScript Library Loading.
-      new \UsabilityDynamics\Requires(array(
-        'name' => 'application',
-        'scope' => array( 'backend' ),
-        'debug' => true
-      ));
+      if( class_exists( 'UsabilityDynamics\Requires' ) ) {
+        new \UsabilityDynamics\Requires( array( 'name'  => 'application', 'scope' => array( 'backend' ), 'debug' => true ) );
+      }
 
       // Basic Frontend Security
       remove_action( 'wp_head', 'feed_links', 2 );
@@ -194,11 +183,9 @@ namespace EDM\Application {
         'style_loader_src'
       ), array( $this, 'relative_url' ) );
 
-
       if( class_exists( '\UsabilityDynamics\Utility' ) ) {
         add_filter( 'sanitize_file_name', array( '\UsabilityDynamics\Utility', 'hashify_file_name' ), 10 );
       }
-
 
       return;
 
@@ -211,15 +198,6 @@ namespace EDM\Application {
           $this->set( 'structure', $settings[ 'structure' ] );
         }
       }
-
-    }
-
-    /**
-     * Frontend Handler
-     *
-     * @method redirect
-     */
-    public function redirect() {
 
     }
 
@@ -266,25 +244,6 @@ namespace EDM\Application {
       }
 
       return $from_email;
-
-    }
-
-    /**
-     * Replace Default Sender Name
-     *
-     * @param $from_name
-     *
-     * @return string
-     */
-    public function wp_mail_from_name( $from_name ) {
-
-      $searchParams = array(
-        'index' => 'discodonniepresents.com',
-        'type' => $type,
-        'body' => $query
-      );
-
-      return $from_name;
 
     }
 
@@ -389,38 +348,6 @@ namespace EDM\Application {
      * @for EDMNetwork
      */
     public function welcome_panel() {
-
-    }
-
-    /**
-     * Load Network Plugins
-     *
-     * @author potanin@UD
-     * @for EDMNetwork
-     */
-    public function muplugins_loaded() {
-
-      // define( 'RWMB_URL', $this->vendor_url( 'rilwis/meta-box' ) . '/' );
-
-      // Include plugins
-      //require_once( $this->root . '/vendor/wordpress/regenerate-thumbnails/regenerate-thumbnails.php' );
-      //require_once( $this->root . '/vendor/wordpress/rilwis/meta-box/meta-box.php' );
-
-    }
-
-    /**
-     * Load Standard Plugins
-     *
-     * @method plugins_loaded
-     * @author potanin@UD
-     * @for EDMNetwork
-     */
-    public function plugins_loaded() {
-
-      //define( 'RWMB_URL', $this->vendor_url( 'rilwis/meta-box' ) . '/' );
-
-      // Include plugins
-      // require_once( $this->root . '/vendor/usabilitydynamics/wp-adrotate/adrotate.php' );
 
     }
 

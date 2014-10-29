@@ -4,20 +4,39 @@
  * Plugin URI: http://usabilitydynamics.com/plugins/
  * Description: Main plugin to handle all site specific bootstrap tasks
  * Author: Usability Dynamics, Inc.
- * Version: 0.1
+ * Version: 0.1.2
  * Author URI: http://usabilitydynamics.com
  */
+global $wp_veneer, $current_blog;
 
+add_action( 'init', function() {
+	global $wp_veneer;
+
+  $wp_veneer->set( 'rewrites.login', true );
+	$wp_veneer->set( 'rewrites.manage', true );
+	$wp_veneer->set( 'rewrites.api',  true );
+
+	$wp_veneer->set( 'static.enabled', true );
+	$wp_veneer->set( 'cdn.enabled', true );
+	$wp_veneer->set( 'cache.enabled', true );
+
+	$wp_veneer->set( 'media.shard.enabled', false );
+	$wp_veneer->set( 'scripts.shard.enabled', false );
+	$wp_veneer->set( 'styles.shard.enabled', false );
+
+});
+
+/** Ok, this action is hackish so we can load this functionality only on DDP! */
+if( defined( 'WP_VENDOR_LIBRARY_DIR' ) && ( isset( $current_blog ) && $current_blog->domain == 'discodonniepresents.com' ) ) {
+
+  if( is_dir( WP_VENDOR_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/static/schemas' ) ) {
+    define( 'WP_ELASTIC_SCHEMAS_DIR', WP_VENDOR_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/static/schemas' );
+  }
+
+}
 /** Init the application */
 if( class_exists( 'EDM\Application\Bootstrap' ) ) {
   new EDM\Application\Bootstrap;
-}
-
-/** Ok, this action is hackish so we can load this functionality only on DDP! */
-if( defined( 'DOMAIN_CURRENT_SITE' ) && DOMAIN_CURRENT_SITE == 'discodonniepresents.com' ){
-  define( 'WP_ELASTIC_SCHEMAS_DIR', WP_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/static/schemas' );
-  require_once( WP_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/vertical-edm.php' );
-  require_once( WP_PLUGIN_DIR . '/wp-elastic/wp-elastic.php' );
 }
 
 /**
@@ -62,6 +81,31 @@ if( defined( 'WP_CLI' ) && WP_CLI ) {
   class DDP_CLI extends WP_CLI_Command {
 
     /**
+     * Test stuff.
+     *
+     * ## OPTIONS
+     *
+     * <stage>
+     * : Which migration stage we want to do, defaults to all
+     *
+     * ## EXAMPLES
+     *
+     *     wp ddp test
+     *     wp ddp test all
+     *
+     * @synopsis [<stage>]
+     */
+    function test( $args ) {
+      $this->_init();
+      $type = false;
+
+	    WP_CLI::line( 'DB_NAME: '. DB_NAME );
+	    WP_CLI::line( 'DB_USER: '. DB_USER );
+	    WP_CLI::line( 'DB_HOST: '. DB_HOST );
+
+    }
+
+    /**
      * Attempts the migration
      *
      * ## OPTIONS
@@ -100,5 +144,44 @@ if( defined( 'WP_CLI' ) && WP_CLI ) {
 
   /** Add the commands from above */
   WP_CLI::add_command( 'ddp', 'DDP_CLI' );
+
+}
+
+add_action( 'wp_ajax_/status', 'api_status_response_handler' );
+add_action( 'wp_ajax_nopriv_/status', 'api_status_response_handler' );
+
+/**
+ * Admin Ajax Response Handler
+ *
+ * Endpoint available natively:
+ * * http://api.usabilitydynamics.com/wp-admin/admin-ajax.php?action=status
+ *
+ * Following endpoint are available with .htaccess rewrites:
+ * * http://www.usabilitydynamics.com/api/status
+ * * http://api.usabilitydynamics.com/status
+ *
+ *
+ * @todo Detect if request from Pingdom.
+ *
+ */
+function api_status_response_handler() {
+
+	if ( file_exists( WP_CONTENT_DIR . "package.json" ) ) {
+		$_package = json_decode( file_get_contents( WP_CONTENT_DIR . "package.json" ) );
+	}
+
+	$_response = array(
+		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
+		"<pingdom_http_custom_check package-name=\"{$_package->name}\" package-version=\"{$_package->version}\">",
+		"<status>OK</status>",
+		"<response_time>" . timer_stop( 0, 3 ) . "</response_time>",
+		"</pingdom_http_custom_check>"
+	);
+
+	nocache_headers();
+
+	@header( 'Content-Type: text/xml; charset=' . get_option( 'blog_charset' ) );
+
+	die( join( "", $_response ) );
 
 }
