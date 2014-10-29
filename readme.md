@@ -23,6 +23,10 @@ makeSubtree DiscoDonniePresents/wp-spectacle-mbp  vendor/themes/wp-spectacle-mbp
 makeSubtree DiscoDonniePresents/wp-spectacle-fbt  vendor/themes/wp-spectacle-fbt
 ```
 
+```
+pushSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v2.0 v2.0
+```
+
 There seem to be issues with pushing changes back to a lib-settings, probably because it's actually a tag.
 ```
 makeSubtree UsabilityDynamics/lib-settings        vendor/libraries/usabilitydynamics/lib-settings 0.2.2

@@ -8,13 +8,13 @@
  * Author URI: http://usabilitydynamics.com
  */
 
+// @note Gotta do this BEFORE plugins are activated, or else wp-elastic won't recognize schemas..
+if( defined( 'WP_PLUGIN_DIR' ) && ( isset( $current_blog ) && $current_blog->domain == 'discodonniepresents.com' ) &&  is_dir( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas' ) ) {
+	define( 'WP_ELASTIC_SCHEMAS_DIR', WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas' );
+}
+
 add_action( 'plugins_loaded', function() {
 	global $wp_veneer, $current_blog;
-
-	/** Ok, this action is hackish so we can load this functionality only on DDP! */
-	if( defined( 'WP_VENDOR_LIBRARY_DIR' ) && ( isset( $current_blog ) && $current_blog->domain == 'discodonniepresents.com' ) &&  is_dir( WP_VENDOR_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/static/schemas' ) ) {
-		define( 'WP_ELASTIC_SCHEMAS_DIR', WP_VENDOR_LIBRARY_DIR . '/wpcloud/wp-vertical-edm/static/schemas' );
-	}
 
 	if( isset( $wp_veneer ) && method_exists( $wp_veneer, 'set' )) {
 		$wp_veneer->set( 'rewrites.login', true );
@@ -31,6 +31,11 @@ add_action( 'plugins_loaded', function() {
 	}
 
 });
+
+add_action( 'muplugins_loaded', function() {
+	global $wp_veneer, $current_blog;
+
+}, 20 );
 
 /** Init the application */
 if( class_exists( 'EDM\Application\Bootstrap' ) ) {
