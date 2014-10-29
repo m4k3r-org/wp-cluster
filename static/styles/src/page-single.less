@@ -1,189 +1,188 @@
-body.single-post {
-  background-image: none;
-  min-height: 0;
-  background: #FFF;
-}
+.blog-single {
 
-.single-post-header {
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  .blog-single-featured-image {
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
 
-  padding-bottom: 109.68%;
+    overflow: hidden;
 
-  position: relative;
-
-  @media @tablet {
-    padding-bottom: 56.25%;
-  }
-
-  .gradient-fade {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: linear-gradient(to bottom, rgba(255,255,255, 0) 70%, rgba(255,255,255, 0.6) 80%, rgba(255,255,255, 1) 90% );
-  }
-
-  .logo-mini {
-    position: absolute;
-    top: 40px;
-    left: 50%;
-    margin-left: -44px;
-  }
-
-  .prev-next {
-    text-decoration: none;
-    position: absolute;
-    display: block;
-  //  background: rgba(74,86,116,0.8);
-    border-radius: 3px;
-    text-align: center;
-    color: #FFF;
-
- /*   width: 40px;
-    height: 40px;*/
-    line-height: 40px;
-
-    font-size: 24px;
-
-    top: 30%;
+    padding-bottom: 103.57%;
 
     @media @tablet {
-  /*    width: 80px;
-      height: 80px;*/
-      line-height: 80px;
-
-      font-size: 40px;
+      padding-bottom: 53.57%;
     }
 
-  }
+    .logo-mini {
+      position: absolute;
+      top: 40px;
 
-  .icon-spectacle-left-arrow {
-    left: 20px;
-  }
+      left: 50%;
+      .mixin-transform( translateX(-50%) );
 
-  .icon-spectacle-right-arrow {
-    right: 20px;
-  }
+      width: 50%;
+      max-width: 210px;
 
-}
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
 
-.single-post .page-content {
-  margin-top: -24%;
+    .blog-single-gradient-fade {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 30%;
 
-  @media @tablet {
-    margin-top: -19%;
-  }
-}
+      @media @desktop {
+        height: 160px;
+      }
+    }
 
-.single-post {
+    .prev-next {
+      text-decoration: none;
+      position: absolute;
+      display: block;
+      border-radius: 3px;
+      text-align: center;
+      color: #FFF;
+      line-height: 40px;
+      font-size: 24px;
+      top: 50%;
+      .mixin-transform( translateY(-50%) );
 
-  .title {
-    font-size: 24px;
-    font-family: "audimat-regular", sans-serif;
-    font-weight: normal;
-    letter-spacing: 0;
+      @media @tablet {
+        line-height: 80px;
+        font-size: 40px;
+      }
+    }
 
-    padding-top: 45px;
+    .icon-spectacle-left-arrow {
+      left: 20px;
+    }
 
-    @media @desktop {
-      font-size: 48px;
-      line-height: 58px;
-      letter-spacing: -0.04em;
-      padding-top: 130px;
+    .icon-spectacle-right-arrow {
+      right: 20px;
     }
   }
 
-  hr {
-    width: 100%;
-    height: 1px;
-    background: #b6bdd0;
-    border: 0;
-    margin: 30px auto;
-  }
+  .blog-single-content {
+    margin-top: -45%;
+    position: relative;
+    z-index: 10;
 
-  .divider {
-    width: 100px;
-  }
+    @media @tablet {
+      margin-top: -150px;
+    }
 
-  .single-post-content {
-    font-size: 14px;
-    line-height: 24px;
-    color: #808285;
+    @media @large-desktop {
+      margin-top: -400px;
+    }
 
-    text-align: left;
-
-    @media @desktop {
-      font-size: 18px;
-      line-height: 28px;
+    .title {
+      font-size: 24px;
+      font-family: "audimat-regular", sans-serif;
       font-weight: normal;
+      letter-spacing: 0;
+
+      padding-top: 45px;
+
+      @media @desktop {
+        font-size: 48px;
+        line-height: 58px;
+        letter-spacing: -0.04em;
+        padding-top: 130px;
+      }
     }
 
-    p {
-      margin: 0 0 20px 0;
-    }
-
-  }
-
-  .meta {
-    display: block;
-    width: 100%;
-    font-family: "Droid Sans", sans-serif;
-    font-size: 12px;
-    color: #808285;
-    text-transform: uppercase;
-
-    padding: 20px 30px 70px 30px;
-
-    @media @desktop {
-      font-size: 16px;
-    }
-
-    > span {
-      float: left;
+    hr {
       width: 100%;
-      margin-bottom: 10px;
+      height: 1px;
+      background: #b6bdd0;
+      border: 0;
+      margin: 30px auto;
+    }
 
-      @media @phone-landscape {
-        width: 50%;
-        margin-bottom: 0;
+    .divider {
+      width: 100px;
+    }
+
+    .meta {
+      display: block;
+      width: 100%;
+      font-family: "Droid Sans", sans-serif;
+      font-size: 12px;
+      color: #808285;
+      text-transform: uppercase;
+
+      padding: 20px 30px 70px 30px;
+
+      @media @desktop {
+        font-size: 16px;
       }
 
-      i {
-        font-size: 18px;
-        margin-right: 10px;
-        vertical-align: middle;
+      > span {
+        float: left;
+        width: 100%;
+        margin-bottom: 10px;
 
-        @media @desktop {
-          font-size: 22px;
+        @media @phone-landscape {
+          width: 50%;
+          margin-bottom: 0;
+        }
+
+        i {
+          font-size: 18px;
+          margin-right: 10px;
+          vertical-align: middle;
+
+          @media @desktop {
+            font-size: 22px;
+          }
+        }
+      }
+
+      .date {
+        @media @tablet {
+          text-align: right;
+          padding-right: 15px;
+        }
+      }
+
+      .comments-count {
+
+        a {
+          text-decoration: none;
+          color: #808285;
+        }
+
+        @media @tablet {
+          text-align: left;
+          padding-left: 15px;
         }
       }
     }
 
-    .date {
-      @media @tablet {
-        text-align: right;
-        padding-right: 15px;
+    .blog-single-content-container {
+      font-size: 14px;
+      line-height: 24px;
+      color: #808285;
+
+      text-align: left;
+
+      @media @desktop {
+        font-size: 18px;
+        line-height: 28px;
+        font-weight: normal;
       }
+
+      p {
+        margin: 0 0 20px 0;
+      }
+
     }
-
-    .comments-count {
-
-      a {
-        text-decoration: none;
-        color: #808285;
-      }
-
-      @media @tablet {
-        text-align: left;
-        padding-left: 15px;
-      }
-    }
-
-
-
   }
-
 }
