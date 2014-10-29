@@ -161,21 +161,22 @@ namespace UsabilityDynamics {
         ));
 
         // Load Schema.
-        if( $args->schema ) {
+        if( isset( $args->schema ) && $args->schema ) {
           $this->set_schema( $args->schema );
         }
 
         // Set Storage Location(s).
-        if( $args->store ) {
+        if( isset( $args->store ) && $args->store ) {
           $this->_store = $args->store;
         }
 
         // Set Storage Key.
-        if( $args->key ) {
+        if( isset( $args->key ) && $args->key ) {
           $this->_key = $args->key;
         }
+
         // Set transient vxpiration value.
-        if( $args->expiration ) {
+        if( isset( $args->expiration ) && $args->expiration ) {
           $this->_expiration = $args->expiration;
         }
 
@@ -433,7 +434,7 @@ namespace UsabilityDynamics {
 
           break;
 
-          case 'site_meta':
+          case 'site_options':
 
             $_value = json_encode( $_data, JSON_FORCE_OBJECT );
 
@@ -470,9 +471,12 @@ namespace UsabilityDynamics {
       public function flush() {
 
         switch( $this->_store ) {
-
           case 'options':
             if( function_exists( 'delete_option' ) ) {
+              delete_option( $this->_key );
+            }
+          case 'site_options':
+            if( function_exists( 'delete_site_option' ) ) {
               delete_option( $this->_key );
             }
           break;
@@ -487,6 +491,11 @@ namespace UsabilityDynamics {
        *
        */
       public function _validate() {
+
+        if( !class_exists( 'JsonSchema\Validator' ) ) {
+          return;
+        }
+
         $validator = new \JsonSchema\Validator();
 
         // Process Validation.
@@ -532,9 +541,14 @@ namespace UsabilityDynamics {
 
           // WordPress Site Options.
           case 'options':
+          case 'site_options':
 
             // Load from options.
-            $_value = \get_option( $this->_key );
+            if( $this->_store == 'site_options' ) {
+              $_value = \get_site_option( $this->_key );
+            } else {
+              $_value = \get_option( $this->_key );
+            }
 
             // If already an array it must have been serialized
             if( gettype( $_value ) === 'array' ) {
