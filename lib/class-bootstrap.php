@@ -29,7 +29,7 @@ namespace UsabilityDynamics\Cluster {
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.4.3';
+      public static $version = '0.4.4';
 
       /**
        * Textdomain String
@@ -517,7 +517,7 @@ namespace UsabilityDynamics\Cluster {
        *
        */
       public function admin_enqueue_scripts() {
-        wp_enqueue_style( 'wp-cluster', plugins_url( '/static/styles/wp-cluster.css', dirname( __FILE__ ) ), array(), self::$version );
+        wp_enqueue_style( 'wp-cluster', plugins_url( '/static/styles/wp-cluster.css', dirname( dirname( __FILE__ ) ) ), array(), self::$version );
       }
 
       /**

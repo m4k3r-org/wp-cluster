@@ -3,7 +3,7 @@
  * Plugin Name: WP-Cluster
  * Plugin URI: http://usabilitydynamics.com/
  * Description: Application managing must-use plugins and obfuscation rewrites.
- * Version: 0.4.3
+ * Version: 0.4.4
  * Author: Usability Dynamics
  * Author URI: http://usabilitydynamics.com/
  * License: GPLv2 or later
