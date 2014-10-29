@@ -92,13 +92,14 @@
                 
                 <?php $products_avaliable[] = $product; ?>
                 
-                <a class="button-secondary" href="<?php echo $this->append_parameters_to_buy_url($product['url']) ?>"><?php echo $product['call2action'] ?> - 
+                <span class="button-secondary">
+                <a href="<?php echo $this->append_parameters_to_buy_url($product['url']) ?>"><?php echo $product['call2action'] ?></a> - 
                     <?php if(!empty($product['price_disc'])): ?>
                     <?php  printf('$%s %s$%d%s (USD)', $product['price_disc'], '&nbsp;&nbsp;<del>' , $product['price'] , '</del>') ?>
                     <?php else: ?>
                     <?php  printf('$%d (USD)', $product['price']) ?>
                     <?php endif; ?>
-                </a>
+                </span>
                     
                 &nbsp;&nbsp;&nbsp;
                 
@@ -108,8 +109,8 @@
                     <ul class="installer-products-list" style="display:inline">
                     <?php foreach($product['renewals'] as $renewal): ?>
                         <?php $products_avaliable[] = $renewal; ?>
-                        <li>
-                            <a class="button-secondary" href="<?php echo $this->append_parameters_to_buy_url($renewal['url']) ?>"><?php echo $renewal['call2action'] ?> - <?php printf('$%d (USD)', $renewal['price']) ?></a>
+                        <li class="button-secondary">
+                            <a href="<?php echo $this->append_parameters_to_buy_url($renewal['url']) ?>"><?php echo $renewal['call2action'] ?></a> - <?php printf('$%d (USD)', $renewal['price']) ?>
                         </li>
                     <?php endforeach; ?>
                     </ul>
@@ -128,15 +129,15 @@
                     
                         <?php $products_avaliable[] = $upgrade; ?>
                         
-                        <li>
-                            <a class="button-secondary" href="<?php echo $this->append_parameters_to_buy_url($upgrade['url']) ?>"><?php echo $upgrade['call2action'] ?> - 
+                        <li class="button-secondary">
+                            <a href="<?php echo $this->append_parameters_to_buy_url($upgrade['url']) ?>"><?php echo $upgrade['call2action'] ?></a> - 
                             
                             <?php if(!empty($product['price_disc'])): ?>
                             <?php  printf('$%s %s$%d%s (USD)', $upgrade['price_disc'], '&nbsp;&nbsp;<del>' , $upgrade['price'] , '</del>') ?>
                             <?php else: ?>
                             <?php  printf('$%d (USD)', $upgrade['price']) ?>
                             <?php endif; ?>
-                            </a>
+                            
                         </li>
                     <?php endforeach; ?>
                     </ul>

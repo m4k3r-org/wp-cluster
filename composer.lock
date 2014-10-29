@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c254f2370ac42537584665c256413bea",
+    "hash": "3ab0bb81896f35ed3f2cc57f73423b55",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -154,6 +154,89 @@
                 "two-column",
                 "wordpress"
             ]
+        },
+        {
+            "name": "discodonniepresents/wp-eventbrite",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:DiscoDonniePresents/wp-eventbrite",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/discodonniepresents/wp-eventbrite/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wp-eventbrite"
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Eventbrite Attendees Notifications",
+            "homepage": "https://github.com/DiscoDonniePresents/wp-eventbrite",
+            "keywords": [
+                "eventbrite",
+                "notifications",
+                "organizers"
+            ]
+        },
+        {
+            "name": "discodonniepresents/wp-spectacle",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:DiscoDonniePresents/wp-spectacle",
+                "reference": "1.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/discodonniepresents/wp-spectacle/zipball/1.0.0?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-theme",
+            "extra": {
+                "installer-name": "wp-spectacle"
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "Spectacle theme for the EDM Network",
+            "keywords": [
+                "one-column",
+                "responsive",
+                "theme",
+                "translation-ready",
+                "two-column",
+                "wordpress"
+            ]
+        },
+        {
+            "name": "discodonniepresents/wp-spectacle-mbp",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:DiscoDonniePresents/wp-spectacle-mbp",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/discodonniepresents/wp-spectacle-mbp/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-theme",
+            "extra": {
+                "installer-name": "wp-spectacle-mbp"
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Spectacle child theme for Monster Block Party"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -468,6 +551,40 @@
             ]
         },
         {
+            "name": "usabilitydynamics/wp-simplify",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/wp-simplify",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usabilitydynamics/wp-simplify/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wp-simplify"
+            },
+            "license": [
+                "GPLv2"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "homepage": "http://usabilitydynamics.com"
+                }
+            ],
+            "description": "WordPress plugin for simplifying the UI.",
+            "homepage": "https://github.com/usabilitydynamics/wp-simplify",
+            "keywords": [
+                "provision",
+                "wordpress"
+            ]
+        },
+        {
             "name": "usabilitydynamics/wp-splash",
             "version": "master",
             "source": {
@@ -541,6 +658,173 @@
             ]
         },
         {
+            "name": "wpackagist-plugin/debug-bar",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/debug-bar/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/debug-bar.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/debug-bar": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/debug-bar/",
+            "time": "2014-09-02 05:19:55"
+        },
+        {
+            "name": "wpackagist-plugin/debug-bar-actions-and-filters-addon",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/debug-bar-actions-and-filters-addon/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/debug-bar-actions-and-filters-addon.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/debug-bar-actions-and-filters-addon": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/debug-bar-actions-and-filters-addon/",
+            "time": "2014-09-04 15:01:31"
+        },
+        {
+            "name": "wpackagist-plugin/debug-bar-constants",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/debug-bar-constants/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/debug-bar-constants.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/debug-bar-constants": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/debug-bar-constants/",
+            "time": "2014-09-05 07:14:13"
+        },
+        {
+            "name": "wpackagist-plugin/debug-bar-post-types",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/debug-bar-post-types/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/debug-bar-post-types.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/debug-bar-post-types": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/debug-bar-post-types/",
+            "time": "2014-09-05 07:22:01"
+        },
+        {
+            "name": "wpackagist-plugin/debug-bar-slow-actions",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/debug-bar-slow-actions/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/debug-bar-slow-actions.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/debug-bar-slow-actions": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/debug-bar-slow-actions/",
+            "time": "2014-09-05 06:35:06"
+        },
+        {
+            "name": "wpackagist-plugin/jetpack",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/jetpack/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/jetpack.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/jetpack": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/jetpack/",
+            "time": "2014-10-23 01:26:49"
+        },
+        {
+            "name": "wpackagist-plugin/wpmandrill",
+            "version": "1.33",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/wpmandrill/",
+                "reference": "tags/1.33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/wpmandrill.1.33.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/wpmandrill": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/wpmandrill/"
+        },
+        {
             "name": "wpcloud/wp-vertical-edm",
             "version": "master",
             "source": {
@@ -586,9 +870,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "usabilitydynamics/wp-flawless": 20,
-        "discodonniepresents/wp-spectacle-chmf": 20,
-        "discodonniepresents/wp-spectacle-isladelsol": 20,
-        "discodonniepresents/wp-festival": 20,
         "usabilitydynamics/wp-social-stream": 20
     },
     "prefer-stable": false,

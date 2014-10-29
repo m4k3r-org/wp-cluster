@@ -1082,6 +1082,7 @@ echo '</textarea>';
 
 <br clear="all"/>
 <?php
+//Todo: in WPML 3.2 we should use the new hooks to add elements to the troubleshooting page
 echo WPML_Troubleshooting_Terms_Menu::display_terms_with_suffix();
 ?>
 

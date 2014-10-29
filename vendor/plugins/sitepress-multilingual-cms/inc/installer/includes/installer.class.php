@@ -83,7 +83,7 @@ final class WP_Installer{
         
         // refresh repositories data on WP update schedule
         // add_action('wp_maybe_auto_update', array($this, 'refresh_repositories_data'));
-
+        
         if(is_admin()){
             wp_enqueue_script('installer-admin', $this->res_url() . '/res/js/admin.js', array('jquery'), $this->version());
             wp_enqueue_style('installer-admin', $this->res_url() . '/res/css/admin.css', array(), $this->version());
@@ -473,32 +473,12 @@ final class WP_Installer{
         
     }
     
-    public function append_parameters_to_buy_url($url, $args = array()){
+    public function append_parameters_to_buy_url($url){
         
         $url = add_query_arg(array('icl_site_url' => site_url()), $url);
         
-        $affiliate_id   = false;
-        $affiliate_key  = false;
-
-        if(isset($this->config['affiliate_id']) && isset($this->config['affiliate_key'])){
-            
-            $affiliate_id  = $this->config['affiliate_id'];    
-            $affiliate_key = $this->config['affiliate_key'];    
-            
-        }elseif(isset($args['affiliate_id']) && isset($args['affiliate_key'])){
-            
-            $affiliate_id   = $args['affiliate_id'];    
-            $affiliate_key  = $args['affiliate_key'];    
-            
-        }elseif(defined('ICL_AFFILIATE_ID') && defined('ICL_AFFILIATE_KEY')){
-            
-            $affiliate_id  = ICL_AFFILIATE_ID;    
-            $affiliate_key = ICL_AFFILIATE_KEY;    
-            
-        }
-        
-        if($affiliate_id && $affiliate_key){
-            $url = add_query_arg(array('affiliate_id' => $affiliate_id, 'affiliate_key' => $affiliate_key), $url);
+        if(defined('ICL_AFFILIATE_ID') && defined('ICL_AFFILIATE_KEY')){
+            $url = add_query_arg(array('affiliate_id' => ICL_AFFILIATE_ID, 'affiliate_key' => ICL_AFFILIATE_KEY), $url);
         }
         
         return $url; 
@@ -1197,6 +1177,8 @@ final class WP_Installer{
     public function localize_strings(){
         global $sitepress;
         
+        if(is_null($sitepress)) return;
+        
         // default strings are always in English
         $user_admin_language = $sitepress->get_admin_language();
         
@@ -1228,7 +1210,6 @@ final class WP_Installer{
             }
         }
         
-        if(is_null($sitepress)) return;
         
         if($user_admin_language != 'en'){
             foreach($this->settings['repositories'] as $repository_id => $repository){

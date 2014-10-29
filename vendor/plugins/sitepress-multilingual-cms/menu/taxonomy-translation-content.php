@@ -100,13 +100,29 @@ global $wp_taxonomies;
 							}
 							?>
 							<?php $class = $term ? '' : ' lowlight';
-							if( !$term ) {
+							if ( ! $term ) {
 								$term = new stdClass();
-								$original_term        = $term_translations[ $term_translations[ 'source_lang' ] ];
+
+								if ( isset( $term_translations[ $term_translations[ 'source_lang' ] ] ) ) {
+									$original_term = $term_translations[ $term_translations[ 'source_lang' ] ];
+								} else {
+									$original_term = false;
+									foreach ( $term_translations as $term ) {
+										if ( is_object( $term ) ) {
+											$original_term = $term;
+											break;
+										}
+									}
+								}
+
 								$term->translation_of = $original_term;
-								$pad = str_repeat( '&#8212; ', max( 0, $original_term->level ) );
+								$pad                  = str_repeat( '&#8212; ', max( 0, $original_term->level ) );
 							} else {
-								$original_term = $term_translations[$term_translations['source_lang']];
+								if ( isset( $term_translations[ $term_translations[ 'source_lang' ] ] ) ) {
+									$original_term = $term_translations[ $term_translations[ 'source_lang' ] ];
+								} else {
+									$original_term = $term;
+								}
 							}?>
 							<a class="icl_tt_term_name<?php echo $class ?>" href="#" onclick="WPML_Translate_taxonomy.show_form(<?php echo $original_term->term_taxonomy_id ?>,'<?php echo $lang_code ?>');return false;">
 								<?php if ( isset( $term->level ) && isset($term->name) ): ?>
@@ -172,7 +188,7 @@ global $wp_taxonomies;
 		</tbody>
 	</table>
 
-	<?php if ( $this->terms_count > WPML_TT_TERMS_PER_PAGE ): ?>
+	<?php if ( $this->trid_count > floor ( WPML_TT_TERMS_PER_PAGE / count ( $this->selected_languages ) ) ): ?>
 		<div class="tablenav bottom">
 			<div class="tablenav-pages">
 				<span class="displaying-num"><?php printf( __( '%d items', 'sitepress' ), $this->terms_count ) ?></span>
@@ -181,7 +197,7 @@ global $wp_taxonomies;
                 <span class="paging-input">
                     <input class="current-page" type="text" size="1" value="<?php echo $this->current_page ?>" name="paged" title="<?php esc_attr_e( 'Current page', 'sitepress' ) ?>"/>
 					<?php _e( 'of', 'sitepress' ) ?>
-					<span class="total-pages"><?php echo $total_pages = ceil( $this->terms_count / WPML_TT_TERMS_PER_PAGE ) ?></span>
+					<span class="total-pages"><?php echo $total_pages = ceil( $this->trid_count / WPML_TT_TERMS_PER_PAGE * count( $this->selected_languages )) ?></span>
                 </span>
 				<a class="next-page<?php if ( $this->current_page == $total_pages ): ?> disabled<?php endif; ?>" href="#" title="<?php esc_attr_e( 'Go to the next page', 'sitepress' ) ?>">&rsaquo;</a>
 				<a class="last-page<?php if ( $this->current_page == $total_pages ): ?> disabled<?php endif; ?>" href="#" title="<?php esc_attr_e( 'Go to the last page', 'sitepress' ) ?>">&raquo;</a>

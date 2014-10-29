@@ -3361,7 +3361,8 @@ class TranslationManagement{
 					$link = get_permalink($new_post_id);
 				}
 				if(is_null($element_id)){
-					$wpdb->update($wpdb->prefix.'icl_translations', array('element_id' => $new_post_id), array('translation_id' => $translation_id) );
+					$wpdb->delete ( $wpdb->prefix . 'icl_translations', array( 'element_id' => $new_post_id, 'element_type' => 'post_' . $postarr[ 'post_type' ] ) );
+					$wpdb->update ( $wpdb->prefix . 'icl_translations', array( 'element_id' => $new_post_id), array('translation_id' => $translation_id) );
 					$user_message = __('Translation added: ', 'sitepress') . '<a href="'.$link.'">' . $postarr['post_title'] . '</a>.';
 				}else{
 					$user_message = __('Translation updated: ', 'sitepress') . '<a href="'.$link.'">' . $postarr['post_title'] . '</a>.';
@@ -3413,6 +3414,17 @@ class TranslationManagement{
 		$overwrite = true;
 		WPML_Terms_Translations::save_all_terms_from_job( $data[ 'job_id' ], $new_post_id, $overwrite );
 
+		// Set the posts mime type correctly.
+ 
+		if ( isset( $original_post ) && isset( $original_post->ID ) && $original_post->post_type == 'attachment' ) {
+			$attached_file = get_post_meta ( $original_post->ID, '_wp_attached_file', false );
+			update_post_meta ( $new_post_id, '_wp_attached_file', array_pop ( $attached_file ) );
+			$mime_type = get_post_mime_type ( $original_post->ID );
+			if ( $mime_type ) {
+				$wpdb->update ( $wpdb->posts, array( 'post_mime_type' => $mime_type ), array( 'ID' => $new_post_id ) );
+			}
+		}
+		
 		do_action('icl_pro_translation_completed', $new_post_id);
 
 	}

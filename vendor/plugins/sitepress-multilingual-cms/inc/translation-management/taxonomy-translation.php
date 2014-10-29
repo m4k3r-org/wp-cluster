@@ -97,221 +97,344 @@ class WPML_Taxonomy_Translation{
 
 		}
 
-		// build list of exclusion based on filters
-		foreach($this->selected_languages as $language){
-			$lcode_alias = str_replace('-', '', $language['code']);
-			$joins[]    = " LEFT JOIN {$wpdb->prefix}icl_translations t{$lcode_alias} ON t{$lcode_alias}.trid = t.trid AND t{$lcode_alias}.language_code='{$language['code']}'";
-			$selects[]  = "t{$lcode_alias}.element_id AS element_id_{$lcode_alias}";
+		$this->current_page = isset( $this->args[ 'page' ] ) ? $this->args[ 'page' ] : 1;
+		if ( !empty( $this->args[ 'search' ] ) ) {
+			$get_terms_args[ 'search' ] = $this->args[ 'search' ];
+			$this->search = $args[ 'search' ];
 		}
 
-		if ( isset( $joins ) && isset( $selects ) ) {
-			$joins   = join( ' ', $joins );
-			$selects = join( ', ', $selects );
-			if ( $this->status == WPML_TT_TAXONOMIES_NOT_TRANSLATED ) {
-				$res = $wpdb->get_results( $wpdb->prepare( "
-		                SELECT t.element_id, {$selects}
-		                FROM {$wpdb->prefix}icl_translations t
-		                    {$joins}
-		                WHERE t.element_type = %s AND t.language_code = %s
-		            ", 'tax_' . $this->taxonomy, $default_language ) );
+		$taxonomy = $this->taxonomy;
 
-				foreach ( $res as $row ) {
-					$translations = 0;
-					foreach ( $row as $r ) {
-						if ( $r > 0 ) {
-							$translations ++;
-						}
-					}
-				}
+		$per_page = ceil( WPML_TT_TERMS_PER_PAGE / count( $_active_languages ) );
+
+		$term_display_args = array( 'page' => $this->current_page, 'per_page' => $per_page );
+
+		if ( ! empty( $this->search ) ) {
+			$term_display_args[ 'search' ] = trim( $this->search );
+		}
+
+		if ( ! empty( $this->args[ 'languages' ] ) ) {
+			$quoted_langs = array();
+			foreach ( $this->args[ 'languages' ] as $lang ) {
+				$quoted_langs[ ] = "'" . $lang . "'";
 			}
-		}
-		if ( ! empty( $excludes ) ) {
-			$get_terms_args[ 'exclude' ] = $wpdb->get_col( $wpdb->prepare( "SELECT term_id FROM {$wpdb->term_taxonomy} WHERE taxonomy=%s AND term_taxonomy_id IN (" . join( ',', $excludes ) . ")", $this->taxonomy ) );
+
+			$term_display_args[ 'langs' ] = join( ', ', $quoted_langs );
 		}
 
-		// get_terms args
-		$get_terms_args['hide_empty'] = false;
-		$get_terms_args['orderby'] = 'name';
-		if(!empty($this->args['search'])){
-			$get_terms_args['search'] = $this->args['search'];
-			$this->search = $args['search'];
-		}
-
-		if(!empty($this->args['child_of'])){
-			$get_terms_args['child_of'] = $this->args['child_of'];
-			$this->child_of = $get_terms_args['child_of'];
-		}else{
+		if ( ! empty( $this->args[ 'child_of' ] ) ) {
+			$get_terms_args[ 'child_of' ]  = $this->args[ 'child_of' ];
+			$this->child_of                = $get_terms_args[ 'child_of' ];
+			$term_display_args[ 'parent' ] = $this->child_of;
+		} else {
 			$this->child_of = 0;
 		}
-		//No filtering necessary here. All language filtering is done be the subsequent functionality.
-		remove_all_filters('terms_clauses');
-		remove_all_filters('list_terms_exclusions');
-		$_terms = get_terms($this->taxonomy, $get_terms_args);
 
-		// on search - force include parents
-		if(!empty($this->search)){
-			if($_terms) foreach($_terms as $term){
-				$in_results = false;
-				foreach($_terms as $term2){
-					if($term2->term_id == $term->parent){
-						$in_results = true;
-						break;
-					}
-				}
-				if(!$in_results){
-					while($term->parent > 0){
-
-						$term = get_term($term->parent, $this->taxonomy);
-						$_terms[] = $term;
-
-					}
-				}
-			}
-
+		if ( isset( $this->args[ 'status' ] ) && $this->args[ 'status' ] == 1  ) {
+			$term_display_args[ 'untranslated_only' ] = true;
+		} else {
+			$this->status = 0;
 		}
 
-		$this->terms_count = count($_terms);
+		$terms_information = $this->get_terms_for_taxonomy_translation_screen ( $taxonomy, $term_display_args );
 
-
-		$_terms = $this->order_terms_by_hierarchy($_terms);
-
-		$this->current_page = isset($this->args['page']) ? $this->args['page'] : 1;
-		$offset = ($this->current_page - 1) * WPML_TT_TERMS_PER_PAGE;
-
-		$this->terms = array_slice($_terms, $offset, WPML_TT_TERMS_PER_PAGE);
-
-		// prepend parents if needed
-		if(isset($this->terms[0])){
-			while($this->terms[0]->parent > 0 && $this->terms[0]->parent != $this->child_of){
-
-				foreach($_terms as $term){
-					if($term->term_id == $this->terms[0]->parent){
-						$guide_parent = $term;
-						break;
-					}
-				}
-				if(!empty($guide_parent)){
-					array_unshift($this->terms, $guide_parent);
-				}
-			}
-		}
-
-		unset($_terms);
-
-		if(is_wp_error($this->terms)){
-			$this->error = sprintf(__('Unknown taxonomy: %s'), $this->taxonomy);
-			return false;
-		}
-
-		if(empty($this->terms) || is_wp_error($this->terms)) return;
-
-		// limit for pagination?
-
-		// get term taxonomy ids
-		foreach($this->terms as $term){
-			$tt_ids[] = $term->term_taxonomy_id;
-		}
-
-		// get list of matching trids
-		$trids = $wpdb->get_col($wpdb->prepare("SELECT trid FROM {$wpdb->prefix}icl_translations WHERE element_type = %s AND element_id IN (" . join(',', $tt_ids) . ")", 'tax_' . $this->taxonomy));
-
-		// get terms by trids
-		$res = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}icl_translations WHERE element_type = %s AND trid IN (" . join( ',', $trids ) . ")", 'tax_' . $this->taxonomy ) );
-
-		$terms_by_trid = array();
-
-		foreach ( $res as $row ) {
-			$terms_by_trid[ $row->trid ][ $row->language_code ] = array( 'term_taxonomy_id' => $row->element_id, 'source_lang' => $row->source_language_code );
-		}
-
-		$terms_in_old_format = $this->terms;
-
-		$this->terms = array();
-
-		foreach ( $terms_by_trid as $trid => $term_translation ) {
-			foreach ( $term_translation as $lang => $term_trid_array ) {
-				foreach ( $terms_in_old_format as $key => $term_object ) {
-					if ( isset( $term_object->term_taxonomy_id ) && $term_object->term_taxonomy_id == $term_trid_array[ 'term_taxonomy_id' ] ) {
-						if ( ! $term_trid_array[ 'source_lang' ] ) {
-							$term_object->translation_of = $term_object->term_taxonomy_id;
-						} else {
-							$term_object->translation_of = SitePress::get_original_element_id( $term_object->term_taxonomy_id, 'tax' . $taxonomy );
-						}
-						$this->terms[ $trid ][ $lang ] = $term_object;
-						if ( $term_object->translation_of == $term_object->term_taxonomy_id || !isset($this->terms[ $trid ][ 'source_lang' ]) ) {
-							$this->terms[ $trid ][ 'source_lang' ] = $lang;
-						}
-					}
-				}
-			}
-		}
-
-		/* If we try to filter for untranslated terms, we will not show any row that has translations in every language. */
-		foreach ( $this->terms as $key => $translated_terms ) {
-			$all_found = true;
-			foreach ( $this->selected_languages as $lang => $langauge ) {
-				if ( ! isset( $translated_terms[ $lang ] ) ) {
-					$all_found = false;
-				}
-			}
-			if ( ! $all_found && isset($_active_languages[ $translated_terms[ 'source_lang' ] ]) ) {
-				/* If we try to filter for untranslated terms, we will always show the original element and its column.*/
-				$this->selected_languages[ $translated_terms[ 'source_lang' ] ] = $_active_languages[ $translated_terms[ 'source_lang' ] ];
-			} elseif ( isset( $this->args[ 'status' ] ) && $this->args[ 'status' ] == 1 ) {
-				unset ( $this->terms[ $key ] );
-			}
-		}
-
+		$this->terms = $terms_information[ 'terms' ];
+		$this->terms_count = $terms_information[ 'count' ];
+		$this->trid_count = $terms_information[ 'trid_count' ];
 	}
 
-	function order_terms_by_hierarchy($terms){
+	/**
+	 * @param $taxonomy string The taxonomy currently displayed
+	 * @param $args     array Filter arguments
+	 *
+	 * @return array holding the terms to be displayed and the overall count of terms in the given taxonomy
+	 */
+	private function get_terms_for_taxonomy_translation_screen( $taxonomy, $args ) {
+		global $wpdb;
 
-		$ordered_list = array();
-		foreach($terms as $term){
-			if($term->parent ==  $this->child_of){
-				$term->level = 0;
-				$ordered_list[] = $term;
+		$untranslated_only = false;
+		$page              = 1;
+		$per_page          = 5;
+		$langs             = false;
+		$search            = false;
+		$parent            = false;
+
+		extract( $args, EXTR_OVERWRITE );
+
+		/*
+		 * The returned array from this function is indexed as follows.
+		 * It holds an array of all terms to be displayed under [terms]
+		 * and the count of all terms matching the filter under [count].
+		 *
+		 * The array under [terms] itself is index as such:
+		 * [trid][lang]
+		 *
+		 * It holds in itself the terms objects of the to be displayed terms.
+		 * These are ordered by their names alphabetically.
+		 * Also their objects are amended by the index $term->translation_of holding the term_taxonomy_id of their original element
+		 * and their level under $term->level in case of hierarchical terms.
+		 *
+		 * Also the index [trid][source_lang] holds the source language of the term group.
+		 */
+
+		// Only look for terms in active languages when checking for untranslated ones.
+
+		$attributes_to_select                                 = array();
+		$icl_translations_table_name                          = $wpdb->prefix . 'icl_translations';
+		$attributes_to_select[ $wpdb->terms ]                 = array( 'alias' => 't', 'vars' => array( 'name', 'slug', 'term_id' ) );
+		$attributes_to_select[ $wpdb->term_taxonomy ]         = array( 'alias' => 'tt', 'vars' => array( 'term_taxonomy_id', 'parent', 'description' ) );
+		$attributes_to_select[ $icl_translations_table_name ] = array( 'alias' => 'i', 'vars' => array( 'language_code', 'trid', 'source_language_code' ) );
+
+		$join_statements = array();
+
+		$as = $this->alias_statements( $attributes_to_select );
+
+		$join_statements [ ] = "{$as['t']} JOIN {$as['tt']} ON tt.term_id = t.term_id";
+		$join_statements [ ] = "{$as['i']} ON i.element_id = tt.term_taxonomy_id";
+
+		if ( $search ) {
+			$join_statements [ ] = "{$wpdb->terms} AS ts ON ts.term_id = tt.term_id";
+		}
+
+		$from_clause = join( ' JOIN ', $join_statements );
+
+		$select_clause = $this->build_select_vars( $attributes_to_select );
+
+		$where_clause = $this->build_where_clause( $attributes_to_select, $taxonomy, $search, $parent );
+
+		$full_statement = "SELECT {$select_clause} FROM {$from_clause} WHERE {$where_clause}";
+
+		if ( $search || $parent ) {
+			$where_clause_no_match = $this->build_where_clause( $attributes_to_select, $taxonomy, false, false );
+			$full_statement2       = "SELECT {$select_clause} FROM {$from_clause} WHERE {$where_clause_no_match}";
+
+			$lang_constraint = "";
+			if ( $langs && ! $untranslated_only && ! $parent ) {
+				$lang_constraint = "AND i.language_code IN ({$langs}) ";
+			}
+
+			$full_statement = "SELECT table2.* FROM (" . $full_statement . " {$lang_constraint} ) AS table1 INNER JOIN (" . $full_statement2 . ") AS table2 ON table1.trid = table2.trid";
+		}
+
+		$all_terms = $wpdb->get_results( $full_statement );
+
+		if ( $all_terms ) {
+			$term_count = count( $all_terms );
+
+			$all_terms_indexed = $this->index_terms_array( $all_terms );
+
+			$all_terms_grouped = $this->order_terms_list( $all_terms_indexed );
+
+			if ( $untranslated_only ) {
+
+				$filter_result = $this->filter_for_untranslated_terms_only( $all_terms_grouped );
+
+				$all_terms_grouped = $filter_result[ 'all_terms_grouped' ];
+
+				$term_count += $filter_result[ 'count_adjustment' ];
+			}
+
+			if ( !empty( $all_terms_grouped ) ) {
+				$terms = array_slice ( $all_terms_grouped, ( $page - 1 ) * $per_page, $per_page );
+				$trid_count = count ( $all_terms_grouped );
+				return array( 'terms' => $terms, 'count' => $term_count, 'trid_count' => $trid_count );
 			}
 		}
-
-
-		foreach($ordered_list as $parent){
-			self::_insert_child_terms_in_list($terms, $ordered_list, $parent->term_id);
-		}
-
-		return $ordered_list;
-
 	}
 
-	static function _insert_child_terms_in_list($terms, &$ordered_list, $parent, $level = 0){
+	/**
+	 * @param $all_terms_grouped array
+	 *
+	 * Filters resultant terms for trids that are not lacking a translation.
+	 *
+	 * @return array Associative array holding, terms that are lacking a translation as well as the term count reduction,
+	 *               resulting from the filtering done by this function.
+	 */
+	private function filter_for_untranslated_terms_only( $all_terms_grouped ) {
+		global $sitepress;
 
-		$children = array();
-		foreach($terms as $term){
-			if($term->parent ==  $parent){
-				$children[] = $term;
+		$count_adjustment = 0;
+
+		$active_languages = $sitepress->get_active_languages ( true );
+		$lang_codes = array_keys ( $active_languages );
+		$n_langs    = count( $lang_codes );
+		foreach ( $all_terms_grouped as $key => $group ) {
+			$all_there = true;
+			foreach ( $lang_codes as $code ) {
+				if ( isset( $this->selected_languages[ $code ] ) && ! isset( $group[ $code ] ) ) {
+					$all_there = false;
+				}
+			}
+			if ( $all_there ) {
+				unset( $all_terms_grouped[ $key ] );
+				$count_adjustment -= $n_langs;
+			} else {
+				$languages_missing = array_intersect( array_keys( $group ), $lang_codes );
+
+				foreach ( $languages_missing as $lm_code ) {
+					if ( ! isset( $this->selected_languages[ $lm_code ] ) ) {
+						$this->selected_languages[ $lm_code ] = $active_languages[ $lm_code ];
+					}
+				}
 			}
 		}
 
-		// get index of parent
-		$parent_index = -1;
-		foreach($ordered_list as $k => $term){
-			if($term->term_id == $parent){
-				$parent_index = $k;
-				break;
+		return array( 'all_terms_grouped' => $all_terms_grouped, 'count_adjustment' => $count_adjustment );
+	}
+
+	/**
+	 * @param $terms array
+	 *
+	 * Turn a numerical array of terms objects into an associative once,
+	 * holding the same terms, but indexed by their term_id.
+	 *
+	 * @return array
+	 */
+	private function index_terms_array( $terms ) {
+		$terms_indexed = array();
+
+		foreach ( $terms as $term ) {
+			$terms_indexed[ $term->term_id ] = $term;
+		}
+
+		return $terms_indexed;
+	}
+
+	/**
+	 * @param $trid_group array
+	 * @param $terms array
+	 *
+	 * Transforms the term arrays generated by the Translation Tree class and turns them into standard
+	 * WordPress terms objects, amended by language information.
+	 *
+	 * @return mixed
+	 */
+	private function set_language_information( $trid_group, $terms ) {
+
+		foreach ( $trid_group[ 'elements' ] as $lang => $term ) {
+
+			$term_object         = $terms[ $term[ 'term_id' ] ];
+			$term_object->level  = $term[ 'level' ];
+			$trid_group[ $lang ] = $term_object;
+			if ( ! $term_object->source_language_code ) {
+				$trid_group[ 'source_lang' ] = $term_object->language_code;
+			}
+			if ( ! isset( $trid_group[ 'source_lang' ] ) ) {
+				$trid_group[ 'source_lang' ] = $term_object->source_language_code;
 			}
 		}
 
-		if($children && $parent_index >= 0){
-			array_splice($ordered_list, $parent_index+1, 0, $children);
+		unset( $trid_group[ 'elements' ] );
 
-			foreach($children as $child){
-				$child->level = $level + 1;
-				self::_insert_child_terms_in_list($terms, $ordered_list, $child->term_id, $level + 1);
+		$source_lang = isset( $trid_group[ 'source_lang' ] ) ? $trid_group[ 'source_lang' ] : false;
+
+		$trid_group[ 'source_lang' ] = $source_lang;
+
+		$original_ttid = false;
+		if ( $source_lang && isset( $trid_group[ $source_lang ] ) ) {
+			$original_element = $trid_group[ $source_lang ];
+			$original_ttid    = $original_element->term_taxonomy_id;
+		}
+
+		$updated_trid_group = $trid_group;
+		unset( $updated_trid_group[ 'source_lang' ] );
+		unset( $updated_trid_group[ 'trid' ] );
+		foreach ( $updated_trid_group as $lang => $term ) {
+			if ( $term->term_taxonomy_id != $original_ttid ) {
+				$term->translation_of = $original_ttid;
+			} else {
+				$term->translation_of = false;
 			}
 		}
 
+		return $trid_group;
+	}
 
+	/**
+	 * @param $terms array
+	 *
+	 * Orders a list of terms alphabetically and hierarchy-wise
+	 *
+	 * @return array
+	 */
+	private function order_terms_list( $terms ) {
 
+		$taxonomy = $this->taxonomy;
+
+		$terms_tree = new WPML_Translation_Tree( $taxonomy, false, $terms );
+
+		$ordered_terms = $terms_tree->get_alphabetically_ordered_list();
+
+		foreach ( $ordered_terms as $key => $trid_group ) {
+
+			$ordered_terms[ $key ] = $this->set_language_information( $trid_group, $terms );
+		}
+
+		return $ordered_terms;
+	}
+
+	/**
+	 * @param $selects array
+	 *                 Generates a list of to be selected variables in an sql query.
+	 *
+	 * @return string
+	 */
+	private function build_select_vars( $selects ) {
+		$output = '';
+
+		if ( is_array( $selects ) ) {
+			$coarse_selects = array();
+
+			foreach ( $selects as $select ) {
+
+				$vars  = $select[ 'vars' ];
+				$table = $select[ 'alias' ];
+
+				foreach ( $vars as $key => $var ) {
+					$vars[ $key ] = $table . '.' . $var;
+				}
+				$coarse_selects[ ] = join( ', ', $vars );
+			}
+
+			$output = join( ', ', $coarse_selects );
+		}
+
+		return $output;
+	}
+
+	/**
+	 * @param $selects array
+	 *
+	 * Returns an array of alias statements to be used in SQL queries with joins.
+	 *
+	 * @return array
+	 */
+	private function alias_statements( $selects ) {
+		$output = array();
+		foreach ( $selects as $key => $select ) {
+			$output[ $select[ 'alias' ] ] = $key . ' AS ' . $select[ 'alias' ];
+		}
+
+		return $output;
+	}
+
+	private function build_where_clause( $selects, $taxonomy, $search = false, $parent = false ) {
+		global $wpdb;
+
+		$where_clauses[ ] = $selects[ $wpdb->term_taxonomy ][ 'alias' ] . '.taxonomy = ' . "'" . $taxonomy . "'";
+		$where_clauses[ ] = $selects[ $wpdb->prefix . 'icl_translations' ][ 'alias' ] . '.element_type = ' . "'tax_" . $taxonomy . "'";
+
+		if ( $parent ) {
+			$where_clauses[ ] = $selects[ $wpdb->term_taxonomy ][ 'alias' ] . '.parent = ' . $parent;
+		}
+
+		if ( $search ) {
+			$where_clauses [ ] = "ts.name LIKE '%" . wpml_like_escape( $search ) . "%' ";
+		}
+
+		$where_clause = join( ' AND  ', $where_clauses );
+
+		return $where_clause;
 	}
 
 
@@ -656,6 +779,34 @@ class WPML_Taxonomy_Translation{
 
 	}
 
+	/**
+	 * @param $terms array
+	 *
+	 * Filters the get_terms function, so to not display any hierarchical terms that do not have child terms.
+	 *
+	 * @return array
+	 */
+	public static function wp_dropdown_cats_filter ( $terms ) {
+
+		$parents = array();
+
+		foreach ( $terms as $term ) {
+			if ( $term->parent ) {
+				$parents [ ] = $term->parent;
+			}
+		}
+
+		$parents = array_unique ( $parents );
+
+		foreach ( $terms as $key => $term ) {
+			if ( !in_array ( $term->term_id, $parents ) ) {
+				unset( $terms[ $key ] );
+			}
+		}
+
+		return $terms;
+	}
+
 	public static function render_parent_taxonomies_dropdown($taxonomy, $child_of = 0){
 		$args = array(
 			'name'              => 'child_of',
@@ -666,28 +817,14 @@ class WPML_Taxonomy_Translation{
 			'hide_empty'        => 0,
 		);
 
-//        $categories = get_categories($args);
-//        $max_depth = 0;
-//
-//        foreach($categories as $category){
-//            $this_depth = 0;
-//            while($category->category_parent > 0){
-//                foreach($categories as $category2){
-//                    if($category2->term_id == $category->category_parent){
-//                        $category = $category2;
-//                        break;
-//                    }
-//                }
-//                $this_depth++;
-//            }
-//            if($this_depth > $max_depth){
-//                $max_depth = $this_depth;
-//            }
-//        }
-//
-//        $args['depth'] = $max_depth;
+		remove_all_filters('terms_clauses');
+		remove_all_filters('get_terms');
+		remove_all_filters('list_terms_exclusions');
 
+		add_filter('get_terms', array('WPML_Taxonomy_Translation', 'wp_dropdown_cats_filter'), 10, 2);
 		wp_dropdown_categories($args);
+		remove_all_filters('get_terms');
+
 	}
 }
 

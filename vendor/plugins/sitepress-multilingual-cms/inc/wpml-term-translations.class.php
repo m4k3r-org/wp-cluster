@@ -1207,8 +1207,14 @@ class WPML_Terms_Translations {
 			}
 
 			$term_id = $term->term_id;
-			$term_taxonomy_label = 	get_taxonomy_labels(get_taxonomy($term->taxonomy))->name;
 
+			$term_taxonomy_label = $term->taxonomy;
+
+			$taxonomy = get_taxonomy($term->taxonomy);
+
+			if ( $taxonomy && isset( $taxonomy->labels ) && isset( $taxonomy->labels->name ) ) {
+				$term_taxonomy_label = $taxonomy->labels->name;
+			}
 
 			if ( isset( $terms[ $term_id ] ) && isset( $terms[ $term_id ][ 'taxonomies' ] ) ) {
 				if ( ! in_array( $term_taxonomy_label, $terms[ $term_id ][ 'taxonomies' ] ) ) {

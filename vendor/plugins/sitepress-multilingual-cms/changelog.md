@@ -1,3 +1,14 @@
+**3.1.8.2**
+
+* **Fixes**
+	* Fixed compatibility issue of json_encode() function with PHP < 5.3.0 not accepting the options argument
+	* Fixed an issue with some terms not being properly displayed on the Taxonomy Translations Screen.
+	
+**3.1.8.1**
+
+* **Fixes**
+	* Fixed a compatibility issue with WooCommerce, showing up when upgrading to 3.1.8
+
 **3.1.8**
 
 * **Improvements**

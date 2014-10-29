@@ -17,12 +17,14 @@ class WPML_Troubleshooting_Terms_Menu {
 				if ( defined( 'ICL_PLUGIN_URL' ) ) {
 					$message .= '<p><a href="' . admin_url( 'admin.php?page=' . ICL_PLUGIN_FOLDER . '/menu/troubleshooting.php#termsuffixupdate' ) . '"><button class="button-primary">Open terms update page</button></a>';
 				}
+
 				ICL_AdminNotifier::addMessage( "termssuffixnotice", $message, 'error', true, false, false, 'terms-suffix', true );
 			}
-
 			$sitepress->save_settings( array( 'taxonomy_names_checked' => true ) );
 		}
 
+
+		//Todo: in WPML 3.2 the ICL_AdminNotifier class got improved and we should not call \ICL_AdminNotifier::displayMessages to display an admin notice
 		ICL_AdminNotifier::displayMessages( 'terms-suffix' );
 	}
 

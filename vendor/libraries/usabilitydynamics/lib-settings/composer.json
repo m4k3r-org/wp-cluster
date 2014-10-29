@@ -3,9 +3,7 @@
   "keywords": [ "settings" ],
   "type": "library",
   "require": {
-    "usabilitydynamics/lib-utility": "*"
-  },
-  "require-dev": {
+    "usabilitydynamics/lib-utility": "*",
     "justinrainbow/json-schema": "1.1.*"
   },
   "minimum-stability": "dev",
@@ -41,9 +39,15 @@
   ],
   "extra": {
     "component": {
-      "scripts":    [ "static/scripts/settings.js" ],
-      "templates":  [ "static/views/new-installation.xhtml" ],
-      "files":      [ "static/schemas/settings.json" ]
+      "scripts": [
+        "static/scripts/settings.js"
+      ],
+      "templates": [
+        "static/views/new-installation.xhtml"
+      ],
+      "files": [
+        "static/schemas/settings.json"
+      ]
     }
   },
   "license": "MIT"

@@ -264,17 +264,13 @@ namespace UsabilityDynamics\Veneer {
 
           // Append the apex domain to storage path.
           if( defined( 'MULTISITE' ) && MULTISITE ) {
-
-	          if( !strpos( $_public_path, $this->site ) ) {
-		          $_public_path = $_public_path . trailingslashit( $this->site );
-	          }
-
+            $_public_path = $_public_path . trailingslashit( $this->site );
           }
 
-          $this->set( 'media.path.disk',    $_public_path . 'media' );
-          $this->set( 'assets.path.disk',   $_public_path . 'assets' );
-          $this->set( 'scripts.path.disk',  $_public_path . 'assets/scripts' );
-          $this->set( 'styles.path.disk',   $_public_path . 'assets/styles' );
+          $this->set( 'media.path.disk', $_public_path . 'media' );
+          $this->set( 'assets.path.disk', $_public_path . 'assets' );
+          $this->set( 'scripts.path.disk', $_public_path . 'assets/scripts' );
+          $this->set( 'styles.path.disk', $_public_path . 'assets/styles' );
 
           if( $this->get( 'media.path.disk' ) && !wp_mkdir_p( $this->get( 'media.path.disk' ) ) ) {
             $this->set( 'media.available', false );
