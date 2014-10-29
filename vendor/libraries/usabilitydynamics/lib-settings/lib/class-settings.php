@@ -171,16 +171,16 @@ namespace UsabilityDynamics {
         }
 
         // Set Storage Key.
-        if( $args->key ) {
+        if( isset( $args->key ) ) {
           $this->_key = $args->key;
         }
         // Set transient vxpiration value.
-        if( $args->expiration ) {
+        if( isset( $args->expiration ) ) {
           $this->_expiration = $args->expiration;
         }
 
         // Set Format to enforce.
-        if( $args->format ) {
+        if( isset( $args->format ) ) {
           $this->_format = $args->format;
         }
         // Toggle Debugger.
