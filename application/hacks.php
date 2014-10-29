@@ -49,15 +49,6 @@ add_action( 'admin_init', function() {
 
 });
 
-add_action( 'template_redirect', function() {
-	// die( current_action() . ' - ' . time() );
-}, 12 );
-
-add_filter( 'login_url', function( $login_url, $redirect ) {
-	$login_url = str_replace( 'wp-login.php', 'manage/login/', $login_url );
-	return $login_url;
-}, 10, 2 );
-
 ob_start( function( $buffer ) {
 
 	$buffer = str_replace( '/wp-login.php', '/manage/login/', $buffer );
