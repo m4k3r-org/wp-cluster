@@ -22,6 +22,6 @@
   	"UsabilityDynamics/lib-js-elastic-filter": "~3.0"
   },
   "require-dev": {
-    "UsabilityDynamics/wp-flawless": "dev-legacy"
+    "UsabilityDynamics/wp-flawless/v1.0": "master"
   }
 }
