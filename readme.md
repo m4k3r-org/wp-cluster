@@ -27,6 +27,7 @@ makeSubtree DiscoDonniePresents/wp-spectacle-isladelsol  vendor/themes/wp-specta
 
 ```
 pushSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v2.0 v2.0
+pushSubtree DiscoDonniePresents/wp-spectacle-mbp   vendor/themes/wp-spectacle-mbp
 ```
 
 There seem to be issues with pushing changes back to a lib-settings, probably because it's actually a tag.
