@@ -64,6 +64,6 @@ add_action( 'template_redirect', function() {
 
 
 if( WP_DEBUG && defined( 'WP_ENV' ) && WP_ENV == 'develop') {
-	// error_reporting( E_ALL );
-	// ini_set( 'display_errors', 1 );
+//	error_reporting( E_ALL );
+//	ini_set( 'display_errors', 1 );
 }

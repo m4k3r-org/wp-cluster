@@ -130,7 +130,6 @@
     "discodonniepresents/wp-spectacle-mbp": "master",
     "discodonniepresents/wp-spectacle-chmf": "master",
     "discodonniepresents/wp-spectacle-isladelsol": "master",
-
     "discodonniepresents/wp-bassoddysey": "master",
     "discodonniepresents/wp-braxton": "master",
     "discodonniepresents/wp-kboom": "master",
@@ -142,7 +141,6 @@
     "discodonniepresents/wp-thegift": "master",
     "discodonniepresents/wp-winterfantasy": "master",
     "discodonniepresents/wp-eventbrite": "master",
-
     "wpackagist-plugin/akismet": "trunk",
     "wpackagist-plugin/public-post-preview": "2.4",
     "wpackagist-plugin/widget-css-classes": "1.2.6",
@@ -158,6 +156,7 @@
     "wpackagist-plugin/jetpack": "trunk",
     "wpackagist-plugin/wpmandrill": "trunk",
     "usabilitydynamics/lib-settings": "~0.2",
+    "usabilitydynamics/wp-gravityforms": "master",
     "usabilitydynamics/wp-seo-addon": "master",
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-network": "master",

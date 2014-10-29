@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "145dc2b48c7ff9ef60e69624e70fe69f",
+    "hash": "8716b3660b9c93e12833384895af9ade",
     "packages": [
         {
             "name": "automattic/wordpress",
@@ -898,6 +898,29 @@
             ]
         },
         {
+            "name": "usabilitydynamics/wp-gravityforms",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/wp-gravityforms",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usabilitydynamics/wp-gravityforms/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "gravityforms"
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "Fork of GravityForms repo so we can use it in our composer architecture."
+        },
+        {
             "name": "usabilitydynamics/wp-network",
             "version": "master",
             "source": {
@@ -1183,7 +1206,7 @@
             },
             "type": "wordpress-plugin",
             "homepage": "http://wordpress.org/plugins/jetpack/",
-            "time": "2014-10-23 01:26:49"
+            "time": "2014-10-29 17:47:50"
         },
         {
             "name": "wpackagist-plugin/public-post-preview",
