@@ -51,6 +51,17 @@ add_action( 'admin_init', function() {
 
 add_action( 'template_redirect', function() {
 
+		if( $_SERVER[ 'HTTP_X_DEBUG' ] === 'cdzt-vogs-oar-qged' ) {
+			nocache_headers();
+			header( 'pragma: no-cache' );
+			header( 'cache-control: no-cache, private' );
+			header( 'x-debug: hello3' );
+		}
+
+	if( function_exists( 'newrelic_ignore_transaction' ) ) {
+		newrelic_ignore_transaction();
+	}
+
 	ob_start( function( $buffer ) {
 
 		// $buffer = str_replace( 'cities across', 'blah blah blah', $buffer );

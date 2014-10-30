@@ -26,7 +26,7 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 		 *
 		 * ## EXAMPLES
 		 *
-		 *     wp utility themes
+		 *     wp cloud themes
 		 *
 		 * @synopsis [<stage>]
 		 */
@@ -62,6 +62,7 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 				$_network = (array) wp_get_network( $site['site_id'] );
 
 				$_results[ $site['domain'] ] = array(
+					'id' => $site['blog_id'],
 					'network' => $_network['domain'],
 					'site' => $site['domain'],
 					'theme' => get_option( 'stylesheet' ), // . ' ' . $_stylesheet->get( 'Version' ),
@@ -72,7 +73,7 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 
 			}
 
-			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'network', 'site', 'theme', 'path', 'template', 'status' ) );
+			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'id', 'network', 'site', 'theme', 'path', 'template', 'status' ) );
 
 		}
 
@@ -87,11 +88,11 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 		 *
 		 * ## EXAMPLES
 		 *
-		 *     wp utility dns
+		 *     wp cloud sites
 		 *
 		 * @synopsis [<stage>]
 		 */
-		function dns( $args ) {
+		function sites( $args ) {
 			global $wpdb, $current_blog;
 
 			//WP_CLI::line( 'DB_NAME: ' . DB_NAME );
@@ -141,6 +142,80 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 		}
 
 		/**
+		 * Display active themes accross the network including relative path.
+		 *
+		 * ## OPTIONS
+		 *
+		 * <stage>
+		 * : Which migration stage we want to do, defaults to all
+		 *
+		 * ## EXAMPLES
+		 *
+		 *     wp cloud sites
+		 *
+		 * @synopsis [<stage>]
+		 */
+		function media( $args ) {
+			global $wpdb, $current_blog;
+
+			// WP_CLI::line( 'Generating list of sites with themes.' );
+
+			$_results = array();
+
+			foreach( (array) wp_get_sites( array( 'network_id' => null ) ) as $site ) {
+
+				switch_to_blog( $site[ 'blog_id' ] );
+
+				$_template = wp_get_theme( get_option( 'template' ) );
+				$_stylesheet= wp_get_theme( get_option( 'stylesheet' ) );
+				$_status = '';
+
+				$_templateActual = get_option( 'stylesheet' ) !== get_option( 'template' ) ? get_option( 'template' ) : null;
+
+				if( $_templateActual && !is_dir( $_template->get_stylesheet_directory() ) ) {
+					$_status[] = 'Template missing.';
+				}
+
+				if( !is_dir( $_stylesheet->get_stylesheet_directory() ) ) {
+					$_status[] = 'Theme missing.';
+				}
+
+				if( defined( 'WP_CLI' )  ) {
+					//die( '<pre>' . print_r( get_current_site(), true ) . '</pre>');
+					//die( '<pre>' . print_r( wp_upload_dir(), true ) . '</pre>');
+				}
+
+				if( class_exists( 'UsabilityDynamics\Veneer\Bootstrap' ) ) {
+					//die(WP_VENEER_STORAGE);
+					//global $wp_veneer;
+					//die( '<pre>' . print_r( $wp_veneer->get(), true ) . '</pre>');
+					//die( 'have:' . current_action() );
+
+				}
+				//$_wp_upload_dir = wp_upload_dir();
+				//die( '<pre>' . print_r( $_wp_upload_dir , true ) . '</pre>');
+
+				$_network = (array) wp_get_network( $site['site_id'] );
+				$_path = wp_normalize_path( trailingslashit( WP_CONTENT_DIR ). get_option( 'upload_path' ) );
+
+				$_results[ $site['domain'] ] = array(
+					'id' => $site['blog_id'],
+					'network' => $_network['domain'],
+					'domain' => $site['domain'],
+					'path' => $_path,
+					'url' => get_option( 'upload_url_path' ),
+					'size' => is_dir( $_path ) ? format_size( foldersize( $_path ) ) : '-'
+				);
+
+			}
+
+			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'id','network', 'domain', 'path', 'url', 'size' ) );
+
+			//die( '<pre>' . print_r( $_results, true ) . '</pre>');
+
+		}
+
+		/**
 		 * Test stuff.
 		 *
 		 * ## OPTIONS
@@ -150,8 +225,8 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 		 *
 		 * ## EXAMPLES
 		 *
-		 *     wp utility test
-		 *     wp utility test all
+		 *     wp cloud test
+		 *     wp cloud test all
 		 *
 		 * @synopsis [<stage>]
 		 */
@@ -175,8 +250,8 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 		 *
 		 * ## EXAMPLES
 		 *
-		 *     wp utility migrate
-		 *     wp utility migrate artist
+		 *     wp cloud migrate
+		 *     wp cloud migrate artist
 		 *
 		 * @synopsis [<stage>]
 		 */
@@ -202,7 +277,47 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 
 	}
 
+	function foldersize($path) {
+		$total_size = 0;
+
+		if( !$path ) {
+			return;
+		}
+		$files = scandir($path);
+		$cleanPath = rtrim($path, '/'). '/';
+
+		foreach( (array) $files as $t) {
+			if ($t<>"." && $t<>"..") {
+				$currentFile = $cleanPath . $t;
+				if (is_dir($currentFile)) {
+					$size = foldersize($currentFile);
+					$total_size += $size;
+				}
+				else {
+					$size = filesize($currentFile);
+					$total_size += $size;
+				}
+			}
+		}
+
+		return $total_size;
+	}
+
+	function format_size($size) {
+		global $units;
+
+		$mod = 1024;
+
+		for ($i = 0; $size > $mod; $i++) {
+			$size /= $mod;
+		}
+
+		$endIndex = strpos($size, ".")+3;
+
+		return substr( $size, 0, $endIndex).' '.$units[$i];
+	}
+
 	/** Add the commands from above */
-	WP_CLI::add_command( 'utility', 'DDP_Utility_CLI' );
+	WP_CLI::add_command( 'cloud', 'DDP_Utility_CLI' );
 
 }

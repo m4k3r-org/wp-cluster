@@ -78,8 +78,10 @@ namespace UsabilityDynamics\Veneer {
 
         // Enable MS Site Rewriting.
         add_filter( 'default_site_option_ms_files_rewriting', array( $this, '_ms_files_rewriting' ) );
-        add_filter( 'pre_option_upload_path', array( $this, '_media_path' ) );
+        //add_filter( 'pre_option_upload_path', array( $this, '_media_path' ) );
         add_filter( 'pre_option_upload_url_path', array( $this, '_media_url_path' ) );
+
+	      add_filter( 'option_upload_path', array( $this, '_media_path' ) );
 
         // Extend Arguments with defaults.
         $args = Utility::parse_args( $args, array(
@@ -169,12 +171,16 @@ namespace UsabilityDynamics\Veneer {
       /**
        * Returns the base non-site-specific path for file uplods. Final path computed in wp_upload_dir();
        *
-       * @param $default
+       * @note This method seems to break things when using switch_to_blog yet with it disabled things seem to work. -potanin@UD
        *
+       * @param $default
        * @return string
        */
       public function _media_path( $default ) {
-        global $wp_veneer;
+
+	      if( $default ) {
+		      return wp_normalize_path( $default . DIRECTORY_SEPARATOR . 'media' );
+	      }
 
         if( defined( 'WP_VENEER_PUBLIC' ) && WP_VENEER_PUBLIC ) {
           $_public_path = trailingslashit( WP_VENEER_PUBLIC );
@@ -189,7 +195,7 @@ namespace UsabilityDynamics\Veneer {
           $_public_path = $_public_path . trailingslashit( $this->site );
         }
 
-        return $_public_path . 'media';
+        return wp_normalize_path( $_public_path . DIRECTORY_SEPARATOR . 'media' );
 
       }
 
