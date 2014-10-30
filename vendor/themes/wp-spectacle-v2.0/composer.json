@@ -17,7 +17,7 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "UsabilityDynamics/lib-wp-theme": "~0.2",
+    "UsabilityDynamics/lib-wp-theme": "~0.3",
     "UsabilityDynamics/siteorigin-panels": "master",
     "mustache/mustache": "~2.6",
     "kertz/twitteroauth": "dev-master"
@@ -25,22 +25,25 @@
   "autoload": {
     "classmap": [ "lib" ]
   },
+  "config": {
+    "preferred-install": "dist",
+    "github-protocols": [ "ssh" ],
+    "vendor-dir": "vendor",
+    "bin-dir": "vendor/bin",
+    "optimize-autoloader": true
+  },
   "extra": {
-    "installer-name": "wp-spectacle-2",
     "installer-paths": {
-      "vendor/libraries/{$vendor}/{$name}": [
-        "type:wordpress-library"
-      ],
-      "vendor/modules/{$name}": [
-        "type:wordpress-muplugin",
-        "type:wordpress-module"
-      ],
-      "vendor/plugins/{$name}": [
-        "type:wordpress-plugin",
-        "type:wpackagist-plugin"
-      ],
       "vendor/themes/{$name}": [
         "type:wordpress-theme"
+      ],
+      "vendor/{$vendor}/{$name}": [
+        "usabilitydynamics/lib-meta-box",
+        "type:wpackagist-plugin",
+        "type:wordpress-muplugin",
+        "type:wordpress-plugin",
+        "type:wordpress-module",
+        "type:wordpress-library"
       ]
     }
   }
