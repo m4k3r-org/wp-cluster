@@ -1,7 +1,6 @@
 path: vendor/libraries/automattic/wordpress
 url: http://discodonniepresents.com/
 debug: false
-quiet: true
 disabled_commands:
   - eval-file
   - cron
