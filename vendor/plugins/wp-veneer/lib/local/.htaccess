@@ -167,14 +167,25 @@
   RewriteCond %{QUERY_STRING} ^$
   RewriteRule ^$ /storage/public/%{HTTP_HOST}/static/index.html [L]
 
-  # Media failover to GCE bucket.
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$
-  RewriteRule ^media/(.*) https://storage.googleapis.com/xlufuwzldcekbrer/%1/media/$1 [R=302,L]
+
+
 
 </IfModule>
 # END Static and Media
+
+# BEGIN Media Bucket
+<IfModule mod_rewrite.c>
+  # Media failover to GCE bucket..   ## https://storage.googleapis.com/xlufuwzldcekbrer
+  #RewriteCond %{ENV:WP_MEDIA_BACKEND} !^$
+  #SetEnvIf X-Branch develop WP_MEDIA_BACKEND=https://storage.googleapis.com/xlufuwzldcekbrer
+  #RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  #RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$
+  #RewriteRule ^media/(.*) %{ENV:WP_MEDIA_BACKEND}/%1/media/$1 [R=302,L]
+  #RewriteRule ^media/(.*) %{ENV:WP_MEDIA_BACKEND}/%1/media/$1 [R=302,L]
+  #RewriteRule ^.*$ http://localhost:4000%{REQUEST_URI} [P,QSA,L]
+</IfModule>
+# END Media Bucket
 
 # BEGIN Public API
 <IfModule mod_rewrite.c>
