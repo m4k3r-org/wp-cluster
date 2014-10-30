@@ -73,10 +73,17 @@ namespace UsabilityDynamics\Festival2 {
       if( defined( 'WP_BASE_DIR' ) ){
         $url = str_ireplace( WP_BASE_DIR, '', $url );
       }
+
       /** Now if we have 'vendor' unnecessaries, we should replace some paths */
       $url = str_ireplace( 'vendor/plugins/vendor/themes', 'vendor/themes', $url );
       /** Return some others */
       $url = str_ireplace( '/modules/var/www/themes/wp-festival-2/', '/themes/wp-festival-2/', $url );
+      
+      /** If we're fixing the carrington build URL */
+      if( stripos( $url, 'carrington' ) ){
+        $url = substr( $url, stripos( $url, '/lib-carrington/' ) );
+        $url = get_template_directory_uri() . '/vendor/libraries/usabilitydynamics' . $url;
+      }
 
       return $url;
     }

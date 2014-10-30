@@ -73,6 +73,14 @@ namespace UsabilityDynamics {
      * @since 0.1.0
      */
     public function __construct() {
+      
+      // Setup our lib-meta-box path if it's not set
+      if( !defined( 'RWMB_URL' ) ){
+        define( 'RWMB_URL', get_template_directory_uri() . '/vendor/plugins/wp-meta-box/' );
+      }
+      
+      // Add this filter now, because otherwise it won't catch
+      add_filter( 'cfct-build-url', array( $this, 'plugins_url' ), 10, 2 );
 
       // Configure Properties.
       $this->id      = Utility::create_slug( __NAMESPACE__ . ' festival', array( 'separator' => ':' ));
@@ -409,13 +417,21 @@ namespace UsabilityDynamics {
     public function wp_print_scripts(){
       global $wp_scripts;
       $disallowed = array(
-        'jquery-ui-accordion',
-        'media-editor',
-        'media-audiovideo',
-        'knockout',
-        'devicepx',
-        'wp-mediaelement'
+        'admin' => array(),
+        'frontend' => array(
+          'jquery-ui-accordion',
+          'media-editor',
+          'media-audiovideo',
+          'knockout',
+          'devicepx',
+          'wp-mediaelement'
+        )
       );
+      if( is_admin() ){
+        $disallowed = $disallowed[ 'admin' ];
+      }else{
+        $disallowed = $disallowed[ 'frontend' ];
+      }
       foreach( $disallowed as $disallow ){
         foreach( $wp_scripts->queue as $key => $value ){
           if( $disallow == $value ){
@@ -431,10 +447,18 @@ namespace UsabilityDynamics {
     public function wp_print_styles(){
       global $wp_styles;
       $disallowed = array(
-        'media-views',
-        'imgareaselect',
-        'wp-mediaelement'
+        'admin' => array(),
+        'frontend' => array(
+          'media-views',
+          'imgareaselect',
+          'wp-mediaelement'
+        )
       );
+      if( is_admin() ){
+        $disallowed = $disallowed[ 'admin' ];
+      }else{
+        $disallowed = $disallowed[ 'frontend' ];
+      }
       foreach( $disallowed as $disallow ){
         foreach( $wp_styles->queue as $key => $value ){
           if( $disallow == $value ){
@@ -467,7 +491,7 @@ namespace UsabilityDynamics {
       }else{
         $file = '/static/scripts/app.js';
       } ?>
-      <script type="text/javascript" data-main="<?php echo '/vendor/themes/wp-festival-v2.0' . $file; ?>" src="http://cdn.udx.io/udx.requires.js"></script> <?php
+      <script type="text/javascript" data-main="<?php echo str_ireplace( home_url(), '', get_template_directory_uri() ) . $file; ?>" src="http://cdn.udx.io/udx.requires.js"></script> <?php
     }
 
     public function get_gallery_template( $attr ){
@@ -830,13 +854,13 @@ namespace UsabilityDynamics {
       // Automatically Load Shortcodes.
       $this->load_shortcodes();
 
-      // Register Editor Style.
-      add_editor_style( home_url( '/assets/styles/app-editor.css' ) );
+      // Register Editor Style. @todo Fix this
+      // add_editor_style( home_url( '/assets/styles/app-editor.css' ) );
 
       // Custom Hooks
       add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
       add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 600 );
-      add_filter( 'plugins_url', array( $this, 'plugins_url' ), 10, 1 );
+      add_filter( 'plugins_url', array( $this, 'plugins_url' ), 10, 2 );
 
     }
 
