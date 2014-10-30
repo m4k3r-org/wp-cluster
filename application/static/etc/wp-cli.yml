@@ -1,5 +1,6 @@
 path: vendor/libraries/automattic/wordpress
 url: http://discodonniepresents.com/
+quiet: true
 debug: false
 disabled_commands:
   - eval-file

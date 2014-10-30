@@ -63,7 +63,7 @@ wp transient delete-all && wp cache flush
 wp db export edm_production.sql
 tar cvzf edm_production.sql.tgz edm_production.sql
 s3cmd put --no-check-md5 --reduced-redundancy edm_production.sql.tgz s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com/edm_production.sql.tgz
-rm -rf edm_production.sql**
+mv  edm_production.sql**
 ```
 
 To fetch backup locally and import it:
@@ -71,4 +71,36 @@ To fetch backup locally and import it:
 s3cmd get s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com/edm_production.sql.tgz
 tar xvf edm_production.sql.tgz
 wp db import edm_production.sql
+```
+
+
+### Media Sync
+
+```
+gsutil -m rsync -rd  /var/www/storage/public/dayafter.com/media/                gs://media.dayafter.com/
+gsutil -m rsync -rd  /var/www/storage/public/somethingwicked.com/media/         gs://media.somethingwicked.com/
+gsutil -m rsync -rd  /var/www/storage/public/freaksbeatstreats.com/media/       gs://media.freaksbeatstreats.com/
+gsutil -m rsync -rd  /var/www/storage/public/monsterblockparty.com/media/       gs://media.monsterblockparty.com/
+gsutil -m rsync -rd  /var/www/storage/public/cominghomemusicfestival.com/media/ gs://media.cominghomemusicfestival.com/
+gsutil -m rsync -rd  /var/www/storage/public/discodonniepresents.com/media/     gs://media.discodonniepresents.com/
+gsutil -m rsync -rd  /var/www/storage/public/smftampa.com/media/                gs://media.smftampa.com/
+gsutil -m rsync -rd  /var/www/storage/public/suncitymusicfestival.com/media/    gs://media.suncitymusicfestival.com/
+gsutil -m rsync -rd  /var/www/storage/public/isladelsolfest.com/media/          gs://media.isladelsolfest.com/
+```
+
+```
+gsutil -m setacl -R -a public-read gs://media.dayafter.com
+gsutil -m setacl -R -a public-read gs://media.somethingwicked.com
+gsutil -m setacl -R -a public-read gs://media.freaksbeatstreats.com
+gsutil -m setacl -R -a public-read gs://media.monsterblockparty.com
+gsutil -m setacl -R -a public-read gs://media.cominghomemusicfestival.com
+gsutil -m setacl -R -a public-read gs://media.discodonniepresents.com
+gsutil -m setacl -R -a public-read gs://media.smftampa.com
+gsutil -m setacl -R -a public-read gs://media.suncitymusicfestival.com
+```
+
+### Archive Sync
+
+```
+gsutil -m rsync -rd  /var/www/storage/public/2014.dayafter.com/media/                gs://2014.dayafter.com/
 ```
