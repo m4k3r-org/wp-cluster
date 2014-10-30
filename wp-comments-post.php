@@ -1,1 +1,0 @@
-./vendor/libraries/automattic/wordpress/wp-comments-post.php
