@@ -1551,13 +1551,13 @@ footer a.icon-twitter {
 .content h1 {
   font-size: 38px;
   line-height: 44px;
-  margin: 0 0 40px 0;
+  margin: 0 0 20px 0;
 }
 @media only screen and (min-width: 992px) {
   .content h1 {
     font-size: 60px;
     line-height: 66px;
-    margin: 0 0 60px 0;
+    margin: 0 0 40px 0;
   }
 }
 .content h2 {
@@ -1627,6 +1627,23 @@ footer a.icon-twitter {
 }
 .content em u {
   color: #A7CDD3;
+}
+.content .packages {
+  color: #d0f4f9;
+  font-size: 18px;
+  line-height: 30px;
+  margin-bottom: 60px;
+}
+.content .packages em,
+.content .packages strong {
+  display: block;
+}
+.content .packages em {
+  margin: 0 0 10px 0;
+}
+.content .packages strong {
+  font-weight: 100;
+  text-transform: uppercase;
 }
 .content .ribbon-container {
   margin: 0 auto 25px auto;
