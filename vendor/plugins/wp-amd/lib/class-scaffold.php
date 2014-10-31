@@ -323,10 +323,10 @@ namespace UsabilityDynamics\AMD {
        * @param type $current
        * @return type
        */
-      public function update_option_rewrite_rules( $rules ) {     
-        return array_unique( array(
-          '^' . $this->get( 'permalink' ) => 'index.php?' . self::$query_vars[0] . '=' . $this->get( 'type' ) . '&' . self::$query_vars[1] . '=1',
-        ) + (array)$rules );
+      public function update_option_rewrite_rules( $rules ) {
+        $new_rules = array( '' . $this->get( 'permalink' ) . '$' => 'index.php?' . self::$query_vars[0] . '=' . $this->get( 'type' ) . '&' . self::$query_vars[1] . '=1' );
+        $rules =  array_merge_recursive( (array) $new_rules, (array) $rules );
+        return $rules;
       }
       
       /**
