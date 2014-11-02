@@ -86,10 +86,10 @@ gsutil -m rsync -rd  /var/www/storage/public/somethingwicked.com/media/         
 gsutil -m rsync -rd  /var/www/storage/public/freaksbeatstreats.com/media/       gs://media.freaksbeatstreats.com/
 gsutil -m rsync -rd  /var/www/storage/public/monsterblockparty.com/media/       gs://media.monsterblockparty.com/
 gsutil -m rsync -rd  /var/www/storage/public/cominghomemusicfestival.com/media/ gs://media.cominghomemusicfestival.com/
-gsutil -m rsync -rd  /var/www/storage/public/discodonniepresents.com/media/     gs://media.discodonniepresents.com/
 gsutil -m rsync -rd  /var/www/storage/public/smftampa.com/media/                gs://media.smftampa.com/
 gsutil -m rsync -rd  /var/www/storage/public/suncitymusicfestival.com/media/    gs://media.suncitymusicfestival.com/
 gsutil -m rsync -rd  /var/www/storage/public/isladelsolfest.com/media/          gs://media.isladelsolfest.com/
+gsutil -m rsync -rd  /var/www/storage/public/discodonniepresents.com/media/     gs://media.discodonniepresents.com/
 ```
 
 ```
