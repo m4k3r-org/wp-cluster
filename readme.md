@@ -106,5 +106,5 @@ gsutil -m setacl -R -a public-read gs://media.suncitymusicfestival.com
 ### Archive Sync
 
 ```
-gsutil -m rsync -rd  /var/www/storage/public/2014.dayafter.com/media/                gs://2014.dayafter.com/
+gsutil -m rsync -rd  /var/www/storage/public/2014.dayafter.com/media/               gs://2014.dayafter.com/
 ```
