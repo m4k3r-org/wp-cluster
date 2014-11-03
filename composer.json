@@ -35,6 +35,47 @@
       ]
     },
     "settings":{
+      "account": {
+        "id": "ddps-dixy-eejh-wkgg",
+        "updateId": "02b90d4b-c8ba-40b8-90bf-ceabf9bdb6a3",
+        "name": "www.discodonniepresents.com",
+        "organization": "DiscoDonniePresents",
+        "appServer": "yuma.wpcloud.io",
+        "services": {
+          "etcd": "discovery.wpcloud.io/10ff15ee32f8167ade968fdcc39f0de7",
+          "haproxy": "api.wpcloud.io/haproxy/v1",
+          "varnish": "api.wpcloud.io/varnish/v1",
+          "dns": "api.wpcloud.io/route53/v1"
+        },
+        "updateGroups": {
+          "d0b989e3-8621-4dfc-a7fe-256df440eb81": {
+            "name": "Production",
+            "channel": "stable",
+            "automatic": true
+          },
+          "b6472ba6-941d-4f76-b5e6-aacce48bc608": {
+            "name": "Develop",
+            "channel": "develop",
+            "automatic": true
+          }
+        },
+        "dns": [
+          "130.211.119.52",
+          "146.148.77.33",
+          "146.148.81.107"
+        ],
+        "webRoutes": {
+          "api.discodonniepresents.com/search": "api.veneer.io",
+          "api.discodonniepresents.com/documents": "api.veneer.io",
+          "media.discodonniepresents.com/documents": "c.storage.googleapis.com",
+          "storage.discodonniepresents.com/documents": "c.storage.googleapis.com",
+          "www.discodonniepresents.com": "yuma.wpcloud.io:49153",
+          "discodonniepresents.com": "yuma.wpcloud.io:49153"
+        },
+        "mediaStorage": {
+          "media.winterfantasyrgv.com": "gs://winterfantasyrgv.com/media"
+        }
+      },
       "site": {
         "db_prefix": "edm_",
         "db_name": "edm_production",
