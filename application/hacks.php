@@ -49,6 +49,20 @@ add_action( 'admin_init', function() {
 
 });
 
+add_action( 'admin_init', function() {
+
+	// No pagespeed on backend
+	if( !headers_sent() ) {
+		header( 'PageSpeed:off' );
+	}
+
+	// Don't run newrelic stuff on backend.
+	if( function_exists( 'newrelic_ignore_transaction' ) ) {
+		newrelic_ignore_transaction();
+	}
+
+});
+
 add_action( 'template_redirect', function() {
 
 		if( $_SERVER[ 'HTTP_X_DEBUG' ] === 'cdzt-vogs-oar-qged' ) {
