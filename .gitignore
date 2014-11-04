@@ -24,3 +24,4 @@ debug.log
 /vendor/libraries/composer/installers
 /vendor/themes/flawless-hddp
 /hook.php
+/*.tar.gz
