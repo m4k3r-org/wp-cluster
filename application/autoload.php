@@ -12,6 +12,12 @@
  *
  */
 
+ob_start(function( $buffer ) {
+	//$buffer = str_replace( '/wp-login.php', '/manage/login', $buffer );
+	//$buffer = str_replace( '/wp-admin/', '/manage/', $buffer );
+	return $buffer;
+});
+
 if ( ! defined( 'WP_VENDOR_LIBRARY_DIR' ) ) {
 	define( 'WP_VENDOR_LIBRARY_DIR', ABSPATH . 'wp-vendor/' );
 }
