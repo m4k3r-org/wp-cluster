@@ -15,6 +15,36 @@
  * @note For use with MAMP: export PATH="/Applications/MAMP/bin/php/php5.3.29/bin:$PATH"
  */
 
+
+/**
+ * Returns an object with "code" and "output"
+ *
+ * @param string $_input
+ *
+ * @example runBinaryCommand( "/Users/andy.potanin/devtools/google-cloud-sdk/bin/gsutil cp -a public-read /storage/discodonniepresents.com/media/2014/11/7eb12a48b76de1fb694e1d312add079a38.jpg gs://media-test.discodonniepresents.com/" )->output
+ *
+ * @author potanin@UD
+ * @return array
+ */
+function runBinaryCommand( $_input = "whoami" ) {
+
+	$_lines = array_merge( array( 'export PATH=$PATH' ), (array) $_input );
+
+	ob_start();
+	passthru( implode( " && \\ \n", $_lines ) . " 2>&1", $return_code );
+	$var = ob_get_contents();
+	ob_end_clean();
+
+	return (object) array(
+		"code" => $return_code,
+		"output" => $var
+	);
+
+}
+
+// $_result = runBinaryCommand( "/Users/andy.potanin/devtools/google-cloud-sdk/bin/gsutil cp -a public-read /Users/andy.potanin/Libraries/www.discodonniepresents.com/storage/public/discodonniepresents.com/media/2014/11/7eb12a48b76de1fb694e1d312add079a38.jpg gs://media-test.discodonniepresents.com/" );
+// die( '<pre>' . print_r( $_result->output , true ) . '</pre>');
+
 /**
  * Create our class that'll be used outside of the CLI
  */
@@ -53,15 +83,18 @@ if( !class_exists( 'GCS_SYNC' ) ){
       /** Setup the command */
       $file = ltrim( $file, '/' );
       $temp_file = tempnam( sys_get_temp_dir(), 'gsutil_' );
-      $cmd = "gsutil cp -a public-read {$this->media_dir}{$file} gs://{$this->bucket}/{$file} > {$temp_file} 2>&1";
+      $cmd = "/Users/andy.potanin/devtools/google-cloud-sdk/bin/gsutil cp -a public-read {$this->media_dir}{$file} gs://{$this->bucket}/{$file} > {$temp_file} 2>&1";
 
       /** Ok, if we're here, run the command */
       $this->_echo( "Running command:" );
       $this->_echo( "{$cmd}" );
 
       /** Run our command */
+      passthru( 'whoami' );
+
       passthru( $cmd );
       $results = file_get_contents( $temp_file );
+
       unlink( $temp_file );
 
       /** @todo This is where we're running into issues, as 'results', doesn't contain the expected output due to path differences */
@@ -70,7 +103,7 @@ if( !class_exists( 'GCS_SYNC' ) ){
     function _update_gce_headers( $file, $headers ){
       /** Setup the command */
       $file = ltrim( $file, '/' );
-      $cmd = "gsutil setmeta";
+      $cmd = "/Users/andy.potanin/devtools/google-cloud-sdk/bin/gsutil setmeta";
       foreach( (array) $headers as $header => $value ){
         $cmd .= ' -h "' . addcslashes( $header, '"' ) . ':' . addcslashes( $value, '"' ) . '"';
       }
@@ -86,6 +119,11 @@ if( !class_exists( 'GCS_SYNC' ) ){
 
     /**
      * This is our function that handles uploading to GCS on request
+     *
+     * [file] => /Users/andy.potanin/Libraries/www.discodonniepresents.com/storage/public/discodonniepresents.com/media/2014/11/7eb12a48b76de1fb694e1d312add079a38.jpg
+     * [url] => http://media.discodonniepresents.com/media/7eb12a48b76de1fb694e1d312add079a38.jpg
+     * [type] => image/jpeg
+     *
      */
     function handle_upload( $upload, $context ){
 

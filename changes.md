@@ -1,3 +1,6 @@
+#### 2.2.1
+* Disabled PageSpeed and NewRelic on admin.
+
 #### 2.2.0
 * Moved MU plugins to be loaded from ./application
 * Added autoload.php MU plugin for loading vendor libs
