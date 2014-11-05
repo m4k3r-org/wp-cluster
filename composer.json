@@ -35,7 +35,7 @@
       ]
     },
     "settings":{
-      "account": {
+      "provisioning": {
         "id": "ddps-dixy-eejh-wkgg",
         "updateId": "02b90d4b-c8ba-40b8-90bf-ceabf9bdb6a3",
         "name": "www.discodonniepresents.com",
@@ -59,11 +59,7 @@
             "automatic": true
           }
         },
-        "dns": [
-          "130.211.119.52",
-          "146.148.77.33",
-          "146.148.81.107"
-        ],
+        "route53": {},
         "webRoutes": {
           "api.discodonniepresents.com/search": "api.veneer.io",
           "api.discodonniepresents.com/documents": "api.veneer.io",
@@ -139,8 +135,8 @@
         "wp_vendor_library_dir": "{wp_vendor_dir}/libraries",
         "wp_vendor_library_url": "{wp_vendor_url}/libraries",
         "wpmu_plugin_dir": "{wp_base_dir}/application",
-        "MUPLUGINDIR": "{wp_base_dir}/application",
-        "PLUGINDIR": "{wp_base_dir}/vendor/plugins",
+        "muplugindir": "{wp_base_dir}/application",
+        "plugindir": "{wp_base_dir}/vendor/plugins",
         "wpmu_plugin_url": "{wp_base_url}/application",
         "wp_theme_dir": "{wp_vendor_dir}/themes",
         "wp_theme_url": "{wp_vendor_url}/themes",
