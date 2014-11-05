@@ -15,36 +15,6 @@
  * @note For use with MAMP: export PATH="/Applications/MAMP/bin/php/php5.3.29/bin:$PATH"
  */
 
-
-/**
- * Returns an object with "code" and "output"
- *
- * @param string $_input
- *
- * @example runBinaryCommand( "/Users/andy.potanin/devtools/google-cloud-sdk/bin/gsutil cp -a public-read /storage/discodonniepresents.com/media/2014/11/7eb12a48b76de1fb694e1d312add079a38.jpg gs://media-test.discodonniepresents.com/" )->output
- *
- * @author potanin@UD
- * @return array
- */
-function runBinaryCommand( $_input = "whoami" ) {
-
-	$_lines = array_merge( array( 'export PATH=$PATH' ), (array) $_input );
-
-	ob_start();
-	passthru( implode( " && \\ \n", $_lines ) . " 2>&1", $return_code );
-	$var = ob_get_contents();
-	ob_end_clean();
-
-	return (object) array(
-		"code" => $return_code,
-		"output" => $var
-	);
-
-}
-
-// $_result = runBinaryCommand( "/Users/andy.potanin/devtools/google-cloud-sdk/bin/gsutil cp -a public-read /Users/andy.potanin/Libraries/www.discodonniepresents.com/storage/public/discodonniepresents.com/media/2014/11/7eb12a48b76de1fb694e1d312add079a38.jpg gs://media-test.discodonniepresents.com/" );
-// die( '<pre>' . print_r( $_result->output , true ) . '</pre>');
-
 /**
  * Create our class that'll be used outside of the CLI
  */
@@ -59,12 +29,41 @@ if( !class_exists( 'GCS_SYNC' ) ){
      * Constructor, we're just going to set our initial options
      */
     function __construct(){
-
       $this->bucket = get_option( self::BUCKET_KEY );
       $this->enabled = get_option( self::ENABLED_KEY );
       $this->media_dir = wp_upload_dir();
       $this->media_dir = trailingslashit( $this->media_dir[ 'basedir' ] );
 
+      /** Go ahead and add our filter to handle auto-uploading to GCS */
+      if( $this->enabled ){
+        add_filter( 'wp_handle_upload', array( $this, 'handle_upload' ), 9999, 2 );
+        add_filter( 'image_make_intermediate_size', array( $this, 'image_make_intermediate_size' ), 9999, 1 );
+        add_filter( 'wp_delete_file', array( $this, 'wp_delete_file' ), 9999, 1 );
+      }
+    }
+
+    /**
+     * Returns an object with "code" and "output"
+     *
+     * @param string $_input
+     *
+     * @example runBinaryCommand( "/Users/andy.potanin/devtools/google-cloud-sdk/bin/gsutil cp -a public-read /storage/discodonniepresents.com/media/2014/11/7eb12a48b76de1fb694e1d312add079a38.jpg gs://media-test.discodonniepresents.com/" )->output
+     *
+     * @author potanin@UD
+     * @return array
+     */
+    function runBinaryCommand( $_input = "whoami" ){
+      $_lines = array_merge( array( 'export PATH=$PATH' ), (array) $_input );
+
+      ob_start();
+      passthru( implode( " && \\ \n", $_lines ) . " 2>&1", $return_code );
+      $var = ob_get_contents();
+      ob_end_clean();
+
+      return (object) array(
+        "code" => $return_code,
+        "output" => $var
+      );
     }
 
     /**
@@ -83,38 +82,36 @@ if( !class_exists( 'GCS_SYNC' ) ){
       /** Setup the command */
       $file = ltrim( $file, '/' );
       $temp_file = tempnam( sys_get_temp_dir(), 'gsutil_' );
-      $cmd = "/Users/andy.potanin/devtools/google-cloud-sdk/bin/gsutil cp -a public-read {$this->media_dir}{$file} gs://{$this->bucket}/{$file} > {$temp_file} 2>&1";
+      $cmd = "gsutil cp -a public-read {$this->media_dir}{$file} gs://{$this->bucket}/{$file} > {$temp_file} 2>&1";
 
       /** Ok, if we're here, run the command */
       $this->_echo( "Running command:" );
       $this->_echo( "{$cmd}" );
 
       /** Run our command */
-      passthru( 'whoami' );
-
-      passthru( $cmd );
+      $this->runBinaryCommand( $cmd );
       $results = file_get_contents( $temp_file );
-
       unlink( $temp_file );
-
-      /** @todo This is where we're running into issues, as 'results', doesn't contain the expected output due to path differences */
     }
 
     function _update_gce_headers( $file, $headers ){
       /** Setup the command */
       $file = ltrim( $file, '/' );
-      $cmd = "/Users/andy.potanin/devtools/google-cloud-sdk/bin/gsutil setmeta";
+      $temp_file = tempnam( sys_get_temp_dir(), 'gsutil_' );
+      $cmd = "gsutil setmeta";
       foreach( (array) $headers as $header => $value ){
         $cmd .= ' -h "' . addcslashes( $header, '"' ) . ':' . addcslashes( $value, '"' ) . '"';
       }
-      $cmd .= " gs://{$this->bucket}/{$file} > /dev/null 2>&1";
+      $cmd .= " gs://{$this->bucket}/{$file} > {$temp_file} 2>&1";
 
       /** Ok, if we're here, run the command */
       $this->_echo( "Running command:" );
       $this->_echo( "{$cmd}" );
 
       /** Run our command */
-      exec( $cmd );
+      $this->runBinaryCommand( $cmd );
+      $results = file_get_contents( $temp_file );
+      unlink( $temp_file );
     }
 
     /**
@@ -131,11 +128,18 @@ if( !class_exists( 'GCS_SYNC' ) ){
       $file = str_ireplace( $this->media_dir, '', $upload[ 'file' ] );
       $this->_upload_to_gce( $file );
 
+      /** If the context is a thumbnail, change the post type */
+      if( $context == 'thumbnail' ){
+        $post_type = $context;
+      }else{
+        $post_type = 'attachment';
+      }
+
       /** Ok, now set it's meta */
       $this->_update_gce_headers( $file, array(
         'x-goog-meta-blog-id' => get_current_blog_id(),
         'x-goog-meta-updated-at' => time(),
-        'x-goog-meta-post-type' => 'attachment'
+        'x-goog-meta-post-type' => $post_type
       ) );
 
       /** Just return the upload */
@@ -143,12 +147,45 @@ if( !class_exists( 'GCS_SYNC' ) ){
 
     }
 
+    /**
+     * This handles working with intermediate sizes
+     */
+    function image_make_intermediate_size( $file ){
+
+      /** Just call the handle upload */
+      $this->handle_upload( array( 'file' => $file ), 'thumbnail' );
+
+      /** Just return what was passed */
+      return $file;
+
+    }
+
+    /**
+     * Handle removing a file from GCS
+     */
+    function wp_delete_file( $file ){
+      /** Setup the command */
+      $file = ltrim( $file, '/' );
+      $temp_file = tempnam( sys_get_temp_dir(), 'gsutil_' );
+      $cmd = "gsutil rm gs://{$this->bucket}/{$file} > {$temp_file} 2>&1";
+
+      /** Ok, if we're here, run the command */
+      $this->_echo( "Running command:" );
+      $this->_echo( "{$cmd}" );
+
+      /** Run our command */
+      $this->runBinaryCommand( $cmd );
+      $results = file_get_contents( $temp_file );
+      unlink( $temp_file );
+
+      /** Just return what was passed */
+      return $file;
+    }
+
   }
 
   /** Create an instance of our object */
   $gcs_sync = new GCS_SYNC();
-  /** Go ahead and add our filter to handle auto-uploading to GCS */
-  add_filter( 'wp_handle_upload', array( $gcs_sync, 'handle_upload' ), 10, 2 );
 
 }
 
