@@ -257,28 +257,16 @@ namespace wpCloud\Stateless {
 		}
 	}
 
-	/* OK, let's add a custom URL to WordPress!
-	   How many lines do we need to do this? HOW MANY LINES?
-	   Disclaimer: I hate WordPress. I really hate this thing. But I keep working on it. */
-
-	// First step: flush rewrite rules on activation!
-	// register_activation_hook(__FILE__, function(){ flush_rewrite_rules(FALSE); });
-
-	// Second step: now we add a new rewrite rule.
-	// This new rewrite rule should redirect to an existing file.
-	// We use index.php with a query var.
-	add_filter('rewrite_rules_array', function($rules) use($wp_rewrite) {
+	add_filter('rewrite_rules_array', function($rules) {
 		$new_rules = array('^github-sync\/?$' => 'index.php?github_sync=1');
 		return $new_rules + $rules;
 	});
 
-	// But this query var is not valid, we need to add it manually.
 	add_filter('query_vars', function($qvars) {
 		$qvars[] = 'github_sync';
 		return $qvars;
 	});
 
-	// And we finally intercept the request, based on the query.
 	add_action('template_redirect', function(){
 		if (get_query_var('github_sync') == '1') {
 			log_msg("\n\nNew update request. Check...");
@@ -290,6 +278,5 @@ namespace wpCloud\Stateless {
 			}
 		}
 	});
-
 
 }
