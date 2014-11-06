@@ -129,13 +129,3 @@
   ?>
 
 </header>
-
-<?php 
-/** 
- * We need to get and loop the featured posts. Ultimately this should be in a widget, but we're doing this
- * for brevity. Take a look at article/content.php template - it has the same functionality, and should also
- * be moved. -williams@ud
- */ 
-if( is_front_page() || $post->post_title == 'Home' ): ?>
-  <?php echo do_shortcode( '[widget_news_block featured=1 title="Latest News and Updates" description="Stay informed and be in the know! The most important festival updates are below."]' );?>
-<?php endif;
