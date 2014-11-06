@@ -25,7 +25,7 @@ $share_count = json_decode( $share_count, true );
         <div class="flipper">
           <div class="front">
             <img src="<?php echo $image_headshot; ?>">
-            <a href="#" class="share news-single-share"><i class="icon-share"></i></a>
+            <a href="#" class="share artist-share"><i class="icon-share"></i></a>
           </div>
           <div class="back">
             <img src="<?php echo $image_headshot; ?>">
