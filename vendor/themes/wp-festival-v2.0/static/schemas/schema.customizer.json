@@ -54,9 +54,13 @@
       "title": "Module: Features",
       "priority": 74
     },
+    "artist_callout": {
+      "title": "Module: Artist Callout",
+      "priority": 75
+    },
     "page_blog_single": {
       "title": "Page: Blog Single",
-      "priority": 75
+      "priority": 76
     },
     "page_blog_main": {
       "title": "Page: Blog Main",
@@ -714,6 +718,83 @@
         "section.schedule-reserve a.block:hover h2", 
         "section.schedule-reserve a.reserve:hover h2", 
         "section.schedule-reserve a.schedule:hover h2"
+      ]
+    },
+    {
+      "key": "artist_callout_background_color",
+      "label": "Background Color",
+      "priority": 40,
+      "section": "artist_callout",
+      "control": "background-color",
+      "important": false,
+      "selector": [
+        ".artist-callout"
+      ]
+    },
+    {
+      "key": "artist_callout_text_color",
+      "label": "Text And Delimiter Color",
+      "priority": 41,
+      "section": "artist_callout",
+      "control": "color",
+      "important": false,
+      "selector": [
+        ".artist-callout .artist-info"
+      ],
+      "extra_controls": {
+        "background-color": [
+          ".artist-callout .artist-info .info-separator"
+        ]
+      }
+    },
+
+    {
+      "key": "artist_callout_button_background_color",
+      "label": "Button Background Color",
+      "priority": 42,
+      "section": "artist_callout",
+      "control": "background-color",
+      "important": false,
+      "selector": [
+        ".artist-callout .button"
+      ]
+    },
+    {
+      "key": "artist_callout_button_color",
+      "label": "Button Color",
+      "priority": 43,
+      "section": "artist_callout",
+      "control": "color",
+      "important": false,
+      "selector": [
+        ".artist-callout .button"
+      ],
+      "extra_controls": {
+        "border-color": [
+          ".artist-callout .button"
+        ]
+      }
+    },
+    {
+      "key": "artist_callout_button_background_color_hover",
+      "label": "Button Background Color Hover",
+      "priority": 44,
+      "section": "artist_callout",
+      "control": "background-color",
+      "important": false,
+      "selector": [
+        ".artist-callout .button:hover"
+      ]
+    },
+    {
+      "key": "artist_callout_button_color_hover",
+      "label": "Button Color Hover",
+      "priority": 45,
+      "section": "artist_callout",
+      "control": "color",
+      "important": true,
+      "selector": [
+        ".artist-callout .button:hover"
       ]
     },
     {
