@@ -29,8 +29,9 @@ define(
     'lib/module-video',
     'lib/contact-form',
     'lib/hotel-widget',
+    'lib/artist-callout',
     'components/fitvids/fitvids-built'
-  ], function( $, developer, equalheights, swipe, countdown, ss, stickem, dotdotdot, stickynav, buytickets, navigation, masonry, carousel, account, streamFilter, artistProfile, collapse, share, imagelightbox, stream, fancybox, blogMain, tabbedContent, videoModule, contact, hotelWidget, fv ){
+  ], function( $, developer, equalheights, swipe, countdown, ss, stickem, dotdotdot, stickynav, buytickets, navigation, masonry, carousel, account, streamFilter, artistProfile, collapse, share, imagelightbox, stream, fancybox, blogMain, tabbedContent, videoModule, contact, hotelWidget, artistCallout, fv ){
 
     var self = this, resizeTo = null;
 
@@ -305,6 +306,9 @@ define(
     }
 
     if ( $('.artist-callout' ).length > 0 ){
+
+      artistCallout.init();
+
       $( window ).on( 'resizeEnd', function(){
         $( '.artist-callout-equal-height' ).css('min-height', '0px');
       });
