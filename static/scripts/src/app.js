@@ -304,6 +304,14 @@ define(
       contact.init();
     }
 
+    if ( $('.artist-callout' ).length > 0 ){
+      $( window ).on( 'resizeEnd', function(){
+        $( '.artist-callout-equal-height' ).css('min-height', '0px');
+      });
+
+      equalheights.equalize( $( '.artist-callout-equal-height' ), 200 );
+    }
+
     // Panama Pages
     if( $( '.tpl-panama' ).length > 0 ){
       equalheights.equalize( $( '.equal-height > div' ), 768 );

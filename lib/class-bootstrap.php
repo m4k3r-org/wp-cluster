@@ -89,6 +89,11 @@ namespace UsabilityDynamics\Festival2 {
 			}
 			register_widget( 'UsabilityDynamics_Festival2_Widget_Hotel_Search' );
 
+      if( !class_exists( 'UsabilityDynamics_Festival2_Widget_Artist_Callout' ) ){
+        require_once( __DIR__ . '/modules/artist-callout/artist-callout.php' );
+      }
+      register_widget( 'UsabilityDynamics_Festival2_Widget_Artist_Callout' );
+
       // Add shortcode for callout item widget
       add_shortcode( 'widget_callout_item', function( $atts ) {
         // Configure defaults and extract the attributes into variables
