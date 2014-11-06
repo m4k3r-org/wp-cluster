@@ -83,11 +83,11 @@ $share_count = json_decode( $share_count, true );
       </div>
       <div class="info-separator"></div>
 
-      <div class="artist-callout-buttons">
-        <div class="col-md-6 col-sm-6 col-lg-6 c4-12">
+      <div class="artist-callout-buttons row">
+        <div class="col-md-6 col-sm-12 col-lg-6 c4-12">
           <a class="button button1" target="_blank" href="<?php echo $button1_link ?>"><?php echo $button1_text ?></a>
         </div>
-        <div class="col-md-6 col-sm-6 col-lg-6 c4-12">
+        <div class="col-md-6 col-sm-12 col-lg-6 c4-12">
           <a class="button button2" href="<?php echo $button2_link ?>"><?php echo $button2_text ?></a>
         </div>
       </div>
