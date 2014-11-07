@@ -284,8 +284,7 @@ namespace UsabilityDynamics\Veneer {
 
         /** Ok, if we're on a production system, we should assume we're caching */
         if( defined( 'ENVIRONMENT' ) && ENVIRONMENT == 'production' && !defined( 'WP_CACHE' ) ) {
-          define( 'WP_CACHE', true );
-        }
+                  }
 
         /** Finally, go through the composer.json file and add all the configs there */
         if( is_file( $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json' ) ) {
