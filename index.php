@@ -4,6 +4,8 @@
  */
 try {
 
+  header( 'PageSpeed: off' );
+
   /** Try to pull in our local debug file if it exists */
   if( file_exists( __DIR__ . '/local-debug.php' ) ){
     require_once( __DIR__ . '/local-debug.php' );
