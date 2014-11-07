@@ -8,12 +8,24 @@
  * Author URI: http://usabilitydynamics.com
  */
 
+add_action( 'init', function() {
+	// die(get_option( '_uds:db:host' ) );
+	// die(get_option( '_uds:db:provider' ) );
+	// die(get_option( 'uds:db:version' ) );
+});
+
 /**
  *
  * The methods "is_plugin_active" and "activate_plugin" are only available on control panel.
  *
  */
 add_action( 'admin_init', function() {
+
+	if( !headers_sent() ) {
+		header( 'x-db-host:' . get_option( '_uds:db:host' ) );
+		header( 'x-db-provider:' . get_option( '_uds:db:provider' ) );
+		header( 'x-db-version:' . get_option( '_uds:db:version' ) );
+	}
 
 	if( !is_plugin_active( 'wpmandrill/wpmandrill.php' ) ) {
 		activate_plugin( 'wpmandrill/wpmandrill.php', null, true );
@@ -86,7 +98,6 @@ add_action( 'template_redirect', function() {
 	});
 
 });
-
 
 if( WP_DEBUG && defined( 'WP_ENV' ) && WP_ENV == 'develop') {
 	//error_reporting( E_ALL );

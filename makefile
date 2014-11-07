@@ -1,6 +1,12 @@
 ################################################################################################
 ## Build DDP Network
 ##
+##
+## Manual MySQL Dump:
+##    wp db export
+##    gzip edm_production.sql
+##    gsutil -m mv edm_production.sql.gz gs://discodonniepresents.com/
+##
 ################################################################################################
 
 CIRCLE_PROJECT_USERNAME	      ?=DiscoDonniePresents
