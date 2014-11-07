@@ -18,3 +18,4 @@ disabled_commands:
   - shell
   - scaffold
   - db drop
+  - db reset
