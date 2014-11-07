@@ -33,7 +33,7 @@ clean:
 
 update:
 	composer update --no-dev
-	@echo "Updated comoser."
+	@echo "Updated Composer dependencies."
 
 snapshot:
 	@echo "Creating MySQL snapshot for <${CURRENT_BRANCH}> database branch to ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
@@ -51,7 +51,7 @@ flushTransient:
 #
 #
 snapshotImport:
-	@echo "Downloading MySQL snapshot for <${CURRENT_BRANCH}> database branch to ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
+	@echo "Downloading MySQL snapshot for <${CURRENT_BRANCH}> database branch to ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
 	@rm -rf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
 	@s3cmd get --no-check-md5 --skip-existing s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz
 	@tar -xvf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.tgz -C ~/tmp
