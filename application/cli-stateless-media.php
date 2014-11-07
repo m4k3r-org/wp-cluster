@@ -101,7 +101,7 @@ namespace wpCloud\Stateless {
 			}
 		}
 
-	//	\WP_CLI::add_command( 'stateless media', 'wpCloud\Stateless\Stateless_Media_Command' );
+		\WP_CLI::add_command( 'stateless media', 'wpCloud\Stateless\Stateless_Media_Command' );
 
 	//die( '<pre>' . print_r( $_test, true ) . '</pre>');
 
