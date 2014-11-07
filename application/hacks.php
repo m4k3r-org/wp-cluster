@@ -22,7 +22,7 @@ add_action( 'init', function() {
 add_action( 'admin_init', function() {
 
 	if( !headers_sent() ) {
-		header( 'x-db-host:' . get_option( '_uds:db:host' ) );
+		header( 'x-db-host:' . DB_HOST );
 		header( 'x-db-provider:' . get_option( '_uds:db:provider' ) );
 		header( 'x-db-version:' . get_option( '_uds:db:version' ) );
 	}
