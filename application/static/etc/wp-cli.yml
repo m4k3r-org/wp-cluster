@@ -10,7 +10,6 @@ disabled_commands:
   - site
   - eval
   - widget
-  - search-replace
   - core multisite-install
   - site create
   - term
