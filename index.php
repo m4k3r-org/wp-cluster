@@ -6,11 +6,6 @@ try {
 
   header( 'PageSpeed: off' );
 
-  /** Try to pull in our local debug file if it exists */
-  if( file_exists( __DIR__ . '/local-debug.php' ) ){
-    require_once( __DIR__ . '/local-debug.php' );
-  }
-
   /** Make sure we have a proper wp-config file */
   if( !file_exists( 'vendor/libraries/automattic/wp-config.php' ) ) {
     throw new Exception( 'Site not installed.' );
