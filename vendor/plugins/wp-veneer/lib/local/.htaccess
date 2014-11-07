@@ -172,9 +172,13 @@
 
 # BEGIN Veneer.io
 <IfModule mod_rewrite.c>
+  RewriteCond %{HTTP_HOST} ^api\..*$
   RewriteRule ^documents/v1/(.*)$   http://api.veneer.io/documents/$1 [P,L]
+  RewriteCond %{HTTP_HOST} ^api\..*$
   RewriteRule ^search/v1/(.*)$      http://api.veneer.io/search/$1 [P,L]
+  RewriteCond %{HTTP_HOST} ^api\..*$
   RewriteRule ^documents/(.*)$      http://api.veneer.io/documents/$1 [P,L]
+  RewriteCond %{HTTP_HOST} ^api\..*$
   RewriteRule ^search/(.*)$         http://api.veneer.io/search/$1 [P,L]
 </IfModule>
 # END Veneer.io
