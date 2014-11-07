@@ -318,6 +318,6 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 	}
 
 	/** Add the commands from above */
-	WP_CLI::add_command( 'cloud', 'DDP_Utility_CLI' );
+	// WP_CLI::add_command( 'cloud', 'DDP_Utility_CLI' );
 
 }

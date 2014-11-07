@@ -7,13 +7,14 @@ disabled_commands:
   - cron
   - comment
   - menu
+  - site
   - eval
   - widget
+  - search-replace
   - core multisite-install
   - site create
   - term
   - sidebar
   - shell
   - scaffold
-disabled_commands:
   - db drop

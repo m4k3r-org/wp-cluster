@@ -408,5 +408,6 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'G
   }
 
   /** Add the new commands */
-  WP_CLI::add_command( 'gcssync', 'GCS_SYNC_CLI' );
+  // WP_CLI::add_command( 'gcssync', 'GCS_SYNC_CLI' );
+
 }

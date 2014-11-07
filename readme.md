@@ -1,3 +1,11 @@
+### Cache Purging
+To purge Varnish cache, run the following commands. Be advised, Varnish will only accept purge notifications from accepted IP addresses.
+
+```
+curl -X PURGE discodonniepresents.com
+curl -X PURGE dayafter.com
+```
+
 ### Subtrees
 Add "subtree helpers" to your bash profile. (https://gist.github.com/andypotanin/e54a7322da3fa33ada7e) to simplify subtree adding/pulling/pushing:
 

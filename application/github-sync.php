@@ -128,7 +128,7 @@ namespace wpCloud\Stateless {
 			}
 		}
 
-		\WP_CLI::add_command( 'github', 'wpCloud\Stateless\GitHub_Command' );
+		// \WP_CLI::add_command( 'github', 'wpCloud\Stateless\GitHub_Command' );
 
 
 	}

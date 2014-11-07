@@ -16,7 +16,7 @@ CURRENT_COMMIT                ?=$(shell git rev-list -1 HEAD)
 CURRENT_TAG                   ?=$(shell git describe --always --tag)
 ACCOUNT_NAME		              ?=ddp
 STORAGE_DIR		                ?=/var/storage/
-STORAGE_BUCKET		            ?=gs://storage.discodonniepresents.com
+STORAGE_BUCKET		            ?=gs://discodonniepresents.com
 RDS_BUCKET		                ?=s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com
 SITE_LIST		                  ?=$(shell wp --allow-root site list --field=url --format=csv)
 
