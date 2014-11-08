@@ -27,7 +27,7 @@ namespace UsabilityDynamics\Theme {
      * @property version
      * @var string
      */
-    public static $version = '1.1.2';
+    public static $version = '0.1.2';
 
     /**
      * Textdomain String
@@ -245,7 +245,7 @@ namespace UsabilityDynamics\Theme {
 
       // do something with any errors, such as display on backend
       if( $_errors ) {
-        wp_die( '<pre>' . print_r( $_errors, true ) . '</pre>' );
+        // wp_die( '<pre>' . print_r( $_errors, true ) . '</pre>' );
       }
 
     }
@@ -256,13 +256,23 @@ namespace UsabilityDynamics\Theme {
      */
     public function init() {
 
-      if( !class_exists( 'UsabilityDynamics\LayoutEngine\Core' ) ) {
-        wp_die( 'UsabilityDynamics\LayoutEngine\Core not found.' );
-      }
+	    if( is_admin() ) {
+		    return;
+	    }
 
-      if( !class_exists( 'UsabilityDynamics\UI\Panel' ) ) {
-        wp_die( 'UsabilityDynamics\UI\Panel not found.' );
-      }
+	    try {
+
+		    if( !class_exists( 'UsabilityDynamics\LayoutEngine\Core' ) ) {
+			    throw new \Exception( 'UsabilityDynamics\LayoutEngine\Core not found.' );
+		    }
+
+		    if( !class_exists( 'UsabilityDynamics\UI\Panel' ) ) {
+			    throw new \Exception( 'UsabilityDynamics\UI\Panel not found.' );
+		    }
+
+	    } catch( \Exception $error ) {
+		    //wp_die( '<h1>Site Temporarily Unavailable</h1><p>Our aplogizes, but this site is currently not available.</p><p>The theme is currently being updated, please check back later.</p><!--' . $error->getMessage() . '-->' );
+	    }
 
       add_filter( 'the_content',  array( $this, 'the_content' ) );
       add_filter( 'content_url',  array( $this, 'content_url' ), 20, 2 );
@@ -487,8 +497,8 @@ namespace UsabilityDynamics\Theme {
 
       // @temp hardcoded, use get_template_directory_uri() to figure out correct URL that should be replaced.
 
-      $url = str_replace( 'themes/wp-splash/static/', 'vendor/usabilitydynamics/wp-splash/static/', $url );
-      $url = str_replace( 'themes/wp-splash/vendor/', 'vendor/usabilitydynamics/wp-splash/vendor/', $url );
+      $url = str_replace( 'themes/wp-splash/static/', 'vendor/themes/wp-splash/static/', $url );
+      $url = str_replace( 'themes/wp-splash/vendor/', 'vendor/themes/wp-splash/vendor/', $url );
 
       return $url;
 
