@@ -7,6 +7,8 @@ curl -X PURGE dayafter.com
 curl -X PURGE umesouthpadre.com
 ```
 
+Otherwise you may simply `make varnishPurge`.
+
 ### Subtrees
 Add "subtree helpers" to your bash profile. (https://gist.github.com/andypotanin/e54a7322da3fa33ada7e) to simplify subtree adding/pulling/pushing:
 
