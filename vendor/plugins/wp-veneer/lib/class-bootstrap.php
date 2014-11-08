@@ -240,7 +240,7 @@ namespace UsabilityDynamics\Veneer {
 	      /** Initialize Components. */
         $this->_components();
 
-        add_action( 'init', array( $this, 'init' ) );
+        add_action( 'setup_theme', array( $this, 'setup_theme' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_action( 'wp_head', array( $this, 'wp_head' ), 0, 200 );
@@ -292,18 +292,6 @@ namespace UsabilityDynamics\Veneer {
             $this->set( 'styles.available', false );
           }
 
-        }
-
-        if( is_dir( ABSPATH . 'wp-content/themes' ) ) {
-          register_theme_directory( ABSPATH . 'wp-content/themes' );
-        }
-
-        if( defined( 'WP_THEME_DIR' ) && is_dir( WP_THEME_DIR ) ) {
-          register_theme_directory( WP_THEME_DIR );
-        }
-
-        if( defined( 'WP_VENEER_THEME_DIR' ) && is_dir( WP_VENEER_THEME_DIR ) ) {
-          register_theme_directory( WP_VENEER_THEME_DIR );
         }
 
       }
@@ -575,11 +563,34 @@ namespace UsabilityDynamics\Veneer {
       }
 
 	    /**
+	     * Ran before theme is setup.
 	     *
+	     * This is the last action before wp_templating_constants() method is called in wp-settings.php which sets the following consants:
+	     * - TEMPLATEPATH
+	     * - STYLESHEETPATH
+	     * - WP_DEFAULT_THEME (if not set)
+	     *
+	     * The theme's functions.php is loaded next, followed by "after_setup_theme" action.
+	     *
+	     * @method setup_theme
 	     */
-      public function init() {
+      public function setup_theme() {
+	      global $wp_theme_directories;
 
-        // Only admin can see W3TC notices and errors
+	      if( defined( 'WP_THEME_DIR' ) && is_dir( WP_THEME_DIR ) ) {
+		      //register_theme_directory( WP_THEME_DIR );
+	      }
+
+	      if( defined( 'WP_VENEER_THEME_DIR' ) && is_dir( WP_VENEER_THEME_DIR ) ) {
+		      //register_theme_directory( WP_VENEER_THEME_DIR );
+	      }
+
+	      // Only register default theme directory if no other directories are registerd
+	      if( !$wp_theme_directories || (is_array( $wp_theme_directories ) && empty( $wp_theme_directories ) ) && is_dir( ABSPATH . 'wp-content/themes' ) ) {
+		      register_theme_directory( ABSPATH . 'wp-content/themes' );
+	      }
+
+	      // Only admin can see W3TC notices and errors
         // add_action('admin_notices', array( $this, 'admin_notices' ));
         // add_action('network_admin_notices', array( $this, 'admin_notices' ));
 
