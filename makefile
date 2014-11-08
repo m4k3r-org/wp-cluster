@@ -154,6 +154,7 @@ post-pull:
 	@curl -X PURGE dayafter.com
 	@curl -X PURGE umesouthpadre.com
 	@curl -X PURGE somethingwicked.com
+	@curl -X PURGE suncitymusicfestival.com
 
 # Install for Staging/Development
 #
