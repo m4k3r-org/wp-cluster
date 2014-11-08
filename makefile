@@ -145,6 +145,15 @@ merge:
 	@git fetch origin
 	@git merge --no-ff origin/production -m "Merging with production"
 
+# Actions to be performed after git pull
+#
+#
+post-pull:
+	@echo "Performing post-pull action."
+	@curl -X PURGE discodonniepresents.com
+	@curl -X PURGE dayafter.com
+	@curl -X PURGE umesouthpadre.com
+
 # Install for Staging/Development
 #
 # - We always dump /wp-vendor/composer/installers* to avoid any issues with installers.
