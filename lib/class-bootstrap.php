@@ -29,7 +29,7 @@ namespace UsabilityDynamics\Cluster {
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.4.3';
+      public static $version = '0.4.4';
 
       /**
        * Textdomain String
@@ -575,10 +575,10 @@ namespace UsabilityDynamics\Cluster {
       public function _admin_menu() {
 
         // Add Network Administration to Network and Site.
-        // add_submenu_page( 'settings.php', __( 'Site Provisioning', self::$text_domain ), __( 'Site Provisioning', self::$text_domain ), 'manage_network', 'network/settings.php?sites', array( $this, 'network_settings' ) );
-        // add_submenu_page( 'settings.php', __( 'Themes', self::$text_domain ), __( 'Themes', self::$text_domain ), 'manage_network', 'network/themes.php?security', array( $this, 'network_settings' ) );
-        // add_submenu_page( 'settings.php', __( 'Policy Delegation', self::$text_domain ), __( 'Policy Delegation', self::$text_domain ), 'manage_network', 'network/settings.php?policy', array( $this, 'network_settings' ) );
-        // add_submenu_page( 'settings.php', __( 'Security', self::$text_domain ), __( 'Security', self::$text_domain ), 'manage_network', 'network/settings.php?security', array( $this, 'network_settings' ) );
+        add_submenu_page( 'settings.php', __( 'Site Provisioning', self::$text_domain ), __( 'Site Provisioning', self::$text_domain ), 'manage_network', 'network/settings.php?sites', array( $this, 'network_settings' ) );
+        add_submenu_page( 'settings.php', __( 'Themes', self::$text_domain ), __( 'Themes', self::$text_domain ), 'manage_network', 'network/themes.php?security', array( $this, 'network_settings' ) );
+        add_submenu_page( 'settings.php', __( 'Policy Delegation', self::$text_domain ), __( 'Policy Delegation', self::$text_domain ), 'manage_network', 'network/settings.php?policy', array( $this, 'network_settings' ) );
+        add_submenu_page( 'settings.php', __( 'Security', self::$text_domain ), __( 'Security', self::$text_domain ), 'manage_network', 'network/settings.php?security', array( $this, 'network_settings' ) );
 
         // Site Only.
         if( current_filter() === 'admin_menu' ) {
@@ -589,8 +589,8 @@ namespace UsabilityDynamics\Cluster {
 	        //remove_submenu_page( 'tools.php', 'ms-delete-site.php' );
 
           // Add Network Administration.
-          // add_options_page( __( 'DNS', self::$text_domain ), __( 'DNS', self::$text_domain ), 'manage_network', 'network-dns', array( $this, 'network_settings' ) );
-          // add_options_page( __( 'Domains', self::$text_domain ), __( 'Domains', self::$text_domain ), 'manage_network', 'network-dns', array( $this, 'network_settings' ) );
+          add_options_page( __( 'DNS', self::$text_domain ), __( 'DNS', self::$text_domain ), 'manage_network', 'network-dns', array( $this, 'network_settings' ) );
+          add_options_page( __( 'Domains', self::$text_domain ), __( 'Domains', self::$text_domain ), 'manage_network', 'network-dns', array( $this, 'network_settings' ) );
 
           // Add Network Administration to Network and Site.
           add_menu_page( 'Network', 'Network', 'manage_network', 'settings.php', array( $this, 'network_settings' ) );
