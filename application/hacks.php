@@ -10,6 +10,18 @@
 
 add_action( 'init', function() {
 
+
+
+
+	die( '<pre>' . print_r( ini_get_all( 'mysql' ), true ) . '</pre>');
+
+	die('here');
+
+
+});
+
+add_action( 'init', function() {
+
 	$_requestHeaders = array();
 
 	foreach( $_SERVER as $key => $value ) {
