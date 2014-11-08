@@ -24,15 +24,15 @@ require( [
   'vendor/fancybox-2.1.5/jquery.fancybox',
   'vendor/fancybox-2.1.5/helpers/jquery.fancybox-media',
   '//wurfl.io/wurfl.js'
-], function( share, countdown, isTouch ){
+], function( share, countdown ){
   
   share.init();
   countdown.init();
 
   // Initialize top video popup
-  if( !window.WURFL.is_mobile )
-  {
-    $('header .video-popup' ).fancybox({
+  if( !window.WURFL.is_mobile ) {
+
+    var _video = $('header .video-popup' ).fancybox({
       maxWidth: 800,
       maxHeight: 600,
       fitToView: false,
@@ -40,17 +40,28 @@ require( [
       closeClick: false,
       padding: 0,
       margin: 0,
-
       helpers: {
         media: true
       },
-
       youtube: {
         autoplay: 1,
         hd: 1
       }
-    }).click();
+    });
+
+    // Store if video already seen in localStorage.
+    if(typeof(Storage) !== "undefined") {
+      if( localStorage.getItem( 'splashSeen' ) ) {
+        // console.log( 'video seen' );
+      } else {
+        _video.click();
+        localStorage.setItem( 'splashSeen', true );
+      }
+
+    } else {
+      _video.click();
+    }
+
   }
 
-
-} );
+});
