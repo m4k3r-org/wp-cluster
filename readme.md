@@ -13,51 +13,43 @@ Otherwise you may simply `make varnishPurge`.
 Add "subtree helpers" to your bash profile. (https://gist.github.com/andypotanin/e54a7322da3fa33ada7e) to simplify subtree adding/pulling/pushing:
 
 ```
-makeSubtree UsabilityDynamics/wp-veneer           vendor/plugins/wp-veneer
-makeSubtree UsabilityDynamics/wp-cluster          vendor/plugins/wp-cluster
-makeSubtree UsabilityDynamics/wp-elastic          vendor/plugins/wp-elastic
-makeSubtree UsabilityDynamics/wp-network          vendor/plugins/wp-network
-makeSubtree UsabilityDynamics/wp-github-updater   vendor/plugins/wp-network
-makeSubtree UsabilityDynamics/wp-splash           vendor/themes/wp-splash
-makeSubtree wpCloud/wp-vertical-edm               vendor/plugins/wp-vertical-edm
-makeSubtree wpCloud/wp-event-post-type            vendor/plugins/wp-event-post-type
-```
-
-```
-makeSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v2.0       v2.0
-makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-v1.0    v1.0
-makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-v2.0    v2.0
-makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-v1.0   v1.0
-makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-v2.0   v2.0
-makeSubtree DiscoDonniePresents/wp-spectacle-chmf  vendor/themes/wp-spectacle-chmf
-makeSubtree DiscoDonniePresents/wp-spectacle-mbp  vendor/themes/wp-spectacle-mbp
-makeSubtree DiscoDonniePresents/wp-spectacle-fbt  vendor/themes/wp-spectacle-fbt
-makeSubtree DiscoDonniePresents/wp-spectacle-isladelsol  vendor/themes/wp-spectacle-isladelsol
+makeSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v2.0       v2.0
+makeSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v1.0    v1.0
+makeSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v2.0    v2.0
+makeSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v1.0   v1.0
+makeSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
+makeSubtree DiscoDonniePresents/wp-spectacle-chmf         vendor/themes/wp-spectacle-chmf
+makeSubtree DiscoDonniePresents/wp-spectacle-mbp          vendor/themes/wp-spectacle-mbp
+makeSubtree DiscoDonniePresents/wp-spectacle-fbt          vendor/themes/wp-spectacle-fbt
+makeSubtree DiscoDonniePresents/wp-spectacle-isladelsol   vendor/themes/wp-spectacle-isladelsol
 ```
 
 Pull subtrees.
 ```
-pullSubtree UsabilityDynamics/wp-cluster            vendor/plugins/wp-cluster
-pullSubtree UsabilityDynamics/wp-veneer             vendor/plugins/wp-veneer
-pullSubtree UsabilityDynamics/wp-crm                vendor/plugins/wp-crm
-pullSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v1.0   v1.0
-pullSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v2.0   v2.0
-pullSubtree DiscoDonniePresents/wp-festival         vendor/themes/wp-festival-v2.0    v2.0
-pullSubtree DiscoDonniePresents/wp-spectacle-chmf   vendor/themes/wp-spectacle-chmf
-pullSubtree DiscoDonniePresents/wp-spectacle-mbp    vendor/themes/wp-spectacle-mbp
-pullSubtree DiscoDonniePresents/wp-spectacle-fbt    vendor/themes/wp-spectacle-fbt
-pullSubtree DiscoDonniePresents/wp-spectacle-isladelsol  vendor/themes/wp-spectacle-isladelsol
+pullSubtree UsabilityDynamics/wp-cluster                  vendor/plugins/wp-cluster
+pullSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
+pullSubtree UsabilityDynamics/wp-crm                      vendor/plugins/wp-crm
+pullSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v1.0   v1.0
+pullSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
+pullSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v2.0    v2.0
+pullSubtree DiscoDonniePresents/wp-spectacle-chmf         vendor/themes/wp-spectacle-chmf
+pullSubtree DiscoDonniePresents/wp-spectacle-mbp          vendor/themes/wp-spectacle-mbp
+pullSubtree DiscoDonniePresents/wp-spectacle-fbt          vendor/themes/wp-spectacle-fbt
+pullSubtree DiscoDonniePresents/wp-spectacle-isladelsol   vendor/themes/wp-spectacle-isladelsol
 ```
 
 Update subtrees.
 ```
-pushSubtree UsabilityDynamics/wp-cluster            vendor/plugins/wp-cluster
-pushSubtree UsabilityDynamics/wp-veneer             vendor/plugins/wp-veneer
-pushSubtree UsabilityDynamics/wp-crm                vendor/plugins/wp-crm
-pushSubtree DiscoDonniePresents/wp-spectacle-mbp    vendor/themes/wp-spectacle-mbp
-pushSubtree DiscoDonniePresents/wp-disco            vendor/themes/wp-disco-v2.0 v2.0
-pushSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v2.0   v2.0
-pushSubtree DiscoDonniePresents/wp-festival         vendor/themes/wp-festival-v2.0    v2.0
+pushSubtree UsabilityDynamics/wp-cluster                  vendor/plugins/wp-cluster
+pushSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
+pushSubtree UsabilityDynamics/wp-crm                      vendor/plugins/wp-crm
+pushSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v2.0       v2.0
+pushSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
+pushSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v2.0    v2.0
+pushSubtree DiscoDonniePresents/wp-spectacle-chmf         vendor/themes/wp-spectacle-chmf
+pushSubtree DiscoDonniePresents/wp-spectacle-mbp          vendor/themes/wp-spectacle-mbp
+pushSubtree DiscoDonniePresents/wp-spectacle-fbt          vendor/themes/wp-spectacle-fbt
+pushSubtree DiscoDonniePresents/wp-spectacle-isladelsol   vendor/themes/wp-spectacle-isladelsol
 ```
 
 Show installed libs:
