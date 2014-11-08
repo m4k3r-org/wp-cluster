@@ -19,11 +19,9 @@ namespace UsabilityDynamics\AMD {
       /**
        * Constructor
        *
-       * @param array $args
-       * @param null  $context
        */
-      function __construct( $args = array(), $context = null ) {
-
+      function __construct( $args = array() ) {
+        
         parent::__construct( $args );
           
         //** Adds settings to customizer */
@@ -39,30 +37,20 @@ namespace UsabilityDynamics\AMD {
         add_filter( 'customize_value_' . $this->name, array( $this, 'customize_value' ) );
         
       }
-
-      /**
-       * @param $value
-       */
+      
       public function customize_update( $value ) {
         $this->save_asset( $value );
       }
-
-      /**
-       * @param $default
-       *
-       * @return string
-       */
+      
       public function customize_value( $default ) {
         $post = $this->get_asset( $this->get( 'type' ) );
         return !empty( $post[ 'post_content' ] ) ? $post[ 'post_content' ] : '';
       }
-
+      
       /**
        * All our sections, settings, and controls are added here
        *
        * @param object $wp_customize Instance of the WP_Customize_Manager class
-       *
-       * @return object
        * @see wp-includes/class-wp-customize-manager.php
        */
       public function customize_register( $wp_customize ) {
@@ -89,8 +77,50 @@ namespace UsabilityDynamics\AMD {
           'priority' => 10
         )));
         
-        return $wp_customize;
+        
+        /*
+        // Minification Option.
+        $wp_customize->add_setting( 'custom-style-minify', array(
+          'default'       => false,
+          'type'          => 'theme_mod',
+          'capability'    => 'edit_theme_options',
+          'transport'     => 'postMessage'
+        ));
 
+        // Caching Option.
+        $wp_customize->add_setting( 'custom-style-cache', array(
+          'default'       => true,
+          'type'          => 'theme_mod',
+          'capability'    => 'edit_theme_options',
+          'transport'     => 'postMessage'
+        ));
+        
+        // Basic Checkbox.
+        $wp_customize->add_control( 'custom-style-minify', array(
+          'label'   => __( 'Minify Output' ),
+          'settings' => 'custom-style-minify',
+          'section' => 'style-customizer',
+          'type'    => 'checkbox',
+          'priority' => 20
+        ));
+
+        // Basic Checkbox.
+        $wp_customize->add_control( 'custom-style-cache', array(
+          'label'   => __( 'Allow Caching' ),
+          'settings' => 'custom-style-cache',
+          'section' => 'style-customizer',
+          'type'    => 'checkbox',
+          'priority' => 30
+        ));
+
+        // Make Setting Magical.
+        $wp_customize->get_setting( 'custom-style' )->transport = 'postMessage';
+        $wp_customize->get_setting( 'custom-style-minify' )->transport = 'postMessage';
+        $wp_customize->get_setting( 'custom-style-cache' )->transport = 'postMessage';
+        
+        //*/
+        
+        return $wp_customize;
       }
       
       /**
@@ -100,8 +130,11 @@ namespace UsabilityDynamics\AMD {
        * @author peshkov@UD
        */
       public function customize_live_preview() {
-        wp_enqueue_script( 'wp-amd-themecustomizer', plugins_url( '/static/scripts/wp.amd.customizer.style.js', dirname( __DIR__  ) ), array( 'jquery','customize-preview' ), '', true );
-        wp_localize_script( 'wp-amd-themecustomizer', 'wp_amd_themecustomizer', array( 'name' => $this->name, 'link_id' => 'wp-amd-' . $this->get( 'type' ) . '-css' ));
+        wp_enqueue_script( 'wp-amd-themecustomizer', WP_AMD_URL . 'scripts/wp.amd.customizer.style.js', array( 'jquery','customize-preview' ), '', true );
+        wp_localize_script( 'wp-amd-themecustomizer', 'wp_amd_themecustomizer', array(
+          'name' => $this->name,
+          'link_id' => 'wp-amd-' . $this->get( 'type' ) . '-css',
+        ) );
       }
     
     }

@@ -1,13 +1,11 @@
 <?php
 /**
- * WP-AMD Plugin.
+ *
  *
  */
 namespace UsabilityDynamics\AMD {
 
-  use UsabilityDynamics\Settings;
-
-  if( !class_exists( 'UsabilityDynamics\AMD\Bootstrap' ) ) {
+  if( !class_exists( '\UsabilityDynamics\AMD\Bootstrap' ) ) {
 
     class Bootstrap {
 
@@ -24,10 +22,10 @@ namespace UsabilityDynamics\AMD {
        * Textdomain String
        *
        * @public
-       * @property domain
+       * @property text_domain
        * @var string
        */
-      public $domain = false;
+      public $text_domain = false;
 
       /**
        * Singleton Instance Reference.
@@ -42,207 +40,77 @@ namespace UsabilityDynamics\AMD {
       public $option = array();
 
       /**
-       * Instantaite class.
+       *
        */
       private function __construct() {
         
-        $plugin_data = get_file_data( ( dirname( __DIR__ ) . '/wp-amd.php' ), array(
+        $plugin_data = \get_file_data( ( dirname( __DIR__ ) . '/wp-amd.php' ), array(
           'Name' => 'Plugin Name',
           'Version' => 'Version',
           'TextDomain' => 'Text Domain',
         ), 'plugin' );
         
-        $this->version  = trim( $plugin_data[ 'Version' ] );
-        $this->domain   = trim( $plugin_data[ 'TextDomain' ] );
-
-        // Initialize Settings.
-        $this->settings = new Settings( array(
+        $this->version = trim( $plugin_data['Version'] );
+        $this->text_domain = trim( $plugin_data['TextDomain'] );
+        
+        $this->settings = new \UsabilityDynamics\Settings( array(
           'key'  => 'wp_amd',
           'data' => array(
             'version' => $this->version,
-            'domain' => $this->domain,
+            'text_domain' => $this->text_domain,
             'assets' => array(
               'script' => array(
-                'type'          => 'script',
-                'disk_cache'    => apply_filters( 'wp-amd:script:disk_cache', false, $this ),
-                'extension'     => 'js',
-                'minify'        => false,
-                'admin_menu'    => true,
-                'load_in_head'  => false,
-                'permalink'     => apply_filters( 'wp-amd:script:path', 'assets/wp-amd.js', $this ),
-                'dependencies'  => apply_filters( 'wp-amd:script:dependencies', array(
-                  'jquery'  => array(
-                    'id'            => 'jquery',
-                    'name'          => 'jQuery',
-                    'infourl'       => 'http://jquery.com',
-                    'version'       => '2.1.0',
-                    'url'           => '//ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.0.min.js',
+                'type' => 'script',
+                'minify' => false,
+                'admin_menu' => true,
+                'load_in_head' => false,
+                'permalink' => "assets/wp-amd.js",
+                'dependencies' => array(
+                  'jquery' => array(
+                    'name'         => 'jQuery',
+                    'infourl'      => 'http://jquery.com',
+                    'url'          => 'http://code.jquery.com/ui/1.10.4/jquery-ui.min.js',
+                  ),
+                  'jquery-ui-autocomplete' => array(
+                    'name'         => 'jQuery UI Autocomplete',
+                    'infourl'      => 'http://jqueryui.com/autocomplete',
                   ),
                   'backbone'  => array(
-                    'id'            => 'backbone',
-                    'name'          => 'Backbone.js',
-                    'infourl'       => 'http://backbonejs.com',
-                    'url'           => 'http://backbonejs.org/backbone-min.js',
+                    'name'         => 'Backbone js',
+                    'infourl'      => 'http://backbonejs.com',
+                    'url'          => 'http://backbonejs.org/backbone-min.js',
                   ),
-                  'lodash' => array(
-                    'id'            => 'lodash',
-                    'name'          => 'Lodash',
-                    'infourl'       => 'http://lodash.com',
-                    'version'       => '2.4.1',
-                    'url'           => 'http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js',
+                  'json2' => array(
+                    'name'         => 'JSON for JS',
+                    'infourl'      => 'https://github.com/douglascrockford/JSON-js',
                   ),
-                  'knockout' => array(
-                    'id'            => 'knockout',
-                    'name'          => 'Knockout.js',
-                    'version'       => '2.2.1',
-                    'infourl'       => 'http://knockoutjs.com',
-                    'url'           => 'http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js',
+                  'thickbox' => array(
+                    'name'         => 'Thickbox',
+                    'infourl'      => 'http://codex.wordpress.org/ThickBox',
                   ),
-                  'udx-requires' => array(
-                    'id'            => 'udx-requires',
-                    'name'          => 'Requires.js (UDX)',
-                    'infourl'       => 'http://cdn.udx.io',
-                    'version'       => '4.0.0',
-                    'url'           => '//cdn.udx.io/udx.requires.js',
-                  ),
-                  'twitter-bootstrap' => array(
-                    'id'            => 'twitter-bootstrap',
-                    'name'          => 'Twitter Bootstrap',
-                    'infourl'       => 'http://getbootstrap.com/',
-                    'version'       => '3.1.1',
-                    'url'           => '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'
-                  ),
-                  'google-analytics' => array(
-                    'id'            => 'google-analytics',
-                    'name'          => 'Google Analytics',
-                    'infourl'       => 'http://google-analytics.com/',
-                    'version'       => '3.1.1',
-                    'url'           => '//www.google-analytics.com/urchin.js'
+                  'underscore' => array(
+                    'name'         => 'Underscore js',
+                    'infourl'      => 'http://underscorejs.org',
+                    'url'          => 'http://underscorejs.org/underscore-min.js',
                   )
-                ), $this ),
+                ),
               ),
               'style'  => array(
-                'type'          => 'style',
-                'minify'        => false,
-                'disk_cache'    => apply_filters( 'wp-amd:script:disk_cache', false, $this ),
-                'permalink'     => apply_filters( 'wp-amd:style:path', 'assets/wp-amd.css', $this ),
-                'extension'     => 'css',
-                'admin_menu'    => true,
-                'load_in_head'  => true,
-                'dependencies'  => apply_filters( 'wp-amd:style:dependencies', array(
-                  'twitter-bootstrap' => array(
-                    'id'            => 'twitter-bootstrap',
-                    'name'          => 'Twitter Bootstrap',
-                    'version'       => '3.1.1',
-                    'infourl'       => 'http://getbootstrap.com/',
-                    'url'           => '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'
-                  ),
-                  'normalize' => array(
-                    'id'            => 'normalize',
-                    'name'          => 'Normalize',
-                    'version'       => '3.0.1',
-                    'infourl'       => 'http://getbootstrap.com/',
-                    'url'           => '//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css'
-                  ),
-                  'fontawesome' => array(
-                    'id'            => 'fontawesome',
-                    'name'          => 'Font Awesome',
-                    'infourl'       => 'http://fontawesome.io/',
-                    'url'           => '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css'
-                  ),
-                ), $this ),
-              )
-            )
+                'type' => 'style',
+                'minify' => false,
+                'permalink' => "assets/wp-amd.css",
+                'admin_menu' => true,
+                'load_in_head' => true,
+                'dependencies' => array(),
+              ),
+            ),
           )
-        ));
-
-        // Set Dynamics.
-        $this->set( 'version',  $this->version );
-        $this->set( 'locale',   $this->domain );
-
-        // Initialize Style and Script classes.
-        $this->style    = new Style( $this->get( 'assets.style' ), $this );
-        $this->script   = new Script( $this->get( 'assets.script' ), $this );
-
-        // AJAX Update Handler.
-        add_action( 'wp_ajax_/amd/asset', array( $this, 'ajax_handler' ) );
-
-        // Handle dynamic URL identification for plugin assets.
-        add_filter( 'includes_url', array( $this, 'includes_url' ), 20, 2 );
-        add_filter( 'plugins_url', array( $this, 'plugins_url' ), 20, 2 );
-
-      }
-
-      /**
-       * Modify includes_url() to find valid location for AMD includes assets.
-       *
-       * @since 1.1.1
-       * @author potanin@UD
-
-       * @param string $url
-       * @param string $path
-       *
-       * @return string
-       */
-      public function plugins_url( $url = '', $path = '' ) {
-
-        return $url;
-
-      }
-
-      /**
-       * Modify includes_url() to find valid location for AMD includes assets.
-       *
-       * @since 1.1.1
-       * @author potanin@UD
-       * @param string $url
-       * @param string $path
-       *
-       * @return string
-       */
-      public function includes_url( $url = '', $path = '' ) {
-
-
-
-        return $url;
-
-      }
-
-      /**
-       * Handle Administrative AJAX Actions
-       *
-       * @author potanin@UD
-       * @method ajax_handler
-       */
-      public function ajax_handler() {
-
-        $_data = $_POST[ 'data' ];
-        $_type = $_POST[ 'type' ];
-
-        if( !$_type || !method_exists( $this->{$_type}, 'save_asset' ) ) {
-
-          return wp_send_json(array(
-            'ok' => false,
-            'message' => __( 'Unexpected error occured.', $this->get( 'locale' ) )
-          ));
-
-        }
-
-        if( !is_wp_error( $_revision = $this->{$_type}->save_asset( $_data ) ) ) {
-
-          return wp_send_json(array(
-            'ok' => false,
-            'revision' => $_revision,
-            'message' => __( 'Asset saved successfully.', $this->get( 'locale' ) )
-          ));
-
-        }
-
-        return wp_send_json(array(
-          'ok' => false,
-          'message' => __( 'Unable to save asset.', $this->get( 'locale' ) )
-        ));
-
+        ) );
+        
+        //** Init our scripts and styles classes */
+        $this->style = new Style( $this->get( 'assets.style' ) );
+        $this->script = new Script( $this->get( 'assets.script' ) );
+        
       }
 
       /**

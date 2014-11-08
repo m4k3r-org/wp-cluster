@@ -7,66 +7,55 @@ curl -X PURGE dayafter.com
 curl -X PURGE umesouthpadre.com
 ```
 
-Otherwise you may simply `make varnishPurge`.
-
 ### Subtrees
 Add "subtree helpers" to your bash profile. (https://gist.github.com/andypotanin/e54a7322da3fa33ada7e) to simplify subtree adding/pulling/pushing:
 
-#### Pull Subtree Changes
-
 ```
-pullSubtree UsabilityDynamics/wp-amd                      vendor/plugins/wp-amd
-pullSubtree UsabilityDynamics/wp-cluster                  vendor/plugins/wp-cluster
-pullSubtree UsabilityDynamics/wp-crm                      vendor/plugins/wp-crm
-pullSubtree UsabilityDynamics/wp-elastic                  vendor/plugins/wp-elastic
-pullSubtree UsabilityDynamics/wp-github-updater           vendor/plugins/wp-github-updater
-pullSubtree UsabilityDynamics/wp-network                  vendor/plugins/wp-network
-pullSubtree UsabilityDynamics/wp-social-stream            vendor/plugins/wp-social-stream
-pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
-pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v2.0      v2.0
-pullSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
-pullSubtree wpCloud/wp-vertical-edm                       vendor/plugins/wp-vertical-edm
-pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
-pullSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v1.0       v1.0
-pullSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v2.0       v2.0
-pullSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v1.0   v1.0
-pullSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
-pullSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v1.0    v1.0
-pullSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v2.0    v2.0
-pullSubtree DiscoDonniePresents/wp-spectacle-chmf         vendor/themes/wp-spectacle-chmf
-pullSubtree DiscoDonniePresents/wp-spectacle-mbp          vendor/themes/wp-spectacle-mbp
-pullSubtree DiscoDonniePresents/wp-spectacle-fbt          vendor/themes/wp-spectacle-fbt
-pullSubtree DiscoDonniePresents/wp-spectacle-isladelsol   vendor/themes/wp-spectacle-isladelsol
+makeSubtree UsabilityDynamics/wp-veneer           vendor/plugins/wp-veneer
+makeSubtree UsabilityDynamics/wp-cluster          vendor/plugins/wp-cluster
+makeSubtree UsabilityDynamics/wp-elastic          vendor/plugins/wp-elastic
+makeSubtree UsabilityDynamics/wp-network          vendor/plugins/wp-network
+makeSubtree UsabilityDynamics/wp-github-updater   vendor/plugins/wp-network
+makeSubtree UsabilityDynamics/wp-splash           vendor/themes/wp-splash
+makeSubtree wpCloud/wp-vertical-edm               vendor/plugins/wp-vertical-edm
+makeSubtree wpCloud/wp-event-post-type            vendor/plugins/wp-event-post-type
 ```
 
-#### Update Subtrees Dependencies
 ```
-pushSubtree UsabilityDynamics/wp-amd                      vendor/plugins/wp-amd
-pushSubtree UsabilityDynamics/wp-cluster                  vendor/plugins/wp-cluster
-pushSubtree UsabilityDynamics/wp-crm                      vendor/plugins/wp-crm
-pushSubtree UsabilityDynamics/wp-elastic                  vendor/plugins/wp-elastic
-pushSubtree UsabilityDynamics/wp-github-updater           vendor/plugins/wp-github-updater
-pushSubtree UsabilityDynamics/wp-network                  vendor/plugins/wp-network
-pushSubtree UsabilityDynamics/wp-social-stream            vendor/plugins/wp-social-stream
-pushSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
-pushSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v2.0      v2.0
-pushSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
-pushSubtree wpCloud/wp-vertical-edm                       vendor/plugins/wp-vertical-edm
-pushSubtree DiscoDonniePresents/wp-eventbrite             vendor/plugins/wp-eventbrite
-pushSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v1.0       v1.0
-pushSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v2.0       v2.0
-pushSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v1.0   v1.0
-pushSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
-pushSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v2.0    v2.0
-pushSubtree DiscoDonniePresents/wp-spectacle-chmf         vendor/themes/wp-spectacle-chmf
-pushSubtree DiscoDonniePresents/wp-spectacle-mbp          vendor/themes/wp-spectacle-mbp
-pushSubtree DiscoDonniePresents/wp-spectacle-fbt          vendor/themes/wp-spectacle-fbt
-pushSubtree DiscoDonniePresents/wp-spectacle-isladelsol   vendor/themes/wp-spectacle-isladelsol
+makeSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v2.0       v2.0
+makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-v1.0    v1.0
+makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-v2.0    v2.0
+makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-v1.0   v1.0
+makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-v2.0   v2.0
+makeSubtree DiscoDonniePresents/wp-spectacle-chmf  vendor/themes/wp-spectacle-chmf
+makeSubtree DiscoDonniePresents/wp-spectacle-mbp  vendor/themes/wp-spectacle-mbp
+makeSubtree DiscoDonniePresents/wp-spectacle-fbt  vendor/themes/wp-spectacle-fbt
+makeSubtree DiscoDonniePresents/wp-spectacle-isladelsol  vendor/themes/wp-spectacle-isladelsol
 ```
 
-Add Subtree for new dependency.
+Pull subtrees.
 ```
-git subtree add --prefix=vendor/themes/wp-splash-v1.0 git@github.com:UsabilityDynamics/wp-splash v1.0
+pullSubtree UsabilityDynamics/wp-cluster            vendor/plugins/wp-cluster
+pullSubtree UsabilityDynamics/wp-veneer             vendor/plugins/wp-veneer
+pullSubtree UsabilityDynamics/wp-crm                vendor/plugins/wp-crm
+pullSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v1.0   v1.0
+pullSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v2.0   v2.0
+pullSubtree DiscoDonniePresents/wp-festival         vendor/themes/wp-festival-v2.0    v2.0
+pullSubtree DiscoDonniePresents/wp-spectacle-chmf   vendor/themes/wp-spectacle-chmf
+pullSubtree DiscoDonniePresents/wp-spectacle-mbp    vendor/themes/wp-spectacle-mbp
+pullSubtree DiscoDonniePresents/wp-spectacle-fbt    vendor/themes/wp-spectacle-fbt
+pullSubtree DiscoDonniePresents/wp-spectacle-isladelsol  vendor/themes/wp-spectacle-isladelsol
+```
+
+Update subtrees.
+```
+pushSubtree UsabilityDynamics/wp-cluster            vendor/plugins/wp-cluster
+pushSubtree UsabilityDynamics/wp-veneer             vendor/plugins/wp-veneer
+pushSubtree UsabilityDynamics/wp-crm                vendor/plugins/wp-crm
+pushSubtree DiscoDonniePresents/wp-spectacle-mbp    vendor/themes/wp-spectacle-mbp
+pushSubtree DiscoDonniePresents/wp-disco            vendor/themes/wp-disco-v2.0 v2.0
+pushSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v2.0   v2.0
+pushSubtree DiscoDonniePresents/wp-festival         vendor/themes/wp-festival-v2.0    v2.0
 ```
 
 Show installed libs:
@@ -85,6 +74,23 @@ composer show --self
   {domain}.drop.ud-dev.com, i.e. dayafter.com becomes "dayafter-com.drop.ud-dev.com"
 * In addition, we have a database backup done daily, that can be restored by including the following text in your commit message:
   [drop refreshdb]
+
+### MySQL Backup and Restore
+Create Backup, either run "make snapshot" to create an automatic snapshot that uses branch name, or create a manually DB backup:
+```
+wp transient delete-all && wp cache flush
+wp db export edm_production.sql
+tar cvzf edm_production.sql.tgz edm_production.sql
+s3cmd put --no-check-md5 --reduced-redundancy edm_production.sql.tgz s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com/edm_production.sql.tgz
+mv  edm_production.sql**
+```
+
+To fetch backup locally and import it:
+```
+s3cmd get s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com/edm_production.sql.tgz
+tar xvf edm_production.sql.tgz
+wp db import edm_production.sql
+```
 
 
 ### Media Sync

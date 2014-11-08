@@ -1,14 +1,3 @@
-#### 2.3.0
-* Convert all database tables to MyISAM.
-* Convert all database tables to use utf8_general_ci character set.
-* Removed unused Grunt/Node modules, simplified Gruntfile.js.
-* Removed local-debug.php handling, should use environment variables.
-* Removed support for ENVIRONMENT variable, expected to use WP_ENV and/or PHP_ENV.
-* (WIP) Add wp-comment-post.php rewrite for posting comments instead of symlinking file.
-* (WIP) Added standard "save site" method to fix common issues such as upload paths/urls, transient paths, etc.
-* (WIP) Revert application structure to native-supported naming conventions, fixes problems with missing themes.
-* (WIP) Removed Grunt tasks in lieu of WP-CLI commands.
-
 #### 2.2.1
 * Disabled PageSpeed and NewRelic on admin.
 

@@ -149,12 +149,6 @@ merge:
 #
 #
 post-pull:
-	@make varnishPurge
-
-# Purge Varnish.
-#
-#
-varnishPurge:
 	@echo "Performing post-pull action."
 	@curl -X PURGE discodonniepresents.com
 	@curl -X PURGE dayafter.com

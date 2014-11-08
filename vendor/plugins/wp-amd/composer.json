@@ -1,7 +1,6 @@
 {
   "name": "usabilitydynamics/wp-amd",
   "version": "0.1.0",
-  "type": "wordpress-plugin",
   "homepage": "https://github.com/UsabilityDynamics/wp-amd",
   "keywords": [
     "amd",
@@ -29,10 +28,6 @@
     "usabilitydynamics/lib-ui": "master",
     "usabilitydynamics/lib-settings": "master",
     "usabilitydynamics/lib-requires": "master"
-  },
-  "require-dev": {
-    "usabilitydynamics/lib-wp-phpunit": "master",
-    "codeclimate/php-test-reporter": "dev-master"
   },
   "autoload": {
     "classmap": [ "lib" ]
