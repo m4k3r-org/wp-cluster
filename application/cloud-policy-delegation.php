@@ -36,6 +36,8 @@
  */
 namespace wpCloud\PolicyDelegation {
 
+	return;
+	
 	add_filter( 'default_site_option_active_sitewide_plugins', function ( $default ) {
 		return $default;
 	} );

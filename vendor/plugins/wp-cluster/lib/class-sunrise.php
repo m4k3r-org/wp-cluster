@@ -75,11 +75,6 @@ namespace UsabilityDynamics\Cluster {
 					}
 				}
 
-				/** Define our sunrise constant */
-				if( !defined( 'SUNRISE_LOADED' ) ) {
-					define( 'SUNRISE_LOADED', 1 );
-				}
-
 				/** Define our cookie constants. */
 				if( !defined( 'DOMAIN_CURRENT_SITE' ) ) {
 					define( 'DOMAIN_CURRENT_SITE', $current_blog->domain );
@@ -247,11 +242,6 @@ namespace UsabilityDynamics\Cluster {
 
 				/** Set the blog ID */
 				$wpdb->set_blog_id( $blog_id, $site_id );
-
-				if( isset( $_SERVER[ 'HTTP_X_UDS_DEBUG' ] ) && $_SERVER[ 'HTTP_X_UDS_DEBUG' ] === 'true' ) {
-					header( "X-Site-Id:$site_id" );
-					header( "X-Blog-Id:$blog_id" );
-				}
 
 			}
 

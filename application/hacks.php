@@ -9,16 +9,32 @@
  */
 
 add_action( 'init', function() {
+	global $current_blog, $current_site, $wp_veneer;
 
 
+	header( "X-Debug-siteID:$current_site->blog_id" );
+	header( "X-Debug-blogID:$current_site->id" );
 
+	die('get_home_path:' . get_home_path());
 
-	die( '<pre>' . print_r( ini_get_all( 'mysql' ), true ) . '</pre>');
+	//die( '<pre>' . print_r( ini_get_all( 'mysql' ), true ) . '</pre>');
 
-	die('here');
+	die( '<pre>' . print_r( $wp_veneer->config->show(), true ) . '</pre>');
 
 
 });
+
+function addActionResponseHeader() {
+
+	header( "X-Debug-Trace:" . timer_stop() . ':' . current_action()  );
+
+
+}
+add_action( 'init', 'addActionResponseHeader' );
+add_action( 'muplugins_loaded', 'addActionResponseHeader' );
+add_action( 'template_redirect', 'addActionResponseHeader' );
+add_action( 'plugins_loaded', 'addActionResponseHeader' );
+
 
 add_action( 'init', function() {
 
