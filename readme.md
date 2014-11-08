@@ -23,9 +23,12 @@ pullSubtree UsabilityDynamics/wp-github-updater           vendor/plugins/wp-gith
 pullSubtree UsabilityDynamics/wp-network                  vendor/plugins/wp-network
 pullSubtree UsabilityDynamics/wp-social-stream            vendor/plugins/wp-social-stream
 pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
+pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v2.0      v2.0
 pullSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
 pullSubtree wpCloud/wp-vertical-edm                       vendor/plugins/wp-vertical-edm
 pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
+pullSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v1.0       v1.0
+pullSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v2.0       v2.0
 pullSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v1.0   v1.0
 pullSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
 pullSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v1.0    v1.0
@@ -46,9 +49,11 @@ pushSubtree UsabilityDynamics/wp-github-updater           vendor/plugins/wp-gith
 pushSubtree UsabilityDynamics/wp-network                  vendor/plugins/wp-network
 pushSubtree UsabilityDynamics/wp-social-stream            vendor/plugins/wp-social-stream
 pushSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
+pushSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v2.0      v2.0
 pushSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
 pushSubtree wpCloud/wp-vertical-edm                       vendor/plugins/wp-vertical-edm
 pushSubtree DiscoDonniePresents/wp-eventbrite             vendor/plugins/wp-eventbrite
+pushSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v1.0       v1.0
 pushSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v2.0       v2.0
 pushSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
 pushSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v2.0    v2.0
