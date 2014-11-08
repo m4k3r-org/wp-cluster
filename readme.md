@@ -4,6 +4,7 @@ To purge Varnish cache, run the following commands. Be advised, Varnish will onl
 ```
 curl -X PURGE discodonniepresents.com
 curl -X PURGE dayafter.com
+curl -X PURGE umesouthpadre.com
 ```
 
 ### Subtrees
