@@ -74,7 +74,6 @@ namespace UsabilityDynamics\Cluster {
 					}
 				}
 
-
 				/** Define our cookie constants. */
 				if( !defined( 'DOMAIN_CURRENT_SITE' ) ) {
 					define( 'DOMAIN_CURRENT_SITE', $current_blog->domain );
