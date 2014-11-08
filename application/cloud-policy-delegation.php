@@ -36,8 +36,6 @@
  */
 namespace wpCloud\PolicyDelegation {
 
-	return;
-	
 	add_filter( 'default_site_option_active_sitewide_plugins', function ( $default ) {
 		return $default;
 	} );
@@ -55,32 +53,33 @@ namespace wpCloud\PolicyDelegation {
 	add_filter( 'default_site_option_illegal_names', '__return_null' );
 
 	add_filter( 'pre_option_active_plugins', function () {
-
+		return null;
 	} );
 
 	add_filter( 'pre_option_recently_edited', function () {
-
+		return null;
 	} );
 
 	add_filter( 'pre_option_template', function () {
-
+		return null;
 	} );
 
 	add_filter( 'pre_option_stylesheet', function () {
-
+		return null;
 	} );
 
 	add_filter( 'pre_option_upload_path', function () {
-
+		return null;
 	} );
 
 	// URL without a trailing slash.
 	add_filter( 'pre_option_upload_url_path', function () {
-
+		return null;
 	} );
 
 	// https://gist.githubusercontent.com/andypotanin/2de82e5d6502cc92a654/raw/_transient_plugin_slugs
 	add_filter( 'pre_site_transient_plugin_slugs', function () {
+		return null;
 
 	} );
 

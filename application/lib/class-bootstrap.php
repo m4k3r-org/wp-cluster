@@ -106,7 +106,7 @@ namespace EDM\Application {
 
       // Current Paths.
       $this->id         = 'edm'; // Utility::create_slug( __NAMESPACE__, array( 'separator' => '::' ) );
-      $this->root       = defined( 'WP_BASE_DIR' ) ? WP_BASE_DIR : get_home_path();
+      $this->root       = wp_normalize_path( 'WP_CONTENT_DIR' );
       $this->home       = home_url();
 
       // Core Filters
@@ -244,7 +244,7 @@ namespace EDM\Application {
 
 	  public function theme_root( $theme_root ) {
 
-		  if( defined( WP_THEME_DIR ) ) {
+		  if( defined( 'WP_THEME_DIR' ) && WP_THEME_DIR ) {
 			  return WP_THEME_DIR;
 		  }
 

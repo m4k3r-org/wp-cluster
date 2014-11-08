@@ -7,7 +7,6 @@
  * Version: 0.1.2
  * Author URI: http://usabilitydynamics.com
  */
-
 add_action( 'init', function() {
 	global $current_blog, $current_site, $wp_veneer;
 
@@ -15,11 +14,12 @@ add_action( 'init', function() {
 	header( "X-Debug-siteID:$current_site->blog_id" );
 	header( "X-Debug-blogID:$current_site->id" );
 
-	die('get_home_path:' . get_home_path());
+	//die( '<pre>' . print_r( get_defined_constants(), true ) . '</pre>');
+	//die('sdf');
 
 	//die( '<pre>' . print_r( ini_get_all( 'mysql' ), true ) . '</pre>');
 
-	die( '<pre>' . print_r( $wp_veneer->config->show(), true ) . '</pre>');
+	//die( '<pre>' . print_r( $wp_veneer->config->show(), true ) . '</pre>');
 
 
 });
@@ -30,11 +30,11 @@ function addActionResponseHeader() {
 
 
 }
+
 add_action( 'init', 'addActionResponseHeader' );
 add_action( 'muplugins_loaded', 'addActionResponseHeader' );
 add_action( 'template_redirect', 'addActionResponseHeader' );
 add_action( 'plugins_loaded', 'addActionResponseHeader' );
-
 
 add_action( 'init', function() {
 
