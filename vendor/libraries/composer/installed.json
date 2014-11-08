@@ -6,12 +6,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/composer/installers.git",
-            "reference": "09e2192a7cd08008e273355fddd38942d8de2992"
+            "reference": "27697a73b7a68b4a834e45fe560bea23ec3b3435"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/09e2192a7cd08008e273355fddd38942d8de2992",
-            "reference": "09e2192a7cd08008e273355fddd38942d8de2992",
+            "url": "https://api.github.com/repos/composer/installers/zipball/27697a73b7a68b4a834e45fe560bea23ec3b3435",
+            "reference": "27697a73b7a68b4a834e45fe560bea23ec3b3435",
             "shasum": ""
         },
         "replace": {
@@ -22,7 +22,7 @@
             "composer/composer": "1.0.*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2014-10-15 03:40:33",
+        "time": "2014-10-25 22:13:47",
         "type": "composer-installer",
         "extra": {
             "class": "Composer\\Installers\\Installer",
@@ -30,7 +30,7 @@
                 "dev-master": "1.0-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-0": {
                 "Composer\\Installers\\": "src/"
@@ -137,12 +137,12 @@
         "version_normalized": "0.3.2.0",
         "source": {
             "type": "git",
-            "url": "git@github.com:UsabilityDynamics/lib-utility",
+            "url": "git@github.com:usabilitydynamics/lib-utility",
             "reference": "0.3.2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://github.com/UsabilityDynamics/lib-utility/archive/0.3.2.zip",
+            "url": "https://github.com/usabilitydynamics/lib-utility/archive/0.3.2.zip",
             "reference": null,
             "shasum": null
         },
@@ -195,73 +195,17 @@
         ]
     },
     {
-        "name": "usabilitydynamics/lib-api",
-        "version": "0.5.0",
-        "version_normalized": "0.5.0.0",
-        "source": {
-            "type": "git",
-            "url": "git@github.com:UsabilityDynamics/lib-api",
-            "reference": "0.5.0"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://github.com/UsabilityDynamics/lib-api/archive/0.5.0.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "usabilitydynamics/lib-utility": "*"
-        },
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "lib"
-            ]
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Andy Potanin",
-                "email": "andy.potanin@usabilitydynamics.com",
-                "homepage": "http://usabilitydynamics.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Maxim Peshkov",
-                "email": "maxim.peshkov@usabilitydynamics.com",
-                "homepage": "http://usabilitydynamics.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Anton Korotkov",
-                "email": "anton.korotkov@usabilitydynamics.com",
-                "homepage": "http://usabilitydynamics.com",
-                "role": "Developer"
-            }
-        ],
-        "homepage": "http://github.com/usabilitydynamics/lib-api",
-        "keywords": [
-            "api"
-        ],
-        "support": {
-            "issues": "https://github.com/usabilitydynamics/lib-api/issues"
-        }
-    },
-    {
         "name": "usabilitydynamics/lib-model",
         "version": "0.4.0",
         "version_normalized": "0.4.0.0",
         "source": {
             "type": "git",
-            "url": "git@github.com:UsabilityDynamics/lib-model",
+            "url": "git@github.com:usabilitydynamics/lib-model",
             "reference": "0.4.0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://github.com/UsabilityDynamics/lib-model/archive/0.4.0.zip",
+            "url": "https://github.com/usabilitydynamics/lib-model/archive/0.4.0.zip",
             "reference": null,
             "shasum": null
         },
@@ -279,7 +223,8 @@
                     "static/scripts/udx.model.js",
                     "static/scripts/udx.model.validation.js"
                 ]
-            }
+            },
+            "installer-name": "lib-model"
         },
         "installation-source": "dist",
         "autoload": {
@@ -380,12 +325,12 @@
         "version_normalized": "0.2.2.0",
         "source": {
             "type": "git",
-            "url": "git@github.com:UsabilityDynamics/lib-settings",
+            "url": "git@github.com:usabilitydynamics/lib-settings",
             "reference": "0.2.2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://github.com/UsabilityDynamics/lib-settings/archive/0.2.2.zip",
+            "url": "https://github.com/usabilitydynamics/lib-settings/archive/0.2.2.zip",
             "reference": null,
             "shasum": null
         },
@@ -405,7 +350,8 @@
                 "files": [
                     "static/schemas/settings.json"
                 ]
-            }
+            },
+            "installer-name": "lib-settings"
         },
         "installation-source": "dist",
         "autoload": {
@@ -447,12 +393,12 @@
         "version_normalized": "0.2.1.0",
         "source": {
             "type": "git",
-            "url": "git@github.com:UsabilityDynamics/lib-ui",
+            "url": "git@github.com:usabilitydynamics/lib-ui",
             "reference": "0.2.1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://github.com/UsabilityDynamics/lib-ui/archive/0.2.1.zip",
+            "url": "https://github.com/usabilitydynamics/lib-ui/archive/0.2.1.zip",
             "reference": null,
             "shasum": null
         },
@@ -507,62 +453,12 @@
                 "role": "Developer"
             }
         ],
-        "homepage": "http://github.com/UsabilityDynamics/wp-ui",
+        "homepage": "http://github.com/usabilitydynamics/wp-ui",
         "keywords": [
             "css-editor",
             "editor",
             "script-editor",
             "ui"
         ]
-    },
-    {
-        "name": "usabilitydynamics/wp-meta-box",
-        "version": "4.3.6",
-        "version_normalized": "4.3.6.0",
-        "source": {
-            "type": "git",
-            "url": "git@github.com:UsabilityDynamics/wp-meta-box",
-            "reference": "4.3.6"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://github.com/UsabilityDynamics/wp-meta-box/archive/master.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "type": "wordpress-plugin",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "inc/fields",
-                "inc/common.php",
-                "inc/field.php",
-                "inc/helpers.php",
-                "inc/meta-box.php"
-            ]
-        }
-    },
-    {
-        "name": "usabilitydynamics/lib-carrington",
-        "version": "1.2.10",
-        "version_normalized": "1.2.10.0",
-        "source": {
-            "type": "git",
-            "url": "git@github.com:UsabilityDynamics/lib-carrington",
-            "reference": "master"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://github.com/usabilitydynamics/lib-carrington/archive/master.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "lib/classes"
-            ]
-        }
     }
 ]
