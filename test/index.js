@@ -5,5 +5,5 @@
 module.exports = {
   "Directory structure": require( './unit/structure' ),
   "Assets": require( './functional/assets' ),
-  "Rewrites": require( './functional/rewrites' ),
+  "Rewrites": require( './functional/rewrites' )
 };

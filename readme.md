@@ -43,6 +43,7 @@ pushSubtree DiscoDonniePresents/wp-spectacle-fbt          vendor/themes/wp-spect
 pushSubtree DiscoDonniePresents/wp-spectacle-isladelsol   vendor/themes/wp-spectacle-isladelsol
 ```
 
+Add Subtree for new dependency.
 ```
 git subtree add --prefix=vendor/themes/wp-splash-v1.0 git@github.com:UsabilityDynamics/wp-splash v1.0
 ```
@@ -63,23 +64,6 @@ composer show --self
   {domain}.drop.ud-dev.com, i.e. dayafter.com becomes "dayafter-com.drop.ud-dev.com"
 * In addition, we have a database backup done daily, that can be restored by including the following text in your commit message:
   [drop refreshdb]
-
-### MySQL Backup and Restore
-Create Backup, either run "make snapshot" to create an automatic snapshot that uses branch name, or create a manually DB backup:
-```
-wp transient delete-all && wp cache flush
-wp db export edm_production.sql
-tar cvzf edm_production.sql.tgz edm_production.sql
-s3cmd put --no-check-md5 --reduced-redundancy edm_production.sql.tgz s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com/edm_production.sql.tgz
-mv  edm_production.sql**
-```
-
-To fetch backup locally and import it:
-```
-s3cmd get s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com/edm_production.sql.tgz
-tar xvf edm_production.sql.tgz
-wp db import edm_production.sql
-```
 
 
 ### Media Sync

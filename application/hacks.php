@@ -80,7 +80,6 @@ add_action( 'template_redirect', function() {
 			nocache_headers();
 			header( 'pragma: no-cache' );
 			header( 'cache-control: no-cache, private' );
-			header( 'x-debug: hello3' );
 		}
 
 	if( function_exists( 'newrelic_ignore_transaction' ) ) {

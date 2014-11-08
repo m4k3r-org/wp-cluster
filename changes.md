@@ -1,6 +1,7 @@
 #### 2.3.0
 * Convert all database tables to MyISAM.
 * Convert all database tables to use utf8_general_ci character set.
+* Removed unused Grunt/Node modules, simplified Gruntfile.js.
 * (WIP) Added standard "save site" method to fix common issues such as upload paths/urls, transient paths, etc.
 * (WIP) Revert application structure to native-supported naming conventions, fixes problems with missing themes.
 * (WIP) Removed Grunt tasks in lieu of WP-CLI commands.
