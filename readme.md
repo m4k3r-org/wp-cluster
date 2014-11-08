@@ -33,15 +33,11 @@ makeSubtree DiscoDonniePresents/wp-spectacle-fbt  vendor/themes/wp-spectacle-fbt
 makeSubtree DiscoDonniePresents/wp-spectacle-isladelsol  vendor/themes/wp-spectacle-isladelsol
 ```
 
+Pull subtrees.
 ```
-pushSubtree UsabilityDynamics/wp-veneer             vendor/plugins/wp-veneer
-pushSubtree UsabilityDynamics/wp-cluster            vendor/plugins/wp-cluster
-pushSubtree DiscoDonniePresents/wp-spectacle-mbp    vendor/themes/wp-spectacle-mbp
-pushSubtree DiscoDonniePresents/wp-disco            vendor/themes/wp-disco-v2.0 v2.0
-pushSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v2.0   v2.0
-pushSubtree DiscoDonniePresents/wp-festival         vendor/themes/wp-festival-v2.0    v2.0
-```
-```
+pullSubtree UsabilityDynamics/wp-cluster            vendor/plugins/wp-cluster
+pullSubtree UsabilityDynamics/wp-veneer             vendor/plugins/wp-veneer
+pullSubtree UsabilityDynamics/wp-crm                vendor/plugins/wp-crm
 pullSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v1.0   v1.0
 pullSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v2.0   v2.0
 pullSubtree DiscoDonniePresents/wp-festival         vendor/themes/wp-festival-v2.0    v2.0
@@ -49,6 +45,17 @@ pullSubtree DiscoDonniePresents/wp-spectacle-chmf   vendor/themes/wp-spectacle-c
 pullSubtree DiscoDonniePresents/wp-spectacle-mbp    vendor/themes/wp-spectacle-mbp
 pullSubtree DiscoDonniePresents/wp-spectacle-fbt    vendor/themes/wp-spectacle-fbt
 pullSubtree DiscoDonniePresents/wp-spectacle-isladelsol  vendor/themes/wp-spectacle-isladelsol
+```
+
+Update subtrees.
+```
+pushSubtree UsabilityDynamics/wp-cluster            vendor/plugins/wp-cluster
+pushSubtree UsabilityDynamics/wp-veneer             vendor/plugins/wp-veneer
+pushSubtree UsabilityDynamics/wp-crm                vendor/plugins/wp-crm
+pushSubtree DiscoDonniePresents/wp-spectacle-mbp    vendor/themes/wp-spectacle-mbp
+pushSubtree DiscoDonniePresents/wp-disco            vendor/themes/wp-disco-v2.0 v2.0
+pushSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v2.0   v2.0
+pushSubtree DiscoDonniePresents/wp-festival         vendor/themes/wp-festival-v2.0    v2.0
 ```
 
 Show installed libs:
