@@ -103,12 +103,10 @@ define( [ 'module', 'require', 'exports', 'jquery' ], function( module, require,
 		}
 	};
 
-  console.log( countDown );
-
 	return {
 
 		init: function(){
-      console.debug( module.id, 'init' );
+      // console.debug( module.id, 'init' );
 			countDown.getElements();
 			countDown.getToDate();
 			countDown.startTimer();
