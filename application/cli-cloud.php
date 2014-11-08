@@ -110,6 +110,7 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 				$_template = wp_get_theme( get_option( 'template' ) );
 				$_stylesheet= wp_get_theme( get_option( 'stylesheet' ) );
 				$_status = '';
+				$_a_records = array();
 
 				$_templateActual = get_option( 'stylesheet' ) !== get_option( 'template' ) ? get_option( 'template' ) : null;
 
@@ -123,6 +124,10 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 
 				$_network = (array) wp_get_network( $site['site_id'] );
 
+				foreach( (array) dns_get_record( $site['domain'], DNS_A ) as $_record ) {
+					$_a_records[] = $_record[ 'ip' ];
+				}
+
 				$_status = $site['public'] ? 'Public' : null;
 
 				$_results[ $site['domain'] ] = array(
@@ -130,12 +135,13 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 					'network' => $_network['domain'],
 					'domain' => $site['domain'],
 					'ip' => gethostbyname( $site['domain'] ),
+					'dns' => join( ", ", $_a_records ),
 					'status' => $_status
 				);
 
 			}
 
-			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'id','network', 'domain', 'ip', 'status' ) );
+			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'id','network', 'domain', 'ip', 'dns', 'status' ) );
 
 			//die( '<pre>' . print_r( $_results, true ) . '</pre>');
 

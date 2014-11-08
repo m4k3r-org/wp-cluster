@@ -92,7 +92,7 @@
         "secure_auth_salt": "5lL^K_Y:V(Nqs yVl/24KG[[4>WZ.jpf8vL*p/.c)Qqf+b2xfP^#WR+p8h.qh3~.",
         "nonce_salt": ",nn=YYjbGs(y^{3+-ng(tFdew``+{!_,=Og>hPEi>8Ncvo/;cnnLgnu`Hru4D)_N",
         "force_ssl_admin": false,
-        "wp_elastic_service_index": "api.discodonniepresents.com/documents/",
+        "wp_elastic_service_index": "api.discodonniepresents.com/documents/v1/",
         "wp_elastic_service_url": "qccj-nxwm-etsk-niuu",
         "wp_elastic_secret_key": "qccj-nxwm-etsk-niuu-chdq-tvek-desl-izlf",
         "wp_elastic_public_key": "qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty",

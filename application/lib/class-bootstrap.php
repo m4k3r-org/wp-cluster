@@ -87,12 +87,13 @@ namespace EDM\Application {
     public function __construct() {
 	    global $wp_theme_directories;
 
+	    //die( '<pre>' . print_r( get_defined_constants(), true ) . '</pre>');
 	    //$cached_roots = get_site_transient( 'theme_roots' );
 	    //die( '<pre>' . print_r( $cached_roots , true ) . '</pre>');
       add_filter( 'wp_cache_themes_persistently', function( $current, $callee ) {
 	      //die('wp_cache_themes_persistently');
         //return false; // 6 hours
-	      return false;
+	      // return false;
         return 43200; // 6 hours
       }, 10, 2);
 
@@ -118,6 +119,7 @@ namespace EDM\Application {
       add_action( 'login_footer', array( &$this, 'login_footer' ), 30 );
       add_filter( 'login_headerurl', array( &$this, 'login_headerurl' ), 30 );
       add_filter( 'wp_mail_from', array( &$this, 'wp_mail_from' ), 10 );
+      add_filter( 'theme_root', array( &$this, 'theme_root' ), 10 );
       add_action( 'login_enqueue_scripts', array( $this, 'login_enqueue_scripts' ), 30 );
 
     }
@@ -239,6 +241,16 @@ namespace EDM\Application {
       }
 
     }
+
+	  public function theme_root( $theme_root ) {
+
+		  if( defined( WP_THEME_DIR ) ) {
+			  return WP_THEME_DIR;
+		  }
+
+		  return $theme_root;
+	  }
+
 
     /**
      * Replace Default Sender Email

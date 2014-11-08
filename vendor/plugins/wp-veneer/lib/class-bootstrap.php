@@ -826,29 +826,40 @@ namespace UsabilityDynamics\Veneer {
 		      $_ip = 'localhost';
 	      }
 
-        if( current_user_can( 'manage_options' ) ){
+        if( current_user_can( 'manage_options' ) ) {
           /** Add the style we need */ ?>
           <style> #wp-admin-bar-server_name > a:before { content: "\f177"; top: 2px; }</style> <?php
-          /** Add the menu items */
+
           $wp_admin_bar->add_menu( array(
             'id' => 'server_name',
             'parent' => 'top-secondary',
-            'title' => sprintf( __( 'Host: [%s]' ), gethostname() ),
+            'title' => sprintf( __( 'Host: %s' ), gethostname() ),
             'href' => '#'
-          ) );
+          ));
+
           $wp_admin_bar->add_menu( array(
             'id' => 'environment',
             'parent' => 'server_name',
-            'title' => sprintf( __( 'Branch: [%s]' ), $_environment ),
+            'title' => sprintf( __( 'Branch: %s' ), $_environment ),
             'href' => '#'
-          ) );
+          ));
+
+          $wp_admin_bar->add_menu( array(
+            'id' => 'db_host',
+            'parent' => 'server_name',
+            'title' => sprintf( __( 'DB: %s/%s' ), DB_HOST, DB_NAME ),
+            'href' => '#'
+          ));
+
           $wp_admin_bar->add_menu( array(
             'id' => 'ip_address',
             'parent' => 'server_name',
-            'title' => sprintf( __( 'IP: [%s]' ), $_ip ),
+            'title' => sprintf( __( 'IP: %s' ), $_ip ),
             'href' => '#'
           ) );
+
         }
+
       }
 
       /**
