@@ -10,7 +10,7 @@
  *  3) application/etc/wp-config/{FILE_NAME}
  *  4) All items defined in composer.json, in the settings object key
  *
- * @author Reid Williams
+ * @author potanin@UD
  * @class UsabilityDynamics\Veneer\Config
  */
 namespace UsabilityDynamics\Veneer {
@@ -22,7 +22,7 @@ namespace UsabilityDynamics\Veneer {
 			/**
 			 * Holds the arrayed location of our config files/folders
 			 */
-			private $config_folders = array();
+			private $configFolders = array();
 
 			/**
 			 * This variable defines the config files which will be autoloaded in the class, can be a
@@ -46,12 +46,47 @@ namespace UsabilityDynamics\Veneer {
 			/**
 			 * This variable will hold the config files that have already been included
 			 */
-			private $loaded = array();
+			private $loadedConfigs = array();
+
+			/**
+			 * @var array
+			 */
+			private $_settings = array();
+
+			/**
+			 * @var null
+			 */
+			public $siteDomain = null;
+
+			/**
+			 * @var null
+			 */
+			public $defaultProtocol = null;
+
+			/**
+			 * @var null
+			 */
+			public $baseDir = null;
+
+			/**
+			 * @var null
+			 */
+			public $composer_file = null;
+
+			/**
+			 * @var null
+			 */
+			public $env = null;
+
+			/**
+			 * @var array
+			 */
+			private $appliedConstants = array();
 
 			/**
 			 * This variable holds protected config variables (they cannot be defined in the config files)
 			 */
-			private $protected_variables = array(
+			private $protectedVariables = array(
 				'slug',
 				'file'
 			);
@@ -59,11 +94,8 @@ namespace UsabilityDynamics\Veneer {
 			/**
 			 * The constants that should be dynamically generated
 			 */
-			protected $protected_constants = array(
-				'WP_BASE_DIR',
-				'WP_BASE_DOMAIN',
+			protected $protectedConstants = array(
 				'WP_DEFAULT_PROTOCOL',
-				'WP_BASE_URL',
 				'WP_HOME',
 				'WP_CACHE',
 				'WP_ALLOW_MULTISITE',
@@ -81,143 +113,93 @@ namespace UsabilityDynamics\Veneer {
 			 * @throws \Exception Plain exception when there is an issue
 			 */
 			public function __construct( $base_dir = __DIR__, $do_stuff = true ) {
-				global $table_prefix, $wp_version;
+				global $table_prefix;
 
 				if ( ! ( is_bool( $do_stuff ) && $do_stuff ) ) {
-					return;
+					return array();
 				}
 
-				/** Make sure we have a valid http host */
-				if ( @isset( $_SERVER[ 'HTTP_HOST' ] ) ) {
-					$this->host = $_SERVER[ 'HTTP_HOST' ];
-				} else {
-					$_SERVER[ 'HTTP_HOST' ] = 'CLI';
+				$this->detectSiteRoot();
+
+				$this->handleCLI();
+
+				$this->processConfigFiles();
+
+				$this->_settings = array_merge( $this->_settings, array(
+					"wp_base_dir" => $this->baseDir,
+					"wp_site_domain" => isset( $_SERVER[ 'HTTP_HOST' ] ) ? $_SERVER[ 'HTTP_HOST' ] : 'localhost',
+					"wp_default_protocol" => $this->defaultProtocol = isset( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] == 'on' ? 'https' : 'http',
+					"wp_env" => isset( $_SERVER[ 'WP_ENV' ] ) ? $_SERVER[ 'WP_ENV' ] : 'production'
+				));
+
+				// Get settings
+				$this->_settings = array_merge( $this->_settings, Config::parseComposer( $this->composer_file ) );
+
+				// Flatted nested object/aray
+				$this->_settings = Config::flatten( $this->_settings );
+
+				// Fix value types.
+				$this->_settings = Config::normalize( $this->_settings );
+
+				// Replace dynamic patterns
+				$this->_settings = Config::replacePatterns( $this->_settings, $_SERVER );
+
+				// Fix value types.
+				$this->_settings = Config::normalize( $this->_settings, true );
+
+				// Intersect existing settings with settings passed with server.
+				$this->_settings = array_intersect_key( Config::normalize( $_SERVER, true ), $this->_settings );
+
+				// Apply consants and save them to object for debugging
+				$this->applyConstants();
+
+				// Set global variables.
+				$this->applyGlobals();
+
+				return $this;
+
+			}
+
+			/**
+			 * @param array $_settings
+			 */
+			private function applyGlobals( $_settings = array() ) {
+				global $table_prefix;
+
+				$_settings = isset( $_settings ) ? $_settings : $this->_settings;
+
+				/** Is this needed? */
+				if ( ! isset( $table_prefix ) ) {
+					$table_prefix = defined( 'DB_PREFIX' ) ? DB_PREFIX : 'wp_';
 				}
 
-				/** Fix HTTPS if we're proxied */
-				if ( @isset( $_SERVER[ 'HTTP_X_FORWARDED_PROTO' ] ) && strtolower( $_SERVER[ 'HTTP_X_FORWARDED_PROTO' ] ) == 'https' ) {
-					$_SERVER[ 'HTTPS' ] = 'on';
-				}
+			}
 
-				/** Set some local variables */
-				$base_dir = dirname( dirname( dirname( dirname( $base_dir ) ) ) );
+			/**
+			 * @param string $base_dir
+			 */
+			private function processConfigFiles( $base_dir = '' ) {
 
-				/** Bring in our local-debug file if we have it */
-				if ( is_file( $base_dir . '/local-debug.php' ) ) {
-					require_once( $base_dir . '/local-debug.php' );
-				}
-
-				// Normalize.
-				foreach ( (array) $_SERVER as $_key => $_value ) {
-
-					if ( $_value === 'true' ) {
-						$_SERVER[ $_key ] = true;
-					}
-
-					if ( $_value === 'false' ) {
-						$_SERVER[ $_key ] = false;
-					}
-
-					if ( is_int( $_value ) ) {
-						$_SERVER[ $_key ] = intval( $_value );
-					}
-
-				}
-
-				/** If we've got WP_CLI, we need to fix the base dir */
-				if ( defined( 'WP_CLI' ) && WP_CLI ) {
-					$_SERVER[ 'DOCUMENT_ROOT' ] = $base_dir;
-
-					if ( ! defined( 'WP_DEBUG' ) ) {
-						define( 'WP_DEBUG', false );
-					}
-
-					if ( ! defined( 'WP_DEBUG_DISPLAY' ) ) {
-						define( 'WP_DEBUG_DISPLAY', false );
-					}
-
-				}
-
-				if ( ! defined( 'WP_ENV' ) && isset( $_SERVER[ 'WP_ENV' ] ) ) {
-					define( 'WP_ENV', $_SERVER[ 'WP_ENV' ] );
-				}
-
-				if ( ! defined( 'PHP_ENV' ) && isset( $_SERVER[ 'PHP_ENV' ] ) ) {
-					define( 'PHP_ENV', $_SERVER[ 'PHP_ENV' ] );
-				}
-
-				if ( ! defined( 'DB_HOST' ) && isset( $_SERVER[ 'DB_HOST' ] ) ) {
-					define( 'DB_HOST', $_SERVER[ 'DB_HOST' ] );
-				}
-
-				if ( ! defined( 'DB_USER' ) && isset( $_SERVER[ 'DB_USER' ] ) ) {
-					define( 'DB_USER', $_SERVER[ 'DB_USER' ] );
-				}
-
-				if ( ! defined( 'DB_PASSWORD' ) && isset( $_SERVER[ 'DB_PASSWORD' ] ) ) {
-					define( 'DB_PASSWORD', $_SERVER[ 'DB_PASSWORD' ] );
-				}
-
-				if ( ! defined( 'DB_NAME' ) && isset( $_SERVER[ 'DB_NAME' ] ) ) {
-					define( 'DB_NAME', $_SERVER[ 'DB_NAME' ] );
-				}
-
-				if ( ! defined( 'DB_PREFIX' ) && isset( $_SERVER[ 'DB_PREFIX' ] ) ) {
-					define( 'DB_PREFIX', $_SERVER[ 'DB_PREFIX' ] );
-				}
-
-				if ( ! defined( 'WP_DEBUG' ) && isset( $_SERVER[ 'WP_DEBUG' ] ) ) {
-					define( 'WP_DEBUG', $_SERVER[ 'WP_DEBUG' ] );
-				}
-
-				if ( ! defined( 'WP_DEBUG_DISPLAY' ) && isset( $_SERVER[ 'WP_DEBUG_DISPLAY' ] ) ) {
-					define( 'WP_DEBUG_DISPLAY', $_SERVER[ 'WP_DEBUG_DISPLAY' ] );
-				}
-
-				// Just in case.
-				if ( ! defined( 'WP_VERSION' ) && isset( $wp_version ) ) {
-					define( 'WP_VERSION', $wp_version );
-				}
-
-				/** Check for any ENVIRONMENT variables first */
-				foreach ( (array) $_ENV as $key => $value ) {
-					if ( ! defined( strtoupper( $key ) ) ) {
-						define( strtoupper( $key ), $value );
-					}
-				}
-
-				/** Bring in our environment file if we need to */
-				if ( ! defined( 'ENVIRONMENT' ) && is_file( $base_dir . '/.environment' ) ) {
-					$environment = @file_get_contents( $base_dir . '/.environment' );
-					define( 'ENVIRONMENT', trim( $environment ) );
-				}
-
-				if ( ! defined( 'ENVIRONMENT' ) && defined( 'WP_ENV' ) && WP_ENV ) {
-					define( 'ENVIRONMENT', WP_ENV );
-				}
-
-				if ( ! defined( 'ENVIRONMENT' ) && defined( 'PHP_ENV' ) && PHP_ENV ) {
-					define( 'ENVIRONMENT', PHP_ENV );
-				}
+				$base_dir = $this->baseDir;
 
 				/** For these variables, make sure they exist */
-				if ( defined( 'ENVIRONMENT' ) ) {
-					$this->config_folders[ ] = rtrim( $base_dir, '/' ) . '/application/static/etc/wp-config/' . ENVIRONMENT . '/';
+				if ( $this->env ) {
+					$this->configFolders[ ] = rtrim( $this->baseDir, '/' ) . '/application/static/etc/wp-config/' . $this->env . '/';
 				}
 
-				$this->config_folders[ ] = rtrim( $base_dir, '/' ) . '/application/static/etc/wp-config/';
+				$this->configFolders[ ] = rtrim( $this->baseDir, '/' ) . '/application/static/etc/wp-config/';
 
-				foreach ( $this->config_folders as $key => $value ) {
+				foreach ( $this->configFolders as $key => $value ) {
 					if ( ! is_dir( $value ) ) {
-						unset( $this->config_folders[ $key ] );
+						unset( $this->configFolders[ $key ] );
 					}
 				}
 
 				/** Renumber the array */
-				$this->config_folders = array_values( $this->config_folders );
+				$this->configFolders = array_values( $this->configFolders );
 
 				/** If we don't have any config folders, bail */
-				if ( ! ( is_array( $this->config_folders ) && ! count( $this->config_folders ) ) ) {
+				if ( ! ( is_array( $this->configFolders ) && ! count( $this->configFolders ) ) ) {
 					/** Now, go through our autoloaded configs, and bring them in */
 					foreach ( $this->autoload_files as $autoload_file ) {
 						/** See if it needs to be global or local */
@@ -228,121 +210,77 @@ namespace UsabilityDynamics\Veneer {
 							$autoload_scope = 'local';
 						}
 						/** Include the files then */
-						$this->load_config( $autoload_file, $autoload_scope );
+						$this->get_config( $autoload_file, $autoload_scope );
 					}
+
 				}
 
-				/** Ensure protected constants are not defined before the configs */
-				foreach ( (array) $this->protected_constants as $protected_constant ) {
-					if ( defined( $protected_constant ) && ! isset( $_ENV[ $protected_constant ] ) ) {
-						throw new \Exception( 'The constant "' . $protected_constant . '" is defined - it\'s autogenerated. Please remove or comment out that define() line.' );
-					}
+			}
+
+			/**
+			 * @param string $base_dir
+			 */
+			private function handleCLI( $base_dir = '' ) {
+
+				/** If we've got WP_CLI, we need to fix the base dir */
+				// If wp-cli then we should take current working directory
+				if( defined( 'WP_CLI' ) ) {
+					$this->baseDir = $_SERVER[ 'PWD' ];
 				}
 
-				/** Now declare our dynamically generated constants for any URLs */
-				if ( ! defined( 'WP_BASE_DIR' ) ) {
-					define( 'WP_BASE_DIR', $base_dir );
-				}
+			}
 
-				if ( ! defined( 'WP_BASE_DOMAIN' ) ) {
-					define( 'WP_BASE_DOMAIN', $_SERVER[ 'HTTP_HOST' ] );
-				}
+			/**
+			 * @return null
+			 */
+			private function detectSiteRoot() {
 
-				if ( ! defined( 'WP_DEFAULT_PROTOCOL' ) ) {
-					define( 'WP_DEFAULT_PROTOCOL', @isset( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] == 'on' ? 'https' : 'http' );
-				}
-
-				if ( ! defined( 'WP_BASE_URL' ) ) {
-					define( 'WP_BASE_URL', WP_DEFAULT_PROTOCOL . '://' . WP_BASE_DOMAIN );
-				}
-
-				if ( ! defined( 'WP_HOME' ) ) {
-					define( 'WP_HOME', rtrim( WP_BASE_URL, '/' ) );
-				}
-
-				/** Ok, we need to make some other determinations based on the file structure */
-				if ( file_exists( WP_BASE_DIR . '/db.php' ) ) {
-					define( 'IS_MULTISITE', false );
-					define( 'IS_STANDALONE', false );
-					define( 'WP_ALLOW_MULTISITE', true );
-					define( 'MULTISITE', true );
-					define( 'SUBDOMAIN_INSTALL', true );
-					define( 'SUNRISE', 'on' );
-				} elseif ( file_exists( WP_BASE_DIR . '/sunrise.php' ) ) {
-					define( 'IS_MULTISITE', true );
-					define( 'IS_STANDALONE', false );
-					define( 'WP_ALLOW_MULTISITE', true );
-					define( 'MULTISITE', true );
-					define( 'SUBDOMAIN_INSTALL', true );
-					define( 'SUNRISE', 'on' );
-				} else {
-					define( 'IS_MULTISITE', false );
-					define( 'IS_STANDALONE', true );
-					define( 'WP_ALLOW_MULTISITE', false );
-					define( 'MULTISITE', false );
-					define( 'SUBDOMAIN_INSTALL', false );
-					define( 'SUNRISE', 'off' );
-				}
-
-				/** Ok, if we're on a production system, we should assume we're caching */
-				if ( defined( 'ENVIRONMENT' ) && ENVIRONMENT == 'production' && ! defined( 'WP_CACHE' ) ) {
+				// If web-server that we can trust document root most of the time
+				if( isset( $_SERVER[ 'DOCUMENT_ROOT' ] ) ) {
+					$this->baseDir = $_SERVER[ 'DOCUMENT_ROOT' ];
 				}
 
 				/** Finally, go through the composer.json file and add all the configs there */
 				if ( is_file( $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json' ) ) {
-					$composer_file = $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json';
-				} else if ( is_file( $base_dir . '/composer.json' ) ) {
-					$composer_file = $base_dir . '/composer.json';
+					$this->baseDir = $_SERVER[ 'DOCUMENT_ROOT' ];
+					$this->composer_file = $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json';
+				} else if ( is_file( $this->baseDir . '/composer.json' ) ) {
+					$this->composer_file = $this->baseDir . '/composer.json';
 				}
 
-				// Get settings
-				$_settings = isset( $composer_file ) ? self::_parse_composer( $composer_file ) : array();
 
-				// Flatted nested object/aray
-				$_settings = Config::flatten( $_settings );
+				return $this->baseDir;
 
-				// Fix value types.
-				$_settings = Config::normalize( $_settings );
+			}
 
-				// Remove blanks.
-				$_settings = array_filter( $_settings, create_function( '$a', 'return $a!=="";' ) );
+			/**
+			 * Loop through them, declaring them if they don't already previously exist
+			 *
+			 * @param $_settings
+			 *
+			 * @return array
+			 */
+			private function applyConstants( $_settings = null ) {
 
-				/** Loop through them, declaring them if they don't already previously exist */
+				// Save original consants.
+				$_originalConstants = get_defined_constants();
+
+				$_settings = isset( $_settings ) ? $_settings : $this->_settings;
+
 				foreach ( (array) $_settings as $key => $value ) {
-					if ( ! defined( strtoupper( $key ) ) ) {
-						$matches = array();
-						/** If we have a {}, we're looking for a constant */
-						if ( preg_match_all( '/{.*?}/i', $value, $matches ) ) {
-							$patterns = $matches[ 0 ];
-							foreach ( $patterns as $pattern ) {
-								$constant = strtoupper( trim( $pattern, '{}' ) );
-								if ( ! defined( $constant ) ) {
-									/** Trigger a notice */
-									trigger_error( 'The constant "' . $constant . '" is not defined, but it is used in our composer config between two {} characters for the variable "' . $key . '".', E_USER_NOTICE );
-								} else {
-									/** Go ahead and string replace the value */
-									$value = str_ireplace( $pattern, constant( $constant ), $value );
-								}
-							}
 
-						}
-						define( strtoupper( $key ), $value );
-					} else {
-						/** Check to see if it's a protected constant */
-						if ( in_array( strtoupper( $key ), $this->protected_constants ) ) {
-							throw new \Exception( 'The constant "' . $this->protected_constants . '" is defined in composer.json - it\'s autogenerated. Please remove that line.' );
-						}
+					/** Ensure protected constants are not defined before the configs */
+					if( in_array( $key, $this->protectedConstants ) ) {
+						continue;
 					}
+
+					if( !defined( $key ) ) {
+						define( $key, $value );
+					}
+
 				}
 
-				/** Is this needed? */
-				if ( ! isset( $table_prefix ) ) {
-					$table_prefix = defined( 'DB_PREFIX' ) ? DB_PREFIX : 'wp_';
-				}
-
-				/** Return this own object */
-
-				return $this;
+				return $this->appliedConstants = array_diff_assoc( get_defined_constants(), $_originalConstants );
 
 			}
 
@@ -353,7 +291,7 @@ namespace UsabilityDynamics\Veneer {
 			 *
 			 * @return array
 			 */
-			function flatten( $array = array(), $prefix = '', $seperator = '_' ) {
+			public function flatten( $array = array(), $prefix = '', $seperator = '_' ) {
 				$result = array();
 
 				foreach ( $array as $key => $value ) {
@@ -369,7 +307,43 @@ namespace UsabilityDynamics\Veneer {
 
 			}
 
-			function normalize( $array = array() ) {
+			/**
+			 * Perform multiple pattern match searches.
+			 *
+			 * @param array $_settings
+			 *
+			 * @return array
+			 */
+			public function replacePatterns( $_settings = array(), $extraPatterns = array() ) {
+
+				$_found_pattern = false;
+				$_patternMap = array_merge( (array) $_settings, array_change_key_case( $extraPatterns, false ) );
+
+				foreach ( (array) $_settings as $key => $value ) {
+
+					if( preg_match_all( '/{([a-zA-Z\_\-]*?)}/ie', $value, $matches ) ) {
+						$_found_pattern = true;
+						$_settings[ $key ] = preg_replace('/{([a-zA-Z\_\-]*?)}/ie','$_patternMap["$1"]',$value);
+					}
+
+				}
+
+				if( $_found_pattern ) {
+					$_settings = self::replacePatterns( $_settings );
+				}
+
+				return $_settings;
+
+			}
+
+			/**
+			 * @param array $array
+			 *
+			 * @param bool $upper_key_case
+			 *
+			 * @return array
+			 */
+			public function normalize( $array = array(), $upper_key_case = false ) {
 
 				foreach ( (array) $array as $key => $value ) {
 
@@ -386,10 +360,16 @@ namespace UsabilityDynamics\Veneer {
 					}
 
 					if ( is_int( $value ) ) {
-						// $array[ $key ] = (int) $value;
+						$array[ $key ] = intval( $value );
 					}
 
 				}
+
+				// Remove blanks.
+				$array = array_filter( $array, create_function( '$a', 'return $a!=="";' ) );
+
+				// Set array key case
+				$array = array_change_key_case( $array, $upper_key_case );
 
 				return $array;
 
@@ -411,15 +391,15 @@ namespace UsabilityDynamics\Veneer {
 			 * @return mixed False on failure, config array on success
 			 */
 			private function get_config( $config, $value = false ) {
-				if ( isset( $this->loaded[ $config ] ) && is_array( $this->loaded[ $config ] ) && isset( $this->loaded[ $config ][ 'vars' ] ) ) {
-					if ( is_string( $value ) && ! empty( $value ) && isset( $this->loaded[ $config ][ 'vars' ][ $value ] ) ) {
-						return $this->loaded[ $config ][ 'vars' ][ $value ];
+				if ( isset( $this->loadedConfigs[ $config ] ) && is_array( $this->loadedConfigs[ $config ] ) && isset( $this->loadedConfigs[ $config ][ 'vars' ] ) ) {
+					if ( is_string( $value ) && ! empty( $value ) && isset( $this->loadedConfigs[ $config ][ 'vars' ][ $value ] ) ) {
+						return $this->loadedConfigs[ $config ][ 'vars' ][ $value ];
 					} else {
 						/** If there is only one item, return it directly */
-						if ( count( $this->loaded[ $config ][ 'vars' ] ) == 1 ) {
-							return array_pop( array_values( $this->loaded[ $config ][ 'vars' ] ) );
+						if ( count( $this->loadedConfigs[ $config ][ 'vars' ] ) == 1 ) {
+							return array_pop( array_values( $this->loadedConfigs[ $config ][ 'vars' ] ) );
 						} else {
-							return $this->loaded[ $config ][ 'vars' ];
+							return $this->loadedConfigs[ $config ][ 'vars' ];
 						}
 					}
 				} else {
@@ -433,11 +413,11 @@ namespace UsabilityDynamics\Veneer {
 			 * @author potanin@UD
 			 *
 			 * @param null $composer_file
-			 * @method _parse_composer
+			 * @method parseComposer
 			 *
 			 * @return array
 			 */
-			private function _parse_composer( $composer_file = null ) {
+			public function parseComposer( $composer_file = null ) {
 
 				try {
 
@@ -465,6 +445,7 @@ namespace UsabilityDynamics\Veneer {
 						} else {
 							$_settings[ $key ] = $value;
 						}
+
 					}
 
 				}
@@ -487,7 +468,7 @@ namespace UsabilityDynamics\Veneer {
 				}
 				$files = array();
 				/** Loop through our config folders, stopping at the first one we can find and include */
-				foreach ( $this->config_folders as $config_folder ) {
+				foreach ( $this->configFolders as $config_folder ) {
 					if ( is_dir( $config_folder . $file ) ) {
 						// echo 'Directory: ' . $config_folder . $file . "\r\n";
 						$config_folder = $config_folder . $file . DIRECTORY_SEPARATOR;
@@ -547,7 +528,7 @@ namespace UsabilityDynamics\Veneer {
 			 * @param array $file File definition array as done in 'load_config'
 			 */
 			private function _try_load_config_file( $slug, $file ) {
-				if ( ! in_array( $slug, array_keys( $this->loaded ) ) ) {
+				if ( ! in_array( $slug, array_keys( $this->loadedConfigs ) ) ) {
 					/** Now, require the file, base on the type it is */
 					if ( substr( $file[ 'file' ], strlen( $file[ 'file' ] ) - 4, 4 ) == '.php' ) {
 						require_once( $file[ 'file' ] );
@@ -565,7 +546,7 @@ namespace UsabilityDynamics\Veneer {
 						}
 					}
 					/** Go through and unset the protected variables */
-					foreach ( $this->protected_variables as $protected_variable ) {
+					foreach ( $this->protectedVariables as $protected_variable ) {
 						if ( isset( $file[ 'vars' ][ $protected_variable ] ) ) {
 							unset( $file[ 'vars' ][ $protected_variable ] );
 						}
@@ -576,8 +557,8 @@ namespace UsabilityDynamics\Veneer {
 							$GLOBALS[ $key ] = $value;
 						}
 					}
-					/** No, add it to our loaded array */
-					$this->loaded[ $slug ] = $file;
+					/** No, add it to our loadedConfigs array */
+					$this->loadedConfigs[ $slug ] = $file;
 				}
 			}
 
@@ -589,7 +570,7 @@ namespace UsabilityDynamics\Veneer {
 	 * If we don't have the following defined, we should assume that we're directly including this file,
 	 * so we should initialize it
 	 */
-	if ( ! defined( 'WP_BASE_DOMAIN' ) && ! defined( 'WP_DEBUG' ) && ! defined( 'AUTH_KEY' ) ) {
+	if ( !isset( $wp_veneer ) || !isset( $wp_veneer->config ) ) {
 		global $wp_veneer;
 
 		/** Init our config object */

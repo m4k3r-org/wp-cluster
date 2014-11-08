@@ -57,15 +57,12 @@
         "file_mods": false
       },
       "empty_trash_days": 7,
-      "force_ssl_admin": false,
       "github_updater_token": "fa1942c87f9b2a7314636d520d8697fb0d9447f3",
       "logged_in_key": "`KQt@)%vulkpZL!>Qr{?q7|R=Hb;chUyfYZc8ABh|uqsTFIn Lfd{yw.<~OkQ[yz|",
       "muplugindir": "{wp_base_dir}/application",
       "nonce_key": "8>q3B0#-&t9ApsKnDXB)R[?o@R]U~|A~,&3u~|c[^6IvH+XA&MdX4^{%$t~`/`QT",
       "nonce_salt": ",nn=YYjbGs(y^{3+-ng(tFdew``+{!_,=Og>hPEi>8Ncvo/;cnnLgnu`Hru4D)_N",
       "plugindir": "{wp_base_dir}/vendor/plugins",
-      "savequeries": false,
-      "script_debug": false,
       "secure_auth_key": "Vc#0W9#bv^F/TX-4b)H`T:N0 oDZYVr|shf!>D|,DT41^R;?Wmnm-.K(/~ucG>3p",
       "secure_auth_salt": "5lL^K_Y:V(Nqs yVl/24KG[[4>WZ.jpf8vL*p/.c)Qqf+b2xfP^#WR+p8h.qh3~.",
       "sitecookiepath": "/manage",
@@ -73,16 +70,15 @@
       "uploads": "{uploadblogsdir}/media",
       "w3tc_dir": "{wp_plugin_dir}/w3-total-cache",
       "wp": {
-        "content_dir": "{wp_base_dir}",
-        "content_url": "{wp_base_url}",
-        "debug": false,
-        "debug_display": false,
-        "debug_log": false,
+        "content_dir": "{document_root}",
+        "content_url": "{site_url}",
         "default_theme": "wp-splash",
-        "elastic_public_key": "qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty",
-        "elastic_secret_key": "qccj-nxwm-etsk-niuu-chdq-tvek-desl-izlf",
-        "elastic_service_index": "api.discodonniepresents.com/documents/v1/",
-        "elastic_service_url": "qccj-nxwm-etsk-niuu",
+        "elastic": {
+          "public_key": "qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty",
+          "secret_key": "qccj-nxwm-etsk-niuu-chdq-tvek-desl-izlf",
+          "service_index": "api.discodonniepresents.com/documents/v1/",
+          "service_url": "qccj-nxwm-etsk-niuu"
+        },
         "logs_dir": "{wp_base_dir}/application/.logs",
         "max_memory_limit": "{wp_memory_limit}",
         "memory_limit": "512M",
@@ -90,12 +86,14 @@
         "plugin_url": "{wp_vendor_url}/plugins",
         "post_revisions": 30,
         "siteurl": "{wp_vendor_url}/libraries/automattic/wordpress",
-        "social_stream_instagram_access_token": "44220099.ec4c95b.d2c3acc28b1f432884be1ddcd8733499",
-        "social_stream_instagram_client_id": "ec4c95bf89754e1d8fd3581edba04808",
-        "social_stream_twitter_access_token": "101485804-shGXjN0D43uU7CtCBHaML5K8uycHqgvEMd5gHtrY",
-        "social_stream_twitter_access_token_secret": "YcCOXWu1bidAv1APgRAd8ATNBl2UmTDXFkoGzicJny5aw",
-        "social_stream_twitter_consumer_key": "iofHkaMCCzxR12Vt9vUL1g",
-        "social_stream_twitter_consumer_secret": "jyzSl4zg26HaBP9eefTWZHjojgWUMxk7XUyJ8J3qiqY",
+        "social_stream": {
+          "instagram_access_token": "44220099.ec4c95b.d2c3acc28b1f432884be1ddcd8733499",
+          "instagram_client_id": "ec4c95bf89754e1d8fd3581edba04808",
+          "twitter_access_token": "101485804-shGXjN0D43uU7CtCBHaML5K8uycHqgvEMd5gHtrY",
+          "twitter_access_token_secret": "YcCOXWu1bidAv1APgRAd8ATNBl2UmTDXFkoGzicJny5aw",
+          "twitter_consumer_key": "iofHkaMCCzxR12Vt9vUL1g",
+          "twitter_consumer_secret": "jyzSl4zg26HaBP9eefTWZHjojgWUMxk7XUyJ8J3qiqY"
+        },
         "ssl_port": 443,
         "system_directory": "{wp_vendor_dir}/libraries/automattic/wordpress",
         "theme_dir": "{wp_vendor_dir}/themes",
@@ -105,14 +103,14 @@
         "vendor_dir": "{wp_base_dir}/vendor",
         "vendor_library_dir": "{wp_vendor_dir}/libraries",
         "vendor_library_url": "{wp_vendor_url}/libraries",
-        "vendor_url": "{wp_base_url}/vendor",
+        "vendor_url": "{site_url}/vendor",
         "veneer_public": "{wp_veneer_storage}/public/{wp_base_domain}",
         "veneer_storage": "storage",
         "veneer_theme_dir": "{wp_veneer_storage}/themes"
       },
       "wpmu": {
         "plugin_dir": "{wp_base_dir}/application",
-        "plugin_url": "{wp_base_url}/application"
+        "plugin_url": "{site_url}/application"
       }
     }
   },

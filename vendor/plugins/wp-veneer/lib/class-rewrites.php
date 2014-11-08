@@ -214,16 +214,28 @@ namespace UsabilityDynamics\Veneer {
         return $uri;
       }
 
-      /**
-       * Fix carrington build stuff
-       */
-      function cfct_build_module_urls( $urls ){
-        foreach( $urls as &$url ){
-          if( defined( 'WP_BASE_DIR' ) && stripos( $url, WP_BASE_DIR ) === 0 ){
-            $url = str_ireplace( WP_BASE_DIR, WP_BASE_URL, $url );
+	    /**
+	     * Fix carrington build stuff
+	     *
+	     * @tdo Make sure this still works. It used to use WP_BASE_DOMAIN and WP_BASE_URL
+	     *
+	     * @param array $urls
+	     *
+	     * @return array
+	     */
+      function cfct_build_module_urls( $urls =array() ) {
+	      global $current_blog;
+
+	      $absoluteUrl = untrailingslashit( $current_blog->domain ) . $current_blog->path;
+
+	      foreach( $urls as &$url ){
+          if( defined( 'WP_SITEURL' ) && WP_SITEURL && stripos( $url, $absoluteUrl ) === 0 ) {
+            $url = str_ireplace( ABSPATH, WP_SITEURL, $absoluteUrl );
           }
         }
+
         return $urls;
+
       }
 
       /**
