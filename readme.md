@@ -12,11 +12,18 @@ Otherwise you may simply `make varnishPurge`.
 ### Subtrees
 Add "subtree helpers" to your bash profile. (https://gist.github.com/andypotanin/e54a7322da3fa33ada7e) to simplify subtree adding/pulling/pushing:
 
-Pull subtrees.
+#### Pull Subtree Changes
+
 ```
+pullSubtree UsabilityDynamics/wp-amd                      vendor/plugins/wp-amd
 pullSubtree UsabilityDynamics/wp-cluster                  vendor/plugins/wp-cluster
-pullSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
 pullSubtree UsabilityDynamics/wp-crm                      vendor/plugins/wp-crm
+pullSubtree UsabilityDynamics/wp-elastic                  vendor/plugins/wp-elastic
+pullSubtree UsabilityDynamics/wp-github-updater           vendor/plugins/wp-github-updater
+pullSubtree UsabilityDynamics/wp-network                  vendor/plugins/wp-network
+pullSubtree UsabilityDynamics/wp-social-stream            vendor/plugins/wp-social-stream
+pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
+pullSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
 pullSubtree wpCloud/wp-vertical-edm                       vendor/plugins/wp-vertical-edm
 pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
 pullSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v1.0   v1.0
@@ -29,13 +36,19 @@ pullSubtree DiscoDonniePresents/wp-spectacle-fbt          vendor/themes/wp-spect
 pullSubtree DiscoDonniePresents/wp-spectacle-isladelsol   vendor/themes/wp-spectacle-isladelsol
 ```
 
-Update subtrees.
+#### Update Subtrees Dependencies
 ```
+pushSubtree UsabilityDynamics/wp-amd                      vendor/plugins/wp-amd
 pushSubtree UsabilityDynamics/wp-cluster                  vendor/plugins/wp-cluster
-pushSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
 pushSubtree UsabilityDynamics/wp-crm                      vendor/plugins/wp-crm
-pushSubtree UsabilityDynamics/wp-vertical-edm             vendor/plugins/wp-vertical-edm
-pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
+pushSubtree UsabilityDynamics/wp-elastic                  vendor/plugins/wp-elastic
+pushSubtree UsabilityDynamics/wp-github-updater           vendor/plugins/wp-github-updater
+pushSubtree UsabilityDynamics/wp-network                  vendor/plugins/wp-network
+pushSubtree UsabilityDynamics/wp-social-stream            vendor/plugins/wp-social-stream
+pushSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
+pushSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
+pushSubtree wpCloud/wp-vertical-edm                       vendor/plugins/wp-vertical-edm
+pushSubtree DiscoDonniePresents/wp-eventbrite             vendor/plugins/wp-eventbrite
 pushSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v2.0       v2.0
 pushSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
 pushSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v2.0    v2.0
