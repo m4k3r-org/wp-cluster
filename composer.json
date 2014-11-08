@@ -72,12 +72,12 @@
           "media.winterfantasyrgv.com": "gs://winterfantasyrgv.com/media"
         }
       },
-      "site": {
+      "default": {
         "db_prefix": "edm_",
         "db_name": "edm_production",
         "db_user": "edm_production",
         "db_password": "psxcazdhbpoxbkfl",
-        "db_host": "173.194.246.158",
+        "db_host": "rds.wpcloud.io",
         "wp_debug": false,
         "wp_debug_display": false,
         "wp_debug_log": false,
@@ -101,9 +101,7 @@
         "wp_social_stream_twitter_access_token": "101485804-shGXjN0D43uU7CtCBHaML5K8uycHqgvEMd5gHtrY",
         "wp_social_stream_twitter_access_token_secret": "YcCOXWu1bidAv1APgRAd8ATNBl2UmTDXFkoGzicJny5aw",
         "wp_social_stream_instagram_client_id": "ec4c95bf89754e1d8fd3581edba04808",
-        "wp_social_stream_instagram_access_token": "44220099.ec4c95b.d2c3acc28b1f432884be1ddcd8733499"
-      },
-      "default": {
+        "wp_social_stream_instagram_access_token": "44220099.ec4c95b.d2c3acc28b1f432884be1ddcd8733499",
         "github_updater_token": "fa1942c87f9b2a7314636d520d8697fb0d9447f3",
         "wp_memory_limit": "512M",
         "wp_max_memory_limit": "{wp_memory_limit}",
