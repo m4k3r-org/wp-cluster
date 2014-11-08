@@ -1,6 +1,6 @@
 {
   "name": "wp-spectacle",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Spectacle Theme for the Drop Network",
   "main": "gruntfile.js",
   "scripts": {
