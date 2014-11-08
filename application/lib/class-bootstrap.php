@@ -92,6 +92,7 @@ namespace EDM\Application {
       add_filter( 'wp_cache_themes_persistently', function( $current, $callee ) {
 	      //die('wp_cache_themes_persistently');
         //return false; // 6 hours
+	      return false;
         return 43200; // 6 hours
       }, 10, 2);
 
