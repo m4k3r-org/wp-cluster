@@ -63,4 +63,12 @@ namespace EDM\Application\Policy {
 	add_filter( 'pre_option_allowedthemes', '__return_false' );
 	add_filter( 'pre_option_allowed_themes', '__return_false' );
 
+	// Site/Network change detection.
+	add_action( 'update_option_home',     'EDM\Application\Policy\site_changed' );
+	add_action( 'update_option_siteurl',  'EDM\Application\Policy\site_changed' );
+
+	function site_changed( $old_value, $value ) {
+
+	}
+
 }

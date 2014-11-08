@@ -14,8 +14,8 @@
  * * assets.shard.subdomain
  * * scripts.path.public
  * * html.minify.enabled
- * *
  *
+ * @todo Use extract_from_markers and insert_with_markers methods to insert/udpate .htaccess rewrites.
  *
  * @verison 0.6.1
  * @author potanin@UD
@@ -219,7 +219,7 @@ namespace UsabilityDynamics\Veneer {
           _doing_it_wrong( 'UsabilityDynamics\Veneer\Bootstrap::__construct', 'Veneer should not be initialized before "init" filter.', '0.6.1' );
         }
 
-	      $this->_install();
+	      // $this->_install();
 
 	      // Requires $this->site to be defined, therefore being ignored on single-site installs.
         if( defined( 'MULTISITE' ) && MULTISITE && $wpdb->site ) {
@@ -614,6 +614,7 @@ namespace UsabilityDynamics\Veneer {
 	    /**
 	     * Copy Files.
 	     *
+	     * @todo Trigger this on plugin activation, not on every request.
 	     * @return array
 	     */
 	    public function _install() {
@@ -626,9 +627,9 @@ namespace UsabilityDynamics\Veneer {
 		    }
 
 		    $_files = array(
-			    //__DIR__ . '/class-config.php' => ABSPATH . '/wp-config.php',
-			    __DIR__ . '/class-advanced-cache.php' => WP_CONTENT_DIR . '/advanced-cache.php',
-			    __DIR__ . '/class-object-cache.php' => WP_CONTENT_DIR . '/object-cache.php'
+			    // __DIR__ . '/class-config.php' => ABSPATH . '/wp-config.php',
+			    // __DIR__ . '/class-advanced-cache.php' => WP_CONTENT_DIR . '/advanced-cache.php',
+			    // __DIR__ . '/class-object-cache.php' => WP_CONTENT_DIR . '/object-cache.php'
 		    );
 
 		    $_errors = array();
