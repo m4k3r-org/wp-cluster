@@ -57,6 +57,7 @@ pushSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco
 pushSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v2.0       v2.0
 pushSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v1.0   v1.0
 pushSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
+pushSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v1.0    v1.0
 pushSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v2.0    v2.0
 pushSubtree DiscoDonniePresents/wp-spectacle-chmf         vendor/themes/wp-spectacle-chmf
 pushSubtree DiscoDonniePresents/wp-spectacle-mbp          vendor/themes/wp-spectacle-mbp
