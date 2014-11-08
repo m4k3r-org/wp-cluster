@@ -41,7 +41,7 @@ namespace UsabilityDynamics\Veneer {
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.6.1';
+      public static $version = '0.7.0';
 
       /**
        * Textdomain String
@@ -793,6 +793,8 @@ namespace UsabilityDynamics\Veneer {
 
       /**
        * Administrative Toolbar.
+       *
+       * @author potanin@UD
        */
       public function toolbar_local(){
         global $wp_admin_bar;
@@ -807,31 +809,32 @@ namespace UsabilityDynamics\Veneer {
           $_environment = PHP_ENV;
         }
 
+	      $_ip = $_SERVER[ 'SERVER_ADDR' ];
+
+	      if( $_ip === '::1' ) {
+		      $_ip = 'localhost';
+	      }
+
         if( current_user_can( 'manage_options' ) ){
           /** Add the style we need */ ?>
-          <style>
-            #wp-admin-bar-server_name > a:before {
-              content: "\f177";
-              top: 2px;
-            }
-          </style> <?php 
+          <style> #wp-admin-bar-server_name > a:before { content: "\f177"; top: 2px; }</style> <?php
           /** Add the menu items */
           $wp_admin_bar->add_menu( array(
             'id' => 'server_name',
             'parent' => 'top-secondary',
-            'title' => gethostname(),
+            'title' => sprintf( __( 'Host: [%s]' ), gethostname() ),
             'href' => '#'
           ) );
           $wp_admin_bar->add_menu( array(
             'id' => 'environment',
             'parent' => 'server_name',
-            'title' => sprintf( __( '[%s]' ), $_environment ),
+            'title' => sprintf( __( 'Branch: [%s]' ), $_environment ),
             'href' => '#'
           ) );
           $wp_admin_bar->add_menu( array(
             'id' => 'ip_address',
             'parent' => 'server_name',
-            'title' => $_SERVER[ 'SERVER_ADDR' ],
+            'title' => sprintf( __( 'IP: [%s]' ), $_ip ),
             'href' => '#'
           ) );
         }
