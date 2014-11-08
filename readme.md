@@ -21,7 +21,6 @@ makeSubtree wpCloud/wp-event-post-type            vendor/plugins/wp-event-post-t
 ```
 
 ```
-makeSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v1.0       v1.0
 makeSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v2.0       v2.0
 makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-v1.0    v1.0
 makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-v2.0    v2.0
