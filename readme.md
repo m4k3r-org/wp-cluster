@@ -45,6 +45,7 @@ Update subtrees.
 pushSubtree UsabilityDynamics/wp-cluster                  vendor/plugins/wp-cluster
 pushSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
 pushSubtree UsabilityDynamics/wp-crm                      vendor/plugins/wp-crm
+pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash
 pushSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v2.0       v2.0
 pushSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
 pushSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v2.0    v2.0
