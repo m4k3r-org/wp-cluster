@@ -17,6 +17,7 @@ Pull subtrees.
 pullSubtree UsabilityDynamics/wp-cluster                  vendor/plugins/wp-cluster
 pullSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
 pullSubtree UsabilityDynamics/wp-crm                      vendor/plugins/wp-crm
+pullSubtree UsabilityDynamics/wp-vertical-edm             vendor/plugins/wp-vertical-edm
 pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
 pullSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v1.0   v1.0
 pullSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
@@ -33,6 +34,7 @@ Update subtrees.
 pushSubtree UsabilityDynamics/wp-cluster                  vendor/plugins/wp-cluster
 pushSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
 pushSubtree UsabilityDynamics/wp-crm                      vendor/plugins/wp-crm
+pushSubtree UsabilityDynamics/wp-vertical-edm             vendor/plugins/wp-vertical-edm
 pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash-v1.0      v1.0
 pushSubtree DiscoDonniePresents/wp-disco                  vendor/themes/wp-disco-v2.0       v2.0
 pushSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
