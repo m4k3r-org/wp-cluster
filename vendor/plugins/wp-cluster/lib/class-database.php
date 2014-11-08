@@ -5,7 +5,6 @@
  * @author Reid Williams
  * @class UsabilityDynamics\Cluster\Database
  */
-
 namespace UsabilityDynamics\Cluster {
 
   if( !class_exists( 'UsabilityDynamics\Cluster\WPDB' ) ){
@@ -358,7 +357,6 @@ namespace UsabilityDynamics\Cluster {
       }
 
     }
-
     /**
      * If we don't have a wp_cluster object, we should make one, but it should be a child of wp_veneer
      */

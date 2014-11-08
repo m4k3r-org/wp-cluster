@@ -81,7 +81,12 @@ namespace UsabilityDynamics\Veneer {
 			/**
 			 * @var null
 			 */
-			public $env = null;
+			public $sunrise = null;
+
+			/**
+			 * @var null
+			 */
+			public $env = 'production';
 
 			/**
 			 * @var array
@@ -100,13 +105,9 @@ namespace UsabilityDynamics\Veneer {
 			 * The constants that should be dynamically generated
 			 */
 			protected $protectedConstants = array(
-				'WP_DEFAULT_PROTOCOL',
-				'WP_HOME',
 				'WP_CACHE',
 				'WP_ALLOW_MULTISITE',
 				'MULTISITE',
-				'SUBDOMAIN_INSTALL',
-				'SUNRISE'
 			);
 
 			/**
@@ -133,7 +134,8 @@ namespace UsabilityDynamics\Veneer {
 					"wp_base_dir" => $this->baseDir,
 					"wp_site_domain" => isset( $_SERVER[ 'HTTP_HOST' ] ) ? $_SERVER[ 'HTTP_HOST' ] : 'localhost',
 					"wp_default_protocol" => $this->defaultProtocol = isset( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] == 'on' ? 'https' : 'http',
-					"wp_env" => isset( $_SERVER[ 'WP_ENV' ] ) ? $_SERVER[ 'WP_ENV' ] : 'production'
+					"wp_env" => isset( $_SERVER[ 'WP_ENV' ] ) ? $_SERVER[ 'WP_ENV' ] : $this->env,
+					"sunrise" => $this->sunrise
 				));
 
 				// Get settings
@@ -164,8 +166,10 @@ namespace UsabilityDynamics\Veneer {
 
 			}
 
+			/**
+			 * @return array
+			 */
 			public function show() {
-
 				return $this->_settings;
 			}
 
@@ -250,6 +254,10 @@ namespace UsabilityDynamics\Veneer {
 				}
 
 				/** Finally, go through the composer.json file and add all the configs there */
+				if ( is_file( $_SERVER[ 'DOCUMENT_ROOT' ] . '/sunrise.php' ) ) {
+					$this->sunrise = true;
+				}
+
 				if ( is_file( $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json' ) ) {
 					$this->baseDir = $_SERVER[ 'DOCUMENT_ROOT' ];
 					$this->composer_file = $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json';

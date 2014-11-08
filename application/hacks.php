@@ -11,8 +11,8 @@ add_action( 'init', function() {
 	global $current_blog, $current_site, $wp_veneer;
 
 
-	header( "X-Debug-siteID:$current_site->blog_id" );
-	header( "X-Debug-blogID:$current_site->id" );
+	header( "X-Debug-Site:$current_site->blog_id" );
+	header( "X-Debug-Network:$current_site->id" );
 
 	//die( '<pre>' . print_r( get_defined_constants(), true ) . '</pre>');
 	//die('sdf');
@@ -21,20 +21,29 @@ add_action( 'init', function() {
 
 	//die( '<pre>' . print_r( $wp_veneer->config->show(), true ) . '</pre>');
 
+	//wp_send_json(array( "blog" => $current_blog, "site" => $current_site ));
 
 });
 
 function addActionResponseHeader() {
 
-	header( "X-Debug-Trace:" . timer_stop() . ':' . current_action()  );
-
+	if( !headers_sent() ) {
+		header( "X-Debug-Trace-" . current_action() . ':' . timer_stop() );
+	}
 
 }
 
 add_action( 'init', 'addActionResponseHeader' );
 add_action( 'muplugins_loaded', 'addActionResponseHeader' );
+add_action( 'wp', 'addActionResponseHeader' );
 add_action( 'template_redirect', 'addActionResponseHeader' );
+add_action( 'wp_loaded', 'addActionResponseHeader' );
+add_action( 'parse_request', 'addActionResponseHeader' );
+add_action( 'get_header', 'addActionResponseHeader' );
 add_action( 'plugins_loaded', 'addActionResponseHeader' );
+add_action( 'get_header', 'addActionResponseHeader' );
+add_action( 'wp_print_styles', 'addActionResponseHeader' );
+add_action( 'get_footer', 'addActionResponseHeader' );
 
 add_action( 'init', function() {
 

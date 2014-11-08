@@ -36,57 +36,32 @@
  */
 namespace wpCloud\PolicyDelegation {
 
-	add_filter( 'default_site_option_active_sitewide_plugins', function ( $default ) {
-		return $default;
-	} );
+	add_filter( 'default_site_option_active_sitewide_plugins', '__return_false' );
+	add_filter( 'default_site_option_siteurl', '__return_false' );
+	add_filter( 'default_site_option_subdomain_install', '__return_false' );
+	add_filter( 'default_site_option_global_terms_enabled', '__return_false' );
+	add_filter( 'default_site_option_add_new_users', '__return_false' );
+	add_filter( 'default_site_option_ms_files_rewriting', '__return_false' );
+	add_filter( 'default_site_option_site_admins', '__return_false' );
+	add_filter( 'default_site_option_illegal_names', '__return_false' );
 
-	add_filter( 'default_site_option_siteurl', function ( $default ) {
-		return $default;
-	} );
 
-	add_filter( 'default_site_option_subdomain_install', '__return_true' );
-	add_filter( 'default_site_option_global_terms_enabled', '__return_true' );
-	add_filter( 'default_site_option_add_new_users', '__return_true' );
-
-	add_filter( 'default_site_option_ms_files_rewriting', '__return_null' );
-	add_filter( 'default_site_option_site_admins', '__return_null' );
-	add_filter( 'default_site_option_illegal_names', '__return_null' );
-
-	add_filter( 'pre_option_active_plugins', function () {
-		return null;
-	} );
-
-	add_filter( 'pre_option_recently_edited', function () {
-		return null;
-	} );
-
-	add_filter( 'pre_option_template', function () {
-		return null;
-	} );
-
-	add_filter( 'pre_option_stylesheet', function () {
-		return null;
-	} );
-
-	add_filter( 'pre_option_upload_path', function () {
-		return null;
-	} );
+	add_filter( 'pre_option_recently_edited', '__return_false' );
+	add_filter( 'pre_option_template', '__return_false' );
+	add_filter( 'pre_option_stylesheet', '__return_false' );
+	add_filter( 'pre_option_active_plugins', '__return_false' );
+	add_filter( 'pre_option_upload_path', '__return_false' );
 
 	// URL without a trailing slash.
-	add_filter( 'pre_option_upload_url_path', function () {
-		return null;
-	} );
+	add_filter( 'pre_option_upload_url_path', '__return_false' );
 
 	// https://gist.githubusercontent.com/andypotanin/2de82e5d6502cc92a654/raw/_transient_plugin_slugs
-	add_filter( 'pre_site_transient_plugin_slugs', function () {
-		return null;
-
-	} );
+	add_filter( 'pre_site_transient_plugin_slugs', '__return_false' );
 
 	// https://gist.githubusercontent.com/andypotanin/2de82e5d6502cc92a654/raw/recently_activated
-	add_filter( 'pre_option_recently_activated', '__return_null' );
-	add_filter( 'pre_option_theme_switched', '__return_null' );
-	add_filter( 'pre_option_allowedthemes', '__return_null' );
-	add_filter( 'pre_option_allowed_themes', '__return_null' );
+	add_filter( 'pre_option_recently_activated', '__return_false' );
+	add_filter( 'pre_option_theme_switched', '__return_false' );
+	add_filter( 'pre_option_allowedthemes', '__return_false' );
+	add_filter( 'pre_option_allowed_themes', '__return_false' );
 
 }
