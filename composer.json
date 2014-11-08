@@ -116,6 +116,8 @@
   },
   "require": {
     "automattic/wordpress": "4.0",
+    "linkorb/etcd-php": "master",
+    "mnsami/composer-custom-directory-installer": "master",
     "discodonniepresents/wp-bassoddysey": "master",
     "discodonniepresents/wp-braxton": "master",
     "discodonniepresents/wp-dayafter": "master",
@@ -158,22 +160,22 @@
     "wpackagist-plugin/wordpress-seo": "trunk",
     "wpackagist-plugin/wp-pagenavi": "2.86",
     "wpackagist-plugin/wpmandrill": "trunk",
+    "wpackagist-plugin/debug-bar": "trunk",
+    "wpackagist-plugin/debug-bar-actions-and-filters-addon": "trunk",
+    "wpackagist-plugin/debug-bar-constants": "trunk",
+    "wpackagist-plugin/debug-bar-post-types": "trunk",
+    "wpackagist-plugin/debug-bar-slow-actions": "trunk",
     "wpcloud/wp-vertical-edm": "master"
   },
   "require-dev": {
     "behat/behat": "~2.5",
     "phpunit/phpunit": "~3.7",
     "wp-cli/wp-cli": "~0.17",
+    "wpackagist-plugin/wordpress-importer": "0.6.1",
     "wpackagist-plugin/redirection": "2.3.6",
     "wpackagist-plugin/akismet": "trunk",
     "wpackagist-plugin/jetpack": "trunk",
-    "usabilitydynamics/wp-gravityforms": "master",
-    "wpackagist-plugin/debug-bar": "trunk",
-    "wpackagist-plugin/debug-bar-actions-and-filters-addon": "trunk",
-    "wpackagist-plugin/debug-bar-constants": "trunk",
-    "wpackagist-plugin/debug-bar-post-types": "trunk",
-    "wpackagist-plugin/debug-bar-slow-actions": "trunk",
-    "wpackagist-plugin/wordpress-importer": "0.6.1"
+    "usabilitydynamics/wp-gravityforms": "master"
   },
   "autoload": {
     "classmap": [
