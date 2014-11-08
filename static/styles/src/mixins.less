@@ -21,10 +21,10 @@
 }
 
 .mixin-gradient-background( @r, @g, @b) {
-  background: -moz-linear-gradient(top,  rgba(@r,@g,@b,0) 0, rgba(@r,@g,@b,1) 100%);
+  background: -moz-linear-gradient(top,  rgba(@r,@g,@b,0) 0,rgba(@r,@g,@b, 0.7) 50%, rgba(@r,@g,@b,1) 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(@r,@g,@b,0)), color-stop(100%,rgba(@r,@g,@b,1)));
-  background: -webkit-linear-gradient(top,  rgba(@r,@g,@b,0) 0,rgba(@r,@g,@b,1) 100%);
-  background: -o-linear-gradient(top,  rgba(@r,@g,@b,0) 0,rgba(@r,@g,@b,1) 100%);
-  background: -ms-linear-gradient(top,  rgba(@r,@g,@b,0) 0,rgba(@r,@g,@b,1) 100%);
-  background: linear-gradient(to bottom,  rgba(@r,@g,@b,0) 0,rgba(@r,@g,@b,1) 100%);
+  background: -webkit-linear-gradient(top,  rgba(@r,@g,@b,0) 0,rgba(@r,@g,@b, 0.7) 50%,rgba(@r,@g,@b,1) 100%);
+  background: -o-linear-gradient(top,  rgba(@r,@g,@b,0) 0,rgba(@r,@g,@b, 0.7) 50%,rgba(@r,@g,@b,1) 100%);
+  background: -ms-linear-gradient(top,  rgba(@r,@g,@b,0) 0,rgba(@r,@g,@b, 0.7) 50%,rgba(@r,@g,@b,1) 100%);
+  background: linear-gradient(to bottom,  rgba(@r,@g,@b, 0) 0, rgba(@r,@g,@b, 0.7) 50%, rgba(@r,@g,@b,1) 100%);
 }
