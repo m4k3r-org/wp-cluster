@@ -820,12 +820,14 @@ namespace UsabilityDynamics\Cluster {
 
       }
 
-      /**
-       * Change My Account Toolbar Dropdown.
-       *
-       * @method admin_bar_menu
-       * @author potanin@UD
-       */
+	    /**
+	     * Change My Account Toolbar Dropdown.
+	     *
+	     * @method admin_bar_menu
+	     * @author potanin@UD
+	     *
+	     * @param bool $wp_admin_bar
+	     */
       public function my_account_toolbar( $wp_admin_bar = false ) {
 
         $user_id      = get_current_user_id();
@@ -840,7 +842,7 @@ namespace UsabilityDynamics\Cluster {
           'title'  => sprintf( __( '%1$s' ), $current_user->display_name ),
           'href'   => $profile_url,
           'meta'   => array(
-            'class' => $class,
+            'class' => isset( $class ) ? $class : '',
             'title' => __( 'My Account' ),
           ),
         ) );
@@ -943,18 +945,23 @@ namespace UsabilityDynamics\Cluster {
 
       }
 
-      /**
-       * Get Setting.
-       *
-       *    // Get Setting
-       *    Cluster::get( 'my_key' )
-       *
-       * @method get
-       *
-       * @for Flawless
-       * @author potanin@UD
-       * @since 0.1.1
-       */
+	    /**
+	     * Get Setting.
+	     *
+	     *    // Get Setting
+	     *    Cluster::get( 'my_key' )
+	     *
+	     * @method get
+	     *
+	     * @for Flawless
+	     * @author potanin@UD
+	     * @since 0.1.1
+	     *
+	     * @param null $key
+	     * @param null $default
+	     *
+	     * @return null
+	     */
       public static function get( $key = null, $default = null ) {
         return self::$instance->_settings ? self::$instance->_settings->get( $key, $default ) : null;
       }
