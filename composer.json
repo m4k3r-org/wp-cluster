@@ -156,6 +156,7 @@
     "wpackagist-plugin/public-post-preview": "2.4",
     "wpackagist-plugin/real-user-monitoring-by-pingdom": "1.0",
     "wpackagist-plugin/video": "1.5.6",
+    "wpackagist-plugin/jetpack": "trunk",
     "wpackagist-plugin/widget-css-classes": "1.2.6",
     "wpackagist-plugin/wordpress-seo": "trunk",
     "wpackagist-plugin/wp-pagenavi": "2.86",
@@ -174,7 +175,6 @@
     "wpackagist-plugin/wordpress-importer": "0.6.1",
     "wpackagist-plugin/redirection": "2.3.6",
     "wpackagist-plugin/akismet": "trunk",
-    "wpackagist-plugin/jetpack": "trunk",
     "usabilitydynamics/wp-gravityforms": "master"
   },
   "autoload": {
