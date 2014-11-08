@@ -153,6 +153,7 @@ post-pull:
 	@curl -X PURGE discodonniepresents.com
 	@curl -X PURGE dayafter.com
 	@curl -X PURGE umesouthpadre.com
+	@curl -X PURGE somethingwicked.com
 
 # Install for Staging/Development
 #
