@@ -1,6 +1,6 @@
 {
   "name": "wp-spectacle-chmf",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Spectacle Theme for the Drop Network",
   "main": "gruntfile.js",
   "scripts": {
