@@ -29,6 +29,7 @@ Pull subtrees.
 pullSubtree UsabilityDynamics/wp-cluster                  vendor/plugins/wp-cluster
 pullSubtree UsabilityDynamics/wp-veneer                   vendor/plugins/wp-veneer
 pullSubtree UsabilityDynamics/wp-crm                      vendor/plugins/wp-crm
+pullSubtree UsabilityDynamics/wp-splash                   vendor/themes/wp-splash
 pullSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v1.0   v1.0
 pullSubtree DiscoDonniePresents/wp-spectacle              vendor/themes/wp-spectacle-v2.0   v2.0
 pullSubtree DiscoDonniePresents/wp-festival               vendor/themes/wp-festival-v1.0    v1.0
