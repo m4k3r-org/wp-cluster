@@ -106,4 +106,5 @@ namespace wpCloud\Stateless {
 	//die( '<pre>' . print_r( $_test, true ) . '</pre>');
 
 	}
+
 }

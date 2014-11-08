@@ -161,7 +161,6 @@ module.exports = function( grunt ) {
       production: {
         files: {
           'wp-cli.yml': 'application/static/etc/wp-cli.yml',
-          'advanced-cache.php': 'vendor/plugins/w3-total-cache/wp-content/advanced-cache.php',
           'object-cache.php': 'vendor/plugins/w3-total-cache/wp-content/object-cache.php',
           'w3tc-config': 'application/static/etc/w3tc-config'
         }

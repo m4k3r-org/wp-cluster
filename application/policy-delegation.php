@@ -34,7 +34,7 @@
  * * The pre_ filters are applied when WP_SETUP_CONFIG constant is set.
  *
  */
-namespace wpCloud\PolicyDelegation {
+namespace EDM\Application\Policy {
 
 	add_filter( 'default_site_option_active_sitewide_plugins', '__return_false' );
 	add_filter( 'default_site_option_siteurl', '__return_false' );
@@ -44,7 +44,6 @@ namespace wpCloud\PolicyDelegation {
 	add_filter( 'default_site_option_ms_files_rewriting', '__return_false' );
 	add_filter( 'default_site_option_site_admins', '__return_false' );
 	add_filter( 'default_site_option_illegal_names', '__return_false' );
-
 
 	add_filter( 'pre_option_recently_edited', '__return_false' );
 	add_filter( 'pre_option_template', '__return_false' );

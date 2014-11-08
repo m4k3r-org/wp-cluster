@@ -87,9 +87,6 @@ namespace EDM\Application {
     public function __construct() {
 	    global $wp_theme_directories;
 
-	    //die( '<pre>' . print_r( get_defined_constants(), true ) . '</pre>');
-	    //$cached_roots = get_site_transient( 'theme_roots' );
-	    //die( '<pre>' . print_r( $cached_roots , true ) . '</pre>');
       add_filter( 'wp_cache_themes_persistently', function( $current, $callee ) {
 	      //die('wp_cache_themes_persistently');
         //return false; // 6 hours
@@ -250,7 +247,6 @@ namespace EDM\Application {
 
 		  return $theme_root;
 	  }
-
 
     /**
      * Replace Default Sender Email

@@ -8,22 +8,25 @@
  * Author URI: http://usabilitydynamics.com
  *
  */
+namespace Application\EDM\API {
 
-if( !function_exists( 'add_action' ) ) {
+	if ( ! function_exists( 'add_action' ) ) {
 
-	if ( $_SERVER[ 'REQUEST_URI' ] === $_SERVER[ 'SCRIPT_NAME' ] ) {
-		api_ping_response_handler();
+		if ( $_SERVER[ 'REQUEST_URI' ] === $_SERVER[ 'SCRIPT_NAME' ] ) {
+			api_ping_response_handler();
+		}
 	}
-}
 
-add_action( 'wp_ajax_/ping', 'api_ping_response_handler' );
-add_action( 'wp_ajax_nopriv_/ping', 'api_ping_response_handler' );
+	add_action( 'wp_ajax_/ping', 'api_ping_response_handler' );
+	add_action( 'wp_ajax_nopriv_/ping', 'api_ping_response_handler' );
 
-function api_ping_response_handler() {
+	function api_ping_response_handler() {
 
-	die(json_encode( array(
-		"ok" => true,
-		"message" => "Service available."
-	)));
+		die( json_encode( array(
+			"ok"      => true,
+			"message" => "Service available."
+		) ) );
+
+	}
 
 }
