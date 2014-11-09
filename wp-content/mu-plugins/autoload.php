@@ -12,6 +12,8 @@
  */
 namespace EDM\Application {
 
+	use wpCloud\Vertical;
+
 	if ( ! defined( 'WP_VENDOR_LIBRARY_DIR' ) ) {
 		define( 'WP_VENDOR_LIBRARY_DIR', ABSPATH . 'wp-vendor/' );
 	}
@@ -27,23 +29,26 @@ namespace EDM\Application {
 
 	// @note Gotta do this BEFORE plugins are activated, or else wp-elastic won't recognize schemas..
 	if ( defined( 'WP_PLUGIN_DIR' ) && ( isset( $current_blog ) && $current_blog->domain == 'discodonniepresents.com' ) && is_dir( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas' ) ) {
-		define( 'WP_ELASTIC_SCHEMAS_DIR', WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas' );
+		//define( 'WP_ELASTIC_SCHEMAS_DIR', WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas' );
 	}
+
+
 
 	/** Init the application */
 	if ( class_exists( 'EDM\Application\Bootstrap' ) ) {
 		new Bootstrap;
 	}
 
-	add_action( 'init', function () {
+	add_action( 'wp_loaded', function () {
+		global $wp_post_types;
+		die( '<pre>' . print_r( $wp_post_types, true ) . '</pre>');
+
 	});
 
 	/**
-	 *
 	 * The methods "is_plugin_active" and "activate_plugin" are only available on control panel.
 	 *
 	 */
-
 	add_action( 'admin_init', function () {
 
 		// No pagespeed on backend
@@ -56,42 +61,26 @@ namespace EDM\Application {
 			newrelic_ignore_transaction();
 		}
 
-		if ( ! is_plugin_active( 'wpmandrill/wpmandrill.php' ) ) {
-			activate_plugin( 'wpmandrill/wpmandrill.php', null, true );
+	});
+
+	add_action( 'init', function () {
+
+		if( class_exists( 'wpCloud\Vertical\EDM\Bootstrap' ) ) {
+			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/artist.json' );
+			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/credit.json' );
+			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/event.json' );
+			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/imageGallery.json' );
+			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/post.json' );
+			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/promoter.json' );
+			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/tour.json' );
+			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/venue.json' );
+			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/videoObject.json' );
 		}
 
-		if ( ! is_plugin_active( 'wp-veneer/wp-veneer.php' ) ) {
-			activate_plugin( 'wp-veneer/wp-veneer.php', null, true );
-		}
-
-		if ( ! is_plugin_active( 'wp-cluster/wp-cluster.php' ) ) {
-			activate_plugin( 'wp-cluster/wp-cluster.php', null, true );
-		}
-
-		if ( ! is_plugin_active( 'wp-network/wp-network.php' ) ) {
-			activate_plugin( 'wp-network/wp-network.php', null, true );
-		}
-
-		if ( ! is_plugin_active( 'wp-vertical-edm/vertical-edm' ) ) {
-			activate_plugin( 'wp-vertical-edm/vertical-edm.php', null, true );
-		}
-
-		if ( ! is_plugin_active( 'wp-github-updater/github-updater' ) ) {
-			activate_plugin( 'wp-github-updater/github-updater.php', null, true );
-		}
-
-		if ( ! is_plugin_active( 'wp-event-post-type-v0.5/wp-event-post-type.php' ) ) {
-			activate_plugin( 'wp-event-post-type-v0.5/wp-event-post-type.php', null, true );
-		}
-
-		if ( ! is_plugin_active( 'wp-elastic/wp-elastic.php' ) ) {
-			activate_plugin( 'wp-elastic/wp-elastic.php', null, true );
-		}
-
-	} );
+	});
 
 	add_action( 'plugins_loaded', function () {
-		global $wp_veneer, $current_blog;
+		global $wp_veneer;
 
 		if ( isset( $wp_veneer ) && method_exists( $wp_veneer, 'set' ) ) {
 			//$wp_veneer->set( 'rewrites.login', true );

@@ -8,10 +8,11 @@
     }
   ],
   "config": {
+    "preferred-install": "dist",
+    "github-protocols": [ "ssh" ],
     "vendor-dir": "vendor/libraries",
     "bin-dir": "vendor/bin",
-    "optimize-autoloader": true,
-    "autoloader-suffix": "VendorPackages"
+    "optimize-autoloader": true
   },
   "require": {
     "composer/installers": "~1.0",

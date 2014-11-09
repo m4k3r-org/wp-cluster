@@ -26,6 +26,7 @@ class Installer extends LibraryInstaller
         'drupal'       => 'DrupalInstaller',
         'elgg'         => 'ElggInstaller',
         'fuel'         => 'FuelInstaller',
+        'fuelphp'      => 'FuelphpInstaller',
         'grav'         => 'GravInstaller',
         'hurad'        => 'HuradInstaller',
         'joomla'       => 'JoomlaInstaller',
@@ -120,6 +121,8 @@ class Installer extends LibraryInstaller
     protected function findFrameworkType($type)
     {
         $frameworkType = false;
+
+        krsort($this->supportedTypes);
 
         foreach ($this->supportedTypes as $key => $val) {
             if ($key === substr($type, 0, strlen($key))) {

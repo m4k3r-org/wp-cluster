@@ -5,6 +5,8 @@
  */
 namespace wpCloud\Vertical\EDM {
 
+	use UsabilityDynamics;
+
   class Bootstrap {
 
     public function __construct() {
@@ -69,6 +71,33 @@ namespace wpCloud\Vertical\EDM {
       ));
 
     }
+
+	  static public function loadModel( $filePath = null ) {
+
+		  if( did_action( 'wp_loaded' ) ) {
+			  _doing_it_wrong( 'UsabilityDynamics\wpElastic\Bootstrap::define', __( 'Called too late.' ), '' );
+		  }
+
+		  if( !file_exists( $filePath ) ) {
+			  return new \WP_Error( 'Unable to load model, given file path is not valid.' );
+		  }
+
+		  $fileContents = file_get_contents( $filePath );
+
+		  if( is_string( $fileContents ) ) {
+			  $parsedContents = json_decode( $fileContents, true );
+		  }
+
+		  $parsedContents = Utility::parse_args( $parsedContents, array(
+			  'types' => array(),
+			  'meta' => array(),
+			  'taxonomies' => array()
+		  ));
+
+		  return UsabilityDynamics\Model::define( $parsedContents );
+
+
+	  }
 
     /**
      * Toggle Features.

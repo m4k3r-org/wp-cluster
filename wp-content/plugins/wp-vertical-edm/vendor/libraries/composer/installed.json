@@ -6,12 +6,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/composer/installers.git",
-            "reference": "09e2192a7cd08008e273355fddd38942d8de2992"
+            "reference": "8024be9aa3ee446272937f46a8807fa52b337767"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/09e2192a7cd08008e273355fddd38942d8de2992",
-            "reference": "09e2192a7cd08008e273355fddd38942d8de2992",
+            "url": "https://api.github.com/repos/composer/installers/zipball/8024be9aa3ee446272937f46a8807fa52b337767",
+            "reference": "8024be9aa3ee446272937f46a8807fa52b337767",
             "shasum": ""
         },
         "replace": {
@@ -22,7 +22,7 @@
             "composer/composer": "1.0.*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2014-10-15 03:40:33",
+        "time": "2014-11-01 17:51:50",
         "type": "composer-installer",
         "extra": {
             "class": "Composer\\Installers\\Installer",
@@ -132,50 +132,17 @@
         "description": "Missing functionalities from model objects of WordPress."
     },
     {
-        "name": "usabilitydynamics/lib-meta-box",
-        "version": "master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "git@github.com:UsabilityDynamics/wp-meta-box",
-            "reference": "master"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://github.com/UsabilityDynamics/wp-meta-box/archive/master.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "composer/installers": "~1.0"
-        },
-        "type": "library",
-        "extra": {
-            "installer-name": "lib-meta-box"
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "inc/fields",
-                "inc/common.php",
-                "inc/field.php",
-                "inc/helpers.php",
-                "inc/meta-box.php"
-            ]
-        }
-    },
-    {
         "name": "usabilitydynamics/lib-utility",
-        "version": "0.3.2",
-        "version_normalized": "0.3.2.0",
+        "version": "0.3.6",
+        "version_normalized": "0.3.6.0",
         "source": {
             "type": "git",
-            "url": "git@github.com:UsabilityDynamics/lib-utility",
-            "reference": "0.3.2"
+            "url": "git@github.com:usabilitydynamics/lib-utility",
+            "reference": "0.3.6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://github.com/UsabilityDynamics/lib-utility/archive/0.3.2.zip",
+            "url": "https://github.com/usabilitydynamics/lib-utility/archive/0.3.6.zip",
             "reference": null,
             "shasum": null
         },
@@ -229,23 +196,25 @@
     },
     {
         "name": "usabilitydynamics/lib-model",
-        "version": "0.3.1",
-        "version_normalized": "0.3.1.0",
+        "version": "0.4.0",
+        "version_normalized": "0.4.0.0",
         "source": {
             "type": "git",
-            "url": "git@github.com:UsabilityDynamics/lib-model",
-            "reference": "0.3.1"
+            "url": "git@github.com:usabilitydynamics/lib-model",
+            "reference": "0.4.0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://github.com/UsabilityDynamics/lib-model/archive/0.3.1.zip",
+            "url": "https://github.com/usabilitydynamics/lib-model/archive/0.4.0.zip",
             "reference": null,
             "shasum": null
         },
         "require": {
             "hanamura/wp-model": "1.1.1",
-            "usabilitydynamics/lib-meta-box": "*",
-            "usabilitydynamics/lib-utility": "*"
+            "usabilitydynamics/lib-utility": "~0.3"
+        },
+        "require-dev": {
+            "usabilitydynamics/lib-meta-box": "master"
         },
         "type": "library",
         "extra": {
@@ -254,7 +223,8 @@
                     "static/scripts/udx.model.js",
                     "static/scripts/udx.model.validation.js"
                 ]
-            }
+            },
+            "installer-name": "lib-model"
         },
         "installation-source": "dist",
         "autoload": {

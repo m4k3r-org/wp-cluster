@@ -7,24 +7,10 @@
  */
 module.exports = function build( grunt ) {
 
-  grunt.initConfig( {
+  grunt.initConfig({
 
     // Read Composer File.
     package: grunt.file.readJSON( 'composer.json' ),
-
-    // Generate Documentation.
-    yuidoc: {
-      compile: {
-        name: '<%= package.name %>',
-        description: '<%= package.description %>',
-        version: '<%= package.version %>',
-        url: '<%= package.homepage %>',
-        options: {
-          paths: 'lib',
-          outdir: 'static/codex/'
-        }
-      }
-    },
 
     less: {
       production: {
@@ -128,28 +114,6 @@ module.exports = function build( grunt ) {
         },
         command: 'composer update --prefer-source'
       }
-    },
-
-    // Coverage Tests.
-    mochacov: {
-      options: {
-        reporter: 'list',
-        requires: [ 'should' ]
-      },
-      all: [ 'test/*.js' ]
-    },
-
-    // Usage Tests.
-    mochacli: {
-      options: {
-        requires: [ 'should' ],
-        reporter: 'list',
-        ui: 'exports',
-        bail: false
-      },
-      all: [
-        'test/*.js'
-      ]
     }
 
   });
@@ -157,21 +121,18 @@ module.exports = function build( grunt ) {
   // Load NPM Tasks.
   grunt.loadNpmTasks( 'grunt-markdown' );
   grunt.loadNpmTasks( 'grunt-requirejs' );
-  grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
   grunt.loadNpmTasks( 'grunt-contrib-uglify' );
   grunt.loadNpmTasks( 'grunt-contrib-watch' );
   grunt.loadNpmTasks( 'grunt-contrib-concat' );
   grunt.loadNpmTasks( 'grunt-contrib-clean' );
   grunt.loadNpmTasks( 'grunt-contrib-less' );
   grunt.loadNpmTasks( 'grunt-shell' );
-  grunt.loadNpmTasks( 'grunt-mocha-cli' );
-  grunt.loadNpmTasks( 'grunt-mocha-cov' );
 
   // Register NPM Tasks.
   grunt.registerTask( 'default', [ 'markdown', 'less:production', 'uglify' ] );
 
   // Build Distribution.
-  grunt.registerTask( 'distribution', [ 'mochacli:all', 'mochacov:all', 'clean:all', 'markdown', 'uglify:production' ] );
+  grunt.registerTask( 'distribution', [  'clean:all', 'markdown', 'uglify:production' ] );
 
   // Update Environment.
   grunt.registerTask( 'update', [ 'clean:update', 'shell:update' ] );

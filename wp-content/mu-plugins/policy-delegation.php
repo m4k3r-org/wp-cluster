@@ -104,8 +104,8 @@ namespace EDM\Application\Policy {
 		static function active_plugins( $_plugins = array() ) {
 
 			$_plugins = array_merge( $_plugins, array(
-				//"wp-amd/wp-amd.php",
-				//"wp-simplify/wp-simplify.php",
+				"wp-amd/wp-amd.php",
+				"wp-simplify/wp-simplify.php",
 				"duplicate-post/duplicate-post.php",
 				"simple-page-ordering/simple-page-ordering.php",
 				"wp-crm/wp-crm.php"
@@ -125,13 +125,14 @@ namespace EDM\Application\Policy {
 		static function sitewide_plugins( $_plugins = array() ) {
 
 			$_plugins = array(
+				"wp-event-post-type-v0.5/wp-event-post-type.php" => time(),
 				"wpmandrill/wpmandrill.php" => time(),
 				"widget-css-classes/widget-css-classes.php"  => time(),
 				"public-post-preview/public-post-preview.php" => time(),
 				"jetpack/jetpack.php" => time(),
 				"wp-github-updater/github-updater.php" => time(),
-				//" wp-veneer/wp-veneer.php" => time(),
-				//"wp-cluster/wp-cluster.php" => time(),
+				"wp-veneer/wp-veneer.php" => time(),
+				"wp-cluster/wp-cluster.php" => time(),
 				"wp-network/wp-network.php" => time(),
 				"wp-vertical-edm/vertical-edm.php" => time(),
 				//"wp-elastic/wp-elastic.php" => time(),
