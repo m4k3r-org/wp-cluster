@@ -406,11 +406,4 @@ return array(
     'Symfony\\Component\\EventDispatcher\\EventSubscriberInterface' => $vendorDir . '/symfony/event-dispatcher/Symfony/Component/EventDispatcher/EventSubscriberInterface.php',
     'Symfony\\Component\\EventDispatcher\\GenericEvent' => $vendorDir . '/symfony/event-dispatcher/Symfony/Component/EventDispatcher/GenericEvent.php',
     'Symfony\\Component\\EventDispatcher\\ImmutableEventDispatcher' => $vendorDir . '/symfony/event-dispatcher/Symfony/Component/EventDispatcher/ImmutableEventDispatcher.php',
-    'UsabilityDynamics\\Job' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-job.php',
-    'UsabilityDynamics\\Loader' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-loader.php',
-    'UsabilityDynamics\\Settings' => $vendorDir . '/usabilitydynamics/lib-settings/lib/class-settings.php',
-    'UsabilityDynamics\\Structure' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-structure.php',
-    'UsabilityDynamics\\Term' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-term.php',
-    'UsabilityDynamics\\Utility' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-utility.php',
-    'UsabilityDynamics\\Utility\\Guid_Fix' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-guid-fix.php',
 );

@@ -37,6 +37,7 @@
   "require": {
     "php": ">=5.3",
     "composer/installers": "v1.0.18",
+    "usabilitydynamics/lib-utility": ">0.3.4",
     "usabilitydynamics/lib-api": "~0.5",
     "usabilitydynamics/lib-settings": "~0.2",
     "usabilitydynamics/lib-ui": "~0.2"

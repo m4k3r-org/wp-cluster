@@ -35,6 +35,8 @@
  *
  *
  * * can_compress_scripts - Should be disabled if PageSpeed is available.
+ * * https://gist.githubusercontent.com/andypotanin/2de82e5d6502cc92a654/raw/recently_activated
+ * * https://gist.githubusercontent.com/andypotanin/2de82e5d6502cc92a654/raw/_transient_plugin_slugs
  *
  */
 namespace EDM\Application\Policy {
@@ -43,44 +45,44 @@ namespace EDM\Application\Policy {
 	add_action( 'wp_ajax_/v1/site', 'EDM\Application\Policy\api_site' );
 	add_action( 'wp_ajax_nopriv_/v1/site', 'EDM\Application\Policy\api_site' );
 
-	add_filter( 'pre_site_option_active_sitewide_plugins', '__return_false' );
+	// Filters Disabled.
 	add_filter( 'pre_site_option_siteurl', '__return_false' );
+	add_filter( 'pre_site_option_site_admins', '__return_false' );
+	add_filter( 'pre_option_recently_activated', '__return_false' );
+	add_filter( 'pre_option_theme_switched', '__return_false' );
+
+	// Filters return true, works well for booleans.
 	add_filter( 'pre_site_option_global_terms_enabled', '__return_true' );
 	add_filter( 'pre_site_option_add_new_users', '__return_true' );
-	add_filter( 'pre_site_option_ms_files_rewriting', '__return_null', 5 );
+	add_filter( 'pre_site_option_ms_files_rewriting', '__return_true', 5 );
 	add_filter( 'pre_site_option_can_compress_scripts', '__return_true', 5 );
-
 	add_filter( 'pre_site_option_subdomain_install', '__return_true' );
-	add_filter( 'pre_site_option_site_admins', '__return_false' );
+	add_filter( 'pre_option_uploads_use_yearmonth_folders', '__return_true' );
+	add_filter( 'pre_option_blog_public', '__return_true' );
 
+	// Blank out options by returning an empty array.
 	add_filter( 'pre_site_option_illegal_names', '__return_empty_array' );
 	add_filter( 'pre_option_recently_edited', '__return_empty_array' );
 
-	add_filter( 'pre_option_active_plugins', 'EDM\Application\Policy\Override::active_plugins' );
+	// Override options - return a fixed array
 	add_filter( 'pre_option_upload_path', 'EDM\Application\Policy\Override::upload_path' );
 	add_filter( 'pre_option_stylesheet_root', 'EDM\Application\Policy\Override::theme_root' );
 	add_filter( 'pre_option_template_root', 'EDM\Application\Policy\Override::theme_root' );
+	add_filter( 'pre_option_allowedthemes', 'EDM\Application\Policy\Override::allowedthemes' );
 
-	add_filter( 'option_current_theme', 'EDM\Application\Policy\Modify::theme_selection' );
-	add_filter( 'option_template', 'EDM\Application\Policy\Modify::theme_selection' );
-	add_filter( 'option_stylesheet', 'EDM\Application\Policy\Modify::theme_selection' );
+	add_filter( 'option_current_theme', 'EDM\Application\Policy\Extend::theme_selection' );
+	add_filter( 'option_template', 'EDM\Application\Policy\Extend::theme_selection' );
+	add_filter( 'option_stylesheet', 'EDM\Application\Policy\Extend::theme_selection' );
+	add_filter( 'option_active_plugins', 'EDM\Application\Policy\Extend::active_plugins' );
+	add_filter( 'option_upload_url_path', 'EDM\Application\Policy\Extend::upload_url_path' );
+	add_filter( 'default_option_cloud_storage_bucket', 'EDM\Application\Policy\Extend::cloud_storage_bucket' );
+	add_filter( 'site_option_active_sitewide_plugins', 'EDM\Application\Policy\Extend::sitewide_plugins' );
 
-	add_filter( 'option_upload_url_path', 'EDM\Application\Policy\Modify::upload_url_path' );
-	add_filter( 'default_option_cloud_storage_bucket', 'EDM\Application\Policy\Modify::cloud_storage_bucket' );
-
-	// https://gist.githubusercontent.com/andypotanin/2de82e5d6502cc92a654/raw/_transient_plugin_slugs
+	// Bypass filters for now.
 	add_filter( 'pre_site_transient_plugin_slugs', '__return_false' );
 	add_filter( 'pre_site_transient_update_themes', '__return_false' );
 	add_filter( 'pre_site_transient_theme_roots', '__return_false' );
 	add_filter( 'pre_site_transient_timeout_theme_roots', '__return_false' );
-
-	add_filter( 'pre_option_blog_public', '__return_true' );
-	add_filter( 'pre_option_uploads_use_yearmonth_folders', '__return_true' );
-
-	// https://gist.githubusercontent.com/andypotanin/2de82e5d6502cc92a654/raw/recently_activated
-	add_filter( 'pre_option_recently_activated', '__return_false' );
-	add_filter( 'pre_option_theme_switched', '__return_false' );
-	add_filter( 'pre_option_allowedthemes', 'EDM\Application\Policy\Override::allowedthemes' );
 
 	// Site/Network change detection.
 	add_action( 'update_option_home', 'EDM\Application\Policy\site_changed' );
@@ -90,7 +92,66 @@ namespace EDM\Application\Policy {
 	// Cache busting.
 	add_filter( 'wp_cache_themes_persistently', '__return_false' );
 
-	class Modify {
+	class Extend {
+
+		/**
+		 * Returned array must be relative to WP_PLUGIN_DIR and not network-activated.
+		 *
+		 * @param array $_plugins
+		 *
+		 * @return array
+		 */
+		static function active_plugins( $_plugins = array() ) {
+
+			$_plugins = array_merge( $_plugins, array(
+				//"wp-amd/wp-amd.php",
+				//"wp-simplify/wp-simplify.php",
+				"duplicate-post/duplicate-post.php",
+				"simple-page-ordering/simple-page-ordering.php",
+				"wp-crm/wp-crm.php"
+			));
+
+			if( WP_DEBUG ) {
+				$_plugins = array_merge( $_plugins, array(
+					"debug-bar/debug-bar.php",
+					"debug-bar-slow-actions/debug-bar-slow-actions.php",
+				));
+			}
+
+			return $_plugins;
+
+		}
+
+		static function sitewide_plugins( $_plugins = array() ) {
+
+			$_plugins = array(
+				"wpmandrill/wpmandrill.php" => time(),
+				"widget-css-classes/widget-css-classes.php"  => time(),
+				"public-post-preview/public-post-preview.php" => time(),
+				"jetpack/jetpack.php" => time(),
+				"wp-github-updater/github-updater.php" => time(),
+				//" wp-veneer/wp-veneer.php" => time(),
+				//"wp-cluster/wp-cluster.php" => time(),
+				"wp-network/wp-network.php" => time(),
+				"wp-vertical-edm/vertical-edm.php" => time(),
+				//"wp-elastic/wp-elastic.php" => time(),
+				"gravityforms/gravityforms.php" => time()
+			);
+
+			//die( '<pre>' . print_r( $_plugins, true ) . '</pre>');
+
+			return $_plugins;
+
+			if( WP_DEBUG ) {
+				$_plugins = array_merge( $_plugins, array(
+					"debug-bar/debug-bar.php",
+					"debug-bar-slow-actions/debug-bar-slow-actions.php",
+				));
+			}
+
+			return $_plugins;
+
+		}
 
 		/**
 		 * Verify Theme is Valid
@@ -128,7 +189,7 @@ namespace EDM\Application\Policy {
 
 		static function cloud_storage_bucket() {
 			global $current_blog;
-			return "gs://media" . $current_blog->domain;
+			return "gs://media." . $current_blog->domain;
 		}
 
 	}
@@ -152,7 +213,17 @@ namespace EDM\Application\Policy {
 
 			return array(
 				"wp-braxton",
+				"wp-bassoddysey",
+				"wp-monsterblockparty",
+				"wp-freaksbeatstreats",
+				"wp-hififest",
+				"wp-spectacle-chmf",
+				"wp-spectacle-fbt",
+				"wp-spectacle-isladelsol",
+				"wp-spectacle-mbp",
 				"wp-dayafter",
+				"wp-thegift",
+				"wp-winterfantasy",
 				"wp-kboom",
 				"wp-thegift",
 				"wp-disco-v1.0",
@@ -177,32 +248,6 @@ namespace EDM\Application\Policy {
 			return "storage/" . $current_blog->domain . "/media" ;
 		}
 
-		/**
-		 * Returned array must be relative to WP_PLUGIN_DIR and not network-activated.
-		 *
-		 * @return array
-		 */
-		static function active_plugins() {
-
-			$_plugins = array(
-				"duplicate-post/duplicate-post.php",
-				"simple-page-ordering/simple-page-ordering.php",
-				"wp-amd/wp-amd.php",
-				"wp-simplify/wp-simplify.php",
-				"wp-crm/wp-crm.php"
-			);
-
-			if( WP_DEBUG ) {
-				$_plugins = array_merge( $_plugins, array(
-					"debug-bar/debug-bar.php",
-					"debug-bar-slow-actions/debug-bar-slow-actions.php",
-				));
-			}
-
-			return $_plugins;
-
-		}
-
 	}
 
 	function api_site() {
@@ -213,13 +258,13 @@ namespace EDM\Application\Policy {
 			"home"                          => get_option( 'home' ),
 			"current_theme"                 => get_option( 'current_theme' ),
 			"stylesheet"                    => get_option( 'stylesheet' ),
-			"stylesheet_root"                    => get_option( 'stylesheet_root' ),
-			"template_root"                    => get_option( 'template_root' ),
+			"stylesheet_root"               => get_option( 'stylesheet_root' ),
+			"template_root"                 => get_option( 'template_root' ),
 			"template"                      => get_option( 'template' ),
 			"theme_roots"                   => get_site_transient( 'theme_roots' ),
 			"active_plugins"                => get_option( 'active_plugins' ),
 			"site_admins"                   => get_site_option( 'site_admins' ),
-			"illegal_names"                   => get_site_option( 'illegal_names' ),
+			"illegal_names"                 => get_site_option( 'illegal_names' ),
 			"active_sitewide_plugins"       => get_site_option( 'active_sitewide_plugins' ),
 			"can_compress_scripts"          => get_site_option( 'can_compress_scripts' ),
 			"ms_files_rewriting"            => get_site_option( 'ms_files_rewriting' ),
@@ -227,8 +272,8 @@ namespace EDM\Application\Policy {
 			"blog_public"                   => get_option( 'blog_public' ),
 			"recently_edited"               => get_option( 'recently_edited' ),
 			"upload"                        => wp_upload_dir(),
-			"cloud_storage_bucket"               => get_option( 'cloud_storage_bucket' ),
-			"cloud_storage_enabled"              => get_option( 'cloud_storage_enabled' ),
+			"cloud_storage_bucket"          => get_option( 'cloud_storage_bucket' ),
+			"cloud_storage_enabled"         => get_option( 'cloud_storage_enabled' ),
 			"upload_path"                   => get_option( 'upload_path' ),
 			"upload_url_path"               => get_option( 'upload_url_path' ),
 			"allowedthemes"                 => get_option( 'allowedthemes' ),

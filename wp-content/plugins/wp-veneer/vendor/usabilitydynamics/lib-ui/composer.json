@@ -1,13 +1,13 @@
 {
   "name": "usabilitydynamics/lib-ui",
-  "type": "library",
-  "homepage": "http://github.com/UsabilityDynamics/wp-ui",
+  "version": "0.2.0",
   "keywords": [
-    "ui",
-    "editor",
-    "css-editor",
-    "script-editor"
+    "ui"
   ],
+  "require": {
+    "udx/ace": "*",
+    "usabilitydynamics/lib-utility": "*"
+  },
   "minimum-stability": "dev",
   "repositories": [
     {
@@ -15,16 +15,14 @@
       "url": "http://repository.usabilitydynamics.com"
     }
   ],
-  "require": {
-    "php": ">=5.3",
-    "usabilitydynamics/lib-utility": "master"
-  },
-  "require-dev": {},
   "autoload": {
     "classmap": [
-      "lib"
+      "lib/ui.php",
+      "lib/class-style-editor-control.php",
+      "lib/class-script-editor-control.php"
     ]
   },
+  "homepage": "http://github.com/usabilitydynamics/lib-ui",
   "authors": [
     {
       "name": "Andy Potanin",
@@ -45,23 +43,16 @@
       "role": "Developer"
     }
   ],
-  "config": {},
   "extra": {
-    "installer-name": "lib-ui",
-    "text_domain": "lib-ui",
-    "main-file": "lib/class-ui.php",
-    "class": "UsabilityDynamics\\UI",
     "component": {
       "scripts": [
-        "static/scripts/ui.js",
-        "static/scripts/ui.markdown.js",
-        "static/scripts/ui.jquery-tabs.js"
+        "scripts/ui.js"
       ],
       "styles": [
-        "static/styles/ui.css",
-        "static/styles/ui.less"
+        "styles/ui.css",
+        "styles/ui.less"
       ]
     }
   },
-  "license": "GNU"
+  "license": "MIT"
 }
