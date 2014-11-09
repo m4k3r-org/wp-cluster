@@ -1,0 +1,27 @@
+{
+  "name": "discodonniepresents/wp-disco",
+  "type": "wordpress-theme",
+  "description": "Festival Theme for the Drop Network",
+  "author": {
+    "name": "Usability Dynamics",
+    "url": "http://UsabilityDynamics.com"
+  },
+  "license": "GPL-2.0",
+  "tags": [ "one-column", "two-column", "translation-ready", "responsive", "wordpress", "theme" ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repository.usabilitydynamics.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "composer/installers": "~1.0",
+    "UsabilityDynamics/lib-carrington": "~1.2",
+    "UsabilityDynamics/lib-wp-theme": "~0.2",
+  	"UsabilityDynamics/lib-js-elastic-filter": "~3.0"
+  },
+  "require-dev": {
+    "usabilitydynamics/wp-flawless/v1.0": "master"
+  }
+}
