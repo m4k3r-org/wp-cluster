@@ -7,15 +7,8 @@ try {
   header( 'PageSpeed: off' );
 
   /** Make sure we have a proper wp-config file */
-  if( !file_exists( 'vendor/libraries/automattic/wp-config.php' ) ) {
+  if( !file_exists( __DIR__ . '/wp-config.php' ) ) {
     throw new Exception( 'Site not installed.' );
-  }
-
-  /** Make sure we have our vendor libraries installed, and if we - include them */
-  if( !file_exists( 'vendor/libraries/automattic/wordpress/wp-blog-header.php' ) ) {
-    throw new Exception( 'Site vendor libraries not installed.' );
-  }else{
-    require_once( 'vendor/libraries/automattic/wordpress/wp-blog-header.php' );
   }
 
 } catch( Exception $e ) {
