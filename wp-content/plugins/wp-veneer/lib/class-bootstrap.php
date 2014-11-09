@@ -238,12 +238,12 @@ namespace UsabilityDynamics\Veneer {
 	      /** Initialize Components. */
         $this->_components();
 
-        //add_action( 'setup_theme', array( $this, 'setup_theme' ) );
+        add_action( 'setup_theme', array( $this, 'setup_theme' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_action( 'wp_head', array( $this, 'wp_head' ), 0, 200 );
         // add_filter( 'theme_root', array( $this, 'theme_root' ), 10 );
-	      // add_filter( 'flush_rewrite_rules_hard', array( $this, 'flush_rewrite_rules_hard' ));
+	      add_filter( 'flush_rewrite_rules_hard', array( $this, 'flush_rewrite_rules_hard' ));
 
         // Initialize Interfaces.
         $this->_interfaces();
@@ -567,7 +567,7 @@ namespace UsabilityDynamics\Veneer {
       public function enqueue_scripts() {
 
         if( is_user_logged_in() ) {
-          wp_enqueue_style( 'wp-veneer', plugins_url( '/static/styles/wp-veneer.css', dirname( __FILE__ ) ) );
+          wp_enqueue_style( 'wp-veneer', plugins_url( '/static/styles/wp-veneer.css', dirname( __DIR__ ) ) );
         };
 
       }
@@ -813,6 +813,7 @@ namespace UsabilityDynamics\Veneer {
 
 	      $this->set( 'rewrites.login', false );
 	      $this->set( 'rewrites.assets', false );
+	      $this->set( 'rewrites.styles', false );
 	      $this->set( 'rewrites.manage', false );
 	      $this->set( 'rewrites.api', false );
 

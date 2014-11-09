@@ -5,6 +5,7 @@
 try {
 
   header( 'PageSpeed: off' );
+	define('WP_USE_THEMES', true);
 
   /** Make sure we have a proper wp-config file */
   if( !file_exists( __DIR__ . '/wp-config.php' ) ) {
