@@ -567,7 +567,7 @@ namespace UsabilityDynamics\Veneer {
       public function enqueue_scripts() {
 
         if( is_user_logged_in() ) {
-          wp_enqueue_style( 'wp-veneer', plugins_url( '/static/styles/wp-veneer.css', dirname( __DIR__ ) ) );
+          wp_enqueue_style( 'wp-veneer', plugins_url( '/static/styles/wp-veneer.css', dirname( __FILE__ ) ) );
         };
 
       }

@@ -58,7 +58,6 @@ namespace EDM\Application {
 	add_action( 'init', function () {
 		global $current_blog;
 
-		die( '<pre>' . print_r( $current_blog, true ) . '</pre>');
 		if( class_exists( '\wpCloud\Vertical\EDM\Bootstrap' ) &&  isset( $current_blog ) && $current_blog->domain == 'discodonniepresents.com' ) {
 			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/artist.json' );
 			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/credit.json' );
