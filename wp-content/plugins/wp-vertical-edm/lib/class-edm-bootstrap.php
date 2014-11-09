@@ -72,6 +72,13 @@ namespace wpCloud\Vertical\EDM {
 
     }
 
+	  /**
+	   * Load JSON File into Post Type model.
+	   *
+	   * @param null $filePath
+	   *
+	   * @return mixed
+	   */
 	  static public function loadModel( $filePath = null ) {
 
 		  if( did_action( 'wp_loaded' ) ) {

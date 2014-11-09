@@ -41,8 +41,7 @@ namespace EDM\Application {
 
 	add_action( 'wp_loaded', function () {
 		global $wp_post_types;
-		die( '<pre>' . print_r( $wp_post_types, true ) . '</pre>');
-
+		///die( '<pre>' . print_r( $wp_post_types, true ) . '</pre>');
 	});
 
 	/**

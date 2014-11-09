@@ -68,7 +68,7 @@ namespace EDM\Application\Policy {
 	add_filter( 'pre_option_upload_path', 'EDM\Application\Policy\Override::upload_path' );
 	add_filter( 'pre_option_stylesheet_root', 'EDM\Application\Policy\Override::theme_root' );
 	add_filter( 'pre_option_template_root', 'EDM\Application\Policy\Override::theme_root' );
-	add_filter( 'pre_option_allowedthemes', 'EDM\Application\Policy\Override::allowedthemes' );
+	//add_filter( 'pre_option_allowedthemes', 'EDM\Application\Policy\Override::allowedthemes' );
 
 	add_filter( 'option_current_theme', 'EDM\Application\Policy\Extend::theme_selection' );
 	add_filter( 'option_template', 'EDM\Application\Policy\Extend::theme_selection' );
@@ -107,48 +107,33 @@ namespace EDM\Application\Policy {
 				"wp-amd/wp-amd.php",
 				"wp-simplify/wp-simplify.php",
 				"duplicate-post/duplicate-post.php",
-				"simple-page-ordering/simple-page-ordering.php",
-				"wp-crm/wp-crm.php"
+				"simple-page-ordering/simple-page-ordering.php"
 			));
-
-			if( WP_DEBUG ) {
-				$_plugins = array_merge( $_plugins, array(
-					"debug-bar/debug-bar.php",
-					"debug-bar-slow-actions/debug-bar-slow-actions.php",
-				));
-			}
 
 			return $_plugins;
 
 		}
 
+		/**
+		 * @param array $_plugins
+		 *
+		 * @return array
+		 */
 		static function sitewide_plugins( $_plugins = array() ) {
 
-			$_plugins = array(
-				"wp-event-post-type-v0.5/wp-event-post-type.php" => time(),
+			$_plugins = array_merge( (array) $_plugins, array(
 				"wpmandrill/wpmandrill.php" => time(),
 				"widget-css-classes/widget-css-classes.php"  => time(),
 				"public-post-preview/public-post-preview.php" => time(),
-				"jetpack/jetpack.php" => time(),
 				"wp-github-updater/github-updater.php" => time(),
 				"wp-veneer/wp-veneer.php" => time(),
 				"wp-cluster/wp-cluster.php" => time(),
 				"wp-network/wp-network.php" => time(),
 				"wp-vertical-edm/vertical-edm.php" => time(),
-				//"wp-elastic/wp-elastic.php" => time(),
-				"gravityforms/gravityforms.php" => time()
-			);
-
-			//die( '<pre>' . print_r( $_plugins, true ) . '</pre>');
-
-			return $_plugins;
-
-			if( WP_DEBUG ) {
-				$_plugins = array_merge( $_plugins, array(
-					"debug-bar/debug-bar.php",
-					"debug-bar-slow-actions/debug-bar-slow-actions.php",
-				));
-			}
+				"gravityforms/gravityforms.php" => time(),
+				"debug-bar/debug-bar.php" => time(),
+				"debug-bar-slow-actions/debug-bar-slow-actions.php"  => time()
+			));
 
 			return $_plugins;
 
