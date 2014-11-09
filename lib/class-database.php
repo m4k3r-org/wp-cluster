@@ -13,6 +13,46 @@ namespace UsabilityDynamics\Cluster {
 		 * we can override certain functions
 		 */
 		class WPDB extends \wpdb {
+
+			/**
+			 * Whether we've managed to successfully connect at some point
+			 *
+			 * @since 3.9.0
+			 * @access private
+			 * @var bool
+			 */
+			private $has_connected = false;
+
+			/**
+			 * @param bool $allow_bail
+			 *        // mysqli::ssl_set
+			 *
+			 * @return bool
+			 */
+			public function db_connect( $allow_bail = true ) {
+
+				if ( function_exists( 'mysql_pconnect' ) ) {
+					$this->dbh = mysql_pconnect( $this->dbhost, $this->dbuser, $this->dbpassword );
+				}
+
+				$this->use_mysqli = false;
+
+				if ( ! $this->dbh && $allow_bail ) {
+					wp_die( 'Unable to connect to DB.' );
+				}
+
+				// $db_selected = mysql_select_db( $this->dbname, $this->dbh );
+
+				$this->has_connected = true;
+				$this->set_charset( $this->dbh );
+				$this->set_sql_mode();
+				$this->ready = true;
+				$this->select( $this->dbname, $this->dbh );
+
+				return false;
+
+			}
+
 			/**
 			 * We need to change our blog prefix so that
 			 * our own capabilities will work properly
@@ -195,8 +235,10 @@ namespace UsabilityDynamics\Cluster {
 						throw new \Exception( 'Not enough credentials to connect to DB' );
 					}
 				}
+
 				/** Overwrite the globals */
 				$table_prefix = $creds[ 'DB_PREFIX' ];
+
 				/** Create the DB */
 				$wpdb = new WPDB( $creds[ 'DB_USER' ], $creds[ 'DB_PASSWORD' ], $creds[ 'DB_NAME' ], $creds[ 'DB_HOST' ] );
 
@@ -293,20 +335,26 @@ namespace UsabilityDynamics\Cluster {
 			 * @todo Hook this up for the wpcloud environment!
 			 */
 			function _maybe_connect_to_blog_db() {
-				global $wp_cluster;
+				global $wp_veneer, $current_blog;
 
-				/** Get our config info */
+				// Added this because below the method assumes there's a public get_config(). This logic is flawed since the files are mixed up between veneer and cluster.
+				if( !method_exists( $wp_veneer->config, 'get_config' ) ) {
+					return false;
+				}
+
 				/** @todo We should really be getting this from the DB */
-				if ( ! ( $blog_db_options = $wp_cluster->config->get_config( 'options/sites/' . $blog->domain, 'db' ) ) ) {
+				if ( ! ( $blog_db_options = $wp_veneer->config->get_config( 'options/sites/' . $current_blog->domain, 'db' ) ) ) {
 					/** Make sure we have a connection */
 					throw new \Exception( 'Could not retreive the blog\'s options - it may not be configured properly.' );
 				}
+
 				/** For each of the options, check to see if one of them is a constant */
 				foreach ( $blog_db_options as $key => $value ) {
 					if ( defined( $value ) ) {
 						$blog_db_options[ $key ] = constant( $value );
 					}
 				}
+
 				/** If we have our blog options, lets go ahead and set them up */
 				if ( $blog_db_options ) {
 					/** Loop through them and define the vars */
@@ -316,6 +364,7 @@ namespace UsabilityDynamics\Cluster {
 						}
 					}
 				}
+
 				/** Ok, we should have our DB info setup now */
 				$creds = array(
 					'DB_NAME'     => ( defined( 'DB_NAME' ) ? DB_NAME : false ),
@@ -324,11 +373,15 @@ namespace UsabilityDynamics\Cluster {
 					'DB_PASSWORD' => ( defined( 'DB_PASSWORD' ) ? DB_PASSWORD : false ),
 					'DB_HOST'     => ( defined( 'DB_HOST' ) ? DB_HOST : false )
 				);
+
 				/** Attempt to connect with these creds */
 				$this->_connect_to_db( $creds );
+
 				/** Well, the only thing left to do is create those actions */
 				//add_filter( 'tables_to_repair', array( $this, '_filter_tables_to_repair' ) );
+
 				add_filter( 'query', array( $this, '_filter_query' ) );
+
 				$this->config[ 'filter_queries' ] = true;
 			}
 
