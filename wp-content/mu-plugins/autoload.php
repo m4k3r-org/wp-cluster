@@ -27,13 +27,6 @@ namespace EDM\Application {
 		require_once( WP_VENDOR_AUTOLOAD_PATH );
 	}
 
-	// @note Gotta do this BEFORE plugins are activated, or else wp-elastic won't recognize schemas..
-	if ( defined( 'WP_PLUGIN_DIR' ) && ( isset( $current_blog ) && $current_blog->domain == 'discodonniepresents.com' ) && is_dir( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas' ) ) {
-		//define( 'WP_ELASTIC_SCHEMAS_DIR', WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas' );
-	}
-
-
-
 	/** Init the application */
 	if ( class_exists( 'EDM\Application\Bootstrap' ) ) {
 		new Bootstrap;
@@ -64,7 +57,7 @@ namespace EDM\Application {
 
 	add_action( 'init', function () {
 
-		if( class_exists( 'wpCloud\Vertical\EDM\Bootstrap' ) ) {
+		if( class_exists( 'wpCloud\Vertical\EDM\Bootstrap' ) &&  isset( $current_blog ) && $current_blog->domain == 'discodonniepresents.com' ) {
 			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/artist.json' );
 			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/credit.json' );
 			Vertical\EDM\Bootstrap::loadModel( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas/event.json' );
@@ -86,13 +79,13 @@ namespace EDM\Application {
 			//$wp_veneer->set( 'rewrites.manage', true );
 			//$wp_veneer->set( 'rewrites.api', true );
 
-			$wp_veneer->set( 'static.enabled', true );
-			$wp_veneer->set( 'cdn.enabled', true );
-			$wp_veneer->set( 'cache.enabled', true );
+			// $wp_veneer->set( 'static.enabled', true );
+			// $wp_veneer->set( 'cdn.enabled', true );
+			// $wp_veneer->set( 'cache.enabled', true );
 
-			$wp_veneer->set( 'media.shard.enabled', false );
-			$wp_veneer->set( 'scripts.shard.enabled', false );
-			$wp_veneer->set( 'styles.shard.enabled', false );
+			// $wp_veneer->set( 'media.shard.enabled', false );
+			// $wp_veneer->set( 'scripts.shard.enabled', false );
+			// $wp_veneer->set( 'styles.shard.enabled', false );
 		}
 
 	} );
@@ -107,11 +100,5 @@ namespace EDM\Application {
 	if ( function_exists( 'add_shortcode' ) ) {
 		add_shortcode( 'wpml_lang_selector', 'wpml_shortcode_func' );
 	}
-
-	ob_start( function ( $buffer ) {
-		//$buffer = str_replace( '/wp-login.php', '/manage/login', $buffer );
-		//$buffer = str_replace( '/wp-admin/', '/manage/', $buffer );
-		return $buffer;
-	} );
 
 }

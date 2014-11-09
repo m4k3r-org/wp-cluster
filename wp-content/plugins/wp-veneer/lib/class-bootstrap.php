@@ -238,12 +238,12 @@ namespace UsabilityDynamics\Veneer {
 	      /** Initialize Components. */
         $this->_components();
 
-        add_action( 'setup_theme', array( $this, 'setup_theme' ) );
+        //add_action( 'setup_theme', array( $this, 'setup_theme' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_action( 'wp_head', array( $this, 'wp_head' ), 0, 200 );
-        add_filter( 'theme_root', array( $this, 'theme_root' ), 10 );
-	      add_filter( 'flush_rewrite_rules_hard', array( $this, 'flush_rewrite_rules_hard' ));
+        // add_filter( 'theme_root', array( $this, 'theme_root' ), 10 );
+	      // add_filter( 'flush_rewrite_rules_hard', array( $this, 'flush_rewrite_rules_hard' ));
 
         // Initialize Interfaces.
         $this->_interfaces();
@@ -567,7 +567,7 @@ namespace UsabilityDynamics\Veneer {
       public function enqueue_scripts() {
 
         if( is_user_logged_in() ) {
-          wp_enqueue_style( 'wp-veneer', plugins_url( '/static/styles/wp-veneer.css', dirname( __DIR__ ) ) );
+          wp_enqueue_style( 'wp-veneer', plugins_url( '/static/styles/wp-veneer.css', dirname( __FILE__ ) ) );
         };
 
       }
@@ -580,7 +580,6 @@ namespace UsabilityDynamics\Veneer {
 	     * @return mixed
 	     */
 	    public function flush_rewrite_rules_hard( $setting ) {
-		    global $wp_rewrite;
 
 		    if( !is_admin() ) {
 		      return;
@@ -589,104 +588,102 @@ namespace UsabilityDynamics\Veneer {
 		    $htaccess_file = wp_normalize_path( get_home_path() . '/.htaccess' );
 
 		    insert_with_markers( $htaccess_file, 'Veneer Static Media', array(
-			    "RewriteEngine On",
-			    "RewriteBase /",
-			    "RewriteRule ^wp-content/uploads/(.*)$ /media/$1 [L]",
-			    "RewriteRule ^system/files/(.*)$ /media/$1 [L]",
-			    "RewriteRule ^system/media/(.*)$ /media/$1 [L]",
-			    "RewriteRule ^files/(.*)$ /media/$1 [L]",
-			    "RewriteRule ^uploads/(.*)$ /media/$1 [L]",
-			    "RewriteCond %{REQUEST_FILENAME} !-f",
-			    "RewriteCond %{REQUEST_FILENAME} !-d",
-			    "RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
-			    "RewriteCond %{DOCUMENT_ROOT}/storage/%1/static/%2 -f",
-			    "RewriteRule ^(.*) /storage/%1/static/%2 [L]",
-			    "RewriteCond %{REQUEST_FILENAME} !-f",
-			    "RewriteCond %{REQUEST_FILENAME} !-d",
-			    "RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
-			    "RewriteCond %{DOCUMENT_ROOT}/storage/%1/%2 -f",
-			    "RewriteRule ^.*$ /storage/%1/%2 [L]",
-			    "RewriteCond %{REQUEST_FILENAME} !-f",
-			    "RewriteCond %{REQUEST_FILENAME} !-d",
-			    "RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(assets|media|cache|static)\\.(.*)::/(?:assets|media|cache|static)?/?(.*)$",
-			    "RewriteCond %{DOCUMENT_ROOT}/storage/%2/%1/%3 -f",
-			    "RewriteRule ^.*$ /storage/%2/%1/%3 [L]",
-			    "RewriteCond %{REQUEST_FILENAME} !-f",
-			    "RewriteCond %{REQUEST_FILENAME} !-d",
-			    "RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
-			    "RewriteCond %{DOCUMENT_ROOT}/storage/%1/static/%2index.html -f",
-			    "RewriteRule ^.*$ /storage/%1/static/%2index.html [NC,QSA,L]",
-			    "RewriteCond %{REQUEST_FILENAME} !-f",
-			    "RewriteCond %{REQUEST_FILENAME} !-d",
-			    "RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
-			    "RewriteCond %{DOCUMENT_ROOT}/storage/%1/static/%2.html -f",
-			    "RewriteRule ^.*$ /storage/%1/static/%2.html [L]",
-			    "RewriteCond %{REQUEST_FILENAME} !-f",
-			    "RewriteCond %{DOCUMENT_ROOT}/storage/%{HTTP_HOST}/static/index\\.html -f",
-			    "RewriteCond %{QUERY_STRING} ^$",
-			    "RewriteRule ^$ /storage/%{HTTP_HOST}/static/index.html [L]"
+			    "<IfModule mod_rewrite.c>",
+			    " RewriteEngine On",
+			    " RewriteBase /",
+
+			    " RewriteRule ^wp-content/uploads/(.*)$ /media/$1 [L]",
+			    " RewriteRule ^files/(.*)$ /media/$1 [L]",
+			    " RewriteRule ^uploads/(.*)$ /media/$1 [L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%1/static/%2 -f",
+			    " RewriteRule ^(.*) /wp-content/storage/%1/static/%2 [L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%1/%2 -f",
+			    " RewriteRule ^.*$ /wp-content/storage/%1/%2 [L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(assets|media|cache|static)\\.(.*)::/(?:assets|media|cache|static)?/?(.*)$",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%2/%1/%3 -f",
+			    " RewriteRule ^.*$ /wp-content/storage/%2/%1/%3 [L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%1/static/%2index.html -f",
+			    " RewriteRule ^.*$ /wp-content/storage/%1/static/%2index.html [NC,QSA,L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%1/static/%2.html -f",
+			    " RewriteRule ^.*$ /wp-content/storage/%1/static/%2.html [L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%{HTTP_HOST}/static/index\\.html -f",
+			    " RewriteCond %{QUERY_STRING} ^$",
+			    " RewriteRule ^$ /wp-content/storage/%{HTTP_HOST}/static/index.html [L]",
+			    "</IfModule>"
 		    ));
 
 		    insert_with_markers( $htaccess_file, 'Veneer Assets', array(
-			    "RewriteEngine On",
-			    "RewriteBase /",
-			    "RewriteRule ^includes/js/(.*)$ /assets/scripts/$1 [QSA,L]",
-			    "RewriteRule ^includes/css/(.*)$ /assets/styles/$1 [QSA,L]",
-			    "RewriteRule ^wp-includes/js/(.*)$ /assets/scripts/$1 [QSA,L]",
-			    "RewriteRule ^wp-includes/images/(.*)$ /assets/images/$1 [QSA,L]",
-			    "RewriteRule ^wp-includes/css/(.*)$ /assets/styles/$1 [R=301,L]",
-			    "RewriteRule ^assets/styles/(.*)$ /wp-includes/css/$1 [QSA,L]",
-			    "RewriteRule ^assets/scripts/(.*)$ /wp-includes/js/$1 [QSA,L]",
-			    "RewriteRule ^assets/images/(.*)$ /wp-includes/images/$1 [QSA,L]"
+			    "<IfModule mod_rewrite.c>",
+			    " RewriteEngine On",
+			    " RewriteBase /",
+			    " RewriteRule ^assets/styles/(.*)$  /wp-includes/css/$1 [QSA,L]",
+			    " RewriteRule ^assets/scripts/(.*)$ /wp-includes/js/$1 [QSA,L]",
+			    " RewriteRule ^assets/images/(.*)$  /wp-includes/images/$1 [QSA,L]",
+			    "</IfModule>"
 		    ));
 
 		    insert_with_markers( $htaccess_file, 'Veneer Management Access ', array(
-			    "RewriteEngine On",
-			    "RewriteBase /",
-			    "# RewriteRule ^wp-admin/admin-ajax.php?(.*)$  /wp-admin/admin-ajax.php$1  [QSA,L]",
-			    "# RewriteRule ^wp-admin/admin-ajax.php?(.*)$  /wp-admin/admin-ajax.php$1  [QSA,L]",
-			    "# RewriteRule ^wp-admin/js/?(.*)$             /manage/js/$1           [QSA,L]",
-			    "# RewriteRule ^wp-admin/css/?(.*)$            /manage/css/$1          [QSA,L]",
-			    "# RewriteRule ^wp-admin/images/?(.*)$         /manage/images/$1       [QSA,L]",
-			    "# RewriteRule ^wp-login.php$                  /manage/login/          [R=301,L]",
-			    "# RewriteRule ^wp-admin$                      /manage/                [R=301,L]",
-			    "# RewriteRule ^wp-admin/install.php?(.*)$     /manage/install.php$1   [R=301,L]",
-			    "# RewriteRule ^manage$                         /manage/ [R=301,L]",
-			    "# RewriteRule ^manage/(login|signup)/?(.*)$    /wp-$1.php [QSA,L]",
-			    "# RewriteRule ^manage/?(.*)$                   /wp-admin/$1 [QSA,L]",
-			    "# RewriteRule ^wp-vendor/libraries/automattic/wordpress/manage/?(.*)$ /manage/$1 [QSA,L]",
-			    "# RewriteRule ^wp-admin/load-styles.php?(.*)$ /wp-admin/load-styles.php$1 [QSA,L]",
-			    "# RewriteRule ^wp-admin/load-scripts.php?(.*)$ /wp-admin/load-scripts.php$1 [R=301,L]"
+			    "<IfModule mod_rewrite.c>",
+			    " RewriteEngine On",
+			    " RewriteBase /",
+			    " RewriteRule ^manage$                         /manage/ [R=301,L]",
+			    " RewriteRule ^manage/(login|signup)/?(.*)$    /wp-$1.php [QSA,L]",
+			    " RewriteRule ^manage/?(.*)$                   /wp-admin/$1 [QSA,L]",
+			    "</IfModule>"
 		    ));
 
 		    insert_with_markers( $htaccess_file, 'Veneer Public API', array(
-			    "RewriteEngine On",
-			    "RewriteBase /",
-			    "RewriteCond %{HTTP_HOST}          ^api\\..*$",
-			    "RewriteRule ^documents/v1/(.*)$   http://api.veneer.io/documents/$1 [P,L]",
-			    "RewriteCond %{HTTP_HOST}          ^api\\..*$",
-			    "RewriteRule ^search/v1/(.*)$      http://api.veneer.io/search/$1 [P,L]",
-			    "RewriteCond %{HTTP_HOST}          ^api\\..*$",
-			    "RewriteRule ^documents/(.*)$      http://api.veneer.io/documents/$1 [P,L]",
-			    "RewriteCond %{HTTP_HOST}          ^api\\..*$",
-			    "RewriteRule ^search/(.*)$         http://api.veneer.io/search/$1 [P,L]"
+			    "<IfModule mod_rewrite.c>",
+			    " RewriteEngine On",
+			    " RewriteBase /",
+			    " RewriteCond %{HTTP_HOST}          ^api\\..*$",
+			    " RewriteRule ^documents/v1/(.*)$   http://api.veneer.io/documents/$1 [P,L]",
+			    " RewriteCond %{HTTP_HOST}          ^api\\..*$",
+			    " RewriteRule ^search/v1/(.*)$      http://api.veneer.io/search/$1 [P,L]",
+			    " RewriteCond %{HTTP_HOST}          ^api\\..*$",
+			    " RewriteRule ^documents/(.*)$      http://api.veneer.io/documents/$1 [P,L]",
+			    " RewriteCond %{HTTP_HOST}          ^api\\..*$",
+			    " RewriteRule ^search/(.*)$         http://api.veneer.io/search/$1 [P,L]",
+			    "</IfModule>"
 		    ));
 
 		    insert_with_markers( $htaccess_file, 'Veneer WordPress API', array(
-			    "RewriteEngine On",
-			    "RewriteBase /",
-			    "RewriteCond %{REQUEST_FILENAME} !-f",
-			    "RewriteCond %{REQUEST_FILENAME} !-d",
-			    "RewriteCond %{REQUEST_URI} !^.*admin-ajax\\.php.*$",
-			    "RewriteRule ^xmlrpc.php$ //xmlrpc.php [QSA,L]",
-			    "RewriteRule ^api/rpc.xml$ //xmlrpc.php [QSA,L]",
-			    "RewriteRule ^api/rpc.json$ /wp-admin/admin-ajax.php?action=/api/json-rpc [QSA,L]",
-			    "RewriteRule ^api/(.*).xml$ /wp-admin/admin-ajax.php?action=/$1&format=xml [QSA,L]",
-			    "RewriteRule ^api/(.*).json$ /wp-admin/admin-ajax.php?action=/$1&format=json [QSA,L]"
+			    "<IfModule mod_rewrite.c>",
+			    " RewriteEngine On",
+			    " RewriteBase /",
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{REQUEST_URI} !^.*admin-ajax\\.php.*$",
+			    " RewriteRule ^xmlrpc.php$    /xmlrpc.php [QSA,L]",
+			    " RewriteRule ^api/rpc.xml$   /xmlrpc.php [QSA,L]",
+			    " RewriteRule ^api/rpc.json$  /wp-admin/admin-ajax.php?action=/api/json-rpc [QSA,L]",
+			    " RewriteRule ^api/(.*).xml$  /wp-admin/admin-ajax.php?action=/$1&format=xml [QSA,L]",
+			    " RewriteRule ^api/(.*).json$ /wp-admin/admin-ajax.php?action=/$1&format=json [QSA,L]",
+			    "</IfModule>"
 		    ));
 
 		    return $setting;
-		    // $_wordpressRewrites = extract_from_markers( $htaccess_file, "WordPress" );
 
 	    }
 
@@ -815,6 +812,7 @@ namespace UsabilityDynamics\Veneer {
         $this->set( 'scripts.outline.enabled', false );
 
 	      $this->set( 'rewrites.login', false );
+	      $this->set( 'rewrites.assets', false );
 	      $this->set( 'rewrites.manage', false );
 	      $this->set( 'rewrites.api', false );
 

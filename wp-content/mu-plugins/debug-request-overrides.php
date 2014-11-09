@@ -40,20 +40,7 @@ namespace Application\EDM\Debug {
 			newrelic_ignore_transaction();
 		}
 
-		ob_start( function ( $buffer ) {
-
-			// $buffer = str_replace( 'cities across', 'blah blah blah', $buffer );
-			$buffer = str_replace( '/wp-login.php', '/manage/login/', $buffer );
-
-			return $buffer;
-
-		} );
 
 	} );
-
-	if ( WP_DEBUG && defined( 'WP_ENV' ) && WP_ENV == 'develop' ) {
-		//error_reporting( E_ALL );
-		//ini_set( 'display_errors', 1 );
-	}
 
 }

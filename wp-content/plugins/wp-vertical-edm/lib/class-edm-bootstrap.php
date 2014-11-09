@@ -38,6 +38,9 @@ namespace wpCloud\Vertical\EDM {
      */
     public function plugins_loaded() {
 
+	    if( !method_exists( API, 'define' ) )  {
+		    return;
+	    }
       // List Sites.
       API::define( '/network/v1/sites', array(
         'scopes' => array( 'read' ),

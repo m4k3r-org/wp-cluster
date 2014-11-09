@@ -68,7 +68,7 @@ namespace EDM\Application\Policy {
 	add_filter( 'pre_option_upload_path', 'EDM\Application\Policy\Override::upload_path' );
 	add_filter( 'pre_option_stylesheet_root', 'EDM\Application\Policy\Override::theme_root' );
 	add_filter( 'pre_option_template_root', 'EDM\Application\Policy\Override::theme_root' );
-	//add_filter( 'pre_option_allowedthemes', 'EDM\Application\Policy\Override::allowedthemes' );
+	add_filter( 'pre_option_allowedthemes', 'EDM\Application\Policy\Override::allowedthemes' );
 
 	add_filter( 'option_current_theme', 'EDM\Application\Policy\Extend::theme_selection' );
 	add_filter( 'option_template', 'EDM\Application\Policy\Extend::theme_selection' );
@@ -105,6 +105,7 @@ namespace EDM\Application\Policy {
 
 			$_plugins = array_merge( $_plugins, array(
 				"wp-amd/wp-amd.php",
+				"meta-box/meta-box.php",
 				"wp-simplify/wp-simplify.php",
 				"duplicate-post/duplicate-post.php",
 				"simple-page-ordering/simple-page-ordering.php"
@@ -120,6 +121,8 @@ namespace EDM\Application\Policy {
 		 * @return array
 		 */
 		static function sitewide_plugins( $_plugins = array() ) {
+
+			// $_plugins = false;
 
 			$_plugins = array_merge( (array) $_plugins, array(
 				"wpmandrill/wpmandrill.php" => time(),
@@ -147,8 +150,7 @@ namespace EDM\Application\Policy {
 		 * @return string
 		 */
 		static function theme_selection( $default = null ) {
-
-			$default = str_replace( array( 'wp-splash' ), array( 'wp-splash-v1.0' ), $default );
+			$default = str_replace( array( 'wp-splash', 'wp-disco-v1.0' ), array( 'wp-splash-v1.0', 'wp-disco-v2.0' ), $default );
 
 			return $default;
 
@@ -198,26 +200,25 @@ namespace EDM\Application\Policy {
 		static function allowedthemes() {
 
 			return array(
-				"wp-braxton",
-				"wp-bassoddysey",
-				"wp-monsterblockparty",
-				"wp-freaksbeatstreats",
-				"wp-hififest",
-				"wp-spectacle-chmf",
-				"wp-spectacle-fbt",
-				"wp-spectacle-isladelsol",
-				"wp-spectacle-mbp",
-				"wp-dayafter",
-				"wp-thegift",
-				"wp-winterfantasy",
-				"wp-kboom",
-				"wp-thegift",
-				"wp-disco-v1.0",
-				"wp-disco-v2.0",
-				"wp-spectacle-v1.0",
-				"wp-spectacle-v2.0",
-				"wp-splash-v1.0",
-				"wp-splash-v2.0"
+				"wp-braxton" => true,
+				"wp-bassoddysey" => true,
+				"wp-monsterblockparty" => true,
+				"wp-freaksbeatstreats" => true,
+				"wp-hififest" => true,
+				"wp-spectacle-chmf" => true,
+				"wp-spectacle-fbt" => true,
+				"wp-spectacle-isladelsol" => true,
+				"wp-spectacle-mbp" => true,
+				"wp-dayafter" => true,
+				"wp-thegift" => true,
+				"wp-winterfantasy" => true,
+				"wp-kboom" => true,
+				"wp-disco-v1.0" => true,
+				"wp-disco-v2.0" => true,
+				"wp-spectacle-v1.0" => true,
+				"wp-spectacle-v2.0" => true,
+				"wp-splash-v1.0" => true,
+				"wp-splash-v2.0" => true
 			);
 
 		}

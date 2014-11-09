@@ -86,7 +86,7 @@ namespace EDM\Application {
      */
     public function __construct() {
 	    global $wp_theme_directories;
-	    
+
 	    // Instantaite Settings.
       //$this->settings   = class_exists( '\UsabilityDynamics\Settings' ) ? new \UsabilityDynamics\Settings : null;
 
@@ -102,7 +102,6 @@ namespace EDM\Application {
       //add_action( 'login_footer', array( &$this, 'login_footer' ), 30 );
       //add_filter( 'login_headerurl', array( &$this, 'login_headerurl' ), 30 );
       //add_filter( 'wp_mail_from', array( &$this, 'wp_mail_from' ), 10 );
-      //add_filter( 'theme_root', array( &$this, 'theme_root' ), 10 );
       //add_action( 'login_enqueue_scripts', array( $this, 'login_enqueue_scripts' ), 30 );
 
     }
@@ -128,10 +127,6 @@ namespace EDM\Application {
 
 	    // Run Upgrade if version is missing or outdated.
       // if( !get_site_option( $this->id . '::version' ) || version_compare( self::$version, get_site_option( $this->id . '::version' ), '>' ) ) { $this->upgrade(); }
-
-      // Dashboard Panels.
-      // add_action( 'wp_network_dashboard_setup', array( &$this, 'wp_dashboard_setup' ), 0 );
-      // add_action( 'wp_user_dashboard_setup', array( &$this, 'wp_dashboard_setup' ), 0 );
 
       // Fix hard-coded location of wp-content/bannner
       add_filter( 'option_adrotate_config', function( $value ) {
@@ -189,38 +184,6 @@ namespace EDM\Application {
     }
 
     /**
-     * Admin Initializer
-     *
-     * @author potanin@UD
-     * @for EDMNetwork
-     */
-    public function admin() {
-
-      remove_action( 'welcome_panel', 'wp_welcome_panel' );
-      add_action( 'welcome_panel', array( get_class(), 'welcome_panel' ), 0 );
-
-      // Automatically setup htaccess file
-      if( !file_exists( $this->root . '/.htaccess' ) && file_exists( 'application/defaults/.htaccess' ) ) {
-        copy( 'application/defaults/.htaccess', $this->root . '/.htaccess' );
-      }
-
-      // Notify administrator if .htaccess was not copied
-      if( current_user_can( 'administrator' ) && ( !is_writable( $this->root . '/.htaccess' ) || !is_writable( $this->root . '/.htaccess' ) ) ) {
-        add_action( 'admin_notices', create_function( '', "echo '<div class=\"error\"><p>" . sprintf( __( 'Please make sure your <a href="%s">.htaccess</a> file is writable ', 'roots' ), admin_url( 'options-permalink.php' ) ) . "</p></div>';" ) );
-      }
-
-    }
-
-	  public function theme_root( $theme_root ) {
-
-		  if( defined( 'WP_THEME_DIR' ) && WP_THEME_DIR ) {
-			  return WP_THEME_DIR;
-		  }
-
-		  return $theme_root;
-	  }
-
-    /**
      * Replace Default Sender Email
      *
      * @param $from_email
@@ -241,17 +204,6 @@ namespace EDM\Application {
 
       return $from_email;
 
-    }
-
-    /**
-     * Admin Login Scripts
-     *
-     * @author potanin@UD
-     */
-    public function login_enqueue_scripts() {
-      echo implode( '', array(
-        '<link rel="stylesheet" id="network-styles" href="', self::application_url( '/static/styles/login.css' ), '" type="text/css" media="all" />'
-      ));
     }
 
     /**
@@ -305,14 +257,6 @@ namespace EDM\Application {
     }
 
     /**
-     * Welcome Dasboard
-     *
-     */
-    public function wp_dashboard_setup() {
-      include( __DIR__ . '/templates/welcome.php' );
-    }
-
-    /**
      * System Upgrade
      *
      * @author potanin@UD
@@ -335,27 +279,6 @@ namespace EDM\Application {
 
       wp_die( '<h1>Updated</h1><p>Updated from ' . $_old_version  . ' to ' . self::$version . '.</p>' );
 
-    }
-
-    /**
-     * Welcome Panel Content
-     *
-     * @author potanin@UD
-     * @for EDMNetwork
-     */
-    public function welcome_panel() {
-
-    }
-
-    /**
-     * Application Link
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    public function application_url( $path = '' ) {
-      return home_url( 'application/' . $path );
     }
 
     /**
@@ -422,36 +345,6 @@ namespace EDM\Application {
       } else {
         return $input;
       }
-    }
-
-    /**
-     * Network Application Error Handler
-     *
-     * Should be overwritten by themes.
-     *
-     * @param $code
-     * @param $message
-     * @param $file
-     * @param $line
-     *
-     * @return bool|void
-     */
-    public function error_handler( $code = null, $message = '', $file = '', $line = null ) {
-
-      // Log error
-      // error_log( $message );
-
-      // AJAX Error
-      if( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-        die( json_encode( array(
-          "success" => false,
-          "message" => $message
-        ) ) );
-      }
-
-      // Output error
-      wp_die( "<h1>Network Error</h1><p>We apologize for the inconvenience and will return shortly.</p><p>$message</p>" );
-
     }
 
   }

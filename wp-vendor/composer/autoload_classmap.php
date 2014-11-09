@@ -329,6 +329,7 @@ return array(
     'LinkORB\\Component\\Etcd\\Exception\\EtcdException' => $vendorDir . '/linkorb/etcd-php/src/LinkORB/Component/Etcd/Exception/EtcdException.php',
     'LinkORB\\Component\\Etcd\\Exception\\KeyExistsException' => $vendorDir . '/linkorb/etcd-php/src/LinkORB/Component/Etcd/Exception/KeyExistsException.php',
     'LinkORB\\Component\\Etcd\\Exception\\KeyNotFoundException' => $vendorDir . '/linkorb/etcd-php/src/LinkORB/Component/Etcd/Exception/KeyNotFoundException.php',
+    'Parsedown' => $vendorDir . '/erusev/parsedown/Parsedown.php',
     'Symfony\\Component\\Console\\Application' => $vendorDir . '/symfony/console/Symfony/Component/Console/Application.php',
     'Symfony\\Component\\Console\\Command\\Command' => $vendorDir . '/symfony/console/Symfony/Component/Console/Command/Command.php',
     'Symfony\\Component\\Console\\Command\\HelpCommand' => $vendorDir . '/symfony/console/Symfony/Component/Console/Command/HelpCommand.php',

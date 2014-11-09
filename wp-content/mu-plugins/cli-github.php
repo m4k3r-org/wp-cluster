@@ -128,8 +128,7 @@ namespace wpCloud\Stateless {
 			}
 		}
 
-		\WP_CLI::add_command( 'github', 'wpCloud\Stateless\GitHub_Command' );
-
+		// \WP_CLI::add_command( 'github', 'wpCloud\Stateless\GitHub_Command' );
 
 	}
 
@@ -257,12 +256,12 @@ namespace wpCloud\Stateless {
 		}
 	}
 
-	add_filter('rewrite_rules_array', function($rules) {
+	add_filter('__rewrite_rules_array', function($rules) {
 		$new_rules = array('^github-sync\/?$' => 'index.php?github_sync=1');
 		return $new_rules + $rules;
 	});
 
-	add_filter('query_vars', function($qvars) {
+	add_filter('__query_vars', function($qvars) {
 		$qvars[] = 'github_sync';
 		return $qvars;
 	});

@@ -20,7 +20,7 @@ if( isset( $_SERVER[ 'HTTP_X_UDS_DEBUG' ] ) ) {
   }, 1000 );
 }
 
-
+//die('sdf'. TEMPLATEPATH);
 if( !is_dir( TEMPLATEPATH ) ) {
 	wp_die(TEMPLATEPATH);
 	return;
