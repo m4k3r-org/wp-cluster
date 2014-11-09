@@ -54,7 +54,6 @@ machine:
     WP_DB_USER: circle
     WP_DB_PASSWORD: circle
     CURRENT_BRANCH: ${CIRCLE_BRANCH}
-    BP_AVATAR_UPLOAD_PATH: /home/ubuntu/storage/uploads
     WP_DEBUG: true
     WP_DEBUG_DISPLAY: 0
 
@@ -83,8 +82,8 @@ dependencies:
 
 test:
   override:
-    - mocha test/unit
-    - mocha test/functional/assets
-    - mocha test/functional/media
-    - mocha test/functional/rewrites
-    - mocha test/functional/sharding
+    - mocha wp-content/static/test/unit
+    - mocha wp-content/static/test/functional/assets
+    - mocha wp-content/static/test/functional/media
+    - mocha wp-content/static/test/functional/rewrites
+    - mocha wp-content/static/test/functional/sharding

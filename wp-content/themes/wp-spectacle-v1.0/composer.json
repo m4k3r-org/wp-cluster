@@ -1,5 +1,6 @@
 {
   "name": "discodonniepresents/wp-spectacle",
+  "version": "0.1.0",
   "type": "wordpress-theme",
   "description": "Spectacle theme for the EDM Network",
   "author": {
@@ -18,21 +19,10 @@
   "minimum-stability": "dev",
   "require": {
     "composer/installers": "~1.0",
-    "UsabilityDynamics/lib-wp-theme": "~0.3",
-    "UsabilityDynamics/lib-carrington": "~1.2"
-  },
-  "extra": {
-    "installer-paths": {
-      "vendor/{$vendor}/{$name}": [
-        "type:wordpress-library"
-      ],
-      "vendor/modules/{$name}": [
-        "type:wordpress-muplugin",
-        "type:wordpress-plugin",
-        "type:wpackagist-plugin",
-        "type:wordpress-theme"
-      ]
-    }
+    "UsabilityDynamics/lib-wp-theme": "master",
+    "UsabilityDynamics/lib-settings": "master",
+    "UsabilityDynamics/lib-carrington": "master",
+    "UsabilityDynamics/lib-meta-box": "master"
   },
   "autoload": {
     "classmap": [ "lib" ]

@@ -93,7 +93,6 @@
     }
   },
   "require": {
-    "automattic/wordpress": "4.0",
     "linkorb/etcd-php": "master",
     "mnsami/composer-custom-directory-installer": "master",
     "discodonniepresents/wp-bassoddysey": "master",
@@ -160,8 +159,8 @@
   },
   "scripts": {
     "pre-update-cmd": [ "rm -rf wp-vendor/composer/installed.json" ],
-    "post-update-cmd": [ "grunt symlink:vendor" ],
-    "post-install-cmd": [ "grunt symlink" ]
+    "post-update-cmd": [],
+    "post-install-cmd": []
   },
   "minimum-stability": "dev",
   "license": "GPLv2"

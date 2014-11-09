@@ -9,7 +9,8 @@
  * Network: true
  * Vertical: true
  * Author URI: http://wpCloud.io
- * GitHub Plugin URI: https://github.com/wpCloud/wp-vertical-edm
+ *
+ * GitHub Plugin URI: wpCloud/wp-vertical-edm
  *
  * Copyright 2011-2014  Usability Dynamics, Inc.   (email : info@UsabilityDynamics.com)
  *

@@ -48,53 +48,6 @@ module.exports = function( grunt ) {
       test: []
     },
 
-    // Build Our Less Assets
-    less: {
-      development: {
-        options: {
-          paths: [
-            'wp-content/static/styles/src'
-          ],
-          relativeUrls: true
-        },
-        files: {
-          'wp-content/static/styles/app.css' : [
-            'wp-content/static/styles/src/app.less'
-          ]
-        }
-      },
-      production : {
-        options : {
-          compress: true,
-          yuicompress: true,
-          relativeUrls: true,
-          paths: [ 'wp-content/static/styles/src' ]
-        },
-        files: {
-          'wp-content/styles/app.css' : [
-            'wp-content/static/styles/src/app.less'
-          ]
-        }
-      }
-    },
-
-    // Build our JavaScript Assets
-    requirejs: {
-      production: {
-        options: {
-          "name": "app",
-          "out": "wp-content/static/scripts/app.js",
-          "baseUrl": "application/static/scripts/src",
-          "paths": {},
-          "map": {},
-          uglify : {
-            max_line_length: 1000,
-            no_mangle: true
-          }
-        }
-      }
-    },
-
     // Symbolic Links.
     symlink: {
       production: {

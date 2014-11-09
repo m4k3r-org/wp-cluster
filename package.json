@@ -23,8 +23,6 @@
   },
   "devDependencies": {
     "grunt-contrib-clean": "*",
-    "grunt-contrib-less": "*",
-    "grunt-contrib-requirejs": "^0.4.4",
     "grunt-contrib-symlink": "^0.3.0",
     "grunt-contrib-watch": "^0.6.1",
     "mocha": "~1.20.1",
