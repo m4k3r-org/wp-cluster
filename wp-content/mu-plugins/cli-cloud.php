@@ -94,10 +94,6 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 		function sites( $args ) {
 			global $wpdb, $current_blog;
 
-			//WP_CLI::line( 'DB_NAME: ' . DB_NAME );
-			//WP_CLI::line( 'DB_USER: ' . DB_USER );
-			//WP_CLI::line( 'DB_HOST: ' . DB_HOST );
-
 			// WP_CLI::line( 'Generating list of sites with themes.' );
 
 			$_results = array();
@@ -127,22 +123,26 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 					$_a_records[] = $_record[ 'ip' ];
 				}
 
+				if( ms_is_switched() ) {}
+
 				$_status = $site['public'] ? 'Public' : null;
 
 				$_results[ $site['domain'] ] = array(
 					'id' => $site['blog_id'],
-					'network' => $_network['domain'],
 					'domain' => $site['domain'],
+					'network' => $_network['domain'],
+					'url' => get_blog_option( $site[ 'blog_id' ], 'home' ),
 					'ip' => gethostbyname( $site['domain'] ),
 					'dns' => join( ", ", $_a_records ),
-					'status' => $_status
+					'status' => $_status,
+					'globalTerms' => global_terms_enabled(),
+					'mainSite' => is_main_site(),
+					'mainNetwork' => is_main_network(),
 				);
 
 			}
 
-			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'id','network', 'domain', 'ip', 'dns', 'status' ) );
-
-			//die( '<pre>' . print_r( $_results, true ) . '</pre>');
+			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'id', 'domain', 'network', 'url', 'ip', 'dns', 'status' , 'globalTerms', 'mainSite', 'mainNetwork' ) );
 
 		}
 
@@ -217,31 +217,6 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'id','network', 'domain', 'path', 'url', 'size' ) );
 
 			//die( '<pre>' . print_r( $_results, true ) . '</pre>');
-
-		}
-
-		/**
-		 * Test stuff.
-		 *
-		 * ## OPTIONS
-		 *
-		 * <stage>
-		 * : Which migration stage we want to do, defaults to all
-		 *
-		 * ## EXAMPLES
-		 *
-		 *     wp cloud test
-		 *     wp cloud test all
-		 *
-		 * @synopsis [<stage>]
-		 */
-		function test( $arg, $args ) {
-			$this->_init();
-			$type = false;
-
-			WP_CLI::line( 'DB_NAME: ' . DB_NAME );
-			WP_CLI::line( 'DB_USER: ' . DB_USER );
-			WP_CLI::line( 'DB_HOST: ' . DB_HOST );
 
 		}
 

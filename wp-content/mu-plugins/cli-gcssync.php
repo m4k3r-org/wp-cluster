@@ -19,7 +19,8 @@
  * Create our class that'll be used outside of the CLI
  */
 if( !class_exists( 'GCS_SYNC' ) ){
-  class GCS_SYNC{
+
+	class GCS_SYNC{
 
     const BUCKET_KEY = 'cloud_storage_bucket';
     const ENABLED_KEY = 'cloud_storage_enabled';
@@ -183,8 +184,11 @@ if( !class_exists( 'GCS_SYNC' ) ){
 
   }
 
-  /** Create an instance of our object */
-  $gcs_sync = new GCS_SYNC();
+  // commented out because was initializing too early before storage directory path filters could apply causing WP to crate a bunch of "blogs.dir" paths...
+	// $gcs_sync = new GCS_SYNC();
+
+	add_action( 'init', function() {});
+
 
 }
 
@@ -407,5 +411,6 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'G
   }
 
   /** Add the new commands */
-  WP_CLI::add_command( 'gcssync', 'GCS_SYNC_CLI' );
+  // WP_CLI::add_command( 'gcssync', 'GCS_SYNC_CLI' );
+
 }

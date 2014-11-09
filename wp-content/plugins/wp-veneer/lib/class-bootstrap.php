@@ -573,7 +573,7 @@ namespace UsabilityDynamics\Veneer {
       }
 
 	    /**
-	     * Need to add logic to append BEFORE the WordPress markers are added, in the meantime need to manually reposition once.
+	     * Need to add logic to append BEFORE the WordPress markers are added, in the meantime need to manually reposition
 	     *
 	     * @param $setting
 	     *

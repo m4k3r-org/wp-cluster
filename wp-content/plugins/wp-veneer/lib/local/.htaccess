@@ -84,6 +84,7 @@
 </IfModule>
 # END Static Cache
 
+
 # BEGIN Veneer Static Media
 RewriteEngine On
 RewriteBase /
@@ -122,7 +123,6 @@ RewriteCond %{DOCUMENT_ROOT}/storage/%{HTTP_HOST}/static/index\.html -f
 RewriteCond %{QUERY_STRING} ^$
 RewriteRule ^$ /storage/%{HTTP_HOST}/static/index.html [L]
 # END Veneer Static Media
-
 # BEGIN Veneer Assets
 RewriteEngine On
 RewriteBase /

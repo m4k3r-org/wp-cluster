@@ -47,8 +47,8 @@ namespace EDM\Application\Policy {
 	add_filter( 'pre_site_option_siteurl', '__return_false' );
 	add_filter( 'pre_site_option_global_terms_enabled', '__return_true' );
 	add_filter( 'pre_site_option_add_new_users', '__return_true' );
-	add_filter( 'pre_site_option_ms_files_rewriting', '__return_zero' );
-	add_filter( 'pre_site_option_can_compress_scripts', '__return_zero' );
+	add_filter( 'pre_site_option_ms_files_rewriting', '__return_null', 5 );
+	add_filter( 'pre_site_option_can_compress_scripts', '__return_true', 5 );
 
 	add_filter( 'pre_site_option_subdomain_install', '__return_true' );
 	add_filter( 'pre_site_option_site_admins', '__return_false' );
@@ -80,7 +80,7 @@ namespace EDM\Application\Policy {
 	// https://gist.githubusercontent.com/andypotanin/2de82e5d6502cc92a654/raw/recently_activated
 	add_filter( 'pre_option_recently_activated', '__return_false' );
 	add_filter( 'pre_option_theme_switched', '__return_false' );
-	add_filter( 'pre_option_allowedthemes', 'EDM\Application\Policy\Override:allowedthemes' );
+	add_filter( 'pre_option_allowedthemes', 'EDM\Application\Policy\Override::allowedthemes' );
 
 	// Site/Network change detection.
 	add_action( 'update_option_home', 'EDM\Application\Policy\site_changed' );
@@ -127,14 +127,18 @@ namespace EDM\Application\Policy {
 		}
 
 		static function cloud_storage_bucket() {
-			global $current_site;
-			return "gs://media" . $current_site->domain;
+			global $current_blog;
+			return "gs://media" . $current_blog->domain;
 		}
 
 	}
 
 	class Override {
 
+		/**
+		 * For now all themese are in same directory, relative to wp-content
+		 * @return string
+		 */
 		static function theme_root() {
 			return '/themes';
 		}
