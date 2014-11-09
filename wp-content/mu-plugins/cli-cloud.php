@@ -259,8 +259,8 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 		 *
 		 * @synopsis [<stage>]
 		 */
-		function status( $arg, $args ) {
-			global $wp_version, $wp_db_version, $wpdb;
+		function status() {
+			global $wp_version, $wp_db_version, $wpdb, $wp_veneer, $wp_cluster;
 
 			$_results = array(
 				"wp.version" =>  $wp_version,
@@ -268,6 +268,8 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 				"db.name" =>  DB_NAME,
 				"db.user" =>  DB_USER,
 				"db.host" =>  DB_HOST,
+				"wp.cluster" =>  method_exists( $wp_veneer, 'get' ) ? true : false,
+				"wp.veneer" =>  class_exists( 'UsabilityDynamics\Cluster\WPDB') ? true : false,
 				"wpdb.ready" =>  $wpdb->ready,
 				"wpdb.blogid" =>  $wpdb->blogid,
 				"wpdb.siteid" =>  $wpdb->siteid,
@@ -299,6 +301,7 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 		 *     wp cloud migrate artist
 		 *
 		 * @synopsis [<stage>]
+		 * @param $args
 		 */
 		function migrate( $args ) {
 			$this->_init();

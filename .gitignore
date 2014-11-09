@@ -21,7 +21,7 @@ wp-content/cache/*
 wp-content/cache/supercache/*
 wp-content/mysql.sql
 wp-content/w3tc-config
-
+wp-content/storage/*
 wp-content/themes/wp-kiwi/.git
 wp-content/themes/wp-kiwi/.gitignore
 

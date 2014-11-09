@@ -105,9 +105,7 @@ namespace UsabilityDynamics\Veneer {
 			 * The constants that should be dynamically generated
 			 */
 			protected $protectedConstants = array(
-				'WP_CACHE',
-				'WP_ALLOW_MULTISITE',
-				'MULTISITE',
+				'WP_ALLOW_MULTISITE'
 			);
 
 			/**
@@ -422,7 +420,7 @@ namespace UsabilityDynamics\Veneer {
 			 *
 			 * @return mixed False on failure, config array on success
 			 */
-			private function get_config( $config, $value = false ) {
+			public function get_config( $config = null, $value = false ) {
 				if ( isset( $this->loadedConfigs[ $config ] ) && is_array( $this->loadedConfigs[ $config ] ) && isset( $this->loadedConfigs[ $config ][ 'vars' ] ) ) {
 					if ( is_string( $value ) && ! empty( $value ) && isset( $this->loadedConfigs[ $config ][ 'vars' ][ $value ] ) ) {
 						return $this->loadedConfigs[ $config ][ 'vars' ][ $value ];

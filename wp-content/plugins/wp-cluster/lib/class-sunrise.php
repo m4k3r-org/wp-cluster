@@ -94,7 +94,7 @@ namespace UsabilityDynamics\Cluster {
 
 				/** Ok, if we have a multi_db environment, we should now connect to the new DB */
 				if( @isset( $wp_veneer->cluster->db ) ){
-					$wp_veneer->cluster->db->_maybe_connect_to_blog_db();
+					// $wp_veneer->cluster->db->_maybe_connect_to_blog_db();
 				}
 
 				/** Return this */

@@ -86,45 +86,26 @@ namespace EDM\Application {
      */
     public function __construct() {
 	    global $wp_theme_directories;
-
-      add_filter( 'wp_cache_themes_persistently', function( $current, $callee ) {
-	      //die('wp_cache_themes_persistently');
-        //return false; // 6 hours
-	      // return false;
-        return 43200; // 6 hours
-      }, 10, 2);
-
-	    if( is_dir( WP_CONTENT_DIR . '/vendor/themes' ) ) {
-		    register_theme_directory( WP_CONTENT_DIR . '/vendor/themes' );
-	    }
-
+	    
 	    // Instantaite Settings.
-      $this->settings   = class_exists( '\UsabilityDynamics\Settings' ) ? new \UsabilityDynamics\Settings : null;
+      //$this->settings   = class_exists( '\UsabilityDynamics\Settings' ) ? new \UsabilityDynamics\Settings : null;
 
       // Current Paths.
-      $this->id         = 'edm'; // Utility::create_slug( __NAMESPACE__, array( 'separator' => '::' ) );
-      $this->root       = wp_normalize_path( 'WP_CONTENT_DIR' );
-      $this->home       = home_url();
+      //$this->id         = 'edm'; // Utility::create_slug( __NAMESPACE__, array( 'separator' => '::' ) );
+      //$this->root       = wp_normalize_path( 'WP_CONTENT_DIR' );
+      //$this->home       = home_url();
 
       // Core Filters
-      add_action( 'setup_theme', array( &$this, 'setup_theme' ), 5 );
-      add_action( 'plugins_loaded', array( &$this, 'plugins_loaded' ), 5 );
-      add_action( 'muplugins_loaded', array( &$this, 'plugins_loaded' ), 5 );
-      add_action( 'init', array( &$this, 'init' ), 100 );
-      add_action( 'admin_init', array( &$this, 'admin' ), 100 );
-      add_action( 'upload_mimes', array( &$this, 'upload_mimes' ), 100 );
-      add_action( 'login_footer', array( &$this, 'login_footer' ), 30 );
-      add_filter( 'login_headerurl', array( &$this, 'login_headerurl' ), 30 );
-      add_filter( 'wp_mail_from', array( &$this, 'wp_mail_from' ), 10 );
-      add_filter( 'theme_root', array( &$this, 'theme_root' ), 10 );
-      add_action( 'login_enqueue_scripts', array( $this, 'login_enqueue_scripts' ), 30 );
+      //add_action( 'init', array( &$this, 'init' ), 100 );
+      //add_action( 'admin_init', array( &$this, 'admin' ), 100 );
+      //add_action( 'upload_mimes', array( &$this, 'upload_mimes' ), 100 );
+      //add_action( 'login_footer', array( &$this, 'login_footer' ), 30 );
+      //add_filter( 'login_headerurl', array( &$this, 'login_headerurl' ), 30 );
+      //add_filter( 'wp_mail_from', array( &$this, 'wp_mail_from' ), 10 );
+      //add_filter( 'theme_root', array( &$this, 'theme_root' ), 10 );
+      //add_action( 'login_enqueue_scripts', array( $this, 'login_enqueue_scripts' ), 30 );
 
     }
-
-	  public function plugins_loaded() {
-		  global $wp_plugin_paths;
-		  // die( '<pre>' . current_action() . print_r( $wp_plugin_paths, true ) . '</pre>');
-	  }
 
     /**
      * Initialize Application
@@ -204,15 +185,6 @@ namespace EDM\Application {
 
       return;
 
-      // migrated out of wp-festival
-      $file = WP_BASE_DIR . '/static/schemas/default.settings.json';
-
-      if( file_exists( $file ) ) {
-        $settings = \UsabilityDynamics\Utility::l10n_localize( json_decode( file_get_contents( $file ), true ) );
-        if( !empty( $settings[ 'structure' ] ) ) {
-          $this->set( 'structure', $settings[ 'structure' ] );
-        }
-      }
 
     }
 

@@ -9,8 +9,8 @@
  * Version: 0.0.1
  * Author URI: http://usabilitydynamics.com
  *
- * @uses _gcs_sync_bucket, option key to specify the bucket name for sync
- * @uses _gcs_sync_enabled, option key to determine if the sync process is enabled or disabled
+ * @uses cloud_storage_bucket, option key to specify the bucket name for sync
+ * @uses cloud_storage_enabled, option key to determine if the sync process is enabled or disabled
  *
  * @note For use with MAMP: export PATH="/Applications/MAMP/bin/php/php5.3.29/bin:$PATH"
  */
@@ -21,9 +21,8 @@
 if( !class_exists( 'GCS_SYNC' ) ){
   class GCS_SYNC{
 
-    const BUCKET_KEY = '_gcs_sync_bucket';
-    const ENABLED_KEY = '_gcs_sync_enabled';
-    const WP_TIMESTAMP_KEY = '_gcs_sync_timestamp';
+    const BUCKET_KEY = 'cloud_storage_bucket';
+    const ENABLED_KEY = 'cloud_storage_enabled';
 
     /**
      * Constructor, we're just going to set our initial options
@@ -206,7 +205,7 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'G
     }
 
     /**
-     * Gets/sets the bucket name in the site options, uses _gcs_sync_bucket
+     * Gets/sets the bucket name in the site options, uses cloud_storage_bucket
      *
      * @synopsis [--name=<bucket>]
      *

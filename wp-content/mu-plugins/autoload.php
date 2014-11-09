@@ -35,11 +35,15 @@ namespace EDM\Application {
 		new Bootstrap;
 	}
 
+	add_action( 'init', function () {
+	});
+
 	/**
 	 *
 	 * The methods "is_plugin_active" and "activate_plugin" are only available on control panel.
 	 *
 	 */
+
 	add_action( 'admin_init', function () {
 
 		// No pagespeed on backend
@@ -90,9 +94,9 @@ namespace EDM\Application {
 		global $wp_veneer, $current_blog;
 
 		if ( isset( $wp_veneer ) && method_exists( $wp_veneer, 'set' ) ) {
-			$wp_veneer->set( 'rewrites.login', true );
-			$wp_veneer->set( 'rewrites.manage', true );
-			$wp_veneer->set( 'rewrites.api', true );
+			//$wp_veneer->set( 'rewrites.login', true );
+			//$wp_veneer->set( 'rewrites.manage', true );
+			//$wp_veneer->set( 'rewrites.api', true );
 
 			$wp_veneer->set( 'static.enabled', true );
 			$wp_veneer->set( 'cdn.enabled', true );

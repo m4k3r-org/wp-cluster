@@ -11,6 +11,13 @@ try {
     throw new Exception( 'Site not installed.' );
   }
 
+  /** Make sure we have our vendor libraries installed, and if we - include them */
+  if( !file_exists( __DIR__ . '/wp-blog-header.php' ) ) {
+    throw new Exception( 'Site vendor libraries not installed.' );
+  }else{
+    require_once( __DIR__ . '/wp-blog-header.php' );
+  }
+
 } catch( Exception $e ) {
 
   /** There was an issue, we need to bail */

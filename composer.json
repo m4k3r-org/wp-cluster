@@ -35,7 +35,6 @@
       ]
     },
     "settings": {
-      "admin_cookie_path": "/manage",
       "auth_key": "Q|TJ#IJddT1wKKk&7fI1zoT=}U[>+2!87xT78N;O,:qES/V5Yu8=puLzM$~-`K$`",
       "auth_salt": "1%s=xC$rCHhe[Wc4/IEMd1Nw+g}@$P<@2b^3`TiW~|YXkIw5OnY )][O0P I:_0y",
       "db": {
@@ -59,7 +58,7 @@
       "nonce_salt": ",nn=YYjbGs(y^{3+-ng(tFdew``+{!_,=Og>hPEi>8Ncvo/;cnnLgnu`Hru4D)_N",
       "secure_auth_key": "Vc#0W9#bv^F/TX-4b)H`T:N0 oDZYVr|shf!>D|,DT41^R;?Wmnm-.K(/~ucG>3p",
       "secure_auth_salt": "5lL^K_Y:V(Nqs yVl/24KG[[4>WZ.jpf8vL*p/.c)Qqf+b2xfP^#WR+p8h.qh3~.",
-      "sitecookiepath": "/manage",
+      "multisite": true,
       "wp": {
         "default_theme": "wp-splash",
         "elastic": {
@@ -86,7 +85,7 @@
         "vendor_library_dir": "{wp_vendor_dir}",
         "vendor_library_url": "{wp_vendor_url}",
         "vendor_url": "{site_url}/wp-vendor",
-        "veneer_public": "wp-content/{wp_base_domain}",
+        "veneer_public": "wp-content/storage",
         "veneer_storage": "wp-content/storage"
 
       }
