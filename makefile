@@ -30,10 +30,10 @@ default: install
 #
 clean:
 	rm -rf composer.lock
-	rm -rf vendor/libraries/composer
-	rm -rf vendor/themes/wp-disco**
-	rm -rf vendor/themes/wp-disco**
-	rm -rf vendor/themes/wp-festival**
+	rm -rf wp-vendor/composer
+	rm -rf wp-content/themes/wp-disco**
+	rm -rf wp-content/themes/wp-disco**
+	rm -rf wp-content/themes/wp-festival**
 	composer clear-cache
 	@echo "Cleared out vendor crap."
 

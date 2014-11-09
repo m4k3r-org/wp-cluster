@@ -41,11 +41,11 @@
       "db": {
         "charset": "utf8",
         "collate": "utf8_general_ci",
-        "host": "rds.wpcloud.io",
+        "host": "173.194.246.158",
         "name": "edm_production",
         "password": "psxcazdhbpoxbkfl",
-        "prefix": "edm_",
-        "user": "edm_production"
+        "user": "edm_production",
+        "prefix": "edm_"
       },
       "disallow": {
         "wp_cron": true,

@@ -22,7 +22,7 @@ namespace Application\EDM\Debug {
 
 		}
 
-		$requestHeaders = array_intersect_key( $_requestHeaders, array() );
+		// $requestHeaders = array_intersect_key( $_requestHeaders, array() );
 
 		header( "X-Debug-Site:$current_site->blog_id" );
 		header( "X-Debug-Network:$current_site->id" );

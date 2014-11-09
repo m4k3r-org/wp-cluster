@@ -77,7 +77,6 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 
 		}
 
-
 		/**
 		 * Display active themes accross the network including relative path.
 		 *
@@ -243,6 +242,46 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 			WP_CLI::line( 'DB_NAME: ' . DB_NAME );
 			WP_CLI::line( 'DB_USER: ' . DB_USER );
 			WP_CLI::line( 'DB_HOST: ' . DB_HOST );
+
+		}
+
+		/**
+		 * Test stuff.
+		 *
+		 * ## OPTIONS
+		 *
+		 * <stage>
+		 * : Which migration stage we want to do, defaults to all
+		 *
+		 * ## EXAMPLES
+		 *
+		 *     wp cloud status
+		 *
+		 * @synopsis [<stage>]
+		 */
+		function status( $arg, $args ) {
+			global $wp_version, $wp_db_version, $wpdb;
+
+			$_results = array(
+				"wp.version" =>  $wp_version,
+				"db.version" =>  $wp_db_version,
+				"db.name" =>  DB_NAME,
+				"db.user" =>  DB_USER,
+				"db.host" =>  DB_HOST,
+				"wpdb.ready" =>  $wpdb->ready,
+				"wpdb.blogid" =>  $wpdb->blogid,
+				"wpdb.siteid" =>  $wpdb->siteid,
+				"db.password" =>  str_repeat('*', strlen(DB_PASSWORD)),
+				"os.hostname" =>  php_uname('n') ,
+				//"os.type" =>  php_uname('s') ,
+				//"os.version" =>  php_uname('v') ,
+				//"os.release" =>  php_uname('r') ,
+				// "os.machine" =>  php_uname('m')
+			);
+
+			\WP_CLI::log( 'Cloud Status:' );
+
+			die( '<pre>' . print_r( $_results, true ) . '</pre>');
 
 		}
 

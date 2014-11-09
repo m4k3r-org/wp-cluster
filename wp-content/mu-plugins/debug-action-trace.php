@@ -26,16 +26,16 @@ namespace Application\EDM\Debug {
 
 	} );
 
-	add_action( 'init', 'addActionResponseHeader' );
-	add_action( 'muplugins_loaded', 'addActionResponseHeader' );
-	add_action( 'wp', 'addActionResponseHeader' );
-	add_action( 'template_redirect', 'addActionResponseHeader' );
-	add_action( 'wp_loaded', 'addActionResponseHeader' );
-	add_action( 'parse_request', 'addActionResponseHeader' );
-	add_action( 'get_header', 'addActionResponseHeader' );
-	add_action( 'plugins_loaded', 'addActionResponseHeader' );
-	add_action( 'get_header', 'addActionResponseHeader' );
-	add_action( 'wp_print_styles', 'addActionResponseHeader' );
-	add_action( 'get_footer', 'addActionResponseHeader' );
+	add_action( 'init', 'Application\EDM\Debug\addActionResponseHeader' );
+	add_action( 'muplugins_loaded', 'Application\EDM\Debug\addActionResponseHeader' );
+	add_action( 'wp', 'Application\EDM\Debug\addActionResponseHeader' );
+	add_action( 'template_redirect', 'Application\EDM\Debug\addActionResponseHeader' );
+	add_action( 'wp_loaded', 'Application\EDM\Debug\addActionResponseHeader' );
+	add_action( 'parse_request', 'Application\EDM\Debug\addActionResponseHeader' );
+	add_action( 'get_header', 'Application\EDM\Debug\addActionResponseHeader' );
+	add_action( 'plugins_loaded', 'Application\EDM\Debug\addActionResponseHeader' );
+	add_action( 'get_header', 'Application\EDM\Debug\addActionResponseHeader' );
+	add_action( 'wp_print_styles', 'Application\EDM\Debug\addActionResponseHeader' );
+	add_action( 'get_footer', 'Application\EDM\Debug\addActionResponseHeader' );
 
 }
