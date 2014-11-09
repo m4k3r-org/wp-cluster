@@ -56,16 +56,17 @@ namespace EDM\Application\Policy {
 	add_filter( 'pre_site_option_illegal_names', '__return_empty_array' );
 	add_filter( 'pre_option_recently_edited', '__return_empty_array' );
 
-	add_filter( 'pre_option_active_plugins', 'EDM\Application\Policy\active_plugins' );
-	add_filter( 'pre_option_upload_path', 'EDM\Application\Policy\upload_path' );
+	add_filter( 'pre_option_active_plugins', 'EDM\Application\Policy\Override::active_plugins' );
+	add_filter( 'pre_option_upload_path', 'EDM\Application\Policy\Override::upload_path' );
+	add_filter( 'pre_option_stylesheet_root', 'EDM\Application\Policy\Override::theme_root' );
+	add_filter( 'pre_option_template_root', 'EDM\Application\Policy\Override::theme_root' );
 
-	add_filter( 'pre_option_current_theme', 'EDM\Application\Policy\theme_selection' );
-	add_filter( 'pre_option_template', 'EDM\Application\Policy\theme_selection' );
-	add_filter( 'pre_option_stylesheet', 'EDM\Application\Policy\theme_selection' );
+	add_filter( 'option_current_theme', 'EDM\Application\Policy\Modify::theme_selection' );
+	add_filter( 'option_template', 'EDM\Application\Policy\Modify::theme_selection' );
+	add_filter( 'option_stylesheet', 'EDM\Application\Policy\Modify::theme_selection' );
 
-	// URL without a trailing slash.
-	add_filter( 'option_upload_url_path', 'EDM\Application\Policy\upload_url_path' );
-	add_filter( 'default_optioncloud_storage_bucket', 'EDM\Application\Policy\cloud_storage_bucket' );
+	add_filter( 'option_upload_url_path', 'EDM\Application\Policy\Modify::upload_url_path' );
+	add_filter( 'default_option_cloud_storage_bucket', 'EDM\Application\Policy\Modify::cloud_storage_bucket' );
 
 	// https://gist.githubusercontent.com/andypotanin/2de82e5d6502cc92a654/raw/_transient_plugin_slugs
 	add_filter( 'pre_site_transient_plugin_slugs', '__return_false' );
@@ -79,7 +80,7 @@ namespace EDM\Application\Policy {
 	// https://gist.githubusercontent.com/andypotanin/2de82e5d6502cc92a654/raw/recently_activated
 	add_filter( 'pre_option_recently_activated', '__return_false' );
 	add_filter( 'pre_option_theme_switched', '__return_false' );
-	add_filter( 'pre_option_allowedthemes', 'EDM\Application\Policy\allowedthemes' );
+	add_filter( 'pre_option_allowedthemes', 'EDM\Application\Policy\Override:allowedthemes' );
 
 	// Site/Network change detection.
 	add_action( 'update_option_home', 'EDM\Application\Policy\site_changed' );
@@ -89,36 +90,114 @@ namespace EDM\Application\Policy {
 	// Cache busting.
 	add_filter( 'wp_cache_themes_persistently', '__return_false' );
 
+	class Modify {
 
-	function theme_selection() {
+		/**
+		 * Verify Theme is Valid
+		 *
+		 * @param null $default
+		 *
+		 * @return string
+		 */
+		static function theme_selection( $default = null ) {
 
-		return 'fag';
+			$default = str_replace( array( 'wp-splash' ), array( 'wp-splash-v1.0' ), $default );
+
+			return $default;
+
+		}
+
+		/**
+		 * Applied as a stanard option filter, so there may be a default.
+		 *
+		 * - URL without a trailing slash.
+		 *
+		 * @param null $upload_url_path
+		 *
+		 * @return null|string
+		 */
+		static function upload_url_path( $upload_url_path = null ) {
+
+			if( !$upload_url_path ) {
+				$upload_url_path  = get_option( 'home' ) . '/media';
+			}
+
+			return $upload_url_path;
+
+		}
+
+		static function cloud_storage_bucket() {
+			global $current_site;
+			return "gs://media" . $current_site->domain;
+		}
 
 	}
 
-	/**
-	 * Returned array must be relative to WP_PLUGIN_DIR and not network-activated.
-	 *
-	 * @return array
-	 */
-	function active_plugins() {
+	class Override {
 
-		$_plugins = array(
-			"duplicate-post/duplicate-post.php",
-			"simple-page-ordering/simple-page-ordering.php",
-			"wp-amd/wp-amd.php",
-			"wp-simplify/wp-simplify.php",
-			"wp-crm/wp-crm.php"
-		);
-
-		if( WP_DEBUG ) {
-			$_plugins = array_merge( $_plugins, array(
-				"debug-bar/debug-bar.php",
-				"debug-bar-slow-actions/debug-bar-slow-actions.php",
-			));
+		static function theme_root() {
+			return '/themes';
 		}
 
-		return $_plugins;
+		/**
+		 * Automatically Set for Network.
+		 *
+		 * @return array
+		 */
+		static function allowedthemes() {
+
+			return array(
+				"wp-braxton",
+				"wp-dayafter",
+				"wp-kboom",
+				"wp-thegift",
+				"wp-disco-v1.0",
+				"wp-disco-v2.0",
+				"wp-spectacle-v1.0",
+				"wp-spectacle-v2.0",
+				"wp-splash-v1.0",
+				"wp-splash-v2.0"
+			);
+
+		}
+
+		/**
+		 * Can Not be configured like upload_url_path so we fix it here.
+		 *
+		 * @param $settings
+		 *
+		 * @return string
+		 */
+		static function upload_path( $settings ) {
+			global $current_blog;
+			return "storage/" . $current_blog->domain . "/media" ;
+		}
+
+		/**
+		 * Returned array must be relative to WP_PLUGIN_DIR and not network-activated.
+		 *
+		 * @return array
+		 */
+		static function active_plugins() {
+
+			$_plugins = array(
+				"duplicate-post/duplicate-post.php",
+				"simple-page-ordering/simple-page-ordering.php",
+				"wp-amd/wp-amd.php",
+				"wp-simplify/wp-simplify.php",
+				"wp-crm/wp-crm.php"
+			);
+
+			if( WP_DEBUG ) {
+				$_plugins = array_merge( $_plugins, array(
+					"debug-bar/debug-bar.php",
+					"debug-bar-slow-actions/debug-bar-slow-actions.php",
+				));
+			}
+
+			return $_plugins;
+
+		}
 
 	}
 
@@ -130,6 +209,8 @@ namespace EDM\Application\Policy {
 			"home"                          => get_option( 'home' ),
 			"current_theme"                 => get_option( 'current_theme' ),
 			"stylesheet"                    => get_option( 'stylesheet' ),
+			"stylesheet_root"                    => get_option( 'stylesheet_root' ),
+			"template_root"                    => get_option( 'template_root' ),
 			"template"                      => get_option( 'template' ),
 			"theme_roots"                   => get_site_transient( 'theme_roots' ),
 			"active_plugins"                => get_option( 'active_plugins' ),
@@ -146,8 +227,6 @@ namespace EDM\Application\Policy {
 			"cloud_storage_enabled"              => get_option( 'cloud_storage_enabled' ),
 			"upload_path"                   => get_option( 'upload_path' ),
 			"upload_url_path"               => get_option( 'upload_url_path' ),
-			"cloud_storage_bucket"               => get_option( 'cloud_storage_bucket' ),
-			"cloud_storage_enabled"               => get_option( 'cloud_storage_enabled' ),
 			"allowedthemes"                 => get_option( 'allowedthemes' ),
 			// "update_plugins"                => get_site_transient( 'update_plugins' ),
 			// "update_themes"                 => get_site_transient( 'update_themes' ),
@@ -163,67 +242,6 @@ namespace EDM\Application\Policy {
 			// "large_size_w"                  => get_option( 'large_size_w' ),
 			// "large_size_h"                  => get_option( 'large_size_h' ),
 		));
-
-	}
-
-	/**
-	 * Applied as a stanard option filter, so there may be a default.
-	 *
-	 * @param null $upload_url_path
-	 *
-	 * @return null|string
-	 */
-	function upload_url_path( $upload_url_path = null ) {
-
-		if( !$upload_url_path ) {
-			$upload_url_path  = get_option( 'home' ) . '/media';
-		}
-
-		return $upload_url_path;
-
-	}
-
-	/**
-	 * Can Not be configured like upload_url_path so we fix it here.
-	 *
-	 * @param $settings
-	 *
-	 * @return string
-	 */
-	function upload_path( $settings ) {
-		global $current_blog;
-		return "storage/" . $current_blog->domain . "/media" ;
-	}
-
-	/**
-	 * Default Setting
-	 *
-	 * @return string
-	 */
-	function cloud_storage_bucket() {
-		global $current_blog;
-		return "gs://media" . $current_blog->domain;
-	}
-
-	/**
-	 * Automatically Set for Network.
-	 *
-	 * @return array
-	 */
-	function allowedthemes() {
-
-		return array(
-			"wp-braxton",
-			"wp-dayafter",
-			"wp-kboom",
-			"wp-thegift",
-			"wp-disco-v1.0",
-			"wp-disco-v2.0",
-			"wp-spectacle-v1.0",
-			"wp-spectacle-v2.0",
-			"wp-splash-v1.0",
-			"wp-splash-v2.0"
-		);
 
 	}
 
