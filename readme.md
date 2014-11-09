@@ -18,7 +18,6 @@ Add "subtree helpers" to your bash profile. (https://gist.github.com/andypotanin
 pullSubtree UsabilityDynamics/wp-amd                      wp-content/plugins/wp-amd
 pullSubtree UsabilityDynamics/wp-cluster                  wp-content/plugins/wp-cluster
 pullSubtree UsabilityDynamics/wp-crm                      wp-content/plugins/wp-crm
-pullSubtree UsabilityDynamics/wp-elastic                  wp-content/plugins/wp-elastic
 pullSubtree UsabilityDynamics/wp-github-updater           wp-content/plugins/wp-github-updater
 pullSubtree UsabilityDynamics/wp-network                  wp-content/plugins/wp-network
 pullSubtree UsabilityDynamics/wp-social-stream            wp-content/plugins/wp-social-stream
@@ -44,7 +43,6 @@ pullSubtree DiscoDonniePresents/wp-spectacle-isladelsol   wp-content/themes/wp-s
 pushSubtree UsabilityDynamics/wp-amd                      wp-content/plugins/wp-amd
 pushSubtree UsabilityDynamics/wp-cluster                  wp-content/plugins/wp-cluster
 pushSubtree UsabilityDynamics/wp-crm                      wp-content/plugins/wp-crm
-pushSubtree UsabilityDynamics/wp-elastic                  wp-content/plugins/wp-elastic
 pushSubtree UsabilityDynamics/wp-github-updater           wp-content/plugins/wp-github-updater
 pushSubtree UsabilityDynamics/wp-network                  wp-content/plugins/wp-network
 pushSubtree UsabilityDynamics/wp-social-stream            wp-content/plugins/wp-social-stream
