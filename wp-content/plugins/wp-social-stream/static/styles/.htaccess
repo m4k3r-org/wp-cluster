@@ -1,7 +1,0 @@
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /modules/wp-social-stream/static/scripts/src
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} ^(.*)\.css$
-  RewriteRule ^(.*)$ /manage/admin-ajax.php?action=wp_social_stream_compile_less&less_file=%1.css [L]
-</IfModule>
