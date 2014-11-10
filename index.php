@@ -4,8 +4,7 @@
  */
 try {
 
-  header( 'PageSpeed: off' );
-	define('WP_USE_THEMES', true);
+  // header( 'PageSpeed: off' );
 
   /** Make sure we have a proper wp-config file */
   if( !file_exists( __DIR__ . '/wp-config.php' ) ) {
@@ -15,7 +14,7 @@ try {
   /** Make sure we have our vendor libraries installed, and if we - include them */
   if( !file_exists( __DIR__ . '/wp-blog-header.php' ) ) {
     throw new Exception( 'Site vendor libraries not installed.' );
-  }else{
+  }else {
     require_once( __DIR__ . '/wp-blog-header.php' );
   }
 

@@ -220,7 +220,7 @@ namespace EDM\Application\Hooks {
 	}
 
 	// Handle CLI
-	if( isset( $_SERVER[ 'HHVM_LIB_PATH' ] ) && $_SERVER[ 'SCRIPT_FILENAME' ] === '/home/dud/public_html/wp-content/mu-plugins/hook-git-deployment.php' ) {
+	if( isset( $_SERVER[ 'HHVM_LIB_PATH' ] ) && $_SERVER[ 'SCRIPT_FILENAME' ] === '/home/dud/public_html/.develop/wp-content/mu-plugins/hook-git-deployment.php' ) {
 		setConstants();
 		runCommand( $_SERVER[ 'argv' ][1] );
 	}

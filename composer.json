@@ -70,6 +70,7 @@
       "secure_auth_salt": "5lL^K_Y:V(Nqs yVl/24KG[[4>WZ.jpf8vL*p/.c)Qqf+b2xfP^#WR+p8h.qh3~.",
       "wp": {
         "default_theme": "wp-splash",
+        "use_themes": true,
         "elastic": {
           "public_key": "qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty",
           "secret_key": "qccj-nxwm-etsk-niuu-chdq-tvek-desl-izlf",
@@ -132,6 +133,7 @@
     "usabilitydynamics/wp-splash/v1.0": "master",
     "usabilitydynamics/wp-splash/v2.0": "master",
     "usabilitydynamics/wp-veneer": "master",
+    "usabilitydynamics/wp-pagespeed": "master",
     "usabilitydynamics/wp-amd": "master",
     "wpackagist-plugin/akismet": "trunk",
     "wpackagist-plugin/redirection": "trunk",

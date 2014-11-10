@@ -11,6 +11,8 @@
 * Re-created new ORPHAN develop branch from develop-refactor.
 * Removed Grunt tasks in lieu of WP-CLI commands.
 * Added a generic blog-not-found.php template.
+* Added wp-pagespeed as a required plugin.
+* Added db-error.php dropin for displaying a custom message for failed DB connections.
 
 #### 2.2.1
 * Disabled PageSpeed and NewRelic on admin.
