@@ -127,12 +127,12 @@ namespace UsabilityDynamics\Veneer {
         }
 
         // Build a varniship
-        if( defined( 'VHP_VARNISH_IP' ) && VHP_VARNISH_IP ) {
-          $varniship = VHP_VARNISH_IP;
+        if( defined( 'WP_VENEER_VARNISH_IP' ) && WP_VENEER_VARNISH_IP ) {
+          $varniship = WP_VENEER_VARNISH_IP;
         } else {
           $varniship = get_option( 'vhp_varnish_ip' );
-          if( defined( 'VHP_VARNISH_IP'  ) ) {
-            define( 'VHP_VARNISH_IP', $varniship );
+          if( defined( 'WP_VENEER_VARNISH_IP'  ) ) {
+            define( 'WP_VENEER_VARNISH_IP', $varniship );
           }
         }
 
