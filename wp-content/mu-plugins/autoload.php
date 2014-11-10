@@ -19,12 +19,13 @@ namespace EDM\Application {
 	}
 
 	if ( ! defined( 'WP_VENDOR_AUTOLOAD_PATH' ) ) {
-		define( 'WP_VENDOR_AUTOLOAD_PATH', WP_VENDOR_LIBRARY_DIR . '/autoload.php' );
+		define( 'WP_VENDOR_AUTOLOAD_PATH', '/autoload.php' );
 	}
 
+
 	// We don't autoload if we are currently in CLI mode because it'll cause a class conflict. Let's see if we can work around this.
-	if ( ! defined( 'WP_CLI' ) && file_exists( WP_VENDOR_AUTOLOAD_PATH ) ) {
-		require_once( WP_VENDOR_AUTOLOAD_PATH );
+	if ( ! defined( 'WP_CLI' ) && file_exists( ABSPATH . WP_VENDOR_AUTOLOAD_PATH ) ) {
+		require_once( ABSPATH . WP_VENDOR_AUTOLOAD_PATH );
 	}
 
 	/** Init the application */
@@ -73,9 +74,14 @@ namespace EDM\Application {
 	});
 
 	add_action( 'plugins_loaded', function () {
-		global $wp_veneer;
+		global $wp_veneer, $wp_cluster;
+
+		if ( isset( $wp_cluster ) && method_exists( $wp_cluster, 'set' ) ) {
+			$wp_cluster->set( 'toolbar.git.enabled', true );
+		}
 
 		if ( isset( $wp_veneer ) && method_exists( $wp_veneer, 'set' ) ) {
+
 			//$wp_veneer->set( 'rewrites.login', true );
 			//$wp_veneer->set( 'rewrites.manage', true );
 			//$wp_veneer->set( 'rewrites.api', true );

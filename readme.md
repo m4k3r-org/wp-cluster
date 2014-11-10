@@ -1,3 +1,11 @@
+### Geting MySQL Database Dump
+To fetch the latest MySQL production database dump:
+```
+gsutil cp gs://discodonniepresents.com/ddp_production.sql.gz .
+gunzip ddp_production.sql.gz
+wp db import ddp_production.sql
+```
+
 ### Cache Purging
 To purge Varnish cache, run the following commands. Be advised, Varnish will only accept purge notifications from accepted IP addresses.
 

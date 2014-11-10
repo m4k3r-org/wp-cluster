@@ -35,16 +35,22 @@
       ]
     },
     "settings": {
-      "auth_key": "Q|TJ#IJddT1wKKk&7fI1zoT=}U[>+2!87xT78N;O,:qES/V5Yu8=puLzM$~-`K$`",
-      "auth_salt": "1%s=xC$rCHhe[Wc4/IEMd1Nw+g}@$P<@2b^3`TiW~|YXkIw5OnY )][O0P I:_0y",
+      "sunrise": true,
+      "multisite": true,
+      "subdomain_install": true,
+      "auth": {
+        "key": "Q|TJ#IJddT1wKKk&7fI1zoT=}U[>+2!87xT78N;O,:qES/V5Yu8=puLzM$~-`K$`",
+        "salt": "1%s=xC$rCHhe[Wc4/IEMd1Nw+g}@$P<@2b^3`TiW~|YXkIw5OnY )][O0P I:_0y"
+      },
       "db": {
         "charset": "utf8",
         "collate": "utf8_general_ci",
-        "host": "173.194.246.158",
+        "host": "rds.wpcloud.io",
         "name": "edm_production",
         "password": "psxcazdhbpoxbkfl",
         "user": "edm_production",
-        "prefix": "edm_"
+        "prefix": "edm_",
+        "persistent": false
       },
       "disallow": {
         "wp_cron": true,
@@ -52,13 +58,16 @@
         "file_mods": false
       },
       "empty_trash_days": 7,
-      "github_updater_token": "fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+      "github": {
+        "key": "9b8f5f46d49b096a2e03",
+        "updater_token": "fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+        "secret": "a7cba5d1f4244f1561f730bc6724417cc4a4a2f9"
+      },
       "logged_in_key": "`KQt@)%vulkpZL!>Qr{?q7|R=Hb;chUyfYZc8ABh|uqsTFIn Lfd{yw.<~OkQ[yz|",
       "nonce_key": "8>q3B0#-&t9ApsKnDXB)R[?o@R]U~|A~,&3u~|c[^6IvH+XA&MdX4^{%$t~`/`QT",
       "nonce_salt": ",nn=YYjbGs(y^{3+-ng(tFdew``+{!_,=Og>hPEi>8Ncvo/;cnnLgnu`Hru4D)_N",
       "secure_auth_key": "Vc#0W9#bv^F/TX-4b)H`T:N0 oDZYVr|shf!>D|,DT41^R;?Wmnm-.K(/~ucG>3p",
       "secure_auth_salt": "5lL^K_Y:V(Nqs yVl/24KG[[4>WZ.jpf8vL*p/.c)Qqf+b2xfP^#WR+p8h.qh3~.",
-      "multisite": true,
       "wp": {
         "default_theme": "wp-splash",
         "elastic": {
@@ -80,11 +89,9 @@
           "twitter_consumer_secret": "jyzSl4zg26HaBP9eefTWZHjojgWUMxk7XUyJ8J3qiqY"
         },
         "ssl_port": 443,
-        "vendor_autoload_path": "{wp_base_dir}/wp-vendor/autoload.php",
-        "vendor_dir": "{wp_base_dir}/wp-vendor",
-        "vendor_library_dir": "{wp_vendor_dir}",
-        "vendor_library_url": "{wp_vendor_url}",
-        "vendor_url": "{site_url}/wp-vendor",
+        "vendor_dir": "wp-vendor",
+        "vendor_url": "/wp-vendor",
+        "vendor_autoload_path": "wp-vendor/autoload.php",
         "veneer_public": "wp-content/storage",
         "veneer_storage": "wp-content/storage"
 
@@ -116,7 +123,6 @@
     "discodonniepresents/wp-thegift": "master",
     "discodonniepresents/wp-winterfantasy": "master",
     "usabilitydynamics/wp-cluster": "master",
-    "usabilitydynamics/wp-elastic": "master",
     "usabilitydynamics/wp-flawless/v1.0": "master",
     "usabilitydynamics/wp-github-updater": "master",
     "usabilitydynamics/wp-network": "master",

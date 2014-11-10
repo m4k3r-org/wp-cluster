@@ -68,9 +68,9 @@ namespace EDM\Application\Policy {
 	add_filter( 'pre_option_upload_path', 'EDM\Application\Policy\Override::upload_path' );
 	add_filter( 'pre_option_stylesheet_root', 'EDM\Application\Policy\Override::theme_root' );
 	add_filter( 'pre_option_template_root', 'EDM\Application\Policy\Override::theme_root' );
-	add_filter( 'pre_option_allowedthemes', 'EDM\Application\Policy\Override::allowedthemes' );
 
 	add_filter( 'option_current_theme', 'EDM\Application\Policy\Extend::theme_selection' );
+	add_filter( 'option_allowedthemes', 'EDM\Application\Policy\Extend::allowedthemes' );
 	add_filter( 'option_template', 'EDM\Application\Policy\Extend::theme_selection' );
 	add_filter( 'option_stylesheet', 'EDM\Application\Policy\Extend::theme_selection' );
 	add_filter( 'option_active_plugins', 'EDM\Application\Policy\Extend::active_plugins' );
@@ -180,6 +180,47 @@ namespace EDM\Application\Policy {
 			return "gs://media." . $current_blog->domain;
 		}
 
+
+		/**
+		 * Automatically Set for Network.
+		 *
+		 * @param array $setting
+		 *
+		 * @return array
+		 */
+		static function allowedthemes( $setting = array() ) {
+
+			$setting = array_merge( $setting, array(
+				"wp-braxton" => true,
+				"wp-bassoddysey" => true,
+				"wp-monsterblockparty" => true,
+				// "wp-freaksbeatstreats" => true,
+				// "wp-hififest" => true,
+				"wp-spectacle-chmf" => true,
+				"wp-spectacle-fbt" => true,
+				"wp-spectacle-isladelsol" => true,
+				"wp-spectacle-mbp" => true,
+				"wp-dayafter" => true,
+				//"wp-thegift" => true,
+				//"wp-winterfantasy" => true,
+				//"wp-kboom" => true,
+				"wp-disco-v1.0" => true,
+				"wp-disco-v2.0" => true,
+				"wp-spectacle-v1.0" => true,
+				"wp-spectacle-v2.0" => true,
+				"wp-splash-v1.0" => true,
+				"wp-splash-v2.0" => true
+			));
+
+			// Fix legacy.
+			unset( $setting[ 'flawless' ] );
+
+			// return die( '<pre>' . print_r( $setting, true ) . '</pre>');
+
+			return $setting;
+
+		}
+
 	}
 
 	class Override {
@@ -190,37 +231,6 @@ namespace EDM\Application\Policy {
 		 */
 		static function theme_root() {
 			return '/themes';
-		}
-
-		/**
-		 * Automatically Set for Network.
-		 *
-		 * @return array
-		 */
-		static function allowedthemes() {
-
-			return array(
-				"wp-braxton" => true,
-				"wp-bassoddysey" => true,
-				"wp-monsterblockparty" => true,
-				"wp-freaksbeatstreats" => true,
-				"wp-hififest" => true,
-				"wp-spectacle-chmf" => true,
-				"wp-spectacle-fbt" => true,
-				"wp-spectacle-isladelsol" => true,
-				"wp-spectacle-mbp" => true,
-				"wp-dayafter" => true,
-				"wp-thegift" => true,
-				"wp-winterfantasy" => true,
-				"wp-kboom" => true,
-				"wp-disco-v1.0" => true,
-				"wp-disco-v2.0" => true,
-				"wp-spectacle-v1.0" => true,
-				"wp-spectacle-v2.0" => true,
-				"wp-splash-v1.0" => true,
-				"wp-splash-v2.0" => true
-			);
-
 		}
 
 		/**

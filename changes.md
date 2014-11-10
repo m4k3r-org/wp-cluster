@@ -1,6 +1,7 @@
 #### 2.3.0
-* Convert all database tables to MyISAM.
-* Convert all database tables to use utf8_general_ci character set.
+* Removed wp-elastic plugin and updated wp-vertical-edm to handle schema loading. [wp option update permalink /%postname%]
+* Convert all database tables to MyISAM. [wp update db convert --type=myisam]
+* Convert all database tables to use utf8_general_ci character set. [wp update db convert --type=utf8_general_ci]
 * Removed unused Grunt/Node modules, simplified Gruntfile.js.
 * Removed local-debug.php handling, should use environment variables.
 * Removed support for ENVIRONMENT variable, expected to use WP_ENV and/or PHP_ENV.
