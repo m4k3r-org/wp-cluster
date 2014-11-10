@@ -202,17 +202,23 @@ namespace UsabilityDynamics\Cluster {
 	    /**
 	     * Get Current Git Tag
 	     *
+	     *
+	     * "git describe --always" - 2.1.1-2409-g2a20a3d
+	     * "git rev-list HEAD | wc -l" - 2575
+	     * "git log -1" - Author: andypotanin <andy.potanin@usabilitydynamics.com> \n Date:   Mon Nov 10 15:25:37 2014 -0500 \ n ...
+	     *
 	     * @source https://gist.github.com/lukeoliff/5501074
 	     * @return mixed
 	     */
 	    static public function get_git_tag() {
 
 		    exec('git describe --always',$version_mini_hash);
-		    exec('git rev-list HEAD | wc -l',$version_number);
-		    exec('git log -1',$line);
+		    // exec('git rev-list HEAD | wc -l',$version_number);
 
-		    return trim($version_number[0]).".".$version_mini_hash[0];
+		    $version_mini_hash = explode( '-', $version_mini_hash[0] );
+		    //$version_number = trim( $version_number[0] );
 
+		    return $version_mini_hash[0];
 
 	    }
 
@@ -220,13 +226,14 @@ namespace UsabilityDynamics\Cluster {
 	     * Get Latest Git Commit
 	     *
 	     * @source https://www.lullabot.com/blog/article/tip-show-last-git-commit-site-footer
+	     * @param string $format
+	     *
 	     * @return mixed
 	     */
-	    static public function get_git_commit() {
-
-		    exec( "git log -1 --pretty=format:'%h - %s (%ci)' --abbrev-commit", $commit_text );
-
-		    return $commit_text;
+	    static public function get_git_commit_message( $format = '%s' ) {
+		    $commit_text = array();
+		    exec( "git log -1 --pretty=format:'{$format}' --abbrev-commit", $commit_text );
+		    return is_array( $commit_text ) ? $commit_text[0] : null;
 
 	    }
 

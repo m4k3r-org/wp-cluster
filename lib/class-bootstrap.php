@@ -151,7 +151,7 @@ namespace UsabilityDynamics\Cluster {
 	      // Install plugin by copying files, got to do this before MS check.
 	      $this->_install();
 
-	      if( !defined( 'MULTISITE' ) ) {
+	      if( !defined( 'MULTISITE' ) || !MULTISITE ) {
           return $this;
         }
 
@@ -390,8 +390,8 @@ namespace UsabilityDynamics\Cluster {
         ) );
 
         // @note Disabled until improved.
-        $this->set( 'toolbar.menu.enabled', false );
-        $this->set( 'toolbar.git.enabled', false );
+        $this->set( 'toolbar.menu.enabled', true );
+        $this->set( 'toolbar.git.enabled', true );
 
         // $this->_settings->commit();
 
@@ -430,11 +430,11 @@ namespace UsabilityDynamics\Cluster {
       private function _interfaces() {
 
         // Render Toolbar.
-	      if( $this->get( 'toolbar.menu.enabled' ) && current_user_can( 'manage_options' ) ) {
+	      if( $this->get( 'toolbar.menu.enabled' ) ) {
 		      add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_menu' ), 10 );
 	      }
 
-	      if( $this->get( 'toolbar.get.enabled' ) && current_user_can( 'manage_options' ) ) {
+	      if( $this->get( 'toolbar.git.enabled' )  ) {
 		      add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_git' ), 90 );
 	      }
 
@@ -462,7 +462,7 @@ namespace UsabilityDynamics\Cluster {
 
 
 	    /**
-	     * Administrative Toolbar.
+	     * Toolbar with Git Information.
 	     *
 	     * @author potanin@UD
 	     */
@@ -477,26 +477,18 @@ namespace UsabilityDynamics\Cluster {
 		    ));
 
 		    $wp_admin_bar->add_menu( array(
+			    'id' => 'cluster_git_message',
+			    'parent' => 'cluster_git',
+			    'title' => sprintf( __( '%s' ), Utility::get_git_commit_message() ),
+			    'href' => '#'
+		    ));
+
+		    $wp_admin_bar->add_menu( array(
 			    'id' => 'cluster_git_version',
 			    'parent' => 'cluster_git',
 			    'title' => sprintf( __( 'Version: %s' ), Utility::get_git_version()->short ),
 			    'href' => '#'
 		    ));
-
-		    $wp_admin_bar->add_menu( array(
-			    'id' => 'cluster_git_tag',
-			    'parent' => 'cluster_git',
-			    'title' => sprintf( __( 'Tag: %s' ), Utility::get_git_tag() ),
-			    'href' => '#'
-		    ));
-
-		    $wp_admin_bar->add_menu( array(
-			    'id' => 'cluster_git_message',
-			    'parent' => 'cluster_git',
-			    'title' => sprintf( __( 'Message: %s' ), Utility::get_git_message() ),
-			    'href' => '#'
-		    ));
-
 
 	    }
 
