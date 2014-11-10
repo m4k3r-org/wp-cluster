@@ -7,4 +7,4 @@
  *
  */
 
-wp_die( 'The site you requested does not exist on the network.' );
+wp_die( '<h1>Network Error</h1><p>The site you requested does not exist on the network.</p>' );

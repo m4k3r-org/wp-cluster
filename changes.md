@@ -10,6 +10,7 @@
 * Removed support for ENVIRONMENT variable, expected to use WP_ENV and/or PHP_ENV.
 * Re-created new ORPHAN develop branch from develop-refactor.
 * Removed Grunt tasks in lieu of WP-CLI commands.
+* Added a generic blog-not-found.php template.
 
 #### 2.2.1
 * Disabled PageSpeed and NewRelic on admin.

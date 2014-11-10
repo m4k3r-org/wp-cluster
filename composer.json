@@ -89,6 +89,7 @@
           "twitter_consumer_secret": "jyzSl4zg26HaBP9eefTWZHjojgWUMxk7XUyJ8J3qiqY"
         },
         "ssl_port": 443,
+        "veneer_varnish_ip": "127.0.0.1",
         "vendor_dir": "wp-vendor",
         "vendor_url": "/wp-vendor",
         "vendor_autoload_path": "wp-vendor/autoload.php",
