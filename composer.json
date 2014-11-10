@@ -133,6 +133,8 @@
     "usabilitydynamics/wp-splash/v2.0": "master",
     "usabilitydynamics/wp-veneer": "master",
     "usabilitydynamics/wp-amd": "master",
+    "wpackagist-plugin/akismet": "trunk",
+    "wpackagist-plugin/redirection": "trunk",
     "wpackagist-plugin/fantastic-elasticsearch": "3.1.1",
     "wpackagist-plugin/google-analytics-for-wordpress": "5.0.7",
     "wpackagist-plugin/public-post-preview": "2.4",
@@ -155,8 +157,6 @@
     "phpunit/phpunit": "~3.7",
     "wp-cli/wp-cli": "~0.17",
     "wpackagist-plugin/wordpress-importer": "0.6.1",
-    "wpackagist-plugin/redirection": "2.3.6",
-    "wpackagist-plugin/akismet": "trunk",
     "usabilitydynamics/wp-gravityforms": "master"
   },
   "autoload": {

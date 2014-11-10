@@ -14,14 +14,9 @@ namespace EDM\Application {
 
 	use wpCloud\Vertical;
 
-	if ( ! defined( 'WP_VENDOR_LIBRARY_DIR' ) ) {
-		define( 'WP_VENDOR_LIBRARY_DIR', ABSPATH . 'wp-vendor/' );
-	}
-
 	if ( ! defined( 'WP_VENDOR_AUTOLOAD_PATH' ) ) {
 		define( 'WP_VENDOR_AUTOLOAD_PATH', '/autoload.php' );
 	}
-
 
 	// We don't autoload if we are currently in CLI mode because it'll cause a class conflict. Let's see if we can work around this.
 	if ( ! defined( 'WP_CLI' ) && file_exists( ABSPATH . WP_VENDOR_AUTOLOAD_PATH ) ) {
@@ -32,11 +27,6 @@ namespace EDM\Application {
 	if ( class_exists( 'EDM\Application\Bootstrap' ) ) {
 		new Bootstrap;
 	}
-
-	add_action( 'wp_loaded', function () {
-		global $wp_post_types;
-		///die( '<pre>' . print_r( $wp_post_types, true ) . '</pre>');
-	});
 
 	/**
 	 * The methods "is_plugin_active" and "activate_plugin" are only available on control panel.
@@ -82,20 +72,21 @@ namespace EDM\Application {
 
 		if ( isset( $wp_veneer ) && method_exists( $wp_veneer, 'set' ) ) {
 
-			//$wp_veneer->set( 'rewrites.login', true );
-			//$wp_veneer->set( 'rewrites.manage', true );
-			//$wp_veneer->set( 'rewrites.api', true );
+			$wp_veneer->set( 'rewrites.login', false );
+			$wp_veneer->set( 'rewrites.manage', false );
+			$wp_veneer->set( 'rewrites.api', false );
 
-			// $wp_veneer->set( 'static.enabled', true );
-			// $wp_veneer->set( 'cdn.enabled', true );
-			// $wp_veneer->set( 'cache.enabled', true );
+			$wp_veneer->set( 'static.enabled', false );
+			$wp_veneer->set( 'cdn.enabled', false );
+			$wp_veneer->set( 'cache.enabled', false );
 
-			// $wp_veneer->set( 'media.shard.enabled', false );
-			// $wp_veneer->set( 'scripts.shard.enabled', false );
-			// $wp_veneer->set( 'styles.shard.enabled', false );
+			$wp_veneer->set( 'media.shard.enabled', false );
+			$wp_veneer->set( 'assets.shard.enabled', false );
+			$wp_veneer->set( 'scripts.shard.enabled', false );
+			$wp_veneer->set( 'styles.shard.enabled', false );
 		}
 
-	} );
+	}, 5 );
 
 	/**
 	 * Some quick hackish WPML fixes

@@ -7,8 +7,8 @@
  * Version: 0.1.0
  * Author URI: http://usabilitydynamics.com
  *
- * http://drop.ud-dev.com/wp-content/mu-plugins/hook-git-deployment.php
- *
+ * curl http://drop.ud-dev.com/wp-content/mu-plugins/hook-git-deployment.php
+ * php
  */
 namespace EDM\Application\Hooks {
 
@@ -48,64 +48,17 @@ namespace EDM\Application\Hooks {
 
 	}
 
-	function refreshDB() {
-
-		/** Setup various vars */
-		$db_prefix = DB_PREFIX;
-
-		/** Backup the latest DB */
-		echo "backing up latest db dump\n";
-		exec( "mysqldump -u " . SOURCE_DB_USER . " -p'" . addcslashes( SOURCE_DB_PASSWORD, "'" ) . "' -h " . SOURCE_DB_HOST . " " . SOURCE_DB_NAME . " > " . DB_DUMP );
-
-		/** So, the first thing we're going to do is run a native mysql import to restore the db */
-		echo "restoring latest db dump\n";
-		exec( "mysql -u " . DB_USER . " -p'" . addcslashes( DB_PASSWORD, "'" ) . "' -h " . DB_HOST . " " . DB_NAME . " < " . DB_DUMP );
-
-		/** Connect to the DB */
-		echo "connecting to the db\n";
-		$db = new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
-		if( $db->connect_errno ){
-			die( "Failed to connect to the database: " . $db->connect_error );
-		}
-
-		/** Changing all passwords - depreciating for now - williams@ud
-		echo "updating all user passwords\n";
-		$db->query( "UPDATE {$db_prefix}users SET user_pass = MD5( 'password' )" ); */
-
-		/** Empty global transients */
-		echo "emptying global transients\n";
-		$db->query( "DELETE FROM {$db_prefix}options WHERE option_name LIKE '%_transient_%'" );
-		$db->query( "DELETE FROM {$db_prefix}sitemeta WHERE meta_key LIKE '%_transient_%'" );
-
-		/** Go ahead and get all the blogs */
-		echo "updating all blogs\n";
-		$res = $db->query( "SELECT * FROM {$db_prefix}blogs" );
-		while( $blog = $res->fetch_assoc() ){
-
-			/** Setup some vars */
-			$blog_id = $blog[ 'blog_id' ];
-			$blog_prefix = $db_prefix . $blog_id . '_';
-			$new_domain = str_ireplace( '.', '-', $blog[ 'domain' ] ) . DOMAIN_SUFFIX;
-			$new_domain_url = DOMAIN_SCHEME . $new_domain . '/';
-
-			/** First, update the blog name and blog options */
-			$db->query( "UPDATE {$db_prefix}blogs SET domain = '{$new_domain}' WHERE blog_id = {$blog_id}" );
-			$db->query( "UPDATE {$blog_prefix}options SET option_value = '{$new_domain_url}' WHERE option_name = 'siteurl' OR option_name = 'home'" );
-
-			/** Remove blog transients */
-			$db->query( "DELETE FROM {$blog_prefix}options WHERE option_name LIKE '%_transient_%'" );
-
-		}
-
-		/** We're done */
-		echo "done\n";
-
-	}
-
+	/**
+	 * WebHook
+	 *
+	 */
 	function fefreshCode() {
 
 		/** Start our try/catch block */
 		try {
+
+			header( 'Cache-Control:private' );
+			header( 'Pragma:no-cache' );
 
 			/** Ok, first get the payload */
 			$raw_payload = file_get_contents( 'php://input' );
@@ -137,6 +90,7 @@ namespace EDM\Application\Hooks {
 			$commands = array(
 				'refreshdb'
 			);
+
 			$to_run   = array();
 			foreach ( $payload[ 'commits' ] as $commit ) {
 				foreach ( $commands as $command ) {
@@ -149,28 +103,33 @@ namespace EDM\Application\Hooks {
 			}
 
 			/** First thing we're going to do is pull from github */
-			echo "pulling from github\n";
+			echo "Running: " . "git -C " . GIT_ROOT . " fetch" . "\n";
 			exec( "git -C " . GIT_ROOT . " fetch" );
+
+			echo "Running: " . "git -C " . GIT_ROOT . " reset --hard origin/" . GIT_BRANCH . "\n";
 			exec( "git -C " . GIT_ROOT . " reset --hard origin/" . GIT_BRANCH );
+
+			echo "Running: " . "git -C " . GIT_ROOT . " pull" . "\n";
 			exec( "git -C " . GIT_ROOT . " pull" );
 
 			/** Ok, we're going to go through the commands, and run them */
 			foreach ( $to_run as $command ) {
-				$command_file = __DIR__ . '/commands/' . $command . '.php';
-				if ( ! file_exists( $command_file ) ) {
-					echo "not running command " . $command . " because the file doesn't exist\n";
+
+				if ( ! method_exists( 'EDM\Application\Hooks\Commands', $command ) ) {
+					echo "Not running command " . $command . " because the file doesn't exist\n";
 				} else {
-					echo "running command " . $command . "\n";
-					exec( "nohup php " . $command_file . " > " . __DIR__ . "/commands/commands.log 2>&1 &" );
+					echo "Running command " . $command . ". (DISABLED).\n";
+					exec( "nohup hhvm " . __FILE__ . " " . $command . " 2>&1 &" );
+					//exec( "nohup php " . __FILE__ . " " . $command . " > " . __DIR__ . "/commands/commands.log 2>&1 &" );
 				}
 			}
 
 			/** If we didn't run any commands, print it out */
 			if ( ! count( $to_run ) ) {
-				echo "no commands were run\n";
+				echo "No extra commands were run.\n";
 			}
 
-			die( 'done' );
+			die( 'Hook completed successfully.' );
 
 		} catch( Exception $e ) {
 
@@ -182,9 +141,83 @@ namespace EDM\Application\Hooks {
 
 	}
 
-	if( isset( $_SERVER ) && $_SERVER[ 'REQUEST_URI' ] === '/wp-content/mu-plugins/hook-git-deployment.php' ) {
+	/**
+	 * CLI Command
+	 *
+	 * @param null $command
+	 */
+	function runCommand( $command = null ) {
+		Commands::$command();
+	}
+
+	class Commands {
+
+		static function refreshdb() {
+
+			/** Setup various vars */
+			$db_prefix = DB_PREFIX;
+
+			/** Backup the latest DB */
+			echo "backing up latest db dump\n";
+			exec( "mysqldump -u " . SOURCE_DB_USER . " -p'" . addcslashes( SOURCE_DB_PASSWORD, "'" ) . "' -h " . SOURCE_DB_HOST . " " . SOURCE_DB_NAME . " > " . DB_DUMP );
+
+			/** So, the first thing we're going to do is run a native mysql import to restore the db */
+			echo "restoring latest db dump\n";
+			exec( "mysql -u " . DB_USER . " -p'" . addcslashes( DB_PASSWORD, "'" ) . "' -h " . DB_HOST . " " . DB_NAME . " < " . DB_DUMP );
+
+			/** Connect to the DB */
+			echo "connecting to the db\n";
+			$db = new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
+			if( $db->connect_errno ){
+				die( "Failed to connect to the database: " . $db->connect_error );
+			}
+
+			/** Changing all passwords - depreciating for now - williams@ud
+			echo "updating all user passwords\n";
+			$db->query( "UPDATE {$db_prefix}users SET user_pass = MD5( 'password' )" ); */
+
+			/** Empty global transients */
+			echo "emptying global transients\n";
+			$db->query( "DELETE FROM {$db_prefix}options WHERE option_name LIKE '%_transient_%'" );
+			$db->query( "DELETE FROM {$db_prefix}sitemeta WHERE meta_key LIKE '%_transient_%'" );
+
+			/** Go ahead and get all the blogs */
+			echo "updating all blogs\n";
+			$res = $db->query( "SELECT * FROM {$db_prefix}blogs" );
+			while( $blog = $res->fetch_assoc() ){
+
+				/** Setup some vars */
+				$blog_id = $blog[ 'blog_id' ];
+				$blog_prefix = $db_prefix . $blog_id . '_';
+				$new_domain = str_ireplace( '.', '-', $blog[ 'domain' ] ) . DOMAIN_SUFFIX;
+				$new_domain_url = DOMAIN_SCHEME . $new_domain . '/';
+
+				/** First, update the blog name and blog options */
+				$db->query( "UPDATE {$db_prefix}blogs SET domain = '{$new_domain}' WHERE blog_id = {$blog_id}" );
+				$db->query( "UPDATE {$blog_prefix}options SET option_value = '{$new_domain_url}' WHERE option_name = 'siteurl' OR option_name = 'home'" );
+
+				/** Remove blog transients */
+				$db->query( "DELETE FROM {$blog_prefix}options WHERE option_name LIKE '%_transient_%'" );
+
+			}
+
+			/** We're done */
+			echo "Database refresh done.\n";
+
+		}
+
+	}
+
+	// Handle WebHook
+	if( isset( $_SERVER[ 'REQUEST_URI' ] ) && $_SERVER[ 'REQUEST_URI' ] === '/wp-content/mu-plugins/hook-git-deployment.php' ) {
 		setConstants();
 		fefreshCode();
+	}
+
+	// Handle CLI
+	if( isset( $_SERVER[ 'PATH_TRANSLATED' ] ) && $_SERVER[ 'PATH_TRANSLATED' ] === 'wp-content/mu-plugins/hook-git-deployment.php' ) {
+		setConstants();
+		runCommand( $_SERVER[ 'argv' ][1] );
 	}
 
 }
