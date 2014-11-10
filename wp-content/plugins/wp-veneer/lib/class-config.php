@@ -10,9 +10,7 @@
  *  3) application/etc/wp-config/{FILE_NAME}
  *  4) All items defined in composer.json, in the settings object key
  *
- * ### Debugging
  *
- * die( '<pre>' . print_r( $wp_veneer->config->appliedConstants, true ) . '</pre>');
  *
  * @author potanin@UD
  * @class UsabilityDynamics\Veneer\Config
@@ -97,7 +95,7 @@ namespace UsabilityDynamics\Veneer {
 			/**
 			 * @var array
 			 */
-			public $appliedConstants = array();
+			private $appliedConstants = array();
 
 			/**
 			 * This variable holds protected config variables (they cannot be defined in the config files)
@@ -620,7 +618,7 @@ namespace UsabilityDynamics\Veneer {
 		}
 
 		/** Now that we've done that, lets include our wp settings file, as per normal operations */
-		require_once( ABSPATH . '/wp-settings.php' );
+		require_once( ABSPATH . 'wp-settings.php' );
 	}
 
 }

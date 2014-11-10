@@ -1,12 +1,28 @@
-# WordPress Network
-#
-# Examples:
-# * http://capitaldealsonline.com/assets/scripts/admin-bar.js
-# * http://capitaldealsonline.com/assets/styles/admin-bar.css
-#
+########################################################################
+##
+## http://site.com/                           -> http://www.site.com/
+##
+## http://www.site.com/                       -> http://www.site.com/
+## http://assets.site.com/                    -> http://assets.site.com/
+## http://media.site.com/                     -> c.storage.googleapis.com
+##
+## ## API Endpoints
+## https://api.site.com/debug/env
+##
+## @version 0.6.8
+## @author potanin@UD
+##
+########################################################################
 
-# @version 0.6.8
-# @author potanin@UD
+#DirectoryIndex index.php
+#Options -Indexes
+
+# BEGIN Rewrite Engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+</IfModule>
+# END Rewrite Engine
+
 
 # BEGIN Veneer Assets
 <IfModule mod_rewrite.c>
@@ -99,12 +115,15 @@
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
-  RewriteEngine On
   RewriteBase /
   RewriteRule ^index\.php$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.php [L]
+  RewriteRule ^wp-admin$ wp-admin/ [R=301,L]
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+  RewriteRule ^(wp-(content|admin|includes).*) $1 [L]
+  RewriteRule ^(.*\.php)$ $1 [L]
+  RewriteRule . index.php [L]
 </IfModule>
 # END WordPress
 
