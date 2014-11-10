@@ -94,7 +94,6 @@
         "vendor_autoload_path": "wp-vendor/autoload.php",
         "veneer_public": "wp-content/storage",
         "veneer_storage": "wp-content/storage"
-
       }
     }
   },
