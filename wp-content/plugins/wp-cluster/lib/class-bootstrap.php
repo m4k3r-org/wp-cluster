@@ -391,6 +391,7 @@ namespace UsabilityDynamics\Cluster {
 
         // @note Disabled until improved.
         $this->set( 'toolbar.menu.enabled', false );
+        $this->set( 'toolbar.git.enabled', false );
 
         // $this->_settings->commit();
 
@@ -429,10 +430,12 @@ namespace UsabilityDynamics\Cluster {
       private function _interfaces() {
 
         // Render Toolbar.
-        add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar' ), 10 );
+	      if( $this->get( 'toolbar.menu.enabled' ) && current_user_can( 'manage_options' ) ) {
+		      add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_menu' ), 10 );
+	      }
 
-	      if( current_user_can( 'manage_options' ) ) {
-		      add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_local' ), 90 );
+	      if( $this->get( 'toolbar.get.enabled' ) && current_user_can( 'manage_options' ) ) {
+		      add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_git' ), 90 );
 	      }
 
       }
@@ -463,7 +466,7 @@ namespace UsabilityDynamics\Cluster {
 	     *
 	     * @author potanin@UD
 	     */
-	    public function toolbar_local(){
+	    public function toolbar_git(){
 		    global $wp_admin_bar;
 
 		    $wp_admin_bar->add_menu( array(
@@ -503,45 +506,40 @@ namespace UsabilityDynamics\Cluster {
        * @method cluster_toolbar
        * @for Boostrap
        */
-      public function toolbar() {
+      public function toolbar_menu() {
         global $wp_admin_bar;
 
-        $wp_admin_bar->remove_menu( 'wp-logo' );
-        $wp_admin_bar->remove_menu( 'comments' );
+        // $wp_admin_bar->remove_menu( 'wp-logo' );
+        // $wp_admin_bar->remove_menu( 'comments' );
 
-        if( $this->get( 'toolbar.menu.enabled' ) ) {
+        $wp_admin_bar->add_menu( array(
+          'id'    => 'cloud-manager',
+          'meta'  => array(
+            'html'     => '<div class="cluster-toolbar-info"></div>',
+            'target'   => '',
+            'onclick'  => '',
+            'tabindex' => 10,
+            'class'    => 'cluster-toolbar'
+          ),
+          'title' => 'Cloud',
+          'href'  => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
+        ) );
 
-          $wp_admin_bar->add_menu( array(
-            'id'    => 'cloud-manager',
-            'meta'  => array(
-              'html'     => '<div class="cluster-toolbar-info"></div>',
-              'target'   => '',
-              'onclick'  => '',
-              'tabindex' => 10,
-              'class'    => 'cluster-toolbar'
-            ),
-            'title' => 'Cloud',
-            'href'  => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
-          ) );
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'cloud-manager',
+          'id'     => 'cloud-policy',
+          'meta'   => array(),
+          'title'  => 'Policy',
+          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=policy'
+        ) );
 
-          $wp_admin_bar->add_menu( array(
-            'parent' => 'cloud-manager',
-            'id'     => 'cloud-policy',
-            'meta'   => array(),
-            'title'  => 'Policy',
-            'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=policy'
-          ) );
-
-          $wp_admin_bar->add_menu( array(
-            'parent' => 'cloud-manager',
-            'id'     => 'cluster-dns',
-            'meta'   => array(),
-            'title'  => 'DNS',
-            'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=dns'
-          ) );
-
-        }
-
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'cloud-manager',
+          'id'     => 'cluster-dns',
+          'meta'   => array(),
+          'title'  => 'DNS',
+          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=dns'
+        ) );
 
       }
 
