@@ -1,7 +1,9 @@
 <?php
 /**
- *
- * Loaded if a .maintenance file exists in ABSPATH, added during plugin updates
+ * Plugin Name: Archived Blog Handler
+ * Version: 0.2.0
+ * Description: Loaded if a .maintenance file exists in ABSPATH, added during plugin updates
+ * Author: Usability Dynamics
  *
  */
 wp_load_translations_early();
