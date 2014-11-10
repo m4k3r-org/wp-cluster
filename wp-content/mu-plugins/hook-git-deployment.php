@@ -92,6 +92,7 @@ namespace EDM\Application\Hooks {
 			);
 
 			$to_run   = array();
+
 			foreach ( $payload[ 'commits' ] as $commit ) {
 				foreach ( $commands as $command ) {
 					if ( stripos( $commit[ 'message' ], '[' . COMMIT_COMMAND_PREFIX . ' ' . $command . ']' ) !== false ) {
@@ -118,11 +119,11 @@ namespace EDM\Application\Hooks {
 				if ( ! method_exists( 'EDM\Application\Hooks\Commands', $command ) ) {
 					echo "Not running command " . $command . " because the file doesn't exist\n";
 				} else {
-					echo "Running command " . $command . ". (DISABLED).\n";
+					echo "Running command: " . "nohup hhvm " . __FILE__ . " " . $command . " 2>&1 &" . ".\n";
 					exec( "nohup hhvm " . __FILE__ . " " . $command . " 2>&1 &" );
-					//exec( "nohup php " . __FILE__ . " " . $command . " > " . __DIR__ . "/commands/commands.log 2>&1 &" );
 				}
 			}
+
 
 			/** If we didn't run any commands, print it out */
 			if ( ! count( $to_run ) ) {
