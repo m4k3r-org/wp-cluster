@@ -150,11 +150,9 @@ namespace EDM\Application\Hooks {
 
 			/** First thing we're going to do is pull from github */
 			echo "pulling from github\n";
-			// exec( "git -C " . GIT_ROOT . " checkout vendor/plugins/w3-total-cache" );
-			exec( "git -C " . GIT_ROOT . " reset --hard origin/develop" );
+			exec( "git -C " . GIT_ROOT . " fetch" );
+			exec( "git -C " . GIT_ROOT . " reset --hard origin/" . GIT_BRANCH );
 			exec( "git -C " . GIT_ROOT . " pull" );
-			// exec( "rm -rf " . GIT_ROOT . "/vendor/plugins/w3-total-cache" );
-			// exec( "rm -rf " . GIT_ROOT . "/vendor/plugins/jetpack" );
 
 			/** Ok, we're going to go through the commands, and run them */
 			foreach ( $to_run as $command ) {
