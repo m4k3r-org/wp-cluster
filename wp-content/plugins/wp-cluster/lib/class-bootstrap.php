@@ -29,7 +29,7 @@ namespace UsabilityDynamics\Cluster {
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.4.4';
+      public static $version = '0.4.5';
 
       /**
        * Textdomain String
@@ -431,6 +431,10 @@ namespace UsabilityDynamics\Cluster {
         // Render Toolbar.
         add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar' ), 10 );
 
+	      if( current_user_can( 'manage_options' ) ) {
+		      add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_local' ), 90 );
+	      }
+
       }
 
       /**
@@ -453,7 +457,47 @@ namespace UsabilityDynamics\Cluster {
 
       }
 
-      /**
+
+	    /**
+	     * Administrative Toolbar.
+	     *
+	     * @author potanin@UD
+	     */
+	    public function toolbar_local(){
+		    global $wp_admin_bar;
+
+		    $wp_admin_bar->add_menu( array(
+			    'id' => 'cluster_git',
+			    'parent' => 'top-secondary',
+			    'title' => sprintf( __( 'Branch: %s' ), Utility::get_git_branch() ),
+			    'href' => '#'
+		    ));
+
+		    $wp_admin_bar->add_menu( array(
+			    'id' => 'cluster_git_version',
+			    'parent' => 'cluster_git',
+			    'title' => sprintf( __( 'Version: %s' ), Utility::get_git_version()->short ),
+			    'href' => '#'
+		    ));
+
+		    $wp_admin_bar->add_menu( array(
+			    'id' => 'cluster_git_tag',
+			    'parent' => 'cluster_git',
+			    'title' => sprintf( __( 'Tag: %s' ), Utility::get_git_tag() ),
+			    'href' => '#'
+		    ));
+
+		    $wp_admin_bar->add_menu( array(
+			    'id' => 'cluster_git_message',
+			    'parent' => 'cluster_git',
+			    'title' => sprintf( __( 'Message: %s' ), Utility::get_git_message() ),
+			    'href' => '#'
+		    ));
+
+
+	    }
+
+	    /**
        * Add Cluster Toolbar
        *
        * @method cluster_toolbar

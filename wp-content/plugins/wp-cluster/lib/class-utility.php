@@ -142,7 +142,7 @@ namespace UsabilityDynamics\Cluster {
        *
        * @return string
        */
-      function get_host() {
+      static public function get_host() {
         static $host = null;
 
         if ($host === null) {
@@ -158,6 +158,77 @@ namespace UsabilityDynamics\Cluster {
 
         return $host;
       }
+
+	    /**
+	     * Get Current Git Branch
+	     *
+	     * @return null
+	     */
+	    static public function get_git_branch() {
+
+		    if( !is_dir( ABSPATH . '.git' ) || !is_file( ABSPATH . '.git/HEAD' ) ) {
+			    return null;
+		    }
+
+		    $stringfromfile = file( ABSPATH . '.git/HEAD', FILE_USE_INCLUDE_PATH);
+
+		    $firstLine = $stringfromfile[0]; //get the string from the array
+
+		    $explodedstring = explode("/", $firstLine, 3); //seperate out by the "/" in the string
+
+		    return $branchname = $explodedstring[2]; //get the one that is always the branch name
+
+	    }
+
+	    /**
+	     * Get Current Git Tag
+	     *
+	     * @source https://gist.github.com/lukeoliff/5501074
+	     * @return mixed
+	     */
+	    static public function get_git_version() {
+
+		    exec('git describe --always',$version_mini_hash);
+		    exec('git rev-list HEAD | wc -l',$version_number);
+		    exec('git log -1',$line);
+		    $version['short'] = "v1.".trim($version_number[0]).".".$version_mini_hash[0];
+		    $version['full'] = "v1.".trim($version_number[0]).".$version_mini_hash[0] (".str_replace('commit ','',$line[0]).")";
+
+		    return (object) $version;
+
+
+	    }
+
+	    /**
+	     * Get Current Git Tag
+	     *
+	     * @source https://gist.github.com/lukeoliff/5501074
+	     * @return mixed
+	     */
+	    static public function get_git_tag() {
+
+		    exec('git describe --always',$version_mini_hash);
+		    exec('git rev-list HEAD | wc -l',$version_number);
+		    exec('git log -1',$line);
+
+		    return trim($version_number[0]).".".$version_mini_hash[0];
+
+
+	    }
+
+	    /**
+	     * Get Latest Git Commit
+	     *
+	     * @source https://www.lullabot.com/blog/article/tip-show-last-git-commit-site-footer
+	     * @return mixed
+	     */
+	    static public function get_git_commit() {
+
+		    exec( "git log -1 --pretty=format:'%h - %s (%ci)' --abbrev-commit", $commit_text );
+
+		    return $commit_text;
+
+	    }
 
     }
 
