@@ -31,23 +31,26 @@ namespace UsabilityDynamics\Cluster {
 			 */
 			public function db_connect( $allow_bail = true ) {
 
-				if ( function_exists( 'mysql_pconnect' ) ) {
-					$this->dbh = mysql_pconnect( $this->dbhost, $this->dbuser, $this->dbpassword );
-				}
-
 				$this->use_mysqli = false;
 
-				if ( ! $this->dbh && $allow_bail ) {
-					wp_die( 'Unable to connect to DB.' );
+				if ( function_exists( 'mysql_pconnect' ) && defined( 'DB_PERSISTENT' ) && DB_PERSISTENT ) {
+					$this->dbh = mysql_pconnect( $this->dbhost, $this->dbuser, $this->dbpassword );
+
+					$this->has_connected = true;
+					$this->set_charset( $this->dbh );
+					$this->set_sql_mode();
+					$this->ready = true;
+					$this->select( $this->dbname, $this->dbh );
+
+					if ( ! $this->dbh && $allow_bail ) {
+						wp_die( 'Unable to connect to DB.' );
+					}
+
+					return true;
+
+				} else {
+					return parent::db_connect( $allow_bail );
 				}
-
-				// $db_selected = mysql_select_db( $this->dbname, $this->dbh );
-
-				$this->has_connected = true;
-				$this->set_charset( $this->dbh );
-				$this->set_sql_mode();
-				$this->ready = true;
-				$this->select( $this->dbname, $this->dbh );
 
 				return false;
 
@@ -222,6 +225,7 @@ namespace UsabilityDynamics\Cluster {
 			 */
 			function _connect_to_db( $creds ) {
 				global $wpdb, $table_prefix;
+
 				/** Backup those objects */
 				$backups = array(
 					'wpdb'         => $wpdb,
@@ -249,17 +253,18 @@ namespace UsabilityDynamics\Cluster {
 
 				/** Ok, we made it, lets run the func to generate the table names */
 				wp_set_wpdb_vars();
+
 				/** Ok, we made it - bail out the backups */
 				foreach ( $backups as $key => $value ) {
 					unset( $backups[ $key ] );
 				}
+
 				/** Set the blog ID to null */
 				$wpdb->set_blog_id( null, null );
+
 				/** Set the 'this' variable as well */
 				$this->db    =& $wpdb;
 				$this->creds = $creds;
-
-				/** Return true */
 
 				return true;
 			}
