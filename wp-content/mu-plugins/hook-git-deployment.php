@@ -7,6 +7,8 @@
  * Version: 0.1.0
  * Author URI: http://usabilitydynamics.com
  *
+ * http://drop.ud-dev.com/wp-content/mu-plugins/hook-git-deployment.php
+ *
  */
 namespace EDM\Application\Hooks {
 
@@ -101,6 +103,7 @@ namespace EDM\Application\Hooks {
 	}
 
 	function fefreshCode() {
+
 		/** Start our try/catch block */
 		try {
 
@@ -110,7 +113,7 @@ namespace EDM\Application\Hooks {
 
 			if ( ! isset( $_SERVER[ 'HTTP_X_GITHUB_EVENT' ] ) ) {
 				header( "HTTP/1.0 401 Unauthorized" );
-				die( 'invalid' );
+				die( 'Expected GitHub web hook not detected.' );
 			}
 
 			/** Make sure we're a PUSH event */
@@ -147,11 +150,11 @@ namespace EDM\Application\Hooks {
 
 			/** First thing we're going to do is pull from github */
 			echo "pulling from github\n";
-			exec( "git -C " . GIT_ROOT . " checkout vendor/plugins/w3-total-cache" );
-			exec( "git -C " . GIT_ROOT . " reset --hard HEAD" );
+			// exec( "git -C " . GIT_ROOT . " checkout vendor/plugins/w3-total-cache" );
+			exec( "git -C " . GIT_ROOT . " reset --hard origin/develop" );
 			exec( "git -C " . GIT_ROOT . " pull" );
-			//  exec( "rm -rf " . GIT_ROOT . "/vendor/plugins/w3-total-cache" );
-			exec( "rm -rf " . GIT_ROOT . "/vendor/plugins/jetpack" );
+			// exec( "rm -rf " . GIT_ROOT . "/vendor/plugins/w3-total-cache" );
+			// exec( "rm -rf " . GIT_ROOT . "/vendor/plugins/jetpack" );
 
 			/** Ok, we're going to go through the commands, and run them */
 			foreach ( $to_run as $command ) {
@@ -181,7 +184,8 @@ namespace EDM\Application\Hooks {
 
 	}
 
-	if( isset( $_SERVER ) && isset( $_SERVER[ 'HTTP_X_GITHUB_EVENT' ] ) ) {
+	if( isset( $_SERVER ) && $_SERVER[ 'REQUEST_URI' ] === '/wp-content/mu-plugins/hook-git-deployment.php' ) {
+		setConstants();
 		fefreshCode();
 	}
 
