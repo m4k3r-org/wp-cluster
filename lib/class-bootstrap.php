@@ -390,8 +390,8 @@ namespace UsabilityDynamics\Cluster {
         ) );
 
         // @note Disabled until improved.
-        $this->set( 'toolbar.menu.enabled', true );
-        $this->set( 'toolbar.git.enabled', true );
+        $this->set( 'toolbar.menu.enabled', false );
+        $this->set( 'toolbar.git.enabled', false );
 
         // $this->_settings->commit();
 
