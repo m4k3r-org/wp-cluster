@@ -192,7 +192,7 @@ namespace UsabilityDynamics\Veneer {
        * @method __construct
        */
       public function __construct() {
-        global $wpdb, $current_site, $current_blog, $wp_veneer;
+        global $wpdb, $current_blog, $wp_veneer;
 
 	      // Return Singleton Instance
         if( self::$instance ) {
@@ -219,8 +219,6 @@ namespace UsabilityDynamics\Veneer {
           _doing_it_wrong( 'UsabilityDynamics\Veneer\Bootstrap::__construct', 'Veneer should not be initialized before "init" filter.', '0.6.1' );
         }
 
-	      // $this->_install();
-
 	      // Requires $this->site to be defined, therefore being ignored on single-site installs.
         if( defined( 'MULTISITE' ) && MULTISITE && $wpdb->site ) {
           $this->site    = $wpdb->get_var( "SELECT domain FROM {$wpdb->blogs} WHERE blog_id = '{$wpdb->blogid}' LIMIT 1" );
@@ -240,59 +238,22 @@ namespace UsabilityDynamics\Veneer {
 	      /** Initialize Components. */
         $this->_components();
 
-        add_action( 'setup_theme', array( $this, 'setup_theme' ) );
+        //add_action( 'setup_theme', array( $this, 'setup_theme' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_action( 'wp_head', array( $this, 'wp_head' ), 0, 200 );
-
-        add_filter( 'theme_root', array( $this, 'theme_root' ), 10 );
+        // add_filter( 'theme_root', array( $this, 'theme_root' ), 10 );
+	      // add_filter( 'flush_rewrite_rules_hard', array( $this, 'flush_rewrite_rules_hard' ));
 
         // Initialize Interfaces.
         $this->_interfaces();
 
-        ob_start( array( $this, 'ob_start' ) );
+	      // Enable Storage.
+	      $this->_storage();
 
-        // Create Public and Cache directories. Media directory created in Media class.
-        if( defined( 'WP_VENEER_STORAGE' ) && is_dir( WP_VENEER_STORAGE ) ) {
+	      $this->_install();
 
-          // Use public directory if explicitly defined.
-          if( defined( 'WP_VENEER_PUBLIC' ) && WP_VENEER_PUBLIC ) {
-            $_public_path = trailingslashit( WP_VENEER_PUBLIC );
-          } else {
-            $_public_path = trailingslashit( WP_VENEER_STORAGE );
-          }
-
-          // Append the apex domain to storage path.
-          if( defined( 'MULTISITE' ) && MULTISITE ) {
-
-	          if( !strpos( $_public_path, $this->site ) ) {
-		          $_public_path = $_public_path . trailingslashit( $this->site );
-	          }
-
-          }
-
-          $this->set( 'media.path.disk',    $_public_path . 'media' );
-          $this->set( 'assets.path.disk',   $_public_path . 'assets' );
-          $this->set( 'scripts.path.disk',  $_public_path . 'assets/scripts' );
-          $this->set( 'styles.path.disk',   $_public_path . 'assets/styles' );
-
-          if( $this->get( 'media.path.disk' ) && !wp_mkdir_p( $this->get( 'media.path.disk' ) ) ) {
-            $this->set( 'media.available', false );
-          }
-
-          if( $this->get( 'assets.path.disk' ) && !wp_mkdir_p( $this->get( 'assets.path.disk' ) ) ) {
-            $this->set( 'assets.available', false );
-          }
-
-          if( $this->get( 'scripts.path.disk' ) && !wp_mkdir_p( $this->get( 'scripts.path.disk' ) ) ) {
-            $this->set( 'scripts.available', false );
-          }
-
-          if( $this->get( 'styles.path.disk' ) && !wp_mkdir_p( $this->get( 'styles.path.disk' ) ) ) {
-            $this->set( 'styles.available', false );
-          }
-
-        }
+	      ob_start( array( $this, 'ob_start' ) );
 
       }
 
@@ -606,10 +567,125 @@ namespace UsabilityDynamics\Veneer {
       public function enqueue_scripts() {
 
         if( is_user_logged_in() ) {
-          wp_enqueue_style( 'wp-veneer', plugins_url( '/static/styles/wp-veneer.css', dirname( __DIR__ ) ) );
+          wp_enqueue_style( 'wp-veneer', plugins_url( '/static/styles/wp-veneer.css', dirname( __FILE__ ) ) );
         };
 
       }
+
+	    /**
+	     * Need to add logic to append BEFORE the WordPress markers are added, in the meantime need to manually reposition
+	     *
+	     * @param $setting
+	     *
+	     * @return mixed
+	     */
+	    public function flush_rewrite_rules_hard( $setting ) {
+
+		    if( !is_admin() ) {
+		      return;
+		    }
+
+		    $htaccess_file = wp_normalize_path( get_home_path() . '/.htaccess' );
+
+		    insert_with_markers( $htaccess_file, 'Veneer Static Media', array(
+			    "<IfModule mod_rewrite.c>",
+			    " RewriteEngine On",
+			    " RewriteBase /",
+
+			    " RewriteRule ^wp-content/uploads/(.*)$ /media/$1 [L]",
+			    " RewriteRule ^files/(.*)$ /media/$1 [L]",
+			    " RewriteRule ^uploads/(.*)$ /media/$1 [L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%1/static/%2 -f",
+			    " RewriteRule ^(.*) /wp-content/storage/%1/static/%2 [L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%1/%2 -f",
+			    " RewriteRule ^.*$ /wp-content/storage/%1/%2 [L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(assets|media|cache|static)\\.(.*)::/(?:assets|media|cache|static)?/?(.*)$",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%2/%1/%3 -f",
+			    " RewriteRule ^.*$ /wp-content/storage/%2/%1/%3 [L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%1/static/%2index.html -f",
+			    " RewriteRule ^.*$ /wp-content/storage/%1/static/%2index.html [NC,QSA,L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{HTTP_HOST}::%{REQUEST_URI} ^(.*)::/(.*)$",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%1/static/%2.html -f",
+			    " RewriteRule ^.*$ /wp-content/storage/%1/static/%2.html [L]",
+
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{DOCUMENT_ROOT}/wp-content/storage/%{HTTP_HOST}/static/index\\.html -f",
+			    " RewriteCond %{QUERY_STRING} ^$",
+			    " RewriteRule ^$ /wp-content/storage/%{HTTP_HOST}/static/index.html [L]",
+			    "</IfModule>"
+		    ));
+
+		    insert_with_markers( $htaccess_file, 'Veneer Assets', array(
+			    "<IfModule mod_rewrite.c>",
+			    " RewriteEngine On",
+			    " RewriteBase /",
+			    " RewriteRule ^assets/styles/(.*)$  /wp-includes/css/$1 [QSA,L]",
+			    " RewriteRule ^assets/scripts/(.*)$ /wp-includes/js/$1 [QSA,L]",
+			    " RewriteRule ^assets/images/(.*)$  /wp-includes/images/$1 [QSA,L]",
+			    "</IfModule>"
+		    ));
+
+		    insert_with_markers( $htaccess_file, 'Veneer Management Access ', array(
+			    "<IfModule mod_rewrite.c>",
+			    " RewriteEngine On",
+			    " RewriteBase /",
+			    " RewriteRule ^manage$                         /manage/ [R=301,L]",
+			    " RewriteRule ^manage/(login|signup)/?(.*)$    /wp-$1.php [QSA,L]",
+			    " RewriteRule ^manage/?(.*)$                   /wp-admin/$1 [QSA,L]",
+			    "</IfModule>"
+		    ));
+
+		    insert_with_markers( $htaccess_file, 'Veneer Public API', array(
+			    "<IfModule mod_rewrite.c>",
+			    " RewriteEngine On",
+			    " RewriteBase /",
+			    " RewriteCond %{HTTP_HOST}          ^api\\..*$",
+			    " RewriteRule ^documents/v1/(.*)$   http://api.veneer.io/documents/$1 [P,L]",
+			    " RewriteCond %{HTTP_HOST}          ^api\\..*$",
+			    " RewriteRule ^search/v1/(.*)$      http://api.veneer.io/search/$1 [P,L]",
+			    " RewriteCond %{HTTP_HOST}          ^api\\..*$",
+			    " RewriteRule ^documents/(.*)$      http://api.veneer.io/documents/$1 [P,L]",
+			    " RewriteCond %{HTTP_HOST}          ^api\\..*$",
+			    " RewriteRule ^search/(.*)$         http://api.veneer.io/search/$1 [P,L]",
+			    "</IfModule>"
+		    ));
+
+		    insert_with_markers( $htaccess_file, 'Veneer WordPress API', array(
+			    "<IfModule mod_rewrite.c>",
+			    " RewriteEngine On",
+			    " RewriteBase /",
+			    " RewriteCond %{REQUEST_FILENAME} !-f",
+			    " RewriteCond %{REQUEST_FILENAME} !-d",
+			    " RewriteCond %{REQUEST_URI} !^.*admin-ajax\\.php.*$",
+			    " RewriteRule ^xmlrpc.php$    /xmlrpc.php [QSA,L]",
+			    " RewriteRule ^api/rpc.xml$   /xmlrpc.php [QSA,L]",
+			    " RewriteRule ^api/rpc.json$  /wp-admin/admin-ajax.php?action=/api/json-rpc [QSA,L]",
+			    " RewriteRule ^api/(.*).xml$  /wp-admin/admin-ajax.php?action=/$1&format=xml [QSA,L]",
+			    " RewriteRule ^api/(.*).json$ /wp-admin/admin-ajax.php?action=/$1&format=json [QSA,L]",
+			    "</IfModule>"
+		    ));
+
+		    return $setting;
+
+	    }
 
 	    /**
 	     * Copy Files.
@@ -736,6 +812,7 @@ namespace UsabilityDynamics\Veneer {
         $this->set( 'scripts.outline.enabled', false );
 
 	      $this->set( 'rewrites.login', false );
+	      $this->set( 'rewrites.assets', false );
 	      $this->set( 'rewrites.manage', false );
 	      $this->set( 'rewrites.api', false );
 
@@ -787,6 +864,53 @@ namespace UsabilityDynamics\Veneer {
 
       }
 
+	    private function _storage() {
+
+		    // Create Public and Cache directories. Media directory created in Media class.
+		    if( !defined( 'WP_VENEER_STORAGE' ) || !is_dir( WP_VENEER_STORAGE ) ) {
+			    return;
+		    }
+
+		    // Use public directory if explicitly defined.
+		    if( defined( 'WP_VENEER_PUBLIC' ) && WP_VENEER_PUBLIC ) {
+			    $_public_path = trailingslashit( WP_VENEER_PUBLIC );
+		    } else {
+			    $_public_path = trailingslashit( WP_VENEER_STORAGE );
+		    }
+
+		    // Append the apex domain to storage path.
+		    if( defined( 'MULTISITE' ) && MULTISITE ) {
+
+			    if( !strpos( $_public_path, $this->site ) ) {
+				    $_public_path = $_public_path . trailingslashit( $this->site );
+			    }
+
+		    }
+
+		    $this->set( 'media.path.disk',    $_public_path . 'media' );
+		    $this->set( 'assets.path.disk',   $_public_path . 'assets' );
+		    $this->set( 'scripts.path.disk',  $_public_path . 'assets/scripts' );
+		    $this->set( 'styles.path.disk',   $_public_path . 'assets/styles' );
+
+		    if( $this->get( 'media.path.disk' ) && !wp_mkdir_p( $this->get( 'media.path.disk' ) ) ) {
+			    $this->set( 'media.available', false );
+		    }
+
+		    if( $this->get( 'assets.path.disk' ) && !wp_mkdir_p( $this->get( 'assets.path.disk' ) ) ) {
+			    $this->set( 'assets.available', false );
+		    }
+
+		    if( $this->get( 'scripts.path.disk' ) && !wp_mkdir_p( $this->get( 'scripts.path.disk' ) ) ) {
+			    $this->set( 'scripts.available', false );
+		    }
+
+		    if( $this->get( 'styles.path.disk' ) && !wp_mkdir_p( $this->get( 'styles.path.disk' ) ) ) {
+			    $this->set( 'styles.available', false );
+		    }
+
+
+	    }
+
       /**
        * Initialize Interface Compnents
        *
@@ -799,7 +923,6 @@ namespace UsabilityDynamics\Veneer {
         $_SERVER[ 'REMOTE_ADDR' ] = isset( $_SERVER[ 'REMOTE_ADDR' ] ) ? $_SERVER[ 'REMOTE_ADDR' ] : '';
         
         add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_local' ), 100 );
-
 
       }
 

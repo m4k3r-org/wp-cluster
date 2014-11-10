@@ -1,8 +1,3 @@
-## Examples
-
-* http://jsfiddle.net/andypotanin/bq57Z/ Gallery
-* http://jsfiddle.net/andypotanin/wUyYd/ Video
-
 ## License
 
 (The MIT License)

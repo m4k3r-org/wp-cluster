@@ -35,18 +35,6 @@ namespace UsabilityDynamics\Veneer {
 		      return;
         }
 
-        if( !defined( 'WP_BASE_DOMAIN' ) && defined( 'WP_HOME' ) ) {
-          define( 'WP_BASE_DOMAIN', str_replace( array( 'https://', 'http://' ), '', WP_HOME ) );
-        }
-
-	      if( !defined( 'WP_BASE_DOMAIN' ) && isset( $current_blog ) && isset( $current_blog->domain ) ) {
-		      define( 'WP_BASE_DOMAIN', str_replace( array( 'https://', 'http://' ), '', $current_blog->domain ) );
-	      }
-
-        if( !defined( 'WP_BASE_DOMAIN' ) ) {
-          wp_die( '<h1>Veneer Error</h1><p>The WP_BASE_DOMAIN constant is not defined.</p>' );
-        }
-
         // Replace Network URL with Site URL.
         add_filter( 'wp_redirect', array( $this, 'wp_redirect' ), 10, 2 );
         add_filter( 'pre_option_home', array( $this, '_option_home' ), 10 );
@@ -57,14 +45,16 @@ namespace UsabilityDynamics\Veneer {
         // Support Vendor paths. Disabled because references get_blogaddress_by_id() too early.
         add_filter( 'update_attached_file', array( $this, 'update_attached_file' ), 50, 2 );
         add_filter( 'get_the_guid', array( $this, 'get_the_guid' ), 50 );
-        add_filter( 'plugins_url', array( $this, 'plugins_url' ), 50, 3 );
+
 
         add_filter( 'network_site_url', array( $this, 'masked_url_fixes' ), 100, 3 );
         add_filter( 'site_url', array( $this, 'masked_url_fixes' ), 100, 3 );
         add_filter( 'login_redirect', array( $this, 'masked_url_fixes' ), 100, 3 );
 
         add_filter( 'lostpassword_url', array( $this, 'lostpassword_url' ), 100, 3 );
-        add_filter( 'includes_url', array( $this, 'includes_url' ), 100, 3 );
+
+	      add_filter( 'includes_url', array( $this, 'includes_url' ), 100, 3 );
+
         add_filter( 'home_url', array( $this, 'home_url' ), 100, 4 );
         add_filter( 'login_url', array( $this, 'login_url' ), 100, 2 );
         add_filter( 'logout_url', array( $this, 'logout_url' ), 50, 2 );
@@ -83,7 +73,10 @@ namespace UsabilityDynamics\Veneer {
         add_filter( 'cfct-build-module-urls', array( $this, 'cfct_build_module_urls' ), 100, 3 );
         add_filter( 'cfct-build-module-url', array( $this, 'replace_network_url' ), 10, 3 );
 
-        // die( json_encode( $this->_debug() ) );
+	      // disabled because causes issues with standard WP structure
+	      // add_filter( 'plugins_url', array( $this, 'plugins_url' ), 50, 3 );
+
+	      // die( json_encode( $this->_debug() ) );
         // add_action( 'template_redirect', function() { global $wp_veneer; wp_send_json_success( $wp_veneer->_rewrites ); });
 
       }
@@ -356,10 +349,15 @@ namespace UsabilityDynamics\Veneer {
        * @return mixed
        */
       public static function includes_url( $url ) {
-        $url = str_ireplace( 'wp-includes/js', 'assets/scripts', $url );
-        $url = str_ireplace( 'wp-includes/css', 'assets/styles', $url );
-        $url = str_ireplace( 'wp-includes/images', 'assets/images', $url );
-        $url = str_ireplace( 'wp-includes/', 'assets/', $url );
+	      global $wp_veneer;
+
+	      if( $wp_veneer->get( 'rewrites.assets' ) ) {
+		      $url = str_ireplace( 'wp-includes/js', 'assets/scripts', $url );
+		      $url = str_ireplace( 'wp-includes/css', 'assets/styles', $url );
+		      $url = str_ireplace( 'wp-includes/images', 'assets/images', $url );
+		      $url = str_ireplace( 'wp-includes/', 'assets/', $url );
+	      }
+
         return $url;
       }
 

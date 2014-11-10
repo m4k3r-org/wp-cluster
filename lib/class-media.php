@@ -93,7 +93,7 @@ namespace UsabilityDynamics\Veneer {
 
         $this->site     = $wp_veneer->site;
         $this->site_id  = $wp_veneer->site_id;
-        $this->cluster  = defined( 'WP_BASE_DOMAIN' ) ? WP_BASE_DOMAIN : null;
+        // $this->cluster  = defined( 'WP_BASE_DOMAIN' ) ? WP_BASE_DOMAIN : null;
 
         if( defined( 'MULTISITE' ) && MULTISITE && $wpdb->site ) {
           $this->network   = $wpdb->get_var( "SELECT domain FROM {$wpdb->site} WHERE id = {$wpdb->siteid}" );
@@ -102,6 +102,7 @@ namespace UsabilityDynamics\Veneer {
         if( $args->subdomain ) {
           $this->subdomain = $args->subdomain;
         }
+
         if( $args->url_rewrite ) {
           $this->url_rewrite = $args->url_rewrite;
         }
@@ -114,16 +115,6 @@ namespace UsabilityDynamics\Veneer {
           $this->active = $args->active;
         }
 
-        // Trying to maintain semi-native support.
-        if( !defined( 'UPLOADBLOGSDIR' ) ) {
-          // define( 'UPLOADBLOGSDIR', defined( 'WP_VENEER_STORAGE' ) ? WP_VENEER_STORAGE : 'static/storage' );
-        }
-
-        // Uploads path relative to ABSPATH
-        if( !defined( 'BLOGUPLOADDIR' ) ) {
-          // define( 'BLOGUPLOADDIR', UPLOADBLOGSDIR . '/media' );
-        }
-
         // Primary image path/url override.
         add_filter( 'upload_dir', array( $this, 'upload_dir' ) );
 
@@ -134,12 +125,18 @@ namespace UsabilityDynamics\Veneer {
         $this->basedir   = $wp_upload_dir[ 'basedir' ];
         $this->baseurl   = $wp_upload_dir[ 'baseurl' ];
 
-        //$this->directory = defined( 'BLOGUPLOADDIR' ) && BLOGUPLOADDIR ? BLOGUPLOADDIR : '';
-        //$this->domain    = defined( 'WP_VENEER_STORAGE' ) && WP_VENEER_STORAGE ? null : $wp_upload_dir[ 'baseurl' ];
-
-        // die( json_encode( $this->_debug() ) );
+	      add_action( 'wp_ajax_/veneer/v1/media', array( $this, 'api_debug_report' ) );
 
       }
+
+	    /**
+	     *
+	     * /wp-admin/admin-ajax.php?action=/veneer/v1/media
+	     *
+	     */
+	    public function api_debug_report() {
+		    wp_send_json( $this->_debug() );
+	    }
 
       /**
        * Return URL Mapping Array
@@ -152,7 +149,11 @@ namespace UsabilityDynamics\Veneer {
         return array(
           'wp_upload_dir' => wp_upload_dir(),
           'this'          => $this,
-          'wp_veneer'     => $wp_veneer
+          'wp_veneer'     => $wp_veneer,
+	        'constants'     => array(
+		        'BLOGUPLOADDIR' => BLOGUPLOADDIR,
+		        'UPLOADBLOGSDIR' => UPLOADBLOGSDIR,
+	        )
         );
 
       }
