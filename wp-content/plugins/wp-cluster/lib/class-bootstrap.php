@@ -134,7 +134,7 @@ namespace UsabilityDynamics\Cluster {
        * @method __construct
        */
       public function __construct() {
-        global $wpdb, $current_site, $current_blog, $wp_veneer;
+        global $wpdb, $current_site, $current_blog, $wp_veneer, $wp_cluster;
 
         /** Return Singleton Instance */
         if( self::$instance ) {
@@ -160,7 +160,7 @@ namespace UsabilityDynamics\Cluster {
           $wp_veneer = new \stdClass();
         }
 
-        $wp_veneer->cluster = self::$instance = &$this;
+	      $wp_cluster = $wp_veneer->cluster = self::$instance = &$this;
 
         // Current Site.
         $this->site_name        = get_option( 'blogname' );
