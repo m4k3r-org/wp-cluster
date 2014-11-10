@@ -44,7 +44,7 @@ include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/venue-taxonomy.ph
 include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/artist-taxonomy.php' );
 
 /* Define Child Theme Version */
-define( 'HDDP_Version', '1.0.0' );
+define( 'HDDP_Version', '2.2.0' );
 
 /* Transdomain */
 define( 'HDDP', 'HDDP' );
