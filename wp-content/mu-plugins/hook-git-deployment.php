@@ -31,7 +31,7 @@ namespace EDM\Application\Hooks {
 		define( 'SOURCE_DB_NAME', 'edm_production' );
 
 		/** Define our DB details */
-		define( 'DB_HOST', '10.88.135.8' );
+		define( 'DB_HOST', 'rds.uds.io' );
 		define( 'DB_USER', 'dud_edm_cluster' );
 		define( 'DB_PASSWORD', 'asdF9UjhgimzV4' );
 		define( 'DB_NAME', 'dud_edm_cluster' );
