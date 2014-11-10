@@ -236,6 +236,7 @@ namespace UsabilityDynamics\Cluster {
 				/** Make sure we have all the creds we need */
 				foreach ( array_keys( $this->creds ) as $key ) {
 					if ( ! ( isset( $creds[ $key ] ) && ! empty( $creds[ $key ] ) ) && $key !== 'DB_PASSWORD' ) {
+						die( '<pre>' . print_r( $creds, true ) . '</pre>');
 						throw new \Exception( 'Not enough credentials to connect to DB' );
 					}
 				}
