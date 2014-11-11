@@ -82,12 +82,4 @@ module.exports = function( grunt ) {
 
   });
 
-  // Build Assets
-  grunt.registerTask( 'default', [ 'build' ] );
-
-  // Build Theme
-  grunt.registerTask( 'build', [ 'compile' ], function() {
-
-  });
-
 };
