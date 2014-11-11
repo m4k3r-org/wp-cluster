@@ -7,4 +7,5 @@
 * Made WP_LOGS_DIR be relative to WP_CONTENT_DIR.
 * Made WP_DEBUG and WP_DEBUG_DISPLAY be configurable via Apache environment even if not defiend in composer.json
 * Bundled in monolog/monolog and removed Raygun4php\RaygunClient dependency.
+* Added new options: varnish.enabled, api.enabled, logs.enabled and rewrites.enabled. Disabled by default.
 * (WIP) Set WP_LANG_DIR properly.

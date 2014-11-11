@@ -828,12 +828,12 @@ namespace UsabilityDynamics\Veneer {
 			private function _components() {
 
 				// Init our logging mechanism
-				if( class_exists( 'UsabilityDynamics\Veneer\Log' )  ) {
+				if( $this->get( 'logs.enabled' ) && class_exists( 'UsabilityDynamics\Veneer\Log' )  ) {
 					$this->_log = Log::init()->__construct();
 				}
 
 				// Init the api
-				if( class_exists( 'UsabilityDynamics\Veneer\API' ) ) {
+				if( $this->get( 'api.enabled' ) && class_exists( 'UsabilityDynamics\Veneer\API' ) ) {
 					$this->_api = API::init()->__construct();
 				}
 
@@ -853,12 +853,12 @@ namespace UsabilityDynamics\Veneer {
 				}
 
 				// Enable Varnish.
-				if( class_exists( 'UsabilityDynamics\Veneer\Varnish' ) ) {
+				if( $this->get( 'varnish.enabled' ) && class_exists( 'UsabilityDynamics\Veneer\Varnish' ) ) {
 					$this->_varnish = new Varnish( $this->get( 'varnish' ) );
 				}
 
 				// Enable URL Rewrites.
-				if( class_exists( 'UsabilityDynamics\Veneer\Rewrites' ) ) {
+				if( $this->get( 'rewrites.enabled' ) && class_exists( 'UsabilityDynamics\Veneer\Rewrites' ) ) {
 					$this->_rewrites = new Rewrites( $this->get( 'rewrites' ) );
 				}
 
