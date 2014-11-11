@@ -34,7 +34,6 @@ pullSubtree UsabilityDynamics/wp-splash                   wp-content/themes/wp-s
 pullSubtree UsabilityDynamics/wp-splash                   wp-content/themes/wp-splash-v2.0      v2.0
 pullSubtree UsabilityDynamics/wp-veneer                   wp-content/plugins/wp-veneer
 pullSubtree wpCloud/wp-vertical-edm                       wp-content/plugins/wp-vertical-edm
-pullSubtree UsabilityDynamics/wp-splash                   wp-content/themes/wp-splash-v1.0      v1.0
 pullSubtree DiscoDonniePresents/wp-disco                  wp-content/themes/wp-disco-v1.0       v1.0
 pullSubtree DiscoDonniePresents/wp-disco                  wp-content/themes/wp-disco-v2.0       v2.0
 pullSubtree DiscoDonniePresents/wp-spectacle              wp-content/themes/wp-spectacle-v1.0   v1.0
@@ -49,27 +48,7 @@ pullSubtree DiscoDonniePresents/wp-spectacle-isladelsol   wp-content/themes/wp-s
 
 #### Update Subtrees Dependencies
 ```
-pushSubtree UsabilityDynamics/wp-amd                      wp-content/plugins/wp-amd
-pushSubtree UsabilityDynamics/wp-cluster                  wp-content/plugins/wp-cluster
-pushSubtree UsabilityDynamics/wp-crm                      wp-content/plugins/wp-crm
-pushSubtree UsabilityDynamics/wp-github-updater           wp-content/plugins/wp-github-updater
-pushSubtree UsabilityDynamics/wp-network                  wp-content/plugins/wp-network
-pushSubtree UsabilityDynamics/wp-social-stream            wp-content/plugins/wp-social-stream
-pushSubtree UsabilityDynamics/wp-splash                   wp-content/themes/wp-splash-v1.0      v1.0
-pushSubtree UsabilityDynamics/wp-splash                   wp-content/themes/wp-splash-v2.0      v2.0
-pushSubtree UsabilityDynamics/wp-veneer                   wp-content/plugins/wp-veneer
-pushSubtree wpCloud/wp-vertical-edm                       wp-content/plugins/wp-vertical-edm
-pushSubtree DiscoDonniePresents/wp-eventbrite             wp-content/plugins/wp-eventbrite
-pushSubtree DiscoDonniePresents/wp-disco                  wp-content/themes/wp-disco-v1.0       v1.0
-pushSubtree DiscoDonniePresents/wp-disco                  wp-content/themes/wp-disco-v2.0       v2.0
-pushSubtree DiscoDonniePresents/wp-spectacle              wp-content/themes/wp-spectacle-v1.0   v1.0
-pushSubtree DiscoDonniePresents/wp-spectacle              wp-content/themes/wp-spectacle-v2.0   v2.0
-pushSubtree DiscoDonniePresents/wp-festival               wp-content/themes/wp-festival-v1.0    v1.0
-pushSubtree DiscoDonniePresents/wp-festival               wp-content/themes/wp-festival-v2.0    v2.0
-pushSubtree DiscoDonniePresents/wp-spectacle-chmf         wp-content/themes/wp-spectacle-chmf
-pushSubtree DiscoDonniePresents/wp-spectacle-mbp          wp-content/themes/wp-spectacle-mbp
-pushSubtree DiscoDonniePresents/wp-spectacle-fbt          wp-content/themes/wp-spectacle-fbt
-pushSubtree DiscoDonniePresents/wp-spectacle-isladelsol   wp-content/themes/wp-spectacle-isladelsol
+git subtree push --prefix=wp-content/themes/wp-splash-v1.0 git@github.com:UsabilityDynamics/wp-splash v1.0
 ```
 
 Add Subtree for new dependency.
@@ -77,7 +56,7 @@ Add Subtree for new dependency.
 git subtree add --prefix=wp-content/themes/wp-splash-v1.0 git@github.com:UsabilityDynamics/wp-splash v1.0
 ```
 
-Show installed libs:
+Show installed libs. This will only work if there is a composer.lock file.
 ```
 composer show --installed --path
 ```
