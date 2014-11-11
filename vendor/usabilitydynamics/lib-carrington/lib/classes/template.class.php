@@ -147,7 +147,9 @@ class cfct_build_template implements Iterator {
 			$ret = $_row->admin($row, ($new ? array() : $this->data), $this);
 		}
 		else {
-			$ret = $_row->html($row,($new ? array() : $this->data), $this);
+			if (!isset($row['render']) || $row['render']) {
+				$ret = $_row->html($row,($new ? array() : $this->data), $this);
+			}
 		}
 		
 		$this->current_row = null;

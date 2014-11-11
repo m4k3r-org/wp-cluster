@@ -18,9 +18,6 @@ The app.config.js file includes:
 * shim - Dependencies of enqueued scripts.
 * config - Object containing all custom configuration such as Analytics ID, Locale Strings, Menufication settings, etc. This configuration does not take user session or application state into consideration.
 
-## To Do
-* Check protocol prefix manually, otherwise nothing will load when working with local files (e.g. file://).
-
 ## Size
 The size of the main http://cdn.udx.io/udx.requires.js file is:
 * 11.1 KB - Minified and GZipped.
@@ -37,11 +34,6 @@ The size of the main http://cdn.udx.io/udx.requires.js file is:
 * Object.defineProperties
 * Object.getOwnPropertyDescriptor
 * Object.getOwnPropertyNames
-
-## Require.js Methods
-
-* get - Get configuration value.
-* set - Set configuration value. Same as require.config({ key: value });
 
 ## Usage
 
@@ -95,9 +87,6 @@ $_requires->render_tag();
 <div data-requires="crowdfavorite.carrington-build.slider"></div>
 <div data-requires="bootstrap.carousel"></div>
 ```
-
-## Version 3.1.2
-* Added "data-requires" module support for retunred object with "create" property for initialization.
 
 ## License
 

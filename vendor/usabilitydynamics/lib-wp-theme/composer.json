@@ -1,6 +1,5 @@
 {
   "name": "usabilitydynamics/lib-wp-theme",
-  "version": "0.2.0",
   "type": "library",
   "description": "WordPress Theme bootstrap.",
   "author": {
@@ -15,25 +14,17 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "UsabilityDynamics/lib-api": "master",
-    "UsabilityDynamics/lib-model": "master",
-    "UsabilityDynamics/lib-requires": "master",
-    "UsabilityDynamics/lib-settings": "master",
-    "UsabilityDynamics/lib-utility": "master",
-    "UsabilityDynamics/lib-ui": "master",
-    "UsabilityDynamics/lib-wp-rpc": "master"
+    "usabilitydynamics/lib-api": "~0.5",
+    "usabilitydynamics/lib-settings": "~0.2",
+    "usabilitydynamics/lib-utility": "~0.3",
+    "usabilitydynamics/lib-ui": "~0.2",
+    "UsabilityDynamics/lib-model": "~0.3",
+    "UsabilityDynamics/lib-requires": "~3.1"
   },
   "autoload": {
     "classmap": [
       "lib/plugins",
-      "lib/class-carrington.php",
-      "lib/class-customizer.php",
-      "lib/class-module.php",
-      "lib/class-requires.php",
-      "lib/class-scaffold.php",
-      "lib/class-script.php",
-      "lib/class-settings.php",
-      "lib/class-utility.php"
+      "lib/classes"
     ]
   },
   "license": "GPL-2.0"

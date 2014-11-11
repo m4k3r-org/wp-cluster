@@ -1,6 +1,5 @@
 {
   "name": "usabilitydynamics/lib-model",
-  "version": "0.3.1",
   "keywords": [
     "shema",
     "models",
@@ -8,9 +7,11 @@
   ],
   "type": "library",
   "require": {
-    "usabilitydynamics/lib-utility": "*",
-    "usabilitydynamics/lib-meta-box": "*",
-    "hanamura/wp-model": "1.1.1"
+    "usabilitydynamics/lib-utility": "~0.3",
+    "hanamura/wp-model": "~1.1"
+  },
+  "require-dev": {
+    "usabilitydynamics/lib-meta-box": "master"
   },
   "minimum-stability": "dev",
   "repositories": [

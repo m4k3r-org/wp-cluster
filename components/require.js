@@ -2028,6 +2028,10 @@ var components = {
             "main": "lib-model-built.js"
         },
         {
+            "name": "lib-requires",
+            "main": "lib-requires-built.js"
+        },
+        {
             "name": "utility",
             "main": "utility-built.js"
         }

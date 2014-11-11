@@ -153,7 +153,7 @@ if (!class_exists('cf_revisions')) {
 		 *
 		 * @return object
 		 */
-		static public function get_instance() {
+		public function get_instance() {
 			if (!(self::$_instance instanceof cf_revisions)) {
 				self::$_instance = new cf_revisions;
 			}
