@@ -29,7 +29,8 @@ SetEnv WP_ENV develop
 SetEnv WP_DEBUG 1
 SetEnv WP_ELASTIC_SECRET_KEY jqnp-krmw-nmap-idpk:julw-urbp-vzst-jwwv
 SetEnv WP_ELASTIC_PUBLIC_KEY jqnp-krmw-nmap-idpk-ooau-bkfm-bghf-jatg
-SetEnv WP_ELASTIC_SERVICE_INDEX api.discodonniepresents-com.drop.ud-dev.com
+SetEnv WP_ELASTIC_SERVICE_URL api.discodonniepresents-com.drop.ud-dev.com
+SetEnv WP_ELASTIC_SERVICE_INDEX jqnp-krmw-nmap-idpk
 SetEnv QM_DISABLED false
 ```
 
