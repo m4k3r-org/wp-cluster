@@ -3,6 +3,16 @@
   "type": "wordpress-plugin",
   "description": "Handles Google PageSpeed.",
   "license": "GPLv2",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wordpress-plugin@repository.usabilitydynamics.com"
+    },
+    {
+      "type":"composer",
+      "url":"http://wpackagist.org"
+    }
+  ],
   "keywords": [
     "wordpress",
     "pagespeed"
@@ -16,21 +26,22 @@
   "minimum-stability": "dev",
   "require": {
     "php": ">=5.3",
-    "composer/installers": "v1.0.18",
+    "composer/installers": "~1.0",
     "usabilitydynamics/lib-settings": "~0.2",
-    "matthiasmullie/minify": "1.2.0",
-    "mrclay/minify": "2.2.0"
+    "zaininnari/html-minifier": "~0.4",
+    "matthiasmullie/minify": "~1.3"
   },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://repository.usabilitydynamics.com"
-    },
-    {
-      "type":"composer",
-      "url":"http://wpackagist.org"
+  "extra": {
+    "installer-paths": {
+      "vendor/{$vendor}/{$name}": [
+        "type:wordpress-muplugin",
+        "type:wordpress-plugin",
+        "type:wpackagist-plugin",
+        "type:wordpress-theme",
+        "type:wordpress-library"
+      ]
     }
-  ],
+  },
   "config": {
     "preferred-install": "dist",
     "github-protocols": [ "ssh" ],
@@ -38,6 +49,8 @@
     "bin-dir": "vendor/bin",
     "component-dir": "vendor/components",
     "optimize-autoloader": true
+  },
+  "autoload": {
+    "classmap": [ "lib" ]
   }
-
 }

@@ -14,13 +14,12 @@
 if( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	include_once( __DIR__ . '/vendor/autoload.php' );
 }
-
 // Include bootstrap.
-if( !class_exists( 'UsabilityDynamics\Veneer\Bootstrap' ) ) {
+if( !class_exists( 'UsabilityDynamics\PageSpeed\Bootstrap' ) ) {
 	include_once( __DIR__ . '/lib/class-bootstrap.php' );
 }
 
 // Initialize.
-if( class_exists( 'UsabilityDynamics\Veneer\Bootstrap' ) ) {
+if( class_exists( 'UsabilityDynamics\PageSpeed\Bootstrap' ) ) {
 	new UsabilityDynamics\PageSpeed\Bootstrap;
 }

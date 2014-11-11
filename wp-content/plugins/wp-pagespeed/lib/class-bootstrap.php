@@ -8,6 +8,9 @@
  */
 namespace UsabilityDynamics\PageSpeed {
 
+	use UsabilityDynamics\Settings;
+	use zz\Html\HTMLMinify;
+
 	if( !class_exists( 'UsabilityDynamics\PageSpeed\Bootstrap' ) ) {
 
 		/**
@@ -66,18 +69,42 @@ namespace UsabilityDynamics\PageSpeed {
 			 * @method __construct
 			 */
 			public function __construct() {
+				global $wp_pagespeed;
 
 				// Return Singleton Instance
 				if( self::$instance ) {
 					return self::$instance;
 				}
 
+				/** If we currently have a wp_veener object, we should copy it */
+				if( isset( $wp_pagespeed ) && is_object( $wp_pagespeed ) && count( get_object_vars( $wp_pagespeed ) ) ) {
+					foreach( array_keys( get_object_vars( $wp_pagespeed ) ) as $key ) {
+						$this->{$key} = $wp_pagespeed->{$key};
+					}
+				}
+
+				// Set the singleton instance
+				if( !isset( $wp_pagespeed ) ) {
+					$wp_pagespeed = self::$instance = & $this;
+				}
+
 				// Check if being called too early, such as during Unit Testing.
 				if( !function_exists( 'did_action' ) ) {
 					return $this;
 				}
+				
+				// Make sure we're not too late to init this
+				if( did_action( 'init' ) ) {
+					_doing_it_wrong( 'UsabilityDynamics\PageSpeed\Bootstrap::__construct', 'PageSpeed should not be initialized before "init" filter.', '0.6.1' );
+				}
 
-				add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+				// Initialize Settings.
+				if( class_exists( '\UsabilityDynamics\Settings' ) ) {
+					$this->_settings = new Settings();
+				}
+
+				// Initialize plugin.
+				add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 20 );
 
 			}
 
@@ -115,6 +142,10 @@ namespace UsabilityDynamics\PageSpeed {
 					header( 'PageSpeedFilters:' . WP_PAGESPEED );
 				}
 
+				if( $this->get( 'core.enabled', false ) ) {
+					header( 'PageSpeed: on' );
+				}
+
 			}
 
 			/**
@@ -140,7 +171,16 @@ namespace UsabilityDynamics\PageSpeed {
 				}
 
 				// Media Domain Sharding.
-				if( $this->get( 'minify' ) ) {
+				if( $this->get( 'minify.enabled' ) ) {
+
+					$buffer = HTMLMinify::minify( $buffer, array(
+						'optimizationLevel' => 'OPTIMIZATION_ADVANCED',
+						'emptyElementAddWhitespaceBeforeSlash' => true,
+						'emptyElementAddSlash' => false,
+						'removeComment' => true,
+						// 'excludeComment' => 'nocache',
+						// 'removeDuplicateAttribute' => false
+					));
 
 				}
 

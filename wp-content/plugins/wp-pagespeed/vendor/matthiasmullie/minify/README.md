@@ -1,74 +1,132 @@
 # Minify
 
+[![Build status](https://api.travis-ci.org/matthiasmullie/minify.svg?branch=master)](https://travis-ci.org/matthiasmullie/minify)
+[![Code coverage](http://img.shields.io/coveralls/matthiasmullie/minify.svg)](https://coveralls.io/r/matthiasmullie/minify)
+[![Code quality](http://img.shields.io/scrutinizer/g/matthiasmullie/minify.svg)](https://scrutinizer-ci.com/g/matthiasmullie/minify)
+[![Latest version](http://img.shields.io/packagist/v/matthiasmullie/minify.svg)](https://packagist.org/packages/matthiasmullie/minify)
+[![Downloads total](http://img.shields.io/packagist/dt/matthiasmullie/minify.svg)](https://packagist.org/packages/matthiasmullie/minify)
+[![License](http://img.shields.io/packagist/l/matthiasmullie/minify.svg)](https://github.com/matthiasmullie/minify/blob/master/LICENSE)
+
+
+## Usage
+
+### CSS
+
+```php
+use MatthiasMullie\Minify;
+
+$sourcePath = '/path/to/source/css/file.css';
+$minifier = new Minify\CSS($sourcePath);
+
+// we can even add another file, they'll then be
+// joined in 1 output file
+$sourcePath2 = '/path/to/second/source/css/file.css';
+$minifier->add($sourcePath2);
+
+// or we can just add plain CSS
+$css = 'body { color: #000000; }';
+$minifier->add($css);
+
+// save minified file to disk
+$minifiedPath = '/path/to/minified/css/file.css';
+$minifier->minify($minifiedPath);
+
+// or just output the content
+echo $minifier->minify();
+```
+
+### JS
+
+```php
+// just look at the CSS example; it's exactly the same, but with the JS class & JS files :)
+```
+
+
 ## Methods
+
 Available methods, for both CSS & JS minifier, are:
 
 ### __construct(/* overload paths */)
-The object constructor accepts 0, 1 or multiple paths of files, or even complete CSS content, that should be minified.
-All CSS passed along, will be combined into 1 minified file.
 
-    use MatthiasMullie\Minify;
-    $minifier = new Minify\CSS($path1, $path2);
+The object constructor accepts 0, 1 or multiple paths of files, or even complete CSS/JS content, that should be minified.
+All CSS/JS passed along, will be combined into 1 minified file.
+
+```php
+use MatthiasMullie\Minify;
+$minifier = new Minify\JS($path1, $path2);
+```
 
 ### add($path, /* overload paths */)
+
 This is roughly equivalent to the constructor.
 
-    $minifier->add($path3);
-    $minifier->add($css);
+```php
+$minifier->add($path3);
+$minifier->add($js);
+```
 
-### minify($path, $options)
+### minify($path)
+
 This will minify the files' content, save the result to $path and return the resulting content.
-If the $path parameter is false, the result will not be written anywhere. CAUTION: Only use this for "simple" CSS: if no target directory ($path) is known, relative uris to e.g. images can not be fixed!
-The $options parameter allow you to define the exact minifying actions that should be performed.
+If the $path parameter is omitted, the result will not be written anywhere.
 
-    $minifier->minify('/target/path.css', Minify\CSS::ALL);
+*CAUTION: If you have CSS with relative paths (to imports, images, ...), you should always specify a target path! Then those relative paths will be adjusted in accordance with the new path.*
 
-## Options
-Both CSS & JS minifiers accept, as 2nd argument to ->minify, options to finegrain the exact minifying actions that should happen.
-Multiple options can be combined using |, like:
+```php
+$minifier->minify('/target/path.js');
+```
 
-    $minifier->minify($path, Minify\CSS::COMBINE_IMPORTS | Minify\CSS::IMPORT_FILES);
+### setMaxImportSize($size) *(CSS only)*
 
-### CSS
-* **Minify\CSS::ALL**
-Applies all below options
-* **Minify\CSS::STRIP_COMMENTS**
-Strips /* CSS comments */
-* **Minify\CSS::STRIP_WHITESPACE**
-Strips redundant whitespace
-* **Minify\CSS::SHORTEN_HEX**
-Shortens hexadecimal color codes where applicable (e.g. #000000 -> #000)
-* **Minify\CSS::COMBINE_IMPORTS**
-Will include @import'ed files into the original document, saving connections to fetch the imported files.
-This will make sure that relative paths (to e.g. images, other @imports, ..) in @import'ed files are adjusted to the correct location relative to the original file.
-* **Minify\CSS::IMPORT_FILES**
-This will import (small) referenced images & woff's as data-uri into the CSS, thus saving connections to fetch the images.
+The CSS minifier will automatically embed referenced files (like images, fonts, ...) into the minified CSS, so they don't have to be fetched over multiple connections.
 
-### JS
-* **Minify\JS::ALL**
-Applies all below options
-* **Minify\JS::STRIP_COMMENTS**
-Strips /* JS */ // comments
-* **Minify\JS::STRIP_WHITESPACE**
-Strips redundant whitespace
+However, for really large files, it's likely better to load them separately (as it would increase the CSS load time if they were included.)
 
-## Example usage
-    $file1 = '/path/to/file1.css';
-    $file2 = '/yet/another/path/to/file2.css';
-    $file3 = '/and/another/path/to/file3.css';
-    $css = 'body { color: #000000; }';
+This method allows the max size of files to import into the minified CSS to be set (in kB). The default size is 5.
 
-    // constructor can be overloaded with multiple files
-    $minifier = new Minify\CSS($file1, $file2);
+```php
+$minifier->setMaxImportSize(10);
+```
 
-    // or files can be added individually
-    $minifier->add($file3);
+### setImportExtensions(extensions) *(CSS only)*
 
-    // or even css content can be loaded
-    $minifier->add($css);
+The CSS minifier will automatically embed referenced files (like images, fonts, ...) into minified CSS, so they don't have to be fetched over multiple connections.
 
-    // minify (all options) & write to file
-    $minifier->minify('/target/path.css', Minify\CSS::ALL);
+This methods allows the type of files to be specified, along with their data:mime type.
+
+The default embedded file types are gif, png, jpg, jpeg, svg & woff.
+
+```php
+$extensions = array(
+    'gif' => 'data:image/gif',
+    'png' => 'data:image/png',
+);
+
+$minifier->setImportExtensions($extensions);
+```
+
+
+## Installation
+
+Simply add a dependency on matthiasmullie/minify to your composer.json file if you use [Composer](https://getcomposer.org/) to manage the dependencies of your project:
+
+```sh
+composer require matthiasmullie/minify
+```
+
+Although it's recommended to use Composer, you can actually include these files anyway you want.
+
+
+## Try it
+
+Simply try it out online at <http://www.minifier.org>.
+
 
 ## License
+
 Minify is [MIT](http://opensource.org/licenses/MIT) licensed.
+
+
+## Challenges
+
+If you're interested in learning some of the harder technical challenges I've encountered building this, you probably want to take a look at [what I wrote about it](http://www.mullie.eu/dont-build-your-own-minifier/) on my blog.
