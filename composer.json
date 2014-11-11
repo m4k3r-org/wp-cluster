@@ -45,7 +45,7 @@
       "db": {
         "charset": "utf8",
         "collate": "utf8_general_ci",
-        "host": "rds.wpcloud.io",
+        "host": "rds.discodonniepresents.com",
         "name": "edm_production",
         "user": "edm_production",
         "password": "psxcazdhbpoxbkfl",
