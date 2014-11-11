@@ -14,15 +14,7 @@ namespace wpCloud\Vertical\EDM {
       // Enable Vertical Features.
       $this->features();
 
-      // Enable Standard Actions.
-      add_action( 'muplugins_loaded',       array( $this, 'muplugins_loaded' ), 0 );
-      add_action( 'plugins_loaded',         array( $this, 'plugins_loaded' ), 100 );
-      add_action( 'login_enqueue_scripts',  array( $this, 'login_enqueue_scripts' ), 30 );
-      add_action( 'login_footer',           array( $this, 'login_footer' ), 30 );
-      add_action( 'upload_mimes',           array( $this, 'upload_mimes' ), 100 );
-
-      // Enable Standard Filters.
-      add_filter( 'sanitize_file_name',     array( 'UsabilityDynamics\Utility', 'hashify_file_name' ), 10 );
+	    add_action( 'plugins_loaded',         array( $this, 'plugins_loaded' ), 20 );
 
     }
 
@@ -38,9 +30,18 @@ namespace wpCloud\Vertical\EDM {
      */
     public function plugins_loaded() {
 
-	    if( !method_exists( API, 'define' ) )  {
+	    // Enable Standard Actions.
+	    add_action( 'login_enqueue_scripts',  array( $this, 'login_enqueue_scripts' ), 30 );
+	    add_action( 'login_footer',           array( $this, 'login_footer' ), 30 );
+
+	    // Enable Standard Filters.
+	    add_filter( 'sanitize_file_name',     array( 'UsabilityDynamics\Utility', 'hashify_file_name' ), 10 );
+
+	    if( !method_exists( 'UsabilityDynamics\API', 'define' ) )  {
 		    return;
 	    }
+
+	    return;
       // List Sites.
       API::define( '/network/v1/sites', array(
         'scopes' => array( 'read' ),
@@ -128,8 +129,8 @@ namespace wpCloud\Vertical\EDM {
     public function login_footer() {
       global $interim_login;
 
-      if( !$interim_login && is_file( 'static/templates/login-info.php' ) ) {
-        include( 'static/templates/login-info.php' );
+	    if( !$interim_login && is_file( dirname (__DIR__ ) . '/static/templates/login-info.php'  ) ) {
+        include( dirname (__DIR__ ) . '/static/templates/login-info.php' );
       }
 
     }
@@ -139,23 +140,7 @@ namespace wpCloud\Vertical\EDM {
      *
      */
     public function wp_dashboard_setup() {
-      include( __DIR__ . '/static/templates/welcome.php' );
-    }
-
-    /**
-     * Allow Upload File Types
-     *
-     * Makes uploading of XML, XSD files possible for SEC files.
-     *
-     * @param $mimes
-     *
-     * @return mixed
-     */
-    public function upload_mimes( $mimes ) {
-      $mimes[ 'xsd' ] = 'application/xsd';
-      $mimes[ 'xml' ] = 'application/xml';
-
-      return $mimes;
+      include( dirname (__DIR__ ) . '/static/templates/welcome.php' );
     }
 
     /**
@@ -164,19 +149,10 @@ namespace wpCloud\Vertical\EDM {
      * @author potanin@UD
      */
     public function login_enqueue_scripts() {
-      echo implode( '', array(
-        '<link rel="stylesheet" id="network-styles" data-vertical="edm" href="', site_url( '/vendor/modules/vertical-edm/static/styles/login.css' ), '" type="text/css" media="all" />'
+
+	    echo implode( '', array(
+        '<link rel="stylesheet" data-vertical="edm" href="', plugins_url( '/static/styles/login.css', dirname( __FILE__ ) ), '" type="text/css" media="all" />'
       ));
-    }
-
-    /**
-     *
-     */
-    public function muplugins_loaded() {
-      global $wp_theme_directories;
-
-
-      // die( '<pre>' . print_r( $wp_theme_directories, true ) . '</pre>' );
 
     }
 
