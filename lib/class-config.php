@@ -303,10 +303,21 @@ namespace UsabilityDynamics\Veneer {
 
 			}
 
+			/**
+			 * Add Server Parameters
+			 *
+			 * @return $this
+			 */
 			private function addServerParameters() {
 
+				// Create an array of existing settings as well as accepted settings that may be set via $_SERVER even if not set in comoser.json
+				$_acceptedKeys = array_merge( $this->_settings, array(
+					'WP_DEBUG' => null,
+					'WP_DEBUG_DISPLAY' => null,
+				));
+
 				// Extract valid server parameters that match available keys
-				$this->serverParameters = array_intersect_key( Config::normalize( $_SERVER, true ), $this->_settings );
+				$this->serverParameters = array_intersect_key( Config::normalize( $_SERVER, true ), $_acceptedKeys );
 
 				// Override extracted server parameters into settings
 				$this->_settings = array_merge( $this->_settings, $this->serverParameters );

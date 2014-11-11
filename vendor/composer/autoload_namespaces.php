@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'JsonSchema' => array($vendorDir . '/justinrainbow/json-schema/src'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src'),
 );
