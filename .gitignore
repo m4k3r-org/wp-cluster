@@ -73,6 +73,7 @@ error_log
 local-debug.php
 debug.log
 .svn
+/wp-content/.logs
 /*.sql
 /*.sql.tar.gz
 /*.sql.gz

@@ -57,7 +57,6 @@
         "file_edit": true,
         "file_mods": false
       },
-      "empty_trash_days": 7,
       "github": {
         "key": "9b8f5f46d49b096a2e03",
         "updater_token": "fa1942c87f9b2a7314636d520d8697fb0d9447f3",
@@ -71,6 +70,7 @@
       "qm_disabled": true,
       "wp": {
         "default_theme": "wp-splash",
+        "debug_display": false,
         "use_themes": true,
         "elastic": {
           "public_key": "qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty",
@@ -78,7 +78,7 @@
           "service_index": "api.discodonniepresents.com/documents/v1/",
           "service_url": "qccj-nxwm-etsk-niuu"
         },
-        "logs_dir": "{wp_base_dir}/wp-content/.logs",
+        "logs_dir": "wp-content/.logs",
         "max_memory_limit": "{wp_memory_limit}",
         "memory_limit": "512M",
         "post_revisions": 30,
@@ -90,7 +90,6 @@
           "twitter_consumer_key": "iofHkaMCCzxR12Vt9vUL1g",
           "twitter_consumer_secret": "jyzSl4zg26HaBP9eefTWZHjojgWUMxk7XUyJ8J3qiqY"
         },
-        "ssl_port": 443,
         "veneer_varnish_ip": "127.0.0.1",
         "vendor_dir": "wp-vendor",
         "vendor_url": "/wp-vendor",

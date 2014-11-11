@@ -126,6 +126,7 @@ namespace EDM\Application\Policy {
 
 			$_plugins = array_merge( (array) $_plugins, array(
 				"wpmandrill/wpmandrill.php" => time(),
+				"simple-page-ordering/simple-page-ordering.php" => time(),
 				"widget-css-classes/widget-css-classes.php"  => time(),
 				"public-post-preview/public-post-preview.php" => time(),
 				"wp-github-updater/github-updater.php" => time(),
