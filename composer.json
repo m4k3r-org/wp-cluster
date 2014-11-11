@@ -69,7 +69,7 @@
       "secure_auth_salt": "5lL^K_Y:V(Nqs yVl/24KG[[4>WZ.jpf8vL*p/.c)Qqf+b2xfP^#WR+p8h.qh3~.",
       "qm_disabled": true,
       "wp": {
-        "default_theme": "wp-splash",
+        "default_theme": "wp-splash-v1.0",
         "debug_display": false,
         "use_themes": true,
         "elastic": {

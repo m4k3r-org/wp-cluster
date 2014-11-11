@@ -330,20 +330,22 @@ namespace EDM\Application\Policy {
 			}
 
 			$_types = array(
-				"post" => true,
-				"page" => true,
+				"post" => 1,
+				"page" => 1,
 				"promoter" => 1,
+				"tour" => 1,
 				"videoobject" => 1,
 				"event" => 1,
 				"venue" => 1,
-				"imagegallery" => 1,
-				"tour" => 1
+				"artist" => 1,
+				"credit" => 1,
+				"imagegallery" => 1
 			);
 
 			$_taxonomies = array(
-				"category" => true,
-				"post_tag" => true,
-				"post_format" => true
+				"category" => 1,
+				"post_tag" => 1,
+				"post_format" => 1
 			);
 
 			$_fields = array(
@@ -352,20 +354,21 @@ namespace EDM\Application\Policy {
 			);
 
 			$_setting = array(
-				"server_url" => str_replace( '://', '://' . $_secretKey . '@', $_serviceUrl ),
+				"last_tab" => "server",
+				"server_url" => str_replace( 'http://', '' . $_secretKey . '@', $_serviceUrl ),
 				"server_index" => "",
 				"server_timeout_read" => "",
 				"server_timeout_write" => "",
 				"fields" => $_fields,
 				"types" => $_types,
 				"taxonomies" => $_taxonomies,
-				"fuzzy" => null,
+				"fuzzy" => '',
 				"score_field_post_content" => 1,
-				"score_field_post_title" => null,
-				"score_field_post_date" => null,
-				"score_tax_category" => null,
-				"score_tax_post_tag" => null,
-				"score_tax_post_format" => null
+				"score_field_post_title" => '',
+				"score_field_post_date" => '',
+				"score_tax_category" => '',
+				"score_tax_post_tag" => '',
+				"score_tax_post_format" => ''
 			);
 
 			// die( '<pre>' . print_r( $_setting, true ) . '</pre>');
@@ -483,8 +486,11 @@ namespace EDM\Application\Policy {
 	 *
 	 */
 	add_filter( 'elasticsearch_nhp_options_args_setup', function( $args ) {
-		$args['page_type'] = 'submenu';
-		$args['page_parent'] = 'tools.php';
+
+		// Breaks manage-index.js from loading...
+		// $args['page_type'] = 'submenu';
+		// $args['page_parent'] = 'tools.php';
+
 		return $args;
 	} );
 
