@@ -4,3 +4,4 @@
 * Added RequireJS inclusion.
 * Removed unused Node.js modules.
 * Removed console.log and console.debug from JavaScript files.
+* Added machine-translated Spanish locales.
