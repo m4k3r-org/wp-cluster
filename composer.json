@@ -27,7 +27,7 @@
     }
   ],
   "config": {
-    "preferred-install": "source",
+    "preferred-install": "dist",
     "github-protocols": [ "ssh" ],
     "vendor-dir": "vendor",
     "bin-dir": "vendor/bin",

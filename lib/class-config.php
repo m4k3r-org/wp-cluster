@@ -10,6 +10,8 @@
  *  3) application/etc/wp-config/{FILE_NAME}
  *  4) All items defined in composer.json, in the settings object key
  *
+ *
+ *
  * @author potanin@UD
  * @class UsabilityDynamics\Veneer\Config
  */
@@ -29,18 +31,20 @@ namespace UsabilityDynamics\Veneer {
 			 * directory (of which all files will be loaded), or a specific file - scope is defined
 			 * such that you might have to use $uds_config->get_config() if the variables aren't declared
 			 * globally
+			 *
+			 * - system - Holds variables such as 'path' or 'web host name' declarations
+			 * - constants - Our defines file, should hold all static declarations, replacement of old wp-config.php
+			 * - database - Our database settings
+			 * - debug - Any debug file, looks for 'debug.php' - g: prefix makes it global
+			 * - options - Looking for some options definition files in a directory (scans all files)
+			 *
 			 */
 			private $autoload_files = array(
 				'g:system',
-				/** Holds variables such as 'path' or 'web host name' declarations */
 				'g:constants',
-				/** Our defines file, should hold all static declarations, replacement of old wp-config.php */
 				'g:database',
-				/** Our database settings */
 				'g:debug',
-				/** Any debug file, looks for 'debug.php' - g: prefix makes it global */
 				'options',
-				/** Looking for some options definition files in a directory (scans all files) */
 			);
 
 			/**
@@ -614,7 +618,7 @@ namespace UsabilityDynamics\Veneer {
 		}
 
 		/** Now that we've done that, lets include our wp settings file, as per normal operations */
-		require_once( ABSPATH . '/wp-settings.php' );
+		require_once( ABSPATH . 'wp-settings.php' );
 	}
 
 }
