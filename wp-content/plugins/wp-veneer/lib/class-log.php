@@ -92,7 +92,7 @@ namespace UsabilityDynamics\Veneer {
 	      if( strpos( WP_LOGS_DIR, ABSPATH ) === 0 || strpos( WP_LOGS_DIR, '/' ) === 0 ) {
           $this->logs_dir = trailingslashit( wp_normalize_path( WP_LOGS_DIR . '/' . $current_blog->domain ) );
 	      } else {
-		      $this->logs_dir = trailingslashit( wp_normalize_path( WP_CONTENT_DIR . '/'. WP_LOGS_DIR . '/' . $current_blog->domain ) );
+		      $this->logs_dir = trailingslashit( wp_normalize_path( ABSPATH . '/'. WP_LOGS_DIR . '/' . $current_blog->domain ) );
 	      }
 
         /** Ok, if the directory doesn't exist, let's try to create it */
