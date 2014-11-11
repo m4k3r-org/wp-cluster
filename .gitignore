@@ -77,4 +77,4 @@ debug.log
 /*.sql
 /*.sql.tar.gz
 /*.sql.gz
-.envrc
+/.envrc
