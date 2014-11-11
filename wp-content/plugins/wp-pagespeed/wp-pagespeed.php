@@ -2,25 +2,25 @@
 /**
  * Plugin Name: PageSpeed
  * Plugin URI: http://usabilitydynamics.com/plugins/wp-pagespeed
- * Description: Composer and stuff.
+ * Description: Handle Google's PageSpeed middleware.
  * Author: Usability Dynamics, Inc.
- * Version: 1.0
+ * Version: 0.1.1
  * Author URI: http://usabilitydynamics.com
- *
+ * Network: True
+ * GitHub Plugin URI: UsabilityDynamics/wp-veneer
  *
  */
 
-
-if( defined( 'WP_PAGESPEED' ) && !WP_PAGESPEED ) {
-	header( 'PageSpeed: off' );
+if( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	include_once( __DIR__ . '/vendor/autoload.php' );
 }
 
-if( defined( 'WP_PAGESPEED' ) && is_bool( WP_PAGESPEED ) ) {
-	header( 'PageSpeed: on' );
-	header( 'PageSpeedFilters:inline_images,remove_comments,recompress_images,minify_html,lazyload_images,-inline_images' );
+// Include bootstrap.
+if( !class_exists( 'UsabilityDynamics\Veneer\Bootstrap' ) ) {
+	include_once( __DIR__ . '/lib/class-bootstrap.php' );
 }
 
-if( defined( 'WP_PAGESPEED' ) && is_string( WP_PAGESPEED ) ) {
-	header( 'PageSpeed: on' );
-	header( 'PageSpeedFilters:' . WP_PAGESPEED );
+// Initialize.
+if( class_exists( 'UsabilityDynamics\Veneer\Bootstrap' ) ) {
+	new UsabilityDynamics\PageSpeed\Bootstrap;
 }

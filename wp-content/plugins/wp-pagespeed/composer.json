@@ -1,0 +1,43 @@
+{
+  "name": "usabilitydynamics/wp-pagespeed",
+  "type": "wordpress-plugin",
+  "description": "Handles Google PageSpeed.",
+  "license": "GPLv2",
+  "keywords": [
+    "wordpress",
+    "pagespeed"
+  ],
+  "authors": [
+      {
+          "name": "andypotanin",
+          "email": "andy.potanin@usabilitydynamics.com"
+      }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.3",
+    "composer/installers": "v1.0.18",
+    "usabilitydynamics/lib-settings": "~0.2",
+    "matthiasmullie/minify": "1.2.0",
+    "mrclay/minify": "2.2.0"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repository.usabilitydynamics.com"
+    },
+    {
+      "type":"composer",
+      "url":"http://wpackagist.org"
+    }
+  ],
+  "config": {
+    "preferred-install": "dist",
+    "github-protocols": [ "ssh" ],
+    "vendor-dir": "vendor",
+    "bin-dir": "vendor/bin",
+    "component-dir": "vendor/components",
+    "optimize-autoloader": true
+  }
+
+}

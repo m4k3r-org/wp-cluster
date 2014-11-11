@@ -1,0 +1,17 @@
+{
+  "name": "wp-pagespeed",
+  "version": "0.1.1",
+  "description": "Handles Google PageSpeed.",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-markdown": "~0.4.0",
+    "grunt-contrib-clean": "~0.5.0"
+  },
+  "dependencies": {
+    "load-grunt-tasks": "^1.0.0"
+  }
+}
