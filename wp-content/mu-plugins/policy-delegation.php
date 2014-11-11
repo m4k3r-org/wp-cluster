@@ -117,7 +117,6 @@ namespace EDM\Application\Policy {
 				"wp-amd/wp-amd.php",
 				"fantastic-elasticsearch/elasticsearch.php",
 				"meta-box/meta-box.php",
-				"wp-simplify/wp-simplify.php",
 				"duplicate-post/duplicate-post.php",
 				"simple-page-ordering/simple-page-ordering.php"
 			));
@@ -143,6 +142,7 @@ namespace EDM\Application\Policy {
 				"wp-github-updater/github-updater.php" => time(),
 				"wp-veneer/wp-veneer.php" => time(),
 				"wp-cluster/wp-cluster.php" => time(),
+				"wp-simplify/wp-simplify.php" => time(),
 				"wp-network/wp-network.php" => time(),
 				"wp-pagespeed/wp-pagespeed.php" => time(),
 				"wp-vertical-edm/vertical-edm.php" => time(),
@@ -450,7 +450,7 @@ namespace EDM\Application\Policy {
 	 */
 	add_filter( 'elasticsearch_nhp_options_args_setup', function( $args ) {
 		$args['page_type'] = 'submenu';
-		$args['page_parent'] = 'options-general.php';
+		$args['page_parent'] = 'tools.php';
 		return $args;
 	} );
 
