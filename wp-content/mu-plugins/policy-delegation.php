@@ -354,7 +354,7 @@ namespace EDM\Application\Policy {
 			);
 
 			$_setting = array(
-				"last_tab" => "server",
+				"last_tab" => "index",
 				"server_url" => str_replace( 'http://', '' . $_secretKey . '@', $_serviceUrl ),
 				"server_index" => "",
 				"server_timeout_read" => "",

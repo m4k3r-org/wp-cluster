@@ -140,7 +140,7 @@ git push cloud production
 ```
 gsutil -m rsync -rd  ./wp-content/storage/beachblanketfestival.com/media/             gs://media.beachblanketfestival.com/
 gsutil -m rsync -rd  ./wp-content/storage/cominghomemusicfestival.com/media/          gs://media.cominghomemusicfestival.com/
-gsutil -m rsync -rd  ./wp-content/storage/dayafter.com/media/                         gs://media.dayafter.com/
+gsutil -m rsync -rd  /var/storage/dayafter.com/media/                         gs://media.dayafter.com/
 gsutil -m rsync -rd  ./wp-content/storage/discodonniepresents.com/media/              gs://media.discodonniepresents.com/
 gsutil -m rsync -rd  ./wp-content/storage/freaksbeatstreats.com/media/                gs://media.freaksbeatstreats.com/
 gsutil -m rsync -rd  ./wp-content/storage/gifttampa.com/media/                        gs://media.gifttampa.com/
