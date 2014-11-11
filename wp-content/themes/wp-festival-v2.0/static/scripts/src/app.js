@@ -35,7 +35,7 @@ define(
 
     var self = this, resizeTo = null;
 
-    console.debug( 'developer', developer );
+    // console.debug( 'developer', developer );
 
     // Performance optimization for window resize event
     $( window ).resize( function(){
