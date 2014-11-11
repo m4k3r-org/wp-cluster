@@ -1,7 +1,7 @@
 {
   "name": "usabilitydynamics/wp-cluster",
-  "description": "WP-Cluster.",
   "type": "wordpress-plugin",
+  "description": "WP-Cluster.",
   "homepage": "https://github.com/usabilitydynamics/wp-cluster",
   "keywords": [
     "wordpress",

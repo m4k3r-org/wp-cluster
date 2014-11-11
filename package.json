@@ -1,6 +1,6 @@
 {
   "name": "wp-cluster",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "WP-Cluster plugin. Handles database and multi-site items.",
   "private": true,
   "engines": {

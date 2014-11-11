@@ -29,7 +29,7 @@ namespace UsabilityDynamics\Cluster {
        * @property $version
        * @type {Object}
        */
-      public static $version = '0.4.4';
+      public static $version = '0.4.5';
 
       /**
        * Textdomain String
@@ -134,7 +134,7 @@ namespace UsabilityDynamics\Cluster {
        * @method __construct
        */
       public function __construct() {
-        global $wpdb, $current_site, $current_blog, $wp_veneer;
+        global $wpdb, $current_site, $current_blog, $wp_veneer, $wp_cluster;
 
         /** Return Singleton Instance */
         if( self::$instance ) {
@@ -149,9 +149,10 @@ namespace UsabilityDynamics\Cluster {
         }
 
 	      // Install plugin by copying files, got to do this before MS check.
-	      $this->_install();
+	      register_activation_hook( dirname( __DIR__ ) . '/wp-cluster.php' , array( 'UsabilityDynamics\Cluster\Bootstrap', 'activation' ) );
+	      register_deactivation_hook( dirname( __DIR__ ) . '/wp-cluster.php' , array( 'UsabilityDynamics\Cluster\Bootstrap', 'deactivation' ) );
 
-	      if( !defined( 'MULTISITE' ) ) {
+	      if( !defined( 'MULTISITE' ) || !MULTISITE ) {
           return $this;
         }
 
@@ -160,7 +161,7 @@ namespace UsabilityDynamics\Cluster {
           $wp_veneer = new \stdClass();
         }
 
-        $wp_veneer->cluster = self::$instance = &$this;
+	      $wp_cluster = $wp_veneer->cluster = self::$instance = &$this;
 
         // Current Site.
         $this->site_name        = get_option( 'blogname' );
@@ -206,33 +207,6 @@ namespace UsabilityDynamics\Cluster {
 
 	      // Initialize all else.
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
-        add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
-        add_action( 'add_admin_bar_menus', array( $this, 'add_admin_bar_menus' ), 21 );
-
-        add_action( 'init', array( $this, 'init' ) );
-        add_action( 'admin_init', array( $this, 'admin_init' ) );
-
-        // Send Cluster Headers.
-        add_action( 'init', array( $this, '_send_headers' ) );
-
-        // Add Cluster Scripts & Styles.
-        add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 20 );
-
-        // Modify Core UI.
-        add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ) );
-        add_action( 'manage_sites_custom_column', array( $this, 'manage_sites_custom_column' ), 10, 2 );
-
-        add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
-
-        // /manage/admin-ajax.php?action=cluster_uptime_status
-        add_action( 'wp_ajax_cluster_uptime_status', array( $this, '_uptime_status' ) );
-        add_action( 'wp_ajax_nopriv_cluster_uptime_status', array( $this, '_uptime_status' ) );
-
-        add_action( 'wp_ajax_nopriv_varnish_test', array( $this, '_varnish_test' ) );
-        add_action( 'wp_ajax_varnish_test', array( $this, '_varnish_test' ) );
-
-        add_filter( 'wp_mail_from', array( 'UsabilityDynamics\Cluster\Utility', 'wp_mail_from' ), 10 );
-        add_filter( 'wp_mail_from_name', array( 'UsabilityDynamics\Cluster\Utility', 'wp_mail_from_name' ), 10 );
 
       }
 
@@ -241,7 +215,7 @@ namespace UsabilityDynamics\Cluster {
 	     *
 	     * @return array
 	     */
-      public function _install() {
+      static public function activation() {
 
 	      $_files = array(
 		      __DIR__ . '/class-sunrise.php' => WP_CONTENT_DIR . '/sunrise.php',
@@ -285,6 +259,13 @@ namespace UsabilityDynamics\Cluster {
 	      return $_errors;
 
       }
+
+	    /**
+	     *
+	     */
+	    static public function deactivation() {
+
+	    }
 
 	    /**
 	     *
@@ -375,23 +356,6 @@ namespace UsabilityDynamics\Cluster {
         //$this->_media = new Media( $this->get( 'media' ) );
         //$this->_varnish = new Varnish($this->get( 'varnish' ));
 
-        // Initialize Settings.
-        $this->set( array(
-          "store" => "options",
-          "key"   => "ud:cluster",
-        ) );
-
-        // ElasticSearch Service Settings.
-        $this->set( 'documents', array(
-          "active" => true,
-          "host"   => "localhost",
-          "port"   => 9200,
-          "token"  => null,
-        ) );
-
-        // @note Disabled until improved.
-        $this->set( 'toolbar.menu.enabled', false );
-
         // $this->_settings->commit();
 
         // Basic Frontend Security
@@ -428,9 +392,6 @@ namespace UsabilityDynamics\Cluster {
        */
       private function _interfaces() {
 
-        // Render Toolbar.
-        add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar' ), 10 );
-
       }
 
       /**
@@ -453,51 +414,78 @@ namespace UsabilityDynamics\Cluster {
 
       }
 
-      /**
+
+	    /**
+	     * Toolbar with Git Information.
+	     *
+	     * @author potanin@UD
+	     */
+	    public function toolbar_git(){
+		    global $wp_admin_bar;
+
+		    $wp_admin_bar->add_menu( array(
+			    'id' => 'cluster_git',
+			    'parent' => 'top-secondary',
+			    'title' => sprintf( __( 'Branch: %s' ), Utility::get_git_branch() ),
+			    'href' => '#'
+		    ));
+
+		    $wp_admin_bar->add_menu( array(
+			    'id' => 'cluster_git_message',
+			    'parent' => 'cluster_git',
+			    'title' => sprintf( __( '%s' ), Utility::get_git_commit_message() ),
+			    'href' => '#'
+		    ));
+
+		    $wp_admin_bar->add_menu( array(
+			    'id' => 'cluster_git_version',
+			    'parent' => 'cluster_git',
+			    'title' => sprintf( __( 'Version: %s' ), Utility::get_git_version()->short ),
+			    'href' => '#'
+		    ));
+
+	    }
+
+	    /**
        * Add Cluster Toolbar
        *
        * @method cluster_toolbar
        * @for Boostrap
        */
-      public function toolbar() {
+      public function toolbar_menu() {
         global $wp_admin_bar;
 
-        $wp_admin_bar->remove_menu( 'wp-logo' );
-        $wp_admin_bar->remove_menu( 'comments' );
+        // $wp_admin_bar->remove_menu( 'wp-logo' );
+        // $wp_admin_bar->remove_menu( 'comments' );
 
-        if( $this->get( 'toolbar.menu.enabled' ) ) {
+        $wp_admin_bar->add_menu( array(
+          'id'    => 'cloud-manager',
+          'meta'  => array(
+            'html'     => '<div class="cluster-toolbar-info"></div>',
+            'target'   => '',
+            'onclick'  => '',
+            'tabindex' => 10,
+            'class'    => 'cluster-toolbar'
+          ),
+          'title' => 'Cloud',
+          'href'  => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
+        ) );
 
-          $wp_admin_bar->add_menu( array(
-            'id'    => 'cloud-manager',
-            'meta'  => array(
-              'html'     => '<div class="cluster-toolbar-info"></div>',
-              'target'   => '',
-              'onclick'  => '',
-              'tabindex' => 10,
-              'class'    => 'cluster-toolbar'
-            ),
-            'title' => 'Cloud',
-            'href'  => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
-          ) );
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'cloud-manager',
+          'id'     => 'cloud-policy',
+          'meta'   => array(),
+          'title'  => 'Policy',
+          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=policy'
+        ) );
 
-          $wp_admin_bar->add_menu( array(
-            'parent' => 'cloud-manager',
-            'id'     => 'cloud-policy',
-            'meta'   => array(),
-            'title'  => 'Policy',
-            'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=policy'
-          ) );
-
-          $wp_admin_bar->add_menu( array(
-            'parent' => 'cloud-manager',
-            'id'     => 'cluster-dns',
-            'meta'   => array(),
-            'title'  => 'DNS',
-            'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=dns'
-          ) );
-
-        }
-
+        $wp_admin_bar->add_menu( array(
+          'parent' => 'cloud-manager',
+          'id'     => 'cluster-dns',
+          'meta'   => array(),
+          'title'  => 'DNS',
+          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=dns'
+        ) );
 
       }
 
@@ -669,7 +657,59 @@ namespace UsabilityDynamics\Cluster {
        */
       public function plugins_loaded() {
 
-        // remove_role( 'manage.stuff' );
+	      // Initialize Settings.
+	      $this->set( array(
+		      "store" => "options",
+		      "key"   => "ud:cluster",
+	      ) );
+
+	      // ElasticSearch Service Settings.
+	      $this->set( 'documents', array(
+		      "active" => true,
+		      "host"   => "localhost",
+		      "port"   => 9200,
+		      "token"  => null,
+	      ) );
+
+
+	      // Render Toolbar.
+	      if( $this->get( 'toolbar.menu.enabled' ) ) {
+		      add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_menu' ), 10 );
+	      }
+
+	      if( $this->get( 'toolbar.git.enabled' )  ) {
+		      add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_git' ), 90 );
+	      }
+
+	      add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
+	      add_action( 'add_admin_bar_menus', array( $this, 'add_admin_bar_menus' ), 21 );
+
+	      add_action( 'init', array( $this, 'init' ) );
+	      add_action( 'admin_init', array( $this, 'admin_init' ) );
+
+	      // Send Cluster Headers.
+	      add_action( 'init', array( $this, '_send_headers' ) );
+
+	      // Add Cluster Scripts & Styles.
+	      add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 20 );
+
+	      // Modify Core UI.
+	      add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ) );
+	      add_action( 'manage_sites_custom_column', array( $this, 'manage_sites_custom_column' ), 10, 2 );
+
+	      add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
+
+	      // /manage/admin-ajax.php?action=cluster_uptime_status
+	      add_action( 'wp_ajax_cluster_uptime_status', array( $this, '_uptime_status' ) );
+	      add_action( 'wp_ajax_nopriv_cluster_uptime_status', array( $this, '_uptime_status' ) );
+
+	      add_action( 'wp_ajax_nopriv_varnish_test', array( $this, '_varnish_test' ) );
+	      add_action( 'wp_ajax_varnish_test', array( $this, '_varnish_test' ) );
+
+	      add_filter( 'wp_mail_from', array( 'UsabilityDynamics\Cluster\Utility', 'wp_mail_from' ), 10 );
+	      add_filter( 'wp_mail_from_name', array( 'UsabilityDynamics\Cluster\Utility', 'wp_mail_from_name' ), 10 );
+
+	      // remove_role( 'manage.stuff' );
         // $result = add_role( 'manage.stuff', __( 'Manage Stuff' ), array( "manage.stuff.view" => true, "manage.stuff.edit" => true ) );
         // $role = get_role( 'manage.stuff' );
         // $current_user = wp_get_current_user();
