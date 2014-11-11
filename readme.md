@@ -2,7 +2,7 @@
 Before running the following commands, please setup a new MySQL database calling it "edm_develop".
 You will also need to have [gsutil](https://cloud.google.com/storage/docs/gsutil), [wp-cli](http://wp-cli.org/gsutil) and [direnv]https://github.com/zimbatm/direnv) installed:
 
-Assuming your local site setup will be in ~/Sites/discodonniepresents.com:
+Assuming your local site setup will be in ~/Sites/discodonniepresents.com using the **develop** branch:
 ```
 cd ~/Sites/discodonniepresents.com
 echo "export WP_ENV=develop" >> .envrc
@@ -10,9 +10,9 @@ echo "export DB_NAME=edm_develop" >> .envrc
 echo "export DB_USER=root" >> .envrc
 echo "export DB_PASSWORD=root" >> .envrc
 echo "export DB_HOST=discodonniepresents.com" >> .envrc
-make direnv
-git clone git@github.com:DiscoDonniePresents/www.discodonniepresents.com.git --depth 1 --branch develop .
-npm install
+git clone git@github.com:DiscoDonniePresents/www.discodonniepresents.com.git .
+git checkout develop
+make setEnvironment
 make snapshotImport
 wp cloud sites
 ```
@@ -32,17 +32,6 @@ SetEnv QM_DISABLED false
 ```
 
 That should be enough to get discodonniepresents.com to work locally, other network sites will also need aliases.
-
-### Cache Purging
-To purge Varnish cache, run the following commands. Be advised, Varnish will only accept purge notifications from accepted IP addresses.
-
-```
-curl -X PURGE discodonniepresents.com
-curl -X PURGE dayafter.com
-curl -X PURGE umesouthpadre.com
-```
-
-Otherwise you may simply `make varnishPurge`.
 
 ### Subtrees
 Add "subtree helpers" to your bash profile. (https://gist.github.com/andypotanin/e54a7322da3fa33ada7e) to simplify subtree adding/pulling/pushing:
@@ -92,6 +81,17 @@ Show versions of libs:
 ```
 composer show --self
 ```
+
+### Cache Purging
+To purge Varnish cache, run the following commands. Be advised, Varnish will only accept purge notifications from accepted IP addresses.
+
+```
+curl -X PURGE discodonniepresents.com
+curl -X PURGE dayafter.com
+curl -X PURGE umesouthpadre.com
+```
+
+Otherwise you may simply `make varnishPurge`.
 
 ### Staging
 

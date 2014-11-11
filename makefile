@@ -31,7 +31,7 @@ default: install
 # Create MySQL Snapshot
 # @todo Add check that direnv exists.
 #
-direnv:
+setEnvironment:
 	@direnv allow
 	@echo "Enabled environment variables in .envrc."
 
@@ -54,6 +54,7 @@ flushTransient:
 	@wp --allow-root db query 'DELETE FROM edm_sitemeta WHERE meta_key LIKE "%_site_transient%"'
 
 snapshot:
+	@make env
 	@echo "Creating MySQL snapshot for <${CURRENT_BRANCH}> branch."
 	@wp --allow-root db export ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@gzip ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
