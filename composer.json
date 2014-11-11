@@ -135,7 +135,7 @@
     "usabilitydynamics/wp-pagespeed": "master",
     "usabilitydynamics/wp-amd": "master",
     "wpackagist-plugin/akismet": "trunk",
-    "wpackagist-plugin/redirection": "trunk",
+    "wpackagist-plugin/redirection": "2.3.10",
     "wpackagist-plugin/fantastic-elasticsearch": "3.1.1",
     "wpackagist-plugin/google-analytics-for-wordpress": "5.0.7",
     "wpackagist-plugin/public-post-preview": "2.4",
