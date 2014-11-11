@@ -41,6 +41,10 @@
  */
 namespace EDM\Application\Policy {
 
+	use \wpCloud\Vertical;
+
+	add_action( 'plugins_loaded', 'EDM\Application\Policy\Override::plugins_loaded', 5 );
+
 	// http://discodonniepresents.com/api/v1/site.json
 	add_action( 'wp_ajax_/v1/site', 'EDM\Application\Policy\api_site' );
 	add_action( 'wp_ajax_nopriv_/v1/site', 'EDM\Application\Policy\api_site' );
@@ -245,6 +249,44 @@ namespace EDM\Application\Policy {
 		static function upload_path( $settings ) {
 			global $current_blog;
 			return "storage/" . $current_blog->domain . "/media" ;
+		}
+
+		/**
+		 * Override Lodded Plugins' Settings
+		 *
+		 */
+		static function plugins_loaded() {
+			global $wp_veneer, $wp_cluster, $wp_pagespeed;
+
+			if ( class_exists( 'wpCloud\Vertical\EDM\Bootstrap' ) ) {
+				Vertical\EDM\Bootstrap::set( 'toolbar.remove.comments', true );
+				Vertical\EDM\Bootstrap::set( 'toolbar.remove.seo', true );
+				Vertical\EDM\Bootstrap::set( 'toolbar.remove.wp', true );
+			}
+
+			if ( isset( $wp_pagespeed ) && method_exists( $wp_pagespeed, 'set' ) ) {
+				$wp_pagespeed->set( 'core.enabled', true );
+				$wp_pagespeed->set( 'minify.enabled', false );
+			}
+
+			if ( isset( $wp_cluster ) && method_exists( $wp_cluster, 'set' ) ) {
+				$wp_cluster->set( 'toolbar.git.enabled', true );
+				$wp_cluster->set( 'toolbar.remove.wp', true );
+			}
+
+			if ( isset( $wp_veneer ) && method_exists( $wp_veneer, 'set' ) ) {
+				$wp_veneer->set( 'rewrites.login', false );
+				$wp_veneer->set( 'rewrites.manage', false );
+				$wp_veneer->set( 'rewrites.api', false );
+				$wp_veneer->set( 'static.enabled', false );
+				$wp_veneer->set( 'cdn.enabled', false );
+				$wp_veneer->set( 'cache.enabled', false );
+				$wp_veneer->set( 'media.shard.enabled', false );
+				$wp_veneer->set( 'assets.shard.enabled', false );
+				$wp_veneer->set( 'scripts.shard.enabled', false );
+				$wp_veneer->set( 'styles.shard.enabled', false );
+			}
+
 		}
 
 	}

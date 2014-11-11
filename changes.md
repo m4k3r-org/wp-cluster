@@ -13,7 +13,7 @@
 * Added a generic blog-not-found.php template.
 * Added wp-pagespeed as a required plugin.
 * Added db-error.php dropin for displaying a custom message for failed DB connections.
-* Replace db.php dropin with a Query Monitor generated file.
+* Changed DB_HOST to rds.discodonniepresents.com which should be overwritten in hosts to point to local MySQL host.
 
 #### 2.2.1
 * Disabled PageSpeed and NewRelic on admin.

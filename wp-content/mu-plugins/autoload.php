@@ -63,36 +63,6 @@ namespace EDM\Application {
 
 	});
 
-	add_action( 'plugins_loaded', function () {
-		global $wp_veneer, $wp_cluster, $wp_pagespeed;
-
-		if ( isset( $wp_pagespeed ) && method_exists( $wp_pagespeed, 'set' ) ) {
-			$wp_pagespeed->set( 'core.enabled', true );
-			$wp_pagespeed->set( 'minify.enabled', false );
-		}
-
-		if ( isset( $wp_cluster ) && method_exists( $wp_cluster, 'set' ) ) {
-			$wp_cluster->set( 'toolbar.git.enabled', true );
-		}
-
-		if ( isset( $wp_veneer ) && method_exists( $wp_veneer, 'set' ) ) {
-
-			$wp_veneer->set( 'rewrites.login', false );
-			$wp_veneer->set( 'rewrites.manage', false );
-			$wp_veneer->set( 'rewrites.api', false );
-
-			$wp_veneer->set( 'static.enabled', false );
-			$wp_veneer->set( 'cdn.enabled', false );
-			$wp_veneer->set( 'cache.enabled', false );
-
-			$wp_veneer->set( 'media.shard.enabled', false );
-			$wp_veneer->set( 'assets.shard.enabled', false );
-			$wp_veneer->set( 'scripts.shard.enabled', false );
-			$wp_veneer->set( 'styles.shard.enabled', false );
-		}
-
-	}, 5 );
-
 	/**
 	 * Some quick hackish WPML fixes
 	 */

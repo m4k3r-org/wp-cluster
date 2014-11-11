@@ -2,13 +2,13 @@
 
 ```
 cd ~/Sites/discodonniepresents.com
+echo "export WP_ENV=develop" >> .envrc
+echo "export DB_NAME=edm_develop" >> .envrc
+echo "export DB_USER=root" >> .envrc
+echo "export DB_PASSWORD=root" >> .envrc
+echo "export DB_HOST=rds.discodonniepresents.com" >> .envrc
+direnv allow
 git clone git@github.com:DiscoDonniePresents/www.discodonniepresents.com.git --depth 1 --branch develop .
-export NODE_ENV=develop
-export WP_ENV=develop
-export DB_NAME=edm_develop
-export DB_USER=root
-export DB_PASSWORD=root
-export DB_HOST=localhost
 npm install
 make snapshotImport
 wp cloud sites
