@@ -142,7 +142,7 @@ if( defined( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) && !class_exists( 'D
 
 			}
 
-			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'id', 'domain', 'network', 'url', 'ip', 'dns', 'status' , 'globalTerms', 'mainSite', 'mainNetwork' ) );
+			\WP_CLI\Utils\format_items( 'table', $_results,  array( 'id', 'domain', 'network', 'url', 'ip', 'dns', 'status' ) );
 
 		}
 
