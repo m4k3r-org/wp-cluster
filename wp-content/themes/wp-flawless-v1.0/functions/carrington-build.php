@@ -959,13 +959,16 @@ class flawless_carrington {
 
   }
 
-
-  /**
-   * Adds Flawless Custom Post Types to Carrington editor, and removes defaults if setting exists in Flawless
-   *
-   * @author potanin@UD
-   * @version 1.0
-   */
+	/**
+	 * Adds Flawless Custom Post Types to Carrington editor, and removes defaults if setting exists in Flawless
+	 *
+	 * @author potanin@UD
+	 * @version 1.0
+	 *
+	 * @param $types
+	 *
+	 * @return array
+	 */
 	static function add_custom_post_types( $types ) {
     global $flawless;
 
@@ -976,10 +979,10 @@ class flawless_carrington {
 
     //** Cycle through Flawless settings */
     foreach( $flawless[ 'post_types' ] as $type => $data ) {
-      if( $data[ 'use_carrington' ] == 'true' ) {
+      if( isset( $data[ 'use_carrington' ] ) && $data[ 'use_carrington' ] == 'true' ) {
         $types[] = $type;
 
-      } elseif( $data[ 'use_carrington' ] == 'false' ) {
+      } elseif( isset( $data[ 'use_carrington' ] ) && $data[ 'use_carrington' ] == 'false' ) {
 
         //** Disable only if specifically disabled by Flawless. */
         unset( $types[array_search( $type, $types )] );

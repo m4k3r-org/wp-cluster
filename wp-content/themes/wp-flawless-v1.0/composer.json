@@ -1,6 +1,5 @@
 {
   "name": "usabilitydynamics/wp-flawless",
-  "version": "0.60.0",
   "type": "wordpress-theme",
   "description": "Festival Theme for the Drop Network",
   "author": {
@@ -12,15 +11,11 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "http://repository.usabilitydynamics.com"
+      "url": "http://wordpress-theme@repository.usabilitydynamics.com"
     }
   ],
   "minimum-stability": "dev",
   "require": {
     "composer/installers": "~1.0"
-  },
-  "autoload": {},
-  "extra": {
-    "installer-name": "flawless"
   }
 }

@@ -18,3 +18,4 @@ static/codex
 *.out
 *.pid
 *.gz
+error_log
