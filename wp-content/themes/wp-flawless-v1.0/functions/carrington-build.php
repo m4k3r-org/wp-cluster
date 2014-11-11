@@ -888,12 +888,16 @@ class flawless_carrington {
     return $html;
   }
 
-
-  /**
-   *  Adds a class to the body of pages using CB
-   *
-   * @author potanin@UD
-   */
+	/**
+	 *  Adds a class to the body of pages using CB
+	 *
+	 * @author potanin@UD
+	 *
+	 * @param $classes
+	 * @param $class
+	 *
+	 * @return array
+	 */
   function body_class( $classes, $class ) {
     global $post;
 
@@ -901,7 +905,7 @@ class flawless_carrington {
       $classes[] = 'non_carrington_layout';
     }
 
-    if( @$_cfct_build_data[ 'active_state' ] == 'build' ) {
+    if( isset( $_cfct_build_data[ 'active_state' ] ) && $_cfct_build_data[ 'active_state' ] == 'build' ) {
       $classes[] = 'carrington_layout';
     } else {
       $classes[] = 'non_carrington_layout';
