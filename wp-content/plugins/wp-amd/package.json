@@ -1,8 +1,7 @@
 {
   "name": "wp-amd",
-  "version": "0.1.0",
+  "version": "1.2.0",
   "description": "wp-amd plugin",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/UsabilityDynamics/wp-amd"

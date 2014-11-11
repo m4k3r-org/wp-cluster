@@ -1,6 +1,5 @@
 {
   "name": "usabilitydynamics/wp-amd",
-  "version": "0.1.0",
   "type": "wordpress-plugin",
   "homepage": "https://github.com/UsabilityDynamics/wp-amd",
   "keywords": [
@@ -21,14 +20,15 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "http://repository.usabilitydynamics.com"
+      "url": "http://wordpress-plugin@repository.usabilitydynamics.com"
     }
   ],
   "require": {
     "php": ">=5.3",
-    "usabilitydynamics/lib-ui": "master",
-    "usabilitydynamics/lib-settings": "master",
-    "usabilitydynamics/lib-requires": "master"
+    "composer/installers": "~1.0",
+    "usabilitydynamics/lib-ui": "~0.2",
+    "usabilitydynamics/lib-settings": "~0.2",
+    "UsabilityDynamics/lib-requires": "~3.1"
   },
   "require-dev": {
     "usabilitydynamics/lib-wp-phpunit": "master",
