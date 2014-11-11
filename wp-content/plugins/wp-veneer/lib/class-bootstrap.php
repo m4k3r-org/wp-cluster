@@ -828,7 +828,7 @@ namespace UsabilityDynamics\Veneer {
 			private function _components() {
 
 				// Init our logging mechanism
-				if( class_exists( 'UsabilityDynamics\Veneer\Log' ) && class_exists( 'Raygun4php\RaygunClient' ) ) {
+				if( class_exists( 'UsabilityDynamics\Veneer\Log' )  ) {
 					$this->_log = Log::init()->__construct();
 				}
 

@@ -75,24 +75,29 @@ namespace UsabilityDynamics\Veneer {
         global $current_blog;
 
         /** Make sure we've got valid data */
-        if( !$do_stuff || !defined( 'WP_LOGS_DIR' ) ){
+        if( !$do_stuff ) {
           return $this;
         }
+
+	      if( !defined( 'WP_LOGS_DIR' ) || !WP_LOGS_DIR ) {
+		      return $this;
+	      }
 
         /** Verify Class Exists.  */
         if( !class_exists( 'Monolog\Logger' ) ) {
           return $this;
         }
 
-        $this->logs_dir = rtrim( WP_LOGS_DIR, '/' ) . '/' . rtrim( WP_BASE_DOMAIN, '/' );
+	      // If logs dir includes ABSPATH or starts with a slash, we assume its already absolute
+	      if( strpos( WP_LOGS_DIR, ABSPATH ) === 0 || strpos( WP_LOGS_DIR, '/' ) === 0 ) {
+          $this->logs_dir = trailingslashit( wp_normalize_path( WP_LOGS_DIR . '/' . $current_blog->domain ) );
+	      } else {
+		      $this->logs_dir = trailingslashit( wp_normalize_path( WP_CONTENT_DIR . '/'. WP_LOGS_DIR . '/' . $current_blog->domain ) );
+	      }
+
         /** Ok, if the directory doesn't exist, let's try to create it */
-        if( !is_dir( $this->logs_dir ) ){
-          if( !@mkdir( $this->logs_dir, 0755, true ) ){
-            throw new \Exception( 'Could not create logs directory: ' . $this->logs_dir );
-          }
-          if( !@chmod( $this->logs_dir, 0755 ) ){
-            throw new \Exception( 'Could not set proper permissions on logs directory: ' . $this->logs_dir );
-          }
+        if( !wp_mkdir_p( $this->logs_dir ) ) {
+          throw new \Exception( 'Could not create ' . $this->logs_dir. ' directory.' );
         }
 
         /** Setup the GUID */
@@ -109,10 +114,12 @@ namespace UsabilityDynamics\Veneer {
 
         /** Add our handler */
         switch( true ) {
-          case defined( 'WP_LOGS_HANDLER' ) && WP_LOGS_HANDLER == 'syslog':
-            /** Syslog handler */
+
+	        /** Syslog handler */
+	        case defined( 'WP_LOGS_HANDLER' ) && WP_LOGS_HANDLER == 'syslog':
             $handler = new SyslogHandler( self::CHANNEL, self::FACILITY, $this->log_level );
-            break;
+          break;
+
           case defined( 'WP_LOGS_HANDLER' ) && WP_LOGS_HANDLER == 'file':
             /** File name to write to */
             $this->log_file = rtrim( $this->logs_dir, '/' ) . '/debug.log';
@@ -127,7 +134,8 @@ namespace UsabilityDynamics\Veneer {
             }
             /** File handler */
             $handler = new StreamHandler( $this->log_file, $this->log_level );
-            break;
+          break;
+
           case defined( 'RAYGUN_API_KEY' ) && ( ( defined( 'WP_LOGS_HANDLER' ) && WP_LOGS_HANDLER == 'raygun' ) || ( !defined( 'WP_LOGS_HANDLER' ) && ENVIRONMENT == 'production' ) ):
             /** Create the client for RayGun */
 
@@ -140,14 +148,16 @@ namespace UsabilityDynamics\Veneer {
 		          $handler = new RaygunHandler( $client );
 	          }
 
-            break;
+          break;
+
           case !defined( 'WP_LOGS_HANDLER' ):
           default:
             /** File name to write to */
             $this->log_file = rtrim( $this->logs_dir, '/' ) . '/debug.log';
             /** Rotating file handler */
             $handler = new RotatingFileHandler( $this->log_file, 14, $this->log_level, true, 0644 );
-            break;
+          break;
+
         }
 
         /** Implement the formatter */
