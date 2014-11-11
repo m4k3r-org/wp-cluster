@@ -305,6 +305,8 @@ namespace EDM\Application\Policy {
 		/**
 		 * Configure ElaticSearch
 		 *
+		 * @todo Fetch types, taxonomies and fields based on post types available on site.
+		 *
 		 * @return array
 		 */
 		static function elasticsearch() {
@@ -316,30 +318,36 @@ namespace EDM\Application\Policy {
 				return false;
 			}
 
+			$_types = array(
+				"post" => true,
+				"page" => true,
+				"promoter" => 1,
+				"videoobject" => 1,
+				"event" => 1,
+				"venue" => 1,
+				"imagegallery" => 1,
+				"tour" => 1
+			);
+
+			$_taxonomies = array(
+				"category" => true,
+				"post_tag" => true,
+				"post_format" => true
+			);
+
+			$_fields = array(
+				"post_content" => 1,
+				"post_title" => 1
+			);
+
 			$_setting = array(
 				"server_url" => "{$_secretKey}@{$_serviceIndex}",
 				"server_index" => "",
 				"server_timeout_read" => "",
 				"server_timeout_write" => "",
-				"fields" => array(
-					"post_content" => 1,
-					"post_title" => 1
-				),
-				"types" => array(
-					"post" => true,
-					"page" => true,
-					"promoter" => 1,
-					"videoobject" => 1,
-					"event" => 1,
-					"venue" => 1,
-					"imagegallery" => 1,
-					"tour" => 1
-				),
-				"taxonomies" => array(
-					"category" => true,
-					"post_tag" => true,
-					"post_format" => true
-				),
+				"fields" => $_fields,
+				"types" => $_types,
+				"taxonomies" => $_taxonomies,
 				"fuzzy" => null,
 				"score_field_post_content" => 1,
 				"score_field_post_title" => null,
