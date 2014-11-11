@@ -2,7 +2,7 @@
   "name": "wp-disco",
   "version": "2.2.0",
   "description": "test",
-  "main": "index.js",
+  "main": "gruntfile.js",
   "directories": {
     "test": "mocha test"
   },
