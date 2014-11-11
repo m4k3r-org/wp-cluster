@@ -7,13 +7,13 @@
  * * ECMA5 shim - defineProperty, getOwnPropertyDescriptor, etc.
  * * Object Validation methods - Object.defineSchema(), Object.validateSchema()
  *
- * @version 3.1.2
+ * @version 3.1.0
  */
 var requirejs, require, define;
 
 (function( global ) {
 
-  var version = '3.1.2';
+  var version = '3.1.0';
 
   var req, s, head, baseElement, dataMain, src, interactiveScript, currentlyAddingScript, mainScript, subPath, commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg, cjsRequireRegExp = /[^.]\s*require\s*\(\s*["']([^'"\s]+)["']\s*\)/g, jsSuffixRegExp = /\.js$/, currDirRegExp = /^\.\//, op = Object.prototype, ostring = op.toString, hasOwn = op.hasOwnProperty, ap = Array.prototype, apsp = ap.splice, isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && window.document), isWebWorker = !isBrowser && typeof importScripts !== 'undefined';
   var readyRegExp = isBrowser && navigator.platform === 'PLAYSTATION 3' ? /^complete$/ : /^(complete|loaded)$/, defContextName = '_';
@@ -114,6 +114,7 @@ var requirejs, require, define;
     }
   }, false );
 
+
   /**
    * UDX Base Application
    *
@@ -180,7 +181,7 @@ var requirejs, require, define;
       configurable: true,
       writable: true
     }
-  });
+  })
 
   /**
    * Convert Object to URL Parameter String.
@@ -254,6 +255,7 @@ var requirejs, require, define;
   /**
    * Extend Target Object
    *
+   * @source https://github.com/knockout/knockout/blob/master/src/utils.js
    * @param target
    * @param source
    * @returns {*}
@@ -328,7 +330,7 @@ var requirejs, require, define;
         location: 'http://cdn.udx.io/ace',
         main: 'ace',
         name: 'ace'
-      });
+      } );
 
       return packages;
 
@@ -383,56 +385,10 @@ var requirejs, require, define;
         /**
          * DOM Element Requires a Module
          *
-         * The module must return/export either a function or an object with a "create" property.
-         *
          * @param element
          */
         function loadRequires( element ) {
           //context.log( 'element[data-requires]', element );
-
-          function moduleError( error ) {
-            element.setAttribute( 'data-status', 'error' );
-            context.log( element.getAttribute( 'data-requires' ), 'not found.', error );
-          }
-
-          function moduleLoaded( callback ) {
-            context.log( 'moduleLoaded', typeof callback );
-
-            var _callback;
-            var _instance;
-
-            element.setAttribute( 'data-status', 'ready' );
-
-            if( 'object' === typeof callback && callback.create ) {
-              _callback = callback.create;
-            }
-
-            if( 'function' === typeof callback ) {
-              _callback = callback;
-            }
-
-            if( 'function' !== typeof _callback ) {
-              return false;
-            }
-
-            // Invoke module creation.
-            _instance = _callback.call( element, context );
-
-            // Subcribe to "loaded" event, if EventEmitter exists.
-            if( _instance && 'function' === typeof _instance.on ) {
-              _instance.on( 'loaded', instanceReady.bind( _instance, element ) );
-            } else {
-              instanceReady.call( _instance, element );
-            }
-
-            // Emit "loaded" event if EventEmitter exists.
-            if( _instance && 'function' === typeof _instance.emit ) {
-              _instance.emit.call( _instance, 'loaded', element );
-            }
-
-            return true;
-
-          }
 
           // Only load once.
           if( element.getAttribute( 'data-status' ) ) {
@@ -446,8 +402,30 @@ var requirejs, require, define;
 
           // console.dir( context.config.paths );
 
-          // Load required module. Can load from a URL or module pool.
-          context.require( [ element.getAttribute( 'data-requires' ) ], moduleLoaded, moduleError );
+          context.require( [ element.getAttribute( 'data-requires' ) ], function moduleLoaded( callback ) {
+            context.log( 'moduleLoaded', typeof callback );
+
+            element.setAttribute( 'data-status', 'ready' );
+
+            if( 'function' === typeof callback ) {
+
+              var _instance = callback.call( element, context );
+
+              if( _instance && 'function' === typeof _instance.emit ) {
+                _instance.emit.call( _instance, 'loaded', element );
+              }
+
+              if( _instance && 'function' === typeof _instance.on ) {
+                _instance.on( 'loaded', instanceReady.bind( _instance, element ) );
+              } else {
+                instanceReady.call( _instance, element );
+              }
+
+            }
+
+          }, function notFound( error ) {
+            context.log( element.getAttribute( 'data-requires' ), 'not found.', error );
+          } );
 
         }
 
@@ -474,8 +452,6 @@ var requirejs, require, define;
      * @param _callback
      */
     fetch_json_file: function( url, _callback ) {
-
-      var http_request;
 
       if( window.XMLHttpRequest ) {
         http_request = new XMLHttpRequest();
@@ -1172,12 +1148,6 @@ var requirejs, require, define;
           "knockout": {
             // exports: "knockout"
           },
-          "google.jsapi": {
-            exports: "google"
-          },
-          "isotope": {
-            exports: "Isotope"
-          },
           "knockout.mapping": {
             exports: "knockout.mapping",
             deps: [ 'knockout' ]
@@ -1197,10 +1167,6 @@ var requirejs, require, define;
           "jquery.spin": {
             exports: 'jQuery.fn.spin',
             deps: [ 'jquery' ]
-          },
-          "jquery.elasticsearch": {
-            exports: 'jQuery.es'
-            // deps: [ 'jquery' ]
           },
           "jquery.fancybox": {
             exports: 'jQuery.fn.fancybox',
@@ -1222,10 +1188,6 @@ var requirejs, require, define;
             exports: 'jQuery.fn.lazyload',
             deps: [ 'jquery' ]
           },
-          "jquery.validation": {
-            exports: 'jQuery.validation',
-            deps: [ 'jquery' ]
-          },
           "sammy": {
             exports: 'sammy',
             deps: [ 'jquery' ]
@@ -1235,6 +1197,10 @@ var requirejs, require, define;
           },
           "swiper": {
             exports: 'Swiper',
+            deps: [ 'jquery' ]
+          },
+          "jquery.validation": {
+            exports: 'jQuery.validation',
             deps: [ 'jquery' ]
           },
           "datatables": {
@@ -1249,33 +1215,25 @@ var requirejs, require, define;
         config: {}
       };
 
-
     config.paths[ 'async' ]                           = "//cdnjs.cloudflare.com/ajax/libs/async/0.2.7/async.min";
     config.paths[ 'datatables' ]                      = '//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min';
     config.paths[ 'jquery.ui' ]                       = "//code.jquery.com/ui/1.10.3/jquery-ui";
     config.paths[ 'jquery.validation' ]               = '//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min';
-    config.paths[ 'twitter.bootstrap' ]               = "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min";
-
-    config.paths[ 'google.jsapi' ]                    = '//www.google.com/jsapi/?v=';
     config.paths[ 'knockout' ]                        = '//ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1';
     config.paths[ 'knockout.mapping' ]                = '//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min';
-    config.paths[ 'knockout.localStorage' ]           = '//cdn.udx.io/knockout.localStorage';
+    config.paths[ 'twitter.bootstrap' ]               = "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min";
 
     // Local Vendors.
     config.paths[ 'skrollr' ]                         = '//cdn.udx.io/skrollr';
-    config.paths[ 'scrollReveal' ]                    = '//cdn.udx.io/scrollReveal';
     config.paths[ 'swiper' ]                          = '//cdn.udx.io/swiper';
     config.paths[ 'swiper.scrollbar' ]                = '//cdn.udx.io/swiper.scrollbar';
     config.paths[ 'elastic.client' ]                  = '//cdn.udx.io/elastic.client';
-    config.paths[ 'n33.skel' ]                        = '//cdn.udx.io/n33.skel';
     config.paths[ 'parallax' ]                        = '//cdn.udx.io/parallax';
     config.paths[ 'pace' ]                            = '//cdn.udx.io/pace';
     config.paths[ 'history' ]                         = '//cdn.udx.io/history';
     config.paths[ 'sammy' ]                           = '//cdn.udx.io/sammy';
     config.paths[ 'emitter' ]                         = '//cdn.udx.io/emitter';
-    config.paths[ 'modernizr' ]                       = '//cdn.udx.io/modernizr';
     config.paths[ 'resizely' ]                        = '//cdn.udx.io/resizely';
-    config.paths[ 'isotope' ]                         = '//cdn.udx.io/isotope';
     config.paths[ 'jquery' ]                          = '//cdn.udx.io/jquery';
     config.paths[ 'jquery.scrollto' ]                 = '//cdn.udx.io/jquery.scrollto';
     config.paths[ 'jquery.parallax' ]                 = '//cdn.udx.io/jquery.parallax';
@@ -1284,15 +1242,10 @@ var requirejs, require, define;
     config.paths[ 'jquery.resizely' ]                 = '//cdn.udx.io/jquery.resizely';
     config.paths[ 'jquery.lazyload' ]                 = '//cdn.udx.io/jquery.lazyload';
     config.paths[ 'jquery.scrollstop' ]               = '//cdn.udx.io/jquery.scrollstop';
-    config.paths[ 'jquery.elasticsearch' ]            = '//cdn.udx.io/jquery.elasticsearch';
-
-    // Elastic Analysis
-    config.paths[ 'analysis.client' ]                 = '//cdn.udx.io/analysis.client';
-    config.paths[ 'analysis.visualizer' ]             = '//cdn.udx.io/analysis.visualizer';
 
     // UI Library.
     config.paths[ 'udx.ui.jquery.tabs' ]              = "//cdn.udx.io/udx.ui.jquery.tabs";
-    config.paths[ 'udx.ui.sticky' ]                   = "//cdn.udx.io/udx.ui.sticky";
+    config.paths[ 'udx.ui.sticky-header' ]            = "//cdn.udx.io/udx.ui.sticky-header";
     config.paths[ 'udx.ui.dynamic-table' ]            = "//cdn.udx.io/udx.ui.dynamic-table";
     config.paths[ 'udx.ui.parallax' ]                 = "//cdn.udx.io/udx.ui.parallax";
     config.paths[ 'udx.ui.scrollr' ]                  = "//cdn.udx.io/udx.ui.scrollr";
@@ -1301,7 +1254,6 @@ var requirejs, require, define;
     config.paths[ 'udx.ui.gallery' ]                  = "//cdn.udx.io/udx.ui.gallery";
     config.paths[ 'udx.ui.stream' ]                   = "//cdn.udx.io/udx.ui.stream";
     config.paths[ 'udx.ui.video' ]                    = "//cdn.udx.io/udx.ui.video";
-    config.paths[ 'udx.ui.meta-box' ]                 = "//cdn.udx.io/udx.ui.meta-box";
     config.paths[ 'udx.ui.wp.editor.script' ]         = "//cdn.udx.io/udx.ui.wp.editor.script";
     config.paths[ 'udx.ui.wp.editor.style' ]          = "//cdn.udx.io/udx.ui.wp.editor.style";
     config.paths[ 'udx.ui.wp.customizer.style' ]      = "//cdn.udx.io/udx.ui.wp.customizer.style";
@@ -1331,13 +1283,8 @@ var requirejs, require, define;
     config.paths[ 'udx.settings' ]                    = "//cdn.udx.io/udx.settings";
     config.paths[ 'udx.storage' ]                     = "//cdn.udx.io/udx.storage";
 
-    // SPA.
-    config.paths[ 'udx.spa' ]                         = "//cdn.udx.io/udx.spa";
-    config.paths[ 'udx.spa.web' ]                     = "//cdn.udx.io/udx.spa.web";
-    config.paths[ 'udx.spa.mobile' ]                  = "//cdn.udx.io/udx.spa.mobile";
-    config.paths[ 'udx.spa.hybrid' ]                  = "//cdn.udx.io/udx.spa.hybrid";
-
     // WP Theme
+    config.paths[ 'udx.spa' ]                         = "//cdn.udx.io/udx.spa";
     config.paths[ 'udx.wp.spa' ]                      = "//cdn.udx.io/udx.wp.spa";
     config.paths[ 'udx.wp.editor' ]                   = "//cdn.udx.io/udx.wp.editor";
     config.paths[ 'udx.wp.theme' ]                    = "//cdn.udx.io/udx.wp.theme";
@@ -1347,9 +1294,6 @@ var requirejs, require, define;
     config.paths[ 'wpp.importer.overview' ]           = "//cdn.udx.io/wpp.importer.overview";
     config.paths[ 'wpp.importer.editor' ]             = "//cdn.udx.io/wpp.importer.editor";
     config.paths[ 'wpp.importer.rets' ]               = "//cdn.udx.io/wpp.importer.rets";
-
-    // Misc
-    config.paths[ 'udx.social.stream' ]               = "//cdn.udx.io/udx.social.stream";
 
     /**
      * Trims the . and .. from an array of path segments.
@@ -1542,6 +1486,7 @@ var requirejs, require, define;
      * @returns {Object}
      */
     function makeModuleMap( name, parentModuleMap, isNormalized, applyMap ) {
+
       var url, pluginModule, suffix, nameParts, prefix = null, parentName = parentModuleMap ? parentModuleMap.name : null, originalName = name, isDefine = true, normalizedName = '';
 
       //If no name, then it means it is a require call, generate an
@@ -1584,7 +1529,6 @@ var requirejs, require, define;
           isNormalized = true;
 
           url = context.nameToUrl( normalizedName );
-
         }
       }
 
@@ -1616,9 +1560,12 @@ var requirejs, require, define;
       var id = depMap.id;
       var mod = getOwn( registry, id );
 
+      //console.debug( 'getModule', context.config.shim );
+
       if( !mod ) {
         mod = registry[id] = new context.Module( depMap );
       }
+
 
       if( context.config.shim[ id ] && context.config.shim[ id ].exports ) {
         var exportName = context.config.shim[ id ].exports;
@@ -1628,6 +1575,7 @@ var requirejs, require, define;
           mod.inWindow = true;
         }
       }
+
 
       return mod;
     }
@@ -1845,8 +1793,6 @@ var requirejs, require, define;
         return onError( err );
       }
 
-      // console.log( 'reqCalls', reqCalls );
-
       //Not expired, check for a cycle.
       if( needCycleCheck ) {
         each( reqCalls, function( mod ) {
@@ -1860,14 +1806,12 @@ var requirejs, require, define;
       if( (!expired || usingPathFallback) && stillLoading ) {
         //Something is still waiting to load. Wait for it, but only
         //if a timeout is not already in effect.
-
         if( (isBrowser || isWebWorker) && !checkLoadedTimeoutId ) {
           checkLoadedTimeoutId = setTimeout( function() {
             checkLoadedTimeoutId = 0;
             checkLoaded();
           }, 50 );
         }
-
       }
 
       inCheckLoaded = false;
@@ -1940,12 +1884,10 @@ var requirejs, require, define;
         //the dependencies are not known until init is called. So
         //if enabled previously, now trigger dependencies as enabled.
         if( options.enabled || this.enabled ) {
-          // Enable this module and dependencies.
-          // Will call this.check()
-          // console.log( 'enable', this.map.id );
+          //Enable this module and dependencies.
+          //Will call this.check()
           this.enable();
         } else {
-          // console.log( 'check', this.map.id );
           this.check();
         }
       },
@@ -1989,29 +1931,24 @@ var requirejs, require, define;
           } )( this.shim.deps || [], bind( this, function() {
               return map.prefix ? this.callPlugin() : this.load();
             } ) );
-
         } else {
-          // console.log( 'load regular dependency', map.id, map );
-          // Regular dependency.
+          //Regular dependency.
           return map.prefix ? this.callPlugin() : this.load();
         }
-
       },
 
       load: function() {
-        // console.log( 'Module.load', this.map.id, this.map.url );
+        context.log( 'Module.load', this.map.id, this.map.url );
         var url = this.map.url;
 
         if( this.inWindow ) {
-          // console.debug( 'Module.load', this.map.id, 'inWindow', context );
-          // return;
+          console.debug( 'Module.load', this.map.id, 'inWindow', context );
+          //return;
         }
 
         //Regular dependency.
         if( !urlFetched[url] ) {
           urlFetched[url] = true;
-          // console.log( 'this.map.id, url', this.map.id, url );
-          // console.log( 'context.load', context.load );
           context.load( this.map.id, url );
         }
 
@@ -2021,14 +1958,15 @@ var requirejs, require, define;
        * Checks if the module is ready to define itself, and if so,
        * define it.
        */
-      check: function moduleCheck() {
-        // context.log( 'Module.moduleCheck', this.map.id, this.map.url, this.inWindow, this.depExports );
+      check: function() {
+        context.log( 'Module.check', this.map.id, this.map.url, this.inWindow, this.depExports );
 
         if( !this.enabled || this.enabling ) {
           return;
         }
 
         var err, cjsModule, id = this.map.id, depExports = this.depExports, exports = this.exports, factory = this.factory;
+
 
         // Already in window.. do not fetch. (@experimental)
         if( this.inWindow ) {
@@ -2037,6 +1975,17 @@ var requirejs, require, define;
           //this.inited = true;
           //this.enabled = true;
           //this.defining = false;
+
+          //this.exports = window[ this.shim.exports ]
+
+          //console.debug( 'this.exports', this.inited );
+          //this.defineEmitted = true;
+          //this.emit( 'defined', this.exports );
+          //this.defineEmitComplete = true;
+//          this.depExports = true;
+          //context.completeLoad( this.map.id );
+          //context.log( 'Module.check', this.map.id, this.map.url, 'in window', this.depExports );
+          //return;
         }
 
         if( !this.inited ) {
@@ -2152,7 +2101,6 @@ var requirejs, require, define;
             //prefix and name should already be normalized, no need
             //for applying map config again either.
             normalizedMap = makeModuleMap( map.prefix + '!' + name, this.map.parentMap );
-
             on( normalizedMap, 'defined', bind( this, function( value ) {
               this.init( [], function() {
                 return value;
@@ -2269,12 +2217,10 @@ var requirejs, require, define;
 
       },
 
-      enable: function moduleEnable() {
-        context.log( 'Module.moduleEnable', this.map.id, this.map.url );
-
+      enable: function() {
+        context.log( 'Module.enable', this.map.id, this.map.url );
 
         enabledRegistry[this.map.id] = this;
-
         this.enabled = true;
 
         //Set flag mentioning that the module is enabling,
@@ -2283,22 +2229,14 @@ var requirejs, require, define;
         //with the depCount still being zero.
         this.enabling = true;
 
-        // console.log( 'Module.moduleEnable', this.depMaps );
-
-        var __canBatch = []; // [ 'pace', 'knockout.mapping' ];
-        var __batchQueue = [];
-
         //Enable each dependency
-        each( this.depMaps, bind( this, function eachDependency( depMap, i ) {
-          // console.log( 'Module.moduleEnable.eachDependency', depMap, i );
-
-          var id;
-          var mod;
-          var handler;
+        each( this.depMaps, bind( this, function( depMap, i ) {
+          var id, mod, handler;
 
           if( typeof depMap === 'string' ) {
-            depMap = makeModuleMap( depMap, ( this.map.isDefine ? this.map : this.map.parentMap ), false, !this.skipMap );
-
+            //Dependency needs to be converted to a depMap
+            //and wired up to this module.
+            depMap = makeModuleMap( depMap, (this.map.isDefine ? this.map : this.map.parentMap), false, !this.skipMap );
             this.depMaps[i] = depMap;
 
             handler = getOwn( handlers, depMap.id );
@@ -2308,51 +2246,17 @@ var requirejs, require, define;
               return;
             }
 
-            // console.log( )
-
             this.depCount += 1;
 
-            if( __canBatch.indexOf( depMap.id )  === -1 ) {
-
-              // Emitted once module is
-              on( depMap, 'defined', bind( this, function( depExports ) {
-                this.defineDep( i, depExports );
-                this.check();
-              } ) );
-
-              if( this.errback ) {
-                on( depMap, 'error', bind( this, this.errback ) );
-              }
-
-            } else {
-              console.log( '__canBatch', depMap.id );
-
-              __batchQueue.push({
-                id: depMap.id,
-                depMap: depMap,
-                mod: registry[ id ],
-                this: this
-              });
-
-            }
-
-          }
-
-          // All batchable libraries are combined.
-          each( __batchQueue, function eachBatchedItem( batchedItem ) {
-            // console.log( 'eachBatchedItem', batchedItem );
-
-            on( batchedItem.depMap, 'defined', bind( batchedItem.this, function( depExports ) {
-              //this.defineDep( i, depExports );
-              //this.check();
+            on( depMap, 'defined', bind( this, function( depExports ) {
+              this.defineDep( i, depExports );
+              this.check();
             } ) );
 
-            if( batchedItem.this.errback ) {
-              //on( batchedItem.depMap, 'error', bind( this, this.errback ) );
+            if( this.errback ) {
+              on( depMap, 'error', bind( this, this.errback ) );
             }
-
-          })
-
+          }
 
           id = depMap.id;
           mod = registry[id];
@@ -2363,14 +2267,10 @@ var requirejs, require, define;
           if( !hasProp( handlers, id ) && mod && !mod.enabled ) {
             context.enable( depMap, this );
           }
-
-
         } ) );
 
-        // console.log( 'Module.moduleEnable', 'this.pluginMaps',  this.pluginMaps );
-
-        // Enable each plugin that is used in
-        // a dependency
+        //Enable each plugin that is used in
+        //a dependency
         eachProp( this.pluginMaps, bind( this, function( pluginMap ) {
           var mod = getOwn( registry, pluginMap.id );
           if( mod && !mod.enabled ) {
@@ -2381,7 +2281,6 @@ var requirejs, require, define;
         this.enabling = false;
 
         this.check();
-
       },
 
       on: function( name, cb ) {
@@ -2733,7 +2632,7 @@ var requirejs, require, define;
             id = makeModuleMap( id, relMap, false, true ).id;
             return hasProp( defined, id ) || hasProp( registry, id );
           }
-        });
+        } );
 
         //Only allow undef on top level require calls
         if( !relMap ) {
@@ -2769,7 +2668,6 @@ var requirejs, require, define;
 
               cleanRegistry( id );
             }
-
           };
         }
 
@@ -2917,7 +2815,7 @@ var requirejs, require, define;
           // Convert urlArgs to string if object given.
           var _args =  Object.keys( config.urlArgs ).length ? stringifyObject( config.urlArgs ) : config.urlArgs;
 
-          url = config.urlArgs ? url + ( _args ? ( url.indexOf( '?' ) === -1 ? '?' : '&' ) + _args : '' ) : url;
+          url = config.urlArgs ? url + ((url.indexOf( '?' ) === -1 ? '?' : '&') + _args) : url;
 
         }
 
@@ -2928,7 +2826,6 @@ var requirejs, require, define;
       //Delegates to req.load. Broken out as a separate function to
       //allow overriding in the optimizer.
       load: function( id, url ) {
-        // console.log( 'req.load', req.load );
         req.load( context, id, url );
       },
 
@@ -3112,26 +3009,6 @@ var requirejs, require, define;
     newContext: newContext
   };
 
-  /**
-   * Get Setting Key.
-   *
-   * @param key
-   * @returns {*}
-   */
-  req.getOption = function getOption( key ) {
-    return ( cfg || this.s.contexts._.config )[ key ];
-  }
-
-  /**
-   * Set Setting Value.
-   *
-   * @param key
-   * @param value
-   */
-  req.setOption = function setOption( key, value ) {
-    ( cfg || this.s.contexts._.config )[ key ] = value;
-  }
-
   //Create default context.
   req( [ 'udx' ] );
 
@@ -3209,34 +3086,29 @@ var requirejs, require, define;
     }
 
     if( isBrowser ) {
-
       //In the browser so use a script tag
       node = req.createNode( config, moduleName, url );
 
       node.setAttribute( 'data-requirecontext', context.contextName );
       node.setAttribute( 'data-requiremodule', moduleName );
 
-      //Check if node.attachEvent is artificially added by custom script or
-      if( node.attachEvent && !(node.attachEvent.toString && node.attachEvent.toString().indexOf( '[native code' ) < 0) && !isOpera ) {
+      if( node.attachEvent && //Check if node.attachEvent is artificially added by custom script or
+        !(node.attachEvent.toString && node.attachEvent.toString().indexOf( '[native code' ) < 0) && !isOpera ) {
         useInteractive = true;
         node.attachEvent( 'onreadystatechange', context.onScriptLoad );
       } else {
         node.addEventListener( 'load', context.onScriptLoad, false );
         node.addEventListener( 'error', context.onScriptError, false );
       }
-
       node.src = url;
 
       currentlyAddingScript = node;
 
       if( baseElement ) {
-        // console.log( 'req.load', 'baseElement', url );
         head.insertBefore( node, baseElement );
       } else {
-        // console.log( 'req.load', 'headElement', url );
         head.appendChild( node );
       }
-
       currentlyAddingScript = null;
 
       return node;
@@ -3256,7 +3128,6 @@ var requirejs, require, define;
 
         //Account for anonymous modules
         context.completeLoad( moduleName );
-
       } catch( e ) {
         context.onError( makeError( 'importscripts', 'importScripts failed for ' + moduleName + ' at ' + url, e, [moduleName] ) );
       }
@@ -3367,7 +3238,6 @@ var requirejs, require, define;
      *
      */
     req.nextTick( function otherScriptTags() {
-     //  console.debug( 'otherScriptTags' );
 
       getAllElementsWithAttribute( 'data-main', 'script' ).each( function( element ) {
         //context.log( 'data-main script', element );

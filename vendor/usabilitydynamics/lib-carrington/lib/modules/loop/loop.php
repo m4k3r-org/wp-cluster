@@ -74,7 +74,9 @@ if (!class_exists('cfct_module_loop') && class_exists('cfct_build_module')) {
 			$this->content_display_options = array(
 				'title' => __('Titles Only', 'carrington-build'),
 				'excerpt' => __('Titles &amp; Excerpts', 'carrington-build'),
-				'content' => __('Titles &amp; Post Content', 'carrington-build')
+				'content' => __('Titles &amp; Post Content', 'carrington-build'),
+				'read-more' => __('Titles &amp; Post Content (with Read More)', 'carrington-build'),
+				'smart-teaser' => __('Titles &amp; Post Teaser (or Excerpt if no more tag)', 'carrington-build'),
 			);
 			
 			// We need to enqueue the suggest script so we can use it later for type-ahead search
@@ -281,6 +283,18 @@ if (!class_exists('cfct_module_loop') && class_exists('cfct_build_module')) {
 					elseif ($args['display'] == 'content') {
 						$this->post_item_content();
 					}
+					elseif ($args['display'] == 'read-more') {
+						$this->post_item_teaser();
+					}
+					elseif ($args['display'] == 'smart-teaser') {
+						global $post;
+						if (preg_match( '/<!--more(.*?)?-->/', $post->post_content)) {
+							$this->post_item_teaser();
+						}
+						else {
+							$this->post_item_excerpt();
+						}
+					}
 					$item = ob_get_clean();
 					$item = apply_filters('cfct-build-loop-item', $item, $data, $args, $query); // @TODO deprecate in 1.2? doesn't scale well when extending the loop object
 					echo apply_filters($this->id_base.'-loop-item', $item, $data, $args, $query);
@@ -455,6 +469,19 @@ if (!class_exists('cfct_module_loop') && class_exists('cfct_build_module')) {
 			else {
 				$this->the_content();
 			}
+		}
+
+		/**
+		 * Run content functions with Read More enabled
+		 *
+		 * @return void
+		 */
+		protected function post_item_teaser() {
+			global $more;
+			$old_more = $more;
+			$more = 0;
+			$this->post_item_content();
+			$more = $old_more;
 		}
 
 # Admin Form
@@ -929,7 +956,7 @@ if (!class_exists('cfct_module_loop') && class_exists('cfct_build_module')) {
 		 *
 		 * @return null
 		 */
-		public function text( $data ) {
+		public function text() {
 			return null;
 		}
 
@@ -1080,7 +1107,7 @@ if (!class_exists('cfct_module_loop') && class_exists('cfct_build_module')) {
 					}
 					
 					// generic repeater element remove button
-					$(".cfct-module-admin-repeater-block .cfct-repeater-item .cfct-repeater-item-remove").live("click", function() {
+					$(document).on("click", ".cfct-module-admin-repeater-block .cfct-repeater-item .cfct-repeater-item-remove", function() {
 						var _list = $(this).closest("ol");
 						$(this).closest("li").remove();
 						if (_list.find("li.cfct-repeater-item").size() == 1) {

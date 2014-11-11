@@ -19,6 +19,7 @@ if( !class_exists( 'NoticeModule' ) ) {
       $content = $this->wp_formatting( $data[ $this->get_field_id( 'content' ) ] );
 
       return $this->load_view( $data, compact( 'content' ) );
+
     }
 
     public function admin_form( $data ) {

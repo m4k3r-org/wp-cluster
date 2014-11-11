@@ -100,6 +100,7 @@ class cfct_module_shortcode extends cfct_build_module {
 #cfct-shortcode-edit-form .help {
 	color: #777;
 	font-size: 11px;
+	margin-left: 0;
 }
 		';
 	}

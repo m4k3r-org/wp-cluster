@@ -134,10 +134,6 @@ The app.config.js file includes:</p>
 <li>shim - Dependencies of enqueued scripts.</li>
 <li>config - Object containing all custom configuration such as Analytics ID, Locale Strings, Menufication settings, etc. This configuration does not take user session or application state into consideration.</li>
 </ul>
-<h2 id="to-do">To Do</h2>
-<ul>
-<li>Check protocol prefix manually, otherwise nothing will load when working with local files (e.g. file://).</li>
-</ul>
 <h2 id="size">Size</h2>
 <p>The size of the main <a href="http://cdn.udx.io/udx.requires.js">http://cdn.udx.io/udx.requires.js</a> file is:</p>
 <ul>
@@ -155,11 +151,6 @@ The app.config.js file includes:</p>
 <li>Object.defineProperties</li>
 <li>Object.getOwnPropertyDescriptor</li>
 <li>Object.getOwnPropertyNames</li>
-</ul>
-<h2 id="require-js-methods">Require.js Methods</h2>
-<ul>
-<li>get - Get configuration value.</li>
-<li>set - Set configuration value. Same as require.config({ key: value });</li>
 </ul>
 <h2 id="usage">Usage</h2>
 <h3 id="initialize-require-client">Initialize Require Client</h3>
@@ -201,10 +192,6 @@ $_requires-&gt;render_tag();</code></pre>
 &lt;div data-requires=&quot;udx.elastic-filter&quot;&gt;&lt;/div&gt;
 &lt;div data-requires=&quot;crowdfavorite.carrington-build.slider&quot;&gt;&lt;/div&gt;
 &lt;div data-requires=&quot;bootstrap.carousel&quot;&gt;&lt;/div&gt;</code></pre>
-<h2 id="version-3-1-2">Version 3.1.2</h2>
-<ul>
-<li>Added &quot;data-requires&quot; module support for retunred object with &quot;create&quot; property for initialization.</li>
-</ul>
 <h2 id="license">License</h2>
 <p>(The MIT License)</p>
 <p>Copyright (c) 2013 Usability Dynamics, Inc. &lt;info@usabilitydynamics.com&gt;</p>

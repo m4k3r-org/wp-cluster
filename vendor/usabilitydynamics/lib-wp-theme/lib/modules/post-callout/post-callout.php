@@ -30,7 +30,7 @@ if( !class_exists( 'PostCalloutModule' ) ) {
     public function __construct() {
       $opts = array(
         'description' => __( 'Show the title, excerpt and (optional) image of a post.', 'carrington-build' ),
-        'icon'        => 'post-callout/icon.png'
+        'icon'        => plugins_url( '/icon.png', __DIR__ )
       );
       parent::__construct( 'cf-post-callout-module', __( 'Post Callout', 'carrington-build' ), $opts );
 
