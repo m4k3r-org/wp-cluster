@@ -28,6 +28,7 @@ pullSubtree UsabilityDynamics/wp-cluster                  wp-content/plugins/wp-
 pullSubtree UsabilityDynamics/wp-crm                      wp-content/plugins/wp-crm
 pullSubtree UsabilityDynamics/wp-github-updater           wp-content/plugins/wp-github-updater
 pullSubtree UsabilityDynamics/wp-network                  wp-content/plugins/wp-network
+pullSubtree UsabilityDynamics/wp-pagespeed                wp-content/plugins/pagespeed
 pullSubtree UsabilityDynamics/wp-social-stream            wp-content/plugins/wp-social-stream
 pullSubtree UsabilityDynamics/wp-splash                   wp-content/themes/wp-splash-v1.0      v1.0
 pullSubtree UsabilityDynamics/wp-splash                   wp-content/themes/wp-splash-v2.0      v2.0
