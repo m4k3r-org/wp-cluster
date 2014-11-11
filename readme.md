@@ -14,6 +14,25 @@ make snapshotImport
 wp cloud sites
 ```
 
+### Setting Up wpCloud.io Remote
+You will need to have a wpCloud.io SSH key setup first.
+
+Add wpCloud.io as a remote:
+```
+git remote add cloud git@wpcloud.io:DiscoDonniePresents/www.discodonniepresents.com.git
+```
+
+Merge any updates from production into current branch:
+```
+git fetch cloud
+git merge cloud/production
+```
+
+Push to production deployment:
+```
+git push cloud production
+```
+
 ### Cache Purging
 To purge Varnish cache, run the following commands. Be advised, Varnish will only accept purge notifications from accepted IP addresses.
 

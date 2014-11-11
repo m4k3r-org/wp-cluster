@@ -34,9 +34,6 @@ default: install
 clean:
 	rm -rf composer.lock
 	rm -rf wp-vendor/composer
-	rm -rf wp-content/themes/wp-disco**
-	rm -rf wp-content/themes/wp-disco**
-	rm -rf wp-content/themes/wp-festival**
 	composer clear-cache
 	@echo "Cleared out vendor crap."
 
@@ -60,7 +57,7 @@ snapshot:
 # Create MySQL Snapshot
 #
 snapshotImport:
-	@echo "Downloading MySQL snapshot for <${CURRENT_BRANCH}> branch to ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
+	@echo "Downloading MySQL snapshot for <${CURRENT_BRANCH}> branch from from gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz to ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
 	@rm -rf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
 	@gsutil -m cp gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
 	@gunzip ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz

@@ -47,8 +47,8 @@
         "collate": "utf8_general_ci",
         "host": "rds.wpcloud.io",
         "name": "edm_production",
-        "password": "psxcazdhbpoxbkfl",
         "user": "edm_production",
+        "password": "psxcazdhbpoxbkfl",
         "prefix": "edm_",
         "persistent": false
       },
