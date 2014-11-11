@@ -27,8 +27,8 @@ define('BUILD_ABOUT_MENU_USER_OPTION', 'build-always-show-module-about');
 				<h2 class="cfct-build-help-header"><a class="module-help-button" href="#cfct-popup-cfct-module-about">Module Help</a></h2>';
 		}
 		
-		public function form($data, $module_type) {
-			$html = apply_filters('cfct-module-about-text', '', $module_type);
+		public function html($data, $option_data) {
+			$html = apply_filters('cfct-module-about-text', '', $data['module_type']);
 			return $html;
 		}
 		

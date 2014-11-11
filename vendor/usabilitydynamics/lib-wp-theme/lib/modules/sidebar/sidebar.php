@@ -16,7 +16,7 @@ if( !class_exists( 'SidebarModule' ) ) {
     public function __construct() {
       $opts = array(
         'description' => __( 'Place a WordPress Sidebar in to the layout.', 'carrington-build' ),
-        'icon'        => '/sidebar/icon.png' // relative to /path/to/carrington-build/modules
+        'icon'        => plugins_url( '/icon.png', __DIR__ )
       );
       parent::__construct( 'cfct-sidebar-module', __( 'SideBar', 'carrington-build' ), $opts );
 

@@ -15,11 +15,34 @@
     }
   ],
   "minimum-stability": "dev",
+  "config": {
+    "preferred-install": "dist",
+    "github-protocols": [ "ssh" ],
+    "vendor-dir": "vendor",
+    "bin-dir": "vendor/bin",
+    "component-dir": "components",
+    "optimize-autoloader": true
+  },
   "require": {
     "composer/installers": "~1.0",
-    "UsabilityDynamics/lib-carrington": "~1.2",
+    "UsabilityDynamics/lib-carrington": "~1.3",
     "UsabilityDynamics/lib-wp-theme": "~0.2",
   	"UsabilityDynamics/lib-js-elastic-filter": "~3.0"
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/plugins/{$name}": [
+        "type:wordpress-muplugin",
+        "type:wordpress-plugin",
+        "type:wpackagist-plugin"
+      ],
+      "vendor/themes/{$name}": [
+        "type:wordpress-theme"
+      ],
+      "vendor/{$vendor}/{$name}": [
+        "type:wordpress-library"
+      ]
+    }
   },
   "require-dev": {
     "UsabilityDynamics/wp-flawless/v1.0": "master"

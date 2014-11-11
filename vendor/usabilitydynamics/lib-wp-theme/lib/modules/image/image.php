@@ -9,7 +9,7 @@ if( !class_exists( 'ImageModule' ) ) {
     public function __construct() {
       $opts = array(
         'description' => __( 'Add an image from the media library.', 'carrington-build' ),
-        'icon'        => 'image/icon.png'
+        'icon'        => plugins_url( '/icon.png', __DIR__ )
       );
 
       parent::__construct( 'cfct-module-image', __( 'Image', 'carrington-build' ), $opts );

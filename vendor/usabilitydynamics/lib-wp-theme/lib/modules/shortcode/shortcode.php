@@ -11,7 +11,7 @@ if( !class_exists( 'ShortcodeModule' ) ) {
     public function __construct() {
       $opts = array(
         'description' => __( 'Insert a shortcode into the layout.', 'carrington-build' ),
-        'icon'        => 'shortcode/icon.png'
+        'icon'        => plugins_url( '/icon.png', __DIR__ )
       );
 
       // use if this module is to have no user configurable options

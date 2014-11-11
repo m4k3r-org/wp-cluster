@@ -1,3 +1,7 @@
+#### 2.2.1
+* Updated Carrington Build (UsabilityDynamics/lib-carrington) to v1.3.3.
+* Reinstalled all vendor dependencies.
+
 #### 2.2.0
 * Added changes.md.
 * Changed name to WP-Disco v2.0.

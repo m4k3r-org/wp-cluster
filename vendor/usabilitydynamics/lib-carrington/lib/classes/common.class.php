@@ -11,6 +11,7 @@ class cfct_build_common {
 	public $template;
 	public $registered_modules_dirs = array();
 	public $registered_module_options_dirs = array();
+	public $registered_row_options_dirs = array();
 	public $enable_custom_attributes;
 	public $module_urls = array();
 	public $loaded_modules = array();
@@ -20,8 +21,8 @@ class cfct_build_common {
 	public function __construct() {
 		$this->template = new cfct_build_template();
 		add_action('cfct-modules-loaded', array($this, 'import_included_modules'), 10);
-		add_action('cfct-modules-loaded', array($this, 'import_module_options'), 11);
 		add_action('cfct-rows-loaded', array($this, 'import_included_rows'));
+		add_action('cfct-modules-loaded', array($this, 'import_options'), 11);
 		$this->enable_custom_attributes = apply_filters('cfct-enable-custom-attributes', true);
 	}
 	
@@ -86,6 +87,10 @@ class cfct_build_common {
 	}
 	
 	public function get_post_id() {
+		if (!isset($this->post_id)) {
+			global $post;
+			$this->post_id = (is_object($post)) ? $post->ID : 0;
+		}
 		return $this->post_id;
 	}
 	
@@ -152,7 +157,7 @@ class cfct_build_common {
 
 	function get_module_options_path($basename) {
 		$path = null;
-		$loaded_module_options = $this->included_module_options(true);
+		$loaded_module_options = $this->included_options(true);
 		if (!empty($loaded_module_options[$basename])) {
 			$path = $loaded_module_options[$basename];
 		}
@@ -190,7 +195,7 @@ class cfct_build_common {
 				break;
 			case strpos($module, 'wp-content') !== false:
 				# this is a pretty good guess... let's go with it.
-				$url = trailingslashit(get_bloginfo('siteurl').substr(dirname($module), strpos($module, 'wp-content') - 1, strlen($module) -1));
+				$url = trailingslashit(get_bloginfo('url').substr(dirname($module), strpos($module, 'wp-content') - 1, strlen($module) -1));
 				break;
 			default:
 				# if we've gotten this far then we haven't determined a usable url, give the developer a chance to recover
@@ -291,24 +296,27 @@ class cfct_build_common {
 	
 // Included Module Options
 
-	public function import_module_options() {
-		$modules = $this->included_module_options();
+	public function import_options() {
+		$modules = $this->included_options();
 		foreach ($modules as $module) {
 			include_once($module);
 		}
 		return true;
 	}
 
-	public function included_module_options($get_lookup = false) {
-		if ($modules = wp_cache_get('cfct-build-included-module-options-lookup', 'cfct_build')) {
+	public function included_options($get_lookup = false) {
+		if ($modules = wp_cache_get('cfct-build-included-options-lookup', 'cfct_build')) {
 			if ($get_lookup) {
 				return $modules;
 			}
 			return array_values($modules);
 		}
-	
-		$paths = apply_filters('cfct-module-option-dirs', array_merge(array(trailingslashit(CFCT_BUILD_DIR).'module-options'), $this->registered_module_options_dirs));
+
+		$module_paths = apply_filters('cfct-module-option-dirs', array_merge(array(trailingslashit(CFCT_BUILD_DIR).'module-options'), $this->registered_module_options_dirs));
+		$row_paths = apply_filters('cfct-row-option-dirs', array_merge(array(trailingslashit(CFCT_BUILD_DIR).'row-options'), $this->registered_row_options_dirs));
+		$paths = array_merge($module_paths, $row_paths);
 		$modules = array();
+
 		foreach ($paths as $path) {
 			if (is_dir($path) && $handle = opendir($path)) {
 				while (false !== ($file = readdir($handle))) {
@@ -320,7 +328,7 @@ class cfct_build_common {
 			}
 		}
 
-		wp_cache_set('cfct-build-included-module-options-lookup', $modules, 'cfct_build', 3600);
+		wp_cache_set('cfct-build-included-options-lookup', $modules, 'cfct_build', 3600);
 		if ($get_lookup) {
 			return $modules;
 		}
@@ -430,7 +438,7 @@ class cfct_build_common {
 	 */
 	public function get_postmeta($post_id = null) {
 		if (is_null($post_id)) {
-			$post_id = $this->post_id;
+			$post_id = $this->get_post_id();
 		}
 		
 		// maybe_unserialize added to safeguard against WordPress double serialization on data import
@@ -440,9 +448,46 @@ class cfct_build_common {
 				'timestamp' => null,
 				'data' => null,
 				'template' => null,
-				'active_state' => null
+				'active_state' => null,
+				'row-options' => array(),
+				'module-options' => array(),
 			));
-		}		
+		}
+		else {
+			// Upgrade for module/row option data
+			//
+
+			$resave = false;
+
+			if (!isset($post_data['row-options'])) {
+				$post_data['row-options'] = array();
+				if (isset($post_data['template']['rows']) && is_array($post_data['template']['rows'])) {
+					foreach ($post_data['template']['rows'] as $row_id => $row) {
+						if (isset($row['cfct-row-options'])) {
+							$post_data['row-options'][$row_id] = $row['cfct-row-options'];
+						}
+					}
+				}
+				$resave = true;
+			}
+
+			if (!isset($post_data['module-options'])) {
+				$post_data['module-options'] = array();
+				if (isset($post_data['data']['modules']) && is_array($post_data['data']['modules'])) {
+					foreach ($post_data['data']['modules'] as $module_id => $module) {
+						if (isset($module['cfct-module-options'])) {
+							$post_data['module-options'][$module_id] = $module['cfct-module-options'];
+						}
+					}
+				}
+				$resave = true;
+			}
+
+			if ($resave) {
+				$this->set_postmeta($post_id, $post_data);
+			}
+		}
+
 		return apply_filters('cfct-get-postmeta', $post_data, $post_id);
 	}
 	
@@ -507,8 +552,7 @@ class cfct_build_common {
 	public function get_module_extras($type, $admin = false) {		
 		$ret = $this->get_extras($type, $admin, 'modules');
 		if ($this->enable_custom_attributes) {
-			$module_options = cfct_module_options::get_instance();
-			$ret .= $module_options->$type($admin);
+			$ret .= call_user_func(array('cfct_module_options', $type), $admin);
 		}
 		return apply_filters('cfct-module-extras', $ret, $type, $admin);
 	}
@@ -522,6 +566,9 @@ class cfct_build_common {
 	 */
 	public function get_row_extras($type, $admin = false) {
 		$ret = $this->get_extras($type, $admin, 'rows');	
+		if ($this->enable_custom_attributes) {
+			$ret .= call_user_func(array('cfct_row_options', $type), $admin);
+		}
 		return apply_filters('cfct-row-extras', $ret, $type, $admin);
 	}
 	
@@ -546,6 +593,7 @@ class cfct_build_common {
 		$this->template->init();
 		$this->import_included_rows();
 		foreach ($this->template->$from as $obj) {
+
 			if (method_exists($obj, $type)) {
 				$r = $obj->$func();
 				if (!empty($r)) {
