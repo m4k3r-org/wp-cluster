@@ -22,11 +22,11 @@ header( 'Content-Type: text/html; charset=utf-8' );
 	<html xmlns="http://www.w3.org/1999/xhtml"<?php if ( is_rtl() ) echo ' dir="rtl"'; ?>>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title><?php _e( 'Database Error' ); ?></title>
-
+		<title><?php _e( 'Network Error' ); ?></title>
 	</head>
 	<body>
-	<h1><?php _e( 'Error establishing a database connection' ); ?></h1>
+	<h1><?php _e( 'Network Error' ); ?></h1>
+	<p><?php _e( 'Error establishing a database connection' ); ?></p>
 	</body>
 	</html>
 <?php
