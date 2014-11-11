@@ -1,12 +1,7 @@
-cache
 temp
 node_modules
-static/cache
-static/codex
 npm-debug.log
-wp-test-config.php
-
-.git
+static/codex
 .svn
 .idea
 .idea/workspace.xml
