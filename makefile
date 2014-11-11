@@ -39,20 +39,26 @@ setEnvironment:
 #
 #
 clean:
-	rm -rf composer.lock
-	rm -rf wp-vendor/composer
-	composer clear-cache
+	@rm -rf composer.lock
+	@rm -rf wp-vendor/composer
+	@composer clear-cache
 	@echo "Cleared out vendor crap."
 
+##
+##
 update:
 	composer update --no-dev --prefer-dist
 	@echo "Updated Composer dependencies."
 
+##
+##
 flushTransient:
 	@echo "Flushing transients."
 	@wp --allow-root transient delete-all
 	@wp --allow-root db query 'DELETE FROM edm_sitemeta WHERE meta_key LIKE "%_site_transient%"'
 
+## Generate MySQL Snapshot
+##
 snapshot:
 	@make env
 	@echo "Creating MySQL snapshot for <${CURRENT_BRANCH}> branch."
@@ -62,14 +68,15 @@ snapshot:
 	@gsutil -m cp -D gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz gs://discodonniepresents.com/${ACCOUNT_NAME}_develop.sql.gz
 	@echo "Snapshot available at gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz."
 
-# Create MySQL Snapshot
-#
+## Create MySQL Snapshot
+##
 snapshotImport:
 	@echo "Downloading MySQL snapshot for <${CURRENT_BRANCH}> branch from from gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz to ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
 	@rm -rf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
 	@gsutil -m cp gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
 	@gunzip ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
 	@wp --allow-root db import ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
+	@rm -rf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@wp cache flush
 	@wp transient delete-all
 	@echo "MySQL snapshot downloaded from gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz and imported."

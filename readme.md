@@ -180,3 +180,14 @@ gsutil -m setacl -R -a public-read gs://ddpsdixyeejhwkgg.wpcloud.zone/media
 ```
 gsutil -m rsync -rd  ./wp-content/storage/2014.dayafter.com/media/                gs://2014.dayafter.com/
 ```
+
+### Technologies Used
+There are several technologies that are used in our stack. Initially you won't have to work with them and we can explore each in more detail later.
+
+* Varnish - All requests to production and develop branch use Varnish for caching.
+* PageSpeed - This is a Google middleware that optimizes HTML output on the fly.
+* ElasticSearch - We use this for searching and filtering. All Events are synchronized between WordPress in an ElasticSearch index.
+* HHVM - Any PHP code has to be HHVM compatible since we'll be switching our production server to this shortly.
+* Docker - The site's application code is packaged into a Docker image before being pushed to production.
+* Gsutil - A CLI tool for accessing Google Cloud Storage files, which have all media uploads, MySQL dumps, etc.
+
