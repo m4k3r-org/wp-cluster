@@ -27,7 +27,7 @@ namespace UsabilityDynamics\Theme {
      * @property version
      * @var string
      */
-    public static $version = '0.1.2';
+    public static $version = '2.0.0';
 
     /**
      * Textdomain String
@@ -597,9 +597,9 @@ namespace UsabilityDynamics\Theme {
      *
      */
     public function loaded() {
-      wp_register_style( 'app', content_url( 'themes/wp-splash/static/styles/app.css' ), array(), Splash::$version, 'all' );
+      wp_register_style( 'app', content_url( 'themes/wp-splash-v2.0/static/styles/app.css' ), array(), Splash::$version, 'all' );
       wp_register_script( 'udx-requires', '//cdn.udx.io/udx.requires.js', array(), '3.1.2', true );
-      wp_register_script( 'app', content_url( 'themes/wp-splash/static/scripts/app.js' ), array( 'udx-requires' ), Splash::$version, true );
+      wp_register_script( 'app', content_url( 'themes/wp-splash-v2.0/static/scripts/app.js' ), array( 'udx-requires' ), Splash::$version, true );
     }
 
     /**
