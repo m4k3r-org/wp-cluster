@@ -72,6 +72,7 @@ namespace EDM\Application\Policy {
 	add_filter( 'pre_option_app:api:url', 'EDM\Application\Policy\Override::app_api_url' );
 	add_filter( 'pre_option_app:api:key', 'EDM\Application\Policy\Override::app_api_key' );
 	add_filter( 'pre_option_app:api:secret', 'EDM\Application\Policy\Override::app_api_secret' );
+	add_filter( 'pre_option_app:api:index', 'EDM\Application\Policy\Override::app_api_index' );
 
 	add_filter( 'pre_option_upload_path', 'EDM\Application\Policy\Override::upload_path' );
 	add_filter( 'pre_option_stylesheet_root', 'EDM\Application\Policy\Override::theme_root' );
@@ -167,7 +168,12 @@ namespace EDM\Application\Policy {
 		 * @return string
 		 */
 		static function theme_selection( $default = null ) {
+
 			$default = str_replace( array( 'wp-splash', 'wp-disco-v1.0' ), array( 'wp-splash-v1.0', 'wp-disco-v2.0' ), $default );
+
+			if( $default === 'flawless' ) {
+				return 'wp-disco-v2.0';
+			}
 
 			return $default;
 
@@ -315,28 +321,31 @@ namespace EDM\Application\Policy {
 		 */
 		static public function elasticsearch() {
 
-			$_secretKey = get_option( 'app:api:key' );
-			$_serviceIndex = get_option( 'app:api:url' );
+			$_serviceUrl = get_option( 'app:api:url' );
+			$_secretKey = get_option( 'app:api:secret' );
+			$_serviceIndex = get_option( 'app:api:index' );
 
 			if( !$_secretKey || !$_serviceIndex ) {
 				return false;
 			}
 
 			$_types = array(
-				"post" => true,
-				"page" => true,
+				"post" => 1,
+				"page" => 1,
 				"promoter" => 1,
+				"tour" => 1,
 				"videoobject" => 1,
 				"event" => 1,
 				"venue" => 1,
-				"imagegallery" => 1,
-				"tour" => 1
+				"artist" => 1,
+				"credit" => 1,
+				"imagegallery" => 1
 			);
 
 			$_taxonomies = array(
-				"category" => true,
-				"post_tag" => true,
-				"post_format" => true
+				"category" => 1,
+				"post_tag" => 1,
+				"post_format" => 1
 			);
 
 			$_fields = array(
@@ -345,20 +354,21 @@ namespace EDM\Application\Policy {
 			);
 
 			$_setting = array(
-				"server_url" => "{$_secretKey}@{$_serviceIndex}",
+				"last_tab" => "server",
+				"server_url" => str_replace( 'http://', '' . $_secretKey . '@', $_serviceUrl ),
 				"server_index" => "",
 				"server_timeout_read" => "",
 				"server_timeout_write" => "",
 				"fields" => $_fields,
 				"types" => $_types,
 				"taxonomies" => $_taxonomies,
-				"fuzzy" => null,
+				"fuzzy" => '',
 				"score_field_post_content" => 1,
-				"score_field_post_title" => null,
-				"score_field_post_date" => null,
-				"score_tax_category" => null,
-				"score_tax_post_tag" => null,
-				"score_tax_post_format" => null
+				"score_field_post_title" => '',
+				"score_field_post_date" => '',
+				"score_tax_category" => '',
+				"score_tax_post_tag" => '',
+				"score_tax_post_format" => ''
 			);
 
 			// die( '<pre>' . print_r( $_setting, true ) . '</pre>');
@@ -368,7 +378,7 @@ namespace EDM\Application\Policy {
 		}
 
 		static public function app_api_url() {
-			return ( defined( 'WP_ELASTIC_SERVICE_INDEX' ) ? WP_ELASTIC_SERVICE_INDEX : null );
+			return 'http://' . ( defined( 'WP_ELASTIC_SERVICE_URL' ) ? WP_ELASTIC_SERVICE_URL : null );
 		}
 
 		static public function app_api_key() {
@@ -377,6 +387,10 @@ namespace EDM\Application\Policy {
 
 		static public function app_api_secret() {
 			return defined( 'WP_ELASTIC_SECRET_KEY' ) ? WP_ELASTIC_SECRET_KEY : null;
+		}
+
+		static public function app_api_index() {
+			return defined( 'WP_ELASTIC_SERVICE_INDEX' ) ? WP_ELASTIC_SERVICE_INDEX : null;
 		}
 
 	}
@@ -392,7 +406,8 @@ namespace EDM\Application\Policy {
 		wp_send_json( array(
 			"siteurl"                       => get_option( 'siteurl' ),
 			"network.url"                   => get_site_option( 'siteurl' ),
-			"app:api:url"                   => 'http://' . get_option( 'app:api:url' ),
+			"app:api:url"                   => get_option( 'app:api:url' ),
+			"app:api:index"                 => get_option( 'app:api:index' ),
 			"app:api:key"                   => get_option( 'app:api:key' ),
 			"app:api:secret"                => get_option( 'app:api:secret' ),
 			"home"                          => get_option( 'home' ),
@@ -471,8 +486,13 @@ namespace EDM\Application\Policy {
 	 *
 	 */
 	add_filter( 'elasticsearch_nhp_options_args_setup', function( $args ) {
+
+		// wp_enqueue_script('es-indexing', plugins_url( '/manage-index.js', __FILE__ ), array('jquery'));
+		// Breaks manage-index.js from loading...
+
 		$args['page_type'] = 'submenu';
 		$args['page_parent'] = 'tools.php';
+
 		return $args;
 	} );
 

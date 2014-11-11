@@ -112,7 +112,7 @@ module.exports = function build( grunt ) {
         options: {
           stdout: true
         },
-        command: 'composer update --prefer-source'
+        command: 'composer update --prefer-source --no-dev'
       }
     }
 

@@ -69,19 +69,18 @@
       "secure_auth_salt": "5lL^K_Y:V(Nqs yVl/24KG[[4>WZ.jpf8vL*p/.c)Qqf+b2xfP^#WR+p8h.qh3~.",
       "qm_disabled": true,
       "wp": {
-        "default_theme": "wp-splash",
+        "default_theme": "wp-splash-v1.0",
         "debug_display": false,
         "use_themes": true,
         "elastic": {
           "public_key": "qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty",
           "secret_key": "qccj-nxwm-etsk-niuu:chdq-tvek-desl-izlf",
-          "service_index": "api.discodonniepresents.com/documents/v1/",
-          "service_url": "qccj-nxwm-etsk-niuu"
+          "service_url": "api.discodonniepresents.com/documents/v1/",
+          "service_index": "qccj-nxwm-etsk-niuu"
         },
         "logs_dir": "wp-content/.logs",
         "max_memory_limit": "{wp_memory_limit}",
         "memory_limit": "512M",
-        "post_revisions": 30,
         "social_stream": {
           "instagram_access_token": "44220099.ec4c95b.d2c3acc28b1f432884be1ddcd8733499",
           "instagram_client_id": "ec4c95bf89754e1d8fd3581edba04808",

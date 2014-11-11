@@ -80,6 +80,10 @@ namespace wpCloud\Vertical\EDM {
 
 	    // load_plugin_textdomain( 'wp-vertical-edm', false, dirname( plugin_basename( dirname( __FILE__ ) ) ) . '/static/locale/' );
 
+	    add_action('admin_head-tools_page_elastic_search', function(){
+		    wp_enqueue_script('edm-elastic-index', plugins_url( '/static/scripts/src/manage-index.js', dirname( __FILE__ ) ), array('jquery'));
+	    });
+
 	    // Enable Standard Actions.
 	    add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_menu' ), 10 );
 	    add_action( 'login_enqueue_scripts',  array( $this, 'login_enqueue_scripts' ), 30 );
