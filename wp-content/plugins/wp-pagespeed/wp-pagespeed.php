@@ -7,7 +7,7 @@
  * Version: 0.1.1
  * Author URI: http://usabilitydynamics.com
  * Network: True
- * GitHub Plugin URI: UsabilityDynamics/wp-veneer
+ * GitHub Plugin URI: UsabilityDynamics/wp-pagespeed
  *
  */
 
