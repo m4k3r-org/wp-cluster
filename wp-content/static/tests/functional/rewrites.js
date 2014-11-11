@@ -31,7 +31,7 @@ function checkURL( url, callback ) {
       followRedirect: false,
       url: url
     }, function( error, res, body ) {
-      console.log( 'done', url );
+      // console.log( 'done', url );
 
       if( error ) {
         return _done( error );

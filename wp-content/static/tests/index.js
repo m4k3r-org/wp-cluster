@@ -4,6 +4,7 @@
  */
 module.exports = {
   "Directory structure": require( './unit/structure' ),
+  "gCloud": require( './functional/gcloud' ),
   "Assets": require( './functional/assets' ),
-  "Rewrites": require( './functional/rewrites' )
+  // "Rewrites": require( './functional/rewrites' )
 };

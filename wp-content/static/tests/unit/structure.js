@@ -7,7 +7,7 @@ module.exports = {
   'circle.yml exists.': fileExists( 'circle.yml' ),
   'wp-cli.yml exists.': fileExists( 'wp-cli.yml' ),
   'composer.json exists.': fileExists( 'composer.json' ),
-  'vendor exists.': fileExists( 'vendor' )
+  'wp-vendor exists.': fileExists( 'wp-vendor' )
 };
 
 
