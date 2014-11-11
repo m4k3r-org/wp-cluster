@@ -29,6 +29,13 @@ SITE_LIST		                  ?=$(shell wp --allow-root site list --field=url --f
 default: install
 
 # Create MySQL Snapshot
+# @todo Add check that direnv exists.
+#
+direnv:
+	@direnv allow
+	@echo "Enabled environment variables in .envrc."
+
+# Create MySQL Snapshot
 #
 #
 clean:

@@ -1,37 +1,37 @@
 ### Setting up Local Environment
+Before running the following commands, please setup a new MySQL database calling it "edm_develop".
+You will also need to have [gsutil](https://cloud.google.com/storage/docs/gsutil), [wp-cli](http://wp-cli.org/gsutil) and [direnv]https://github.com/zimbatm/direnv) installed:
 
+Assuming your local site setup will be in ~/Sites/discodonniepresents.com:
 ```
 cd ~/Sites/discodonniepresents.com
 echo "export WP_ENV=develop" >> .envrc
 echo "export DB_NAME=edm_develop" >> .envrc
 echo "export DB_USER=root" >> .envrc
 echo "export DB_PASSWORD=root" >> .envrc
-echo "export DB_HOST=rds.discodonniepresents.com" >> .envrc
-direnv allow
+echo "export DB_HOST=discodonniepresents.com" >> .envrc
+make direnv
 git clone git@github.com:DiscoDonniePresents/www.discodonniepresents.com.git --depth 1 --branch develop .
 npm install
 make snapshotImport
 wp cloud sites
 ```
+The very last command is to help you determine if wp-cli can connect to DB, meaning everything is setup good.
 
-### Setting Up wpCloud.io Remote
-You will need to have a wpCloud.io SSH key setup first.
+Now we will need to configure Apache. First create a "discodonniepresents.com" host then set the following environment variables:
 
-Add wpCloud.io as a remote:
 ```
-git remote add cloud git@wpcloud.io:DiscoDonniePresents/www.discodonniepresents.com.git
+SetEnv DB_NAME edm_develop
+SetEnv DB_USER root
+SetEnv DB_PASSWORD root
+SetEnv DB_HOST localhost
+SetEnv WP_ENV develop
+SetEnv WP_DEBUG 1
+SetEnv WP_ACCESS local
+SetEnv QM_DISABLED false
 ```
 
-Merge any updates from production into current branch:
-```
-git fetch cloud
-git merge cloud/production
-```
-
-Push to production deployment:
-```
-git push cloud production
-```
+That should be enough to get discodonniepresents.com to work locally, other network sites will also need aliases.
 
 ### Cache Purging
 To purge Varnish cache, run the following commands. Be advised, Varnish will only accept purge notifications from accepted IP addresses.
@@ -100,6 +100,24 @@ composer show --self
 * In addition, we have a database backup done daily, that can be restored by including the following text in your commit message:
   [drop refreshdb]
 
+### Setting Up wpCloud.io Remote
+You will need to have a wpCloud.io SSH key setup first.
+
+Add wpCloud.io as a remote:
+```
+git remote add cloud git@wpcloud.io:DiscoDonniePresents/www.discodonniepresents.com.git
+```
+
+Merge any updates from production into current branch:
+```
+git fetch cloud
+git merge cloud/production
+```
+
+Push to production deployment:
+```
+git push cloud production
+```
 
 ### Media Sync
 
