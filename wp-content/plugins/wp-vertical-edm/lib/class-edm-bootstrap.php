@@ -42,6 +42,7 @@ namespace wpCloud\Vertical\EDM {
 	    }
 
 	    return;
+
       // List Sites.
       API::define( '/network/v1/sites', array(
         'scopes' => array( 'read' ),
