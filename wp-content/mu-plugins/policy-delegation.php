@@ -487,9 +487,11 @@ namespace EDM\Application\Policy {
 	 */
 	add_filter( 'elasticsearch_nhp_options_args_setup', function( $args ) {
 
+		// wp_enqueue_script('es-indexing', plugins_url( '/manage-index.js', __FILE__ ), array('jquery'));
 		// Breaks manage-index.js from loading...
-		// $args['page_type'] = 'submenu';
-		// $args['page_parent'] = 'tools.php';
+
+		$args['page_type'] = 'submenu';
+		$args['page_parent'] = 'tools.php';
 
 		return $args;
 	} );
