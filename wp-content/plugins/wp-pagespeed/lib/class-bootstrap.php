@@ -103,6 +103,17 @@ namespace UsabilityDynamics\PageSpeed {
 					$this->_settings = new Settings();
 				}
 
+				// Load options.
+				$this->set(array(
+					"core" => array(
+						"enabled" => get_option( "wp-pagespeed:core.enabled" )
+					),
+					"minify" => array(
+						"enabled" => get_option( "wp-pagespeed:minify.enabled" ),
+						"level" => get_option( "wp-pagespeed:minify.level" )
+					)
+				));
+
 				// Initialize plugin.
 				add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 20 );
 
@@ -114,6 +125,29 @@ namespace UsabilityDynamics\PageSpeed {
 			public function plugins_loaded() {
 
 				add_action( 'template_redirect', array( $this, 'template_redirect' ) );
+				// add_action( 'admin_init', array( $this, 'admin_init' ) );
+
+			}
+
+			public function setting_callback_function() {
+				echo '<p>Intro text for our settings section</p>';
+
+			}
+			public function setting_section_callback_function() {
+				echo '<label><input name="core.enabled" type="checkbox" value="1" class="code" ' . checked( 1, get_option( 'core.enabled' ), false ) . ' /> Explanation text</label>';
+			}
+
+			/**
+			 *
+			 */
+			public function admin_init() {
+
+				register_setting( 'reading', 'core.enabled' );
+				register_setting( 'reading', 'minify.enabled' );
+
+				add_settings_section( 'wp-pagespeed-section', __( 'PageSpeed Settings', 'wp-pagespeed' ), array( $this, 'setting_section_callback_function' ), 'reading' );
+
+				add_settings_field( 'core.enabled', __( 'Enabled', 'wp-pagespeed' ), array( $this, 'setting_callback_function' ), 'reading', 'wp-pagespeed-section' );
 
 			}
 
