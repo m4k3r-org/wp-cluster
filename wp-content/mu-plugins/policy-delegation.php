@@ -68,7 +68,11 @@ namespace EDM\Application\Policy {
 	add_filter( 'pre_site_option_illegal_names', '__return_empty_array' );
 	add_filter( 'pre_option_recently_edited', '__return_empty_array' );
 
-	// Override options - return a fixed array
+	// Override options - return a fixed array/string
+	add_filter( 'pre_option_app:api:url', 'EDM\Application\Policy\Override::app_api_url' );
+	add_filter( 'pre_option_app:api:key', 'EDM\Application\Policy\Override::app_api_key' );
+	add_filter( 'pre_option_app:api:secret', 'EDM\Application\Policy\Override::app_api_secret' );
+
 	add_filter( 'pre_option_upload_path', 'EDM\Application\Policy\Override::upload_path' );
 	add_filter( 'pre_option_stylesheet_root', 'EDM\Application\Policy\Override::theme_root' );
 	add_filter( 'pre_option_template_root', 'EDM\Application\Policy\Override::theme_root' );
@@ -244,7 +248,7 @@ namespace EDM\Application\Policy {
 		 * For now all themese are in same directory, relative to wp-content
 		 * @return string
 		 */
-		static function theme_root() {
+		static public function theme_root() {
 			return '/themes';
 		}
 
@@ -255,7 +259,7 @@ namespace EDM\Application\Policy {
 		 *
 		 * @return string
 		 */
-		static function upload_path( $settings ) {
+		static public function upload_path( $settings ) {
 			global $current_blog;
 			return "storage/" . $current_blog->domain . "/media" ;
 		}
@@ -264,7 +268,7 @@ namespace EDM\Application\Policy {
 		 * Override Lodded Plugins' Settings
 		 *
 		 */
-		static function plugins_loaded() {
+		static public function plugins_loaded() {
 			global $wp_veneer, $wp_cluster, $wp_pagespeed;
 
 			if ( class_exists( 'wpCloud\Vertical\EDM\Bootstrap' ) ) {
@@ -309,10 +313,10 @@ namespace EDM\Application\Policy {
 		 *
 		 * @return array
 		 */
-		static function elasticsearch() {
+		static public function elasticsearch() {
 
-			$_secretKey = defined( 'WP_ELASTIC_SECRET_KEY' ) ? WP_ELASTIC_SECRET_KEY : null;
-			$_serviceIndex = defined( 'WP_ELASTIC_SERVICE_INDEX' ) ? WP_ELASTIC_SERVICE_INDEX : null;
+			$_secretKey = get_option( 'app:api:key' );
+			$_serviceIndex = get_option( 'app:api:url' );
 
 			if( !$_secretKey || !$_serviceIndex ) {
 				return false;
@@ -363,9 +367,24 @@ namespace EDM\Application\Policy {
 
 		}
 
+		static public function app_api_url() {
+			return ( defined( 'WP_ELASTIC_SERVICE_INDEX' ) ? WP_ELASTIC_SERVICE_INDEX : null );
+		}
+
+		static public function app_api_key() {
+			return defined( 'WP_ELASTIC_PUBLIC_KEY' ) ? WP_ELASTIC_PUBLIC_KEY : null;
+		}
+
+		static public function app_api_secret() {
+			return defined( 'WP_ELASTIC_SECRET_KEY' ) ? WP_ELASTIC_SECRET_KEY : null;
+		}
+
 	}
 
 	/**
+	 *
+	 * http://discodonniepresents.com/api/v1/site.json
+	 * http://discodonniepresents.com/wp-admin/admin-ajax.php?action=/v1/site
 	 *
 	 */
 	function api_site() {
@@ -373,6 +392,9 @@ namespace EDM\Application\Policy {
 		wp_send_json( array(
 			"siteurl"                       => get_option( 'siteurl' ),
 			"network.url"                   => get_site_option( 'siteurl' ),
+			"app:api:url"                   => 'http://' . get_option( 'app:api:url' ),
+			"app:api:key"                   => get_option( 'app:api:key' ),
+			"app:api:secret"                => get_option( 'app:api:secret' ),
 			"home"                          => get_option( 'home' ),
 			"current_theme"                 => get_option( 'current_theme' ),
 			"stylesheet"                    => get_option( 'stylesheet' ),

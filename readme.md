@@ -27,7 +27,9 @@ SetEnv DB_PASSWORD root
 SetEnv DB_HOST localhost
 SetEnv WP_ENV develop
 SetEnv WP_DEBUG 1
-SetEnv WP_ACCESS local
+SetEnv WP_ELASTIC_SECRET_KEY jqnp-krmw-nmap-idpk:julw-urbp-vzst-jwwv
+SetEnv WP_ELASTIC_PUBLIC_KEY jqnp-krmw-nmap-idpk-ooau-bkfm-bghf-jatg
+SetEnv WP_ELASTIC_SERVICE_INDEX api.discodonniepresents-com.drop.ud-dev.com
 SetEnv QM_DISABLED false
 ```
 
@@ -118,6 +120,18 @@ Push to production deployment:
 ```
 git push cloud production
 ```
+
+### ElasticSearch Access Keys
+
+#### Production
+* Index: qccj-nxwm-etsk-niuu
+* Admin Key: qccj-nxwm-etsk-niuu:chdq-tvek-desl-izlf
+* Public Key: qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty
+
+#### Development
+* Index: jqnp-krmw-nmap-idpk
+* Admin Key: jqnp-krmw-nmap-idpk:julw-urbp-vzst-jwwv
+* Public Key: jqnp-krmw-nmap-idpk-ooau-bkfm-bghf-jatg
 
 ### Media Sync
 
