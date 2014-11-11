@@ -275,6 +275,10 @@ namespace EDM\Application\Policy {
 			}
 
 			if ( isset( $wp_veneer ) && method_exists( $wp_veneer, 'set' ) ) {
+				$wp_veneer->set( 'varnish.enabled', true );
+				$wp_veneer->set( 'api.enabled', true );
+				$wp_veneer->set( 'logs.enabled', false );
+				$wp_veneer->set( 'rewrites.enabled', true );
 				$wp_veneer->set( 'rewrites.login', false );
 				$wp_veneer->set( 'rewrites.manage', false );
 				$wp_veneer->set( 'rewrites.api', false );
