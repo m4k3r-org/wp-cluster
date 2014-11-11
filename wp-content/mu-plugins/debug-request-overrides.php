@@ -30,7 +30,7 @@ namespace Application\EDM\Debug {
 
 	add_action( 'template_redirect', function () {
 
-		if ( $_SERVER[ 'HTTP_X_DEBUG' ] === 'cdzt-vogs-oar-qged' ) {
+		if ( isset( $_SERVER[ 'HTTP_X_DEBUG' ] ) && $_SERVER[ 'HTTP_X_DEBUG' ] === 'cdzt-vogs-oar-qged' ) {
 			nocache_headers();
 			header( 'pragma: no-cache' );
 			header( 'cache-control: no-cache, private' );

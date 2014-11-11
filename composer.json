@@ -74,7 +74,7 @@
         "use_themes": true,
         "elastic": {
           "public_key": "qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty",
-          "secret_key": "qccj-nxwm-etsk-niuu-chdq-tvek-desl-izlf",
+          "secret_key": "qccj-nxwm-etsk-niuu:chdq-tvek-desl-izlf",
           "service_index": "api.discodonniepresents.com/documents/v1/",
           "service_url": "qccj-nxwm-etsk-niuu"
         },

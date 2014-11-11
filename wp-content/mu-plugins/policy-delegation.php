@@ -302,10 +302,17 @@ namespace EDM\Application\Policy {
 
 		}
 
-		static function elasticsearch( $default = null ) {
+		static function elasticsearch() {
+
+			$_secretKey = defined( 'WP_ELASTIC_SECRET_KEY' ) ? WP_ELASTIC_SECRET_KEY : null;
+			$_serviceIndex = defined( 'WP_ELASTIC_SERVICE_INDEX' ) ? WP_ELASTIC_SERVICE_INDEX : null;
+
+			if( !$_secretKey || !$_serviceIndex ) {
+				return false;
+			}
 
 			$_setting = array(
-				"server_url" => "qccj-nxwm-etsk-niuu:chdq-tvek-desl-izlf@api.discodonniepresents.com/documents/v1/",
+				"server_url" => "{$_secretKey}@{$_serviceIndex}",
 				"server_index" => "",
 				"server_timeout_read" => "",
 				"server_timeout_write" => "",
@@ -337,7 +344,7 @@ namespace EDM\Application\Policy {
 				"score_tax_post_format" => null
 			);
 
-			// update_option( 'elasticsearch', $_setting );
+			die( '<pre>' . print_r( $_setting, true ) . '</pre>');
 
 			return $_setting;
 
