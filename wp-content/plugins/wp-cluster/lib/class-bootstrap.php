@@ -206,7 +206,7 @@ namespace UsabilityDynamics\Cluster {
 	      $this->_cli();
 
 	      // Initialize all else.
-        add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+        add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 20 );
 
       }
 
@@ -414,38 +414,6 @@ namespace UsabilityDynamics\Cluster {
 
       }
 
-
-	    /**
-	     * Toolbar with Git Information.
-	     *
-	     * @author potanin@UD
-	     */
-	    public function toolbar_git(){
-		    global $wp_admin_bar;
-
-		    $wp_admin_bar->add_menu( array(
-			    'id' => 'cluster_git',
-			    'parent' => 'top-secondary',
-			    'title' => sprintf( __( 'Branch: %s' ), Utility::get_git_branch() ),
-			    'href' => '#'
-		    ));
-
-		    $wp_admin_bar->add_menu( array(
-			    'id' => 'cluster_git_message',
-			    'parent' => 'cluster_git',
-			    'title' => sprintf( __( '%s' ), Utility::get_git_commit_message() ),
-			    'href' => '#'
-		    ));
-
-		    $wp_admin_bar->add_menu( array(
-			    'id' => 'cluster_git_version',
-			    'parent' => 'cluster_git',
-			    'title' => sprintf( __( 'Version: %s' ), Utility::get_git_version()->short ),
-			    'href' => '#'
-		    ));
-
-	    }
-
 	    /**
        * Add Cluster Toolbar
        *
@@ -455,37 +423,63 @@ namespace UsabilityDynamics\Cluster {
       public function toolbar_menu() {
         global $wp_admin_bar;
 
-        // $wp_admin_bar->remove_menu( 'wp-logo' );
-        // $wp_admin_bar->remove_menu( 'comments' );
+	      if( $this->get( 'toolbar.git.enabled' ) ) {
 
-        $wp_admin_bar->add_menu( array(
-          'id'    => 'cloud-manager',
-          'meta'  => array(
-            'html'     => '<div class="cluster-toolbar-info"></div>',
-            'target'   => '',
-            'onclick'  => '',
-            'tabindex' => 10,
-            'class'    => 'cluster-toolbar'
-          ),
-          'title' => 'Cloud',
-          'href'  => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
-        ) );
+		      $wp_admin_bar->add_menu( array(
+			      'id' => 'cluster_git',
+			      'parent' => 'top-secondary',
+			      'title' => sprintf( __( 'Branch: %s' ), Utility::get_git_branch() ),
+			      'href' => '#'
+		      ));
 
-        $wp_admin_bar->add_menu( array(
-          'parent' => 'cloud-manager',
-          'id'     => 'cloud-policy',
-          'meta'   => array(),
-          'title'  => 'Policy',
-          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=policy'
-        ) );
+		      $wp_admin_bar->add_menu( array(
+			      'id' => 'cluster_git_message',
+			      'parent' => 'cluster_git',
+			      'title' => sprintf( __( '%s' ), Utility::get_git_commit_message() ),
+			      'href' => '#'
+		      ));
 
-        $wp_admin_bar->add_menu( array(
-          'parent' => 'cloud-manager',
-          'id'     => 'cluster-dns',
-          'meta'   => array(),
-          'title'  => 'DNS',
-          'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=dns'
-        ) );
+		      $wp_admin_bar->add_menu( array(
+			      'id' => 'cluster_git_version',
+			      'parent' => 'cluster_git',
+			      'title' => sprintf( __( 'Version: %s' ), Utility::get_git_version()->short ),
+			      'href' => '#'
+		      ));
+
+	      }
+
+	      if( $this->get( 'toolbar.menu.enabled' ) ) {
+
+		      $wp_admin_bar->add_menu( array(
+			      'id'    => 'cloud-manager',
+			      'meta'  => array(
+				      'html'     => '<div class="cluster-toolbar-info"></div>',
+				      'target'   => '',
+				      'onclick'  => '',
+				      'tabindex' => 10,
+				      'class'    => 'cluster-toolbar'
+			      ),
+			      'title' => 'Cloud',
+			      'href'  => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=networks'
+		      ) );
+
+		      $wp_admin_bar->add_menu( array(
+			      'parent' => 'cloud-manager',
+			      'id'     => 'cloud-policy',
+			      'meta'   => array(),
+			      'title'  => 'Policy',
+			      'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=policy'
+		      ) );
+
+		      $wp_admin_bar->add_menu( array(
+			      'parent' => 'cloud-manager',
+			      'id'     => 'cluster-dns',
+			      'meta'   => array(),
+			      'title'  => 'DNS',
+			      'href'   => $this->cluster_domain . '/manage/admin.php?page=cluster#panel=dns'
+		      ) );
+
+	      }
 
       }
 
@@ -673,13 +667,7 @@ namespace UsabilityDynamics\Cluster {
 
 
 	      // Render Toolbar.
-	      if( $this->get( 'toolbar.menu.enabled' ) ) {
-		      add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_menu' ), 10 );
-	      }
-
-	      if( $this->get( 'toolbar.git.enabled' )  ) {
-		      add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_git' ), 90 );
-	      }
+	      add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_menu' ), 10 );
 
 	      add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 21 );
 	      add_action( 'add_admin_bar_menus', array( $this, 'add_admin_bar_menus' ), 21 );
@@ -1006,20 +994,25 @@ namespace UsabilityDynamics\Cluster {
         return self::$instance->_settings ? self::$instance->_settings->get( $key, $default ) : null;
       }
 
-      /**
-       * Set Setting.
-       *
-       * @usage
-       *
-       *    // Set Setting
-       *    Cluster::set( 'my_key', 'my-value' )
-       *
-       * @method get
-       * @for Flawless
-       *
-       * @author potanin@UD
-       * @since 0.1.1
-       */
+	    /**
+	     * Set Setting.
+	     *
+	     * @usage
+	     *
+	     *    // Set Setting
+	     *    Cluster::set( 'my_key', 'my-value' )
+	     *
+	     * @method get
+	     * @for Flawless
+	     *
+	     * @author potanin@UD
+	     * @since 0.1.1
+	     *
+	     * @param null $key
+	     * @param null $value
+	     *
+	     * @return null
+	     */
       public static function set( $key = null, $value = null ) {
         return self::$instance->_settings ? self::$instance->_settings->set( $key, $value ) : null;
       }
