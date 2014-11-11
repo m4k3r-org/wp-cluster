@@ -17,6 +17,7 @@
   "require": {
     "composer/installers": "~1.0",
     "usabilitydynamics/lib-utility": "~0.3",
+    "usabilitydynamics/lib-settings": "~0.2",
     "usabilitydynamics/lib-model": "~0.3"
   },
   "autoload": {

@@ -1,7 +1,6 @@
 <?php
 /**
  * Plugin Name: EDM Vertical
- * Text Domain: edm-vertical
  * Plugin URI: http://wpCloud.io
  * Description: EDM Vertical for wpCloud.io
  * Author: Usability Dynamics, Inc
@@ -9,6 +8,8 @@
  * Network: true
  * Vertical: true
  * Author URI: http://wpCloud.io
+ * Text Domain: edm-vertical
+ * Domain Path: /static/locale/
  *
  * GitHub Plugin URI: wpCloud/wp-vertical-edm
  *

@@ -64,6 +64,7 @@ return array(
     'UsabilityDynamics\\Model\\Manager' => $vendorDir . '/usabilitydynamics/lib-model/lib/class-model-manager.php',
     'UsabilityDynamics\\Model\\Post' => $vendorDir . '/usabilitydynamics/lib-model/lib/models/class-post.php',
     'UsabilityDynamics\\Model\\Utility' => $vendorDir . '/usabilitydynamics/lib-model/lib/class-model-utility.php',
+    'UsabilityDynamics\\Settings' => $vendorDir . '/usabilitydynamics/lib-settings/lib/class-settings.php',
     'UsabilityDynamics\\Structure' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-structure.php',
     'UsabilityDynamics\\Term' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-term.php',
     'UsabilityDynamics\\Utility' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-utility.php',
