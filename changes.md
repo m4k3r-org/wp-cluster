@@ -14,6 +14,7 @@
 * Added wp-pagespeed as a required plugin.
 * Added db-error.php dropin for displaying a custom message for failed DB connections.
 * Changed DB_HOST to rds.discodonniepresents.com which should be overwritten in hosts to point to local MySQL host.
+* Configured ElasticSearch settings for Fantastic Elastic to be network-delegated and moved menu under Settings.
 
 #### 2.2.1
 * Disabled PageSpeed and NewRelic on admin.

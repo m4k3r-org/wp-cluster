@@ -72,6 +72,7 @@ namespace EDM\Application\Policy {
 	add_filter( 'pre_option_upload_path', 'EDM\Application\Policy\Override::upload_path' );
 	add_filter( 'pre_option_stylesheet_root', 'EDM\Application\Policy\Override::theme_root' );
 	add_filter( 'pre_option_template_root', 'EDM\Application\Policy\Override::theme_root' );
+	add_filter( 'pre_option_elasticsearch', 'EDM\Application\Policy\Override::elasticsearch' );
 
 	add_filter( 'option_current_theme', 'EDM\Application\Policy\Extend::theme_selection' );
 	add_filter( 'option_allowedthemes', 'EDM\Application\Policy\Extend::allowedthemes' );
@@ -96,6 +97,11 @@ namespace EDM\Application\Policy {
 	// Cache busting.
 	add_filter( 'wp_cache_themes_persistently', '__return_false' );
 
+	class Defaults {
+
+
+	}
+
 	class Extend {
 
 		/**
@@ -109,6 +115,7 @@ namespace EDM\Application\Policy {
 
 			$_plugins = array_merge( $_plugins, array(
 				"wp-amd/wp-amd.php",
+				"fantastic-elasticsearch/elasticsearch.php",
 				"meta-box/meta-box.php",
 				"wp-simplify/wp-simplify.php",
 				"duplicate-post/duplicate-post.php",
@@ -181,11 +188,13 @@ namespace EDM\Application\Policy {
 
 		}
 
+		/**
+		 * @return string
+		 */
 		static function cloud_storage_bucket() {
 			global $current_blog;
 			return "gs://media." . $current_blog->domain;
 		}
-
 
 		/**
 		 * Automatically Set for Network.
@@ -293,8 +302,52 @@ namespace EDM\Application\Policy {
 
 		}
 
+		static function elasticsearch( $default = null ) {
+
+			$_setting = array(
+				"server_url" => "qccj-nxwm-etsk-niuu:chdq-tvek-desl-izlf@api.discodonniepresents.com/documents/v1/",
+				"server_index" => "",
+				"server_timeout_read" => "",
+				"server_timeout_write" => "",
+				"fields" => array(
+					"post_content" => 1,
+					"post_title" => 1
+				),
+				"types" => array(
+					"post" => true,
+					"page" => true,
+					"promoter" => 1,
+					"videoobject" => 1,
+					"event" => 1,
+					"venue" => 1,
+					"imagegallery" => 1,
+					"tour" => 1
+				),
+				"taxonomies" => array(
+					"category" => true,
+					"post_tag" => true,
+					"post_format" => true
+				),
+				"fuzzy" => null,
+				"score_field_post_content" => 1,
+				"score_field_post_title" => null,
+				"score_field_post_date" => null,
+				"score_tax_category" => null,
+				"score_tax_post_tag" => null,
+				"score_tax_post_format" => null
+			);
+
+			// update_option( 'elasticsearch', $_setting );
+
+			return $_setting;
+
+		}
+
 	}
 
+	/**
+	 *
+	 */
 	function api_site() {
 
 		wp_send_json( array(
@@ -363,8 +416,22 @@ namespace EDM\Application\Policy {
 
 	}
 
+	/**
+	 * @param $old_value
+	 * @param $value
+	 */
 	function site_changed( $old_value, $value ) {
 
 	}
+
+	/**
+	 * Adjust FantasticElastic UI
+	 *
+	 */
+	add_filter( 'elasticsearch_nhp_options_args_setup', function( $args ) {
+		$args['page_type'] = 'submenu';
+		$args['page_parent'] = 'options-general.php';
+		return $args;
+	} );
 
 }
