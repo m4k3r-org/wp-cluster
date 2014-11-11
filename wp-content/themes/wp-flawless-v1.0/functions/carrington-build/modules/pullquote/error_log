@@ -1,2 +1,0 @@
-[21-Oct-2013 15:33:09 America/Los_Angeles] PHP Fatal error:  Class 'cfct_build_module' not found in /home/ddp/public_html/production/wp-content/themes/flawless/functions/carrington-build/modules/pullquote/pullquote.php on line 4
-[21-Oct-2013 15:33:09 America/Los_Angeles] PHP Fatal error:  Using $this when not in object context in /home/ddp/public_html/production/wp-content/themes/flawless/functions/carrington-build/modules/pullquote/view.php on line 3
