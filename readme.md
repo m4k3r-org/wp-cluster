@@ -1,6 +1,6 @@
 ### Setting up Local Environment
 Before running the following commands, please setup a new MySQL database calling it "edm_develop".
-You will also need to have [gsutil](https://cloud.google.com/storage/docs/gsutil), [wp-cli](http://wp-cli.org/gsutil) and [direnv]https://github.com/zimbatm/direnv) installed:
+You will also need to have [gsutil](https://cloud.google.com/storage/docs/gsutil), [wp-cli](http://wp-cli.org/gsutil) and [direnv](https://github.com/zimbatm/direnv) installed:
 
 Assuming your local site setup will be in ~/Sites/discodonniepresents.com using the **develop** branch:
 ```
