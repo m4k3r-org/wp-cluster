@@ -12,6 +12,10 @@ echo "export DB_NAME=edm_develop" >> .envrc
 echo "export DB_USER=root" >> .envrc
 echo "export DB_PASSWORD=root" >> .envrc
 echo "export DB_HOST=discodonniepresents.com" >> .envrc
+echo "export WP_ELASTIC_SECRET_KEY=jqnp-krmw-nmap-idpk:julw-urbp-vzst-jwwv" >> .envrc
+echo "export WP_ELASTIC_PUBLIC_KEY=jqnp-krmw-nmap-idpk-ooau-bkfm-bghf-jatg" >> .envrc
+echo "export WP_ELASTIC_SERVICE_URL=api.discodonniepresents-com.drop.ud-dev.com" >> .envrc
+echo "export WP_ELASTIC_SERVICE_INDEX=jqnp-krmw-nmap-idpk" >> .envrc
 make setEnvironment
 make snapshotImport
 wp cloud sites
@@ -137,63 +141,40 @@ git push cloud production
 ### Media Sync
 
 #### Standard Sites' Media
+
 ```
-gsutil -m rsync -rd  ./wp-content/storage/beachblanketfestival.com/media/             gs://media.beachblanketfestival.com/
-gsutil -m rsync -rd  ./wp-content/storage/cominghomemusicfestival.com/media/          gs://media.cominghomemusicfestival.com/
-gsutil -m rsync -rd  /var/storage/dayafter.com/media/                         gs://media.dayafter.com/
-gsutil -m rsync -rd  ./wp-content/storage/discodonniepresents.com/media/              gs://media.discodonniepresents.com/
-gsutil -m rsync -rd  ./wp-content/storage/freaksbeatstreats.com/media/                gs://media.freaksbeatstreats.com/
-gsutil -m rsync -rd  ./wp-content/storage/gifttampa.com/media/                        gs://media.gifttampa.com/
-gsutil -m rsync -rd  ./wp-content/storage/isladelsolfest.com/media/                   gs://media.isladelsolfest.com/
-gsutil -m rsync -rd  ./wp-content/storage/monsterblockparty.com/media/                gs://media.monsterblockparty.com/
-gsutil -m rsync -rd  ./wp-content/storage/smftampa.com/media/                         gs://media.smftampa.com/
-gsutil -m rsync -rd  ./wp-content/storage/somethingwicked.com/media/                  gs://media.somethingwicked.com/
-gsutil -m rsync -rd  ./wp-content/storage/suncitymusicfestival.com/media/             gs://media.suncitymusicfestival.com/
-gsutil -m rsync -rd  ./wp-content/storage/winterfantasyrgv.com/media/                 gs://media.winterfantasyrgv.com/
-gsutil -m rsync -rd  ./wp-content/storage/umesouthpadre.com/media/                    gs://media.umesouthpadre.com/
+gsutil -m cp -a public-read -rn /var/storage/dayafter.com/media/                         gs://media.dayafter.com/
+gsutil -m cp -a public-read -rn /var/storage/beachblanketfestival.com/media/             gs://media.beachblanketfestival.com/
+gsutil -m cp -a public-read -rn /var/storage/cominghomemusicfestival.com/media/          gs://media.cominghomemusicfestival.com/
+gsutil -m cp -a public-read -rn /var/storage/discodonniepresents.com/media/              gs://media.discodonniepresents.com/
+gsutil -m cp -a public-read -rn /var/storage/freaksbeatstreats.com/media/                gs://media.freaksbeatstreats.com/
+gsutil -m cp -a public-read -rn /var/storage/gifttampa.com/media/                        gs://media.gifttampa.com/
+gsutil -m cp -a public-read -rn /var/storage/isladelsolfest.com/media/                   gs://media.isladelsolfest.com/
+gsutil -m cp -a public-read -rn /var/storage/monsterblockparty.com/media/                gs://media.monsterblockparty.com/
+gsutil -m cp -a public-read -rn /var/storage/smftampa.com/media/                         gs://media.smftampa.com/
+gsutil -m cp -a public-read -rn /var/storage/somethingwicked.com/media/                  gs://media.somethingwicked.com/
+gsutil -m cp -a public-read -rn /var/storage/suncitymusicfestival.com/media/             gs://media.suncitymusicfestival.com/
+gsutil -m cp -a public-read -rn /var/storage/winterfantasyrgv.com/media/                 gs://media.winterfantasyrgv.com/
+gsutil -m cp -a public-read -rn /var/storage/umesouthpadre.com/media/                    gs://media.umesouthpadre.com/
 ```
 
 #### Archived Sites' Media
 ```
-gsutil -m rsync -rd  ./wp-content/storage/hififest.com/media/                         gs://ddpsdixyeejhwkgg.wpcloud.zone/media/hififest.com
-gsutil -m rsync -rd  ./wp-content/storage/bassodyssey.com/media/                      gs://ddpsdixyeejhwkgg.wpcloud.zone/media/bassodyssey.com
-gsutil -m rsync -rd  ./wp-content/storage/wildwood.beachblanketfestival.com/media/    gs://ddpsdixyeejhwkgg.wpcloud.zone/media/wildwood.beachblanketfestival.com
-gsutil -m rsync -rd  ./wp-content/storage/galveston.beachblanketfestival.com/media/   gs://ddpsdixyeejhwkgg.wpcloud.zone/media/galveston.beachblanketfestival.com
-gsutil -m rsync -rd  ./wp-content/storage/mexico.lightsallnight.com/media/            gs://ddpsdixyeejhwkgg.wpcloud.zone/media/mexico.lightsallnight.com
-gsutil -m rsync -rd  ./wp-content/storage/2014.dayafter.com/media/                    gs://ddpsdixyeejhwkgg.wpcloud.zone/media/2014.dayafter.com
-gsutil -m rsync -rd  ./wp-content/storage/2013.monsterblockparty.com/media/           gs://ddpsdixyeejhwkgg.wpcloud.zone/media/2013.monsterblockparty.com
-gsutil -m rsync -rd  ./wp-content/storage/2013.freaksbeatstreats.com/media/           gs://ddpsdixyeejhwkgg.wpcloud.zone/media/2013.freaksbeatstreats.com
-gsutil -m rsync -rd  ./wp-content/storage/sugarsociety.com/media/                     gs://ddpsdixyeejhwkgg.wpcloud.zone/media/sugarsociety.com
-gsutil -m rsync -rd  ./wp-content/storage/gxgmag.com/media/                           gs://ddpsdixyeejhwkgg.wpcloud.zone/media/gxgmag.com
+gsutil -m cp -a public-read -rn /var/storage/2014.dayafter.com/media/                    gs://media.dayafter.com/
+gsutil -m cp -a public-read -rn /var/storage/2013.monsterblockparty.com/media/           gs://media.monsterblockparty.com/
+gsutil -m cp -a public-read -rn /var/storage/2013.freaksbeatstreats.com/media/           gs://media.freaksbeatstreats.com/
 ```
 
-#### Archived Sites' Media (Broken)
-```
-gsutil -m rsync -rd  ./wp-content/storage/2015.umesouthpadre.com/media/               gs://ddpsdixyeejhwkgg.wpcloud.zone/media/2015.umesouthpadre.com
-```
-
-#### Media Permissions
-```
-gsutil -m setacl -R -a public-read gs://media.beachblanketfestival.com
-gsutil -m setacl -R -a public-read gs://media.cominghomemusicfestival.com
-gsutil -m setacl -R -a public-read gs://media.dayafter.com
-gsutil -m setacl -R -a public-read gs://media.discodonniepresents.com
-gsutil -m setacl -R -a public-read gs://media.freaksbeatstreats.com
-gsutil -m setacl -R -a public-read gs://media.gifttampa.com
-gsutil -m setacl -R -a public-read gs://media.isladelsolfest.com
-gsutil -m setacl -R -a public-read gs://media.monsterblockparty.com
-gsutil -m setacl -R -a public-read gs://media.smftampa.com
-gsutil -m setacl -R -a public-read gs://media.somethingwicked.com
-gsutil -m setacl -R -a public-read gs://media.suncitymusicfestival.com
-gsutil -m setacl -R -a public-read gs://media.winterfantasyrgv.com
-gsutil -m setacl -R -a public-read gs://media.umesouthpadre.com
-gsutil -m setacl -R -a public-read gs://ddpsdixyeejhwkgg.wpcloud.zone/media
-```
-
-### Archive Sync
+#### Archived Sites' Media
 
 ```
-gsutil -m rsync -rd  ./wp-content/storage/2014.dayafter.com/media/                gs://2014.dayafter.com/
+gsutil -m cp -a public-read -rn /var/storage/hififest.com/media/                         gs://discodonniepresents.com/hififest.com
+gsutil -m cp -a public-read -rn /var/storage/bassodyssey.com/media/                      gs://discodonniepresents.com/bassodyssey.com
+gsutil -m cp -a public-read -rn /var/storage/wildwood.beachblanketfestival.com/media/    gs://discodonniepresents.com/wildwood.beachblanketfestival.com
+gsutil -m cp -a public-read -rn /var/storage/galveston.beachblanketfestival.com/media/   gs://discodonniepresents.com/galveston.beachblanketfestival.com
+gsutil -m cp -a public-read -rn /var/storage/mexico.lightsallnight.com/media/            gs://discodonniepresents.com/mexico.lightsallnight.com
+gsutil -m cp -a public-read -rn /var/storage/sugarsociety.com/media/                     gs://discodonniepresents.com/sugarsociety.com
+gsutil -m cp -a public-read -rn /var/storage/gxgmag.com/media/                           gs://discodonniepresents.com/gxgmag.com
 ```
 
 ### Technologies Used
