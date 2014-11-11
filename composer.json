@@ -68,6 +68,7 @@
       "nonce_salt": ",nn=YYjbGs(y^{3+-ng(tFdew``+{!_,=Og>hPEi>8Ncvo/;cnnLgnu`Hru4D)_N",
       "secure_auth_key": "Vc#0W9#bv^F/TX-4b)H`T:N0 oDZYVr|shf!>D|,DT41^R;?Wmnm-.K(/~ucG>3p",
       "secure_auth_salt": "5lL^K_Y:V(Nqs yVl/24KG[[4>WZ.jpf8vL*p/.c)Qqf+b2xfP^#WR+p8h.qh3~.",
+      "qm_disabled": true,
       "wp": {
         "default_theme": "wp-splash",
         "use_themes": true,
