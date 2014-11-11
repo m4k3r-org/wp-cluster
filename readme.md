@@ -1,9 +1,17 @@
-### Geting MySQL Database Dump
-To fetch the latest MySQL production database dump:
+### Setting up Local Environment
+
 ```
-gsutil cp gs://discodonniepresents.com/ddp_production.sql.gz .
-gunzip ddp_production.sql.gz
-wp db import ddp_production.sql
+cd ~/Sites/discodonniepresents.com
+git clone git@github.com:DiscoDonniePresents/www.discodonniepresents.com.git --depth 1 --branch develop .
+export NODE_ENV=develop
+export WP_ENV=develop
+export DB_NAME=edm_develop
+export DB_USER=root
+export DB_PASSWORD=root
+export DB_HOST=localhost
+npm install
+make snapshotImport
+wp cloud sites
 ```
 
 ### Cache Purging
