@@ -532,7 +532,7 @@ if (!class_exists('cfct_module_carousel') && class_exists('cfct_build_module')) 
 						containment: "parent",
 						placeholder: "carousel-sortable-placeholder"
 					});
-					$(".car-search-pagination a").live("click", function() {
+					$(document).on("click", ".car-search-pagination a", function() {
 								var page_str_idx = this.href.indexOf("car_search_page=");
 								var target_page = 1;
 								$("#car-item-search div.otypeahead-target").html("<div class=\"'.$this->id_base.'-loading\">'.__('Loading...', 'carrington-build').'<\/div>").slideDown("fast");
@@ -571,19 +571,19 @@ if (!class_exists('cfct_module_carousel') && class_exists('cfct_build_module')) 
 				});
 			
 				// set up post edit
-				$("#car-items li.carousel-post-item .carousel-post-item-ident, #car-items li.carousel-post-item .carousel-item-img").live("click", function() {
+				$(document).on("click", "#car-items li.carousel-post-item .carousel-post-item-ident, #car-items li.carousel-post-item .carousel-item-img", function() {
 					$(this).closest(".carousel-post-item").addClass("carousel-item-edit");
 					return false;
 				});
 								
 				// set up post done edit
-				$("#car-items li.carousel-post-item .carousel-edit-done").live("click", function() {
+				$(document).on("click", "#car-items li.carousel-post-item .carousel-edit-done", function() {
 					$(this).closest(".carousel-post-item").removeClass("carousel-item-edit");
 					return false;
 				});
 								
 				// set up post remove
-				$("#car-items li.carousel-post-item .carousel-edit-remove a").live("click", function() {
+				$(document).on("click", "#car-items li.carousel-post-item .carousel-edit-remove a", function() {
 					if (confirm("Do you really want to remove this item?")) {
 						$(this).closest(".carousel-post-item").remove();
 						_parent = $("#car-items ol");
@@ -674,7 +674,8 @@ if (!class_exists('cfct_module_carousel') && class_exists('cfct_build_module')) 
 				'post_type' => apply_filters('cfct-carousel-search-in', array_filter(get_post_types(array('public' => 1)), array($this, 'filter_post_types'))),
 				'posts_per_page' => $posts_per_page,
 				'paged' => $page,
-				'meta_key' => '_thumbnail_id'
+				'meta_key' => '_thumbnail_id',
+				'ignore_sticky_posts' => 1,
 			));
 			
 			$ids = array();

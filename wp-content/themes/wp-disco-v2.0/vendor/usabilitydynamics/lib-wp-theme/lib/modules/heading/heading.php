@@ -19,7 +19,7 @@ if( !class_exists( 'HeadingModule' ) ) {
 
       $opts = array(
         'description' => __( 'Add headings into the page layout wherever needed.', 'carrington-build' ),
-        'icon'        => 'heading/icon.png'
+        'icon'        => plugins_url( '/icon.png', __DIR__ )
       );
 
       $this->editable = true;

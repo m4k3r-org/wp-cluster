@@ -179,7 +179,7 @@ if (!class_exists('cfct_module_loop_subpages') && class_exists('cfct_module_loop
 			}
 			$types_esc = array();
 			foreach ($types as $type) {
-				$types_esc[] = $wpdb->escape($type);
+				$types_esc[] = esc_sql($type);
 			}
 			return $wpdb->get_col($wpdb->prepare("
 				SELECT DISTINCT post_parent

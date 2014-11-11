@@ -3,7 +3,7 @@
   "keywords": [ "settings" ],
   "type": "library",
   "require": {
-    "usabilitydynamics/lib-utility": "*"
+    "usabilitydynamics/lib-utility": "~0.3"
   },
   "require-dev": {
     "justinrainbow/json-schema": "1.1.*"

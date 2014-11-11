@@ -4,36 +4,7 @@
  *
  * @package Carrington Build
  */
-
 if( !class_exists( 'RowFourColumns' ) ) {
-
-  class __block_c8_12 extends cfct_block {
-    public function __construct( $classes = array() ) {
-      $this->add_classes( array( 'col-md-3', 'column' ) );
-      parent::__construct( $classes );
-    }
-  }
-
-  class __block_c8_34 extends cfct_block {
-    public function __construct( $classes = array() ) {
-      $this->add_classes( array( 'col-md-3', 'column' ) );
-      parent::__construct( $classes );
-    }
-  }
-
-  class __block_c8_56 extends cfct_block {
-    public function __construct( $classes = array() ) {
-      $this->add_classes( array( 'col-md-3', 'column' ) );
-      parent::__construct( $classes );
-    }
-  }
-
-  class __block_c8_78 extends cfct_block {
-    public function __construct( $classes = array() ) {
-      $this->add_classes( array( 'col-md-3', 'column' ) );
-      parent::__construct( $classes );
-    }
-  }
 
   class RowFourColumns extends cfct_build_row {
 
@@ -55,8 +26,41 @@ if( !class_exists( 'RowFourColumns' ) ) {
 
       parent::__construct( $config );
     }
-
   }
-
 }
 
+if ( !class_exists( '__block_c8_12' ) ) {
+  class __block_c8_12 extends cfct_block {
+    public function __construct( $classes = array() ) {
+      $this->add_classes( array( 'col-md-3', 'column' ) );
+      parent::__construct( $classes );
+    }
+  }
+}
+
+if ( !class_exists( '__block_c8_34' ) ) {
+  class __block_c8_34 extends cfct_block {
+    public function __construct( $classes = array() ) {
+      $this->add_classes( array( 'col-md-3', 'column' ) );
+      parent::__construct( $classes );
+    }
+  }
+}
+
+if ( !class_exists( '__block_c8_56' ) ) {
+  class __block_c8_56 extends cfct_block {
+    public function __construct( $classes = array() ) {
+      $this->add_classes( array( 'col-md-3', 'column' ) );
+      parent::__construct( $classes );
+    }
+  }
+}
+
+if ( !class_exists( '__block_c8_78' ) ) {
+  class __block_c8_78 extends cfct_block {
+    public function __construct( $classes = array() ) {
+      $this->add_classes( array( 'col-md-3', 'column' ) );
+      parent::__construct( $classes );
+    }
+  }
+}

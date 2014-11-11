@@ -19,7 +19,7 @@ if( !class_exists( 'WidgetModule' ) ) {
     public function __construct() {
       $opts = array(
         'description' => __( 'Place any WordPress 2.7+ compatible widget in to the layout.', 'carrington-build' ),
-        'icon'        => 'widget/icon.png'
+        'icon'        => plugins_url( '/icon.png', __DIR__ )
       );
       parent::__construct( 'cfct-widget-module', __( 'Widget', 'carrington-build' ), $opts );
       $this->_init_widgets();
