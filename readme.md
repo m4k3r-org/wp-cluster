@@ -5,13 +5,13 @@ You will also need to have [gsutil](https://cloud.google.com/storage/docs/gsutil
 Assuming your local site setup will be in ~/Sites/discodonniepresents.com using the **develop** branch:
 ```
 cd ~/Sites/discodonniepresents.com
+git clone git@github.com:DiscoDonniePresents/www.discodonniepresents.com.git .
+git checkout develop
 echo "export WP_ENV=develop" >> .envrc
 echo "export DB_NAME=edm_develop" >> .envrc
 echo "export DB_USER=root" >> .envrc
 echo "export DB_PASSWORD=root" >> .envrc
 echo "export DB_HOST=discodonniepresents.com" >> .envrc
-git clone git@github.com:DiscoDonniePresents/www.discodonniepresents.com.git .
-git checkout develop
 make setEnvironment
 make snapshotImport
 wp cloud sites
