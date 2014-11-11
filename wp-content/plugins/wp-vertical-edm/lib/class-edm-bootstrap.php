@@ -5,11 +5,59 @@
  */
 namespace wpCloud\Vertical\EDM {
 
-	use UsabilityDynamics;
+	use UsabilityDynamics\API;
+	use UsabilityDynamics\Model;
+	use UsabilityDynamics\Settings;
 
   class Bootstrap {
 
-    public function __construct() {
+	  /**
+	   * Cluster core version.
+	   *
+	   * @static
+	   * @property $version
+	   * @type {Object}
+	   */
+	  public static $version = '0.1.0';
+
+	  /**
+	   * Textdomain String
+	   *
+	   * @public
+	   * @property text_domain
+	   * @var string
+	   */
+	  public static $text_domain = 'wp-vertical-edm';
+
+	  /**
+	   * Singleton Instance Reference.
+	   *
+	   * @public
+	   * @static
+	   * @property $instance
+	   * @type {Object}
+	   */
+	  public static $instance = false;
+
+	  /**
+	   * Settings.
+	   *
+	   * @public
+	   * @property $_settings
+	   * @type {Mixed}
+	   */
+	  public $_settings = null;
+
+	  public function __construct() {
+
+		  /** Return Singleton Instance */
+		  if( self::$instance ) {
+			  return self::$instance;
+		  }
+
+		  self::$instance = &$this;
+
+		  $this->_settings  = new Settings();
 
       // Enable Vertical Features.
       $this->features();
@@ -30,7 +78,10 @@ namespace wpCloud\Vertical\EDM {
      */
     public function plugins_loaded() {
 
+	    // load_plugin_textdomain( 'wp-vertical-edm', false, dirname( plugin_basename( dirname( __FILE__ ) ) ) . '/static/locale/' );
+
 	    // Enable Standard Actions.
+	    add_action( 'wp_before_admin_bar_render', array( $this, 'toolbar_menu' ), 10 );
 	    add_action( 'login_enqueue_scripts',  array( $this, 'login_enqueue_scripts' ), 30 );
 	    add_action( 'login_footer',           array( $this, 'login_footer' ), 30 );
 
@@ -40,8 +91,6 @@ namespace wpCloud\Vertical\EDM {
 	    if( !method_exists( 'UsabilityDynamics\API', 'define' ) )  {
 		    return;
 	    }
-
-	    return;
 
       // List Sites.
       API::define( '/network/v1/sites', array(
@@ -106,7 +155,7 @@ namespace wpCloud\Vertical\EDM {
 			  'taxonomies' => array()
 		  ));
 
-		  return UsabilityDynamics\Model::define( $parsedContents );
+		  return Model::define( $parsedContents );
 
 
 	  }
@@ -122,7 +171,26 @@ namespace wpCloud\Vertical\EDM {
       // add_action( 'network_admin_menu',     'wpCloud\Modules\Intelligence::admin_menu', 20 );
     }
 
-    /**
+	  public function toolbar_menu() {
+		  global $wp_admin_bar;
+
+		  if( $this->get( 'toolbar.remove.comments' ) ) {
+			  $wp_admin_bar->remove_menu( 'comments' );
+		  }
+
+		  if( $this->get( 'toolbar.remove.wp' ) ) {
+			  $wp_admin_bar->remove_menu( 'wp-logo' );
+		  }
+
+		  if( $this->get( 'toolbar.remove.seo' ) ) {
+			  $wp_admin_bar->remove_menu( 'wpseo-menu' );
+		  }
+
+
+	  }
+
+
+		  /**
      * Render Informaiton on Login Screen.
      *
      * @method login_footer
@@ -156,6 +224,70 @@ namespace wpCloud\Vertical\EDM {
       ));
 
     }
+
+	  /**
+	   * Get Setting.
+	   *
+	   *    // Get Setting
+	   *    Cluster::get( 'my_key' )
+	   *
+	   * @method get
+	   *
+	   * @for Flawless
+	   * @author potanin@UD
+	   * @since 0.1.1
+	   *
+	   * @param null $key
+	   * @param null $default
+	   *
+	   * @return null
+	   */
+	  public static function get( $key = null, $default = null ) {
+		  return self::$instance->_settings ? self::$instance->_settings->get( $key, $default ) : null;
+	  }
+
+	  /**
+	   * Set Setting.
+	   *
+	   * @usage
+	   *
+	   *    // Set Setting
+	   *    Cluster::set( 'my_key', 'my-value' )
+	   *
+	   * @method get
+	   * @for Flawless
+	   *
+	   * @author potanin@UD
+	   * @since 0.1.1
+	   *
+	   * @param null $key
+	   * @param null $value
+	   *
+	   * @return null
+	   */
+	  public static function set( $key = null, $value = null ) {
+		  return self::$instance->_settings ? self::$instance->_settings->set( $key, $value ) : null;
+	  }
+
+	  /**
+	   * Get the Cluster Singleton
+	   *
+	   * Concept based on the CodeIgniter get_instance() concept.
+	   *
+	   * @example
+	   *
+	   *      var settings = Cluster::get_instance()->Settings;
+	   *      var api = Cluster::$instance()->API;
+	   *
+	   * @static
+	   * @return object
+	   *
+	   * @method get_instance
+	   * @for Cluster
+	   */
+	  public static function &get_instance() {
+		  return self::$instance;
+	  }
 
   }
 
