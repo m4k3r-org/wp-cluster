@@ -7,6 +7,9 @@
 ##    gzip edm_production.sql
 ##    gsutil -m mv edm_production.sql.gz gs://discodonniepresents.com/
 ##
+## export ACCOUNT_NAME=edm
+## export CURRENT_BRANCH=$(git describe --contains --all HEAD)
+##
 ################################################################################################
 
 CIRCLE_PROJECT_USERNAME	      ?=DiscoDonniePresents
@@ -14,7 +17,7 @@ CIRCLE_PROJECT_REPONAME	      ?=www.discodonniepresents.com
 CURRENT_BRANCH                ?=$(shell git describe --contains --all HEAD)
 CURRENT_COMMIT                ?=$(shell git rev-list -1 HEAD)
 CURRENT_TAG                   ?=$(shell git describe --always --tag)
-ACCOUNT_NAME		              ?=ddp
+ACCOUNT_NAME		              ?=edm
 STORAGE_DIR		                ?=/var/storage/
 STORAGE_BUCKET		            ?=gs://discodonniepresents.com
 RDS_BUCKET		                ?=s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com
@@ -38,41 +41,34 @@ clean:
 	@echo "Cleared out vendor crap."
 
 update:
-	composer update --no-dev
+	composer update --no-dev --prefer-dist
 	@echo "Updated Composer dependencies."
-
-snapshot:
-	@echo "Creating MySQL snapshot for <${CURRENT_BRANCH}> database branch to ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.ddp_production.sql"
-	@wp --allow-root db export ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
-	@gzip ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
-	@gsutil mv ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz gs://discodonniepresents.com/
-	@echo "MySQL snapshot available at s3://rds.uds.io/DiscoDonniePresents/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz."
 
 flushTransient:
 	@echo "Flushing transients."
 	@wp --allow-root transient delete-all
 	@wp --allow-root db query 'DELETE FROM edm_sitemeta WHERE meta_key LIKE "%_site_transient%"'
 
+snapshot:
+	@echo "Creating MySQL snapshot for <${CURRENT_BRANCH}> branch."
+	@wp --allow-root db export ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
+	@gzip ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
+	@gsutil -m mv ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz gs://discodonniepresents.com/
+	@gsutil -m cp -D gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz gs://discodonniepresents.com/${ACCOUNT_NAME}_develop.sql.gz
+	@echo "Snapshot available at gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz."
+
 # Create MySQL Snapshot
 #
-#
 snapshotImport:
-	@echo "Downloading MySQL snapshot for <${CURRENT_BRANCH}> database branch to ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
+	@echo "Downloading MySQL snapshot for <${CURRENT_BRANCH}> branch to ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
 	@rm -rf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
-	@s3cmd get --no-check-md5 --skip-existing s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
+	@gsutil -m cp gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
 	@gunzip ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
 	@wp --allow-root db import ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@wp cache flush
 	@wp transient delete-all
-	@echo "MySQL snapshot downloaded from s3://rds.uds.io/DiscoDonniePresents/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz and imported."
+	@echo "MySQL snapshot downloaded from gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz and imported."
 
-#
-# - Import MySQL Snapshot
-#
-staging:
-	@echo "Setting up staging environment from RDS data snapshot, <${CURRENT_BRANCH}> database branch, using s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz for MySQL data."
-
-#
 # - Import MySQL Snapshot
 #
 develop:
@@ -80,10 +76,7 @@ develop:
 	@npm install --silent
 	@rm -rf composer.lock wp-vendor/composer/installed.json wp-vendor/composer/installers
 	@composer update --dev --prefer-source --no-interaction --no-progress
-	@s3cmd get --no-check-md5 --skip-existing s3://rds.uds.io/${CIRCLE_PROJECT_USERNAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
-	@tar -xvf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz -C ~/tmp
-	@wp db import ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
-	@wp plugin deactivate w3-total-cache google-sitemap-generator
+	@make snapshotImport
 	@wp option update git:branch ${CURRENT_BRANCH}
 	@wp option update git:build ${CIRCLE_BUILD_NUM}
 	@wp option update git:organization ${CIRCLE_PROJECT_USERNAME}
