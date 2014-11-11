@@ -132,6 +132,7 @@ namespace EDM\Application\Policy {
 				"wp-veneer/wp-veneer.php" => time(),
 				"wp-cluster/wp-cluster.php" => time(),
 				"wp-network/wp-network.php" => time(),
+				"wp-pagespeed/wp-pagespeed.php" => time(),
 				"wp-vertical-edm/vertical-edm.php" => time(),
 				"gravityforms/gravityforms.php" => time(),
 				"debug-bar/debug-bar.php" => time(),

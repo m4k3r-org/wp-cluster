@@ -64,7 +64,12 @@ namespace EDM\Application {
 	});
 
 	add_action( 'plugins_loaded', function () {
-		global $wp_veneer, $wp_cluster;
+		global $wp_veneer, $wp_cluster, $wp_pagespeed;
+
+		if ( isset( $wp_pagespeed ) && method_exists( $wp_pagespeed, 'set' ) ) {
+			$wp_pagespeed->set( 'core.enabled', true );
+			$wp_pagespeed->set( 'minify.enabled', false );
+		}
 
 		if ( isset( $wp_cluster ) && method_exists( $wp_cluster, 'set' ) ) {
 			$wp_cluster->set( 'toolbar.git.enabled', true );
