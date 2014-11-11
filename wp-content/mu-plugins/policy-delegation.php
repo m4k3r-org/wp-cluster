@@ -302,6 +302,11 @@ namespace EDM\Application\Policy {
 
 		}
 
+		/**
+		 * Configure ElaticSearch
+		 *
+		 * @return array
+		 */
 		static function elasticsearch() {
 
 			$_secretKey = defined( 'WP_ELASTIC_SECRET_KEY' ) ? WP_ELASTIC_SECRET_KEY : null;
@@ -344,7 +349,7 @@ namespace EDM\Application\Policy {
 				"score_tax_post_format" => null
 			);
 
-			die( '<pre>' . print_r( $_setting, true ) . '</pre>');
+			// die( '<pre>' . print_r( $_setting, true ) . '</pre>');
 
 			return $_setting;
 
