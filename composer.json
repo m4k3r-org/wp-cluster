@@ -75,8 +75,8 @@
         "elastic": {
           "public_key": "qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty",
           "secret_key": "qccj-nxwm-etsk-niuu:chdq-tvek-desl-izlf",
-          "service_index": "api.discodonniepresents.com/documents/v1/",
-          "service_url": "qccj-nxwm-etsk-niuu"
+          "service_url": "api.discodonniepresents.com/documents/v1/",
+          "service_index": "qccj-nxwm-etsk-niuu"
         },
         "logs_dir": "wp-content/.logs",
         "max_memory_limit": "{wp_memory_limit}",
