@@ -151,7 +151,8 @@
     "wpackagist-plugin/debug-bar-constants": "trunk",
     "wpackagist-plugin/debug-bar-post-types": "trunk",
     "wpackagist-plugin/debug-bar-slow-actions": "trunk",
-    "wpcloud/wp-vertical-edm": "master"
+    "wpcloud/wp-vertical-edm": "master",
+    "firephp/firephp-core": "master"
   },
   "require-dev": {
     "behat/behat": "~2.5",
