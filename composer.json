@@ -12,13 +12,24 @@
       "url": "http://wpackagist.org"
     }
   ],
+  "bin": [
+    "wp-content/mu-plugins/bin/edm"
+  ],
   "config": {
     "preferred-install": "dist",
     "github-protocols": [ "ssh" ],
     "vendor-dir": "wp-vendor",
+    "notify-on-install": false,
+    "discard-changes: ": true,
     "bin-dir": "wp-vendor/bin",
     "component-dir": "wp-vendor/components",
-    "optimize-autoloader": true
+    "optimize-autoloader": true,
+    "http-basic": {
+      "repository.usabilitydynamics.com": {
+        "username": "wordpress-site",
+        "password": "fa1942c87f9b2a7314636d520d8697fb0d9447f3"
+      }
+    }
   },
   "extra": {
     "installer-paths": {
@@ -117,7 +128,7 @@
   "require": {
     "linkorb/etcd-php": "master",
     "erusev/parsedown": "~1.1.1",
-    "mnsami/composer-custom-directory-installer": "master",
+    "firephp/firephp-core": "master",
     "discodonniepresents/wp-bassoddysey": "master",
     "discodonniepresents/wp-braxton": "master",
     "discodonniepresents/wp-dayafter": "master",
@@ -167,15 +178,15 @@
     "wpackagist-plugin/debug-bar-constants": "trunk",
     "wpackagist-plugin/debug-bar-post-types": "trunk",
     "wpackagist-plugin/debug-bar-slow-actions": "trunk",
-    "wpcloud/wp-vertical-edm": "master",
-    "firephp/firephp-core": "master"
+    "wpcloud/wp-vertical-edm": "master"
   },
   "require-dev": {
     "behat/behat": "~2.5",
     "phpunit/phpunit": "~3.7",
     "wp-cli/wp-cli": "~0.17",
     "wpackagist-plugin/wordpress-importer": "0.6.1",
-    "usabilitydynamics/wp-gravityforms": "master"
+    "usabilitydynamics/wp-gravityforms": "master",
+    "mnsami/composer-custom-directory-installer": "master"
   },
   "autoload": {
     "classmap": [ "wp-content/mu-plugins/lib" ]

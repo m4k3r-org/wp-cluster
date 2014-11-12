@@ -27,22 +27,17 @@ _GET_SITES                    =$(call wp,sites,list)
 
 #
 #
-#
 default: install
 
-# Create MySQL Snapshot
-# @todo Add check that direnv exists.
+# Install direnv (https://github.com/zimbatm/direnv) to use this file
+# - Run "direnv allow" to enable.
 #
 setEnvironment:
-	@direnv allow
+	@touch ./.envrc
 	@echo "Enabled environment variables in .envrc."
 
 # Pull all Subtrees
 #
-testlly:
-	#echo $(call _GET_SITES)
-	#$(foreach A,$(shell wp sites list -),$(info $(call func,$A)))
-
 freshTrees:
 	@git subtree pull --prefix=wp-content/static/wiki git@github.com:DiscoDonniePresents/www.discodonniepresents.com.wiki.git master --sqash
 	@git subtree pull --prefix=wp-content/plugins/wp-amd git@github.com:UsabilityDynamics/wp-amd master --squash
