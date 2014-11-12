@@ -151,11 +151,11 @@ namespace UsabilityDynamics\Cluster {
 				}
 
 				// die( '<pre>' . print_r($current_blog, true ) . '</pre>');
-
 				/** Try to lookup the blog */
 				if ( $possible_domains ) {
 					$query = $wpdb->prepare( "SELECT blog_id, site_id, domain, path  FROM {$wpdb->blogs} WHERE domain IN (" . implode( ',', array_fill( 0, count( $possible_domains ), '%s' ) ) . ") AND public=1 ORDER BY CHAR_LENGTH( domain ) + CHAR_LENGTH( path ) DESC", $possible_domains );
 				}
+
 
 				if ( isset( $query ) ) {
 					$_singleMatch = $wpdb->get_results( $query );
@@ -221,6 +221,7 @@ namespace UsabilityDynamics\Cluster {
 					);
 
 				};
+
 
 				/** If we don't have a blog, bail */
 				if ( ! $current_blog ) {

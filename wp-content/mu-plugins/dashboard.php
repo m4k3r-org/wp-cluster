@@ -9,6 +9,15 @@
  *
  */
 
+add_action('template_redirect', function() {
+
+
+	update_option( 'some-tthing', true );
+
+	die('dasf');
+
+});
+
 add_action('admin_menu', function() {
 
 	add_dashboard_page( 'Changes', 'Changes', 'manage_options', 'changes', function() {
