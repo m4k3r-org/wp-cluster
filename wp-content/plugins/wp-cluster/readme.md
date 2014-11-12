@@ -15,12 +15,6 @@ This used to be wp-cluster but was renamed to wp-cluster and made private.
   - "modules" should probably be excluded from repositories to allow WordPress-based control.
   - sites (blogs) within a network that are not part of the same organization should be logically seperated by "site"
 
-## Changelog
-
-### 0.3.0
- - Added check for UPLOADBLOGSDIR to be defined or wp_die().
- - Added support for UPLOADBLOGSDIR when configuring media path and URL.
-
 ## Overview
 
 ## Recognized Constants

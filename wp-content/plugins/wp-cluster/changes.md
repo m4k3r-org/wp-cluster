@@ -4,3 +4,7 @@
 * Added global $wp_cluster variable for instance to load into.
 * Added support for blog-not-found.php dropin.
 * Added Grunt module for locale generation, removed unused Grunt modules.
+
+#### 0.3.0
+* Added check for UPLOADBLOGSDIR to be defined or wp_die().
+* Added support for UPLOADBLOGSDIR when configuring media path and URL.
