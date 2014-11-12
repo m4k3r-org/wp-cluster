@@ -25,9 +25,8 @@
   "config": {
     "preferred-install": "dist",
     "github-protocols": [ "ssh" ],
-    "vendor-dir": "vendor/libraries",
+    "vendor-dir": "vendor",
     "bin-dir": "vendor/bin",
-    "component-dir": "vendor/components",
     "optimize-autoloader": true
   },
   "require": {
@@ -36,22 +35,10 @@
     "usabilitydynamics/lib-settings": "~0.2",
     "usabilitydynamics/lib-ui": "~0.2",
     "usabilitydynamics/lib-utility": "~0.3",
-    "usabilitydynamics/lib-api": "~0.5"
+    "usabilitydynamics/lib-api": "~0.5",
+    "firephp/firephp-core": "~0.4"
   },
   "autoload": {
-    "classmap": [
-      "lib/class-api.php",
-      "lib/class-bootstrap.php",
-      "lib/class-dashboard.php",
-      "lib/class-database.php",
-      "lib/class-developer.php",
-      "lib/class-locale.php",
-      "lib/class-plugins.php",
-      "lib/class-settings.php",
-      "lib/class-sunrise.php",
-      "lib/class-theme.php",
-      "lib/class-utility.php",
-      "lib/class-views.php"
-    ]
+    "classmap": [ "lib" ]
   }
 }
