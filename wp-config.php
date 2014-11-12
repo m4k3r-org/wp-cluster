@@ -1,1 +1,0 @@
-wp-content/plugins/wp-veneer/lib/class-config.php
