@@ -222,6 +222,7 @@ namespace EDM\Application\Policy {
 				// "wp-freaksbeatstreats" => true,
 				// "wp-hififest" => true,
 				"wp-spectacle-chmf" => true,
+				"wp-festival-smf" => true,
 				"wp-spectacle-fbt" => true,
 				"wp-spectacle-isladelsol" => true,
 				"wp-spectacle-mbp" => true,
