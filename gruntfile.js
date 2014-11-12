@@ -48,7 +48,7 @@ module.exports = function( grunt ) {
       production: {
         files: {
           '.htaccess': 'wp-content/plugins/wp-veneer/lib/local/.htaccess',
-          'wp-config.php': 'wp-content/plugins/wp-veneer/lib/class-config.php',
+          'wp-config.php': 'wp-content/plugins/wp-cluster/lib/class-config.php',
           'wp-content/db.php': 'wp-content/plugins/wp-cluster/lib/class-database.php',
           'wp-content/sunrise.php': 'wp-content/plugins/wp-cluster/lib/class-sunrise.php'
         }
@@ -58,7 +58,7 @@ module.exports = function( grunt ) {
   });
 
   grunt.registerTask( 'default', function() {
-    console.log( 'ta da ');
+    console.log( 'Done.');
   })
 
 };

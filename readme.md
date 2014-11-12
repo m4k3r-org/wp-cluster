@@ -8,18 +8,19 @@ cd ~/Sites/discodonniepresents.com
 git clone git@github.com:DiscoDonniePresents/www.discodonniepresents.com.git .
 git checkout develop
 echo "export WP_ENV=develop" >> .envrc
-echo "export DB_NAME=edm_develop" >> .envrc
-echo "export DB_USER=root" >> .envrc
-echo "export DB_PASSWORD=root" >> .envrc
-echo "export DB_HOST=discodonniepresents.com" >> .envrc
+echo "export DB_NAME=edm" >> .envrc
+echo "export DB_USER=edm" >> .envrc
+echo "export DB_PASSWORD=your-mysql-password" >> .envrc
+echo "export DB_HOST=127.0.0.1" >> .envrc
 echo "export WP_ELASTIC_SECRET_KEY=jqnp-krmw-nmap-idpk:julw-urbp-vzst-jwwv" >> .envrc
 echo "export WP_ELASTIC_PUBLIC_KEY=jqnp-krmw-nmap-idpk-ooau-bkfm-bghf-jatg" >> .envrc
 echo "export WP_ELASTIC_SERVICE_URL=api.discodonniepresents-com.drop.ud-dev.com" >> .envrc
 echo "export WP_ELASTIC_SERVICE_INDEX=jqnp-krmw-nmap-idpk" >> .envrc
-make setEnvironment
+make subtreePull
 make snapshotImport
 wp cloud sites
 ```
+
 The very last command is to help you determine if wp-cli can connect to DB, meaning everything is setup good.
 
 Now we will need to configure Apache. First create a "discodonniepresents.com" host then set the following environment variables:

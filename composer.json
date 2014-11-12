@@ -48,15 +48,33 @@
         "key": "Q|TJ#IJddT1wKKk&7fI1zoT=}U[>+2!87xT78N;O,:qES/V5Yu8=puLzM$~-`K$`",
         "salt": "1%s=xC$rCHhe[Wc4/IEMd1Nw+g}@$P<@2b^3`TiW~|YXkIw5OnY )][O0P I:_0y"
       },
-      "db": {
-        "name": "edm",
-        "user": "edm",
-        "password": "psxcazdhbpoxbkfl",
-        "host": "localhost",
-        "prefix": "edm_",
-        "read": 1,
-        "write": 0
-      },
+      "db": [
+        {
+          "name": "edm",
+          "user": "edm",
+          "password": "psxcazdhbpoxbkfl",
+          "host": "localhost",
+          "prefix": "edm_",
+          "read": 1,
+          "write": 0
+        },
+        {
+          "name": "edm",
+          "user": "edm",
+          "password": "xdzepwgzeqmuuisq",
+          "host": "colossus.wpcloud.io",
+          "read": 2,
+          "write": 1
+        },
+        {
+          "name": "edm",
+          "user": "edm",
+          "password": "xdzepwgzeqmuuisq",
+          "host": "monarch.wpcloud.io",
+          "read": 3,
+          "write": 2
+        }
+      ],
       "disallow": {
         "wp_cron": true,
         "file_edit": true,
@@ -80,7 +98,7 @@
         "elastic": {
           "public_key": "qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty",
           "secret_key": "qccj-nxwm-etsk-niuu:chdq-tvek-desl-izlf",
-          "service_url": "api.discodonniepresents.com/documents/v1/",
+          "service_url": "api.discodonniepresents.com/",
           "service_index": "qccj-nxwm-etsk-niuu"
         },
         "logs_dir": "wp-content/.logs",
