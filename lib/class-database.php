@@ -9,11 +9,11 @@
  */
 namespace UsabilityDynamics\Cluster {
 
+	use wpdb;
+
 	require_once( ABSPATH . WPINC . '/wp-db.php' );
 
 	if ( ! class_exists( 'UsabilityDynamics\Cluster\HyperDB' ) && class_exists( 'wpdb' ) ) {
-
-		use wpdb;
 
 		/**
 		 * Common definitions
