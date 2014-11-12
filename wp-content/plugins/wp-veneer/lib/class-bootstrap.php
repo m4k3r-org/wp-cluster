@@ -643,13 +643,14 @@ namespace UsabilityDynamics\Veneer {
 					"</IfModule>"
 				));
 
-				insert_with_markers( $htaccess_file, 'Veneer Management Access ', array(
+				// Commented out for now as it causes inability to login.
+				insert_with_markers( $htaccess_file, 'Veneer Management Access', array(
 					"<IfModule mod_rewrite.c>",
-					" RewriteEngine On",
-					" RewriteBase /",
-					" RewriteRule ^manage$                         /manage/ [R=301,L]",
-					" RewriteRule ^manage/(login|signup)/?(.*)$    /wp-$1.php [QSA,L]",
-					" RewriteRule ^manage/?(.*)$                   /wp-admin/$1 [QSA,L]",
+					" # RewriteEngine On",
+					" # RewriteBase /",
+					" # RewriteRule ^manage$                         /manage/ [R=301,L]",
+					" # RewriteRule ^manage/(login|signup)/?(.*)$    /wp-$1.php [QSA,L]",
+					" # RewriteRule ^manage/?(.*)$                   /wp-admin/$1 [QSA,L]",
 					"</IfModule>"
 				));
 
