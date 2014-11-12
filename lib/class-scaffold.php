@@ -269,9 +269,9 @@ namespace UsabilityDynamics\AMD {
       public function admin_scripts() {
         do_action( 'amd::admin_scripts::edit_page' );
         
-        wp_register_script( 'wp-amd-ace', plugins_url( '/static/scripts/src/ace/ace.js', dirname( __DIR__ ) ), array(), $this->get( 'version' ), true );
-        wp_enqueue_style( 'wp-amd-admin-styles', plugins_url( '/static/styles/wp-amd.css', dirname( __DIR__ ) ) );
-        wp_enqueue_script( 'wp-amd-admin-scripts', plugins_url( '/static/scripts/wp-amd.js',  dirname( __DIR__ ) ), array( 'wp-amd-ace', 'jquery-ui-resizable' ), $this->get( 'version' ), true );
+        wp_register_script( 'wp-amd-ace', plugins_url( '/static/scripts/src/ace/ace.js', dirname( __FILE__ ) ), array(), $this->get( 'version' ), true );
+        wp_enqueue_style( 'wp-amd-admin-styles', plugins_url( '/static/styles/wp-amd.css', dirname( __FILE__ ) ) );
+        wp_enqueue_script( 'wp-amd-admin-scripts', plugins_url( '/static/scripts/wp-amd.js',  dirname( __FILE__ ) ), array( 'wp-amd-ace', 'jquery-ui-resizable' ), $this->get( 'version' ), true );
         wp_enqueue_script( 'wp-amd-admin-scripts' );
 
       }
