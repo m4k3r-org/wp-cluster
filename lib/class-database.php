@@ -2,7 +2,11 @@
 /**
  * Database
  *
- * Taken from HyperDB.
+ * When included as the db.php dropin this file is loaded by wp-settings.php right after wp-db.php is laoded.
+ * As long as this file sets $wpdb global the native new wpdb() will not be run.
+ * This file is loaded before filters/actions API is enabled and before sunrise.php
+ * The only custom file loaded before this is wp-config.php.
+ *
  *
  * @module Cluster
  * @author potanin@UD
@@ -10,8 +14,6 @@
 namespace UsabilityDynamics\Cluster {
 
 	use wpdb;
-
-	require_once( ABSPATH . WPINC . '/wp-db.php' );
 
 	if ( ! class_exists( 'UsabilityDynamics\Cluster\HyperDB' ) && class_exists( 'wpdb' ) ) {
 
@@ -175,6 +177,10 @@ namespace UsabilityDynamics\Cluster {
 
 			/**
 			 * Triggers __construct() for backwards compatibility with PHP4
+			 *
+			 * @param null $args
+			 *
+			 * @return \UsabilityDynamics\Cluster\HyperDB
 			 */
 			function hyperdb( $args = null ) {
 				return $this->__construct( $args );
@@ -319,6 +325,11 @@ namespace UsabilityDynamics\Cluster {
 			/**
 			 * Callbacks are executed in the order in which they are registered until one
 			 * of them returns something other than null.
+			 *
+			 * @param $group
+			 * @param null $args
+			 *
+			 * @return mixed
 			 */
 			function run_callbacks( $group, $args = null ) {
 				if ( ! isset( $this->hyper_callbacks[ $group ] ) || ! is_array( $this->hyper_callbacks[ $group ] ) ) {
@@ -762,7 +773,9 @@ namespace UsabilityDynamics\Cluster {
 			/**
 			 * Disconnect and remove connection from open connections list
 			 *
-			 * @param string $tdbhname
+			 * @param $dbhname
+			 *
+			 * @internal param string $tdbhname
 			 */
 			function disconnect( $dbhname ) {
 				if ( $k = array_search( $dbhname, $this->open_connections ) ) {
@@ -898,6 +911,8 @@ namespace UsabilityDynamics\Cluster {
 			 * @since 2.5.0
 			 * @uses $wp_version
 			 *
+			 * @param bool $dbh_or_table
+			 *
 			 * @return WP_Error
 			 */
 			function check_database_version( $dbh_or_table = false ) {
@@ -913,6 +928,9 @@ namespace UsabilityDynamics\Cluster {
 			 * This function is called when WordPress is generating the table schema to determine wether or not the current database
 			 * supports or needs the collation statements.
 			 * The additional argument allows the caller to check a specific database.
+			 *
+			 * @param bool $dbh_or_table
+			 *
 			 * @return bool
 			 */
 			function supports_collation( $dbh_or_table = false ) {
@@ -1077,10 +1095,40 @@ namespace UsabilityDynamics\Cluster {
 				return HYPERDB_LAG_OK;
 			}
 
-			// Helper functions for configuration
+			public static function maybe_enable() {
+				global $wpdb, $wp_veneer, $wp_cluster;
 
-		} // class hyperdb
+				die( '<pre>' . print_r( $wp_veneer, true ) . '</pre>');
+				$wpdb = new hyperdb();
+
+				if( is_file( $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json' ) ) {
+					//$_composer = json_decode( file_get_contents( $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json' ) );
+					//die( '<pre>' . print_r( $_composer->extra->settings->db, true ) . '</pre>');
+				}
+
+				if( defined( 'DB_HOST' ) ) {
+
+					$wpdb->add_database(array(
+						'host'     => DB_HOST,
+						'user'     => DB_USER,
+						'password' => DB_PASSWORD,
+						'name'     => DB_NAME,
+						'dataset'  => 'global',
+						'read'     => 1,
+						'write'    => 1,
+						'timeout'  => 0.2
+					));
+
+				}
+
+			}
+
+		}
+
+
+		HyperDB::maybe_enable();
 
 	}
+
 
 }
