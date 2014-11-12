@@ -43,11 +43,6 @@ module.exports = function( grunt ) {
       }
     },
 
-    // Clean Directories.
-    clean: {
-      test: []
-    },
-
     // Symbolic Links.
     symlink: {
       production: {
@@ -61,6 +56,10 @@ module.exports = function( grunt ) {
     }
 
   });
+
+  grunt.registerTask( 'default', function() {
+    console.log( 'ta da ');
+  })
 
 };
 

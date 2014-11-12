@@ -22,6 +22,8 @@ STORAGE_DIR		                ?=/var/storage/
 STORAGE_BUCKET		            ?=gs://discodonniepresents.com
 RDS_BUCKET		                ?=s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com
 SITE_LIST		                  ?=$(shell wp --allow-root site list --field=url --format=csv)
+PWD                           := $(shell pwd)
+_GET_SITES                    =$(call wp,sites,list)
 
 #
 #
@@ -38,7 +40,8 @@ setEnvironment:
 # Pull all Subtrees
 #
 testlly:
-	$(foreach A,$(STUFF),$(info $(call func,$A)))
+	#echo $(call _GET_SITES)
+	#$(foreach A,$(shell wp sites list -),$(info $(call func,$A)))
 
 freshTrees:
 	@git subtree pull --prefix=wp-content/static/wiki git@github.com:DiscoDonniePresents/www.discodonniepresents.com.wiki.git master --sqash
@@ -212,3 +215,9 @@ install:
 	@npm install --silent
 	@rm -rf wp-vendor/composer/installed.json wp-vendor/composer/installers
 	@composer update --prefer-source --dev --no-interaction --no-progress
+
+# pass commands to Grunt
+#
+%:
+	@npm install
+	@grunt $@

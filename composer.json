@@ -42,16 +42,32 @@
         "key": "Q|TJ#IJddT1wKKk&7fI1zoT=}U[>+2!87xT78N;O,:qES/V5Yu8=puLzM$~-`K$`",
         "salt": "1%s=xC$rCHhe[Wc4/IEMd1Nw+g}@$P<@2b^3`TiW~|YXkIw5OnY )][O0P I:_0y"
       },
-      "db": {
-        "charset": "utf8",
-        "collate": "utf8_general_ci",
-        "host": "rds.discodonniepresents.com",
-        "name": "edm_production",
-        "user": "edm_production",
-        "password": "psxcazdhbpoxbkfl",
-        "prefix": "edm_",
-        "persistent": false
-      },
+      "db": [
+        {
+          "host": "localhost",
+          "name": "edm",
+          "user": "edm",
+          "password": "psxcazdhbpoxbkfl",
+          "prefix": "edm_",
+          "read": 1,
+          "write": 0,
+          "timeout": 1,
+          "charset": "utf8",
+          "collate": "utf8_general_ci"
+        },
+        {
+          "host": "rds.wpcloud.io",
+          "name": "edm",
+          "user": "edm",
+          "password": "psxcazdhbpoxbkfl",
+          "prefix": "edm_",
+          "read": 5,
+          "write": 5,
+          "timeout": 1,
+          "charset": "utf8",
+          "collate": "utf8_general_ci"
+        }
+      ],
       "disallow": {
         "wp_cron": true,
         "file_edit": true,
