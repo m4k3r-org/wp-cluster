@@ -42,24 +42,13 @@
 namespace EDM\Application\Policy {
 
 	add_filter( 'extra_theme_headers', function( $extra_headers ) {
-
-		$extra_headers[] = 'GitHub Theme URI';
-		$extra_headers[] = 'GitHub Branch';
-		$extra_headers[] = 'GitHub Access Token';
+		$extra_headers[] = 'GitHub';
 		return $extra_headers;
-
 	});
 
-
 	add_filter( 'extra_plugin_headers', function( $extra_headers ) {
-
-		$extra_headers[] = 'GitHub Plugin URI';
-		$extra_headers[] = 'GitHub Branch';
-		$extra_headers[] = 'GitHub Access Token';
-
-
+		$extra_headers[] = 'GitHub';
 		return $extra_headers;
-
 	});
 
 	use \wpCloud\Vertical;
@@ -158,6 +147,7 @@ namespace EDM\Application\Policy {
 		 */
 		static function sitewide_plugins( $_plugins = array() ) {
 
+			// return $_plugins;
 			// $_plugins = false;
 
 			$_plugins = array_merge( (array) $_plugins, array(
