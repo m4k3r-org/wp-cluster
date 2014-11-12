@@ -30,7 +30,7 @@ class GitHub_Updater {
 	 *
 	 * @var stdClass
 	 */
-	protected $repo_api;
+ 	protected $repo_api;
 
 	/**
 	 * Variable for setting update transient hours
@@ -64,7 +64,6 @@ class GitHub_Updater {
 			'github_theme_updater'         => 'class-theme-updater.php',
 			'github_updater_github_api'    => 'class-github-api.php',
 			'github_updater_bitbucket_api' => 'class-bitbucket-api.php',
-			'github_updater_settings'      => 'class-github-updater-settings.php',
 			'parsedown'                    => 'Parsedown.php',
 		);
 
@@ -102,9 +101,6 @@ class GitHub_Updater {
 		if ( current_user_can( 'update_themes' ) ) {
 			new GitHub_Theme_Updater;
 		}
-		if ( is_admin() && ( current_user_can( 'update_plugins' ) || current_user_can( 'update_themes' ) ) ) {
-			new GitHub_Updater_Settings;
-		}
 	}
 
 	/**
@@ -121,7 +117,7 @@ class GitHub_Updater {
 
 		foreach ( (array) $plugins as $plugin => $headers ) {
 			if ( empty( $headers['GitHub Plugin URI'] ) &&
-			     empty( $headers['Bitbucket Plugin URI'] ) ) {
+				empty( $headers['Bitbucket Plugin URI'] ) ) {
 				continue;
 			}
 
@@ -140,22 +136,18 @@ class GitHub_Updater {
 	}
 
 	/**
-	 * Parse extra headers to determine repo type and populate info
-	 *
-	 * @param array of extra headers
-	 * @return array of repo information
-	 *
-	 * parse_url( ..., PHP_URL_PATH ) is either clever enough to handle the short url format
-	 * (in addition to the long url format), or it's coincidentally returning all of the short
-	 * URL string, which is what we want anyway.
-	 *
-	 */
+	* Parse extra headers to determine repo type and populate info
+	*
+	* @param array of extra headers
+	* @return array of repo information
+	*
+	* parse_url( ..., PHP_URL_PATH ) is either clever enough to handle the short url format
+	* (in addition to the long url format), or it's coincidentally returning all of the short
+	* URL string, which is what we want anyway.
+	*
+	*/
 	protected function get_local_plugin_meta( $headers ) {
-		$git_repo = array();
-		$options  = get_site_option( 'github_updater' );
-
-		// Reverse sort to run plugin/theme URI first
-		arsort( self::$extra_headers );
+		$git_repo      = array();
 
 		foreach ( (array) self::$extra_headers as $key => $value ) {
 			if ( ! empty( $git_repo['type'] ) && 'github_plugin' !== $git_repo['type'] ) {
@@ -186,9 +178,7 @@ class GitHub_Updater {
 					if ( empty( $headers['GitHub Access Token'] ) ) {
 						break;
 					}
-					$git_repo['access_token']  = $headers['GitHub Access Token'];
-
-					$this->save_header_options( $git_repo['repo'], $git_repo['access_token'], $options );
+					$git_repo['access_token'] = $headers['GitHub Access Token'];
 					break;
 			}
 		}
@@ -213,8 +203,6 @@ class GitHub_Updater {
 					$git_repo['owner']      = $owner_repo[0];
 					$git_repo['repo']       = $owner_repo[1];
 					$git_repo['local_path'] = WP_PLUGIN_DIR . '/' . $git_repo['repo'] .'/';
-
-					$this->save_header_options( $git_repo['repo'], $git_repo['pass'], $options );
 					break;
 				case 'Bitbucket Branch':
 					if ( empty( $headers['Bitbucket Branch'] ) ) {
@@ -229,14 +217,14 @@ class GitHub_Updater {
 	}
 
 	/**
-	 * Get array of all themes in multisite
-	 *
-	 * wp_get_themes does not seem to work under network activation in the same way as in a single install.
-	 * http://core.trac.wordpress.org/changeset/20152
-	 *
-	 * @return array
-	 */
-	protected function multisite_get_themes() {
+	* Get array of all themes in multisite
+	*
+	* wp_get_themes does not seem to work under network activation in the same way as in a single install.
+	* http://core.trac.wordpress.org/changeset/20152
+	*
+	* @return array
+	*/
+	private function multisite_get_themes() {
 		$themes     = array();
 		$theme_dirs = scandir( get_theme_root() );
 		$theme_dirs = array_diff( $theme_dirs, array( '.', '..', '.DS_Store', 'index.php' ) );
@@ -253,12 +241,8 @@ class GitHub_Updater {
 	 * Populates variable array
 	 */
 	protected function get_theme_meta() {
-		$git_themes = array();
-		$themes     = wp_get_themes();
-		$options    = get_site_option( 'github_updater' );
-
-		// Reverse sort to run plugin/theme URI first
-		arsort( self::$extra_headers );
+		$git_themes    = array();
+		$themes        = wp_get_themes();
 
 		if ( is_multisite() ) {
 			$themes = $this->multisite_get_themes();
@@ -280,13 +264,11 @@ class GitHub_Updater {
 				if ( ! empty( $git_theme['type'] ) && 'github_theme' !== $git_theme['type'] ) {
 					continue;
 				}
-
 				switch( $value ) {
 					case 'GitHub Theme URI':
 						if ( empty( $github_uri ) ) {
 							break;
 						}
-
 						$git_theme['type']                    = 'github_theme';
 
 						$owner_repo                           = parse_url( $github_uri, PHP_URL_PATH );
@@ -313,8 +295,6 @@ class GitHub_Updater {
 							break;
 						}
 						$git_theme['access_token']            = $github_token;
-
-						$this->save_header_options( $git_theme['repo'], $github_token, $options );
 						break;
 				}
 			}
@@ -328,7 +308,6 @@ class GitHub_Updater {
 						if ( empty( $bitbucket_uri ) ) {
 							break;
 						}
-
 						$git_theme['type']                    = 'bitbucket_theme';
 
 						$git_theme['user']                    = parse_url( $bitbucket_uri, PHP_URL_USER );
@@ -345,8 +324,6 @@ class GitHub_Updater {
 						$git_theme['local_version']           = $theme->get( 'Version' );
 						$git_theme['sections']['description'] = $theme->get( 'Description' );
 						$git_theme['local_path']              = get_theme_root() . '/' . $git_theme['repo'] .'/';
-
-						$this->save_header_options( $git_theme['repo'], $git_theme['pass'], $options );
 						break;
 					case 'Bitbucket Branch':
 						if ( empty( $bitbucket_branch ) ) {
@@ -515,13 +492,12 @@ class GitHub_Updater {
 		$changelogs = array( 'CHANGES.md', 'CHANGELOG.md' );
 
 		foreach ( $changelogs as $changes ) {
-			$changes = strtolower( $changes );
 			if ( file_exists( $this->$type->local_path . $changes ) ) {
 				return $changes;
 			}
 		}
 
-		return false;
+			return false;
 	}
 
 	/**
@@ -630,18 +606,4 @@ class GitHub_Updater {
 		return $rating;
 	}
 
-	/**
-	 * Save access tokens and passwords from headers to option.
-	 *
-	 * @param $repo
-	 * @param $value
-	 * @param $options
-	 */
-	protected function save_header_options( $repo, $value, $options ) {
-		if ( ! $value ) {
-			return false;
-		}
-		$options[ $repo ] = $value;
-		update_site_option( 'github_updater', $options );
-	}
 }
