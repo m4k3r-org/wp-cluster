@@ -29,7 +29,7 @@ class GitHub_Plugin_Updater extends GitHub_Updater {
 
 		// Get details of GitHub-sourced plugins
 		$this->config = $this->get_plugin_meta();
-		
+
 		if ( empty( $this->config ) ) {
 			return false;
 		}
@@ -47,6 +47,7 @@ class GitHub_Plugin_Updater extends GitHub_Updater {
 					break;
 			}
 
+			die( '<pre>' . print_r( $this, true ) . '</pre>');
 			$this->{$plugin->type} = $plugin;
 			$this->set_defaults( $plugin->type );
 
@@ -60,7 +61,7 @@ class GitHub_Plugin_Updater extends GitHub_Updater {
 				$plugin->download_link = $repo_api->construct_download_link();
 			}
 		}
-
+		die( '<pre>' . print_r( $this->config, true ) . '</pre>');
 		$this->make_force_check_transient( 'plugins' );
 
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'pre_set_site_transient_update_plugins' ) );
