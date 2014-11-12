@@ -139,12 +139,10 @@ git push cloud production
 * Public Key: jqnp-krmw-nmap-idpk-ooau-bkfm-bghf-jatg
 
 ```
-  ```
-  SetEnv WP_ELASTIC_SECRET_KEY qccj-nxwm-etsk-niuu:chdq-tvek-desl-izlf
-  SetEnv WP_ELASTIC_PUBLIC_KEY qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty
-  SetEnv WP_ELASTIC_SERVICE_URL api.discodonniepresents.com/documents/v1/
-  SetEnv WP_ELASTIC_SERVICE_INDEX qccj-nxwm-etsk-niuu
-
+SetEnv WP_ELASTIC_SECRET_KEY qccj-nxwm-etsk-niuu:chdq-tvek-desl-izlf
+SetEnv WP_ELASTIC_PUBLIC_KEY qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty
+SetEnv WP_ELASTIC_SERVICE_URL api.discodonniepresents.com/documents/v1/
+SetEnv WP_ELASTIC_SERVICE_INDEX qccj-nxwm-etsk-niuu
 ```
 ### Media Sync
 
