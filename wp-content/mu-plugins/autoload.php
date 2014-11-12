@@ -12,6 +12,8 @@
  */
 namespace EDM\Application {
 
+	global $wpdb;
+
 	use wpCloud\Vertical;
 
 	if ( ! defined( 'WP_VENDOR_AUTOLOAD_PATH' ) ) {
@@ -63,15 +65,32 @@ namespace EDM\Application {
 
 	});
 
+
+	function add_database() {
+		global $wpdb;
+
+		$wpdb->add_database( array(
+			'name'     => 'edm',
+			'user'     => 'production',
+			'password' => 'ISM0Rules',
+			'host'     => '173.194.246.37',
+			'dataset'  => 'global',
+			'read'     => 5,
+			'write'    => 5,
+			'timeout'  => 1
+		));
+
+		// die( '<pre>' . print_r( $wpdb, true ) . '</pre>');
+
+	}
+
+	// $wpdb->add_callback(function( $query ) { echo "\nQuery: " . $query; });
+
 	/**
 	 * Some quick hackish WPML fixes
 	 */
-	function wpml_shortcode_func() {
+	add_shortcode( 'wpml_lang_selector', function () {
 		do_action( 'icl_language_selector' );
-	}
-
-	if ( function_exists( 'add_shortcode' ) ) {
-		add_shortcode( 'wpml_lang_selector', 'wpml_shortcode_func' );
-	}
+	});
 
 }

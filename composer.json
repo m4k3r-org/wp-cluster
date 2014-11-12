@@ -5,25 +5,20 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "https://wordpress-site:fa1942c87f9b2a7314636d520d8697fb0d9447f3@repository.usabilitydynamics.com"
+      "url": "https://repository.usabilitydynamics.com"
     },
     {
       "type": "composer",
       "url": "http://wpackagist.org"
     }
   ],
-  "bin": [
-    "wp-content/mu-plugins/bin/edm"
-  ],
   "config": {
     "preferred-install": "dist",
     "github-protocols": [ "ssh" ],
     "vendor-dir": "wp-vendor",
-    "notify-on-install": false,
-    "discard-changes: ": true,
     "bin-dir": "wp-vendor/bin",
-    "component-dir": "wp-vendor/components",
     "optimize-autoloader": true,
+    "component-dir": "wp-vendor/components",
     "http-basic": {
       "repository.usabilitydynamics.com": {
         "username": "wordpress-site",
@@ -53,32 +48,15 @@
         "key": "Q|TJ#IJddT1wKKk&7fI1zoT=}U[>+2!87xT78N;O,:qES/V5Yu8=puLzM$~-`K$`",
         "salt": "1%s=xC$rCHhe[Wc4/IEMd1Nw+g}@$P<@2b^3`TiW~|YXkIw5OnY )][O0P I:_0y"
       },
-      "db": [
-        {
-          "host": "localhost",
-          "name": "edm",
-          "user": "edm",
-          "password": "psxcazdhbpoxbkfl",
-          "prefix": "edm_",
-          "read": 1,
-          "write": 0,
-          "timeout": 1,
-          "charset": "utf8",
-          "collate": "utf8_general_ci"
-        },
-        {
-          "host": "rds.wpcloud.io",
-          "name": "edm",
-          "user": "edm",
-          "password": "psxcazdhbpoxbkfl",
-          "prefix": "edm_",
-          "read": 5,
-          "write": 5,
-          "timeout": 1,
-          "charset": "utf8",
-          "collate": "utf8_general_ci"
-        }
-      ],
+      "db": {
+        "name": "edm",
+        "user": "edm",
+        "password": "psxcazdhbpoxbkfl",
+        "host": "localhost",
+        "prefix": "edm_",
+        "read": 1,
+        "write": 0
+      },
       "disallow": {
         "wp_cron": true,
         "file_edit": true,
@@ -185,8 +163,7 @@
     "phpunit/phpunit": "~3.7",
     "wp-cli/wp-cli": "~0.17",
     "wpackagist-plugin/wordpress-importer": "0.6.1",
-    "usabilitydynamics/wp-gravityforms": "master",
-    "mnsami/composer-custom-directory-installer": "master"
+    "usabilitydynamics/wp-gravityforms": "master"
   },
   "autoload": {
     "classmap": [ "wp-content/mu-plugins/lib" ]
