@@ -6,10 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Composer\\CustomDirectoryInstaller\\LibraryInstaller' => $vendorDir . '/mnsami/composer-custom-directory-installer/src/Composer/CustomDirectoryInstaller/LibraryInstaller.php',
-    'Composer\\CustomDirectoryInstaller\\LibraryPlugin' => $vendorDir . '/mnsami/composer-custom-directory-installer/src/Composer/CustomDirectoryInstaller/LibraryPlugin.php',
-    'Composer\\CustomDirectoryInstaller\\PearInstaller' => $vendorDir . '/mnsami/composer-custom-directory-installer/src/Composer/CustomDirectoryInstaller/PearInstaller.php',
-    'Composer\\CustomDirectoryInstaller\\PearPlugin' => $vendorDir . '/mnsami/composer-custom-directory-installer/src/Composer/CustomDirectoryInstaller/PearPlugin.php',
     'Composer\\Installers\\AglInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/AglInstaller.php',
     'Composer\\Installers\\AnnotateCmsInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/AnnotateCmsInstaller.php',
     'Composer\\Installers\\BaseInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/BaseInstaller.php',
@@ -63,6 +59,8 @@ return array(
     'Composer\\Installers\\ZikulaInstaller' => $vendorDir . '/composer/installers/src/Composer/Installers/ZikulaInstaller.php',
     'EDM\\Application\\Bootstrap' => $baseDir . '/wp-content/mu-plugins/lib/class-bootstrap.php',
     'EDM\\Application\\Migration' => $baseDir . '/wp-content/mu-plugins/lib/class-migrate.php',
+    'FB' => $vendorDir . '/firephp/firephp-core/lib/FirePHPCore/fb.php',
+    'FirePHP' => $vendorDir . '/firephp/firephp-core/lib/FirePHPCore/FirePHP.class.php',
     'Guzzle\\Batch\\AbstractBatchDecorator' => $vendorDir . '/guzzle/guzzle/src/Guzzle/Batch/AbstractBatchDecorator.php',
     'Guzzle\\Batch\\Batch' => $vendorDir . '/guzzle/guzzle/src/Guzzle/Batch/Batch.php',
     'Guzzle\\Batch\\BatchBuilder' => $vendorDir . '/guzzle/guzzle/src/Guzzle/Batch/BatchBuilder.php',

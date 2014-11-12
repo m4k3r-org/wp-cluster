@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1b4fd9252902ca253d6ed940c82f31cc",
+    "hash": "66cacf5fbcff9231f281812462dcafc1",
     "packages": [
         {
             "name": "composer/installers",
@@ -614,7 +614,7 @@
         },
         {
             "name": "erusev/parsedown",
-            "version": "dev-master",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erusev/parsedown.git",
@@ -650,6 +650,45 @@
                 "parser"
             ],
             "time": "2014-10-29 20:29:46"
+        },
+        {
+            "name": "firephp/firephp-core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firephp/firephp-core.git",
+                "reference": "e669ef4e47ac86d05914e9e6251c7c6be5196713"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firephp/firephp-core/zipball/e669ef4e47ac86d05914e9e6251c7c6be5196713",
+                "reference": "e669ef4e47ac86d05914e9e6251c7c6be5196713",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/FirePHPCore/FirePHP.class.php",
+                    "lib/FirePHPCore/fb.php"
+                ],
+                "files": [
+                    "lib/FirePHPCore/fb.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Dorn",
+                    "email": "christoph@christophdorn.com",
+                    "homepage": "http://christophdorn.com"
+                }
+            ],
+            "description": "Traditional FirePHPCore library for sending PHP variables to the browser.",
+            "homepage": "https://github.com/firephp/firephp-core",
+            "time": "2014-08-28 15:02:46"
         },
         {
             "name": "guzzle/guzzle",
@@ -797,69 +836,18 @@
             "time": "2014-09-12 14:11:59"
         },
         {
-            "name": "mnsami/composer-custom-directory-installer",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mnsami/composer-custom-directory-installer.git",
-                "reference": "f2247c448aa61e5d664083e9126629c3767a432e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mnsami/composer-custom-directory-installer/zipball/f2247c448aa61e5d664083e9126629c3767a432e",
-                "reference": "f2247c448aa61e5d664083e9126629c3767a432e",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "*",
-                "php": ">=5.3"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": [
-                    "Composer\\CustomDirectoryInstaller\\LibraryPlugin",
-                    "Composer\\CustomDirectoryInstaller\\PearPlugin"
-                ],
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Composer\\CustomDirectoryInstaller": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mina Nabil Sami",
-                    "email": "mina.nsami@gmail.com"
-                }
-            ],
-            "description": "A composer plugin, to help install packages of different types in custom paths.",
-            "keywords": [
-                "composer",
-                "composer-installer",
-                "composer-plugin"
-            ],
-            "time": "2014-10-04 22:18:00"
-        },
-        {
             "name": "symfony/console",
-            "version": "dev-master",
+            "version": "2.7.x-dev",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "2fc3644d2e10e14935b2c79e57a5185281eb1eb7"
+                "reference": "8c47430b88b646f91a0255fea7aef72dc7ca57e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/2fc3644d2e10e14935b2c79e57a5185281eb1eb7",
-                "reference": "2fc3644d2e10e14935b2c79e57a5185281eb1eb7",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/8c47430b88b646f91a0255fea7aef72dc7ca57e1",
+                "reference": "8c47430b88b646f91a0255fea7aef72dc7ca57e1",
                 "shasum": ""
             },
             "require": {
@@ -878,7 +866,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
@@ -902,21 +890,21 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2014-11-03 03:55:50"
+            "time": "2014-11-10 18:00:54"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "dev-master",
+            "version": "2.7.x-dev",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "dcf345d5ed96bc6c3b4521c1989670d2c9e5014e"
+                "reference": "8e5829263631e686bf4d1254b02411263b8fa228"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/dcf345d5ed96bc6c3b4521c1989670d2c9e5014e",
-                "reference": "dcf345d5ed96bc6c3b4521c1989670d2c9e5014e",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/8e5829263631e686bf4d1254b02411263b8fa228",
+                "reference": "8e5829263631e686bf4d1254b02411263b8fa228",
                 "shasum": ""
             },
             "require": {
@@ -936,7 +924,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
@@ -960,7 +948,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2014-11-03 03:55:50"
+            "time": "2014-11-10 18:00:54"
         },
         {
             "name": "usabilitydynamics/wp-amd",
@@ -1034,44 +1022,6 @@
             "keywords": [
                 "multisite",
                 "varnish",
-                "wordpress"
-            ]
-        },
-        {
-            "name": "usabilitydynamics/wp-elastic",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:usabilitydynamics/wp-elastic",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/usabilitydynamics/wp-elastic/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-name": "wp-elastic"
-            },
-            "license": [
-                "GPLv2"
-            ],
-            "authors": [
-                {
-                    "name": "Andy Potanin",
-                    "homepage": "http://usabilitydynamics.com"
-                },
-                {
-                    "name": "Paris Holley",
-                    "homepage": "http://parisholley.com"
-                }
-            ],
-            "description": "Improve WordPress search performance/accuracy and enable faceted search by leveraging an ElasticSearch server.",
-            "keywords": [
-                "elasticsearch",
-                "search",
                 "wordpress"
             ]
         },
@@ -1152,6 +1102,42 @@
             "keywords": [
                 "multisite",
                 "varnish",
+                "wordpress"
+            ]
+        },
+        {
+            "name": "usabilitydynamics/wp-pagespeed",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:usabilitydynamics/wp-pagespeed",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usabilitydynamics/wp-pagespeed/zipball/master?access_token=fa1942c87f9b2a7314636d520d8697fb0d9447f3",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "wp-pagespeed"
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Potanin",
+                    "homepage": "http://usabilitydynamics.com"
+                }
+            ],
+            "description": "https://github.com/usabilitydynamics/wp-pagespeed",
+            "homepage": "https://github.com/usabilitydynamics/wp-pagespeed",
+            "keywords": [
+                "multisite",
+                "varnish",
+                "veneer",
                 "wordpress"
             ]
         },
@@ -1350,6 +1336,30 @@
                 "veneer",
                 "wordpress"
             ]
+        },
+        {
+            "name": "wpackagist-plugin/akismet",
+            "version": "dev-trunk",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/akismet/",
+                "reference": "trunk"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/akismet.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/akismet": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/akismet/",
+            "time": "2014-11-05 16:11:04"
         },
         {
             "name": "wpackagist-plugin/debug-bar",
@@ -1586,6 +1596,29 @@
             },
             "type": "wordpress-plugin",
             "homepage": "http://wordpress.org/plugins/real-user-monitoring-by-pingdom/"
+        },
+        {
+            "name": "wpackagist-plugin/redirection",
+            "version": "2.3.10",
+            "source": {
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/redirection/",
+                "reference": "tags/2.3.10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://downloads.wordpress.org/plugin/redirection.2.3.10.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "replace": {
+                "wpackagist/redirection": "self.version"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "http://wordpress.org/plugins/redirection/"
         },
         {
             "name": "wpackagist-plugin/video",
