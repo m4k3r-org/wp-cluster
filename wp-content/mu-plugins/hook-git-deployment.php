@@ -39,7 +39,7 @@ namespace EDM\Application\Hooks {
 		define( 'DB_DUMP', '/home/dud/db/edm_cluster.sql' );
 
 		/** Define our local environment variables */
-		define( 'GIT_ROOT', '/home/dud/public_html' );
+		define( 'GIT_ROOT', '/home/dud/public_html/.develop' );
 		define( 'GIT_BRANCH', 'develop' );
 
 		/** Define our new domain suffix */
