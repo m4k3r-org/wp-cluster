@@ -1,3 +1,6 @@
+#### 2.3.1
+* Version bump
+
 #### 2.3.0
 * Updated Carrington Build (UsabilityDynamics/lib-carrington) to v1.3.3.
 * Reinstalled all vendor dependencies.
