@@ -16,14 +16,17 @@ if( !class_exists( 'UsabilityDynamics_Festival2_AdvancedGalleryModule' ) ) {
      * Construct
      */
     public function __construct() {
-      
-      wp_enqueue_media();
-      wp_enqueue_script('knockout', 'http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js');
+
+	    if( is_admin() ) {
+		    wp_enqueue_media();
+		    wp_enqueue_script( 'knockout', 'http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js' );
+	    }
 
       $opts = array(
         'description' => __( 'Display Advanced Gallery for home page.', wp_festival2( 'domain' ) ),
         'icon' => plugins_url( basename( __DIR__ ) . '/icon.png', __DIR__ . '/' )
       );
+
       parent::__construct( 'cfct-module-advanced-gallery', __( 'Advanced Gallery', wp_festival2( 'domain' ) ), $opts );
 
     }
