@@ -34,15 +34,15 @@
 </IfModule>
 # END Veneer Assets
 
-# BEGIN Veneer Management Access 
+# BEGIN Veneer Management Access
 <IfModule mod_rewrite.c>
- RewriteEngine On
- RewriteBase /
- RewriteRule ^manage$                         /manage/ [R=301,L]
- RewriteRule ^manage/(login|signup)/?(.*)$    /wp-$1.php [QSA,L]
- RewriteRule ^manage/?(.*)$                   /wp-admin/$1 [QSA,L]
+ # RewriteEngine On
+ # RewriteBase /
+ # RewriteRule ^manage$                         /manage/ [R=301,L]
+ # RewriteRule ^manage/(login|signup)/?(.*)$    /wp-$1.php [QSA,L]
+ # RewriteRule ^manage/?(.*)$                   /wp-admin/$1 [QSA,L]
 </IfModule>
-# END Veneer Management Access 
+# END Veneer Management Access
 
 # BEGIN Veneer Public API
 <IfModule mod_rewrite.c>
