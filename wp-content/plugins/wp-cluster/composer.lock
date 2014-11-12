@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5533d8edce6fa288a98464569cfef88f",
+    "hash": "371188661b37b2fc0f6012c6b4b4acd5",
     "packages": [
         {
             "name": "composer/installers",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "09e2192a7cd08008e273355fddd38942d8de2992"
+                "reference": "8024be9aa3ee446272937f46a8807fa52b337767"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/09e2192a7cd08008e273355fddd38942d8de2992",
-                "reference": "09e2192a7cd08008e273355fddd38942d8de2992",
+                "url": "https://api.github.com/repos/composer/installers/zipball/8024be9aa3ee446272937f46a8807fa52b337767",
+                "reference": "8024be9aa3ee446272937f46a8807fa52b337767",
                 "shasum": ""
             },
             "replace": {
@@ -96,74 +96,19 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-10-15 03:40:33"
-        },
-        {
-            "name": "justinrainbow/json-schema",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "05ff6d8d79fe3ad190b0663d80d3f9deee79416c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/05ff6d8d79fe3ad190b0663d80d3f9deee79416c",
-                "reference": "05ff6d8d79fe3ad190b0663d80d3f9deee79416c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "JsonSchema": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "NewBSD"
-            ],
-            "authors": [
-                {
-                    "name": "Igor Wiedler",
-                    "email": "igor@wiedler.ch",
-                    "homepage": "http://wiedler.ch/igor/"
-                },
-                {
-                    "name": "Bruno Prieto Reis",
-                    "email": "bruno.p.reis@gmail.com"
-                },
-                {
-                    "name": "Justin Rainbow",
-                    "email": "justin.rainbow@gmail.com"
-                },
-                {
-                    "name": "Robert Schönthal",
-                    "email": "robert.schoenthal@gmail.com",
-                    "homepage": "http://digitalkaoz.net"
-                }
-            ],
-            "description": "A library to validate a json schema.",
-            "homepage": "https://github.com/justinrainbow/json-schema",
-            "keywords": [
-                "json",
-                "schema"
-            ],
-            "time": "2012-01-03 00:33:17"
+            "time": "2014-11-01 17:51:50"
         },
         {
             "name": "usabilitydynamics/lib-api",
             "version": "0.5.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-api",
+                "url": "git@github.com:usabilitydynamics/lib-api",
                 "reference": "0.5.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-api/archive/0.5.0.zip",
+                "url": "https://github.com/usabilitydynamics/lib-api/archive/0.5.0.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -171,6 +116,9 @@
                 "usabilitydynamics/lib-utility": "*"
             },
             "type": "library",
+            "extra": {
+                "installer-name": "lib-api"
+            },
             "autoload": {
                 "classmap": [
                     "lib"
@@ -209,35 +157,27 @@
         },
         {
             "name": "usabilitydynamics/lib-settings",
-            "version": "0.2.2",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-settings",
-                "reference": "0.2.2"
+                "url": "git@github.com:usabilitydynamics/lib-settings",
+                "reference": "0.2.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-settings/archive/0.2.2.zip",
+                "url": "https://github.com/usabilitydynamics/lib-settings/archive/0.2.3.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
-                "justinrainbow/json-schema": "1.1.*",
-                "usabilitydynamics/lib-utility": "*"
+                "usabilitydynamics/lib-utility": "~0.3"
+            },
+            "require-dev": {
+                "justinrainbow/json-schema": "1.1.*"
             },
             "type": "library",
             "extra": {
-                "component": {
-                    "scripts": [
-                        "static/scripts/settings.js"
-                    ],
-                    "templates": [
-                        "static/views/new-installation.xhtml"
-                    ],
-                    "files": [
-                        "static/schemas/settings.json"
-                    ]
-                }
+                "installer-name": "lib-settings"
             },
             "autoload": {
                 "classmap": [
@@ -277,12 +217,12 @@
             "version": "0.2.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-ui",
+                "url": "git@github.com:usabilitydynamics/lib-ui",
                 "reference": "0.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-ui/archive/0.2.1.zip",
+                "url": "https://github.com/usabilitydynamics/lib-ui/archive/0.2.1.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -336,7 +276,7 @@
                     "role": "Developer"
                 }
             ],
-            "homepage": "http://github.com/UsabilityDynamics/wp-ui",
+            "homepage": "http://github.com/usabilitydynamics/wp-ui",
             "keywords": [
                 "css-editor",
                 "editor",

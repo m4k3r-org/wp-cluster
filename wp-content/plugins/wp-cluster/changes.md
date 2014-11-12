@@ -3,3 +3,4 @@
 * Added admin toolbar with Git branch, version and commit message.
 * Added global $wp_cluster variable for instance to load into.
 * Added support for blog-not-found.php dropin.
+* Added Grunt module for locale generation, removed unused Grunt modules.

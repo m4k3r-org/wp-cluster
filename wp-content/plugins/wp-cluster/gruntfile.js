@@ -7,6 +7,13 @@
  */
 module.exports = function build( grunt ) {
 
+  // Automatically Load Tasks
+  require( 'load-grunt-tasks' )( grunt, {
+    pattern: 'grunt-*',
+    config: './package.json',
+    scope: 'devDependencies'
+  } );
+
   grunt.initConfig( {
 
     // Read Composer File.
@@ -98,38 +105,37 @@ module.exports = function build( grunt ) {
       }
     },
 
-    // Clean for Development.
-    clean: {
-      all: [
-        "vendor",
-        "static/readme.md",
-        "composer.lock",
-        "static/styles/*.css",
-        "static/scripts/*.js"
-      ],
-      vendor: [
-        "composer.lock",
-        "vendor/*"
-      ]
+    // Generate POT file.
+    makepot: {
+      target: {
+        options: {
+          type: 'wp-plugin',
+          domainPath: 'static/locale',                   // Where to save the POT file.
+          exclude: [ "node_modules/**", "vendor/**", "static/**" ],
+          mainFile: 'wp-cluster.php',
+          potFilename: 'wp-cluster.pot',
+          potHeaders: {
+            poedit: true,
+            language: 'en',
+            'x-poedit-country': 'United States',
+            'x-poedit-sourcecharset': 'UTF-8',
+            'x-textdomain-support': 'yes',
+            'x-poedit-keywordslist': true
+          },
+          updateTimestamp: true
+        }
+      }
     }
 
   });
 
-  // Load tasks
-  grunt.loadNpmTasks( 'grunt-markdown' );
-  grunt.loadNpmTasks( 'grunt-shell' );
-  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-  grunt.loadNpmTasks( 'grunt-contrib-watch' );
-  grunt.loadNpmTasks( 'grunt-contrib-less' );
-  grunt.loadNpmTasks( 'grunt-contrib-clean' );
-
   // Register default task
-  grunt.registerTask( 'default', [ 'markdown', 'less', 'uglify' ] );
+  grunt.registerTask( 'default', [ 'markdown', 'less', 'uglify', 'makepot' ] );
 
   grunt.registerTask( 'install', [ 'default' ] );
   grunt.registerTask( 'build', [ 'default' ] );
 
   // Build Distribution
-  grunt.registerTask( 'release', [] );
+  grunt.registerTask( 'release', [ 'default' ] );
 
 };
