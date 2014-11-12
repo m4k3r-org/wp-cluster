@@ -47,7 +47,7 @@ namespace UsabilityDynamics\Cluster {
 			 * @param bool $do_stuff Whether we should actually do initialization( needed for 'init' )
 			 */
 			function __construct( $do_stuff = true ) {
-				global $wp_veneer, $current_blog, $blog_id, $current_site, $site_id, $wpdb;
+				global $wp_cluster, $current_blog, $blog_id, $current_site, $site_id, $wpdb;
 
 				if ( ! ( is_bool( $do_stuff ) && $do_stuff ) ) {
 					return $this;
@@ -92,13 +92,6 @@ namespace UsabilityDynamics\Cluster {
 				if ( ! defined( 'PATH_CURRENT_SITE' ) ) {
 					define( 'PATH_CURRENT_SITE', $current_blog->path );
 				}
-
-				/** Ok, if we have a multi_db environment, we should now connect to the new DB */
-				if ( @isset( $wp_veneer->cluster->db ) ) {
-					// $wp_veneer->cluster->db->_maybe_connect_to_blog_db();
-				}
-
-				/** Return this */
 
 				return $this;
 
@@ -155,7 +148,6 @@ namespace UsabilityDynamics\Cluster {
 				if ( $possible_domains ) {
 					$query = $wpdb->prepare( "SELECT blog_id, site_id, domain, path  FROM {$wpdb->blogs} WHERE domain IN (" . implode( ',', array_fill( 0, count( $possible_domains ), '%s' ) ) . ") AND public=1 ORDER BY CHAR_LENGTH( domain ) + CHAR_LENGTH( path ) DESC", $possible_domains );
 				}
-
 
 				if ( isset( $query ) ) {
 					$_singleMatch = $wpdb->get_results( $query );
@@ -222,7 +214,6 @@ namespace UsabilityDynamics\Cluster {
 
 				};
 
-
 				/** If we don't have a blog, bail */
 				if ( ! $current_blog ) {
 
@@ -258,23 +249,20 @@ namespace UsabilityDynamics\Cluster {
 
 		}
 
-		/**
-		 * If we don't have a wp_cluster object, we should make one, but it should be a child of wp_veneer
-		 */
-		global $wp_veneer;
+		global $wp_cluster;
 
-		if ( ! is_object( $wp_veneer ) ) {
-			$wp_veneer = new \stdClass();
+		if ( ! is_object( $wp_cluster ) ) {
+			$wp_cluster = new \stdClass();
 		}
 
 		/** Add to our object, if we don't have the cluster object */
-		if ( ! isset( $wp_veneer->cluster ) ) {
-			$wp_veneer->cluster = new \stdClass();
+		if ( ! isset( $wp_cluster->cluster ) ) {
+			$wp_cluster->cluster = new \stdClass();
 		}
 
 		/** Now, add on our sunrise object, finally */
-		if ( ! isset( $wp_veneer->cluster->sunrise ) ) {
-			$wp_veneer->cluster->sunrise = Sunrise::init()->__construct();
+		if ( ! isset( $wp_cluster->cluster->sunrise ) ) {
+			$wp_cluster->cluster->sunrise = Sunrise::init()->__construct();
 		}
 
 	}
