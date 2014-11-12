@@ -80,7 +80,9 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 	 * @return boolean|object
 	 */
 	protected function api( $url ) {
-		$response      = wp_remote_get( $this->get_api_url( $url ) );
+		$_api_url = $this->get_api_url( $url );
+
+		$response      = wp_remote_get( $_api_url );
 		$code          = wp_remote_retrieve_response_code( $response );
 		$allowed_codes = array( 200, 404 );
 
@@ -123,6 +125,12 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 			$this->type->access_token = GITHUB_UPDATER_TOKEN;
 		}
 
+		$this->type->access_token = apply_filters( 'github_updater:access_token', ( isset( $this->type->access_token ) ? $this->type->access_token : null ), array(
+			'endpoint' => $endpoint,
+			'segments' => $segments,
+			'this' => $this
+		));
+
 		if ( ! empty( $this->type->access_token ) ) {
 			$endpoint = add_query_arg( 'access_token', $this->type->access_token, $endpoint );
 		}
@@ -144,6 +152,11 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 	 */
 	public function get_remote_info( $file ) {
 		$response = $this->get_transient( $file );
+
+		// Make sure response is actually valuable, not an empty array.
+		if( is_array( $response ) && count( array_filter( $response ) ) === 0 ) {
+			$response = null;
+		}
 
 		if ( ! $response ) {
 			$response = $this->api( '/repos/:owner/:repo/contents/' . $file );
@@ -246,6 +259,15 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 		} else {
 			$endpoint .= $this->type->newest_tag;
 		}
+
+		if( empty( $this->type->access_token ) && defined( 'GITHUB_UPDATER_TOKEN' ) ) {
+			$this->type->access_token = GITHUB_UPDATER_TOKEN;
+		}
+
+		$this->type->access_token = apply_filters( 'github_updater:access_token', ( isset( $this->type->access_token ) ? $this->type->access_token : null ), array(
+			'endpoint' => $endpoint,
+			'this' => $this
+		));
 
 		if ( ! empty( $this->type->access_token ) ) {
 			$endpoint .= '?access_token=' . $this->type->access_token;
