@@ -93,7 +93,7 @@
       "qm_disabled": true,
       "wp": {
         "default_theme": "wp-splash-v1.0",
-        "debug_display": true,
+        "debug_display": false,
         "use_themes": true,
         "elastic": {
           "public_key": "qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty",
