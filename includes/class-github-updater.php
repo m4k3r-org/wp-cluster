@@ -133,6 +133,13 @@ class GitHub_Updater {
 			$git_repo['name']                    = $plugin_data['Name'];
 			$git_repo['local_version']           = $plugin_data['Version'];
 			$git_repo['sections']['description'] = $plugin_data['Description'];
+
+			if( !isset( $git_repo['repo'] ) ) {
+				// Don't know why repo is unset on first one, but this fixes it for now. - potanin@UD
+				$git_repo = array_merge( $git_repo, $this->get_local_plugin_meta( $headers ) );
+
+			}
+
 			$git_plugins[ $git_repo['repo'] ]    = (object) $git_repo;
 		}
 

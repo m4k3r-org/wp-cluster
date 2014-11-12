@@ -29,7 +29,7 @@ class GitHub_Plugin_Updater extends GitHub_Updater {
 
 		// Get details of GitHub-sourced plugins
 		$this->config = $this->get_plugin_meta();
-		
+
 		if ( empty( $this->config ) ) {
 			return false;
 		}
