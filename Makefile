@@ -39,7 +39,7 @@ setEnvironment:
 # Pull all Subtrees
 #
 freshTrees:
-	@git subtree pull --prefix=wp-content/static/wiki git@github.com:DiscoDonniePresents/www.discodonniepresents.com.wiki.git master --sqash
+	@git subtree pull --prefix=wp-content/static/wiki git@github.com:DiscoDonniePresents/www.discodonniepresents.com.wiki master --squash
 	@git subtree pull --prefix=wp-content/plugins/wp-amd git@github.com:UsabilityDynamics/wp-amd master --squash
 	@git subtree pull --prefix=wp-content/plugins/wp-cluster git@github.com:UsabilityDynamics/wp-cluster master --squash
 	@git subtree pull --prefix=wp-content/plugins/wp-crm git@github.com:UsabilityDynamics/wp-crm master --squash
