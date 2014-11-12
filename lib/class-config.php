@@ -13,11 +13,11 @@
  *
  *
  * @author potanin@UD
- * @class UsabilityDynamics\Veneer\Config
+ * @class UsabilityDynamics\Cluster\Config
  */
-namespace UsabilityDynamics\Veneer {
+namespace UsabilityDynamics\Cluster {
 
-	if ( ! class_exists( 'UsabilityDynamics\Veneer\Config' ) ) {
+	if ( ! class_exists( 'UsabilityDynamics\Cluster\Config' ) ) {
 
 		class Config {
 
@@ -133,12 +133,12 @@ namespace UsabilityDynamics\Veneer {
 				$this->processConfigFiles();
 
 				$this->_settings = array_merge( $this->_settings, array(
-					"wp_base_dir" => $this->baseDir,
-					"wp_site_domain" => isset( $_SERVER[ 'HTTP_HOST' ] ) ? $_SERVER[ 'HTTP_HOST' ] : 'localhost',
+					"wp_base_dir"         => $this->baseDir,
+					"wp_site_domain"      => isset( $_SERVER[ 'HTTP_HOST' ] ) ? $_SERVER[ 'HTTP_HOST' ] : 'localhost',
 					"wp_default_protocol" => $this->defaultProtocol = isset( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] == 'on' ? 'https' : 'http',
-					"wp_env" => isset( $_SERVER[ 'WP_ENV' ] ) ? $_SERVER[ 'WP_ENV' ] : $this->env,
-					"sunrise" => $this->sunrise
-				));
+					"wp_env"              => isset( $_SERVER[ 'WP_ENV' ] ) ? $_SERVER[ 'WP_ENV' ] : $this->env,
+					"sunrise"             => $this->sunrise
+				) );
 
 				// Get settings
 				$this->_settings = array_merge( $this->_settings, Config::parseComposer( $this->composer_file ) );
@@ -154,6 +154,9 @@ namespace UsabilityDynamics\Veneer {
 
 				// Fix value types.
 				$this->_settings = Config::normalize( $this->_settings, true );
+
+				// Handle Database.
+				$this->parseDatabase();
 
 				// Intersect existing settings with settings passed with server.
 				$this->addServerParameters();
@@ -180,8 +183,6 @@ namespace UsabilityDynamics\Veneer {
 			 */
 			private function applyGlobals( $_settings = array() ) {
 				global $table_prefix;
-
-				$_settings = isset( $_settings ) ? $_settings : $this->_settings;
 
 				/** Is this needed? */
 				if ( ! isset( $table_prefix ) ) {
@@ -239,7 +240,7 @@ namespace UsabilityDynamics\Veneer {
 
 				/** If we've got WP_CLI, we need to fix the base dir */
 				// If wp-cli then we should take current working directory
-				if( defined( 'WP_CLI' ) ) {
+				if ( defined( 'WP_CLI' ) ) {
 					$this->baseDir = $_SERVER[ 'PWD' ];
 				}
 
@@ -251,7 +252,7 @@ namespace UsabilityDynamics\Veneer {
 			private function detectSiteRoot() {
 
 				// If web-server that we can trust document root most of the time
-				if( isset( $_SERVER[ 'DOCUMENT_ROOT' ] ) ) {
+				if ( isset( $_SERVER[ 'DOCUMENT_ROOT' ] ) ) {
 					$this->baseDir = $_SERVER[ 'DOCUMENT_ROOT' ];
 				}
 
@@ -261,12 +262,11 @@ namespace UsabilityDynamics\Veneer {
 				}
 
 				if ( is_file( $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json' ) ) {
-					$this->baseDir = $_SERVER[ 'DOCUMENT_ROOT' ];
+					$this->baseDir       = $_SERVER[ 'DOCUMENT_ROOT' ];
 					$this->composer_file = $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json';
 				} else if ( is_file( $this->baseDir . '/composer.json' ) ) {
 					$this->composer_file = $this->baseDir . '/composer.json';
 				}
-
 
 				return $this->baseDir;
 
@@ -289,11 +289,11 @@ namespace UsabilityDynamics\Veneer {
 				foreach ( (array) $_settings as $key => $value ) {
 
 					/** Ensure protected constants are not defined before the configs */
-					if( in_array( $key, $this->protectedConstants ) ) {
+					if ( in_array( $key, $this->protectedConstants ) ) {
 						continue;
 					}
 
-					if( !defined( $key ) ) {
+					if ( ! defined( $key ) ) {
 						define( $key, $value );
 					}
 
@@ -312,9 +312,9 @@ namespace UsabilityDynamics\Veneer {
 
 				// Create an array of existing settings as well as accepted settings that may be set via $_SERVER even if not set in comoser.json
 				$_acceptedKeys = array_merge( $this->_settings, array(
-					'WP_DEBUG' => null,
+					'WP_DEBUG'         => null,
 					'WP_DEBUG_DISPLAY' => null,
-				));
+				) );
 
 				// Extract valid server parameters that match available keys
 				$this->serverParameters = array_intersect_key( Config::normalize( $_SERVER, true ), $_acceptedKeys );
@@ -324,6 +324,45 @@ namespace UsabilityDynamics\Veneer {
 
 				return $this;
 
+			}
+
+			private function parseDatabase() {
+
+				// Single database, do nothing.
+				if ( $this->_settings[ 'DB_HOST' ] ) {
+					return;
+				}
+
+				// Multiple databases.
+				if ( $this->_settings[ 'DB_0_HOST' ] ) {
+
+					foreach( Config::find_by_prefix( $this->_settings, 'DB_0' ) as $_key => $_value ) {
+
+						$this->_settings[ str_replace( '_0', '', $_key ) ]  = $_value;
+						unset( $this->_settings[ $_key ] );
+					}
+
+				}
+
+			}
+
+			/**
+			 * @param $arr_main_array
+			 * @param string $prefix
+			 *
+			 * @return array
+			 */
+			public function find_by_prefix( $arr_main_array, $prefix = '' ) {
+
+				$arr_result = array();
+				foreach ( $arr_main_array as $key => $value ) {
+					//$exp_key = explode('_', $key);
+					if ( strpos( $key, $prefix ) === 0 ) {
+						$arr_result[ $key ] = $value;
+					}
+				}
+
+				return $arr_result;
 			}
 
 			/**
@@ -359,18 +398,18 @@ namespace UsabilityDynamics\Veneer {
 			public function replacePatterns( $_settings = array(), $extraPatterns = array() ) {
 
 				$_found_pattern = false;
-				$_patternMap = array_merge( (array) $_settings, array_change_key_case( $extraPatterns, false ) );
+				$_patternMap    = array_merge( (array) $_settings, array_change_key_case( $extraPatterns, false ) );
 
 				foreach ( (array) $_settings as $key => $value ) {
 
-					if( preg_match_all( '/{([a-zA-Z\_\-]*?)}/ie', $value, $matches ) ) {
-						$_found_pattern = true;
-						$_settings[ $key ] = preg_replace('/{([a-zA-Z\_\-]*?)}/ie','$_patternMap["$1"]',$value);
+					if ( preg_match_all( '/{([a-zA-Z\_\-]*?)}/ie', $value, $matches ) ) {
+						$_found_pattern    = true;
+						$_settings[ $key ] = preg_replace( '/{([a-zA-Z\_\-]*?)}/ie', '$_patternMap["$1"]', $value );
 					}
 
 				}
 
-				if( $_found_pattern ) {
+				if ( $_found_pattern ) {
 					$_settings = self::replacePatterns( $_settings );
 				}
 
@@ -473,7 +512,7 @@ namespace UsabilityDynamics\Veneer {
 
 				} catch( \Exception $error ) {
 					// Most likely can't parse JSON file... Silently fail.
-					return $_settings;
+					return isset( $_settings ) ? $_settings : null;
 				}
 
 				if ( isset( $_composer->settings ) && is_object( $_composer->settings ) ) {
@@ -615,21 +654,24 @@ namespace UsabilityDynamics\Veneer {
 	 * If we don't have the following defined, we should assume that we're directly including this file,
 	 * so we should initialize it
 	 */
-	if ( !isset( $wp_veneer ) || !isset( $wp_veneer->config ) ) {
-		global $wp_veneer;
+	if ( ! isset( $wp_cluster ) || ! isset( $wp_cluster->config ) ) {
+		global $wp_cluster;
 
 		/** Init our config object */
-		if ( ! is_object( $wp_veneer ) ) {
-			$wp_veneer = new \stdClass();
+		if ( ! is_object( $wp_cluster ) ) {
+			$wp_cluster = new \stdClass();
 		}
 
 		/** Add to our object, if we don't have the config object */
-		if ( ! isset( $wp_veneer->config ) ) {
-			$wp_veneer->config = new Config();
+		if ( ! isset( $wp_cluster->config ) ) {
+			$wp_cluster->config = new Config();
 		}
 
-		/** Now that we've done that, lets include our wp settings file, as per normal operations */
-		require_once( ABSPATH . 'wp-settings.php' );
+		// Now that we've done that, lets include our wp settings file, as per normal operations
+		if ( file_exists( ABSPATH . 'wp-settings.php' ) ) {
+			require_once( ABSPATH . 'wp-settings.php' );
+		}
+
 	}
 
 }

@@ -1133,28 +1133,39 @@ namespace UsabilityDynamics\Cluster {
 
 				}
 
-				try {
+				// If multiple databases seem to be present, we must parse all defiend constants and build an array of DBs.
+				if ( defined( 'DB_1_HOST' ) && defined( 'DB_1_HOST' ) ) {
 
-					if ( is_file( $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json' ) ) {
-						$_composer = json_decode( file_get_contents( $_SERVER[ 'DOCUMENT_ROOT' ] . '/composer.json' ) );
+					$dbList = array();
 
-						foreach ( (array) $_composer->extra->settings->db->replicas as $_replica ) {
+					foreach( get_defined_constants() as $_key => $_value ) {
 
-							$wpdb->add_database( array(
-								'host'     => $_replica->host,
-								'user'     => $_replica->user,
-								'password' => $_replica->password,
-								'name'     => $_replica->name,
-								'read'     => $_replica->ready,
-								'write'    => $_replica->write
-							) );
+						if (preg_match('/^DB_([0-9])/', $_key, $_matches )) {
+
+							if( !isset( $dbList[ $_matches[1] ] ) ) {
+								$dbList[ $_matches[1] ] = array();
+							}
+
+							$dbList[ $_matches[1] ][ str_replace( '_' . $_matches[1], '', $_key ) ] =$_value;
 
 						}
 
 					}
 
-				} catch( \Exception $error ) {
-					// $error->getMessage();
+					foreach( (array) $dbList as $_replica ) {
+
+						$wpdb->add_database( array(
+							'host'     => isset( $_replica[ 'DB_HOST' ] ) ? $_replica[ 'DB_HOST' ] : null,
+							'user'     => isset( $_replica[ 'DB_USER' ] ) ? $_replica[ 'DB_USER' ] : null,
+							'password' => isset( $_replica[ 'DB_PASSWORD' ] ) ? $_replica[ 'DB_PASSWORD' ] : null,
+							'name'     => isset( $_replica[ 'DB_NAME' ] ) ? $_replica[ 'DB_NAME' ] : null,
+							'read'     => isset( $_replica[ 'DB_READ' ] ) ? $_replica[ 'DB_READ' ] : null,
+							'write'    => isset( $_replica[ 'DB_WRITE' ] ) ? $_replica[ 'DB_WRITE' ] : null,
+							'dataset'    => isset( $_replica[ 'DB_DATASET' ] ) ? $_replica[ 'DB_DATASET' ] : null
+						));
+
+					}
+
 				}
 
 			}
