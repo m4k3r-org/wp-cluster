@@ -8,12 +8,17 @@
  */
 namespace UsabilityDynamics {
 
+	Use UsabilityDynamics\UI;
+	Use UsabilityDynamics\Structure;
+	Use UsabilityDynamics\Shortcode;
+	Use UsabilityDynamics\Theme\Scaffold;
+
   /**
    * Festival Theme
    *
    * @author Usability Dynamics
    */
-  class Festival2 extends \UsabilityDynamics\Theme\Scaffold {
+  class Festival2 extends Scaffold {
 
     /**
      * Version of theme
@@ -94,11 +99,11 @@ namespace UsabilityDynamics {
       ));
 
       // Register Custom Post Types, meta and set their taxonomies
-      $this->structure = \UsabilityDynamics\Structure::define( $this->get_schema( '/static/schemas/schema.structure.json' ) );
+      $this->structure = Structure::define( $this->get_schema( '/static/schemas/schema.structure.json' ) );
 
       // Set Theme UI
       if( class_exists( '\UsabilityDynamics\UI\Settings' ) ) {
-        $this->ui = new \UsabilityDynamics\UI\Settings( $this->settings, $this->get_schema( '/static/schemas/schema.ui.json' ) );
+        $this->ui = new UI\Settings( $this->settings, $this->get_schema( '/static/schemas/schema.ui.json' ) );
       }
 
       // Configure API Methods.
@@ -657,7 +662,7 @@ namespace UsabilityDynamics {
         include_once( WP_VENDOR_DIR . '/usabilitydynamics/wp-amd/wp-amd.php' );
       }
       if( class_exists( '\UsabilityDynamics\Festival2\Customizer' ) ) {
-        $this->customizer = \UsabilityDynamics\Festival2\Customizer::define( array(
+        $this->customizer = Festival2\Customizer::define( array(
           'text_domain' => $this->domain,
         ) );
       }
@@ -951,7 +956,7 @@ namespace UsabilityDynamics {
      */
     private function load_shortcodes() {
       // Inits shortcodes
-      \UsabilityDynamics\Shortcode\Utility::maybe_load_shortcodes( get_stylesheet_directory() . '/lib/shortcodes' );
+      Shortcode\Utility::maybe_load_shortcodes( get_stylesheet_directory() . '/lib/shortcodes' );
     }
 
     /**

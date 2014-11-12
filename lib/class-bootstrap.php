@@ -8,6 +8,8 @@
  */
 namespace UsabilityDynamics\Festival2 {
 
+	use UsabilityDynamics\Festival2;
+
   /**
    * Festival Bootstrap
    *
@@ -35,10 +37,19 @@ namespace UsabilityDynamics\Festival2 {
       }
 
       // Instantaite Disco.
-      $this->theme = new \UsabilityDynamics\Festival2;
+      $this->theme = new Festival2;
 
       // Init our widgets
       add_action( 'widgets_init', array( __CLASS__, 'register_widgets' ) );
+
+
+	    add_action( 'wp_print_footer_scripts', function() {
+
+		    if( !wp_script_is( 'requirejs', 'done' ) && !wp_script_is( 'requirejs', 'enqueued' ) && !wp_script_is( 'udx-requires', 'done' ) ) {
+			    echo '<script type="text/javascript" data-main="/wp-content/themes/wp-festival-v2.0/static/scripts/app" src="http://cdn.udx.io/udx.requires.js"></script>';
+		    }
+
+	    }, 100 );
 
     }
 

@@ -11,7 +11,7 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "http://repository.usabilitydynamics.com"
+      "url": "https://wordpress-theme:fa1942c87f9b2a7314636d520d8697fb0d9447f3@repository.usabilitydynamics.com"
     },
     {
       "type": "package",
