@@ -62,6 +62,7 @@ subtreePull:
 	@git subtree pull --prefix=wp-content/themes/wp-spectacle-chmf git@github.com:DiscoDonniePresents/wp-spectacle-chmf master --squash
 	@git subtree pull --prefix=wp-content/themes/wp-spectacle-mbp git@github.com:DiscoDonniePresents/wp-spectacle-mbp master --squash
 	@git subtree pull --prefix=wp-content/themes/wp-spectacle-fbt git@github.com:DiscoDonniePresents/wp-spectacle-fbt master --squash
+	@git subtree pull --prefix=vendor/themes/wp-festival-smf git@github.com:DiscoDonniePresents/wp-festival-smf master --squash
 	@git subtree pull --prefix=wp-content/themes/wp-spectacle-isladelsol git@github.com:DiscoDonniePresents/wp-spectacle-isladelsol master --squash
 	@git subtree pull --prefix=wp-content/static/mocks git@github.com:DiscoDonniePresents/mocks.git master --squash
 	@echo "Pulled all common subtrees."

@@ -5,7 +5,7 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "https://wordpress-site:fa1942c87f9b2a7314636d520d8697fb0d9447f3@repository.usabilitydynamics.com"
+      "url": "https://wordpress-site:a98f52edc56dae806c91c80b1d7509c01c9aa352@repository.usabilitydynamics.com"
     },
     {
       "type": "composer",
@@ -22,7 +22,7 @@
     "http-basic": {
       "repository.usabilitydynamics.com": {
         "username": "wordpress-site",
-        "password": "fa1942c87f9b2a7314636d520d8697fb0d9447f3"
+        "password": "a98f52edc56dae806c91c80b1d7509c01c9aa352"
       }
     },
     "amazon-aws": {
