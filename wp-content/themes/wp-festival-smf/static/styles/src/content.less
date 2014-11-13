@@ -1,6 +1,10 @@
 .content {
-	margin-top: -15%;
+	margin-top: -30%;
 	text-align: center;
+
+	@media @phone-landscape {
+		margin-top: -15%;
+	}
 
 	.ic {
 		display: inline-block;
@@ -18,17 +22,43 @@
 		margin: 0 0 15px 0;
 
 		@media @desktop {
-			font-size: 36px;
+			font-size: 30px;
 			margin: 0 0 25px 0;
+		}
+
+		@media @large-desktop {
+			font-size: 36px;
+		}
+
+		.force-nl {
+			display: none;
+
+			@media @tablet {
+				display: block;
+			}
+
+			@media @desktop {
+				display: none;
+			}
 		}
 	}
 
 	h3 {
 		font-size: 14px;
+		line-height: 18px;
 		margin: 0 0 20px 0;
-
+		
 		@media @desktop {
 			font-size: 18px;
+			line-height: 23px;
+		}
+		
+		.force-nl {
+			position: static;
+			
+			@media @large-desktop {
+				display: none;
+			}
 		}
 	}
 
