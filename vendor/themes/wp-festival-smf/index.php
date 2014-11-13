@@ -35,6 +35,7 @@
 
   <link rel="stylesheet" href="/wp-content/themes/wp-festival-smf/static/styles/app.css">
   <script type="text/javascript" data-main="/wp-content/themes/wp-festival-smf/static/scripts/src/app" src="http://cdn.udx.io/udx.requires.js"></script>
+  <?php wp_head(); ?>
 </head>
 
 <body>
@@ -127,5 +128,6 @@
 
     <div class="bg"></div>
   </div>
+<?php wp_footer(); ?>
 </body>
 </html>
