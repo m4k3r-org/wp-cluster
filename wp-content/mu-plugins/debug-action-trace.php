@@ -12,6 +12,12 @@ namespace Application\EDM\Debug {
 	function addActionResponseHeader() {
 
 		if ( ! headers_sent() ) {
+			global $wp_locale;
+			if( !isset( $wp_locale ) )
+			{
+				require_once ABSPATH . WPINC . '/locale.php';
+				$wp_locale = new \WP_Locale();
+			}
 			header( "X-Debug-Trace-" . current_action() . ':' . timer_stop() );
 		}
 
