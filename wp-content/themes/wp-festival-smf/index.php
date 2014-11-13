@@ -22,6 +22,8 @@
 
   <link rel="stylesheet" href="/wp-content/themes/wp-festival-smf/static/styles/app.css">
   <script type="text/javascript" data-main="/wp-content/themes/wp-festival-smf/static/scripts/src/app" src="http://cdn.udx.io/udx.requires.js"></script>
+
+  <?php wp_head(); ?>
 </head>
 
 <body>
@@ -91,10 +93,10 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12">
-					<a href="https://www.facebook.com/UltimateMusicExperience" target="_blank" class="icon-facebook hover-pop"></a>
-					<a href="https://twitter.com/UMESouthPadre" target="_blank" class="icon-twitter hover-pop"></a>
+					<a href="https://www.facebook.com/SMFTAMPA" target="_blank" class="icon-facebook hover-pop"></a>
+					<a href="https://twitter.com/SMFTampa" target="_blank" class="icon-twitter hover-pop"></a>
 					<a href="https://www.youtube.com/channel/UC17AVS-axW6YecuumgxtC2g" target="_blank" class="icon-youtube hover-pop"></a>
-					<a href="http://instagram.com/UMEfestival" target="_blank" class="icon-instagram hover-pop"></a>
+					<a href="http://instagram.com/SMFTampa/" target="_blank" class="icon-instagram hover-pop"></a>
 				</div>
 			</div>
 		</div>
@@ -127,5 +129,8 @@
 
     <div class="bg"></div>
   </div>
+
+	<?php wp_footer(); ?>
+
 </body>
 </html>
