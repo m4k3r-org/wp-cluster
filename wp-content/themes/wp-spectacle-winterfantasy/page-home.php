@@ -98,7 +98,7 @@ $artist_lineup = json_decode( $artist_lineup, true );
 				Disco Donnie Presents and Global Groove Events are excited to announce that Winter Fantasy is back once again to celebrate its the fourth edition. Sure to put some heat in your season, come join us at the Pharr Events Center in Pharr, Texas on Friday, December 26th and get ready to deck the halls with bass!
 			</p>
 
-      <h2>Social Streame</h2>
+      <h2>Social Stream</h2>
       <hr>
 
       <div class="stream">
