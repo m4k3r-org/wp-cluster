@@ -95,8 +95,8 @@ $artist_lineup = json_decode( $artist_lineup, true );
       </a>
 
       <p class="main-content">
-        For all the Ghouls and Boys! The Monster Block Party is a FREE, daytime Halloween festival for Salt Lake City's goblins and ghouls of all ages. There will be trick-or-treating booths, a costume contest with prizes (Kid, Teen and Adult divisions), free arts and crafts projects, a pumpkin drop, live performances and more!
-      </p>
+				Disco Donnie Presents and Global Groove Events are excited to announce that Winter Fantasy is back once again to celebrate its the fourth edition. Sure to put some heat in your season, come join us at the Pharr Events Center in Pharr, Texas on Friday, December 26th and get ready to deck the halls with bass!
+			</p>
 
       <h2>Social Streame</h2>
       <hr>

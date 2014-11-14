@@ -1,3 +1,6 @@
+#### 0.1.2
+* Changed homepage text
+
 #### 0.1.1
 * Fixed comment form style
 
