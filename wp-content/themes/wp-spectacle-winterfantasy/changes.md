@@ -1,3 +1,7 @@
+#### 0.1.4
+* Homepage fixes
+* Header fixes
+
 #### 0.1.3
 * Fixed design bugs on mobile
 
