@@ -45,7 +45,7 @@
 				<img src="/wp-content/themes/wp-festival-smf/static/images/organizer-logo-committee.png" alt="Committee">
 			</a>
 
-    </div>s
+    </div>
   </header>
 
   <div class="content container">
