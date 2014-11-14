@@ -16,12 +16,15 @@ require.config({
 require( [
 	'jquery',
   'lib/share',
-  'lib/countdown'
-], function( $, share, countdown ){
+  'lib/countdown',
+	'lib/stickyfooter'
+], function( $, share, countdown, footerPos ){
 
 	$(function() {
 		share.init();
 		countdown.init();
+		footerPos.init();
+
 	});
 
 

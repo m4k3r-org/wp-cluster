@@ -1,3 +1,6 @@
+#### 0.4.0
+* Added sticky footer
+
 #### 0.3.3
 * Removed description meta
 
