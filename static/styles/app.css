@@ -1390,7 +1390,7 @@ hr.short {
   position: relative;
   display: block;
   width: 100%;
-  padding-bottom: 50.6%;
+  padding-bottom: 107.916%;
   background-image: url("../images/background-480.jpg");
   background-position: top center;
   background-size: cover;
@@ -1398,6 +1398,7 @@ hr.short {
 }
 @media only screen and (min-width: 480px) {
   .main-header {
+    padding-bottom: 50.6%;
     background-image: url("../images/background-1024.jpg");
   }
 }
@@ -1423,7 +1424,7 @@ hr.short {
 }
 @media only screen and (min-width: 768px) {
   .main-header .share {
-    top: 80px;
+    top: 65px;
     left: 40px;
   }
 }
@@ -1453,14 +1454,19 @@ hr.short {
   display: none;
   position: absolute;
   z-index: 2;
-  width: 276px;
-  top: 65px;
+  width: 196px;
+  top: 25px;
   left: 50%;
-  margin-left: -138px;
+  margin-left: -98px;
 }
 @media only screen and (min-width: 768px) {
   .main-header .organizer-logos {
     display: block;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .main-header .organizer-logos {
+    top: 45px;
   }
 }
 .main-header .organizer-logos > a {
@@ -1471,18 +1477,19 @@ hr.short {
   margin: 0 35px 0 0;
 }
 footer {
-  background: #258f9e;
+  background: #5c4d45;
   text-align: center;
   padding: 30px 0;
   margin: 30px 0 0 0;
 }
 footer a {
   display: block;
-  font-size: 32px;
+  font-size: 26px;
   padding: 0;
   text-align: center;
   width: 50%;
   float: left;
+  color: #FFF;
 }
 @media only screen and (min-width: 768px) {
   footer a {
@@ -1503,8 +1510,13 @@ footer a.icon-twitter {
   }
 }
 .content {
-  margin-top: -15%;
+  margin-top: -30%;
   text-align: center;
+}
+@media only screen and (min-width: 480px) {
+  .content {
+    margin-top: -15%;
+  }
 }
 .content .ic {
   display: inline-block;
@@ -1523,17 +1535,45 @@ footer a.icon-twitter {
 }
 @media only screen and (min-width: 992px) {
   .content h2 {
-    font-size: 36px;
+    font-size: 30px;
     margin: 0 0 25px 0;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .content h2 {
+    font-size: 36px;
+  }
+}
+.content h2 .force-nl {
+  display: none;
+}
+@media only screen and (min-width: 768px) {
+  .content h2 .force-nl {
+    display: block;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .content h2 .force-nl {
+    display: none;
   }
 }
 .content h3 {
   font-size: 14px;
+  line-height: 18px;
   margin: 0 0 20px 0;
 }
 @media only screen and (min-width: 992px) {
   .content h3 {
     font-size: 18px;
+    line-height: 23px;
+  }
+}
+.content h3 .force-nl {
+  position: static;
+}
+@media only screen and (min-width: 1200px) {
+  .content h3 .force-nl {
+    display: none;
   }
 }
 .content .button {
