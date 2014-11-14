@@ -1454,10 +1454,10 @@ hr.short {
   display: none;
   position: absolute;
   z-index: 2;
-  width: 196px;
+  width: 310px;
   top: 25px;
   left: 50%;
-  margin-left: -98px;
+  margin-left: -155px;
 }
 @media only screen and (min-width: 768px) {
   .main-header .organizer-logos {
@@ -1473,8 +1473,9 @@ hr.short {
   float: left;
   text-decoration: none;
 }
-.main-header .organizer-logos > a.disco-donnie {
-  margin: 0 35px 0 0;
+.main-header .organizer-logos > a.disco-donnie,
+.main-header .organizer-logos > a.sunset-events {
+  margin: 0 25px 0 0;
 }
 footer {
   background: #5c4d45;

@@ -41,6 +41,11 @@
       <a href="http://globalgrooveevents.com" target="_blank" class="sunset-events">
         <img src="/wp-content/themes/wp-festival-smf/static/images/organizer-logo-sunset-events.png" alt="Sunset Events">
       </a>
+
+			<a href=http://committeeent.com/" target="_blank" class="committee">
+				<img src="/wp-content/themes/wp-festival-smf/static/images/organizer-logo-committee.png" alt="Committee">
+			</a>
+
     </div>
   </header>
 
