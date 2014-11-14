@@ -1,3 +1,6 @@
+#### 0.4.1
+* Changed book a room link
+
 #### 0.4.0
 * Added sticky footer
 
