@@ -11,7 +11,6 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Sunset Music Festival 2015 is an electronic dance music festival in Tampa, Florida on May 23rd-24th."/><meta property="og:locale" content="en_US" />
 
   <meta http-equiv="Pragma" content="public" />
   <meta http-equiv="Cache-Type" content="text/html; charset=UTF-8" />
