@@ -86,7 +86,7 @@ $artist_lineup = json_decode( $artist_lineup, true );
     <div class="triangle-top"></div>
 
     <div class="content-inner">
-      <a href="https://www.eventbrite.com/e/freaks-beats-and-treats-2014-featuring-dj-bl3nd-tickets-13056683893" onclick="javascript:_gaq.push( [ '_link', 'https://www.eventbrite.com/e/freaks-beats-and-treats-2014-featuring-dj-bl3nd-tickets-13056683893?aff=spectacle' ] ); return false;" class="buy-tickets" target="_blank">
+      <a href="http://www.eventbrite.com/e/winter-fantasy-2014-tickets-14331111741" onclick="javascript:_gaq.push( [ '_link', 'http://www.eventbrite.com/e/winter-fantasy-2014-tickets-14331111741?aff=spectacle' ] ); return false;" class="buy-tickets" target="_blank">
         <div class="inner">
           Tickets
           <strong>On-Sale</strong>

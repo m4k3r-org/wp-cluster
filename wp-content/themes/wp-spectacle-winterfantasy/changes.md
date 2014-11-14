@@ -1,3 +1,9 @@
+#### 0.1.5
+* JS bug fix
+* Homepage fixes
+* Changed buy ticket link
+
+
 #### 0.1.4
 * Homepage fixes
 * Header fixes
