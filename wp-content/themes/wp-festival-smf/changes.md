@@ -1,5 +1,9 @@
+#### 0.3.2
+* Fixed organizer logos dimensions
+* Changed date for the countdown
+
 #### 0.3.1
-* Adjusted oranizer logos
+* Adjusted organizer logos
 
 #### 0.3.0
 * Change organizer logo link for Committee

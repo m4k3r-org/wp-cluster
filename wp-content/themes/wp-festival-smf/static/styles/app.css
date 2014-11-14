@@ -1455,18 +1455,20 @@ hr.short {
   display: none;
   position: absolute;
   z-index: 2;
-  width: 310px;
   top: 25px;
   left: 50%;
-  margin-left: -155px;
 }
 @media only screen and (min-width: 768px) {
   .main-header .organizer-logos {
     display: block;
+    width: 215px;
+    margin-left: -107px;
   }
 }
 @media only screen and (min-width: 1200px) {
   .main-header .organizer-logos {
+    width: 260px;
+    margin-left: -130px;
     top: 45px;
   }
 }
@@ -1478,8 +1480,26 @@ hr.short {
 .main-header .organizer-logos > a.sunset-events {
   margin: 0 25px 0 0;
 }
-.main-header .organizer-logos > a.committee {
-  margin-top: 10px;
+@media only screen and (min-width: 768px) {
+  .main-header .organizer-logos > a.disco-donnie img {
+    width: 50px;
+  }
+  .main-header .organizer-logos > a.sunset-events img {
+    width: 40px;
+  }
+  .main-header .organizer-logos > a.committee {
+    margin-top: 4px;
+  }
+  .main-header .organizer-logos > a.committee img {
+    width: 70px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .main-header .organizer-logos > a.disco-donnie img,
+  .main-header .organizer-logos > a.sunset-events img,
+  .main-header .organizer-logos > a.committee img {
+    width: auto;
+  }
 }
 footer {
   background: #5c4d45;

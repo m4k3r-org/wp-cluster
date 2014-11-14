@@ -74,10 +74,10 @@
         <span class="ic icon-tickets"></span>
 				<hr class="short">
 				<h3>Early bird tickets <br class="force-nl">on sale</h3>
-				<h2>Fri, Dec 4, <br class="force-nl">2014</h2>
+				<h2>Fri, Dec 5, <br class="force-nl">2014</h2>
 
         <div class="countdown">
-          <div class="timer" data-todate="Fri, 04 Dec 2014 10:00:00 EST">
+          <div class="timer" data-todate="Fri, 05 Dec 2014 10:00:00 EST">
             <div class="days">0</div>
             <div class="hours">0</div>
             <div class="minutes">0</div>
