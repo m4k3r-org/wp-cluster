@@ -18,7 +18,7 @@
   <meta http-equiv="Cache-Control" content="public, max-age=1800" />
   <meta http-equiv="Expires" content="Fri, 4 Dec 2014 11:00:00 EST" />
 
-  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="shortcut icon" href="/wp-content/themes/wp-festival-smf/favicon.ico">
 
   <link rel="stylesheet" href="/wp-content/themes/wp-festival-smf/static/styles/app.css">
   <script type="text/javascript" data-main="/wp-content/themes/wp-festival-smf/static/scripts/src/app" src="http://cdn.udx.io/udx.requires.js"></script>
@@ -42,7 +42,7 @@
         <img src="/wp-content/themes/wp-festival-smf/static/images/organizer-logo-sunset-events.png" alt="Sunset Events">
       </a>
 
-			<a href=http://committeeent.com/" target="_blank" class="committee">
+			<a href="https://www.facebook.com/committeeent" target="_blank" class="committee">
 				<img src="/wp-content/themes/wp-festival-smf/static/images/organizer-logo-committee.png" alt="Committee">
 			</a>
 

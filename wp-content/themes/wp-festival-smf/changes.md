@@ -1,3 +1,8 @@
+#### 0.3.0
+* Change organizer logo link for Committee
+* Cleaned up styles and JS
+* Fixed JS bugs in Chrome
+
 #### 0.2.1
 * Added new organizer logo
 * Fixed corrupt header image on large displays
