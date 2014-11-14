@@ -13,8 +13,6 @@ require.config({
   },
 
   shim: {
-    "vendor/fancybox-2.1.5/jquery.fancybox": ["jquery"],
-    "vendor/fancybox-2.1.5/helpers/jquery.fancybox-media": ["jquery", "vendor/fancybox-2.1.5/jquery.fancybox"],
     "vendor/caroufredsel-6.2.1/jquery.carouFredSel-6.2.1": ["jquery"],
     "vendor/jquery-dotdotdot/jquery.dotdotdot.min": {
       "deps": ["jquery"],
@@ -27,8 +25,6 @@ require.config({
 require( [
   'jquery',
   'lib/istouch',
-  'vendor/fancybox-2.1.5/jquery.fancybox',
-  'vendor/fancybox-2.1.5/helpers/jquery.fancybox-media',
   'lib/stream',
   'lib/countdown',
   'lib/contests',
@@ -39,7 +35,7 @@ require( [
   'lib/share',
   'lib/blog',
   'vendor/jquery-dotdotdot/jquery.dotdotdot.min'
-], function( $, isTouch, fancybox, fancyboxMedia, stream, countDown, contests, spectacleTabs, equalHeights, navigation, swipe, share, blog, dotdotdot ){
+], function( $, isTouch, stream, countDown, contests, spectacleTabs, equalHeights, navigation, swipe, share, blog, dotdotdot ){
 
   // Performance optimization for window resize event
   $( window ).resize( function() {
@@ -53,30 +49,6 @@ require( [
     }, 250 );
 
   } );
-
-  // Initialize top video popup
-  if ( isTouch === false )
-  {
-    $('header .play-video' ).fancybox({
-      maxWidth: 800,
-      maxHeight: 600,
-      fitToView: false,
-      autoSize: false,
-      closeClick: false,
-      padding: 0,
-      margin: 0,
-
-      helpers: {
-        media: true
-      },
-
-      youtube: {
-        autoplay: 1,
-        hd: 1
-      }
-    });
-  }
-
 
   // Init navigation overlay
   navigation.init();
