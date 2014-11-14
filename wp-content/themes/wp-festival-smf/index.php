@@ -66,7 +66,7 @@
 				<h3>Memorial Day <br class="force-nl">Weekend</h3>
 				<h2>May 23 &amp; 24, 2015</h2>
 
-        <a href="http://www.kayak.com/r/JTAEACCzXQ;map" target="_blank" class="button">Book a Room</a>
+        <a href="https://discodonniepresents.findor.com/results/list?checkIn=2015-03-22&checkOut=2015-03-25&room1=2&eventID=3" target="_blank" class="button">Book a Room</a>
       </div>
 
       <div class="col-xs-12 col-sm-4">
