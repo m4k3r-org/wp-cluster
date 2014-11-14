@@ -1,5 +1,4 @@
 Makefile
-Dockerfile
 .environment
 .gitignore
 .git
