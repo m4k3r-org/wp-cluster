@@ -1,3 +1,6 @@
+#### 0.3.1
+* Adjusted oranizer logos
+
 #### 0.3.0
 * Change organizer logo link for Committee
 * Cleaned up styles and JS

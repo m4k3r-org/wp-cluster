@@ -1478,6 +1478,9 @@ hr.short {
 .main-header .organizer-logos > a.sunset-events {
   margin: 0 25px 0 0;
 }
+.main-header .organizer-logos > a.committee {
+  margin-top: 10px;
+}
 footer {
   background: #5c4d45;
   text-align: center;
