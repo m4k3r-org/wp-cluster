@@ -1,3 +1,6 @@
+#### 0.1.3
+* Fixed design bugs on mobile
+
 #### 0.1.2
 * Changed homepage text
 
