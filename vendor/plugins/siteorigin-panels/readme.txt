@@ -6,13 +6,15 @@ Tested up to: 4.0
 Stable tag: trunk
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
-Donate link: http://siteorigin.com/page-builder/#donate
+Donate link: https://siteorigin.com/page-builder/#donate
 
 Build responsive page layouts using the widgets you know and love using this simple drag and drop page builder.
 
 == Description ==
 
 [vimeo http://vimeo.com/59561067]
+
+Page Builder 2.0 is coming. Read our [announcement post](https://siteorigin.com/page-builder-2-changes-everything/) for more on what you can expect from this update.
 
 WordPress has evolved into a fully functional CMS. Page Builder (previously called Panels) completes the transition by giving you a way to create responsive column layouts using the widgets you know and love.
 
@@ -26,9 +28,9 @@ We've included a few useful widgets, but it works with a lot of other widgets an
 
 Page Builder works with most well made themes. The only requirement is that your theme supports pages. And if your theme is responsive, change a few settings and boom, your layouts will work with your theme and collapse into a single column on mobile devices.
 
-There are loads free and premium themes that work with the Page Builder, we have our own collection of [free themes](http://siteorigin.com/) if you'd like to use one of ours.
+There are loads free and premium themes that work with the Page Builder, we have our own collection of [free themes](https://siteorigin.com/) if you'd like to use one of ours.
 
-Page Builder [Documentation](http://siteorigin.com/page-builder/documentation/) is available on SiteOrigin and we offer free support on our [support forum](http://siteorigin.com/threads/plugin-page-builder/). If you're having strange issues, try following [this guide](http://siteorigin.com/troubleshooting/identifying-plugin-conflicts/).
+Page Builder [Documentation](https://siteorigin.com/page-builder/documentation/) is available on SiteOrigin and we offer free support on our [support forum](http://siteorigin.com/threads/plugin-page-builder/). If you're having strange issues, try following [this guide](http://siteorigin.com/troubleshooting/identifying-plugin-conflicts/).
 
 = Bundled Widgets =
 
@@ -89,6 +91,11 @@ Page Builder is actively developed and updated, so generally I'd recommend that 
 I've tried to ensure that Page Builder is compatible with most plugin widgets. It's best to just download Page Builder and test for yourself.
 
 == Changelog ==
+
+= 1.5.4 =
+* All CSS is now loaded inline to prevent slow down issue.
+* Fixed duplication of CSS for home page.
+* Preview data is now forced to save in a separate post meta to prevent overwrite and loss of Page Builder data from preview.
 
 = 1.5.3 =
 * Fixed post loop widget issue.

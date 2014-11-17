@@ -50,7 +50,6 @@ function siteorigin_panels_setting($key = ''){
 			'affiliate-id' => apply_filters( 'siteorigin_panels_affiliate_id', false ),
 			'copy-content' => true,
 			'animations' => true,
-			'inline-css' => true,
 		) ) );
 		$settings = wp_parse_args( $current_settings, $settings);
 
@@ -118,7 +117,6 @@ function siteorigin_panels_options_field( $id, $value, $title, $description = fa
 				case 'responsive' :
 				case 'copy-content' :
 				case 'animations' :
-				case 'inline-css' :
 				case 'bundled-widgets' :
 					?><label><input type="checkbox" name="siteorigin_panels_settings[<?php echo esc_attr($id) ?>]" <?php checked($value) ?> /> <?php _e('Enabled', 'siteorigin-panels') ?></label><?php
 					break;
@@ -146,7 +144,6 @@ function siteorigin_panels_save_options(){
 	$settings = isset( $_POST['siteorigin_panels_settings'] ) ? $_POST['siteorigin_panels_settings'] : array();
 	foreach($settings as $f => $v){
 		switch($f){
-			case 'inline-css' :
 			case 'responsive' :
 			case 'copy-content' :
 			case 'animations' :
@@ -165,7 +162,6 @@ function siteorigin_panels_save_options(){
 	$settings['responsive'] = !empty($settings['responsive']);
 	$settings['copy-content'] = !empty($settings['copy-content']);
 	$settings['animations'] = !empty($settings['animations']);
-	$settings['inline-css'] = !empty($settings['inline-css']);
 	$settings['bundled-widgets'] = !empty($settings['bundled-widgets']);
 
 	// Post type settings
