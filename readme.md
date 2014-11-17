@@ -97,19 +97,19 @@ wp db import edm_production.sql
 
 #### Standard Sites' Media
 ```
-gsutil -m rsync -rd  /var/storage/beachblanketfestival.com/media/             gs://media.beachblanketfestival.com/
-gsutil -m rsync -rd  /var/storage/cominghomemusicfestival.com/media/          gs://media.cominghomemusicfestival.com/
-gsutil -m rsync -rd  /var/storage/dayafter.com/media/                         gs://media.dayafter.com/
-gsutil -m rsync -rd  /var/storage/discodonniepresents.com/media/              gs://media.discodonniepresents.com/
-gsutil -m rsync -rd  /var/storage/freaksbeatstreats.com/media/                gs://media.freaksbeatstreats.com/
-gsutil -m rsync -rd  /var/storage/gifttampa.com/media/                        gs://media.gifttampa.com/
-gsutil -m rsync -rd  /var/storage/isladelsolfest.com/media/                   gs://media.isladelsolfest.com/
-gsutil -m rsync -rd  /var/storage/monsterblockparty.com/media/                gs://media.monsterblockparty.com/
-gsutil -m rsync -rd  /var/storage/smftampa.com/media/                         gs://media.smftampa.com/
-gsutil -m rsync -rd  /var/storage/somethingwicked.com/media/                  gs://media.somethingwicked.com/
-gsutil -m rsync -rd  /var/storage/suncitymusicfestival.com/media/             gs://media.suncitymusicfestival.com/
-gsutil -m rsync -rd  /var/storage/winterfantasyrgv.com/media/                 gs://media.winterfantasyrgv.com/
-gsutil -m rsync -rd  /var/storage/umesouthpadre.com/media/                    gs://media.umesouthpadre.com/
+gsutil -m rsync -d  /var/storage/beachblanketfestival.com/media/             gs://media.beachblanketfestival.com/
+gsutil -m rsync -d  /var/storage/cominghomemusicfestival.com/media/          gs://media.cominghomemusicfestival.com/
+gsutil -m rsync -d  /var/storage/dayafter.com/media/                         gs://media.dayafter.com/
+gsutil -m rsync -d  /var/storage/discodonniepresents.com/media/              gs://media.discodonniepresents.com/
+gsutil -m rsync -d  /var/storage/freaksbeatstreats.com/media/                gs://media.freaksbeatstreats.com/
+gsutil -m rsync -d  /var/storage/gifttampa.com/media/                        gs://media.gifttampa.com/
+gsutil -m rsync -d  /var/storage/isladelsolfest.com/media/                   gs://media.isladelsolfest.com/
+gsutil -m rsync -d  /var/storage/monsterblockparty.com/media/                gs://media.monsterblockparty.com/
+gsutil -m rsync -d  /var/storage/smftampa.com/media/                         gs://media.smftampa.com/
+gsutil -m rsync -d  /var/storage/somethingwicked.com/media/                  gs://media.somethingwicked.com/
+gsutil -m rsync -d  /var/storage/suncitymusicfestival.com/media/             gs://media.suncitymusicfestival.com/
+gsutil -m rsync -d  /var/storage/winterfantasyrgv.com/media/                 gs://media.winterfantasyrgv.com/
+gsutil -m rsync -d  /var/storage/umesouthpadre.com/media/                    gs://media.umesouthpadre.com/
 ```
 
 #### Archived Sites' Media
