@@ -86,17 +86,16 @@ $artist_lineup = json_decode( $artist_lineup, true );
     <div class="triangle-top"></div>
 
     <div class="content-inner">
-      <a href="http://www.eventbrite.com/e/winter-fantasy-2014-tickets-14331111741" onclick="javascript:_gaq.push( [ '_link', 'http://www.eventbrite.com/e/winter-fantasy-2014-tickets-14331111741?aff=spectacle' ] ); return false;" class="buy-tickets" target="_blank">
+      <a href="http://www.eventbrite.com/e/winter-fantasy-2014-tickets-14331111741" onclick="javascript:_gaq.push( [ '_link', 'http://www.eventbrite.com/e/winter-fantasy-2014-tickets-14331111741' ] ); return false;" class="buy-tickets" target="_blank">
         <div class="inner">
-          Tickets
-          <strong>On-Sale</strong>
-          <small>Sat, Nov 15 10 AM CT</small>
+          Buy
+          <strong>Tickets</strong>
         </div>
       </a>
 
       <p class="main-content">
-				Disco Donnie Presents and Global Groove Events are excited to announce that Winter Fantasy is back once again to celebrate its the fourth edition. Sure to put some heat in your season, come join us at the Pharr Events Center in Pharr, Texas on Friday, December 26th and get ready to deck the halls with bass!
-			</p>
+        Disco Donnie Presents and Global Groove Events are excited to announce that Winter Fantasy is back once again to celebrate its the fourth edition. Sure to put some heat in your season, come join us at the Pharr Events Center in Pharr, Texas on Friday, December 26th and get ready to deck the halls with bass!
+      </p>
 
       <h2>#WinterFantasy</h2>
       <hr>
