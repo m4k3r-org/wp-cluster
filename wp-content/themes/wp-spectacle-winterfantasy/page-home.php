@@ -89,8 +89,8 @@ $artist_lineup = json_decode( $artist_lineup, true );
       <a href="http://www.eventbrite.com/e/winter-fantasy-2014-tickets-14331111741" onclick="javascript:_gaq.push( [ '_link', 'http://www.eventbrite.com/e/winter-fantasy-2014-tickets-14331111741' ] ); return false;" class="buy-tickets" target="_blank">
         <div class="inner">
           Tickets
-          <strong>ON SALE</strong>
-          <small>Sat, Nov 16 10 AM CT</small>
+          <strong>ON-SALE</strong>
+          <small>Sat, Nov 15 10 AM CT</small>
         </div>
       </a>
 

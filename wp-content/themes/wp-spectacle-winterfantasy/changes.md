@@ -1,3 +1,6 @@
+#### 0.2.2
+* fixed event date
+
 #### 0.2.1
 * copy fixes
 
