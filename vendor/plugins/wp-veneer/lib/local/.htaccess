@@ -7,6 +7,8 @@
 # @version 0.6.8
 # @author potanin@UD
 
+Options -Indexes
+
 # BEGIN Environment
 <IfModule mod_setenvif.c>
   SetEnvIfNoCase X-UDS-Environment "(.*)" APPLICATION_ENVIRONMENT=$1
