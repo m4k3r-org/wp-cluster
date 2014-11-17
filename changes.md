@@ -1,3 +1,6 @@
+#### 2.0.7
+* Fixed admin JS bug
+
 #### 2.0.6
 * (WIP) Merging develop and master branches into v2.0.
 
