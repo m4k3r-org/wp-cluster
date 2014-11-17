@@ -35,10 +35,14 @@
       left: 0;
       right: 0;
       bottom: 0;
-      height: 30%;
+      height: 130px;
 
       @media @desktop {
         height: 160px;
+      }
+
+      @media @large-desktop {
+        height: 250px;
       }
     }
 
@@ -70,16 +74,20 @@
   }
 
   .blog-single-content {
-    margin-top: -45%;
+    margin-top: -40px;
     position: relative;
     z-index: 10;
 
     @media @tablet {
-      margin-top: -150px;
+      margin-top: -60px;
+    }
+
+    @media @desktop {
+      margin-top: -100px;
     }
 
     @media @large-desktop {
-      margin-top: -400px;
+      margin-top: -140px;
     }
 
     .title {
@@ -87,14 +95,13 @@
       font-family: "audimat-regular", sans-serif;
       font-weight: normal;
       letter-spacing: 0;
-
-      padding-top: 45px;
+      padding: 0;
+      margin: 0;
 
       @media @desktop {
         font-size: 48px;
         line-height: 58px;
         letter-spacing: -0.04em;
-        padding-top: 130px;
       }
     }
 
@@ -181,6 +188,10 @@
 
       p {
         margin: 0 0 20px 0;
+      }
+
+      img{
+        max-width:100%;
       }
 
     }
