@@ -1,3 +1,6 @@
+#### 0.2.5
+* Buy tickets adjustments
+
 #### 0.2.4
 * Buy tickets copy change
 * Hashtag adjustments on homepage
