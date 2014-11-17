@@ -1,3 +1,7 @@
+#### 0.2.4
+* Buy tickets copy change
+* Hashtag adjustments on homepage
+
 #### 0.2.3
 * removed event date from buy ticket box
 
