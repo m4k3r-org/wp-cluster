@@ -1,3 +1,6 @@
+#### 0.2.1
+* copy fixes
+
 #### 0.2.0
 * Inner pages fixes
 * Blog, Hotels
