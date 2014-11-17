@@ -90,7 +90,6 @@ $artist_lineup = json_decode( $artist_lineup, true );
         <div class="inner">
           Tickets
           <strong>ON-SALE</strong>
-          <small>Sat, Nov 15 10 AM CT</small>
         </div>
       </a>
 

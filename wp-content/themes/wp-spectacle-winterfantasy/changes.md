@@ -1,3 +1,6 @@
+#### 0.2.3
+* removed event date from buy ticket box
+
 #### 0.2.2
 * fixed event date
 
