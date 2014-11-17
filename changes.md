@@ -1,8 +1,27 @@
+#### 0.2.5
+* Buy tickets adjustments
+
+#### 0.2.4
+* Buy tickets copy change
+* Hashtag adjustments on homepage
+
+#### 0.2.3
+* removed event date from buy ticket box
+
+#### 0.2.2
+* fixed event date
+
+#### 0.2.1
+* copy fixes
+
+#### 0.2.0
+* Inner pages fixes
+* Blog, Hotels
+
 #### 0.1.5
 * JS bug fix
 * Homepage fixes
 * Changed buy ticket link
-
 
 #### 0.1.4
 * Homepage fixes
