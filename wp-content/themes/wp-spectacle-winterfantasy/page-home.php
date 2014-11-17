@@ -86,19 +86,19 @@ $artist_lineup = json_decode( $artist_lineup, true );
     <div class="triangle-top"></div>
 
     <div class="content-inner">
-      <a href="http://www.eventbrite.com/e/winter-fantasy-2014-tickets-14331111741" onclick="javascript:_gaq.push( [ '_link', 'http://www.eventbrite.com/e/winter-fantasy-2014-tickets-14331111741?aff=spectacle' ] ); return false;" class="buy-tickets" target="_blank">
+      <a href="https://www.eventbrite.com/e/freaks-beats-and-treats-2014-featuring-dj-bl3nd-tickets-13056683893" onclick="javascript:_gaq.push( [ '_link', 'https://www.eventbrite.com/e/freaks-beats-and-treats-2014-featuring-dj-bl3nd-tickets-13056683893?aff=spectacle' ] ); return false;" class="buy-tickets" target="_blank">
         <div class="inner">
           Tickets
-          <strong>On-Sale</strong>
-          <small>Sat, Nov 15 10 AM CT</small>
+          <strong>ON SALE</strong>
+          <small>Fri, Sep 4 10 AM CT</small>
         </div>
       </a>
 
       <p class="main-content">
-				Disco Donnie Presents and Global Groove Events are excited to announce that Winter Fantasy is back once again to celebrate its the fourth edition. Sure to put some heat in your season, come join us at the Pharr Events Center in Pharr, Texas on Friday, December 26th and get ready to deck the halls with bass!
-			</p>
+        For all the Ghouls and Boys! The Monster Block Party is a FREE, daytime Halloween festival for Salt Lake City's goblins and ghouls of all ages. There will be trick-or-treating booths, a costume contest with prizes (Kid, Teen and Adult divisions), free arts and crafts projects, a pumpkin drop, live performances and more!
+      </p>
 
-      <h2>#WinterFantasy</h2>
+      <h2>Social Stream</h2>
       <hr>
 
       <div class="stream">
