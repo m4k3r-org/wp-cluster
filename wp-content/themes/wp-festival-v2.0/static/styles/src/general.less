@@ -796,6 +796,43 @@ section.schedule-reserve{
   }
 }
 
+// Multi-language Overlay
+
+.language-overlay {
+	display: none;
+	overflow: auto;
+
+	.bg{
+		background: none;
+
+		@media @tablet {
+			background: #090533;
+		}
+	}
+
+	.overlay-content {
+		background: rgba(9,5,51,0.95);
+		position: absolute;
+
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 72000;
+
+		color: #ffffff;
+		text-align: center;
+
+		@media @tablet {
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			transform: translateY(-50%);
+
+			background: none;
+		}
+	}
+}
+
+
 .divider {
   height: 1px;
   width: 40%;

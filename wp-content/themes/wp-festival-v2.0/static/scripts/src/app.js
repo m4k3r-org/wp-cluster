@@ -30,8 +30,9 @@ define(
     'lib/contact-form',
     'lib/hotel-widget',
     'lib/artist-callout',
-    'components/fitvids/fitvids-built'
-  ], function( $, developer, equalheights, swipe, countdown, ss, stickem, dotdotdot, stickynav, buytickets, navigation, masonry, carousel, account, streamFilter, artistProfile, collapse, share, imagelightbox, stream, fancybox, blogMain, tabbedContent, videoModule, contact, hotelWidget, artistCallout, fv ){
+    'components/fitvids/fitvids-built',
+		'lib/multi-language'
+  ], function( $, developer, equalheights, swipe, countdown, ss, stickem, dotdotdot, stickynav, buytickets, navigation, masonry, carousel, account, streamFilter, artistProfile, collapse, share, imagelightbox, stream, fancybox, blogMain, tabbedContent, videoModule, contact, hotelWidget, artistCallout, fv, multiLanguage ){
 
     var self = this, resizeTo = null;
 
@@ -86,6 +87,11 @@ define(
     collapse.init();
 
     share.init();
+
+
+		// Multi-language overlay
+		multiLanguage.init();
+
 
     if( $( '.video-module-container' ).length ){
       videoModule.init();

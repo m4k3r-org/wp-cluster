@@ -48,6 +48,8 @@
           <span class="seconds"><strong>0</strong>S</span>
         </div>
 
+				<?php get_template_part('templates/aside/language-switcher'); ?>
+
 				<?php
 					// Need to use a custom function here instead of wp_festival2->nav()
 					$header_nav_items = wp_get_nav_menu_items('header');

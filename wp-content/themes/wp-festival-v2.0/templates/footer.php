@@ -31,6 +31,7 @@ $disabled_sections = get_post_meta( $post->ID, 'disabledSections' ); ?>
     <?php get_template_part( 'templates/overlays/account', get_post_type() ); ?>
     <?php get_template_part( 'templates/overlays/share', get_post_type() ); ?>
     <?php get_template_part( 'templates/overlays/imagelightbox', get_post_type() ); ?>
+		<?php get_template_part( 'templates/overlays/multi-language', get_post_type() ); ?>
     
     <?php wp_footer(); ?>
 
