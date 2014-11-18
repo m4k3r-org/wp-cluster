@@ -7,7 +7,7 @@
 
   <h1 class="main-logo">
     <a href="/">
-      <img src="<?php echo get_stylesheet_directory_uri(); ?>/static/images/logo.png" alt="Monster Block Party">
+      <img src="<?php echo get_stylesheet_directory_uri(); ?>/static/images/logo.png" alt="Winter Fantasy">
     </a>
   </h1>
 
