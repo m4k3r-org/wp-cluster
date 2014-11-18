@@ -1,3 +1,7 @@
+#### 2.1.0
+* Changes to footer
+* CSS adjustments
+
 #### 2.0.7
 * Fixed admin JS bug
 
