@@ -1,3 +1,6 @@
+#### 0.2.7
+* Changed background image style
+
 #### 0.2.6
 * Changed shortcode styles
 
