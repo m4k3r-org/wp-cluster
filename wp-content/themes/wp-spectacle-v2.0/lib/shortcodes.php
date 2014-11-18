@@ -37,7 +37,8 @@ class Shortcodes
 
       $attributes = shortcode_atts( array(
         'title' => '',
-        'background' => ''
+        'background' => '',
+        'equalize' => ''
       ), $atts );
 
       $content = do_shortcode( $content );
@@ -46,7 +47,14 @@ class Shortcodes
       $content = explode( "\n", $content );
 
       if ( isset( $atts['background'] ) && $atts['background'] == true ){
-        $html = '<ul class="is-background">';
+
+        $equalize_class = '';
+
+        if ( isset( $atts['equalize'] ) && $atts['equalize'] == true ){
+          $equalize_class = 'equaual-shorcode-list';
+        }
+
+        $html = '<ul class="is-background '. $equalize_class .'">';
       }
       else{
         $html = '<ul>';
