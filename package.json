@@ -1,6 +1,6 @@
 {
   "name": "wp-spectacle-2",
-  "version": "1.0.2",
+  "version": "0.2.6",
   "description": "Spectacle Theme for the Drop Network",
   "main": "gruntfile.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/DiscoDonniePresents/wp-spectacle-isladelsol"
+    "url": "git://github.com/DiscoDonniePresents/wp-spectacle-winterfantasy"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
@@ -21,6 +21,6 @@
   "author": "Usability Dynamics",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/DiscoDonniePresents/wp-spectacle-isladelsol/issues"
+    "url": "https://github.com/DiscoDonniePresents/wp-spectacle-winterfantasy/issues"
   }
 }
