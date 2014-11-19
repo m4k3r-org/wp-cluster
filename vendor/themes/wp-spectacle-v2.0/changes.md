@@ -1,3 +1,7 @@
+#### 2.2.0
+* Changes to footer
+* Added new shortcode
+
 #### 2.1.0
 * Changes to footer
 * CSS adjustments

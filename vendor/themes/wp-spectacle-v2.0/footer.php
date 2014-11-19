@@ -4,7 +4,7 @@ $menu = new Spectacle_Navigation_Builder();
 ?>
 
 <?php if( has_nav_menu( 'footer-navigation' ) || has_nav_menu( 'footer-profiles-navigation' ) ): ?>
-  <footer <?php if ( !is_front_page()) echo 'class="inner-footer"'; ?>>
+  <footer>
 
     <?php if( has_nav_menu( 'footer-navigation' ) ): ?>
       <div class="footer-navigation">

@@ -32,7 +32,7 @@
 </head>
 
 <body <?php body_class(); ?>>
-  <div id="doc">
+  <div id="doc" <?php if ( !is_front_page()) echo 'class="inner-doc"'; ?>>
 
     <div class="main-nav-menu">
       <?php if ( has_nav_menu( 'main-navigation' ) ): ?>
