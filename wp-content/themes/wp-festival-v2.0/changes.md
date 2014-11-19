@@ -1,3 +1,7 @@
+### 2.1.1
+* Language switcher adjustments on mobile
+* Language switcher mini flag bug fix
+
 ### 2.1.0
 * Added multi-language support with WPML plugin
 
