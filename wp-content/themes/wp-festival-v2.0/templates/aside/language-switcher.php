@@ -11,8 +11,21 @@
 			{
 				if ( (bool) $language_value['active'] )
 				{
-					$language_flag_url = $language_value['country_flag_url'];
+					// Get by attachment title for the small flag
+					$get_language_image = new WP_Query(array(
+							'post_per_page' => 1,
+							'post_type' => 'attachment',
+							'name' => $language_id .'-small'
+					));
+
+					if ( isset( $get_language_image->posts[0] ) )
+					{
+						$language_flag_url = wp_get_attachment_url( $get_language_image->posts[0]->ID );
+					}
+
 					$language_name = $language_value['translated_name'];
+
+					break;
 				}
 			}
 
