@@ -1,3 +1,6 @@
+### 2.1.0
+* Added multi-language support with WPML plugin
+
 ### 2.0.4
 * Fixed horizontal body overflow styling.
 * Added Grunt task for POT file generation, re-generated file into proper location (static/locale), as defiend in style.css.
