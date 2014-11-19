@@ -30,7 +30,7 @@
 			}
 
 			// hardcoded need to remove
-			$language_flag_url = '/wp-content/themes/wp-festival-v2.0/static/images/lang/en-small.png';
+			//$language_flag_url = '/wp-content/themes/wp-festival-v2.0/static/images/lang/en-small.png';
 
 			if ( $language_flag_url !== null ): ?>
 				<a href="#" class="active-language"><img src="<?php echo $language_flag_url; ?>" alt="<?php echo $language_name; ?>"></a>
