@@ -161,6 +161,43 @@ namespace UsabilityDynamics\Festival2 {
 
       });
 
+      // Add shortcode for hotel search
+      add_shortcode( 'widget_hotel_search', function ( $atts ){
+
+        ob_start();
+
+        the_widget( 'UsabilityDynamics_Festival2_Widget_Hotel_Search', $atts, $args );
+
+        $output = ob_get_clean();
+
+        return $output;
+
+      } );
+
+      // Add shortcode for company item
+      add_shortcode( 'widget_company', function ( $atts ){
+
+        ob_start();
+
+        the_widget( 'UsabilityDynamics_Festival2_Widget_Company_Item', $atts, $args );
+
+        // Configure defaults and extract the attributes into variables
+        extract( shortcode_atts( array(
+          'title' => '',
+          'description' => '',
+          'background' => '',
+          'url' => '',
+          'button_text' => '',
+          'is_sponsor_leadin' => '',
+          'image_image_id' => ''
+        ), $atts ) );
+
+        $output = ob_get_clean();
+
+        return $output;
+
+      } );
+
     }
 
   }
