@@ -52,18 +52,6 @@ module.exports = function( grunt ) {
       }
     },
 
-    // Run Mocha Tests.
-    mochacli: {
-      options: {
-        require: [ 'should' ],
-        reporter: 'list',
-        ui: 'exports'
-      },
-      all: [
-        'test/*.js'
-      ]
-    },
-
     // Require JS Tasks.
     requirejs: {
       compile: {
@@ -125,32 +113,32 @@ module.exports = function( grunt ) {
       "vendor"
     ],
 
-    // Documentation
-    yuidoc: {
-      compile: {
-        name: '<%= composer.name %>',
-        description: '<%= composer.description %>',
-        version: '<%= composer.version %>',
-        url: '<%= composer.author.url %>',
-        logo: 'http://media.usabilitydynamics.com/logo.png',
+    // Generate POT file.
+    makepot: {
+      target: {
         options: {
-          paths: './',
-          outdir: 'static/codex'
+          type: 'wp-theme',
+          domainPath: 'static/locale',                   // Where to save the POT file.
+          exclude: [ "static/**", "tasks/**", "vendor/**", "test" ],
+          mainFile: 'style.css',
+          potFilename: 'wp-festival-v2.0.pot',
+          potHeaders: {
+            poedit: true,
+            language: 'en',
+            'x-poedit-country': 'United States',
+            'x-poedit-sourcecharset': 'UTF-8',
+            'x-textdomain-support': 'yes',
+            'x-poedit-keywordslist': true
+          },
+          updateTimestamp: true
         }
       }
     }
 
   });
 
-  // Load tasks
-  grunt.loadNpmTasks( 'grunt-contrib-requirejs');
-  grunt.loadNpmTasks( 'grunt-contrib-uglify');
-  grunt.loadNpmTasks( 'grunt-contrib-less' );
-  grunt.loadNpmTasks( 'grunt-contrib-watch' );
-  grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
-
   // Build Assets
-  grunt.registerTask( 'default', [ 'compile' ] );
+  grunt.registerTask( 'default', [ 'compile', 'makepot' ] );
 
   // Install environment
   grunt.registerTask( 'compile', [ 'requirejs',  'less:production' ] );
@@ -161,11 +149,8 @@ module.exports = function( grunt ) {
   });
 
   // Build Theme
-  grunt.registerTask( 'build', [ 'compile' ], function() {
+  grunt.registerTask( 'build', [ 'compile', 'makepot', 'markdown' ], function() {
 
   });
-
-  // Update Documentation
-  grunt.registerTask( 'doc', [ 'yuidoc', 'markdown' ] );
 
 };

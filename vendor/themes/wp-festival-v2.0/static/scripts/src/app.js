@@ -30,12 +30,13 @@ define(
     'lib/contact-form',
     'lib/hotel-widget',
     'lib/artist-callout',
-    'components/fitvids/fitvids-built'
-  ], function( $, developer, equalheights, swipe, countdown, ss, stickem, dotdotdot, stickynav, buytickets, navigation, masonry, carousel, account, streamFilter, artistProfile, collapse, share, imagelightbox, stream, fancybox, blogMain, tabbedContent, videoModule, contact, hotelWidget, artistCallout, fv ){
+    'components/fitvids/fitvids-built',
+		'lib/multi-language'
+  ], function( $, developer, equalheights, swipe, countdown, ss, stickem, dotdotdot, stickynav, buytickets, navigation, masonry, carousel, account, streamFilter, artistProfile, collapse, share, imagelightbox, stream, fancybox, blogMain, tabbedContent, videoModule, contact, hotelWidget, artistCallout, fv, multiLanguage ){
 
     var self = this, resizeTo = null;
 
-    console.debug( 'developer', developer );
+    // console.debug( 'developer', developer );
 
     // Performance optimization for window resize event
     $( window ).resize( function(){
@@ -86,6 +87,11 @@ define(
     collapse.init();
 
     share.init();
+
+
+		// Multi-language overlay
+		multiLanguage.init();
+
 
     if( $( '.video-module-container' ).length ){
       videoModule.init();
@@ -231,6 +237,44 @@ define(
 
     if( $( '#latest-blog-posts' ).length ){
       swipe.init( '#latest-blog-posts', '.posts', '.post', '#latest-blog-posts .indicator-parent' );
+    }
+
+    if( $( '.travel-packages-container' ).length ){
+
+      // Swipe for Travel packages page header ( only when display width < 1200 )
+      $( window ).on( 'resizeEnd', function(){
+
+        if( document.documentElement.clientWidth >= 1199 ){
+
+          if( typeof(bookHotelScroller) != 'undefined' ){
+            swipe.destroy( bookHotelScroller );
+            bookHotelScroller = null;
+          }
+
+          $( '.travel-packages-container' ).data( 'initswipe', false );
+          $( '.travel-pcg-images' ).removeAttr( 'style' );
+        } else{
+          if( !$( '.travel-packages-container' ).data( 'initswipe' ) ){
+            bookHotelScroller = swipe.init( '.travel-packages-container', '.travel-pcg-images', '.img-container', '.travel-packages-container .indicator-parent' );
+
+            $( '.travel-packages-container' ).data( 'initswipe', true );
+          }
+        }
+
+        if( document.documentElement.clientWidth >= 992 ){
+
+          var header = $( '#doc > header' );
+
+          var remainingSpace = header.height() - ( $( '.travel-packages-container' ).outerHeight( true ) + $( '.nav-arrows' ).outerHeight( true ) + $( '.travel-packages-container' ).position().top);
+
+          if( remainingSpace < header.height() ){
+            header.height( header.height() - remainingSpace + 105 );
+          }
+
+        }
+
+      } );
+      
     }
 
     // Initialize swipe for tier3 artists

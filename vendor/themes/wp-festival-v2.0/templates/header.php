@@ -48,13 +48,15 @@
           <span class="seconds"><strong>0</strong>S</span>
         </div>
 
+				<?php get_template_part('templates/aside/language-switcher'); ?>
+
 				<?php
 					// Need to use a custom function here instead of wp_festival2->nav()
 					$header_nav_items = wp_get_nav_menu_items('header');
 					if ( $header_nav_items !== false ):
 				?>
 
-						<nav class="main-navigation clearfix">
+						<nav class="main-navigation clearfix <?php if (function_exists( 'icl_get_languages' )) { echo ' has-multilanguage '; } ?>">
 							<?php for ( $i = 0, $mi = count($header_nav_items); $i < $mi; $i++ ): ?>
 								<a href="<?php echo $header_nav_items[$i]->url; ?>" class="<?php echo implode(' ', $header_nav_items[ $i ]->classes); ?>">
 									<?php if ( in_array('menu', $header_nav_items[ $i ]->classes ) ): ?>
