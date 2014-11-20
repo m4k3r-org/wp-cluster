@@ -14,7 +14,7 @@ Options -Indexes
   Deny from all
 </Files>
 
-<FilesMatch "Dockerfile|makefile|.dockerignore|.environment">
+<FilesMatch "Dockerfile|makefile|.dockerignore|.environment|.gitignore|.gitmodules|.envrc">
   Order allow,deny
   Deny from all
 </FilesMatch>
