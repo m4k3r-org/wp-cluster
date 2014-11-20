@@ -4,7 +4,7 @@
  * @class developer
  */
 define( [ 'module', 'require', 'exports', 'jquery' ], function DeveloperModule( module, require, exports, $ ) {
-  console.info( 'DeveloperModule', 'ping2' );
+  // console.debug( 'DeveloperModule', 'ping2' );
 
   var j = 4;
   var k = 50;

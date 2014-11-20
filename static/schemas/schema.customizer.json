@@ -133,7 +133,9 @@
         ".buy-tickets-overlay .bg",
         ".share-overlay .bg",
         ".navigation-overlay",
-        ".artist-profile-overlay>.artist-overlay-bg, .artist-profile-share-overlay>.artist-overlay-bg"
+        ".artist-profile-overlay>.artist-overlay-bg, .artist-profile-share-overlay>.artist-overlay-bg",
+				".language-overlay .bg",
+				".language-overlay .overlay-content"
       ],
       "extra_controls": {
         "color": [
