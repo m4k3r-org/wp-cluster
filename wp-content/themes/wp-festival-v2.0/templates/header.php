@@ -56,7 +56,7 @@
 					if ( $header_nav_items !== false ):
 				?>
 
-						<nav class="main-navigation clearfix">
+						<nav class="main-navigation clearfix <?php if (function_exists( 'icl_get_languages' )) { echo ' has-multilanguage '; } ?>">
 							<?php for ( $i = 0, $mi = count($header_nav_items); $i < $mi; $i++ ): ?>
 								<a href="<?php echo $header_nav_items[$i]->url; ?>" class="<?php echo implode(' ', $header_nav_items[ $i ]->classes); ?>">
 									<?php if ( in_array('menu', $header_nav_items[ $i ]->classes ) ): ?>

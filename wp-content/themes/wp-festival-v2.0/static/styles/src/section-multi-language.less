@@ -17,6 +17,22 @@
 				height: 24px;
 			}
 		}
+
+		.flag-desktop {
+			display: none;
+
+			@media @tablet {
+				display: block;
+			}
+		}
+
+		.flag-mobile {
+			display: block;
+
+			@media @tablet {
+				display: none;
+			}
+		}
 	}
 }
 

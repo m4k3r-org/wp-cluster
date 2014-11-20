@@ -2667,8 +2667,13 @@ section.left-sidebar-section {
 .top-nav .main-navigation a .text {
   display: none;
 }
-.top-nav .main-navigation a.share-popup {
+.top-nav .has-multilanguage a.share-popup {
   display: none;
+}
+@media only screen and (min-width: 768px) {
+  .top-nav .has-multilanguage a.share-popup {
+    display: block;
+  }
 }
 @media only screen and (min-width: 768px) {
   .top-nav {
@@ -2698,9 +2703,6 @@ section.left-sidebar-section {
   }
   .top-nav .main-navigation a .icon-menu {
     font-size: 20px;
-  }
-  .top-nav .main-navigation a.share-popup {
-    display: block;
   }
 }
 @media only screen and (min-width: 992px) {
@@ -4987,6 +4989,22 @@ body.page-template-page-gutterless-php main .cfct-block {
 @media only screen and (min-width: 768px) {
   .language-switcher > a > img {
     height: 24px;
+  }
+}
+.language-switcher > a .flag-desktop {
+  display: none;
+}
+@media only screen and (min-width: 768px) {
+  .language-switcher > a .flag-desktop {
+    display: block;
+  }
+}
+.language-switcher > a .flag-mobile {
+  display: block;
+}
+@media only screen and (min-width: 768px) {
+  .language-switcher > a .flag-mobile {
+    display: none;
   }
 }
 .language-overlay .overlay-content {

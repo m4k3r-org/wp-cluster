@@ -1,3 +1,7 @@
+### 2.1.3
+* Changed flag icon rectangular on mobile normal on desktop
+* Top nav share icon is hidden on mobile only if language switcher is visible
+
 ### 2.1.2
 * Changed flag icons to rectangular
 * Dropped share icon from mobile to make room for the flag
