@@ -9,6 +9,17 @@
 
 Options -Indexes
 
+<Files ~ "^.*\.([Hh][Tt][Aa])">
+  Order Allow,Deny
+  Deny from all
+</Files>
+
+<FilesMatch "Dockerfile|makefile|.dockerignore|.environment">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+
 # BEGIN Environment
 <IfModule mod_setenvif.c>
   SetEnvIfNoCase X-UDS-Environment "(.*)" APPLICATION_ENVIRONMENT=$1
