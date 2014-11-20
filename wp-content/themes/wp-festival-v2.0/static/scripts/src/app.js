@@ -260,22 +260,21 @@ define(
             $( '.travel-packages-container' ).data( 'initswipe', true );
           }
         }
-      } );
 
-      if( document.documentElement.clientWidth >= 992 ){
+        if( document.documentElement.clientWidth >= 992 ){
 
-        var header = $( '#doc > header' );
+          var header = $( '#doc > header' );
 
-        var remainingSpace = header.height() - ( $( '.travel-packages-container' ).outerHeight( true ) + $( '.nav-arrows' ).outerHeight( true ) + $( '.travel-packages-container' ).position().top);
+          var remainingSpace = header.height() - ( $( '.travel-packages-container' ).outerHeight( true ) + $( '.nav-arrows' ).outerHeight( true ) + $( '.travel-packages-container' ).position().top);
 
-        console.log( $( '.nav-arrows' ).outerHeight( false ) );
+          if( remainingSpace < header.height() ){
+            header.height( header.height() - remainingSpace + 105 );
+          }
 
-        if( remainingSpace < header.height() ){
-          header.height( header.height() - remainingSpace + 105 );
         }
 
-      }
-
+      } );
+      
     }
 
     // Initialize swipe for tier3 artists
