@@ -1,3 +1,7 @@
+### 2.1.2
+* Changed flag icons to rectangular
+* Dropped share icon from mobile to make room for the flag
+
 ### 2.1.1
 * Language switcher adjustments on mobile
 * Language switcher mini flag bug fix

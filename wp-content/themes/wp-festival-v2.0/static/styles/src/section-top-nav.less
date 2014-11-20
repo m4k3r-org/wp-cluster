@@ -29,19 +29,15 @@
 
   .main-navigation{
     float: right;
-    margin: 0 20px 0 0;
+    margin: 9px 20px 0 0;
 
     a{
       float: right;
-      margin: 12px 0 0 20px;
-      font-size: 16px;
+      margin: 0 0 0 20px;
+      font-size: 24px;
       font-weight: normal;
 
       .mixin-transition(color);
-
-			@media @tablet {
-				margin-top: 0;
-			}
 
       &:hover{
         color: #fff200;
@@ -50,6 +46,10 @@
       .text{
         display: none;
       }
+
+			&.share-popup {
+				display: none;
+			}
     }
   }
 }
@@ -78,6 +78,7 @@
 
       a{
         font-size: 22px;
+				margin: 0 0 0 30px;
 
         .text{
           display: inline;
@@ -85,12 +86,15 @@
           font-weight: 100;
           text-transform: uppercase;
           padding: 0 0 0 10px;
-
         }
 
         .icon-menu{
           font-size: 20px;
         }
+
+				&.share-popup {
+					display: block;
+				}
       }
     }
   }
