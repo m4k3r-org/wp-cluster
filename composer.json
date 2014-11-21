@@ -60,10 +60,10 @@
           "name": "edm",
           "user": "edm",
           "password": "psxcazdhbpoxbkfl",
-          "host": "localhost",
+          "host": "127.0.0.1",
           "prefix": "edm_",
           "read": 1,
-          "write": 0
+          "write": 5
         },
         {
           "name": "edm",
