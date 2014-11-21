@@ -178,10 +178,10 @@ namespace UsabilityDynamics\Cluster {
 				return $this->_settings;
 			}
 
-			/**
-			 * @param array $_settings
-			 */
-			private function applyGlobals( $_settings = array() ) {
+            /**
+             * @internal param array $_settings
+             */
+			private function applyGlobals() {
 				global $table_prefix;
 
 				/** Is this needed? */
@@ -191,12 +191,9 @@ namespace UsabilityDynamics\Cluster {
 
 			}
 
-			/**
-			 * @param string $base_dir
-			 */
-			private function processConfigFiles( $base_dir = '' ) {
-
-				$base_dir = $this->baseDir;
+            /**
+             */
+			private function processConfigFiles() {
 
 				/** For these variables, make sure they exist */
 				if ( $this->env ) {
@@ -233,10 +230,9 @@ namespace UsabilityDynamics\Cluster {
 
 			}
 
-			/**
-			 * @param string $base_dir
-			 */
-			private function handleCLI( $base_dir = '' ) {
+            /**
+             */
+			private function handleCLI() {
 
 				/** If we've got WP_CLI, we need to fix the base dir */
 				// If wp-cli then we should take current working directory
@@ -388,13 +384,14 @@ namespace UsabilityDynamics\Cluster {
 
 			}
 
-			/**
-			 * Perform multiple pattern match searches.
-			 *
-			 * @param array $_settings
-			 *
-			 * @return array
-			 */
+            /**
+             * Perform multiple pattern match searches.
+             *
+             * @param array $_settings
+             *
+             * @param array $extraPatterns
+             * @return array
+             */
 			public function replacePatterns( $_settings = array(), $extraPatterns = array() ) {
 
 				$_found_pattern = false;
