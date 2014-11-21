@@ -112,7 +112,7 @@
     <div class="overlay-content">
 
       <div class="share-wrapper clearfix">
-				<a href="https://twitter.com/intent/tweet?original_referer=/&text=SMF Tampa&url=http://smftampa.com" target="_blank" class="twitter">
+				<a href="https://twitter.com/intent/tweet?original_referer=/&text=%23SMFTampa%202015%20tickets%20go%20on-sale%20Friday%2C%20December%205th%20at%2010%3A00%20AM%20ET!%20http%3A%2F%2Fsmftampa.com%2F" target="_blank" class="twitter">
 					<span class="icon-twitter"></span>
 				</a>
 
