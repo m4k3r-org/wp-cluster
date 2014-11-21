@@ -23,6 +23,12 @@
 </IfModule>
 # END Rewrite Engine
 
+# BEGIN Veneer Security
+<FilesMatch "Dockerfile|makefile|.dockerignore|.environment|.gitignore|.gitmodules|.envrc">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+# END Veneer Security
 
 # BEGIN Veneer Assets
 <IfModule mod_rewrite.c>
