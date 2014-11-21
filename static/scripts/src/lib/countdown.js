@@ -11,7 +11,7 @@ define( [ 'module', 'require', 'exports', 'jquery' ], function( module, require,
 	var countDown = {
 
 		toDate: null,
-		element: $( '.countdown .timer' ),
+		element: null,
 
 		day: 0,
 		hour: 0,
@@ -31,12 +31,10 @@ define( [ 'module', 'require', 'exports', 'jquery' ], function( module, require,
 		 * @return void
 		 */
 		getElements: function(){
-      // console.debug( module.id, 'getElements' );
 			this.day = $( '.days', this.element );
 			this.hour = $( '.hours', this.element );
 			this.minute = $( '.minutes', this.element );
 			this.second = $( '.seconds', this.element );
-      //console.log( 'this.day', this.day );
 		},
 
 		/**
@@ -46,7 +44,6 @@ define( [ 'module', 'require', 'exports', 'jquery' ], function( module, require,
 		 * @return void
 		 */
 		getToDate: function(){
-      // console.debug( module.id, 'getToDate' );
 			this.toDate = new Date( this.element.data( 'todate' ) );
 		},
 
@@ -57,7 +54,6 @@ define( [ 'module', 'require', 'exports', 'jquery' ], function( module, require,
 		 * @return void
 		 */
 		calcRemaining: function(){
-      // console.debug( module.id, 'calcRemaining' );
 			var now = new Date();
 			var distance = this.toDate - now;
 
@@ -90,7 +86,6 @@ define( [ 'module', 'require', 'exports', 'jquery' ], function( module, require,
 		 * @return void
 		 */
 		startTimer: function(){
-      // console.debug( module.id, 'startTimer' );
 			this._s = 1000;
 			this._m = this._s * 60;
 			this._h = this._m * 60;
@@ -106,12 +101,12 @@ define( [ 'module', 'require', 'exports', 'jquery' ], function( module, require,
 	return {
 
 		init: function(){
-      // console.debug( module.id, 'init' );
+
+			countDown.element = $( '.countdown .timer' );
+
 			countDown.getElements();
 			countDown.getToDate();
 			countDown.startTimer();
 		}
-
 	}
-
 } );

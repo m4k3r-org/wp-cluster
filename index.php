@@ -11,14 +11,13 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Sunset Music Festival 2015 is an electronic dance music festival in Tampa, Florida on May 23rd-24th."/><meta property="og:locale" content="en_US" />
 
   <meta http-equiv="Pragma" content="public" />
   <meta http-equiv="Cache-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Cache-Control" content="public, max-age=1800" />
   <meta http-equiv="Expires" content="Fri, 4 Dec 2014 11:00:00 EST" />
 
-  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="shortcut icon" href="/wp-content/themes/wp-festival-smf/favicon.ico">
 
   <link rel="stylesheet" href="/wp-content/themes/wp-festival-smf/static/styles/app.css">
   <script type="text/javascript" data-main="/wp-content/themes/wp-festival-smf/static/scripts/src/app" src="http://cdn.udx.io/udx.requires.js"></script>
@@ -41,6 +40,11 @@
       <a href="http://globalgrooveevents.com" target="_blank" class="sunset-events">
         <img src="/wp-content/themes/wp-festival-smf/static/images/organizer-logo-sunset-events.png" alt="Sunset Events">
       </a>
+
+			<a href="https://www.facebook.com/committeeent" target="_blank" class="committee">
+				<img src="/wp-content/themes/wp-festival-smf/static/images/organizer-logo-committee.png" alt="Committee">
+			</a>
+
     </div>
   </header>
 
@@ -62,17 +66,17 @@
 				<h3>Memorial Day <br class="force-nl">Weekend</h3>
 				<h2>May 23 &amp; 24, 2015</h2>
 
-        <a href="http://www.kayak.com/r/JTAEACCzXQ;map" target="_blank" class="button">Book a Room</a>
+        <a href="https://discodonniepresents.findor.com/results/list?checkIn=2015-03-22&checkOut=2015-03-25&room1=2&eventID=3" target="_blank" class="button">Book a Room</a>
       </div>
 
       <div class="col-xs-12 col-sm-4">
         <span class="ic icon-tickets"></span>
 				<hr class="short">
 				<h3>Early bird tickets <br class="force-nl">on sale</h3>
-				<h2>Fri, Dec 4, <br class="force-nl">2014</h2>
+				<h2>Fri, Dec 5, <br class="force-nl">2014</h2>
 
         <div class="countdown">
-          <div class="timer" data-todate="Fri, 04 Dec 2014 10:00:00 EST">
+          <div class="timer" data-todate="Fri, 05 Dec 2014 10:00:00 EST">
             <div class="days">0</div>
             <div class="hours">0</div>
             <div class="minutes">0</div>
@@ -108,7 +112,7 @@
     <div class="overlay-content">
 
       <div class="share-wrapper clearfix">
-				<a href="https://twitter.com/intent/tweet?original_referer=/&text=SMF Tampa&url=http://smftampa.com" target="_blank" class="twitter">
+				<a href="https://twitter.com/intent/tweet?original_referer=/&text=%23SMFTampa%202015%20tickets%20go%20on-sale%20Friday%2C%20December%205th%20at%2010%3A00%20AM%20ET!%20http%3A%2F%2Fsmftampa.com%2F" target="_blank" class="twitter">
 					<span class="icon-twitter"></span>
 				</a>
 

@@ -14,7 +14,7 @@ define(['jquery'], function( $ ){
 		 */
 		eventOpen : function()
 		{
-			$( 'body' ).on('click', '.share-popup', function(e) {
+			$( '.main-header' ).on('click', '.share-popup', function(e) {
 
 				e.preventDefault();
 

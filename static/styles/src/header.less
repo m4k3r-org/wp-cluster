@@ -67,17 +67,19 @@
 
 		position: absolute;
 		z-index: 2;
-
-		width: 196px;
 		top: 25px;
 		left: 50%;
-		margin-left: -98px;
 
 		@media @tablet {
 			display: block;
+
+			width: 215px;
+			margin-left: -107px;
 		}
 
 		@media @large-desktop {
+			width: 260px;
+			margin-left: -130px;
 			top: 45px;
 		}
 
@@ -85,8 +87,41 @@
 			float: left;
 			text-decoration: none;
 
-			&.disco-donnie {
-				margin: 0 35px 0 0;
+			&.disco-donnie,
+			&.sunset-events {
+				margin: 0 25px 0 0;
+			}
+
+			@media @tablet {
+				&.disco-donnie {
+					img {
+						width: 50px;
+					}
+				}
+
+				&.sunset-events {
+					img {
+						width: 40px;
+					}
+				}
+
+				&.committee {
+					margin-top: 4px;
+
+					img {
+						width: 70px;
+					}
+				}
+			}
+
+			@media @large-desktop {
+				&.disco-donnie,
+				&.sunset-events,
+				&.committee {
+					img {
+						width: auto;
+					}
+				}
 			}
 		}
 	}
