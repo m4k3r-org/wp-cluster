@@ -174,7 +174,7 @@ namespace UsabilityDynamics\Cluster {
         $this->network_domain   = isset( $wpdb->site ) ? $wpdb->get_var( "SELECT domain FROM {$wpdb->site} WHERE id = {$this->network_id}" ) : null;
         $this->allowed_domains  = array( $this->domain, DOMAIN_CURRENT_SITE );
         $this->is_valid         = in_array( $this->requested_domain, $this->allowed_domains ) ? true : false;
-        $this->is_public        = is_object( $current_blog ) ? $current_blog->public : true;
+        $this->is_public        = is_object( $current_blog ) && isset( $current_blog->public ) ? $current_blog->public : true;
         $this->is_main_site     = is_main_site();
         $this->is_multisite     = is_multisite();
         $this->is_main_network  = is_main_network();
