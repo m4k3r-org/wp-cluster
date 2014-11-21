@@ -55,6 +55,7 @@ subtreePull:
 	@git subtree pull --prefix=wp-content/plugins/wp-vertical-edm git@github.com:wpCloud/wp-vertical-edm master --squash
 	@git subtree pull --prefix=wp-content/themes/wp-disco-v1.0 git@github.com:DiscoDonniePresents/wp-disco v1.0 --squash
 	@git subtree pull --prefix=wp-content/themes/wp-disco-v2.0 git@github.com:DiscoDonniePresents/wp-disco v2.0 --squash
+	@git subtree pull --prefix=wp-content/themes/wp-disco-v2.0/vendor/usabilitydynamics/lib-js-elastic-filter git@github.com:UsabilityDynamics/lib-js-elastic-filter master --squash
 	@git subtree pull --prefix=wp-content/themes/wp-spectacle-v1.0 git@github.com:DiscoDonniePresents/wp-spectacle v1.0 --squash
 	@git subtree pull --prefix=wp-content/themes/wp-spectacle-v2.0 git@github.com:DiscoDonniePresents/wp-spectacle v2.0 --squash
 	@git subtree pull --prefix=wp-content/themes/wp-festival-v1.0 git@github.com:DiscoDonniePresents/wp-festival v1.0 --squash
