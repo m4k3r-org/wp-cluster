@@ -35,12 +35,31 @@ class Shortcodes
   public function register_list(){
     add_shortcode( 'spectacle_list', function ( $atts, $content = null ){
 
+      $attributes = shortcode_atts( array(
+        'title' => '',
+        'background' => '',
+        'equalize' => ''
+      ), $atts );
+
       $content = do_shortcode( $content );
       $content = trim( $content );
       $content = str_replace( "\r\n", "\n", $content );
       $content = explode( "\n", $content );
 
-      $html = '<ul>';
+      if ( isset( $atts['background'] ) && $atts['background'] == true ){
+
+        $equalize_class = '';
+
+        if ( isset( $atts['equalize'] ) && $atts['equalize'] == true ){
+          $equalize_class = 'equaual-shorcode-list';
+        }
+
+        $html = '<ul class="is-background '. $equalize_class .'">';
+      }
+      else{
+        $html = '<ul>';
+      }
+
       for( $i = 0, $mi = count( $content ); $i < $mi; $i++ ){
         $html .= '<li>' . $content[ $i ] . '</li>';
       }
@@ -116,10 +135,17 @@ class Shortcodes
     add_shortcode( 'spectacle_tab_content', function ( $atts, $content = null ){
 
       $attributes = shortcode_atts( array(
-        'id' => ''
+        'id' => '',
+        'background' => ''
       ), $atts );
 
-      return '<div id="spectacle_tab_' . esc_attr( $attributes[ 'id' ] ) . '" class="spectacle_tab_content">' . do_shortcode( $content ) . '</div>';
+      $extra_class = '';
+
+      if ( isset( $attributes['background'] ) && $atts['background'] == true ){
+        $extra_class .= 'is-background';
+      }
+
+      return '<div id="spectacle_tab_' . esc_attr( $attributes[ 'id' ] ) . '" class="spectacle_tab_content ' . $extra_class  . ' ">' . do_shortcode( $content ) . '</div>';
 
     } );
 
