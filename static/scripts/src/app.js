@@ -239,6 +239,45 @@ define(
       swipe.init( '#latest-blog-posts', '.posts', '.post', '#latest-blog-posts .indicator-parent' );
     }
 
+    if( $( '.travel-packages-container' ).length ){
+
+      // Swipe for Travel packages page header ( only when display width < 1200 )
+      $( window ).on( 'resizeEnd', function(){
+
+        if( document.documentElement.clientWidth >= 1199 ){
+
+          if( typeof(bookHotelScroller) != 'undefined' ){
+            swipe.destroy( bookHotelScroller );
+            bookHotelScroller = null;
+          }
+
+          $( '.travel-packages-container' ).data( 'initswipe', false );
+          $( '.travel-pcg-images' ).removeAttr( 'style' );
+        } else{
+          if( !$( '.travel-packages-container' ).data( 'initswipe' ) ){
+            bookHotelScroller = swipe.init( '.travel-packages-container', '.travel-pcg-images', '.img-container', '.travel-packages-container .indicator-parent' );
+
+            $( '.travel-packages-container' ).data( 'initswipe', true );
+          }
+        }
+
+      } );
+
+
+      if( document.documentElement.clientWidth >= 992 ){
+
+        var header = $( '#doc > header' );
+
+        var remainingSpace = header.height() - ( $( '.travel-packages-container' ).outerHeight( true ) + $( '.nav-arrows' ).outerHeight( true ) + $( '.travel-packages-container' ).position().top);
+
+        if( remainingSpace < header.height() ){
+          header.height( header.height() - remainingSpace + 105 );
+        }
+
+      }
+
+    }
+
     // Initialize swipe for tier3 artists
     if( $( '.tier3-artists' ).length ){
       var tier3ArtistScroller = null;

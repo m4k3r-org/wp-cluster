@@ -1,6 +1,6 @@
 .language-switcher {
 	float: right;
-	padding-top: 10px;
+	padding-top: 8px;
 	margin: 0 20px 0 0;
 
 	@media @desktop {
@@ -12,6 +12,26 @@
 
 		> img {
 			display: block;
+
+			@media @tablet {
+				height: 24px;
+			}
+		}
+
+		.flag-desktop {
+			display: none;
+
+			@media @tablet {
+				display: block;
+			}
+		}
+
+		.flag-mobile {
+			display: block;
+
+			@media @tablet {
+				display: none;
+			}
 		}
 	}
 }
