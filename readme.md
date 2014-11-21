@@ -167,9 +167,9 @@ gsutil -m cp -a public-read -rn /var/storage/umesouthpadre.com/media/           
 
 #### Archived Sites' Media
 ```
-gsutil -m cp -a public-read -rn /var/storage/2014.dayafter.com/media/                    gs://media.dayafter.com/
-gsutil -m cp -a public-read -rn /var/storage/2013.monsterblockparty.com/media/           gs://media.monsterblockparty.com/
-gsutil -m cp -a public-read -rn /var/storage/2013.freaksbeatstreats.com/media/           gs://media.freaksbeatstreats.com/
+gsutil -m cp -a public-read -rn /var/storage/2014.dayafter.com/media/                    gs://media.dayafter.com/archive/2014/
+gsutil -m cp -a public-read -rn /var/storage/2013.monsterblockparty.com/media/           gs://media.monsterblockparty.com/archive/2013/
+gsutil -m cp -a public-read -rn /var/storage/2013.freaksbeatstreats.com/media/           gs://media.freaksbeatstreats.com/archive/2013/
 ```
 
 #### Archived Sites' Media

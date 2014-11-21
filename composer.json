@@ -52,7 +52,7 @@
       "multisite": true,
       "subdomain_install": true,
       "auth": {
-        "key": "Q|TJ#IJddT1wKKk&7fI1zoT=}U[>+2!87xT78N;O,:qES/V5Yu8=puLzM$~-`K$`",
+        "key": "Q|TJ#IJddT1wKKk&7fI1zoT=}wU[>+2!87xT78N;O,:qES/V5Yu8=puLzM$~-`K$`",
         "salt": "1%s=xC$rCHhe[Wc4/IEMd1Nw+g}@$P<@2b^3`TiW~|YXkIw5OnY )][O0P I:_0y"
       },
       "db": [
@@ -63,7 +63,7 @@
           "host": "127.0.0.1",
           "prefix": "edm_",
           "read": 1,
-          "write": 5
+          "write": 0
         },
         {
           "name": "edm",
@@ -72,14 +72,6 @@
           "host": "colossus.wpcloud.io",
           "read": 2,
           "write": 1
-        },
-        {
-          "name": "edm",
-          "user": "edm",
-          "password": "xdzepwgzeqmuuisq",
-          "host": "monarch.wpcloud.io",
-          "read": 3,
-          "write": 2
         }
       ],
       "disallow": {
