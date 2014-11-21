@@ -19,7 +19,7 @@ CURRENT_COMMIT                ?=$(shell git rev-list -1 HEAD)
 CURRENT_TAG                   ?=$(shell git describe --always --tag)
 ACCOUNT_NAME		          ?=edm
 STORAGE_DIR		              ?=/var/storage/
-STORAGE_BUCKET		          ?=gs://media.discodonniepresents.com/
+STORAGE_BUCKET		          ?=gs://media.discodonniepresents.com
 RDS_BUCKET		              ?=gs://discodonniepresents.com/
 SITE_LIST		              ?=$(shell wp --allow-root site list --field=url --format=csv)
 PWD                           := $(shell pwd)
@@ -92,26 +92,25 @@ flushTransient:
 ## Generate MySQL Snapshot
 ##
 snapshot:
-	@make env
 	@echo "Creating MySQL snapshot for <${CURRENT_BRANCH}> branch."
 	@wp --allow-root db export ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@gzip ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
-	@gsutil -m mv ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz gs://discodonniepresents.com/
-	@gsutil -m cp -D gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz gs://discodonniepresents.com/${ACCOUNT_NAME}_develop.sql.gz
-	@echo "Snapshot available at gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz."
+	@gsutil -m mv ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz ${RDS_BUCKET}/
+	@gsutil -m cp -D ${RDS_BUCKET}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz ${RDS_BUCKET}/${ACCOUNT_NAME}_develop.sql.gz
+	@echo "Snapshot available at ${RDS_BUCKET}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz."
 
-## Create MySQL Snapshot
+## Fetch MySQL Snapshot
 ##
 snapshotImport:
-	@echo "Downloading MySQL snapshot for <${CURRENT_BRANCH}> branch from from gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz to ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
+	@echo "Downloading MySQL snapshot for <${CURRENT_BRANCH}> branch from from ${RDS_BUCKET}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz to ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql."
 	@rm -rf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
-	@gsutil -m cp gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
+	@gsutil -m cp ${RDS_BUCKET}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
 	@gunzip ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz
 	@wp --allow-root db import ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@rm -rf ~/tmp/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@wp cache flush
 	@wp transient delete-all
-	@echo "MySQL snapshot downloaded from gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz and imported."
+	@echo "MySQL snapshot downloaded from ${RDS_BUCKET}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz and imported."
 
 # - Import MySQL Snapshot
 #

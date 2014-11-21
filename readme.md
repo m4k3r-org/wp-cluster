@@ -145,7 +145,6 @@ SetEnv WP_ELASTIC_PUBLIC_KEY qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty
 SetEnv WP_ELASTIC_SERVICE_URL api.discodonniepresents.com/documents/v1/
 SetEnv WP_ELASTIC_SERVICE_INDEX qccj-nxwm-etsk-niuu
 ```
-### Media Sync
 
 #### Standard Sites' Media
 
@@ -166,15 +165,12 @@ gsutil -m cp -a public-read -rn /var/storage/umesouthpadre.com/media/           
 ```
 
 #### Archived Sites' Media
+
 ```
 gsutil -m cp -a public-read -rn /var/storage/2014.dayafter.com/media/                    gs://media.dayafter.com/archive/2014/
 gsutil -m cp -a public-read -rn /var/storage/2013.monsterblockparty.com/media/           gs://media.monsterblockparty.com/archive/2013/
 gsutil -m cp -a public-read -rn /var/storage/2013.freaksbeatstreats.com/media/           gs://media.freaksbeatstreats.com/archive/2013/
-```
 
-#### Archived Sites' Media
-
-```
 gsutil -m cp -a public-read -rn /var/storage/hififest.com/media/                         gs://discodonniepresents.com/hififest.com
 gsutil -m cp -a public-read -rn /var/storage/bassodyssey.com/media/                      gs://discodonniepresents.com/bassodyssey.com
 gsutil -m cp -a public-read -rn /var/storage/wildwood.beachblanketfestival.com/media/    gs://discodonniepresents.com/wildwood.beachblanketfestival.com

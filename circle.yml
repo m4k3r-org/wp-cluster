@@ -39,7 +39,6 @@ machine:
     cominghomemusicfestival.com: 127.0.0.1
     monsterblockparty.com: 127.0.0.1
     freaksbeatstreats.com: 127.0.0.1
-    ccf.discodonniepresents.com: 127.0.0.1
     2015.umesouthpadre.com: 127.0.0.1
 
   environment:
