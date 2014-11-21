@@ -46,7 +46,8 @@ snapshot:
 	@wp --allow-root db export ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@gzip ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql
 	@gsutil mv ${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz gs://discodonniepresents.com/
-	@echo "MySQL snapshot available at s3://rds.uds.io/DiscoDonniePresents/${CIRCLE_PROJECT_REPONAME}/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz."
+	@gsutil -m cp -D gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz gs://discodonniepresents.com/${ACCOUNT_NAME}_develop.sql.gz
+	@echo "MySQL snapshot available at gs://discodonniepresents.com/${ACCOUNT_NAME}_${CURRENT_BRANCH}.sql.gz."
 
 flushTransient:
 	@echo "Flushing transients."
