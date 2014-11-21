@@ -357,7 +357,14 @@ namespace EDM\Application\Policy {
 			$_taxonomies = array(
 				"category" => 1,
 				"post_tag" => 1,
-				"post_format" => 1
+				"post_format" => 1,
+				"venue-type" => 1,
+				"city" => 1,
+				"state" => 1,
+				"country" => 1,
+				"age-limit" => 1,
+				"event-type" => 1,
+				"genre" => 1,
 			);
 
 			$_fields = array(
@@ -368,7 +375,7 @@ namespace EDM\Application\Policy {
 			$_setting = array(
 				"last_tab" => "index",
 				"server_url" => str_replace( 'http://', '' . $_secretKey . '@', $_serviceUrl ),
-				"server_index" => "",
+				"server_index" => $_serviceIndex,
 				"server_timeout_read" => "",
 				"server_timeout_write" => "",
 				"fields" => $_fields,
@@ -493,19 +500,13 @@ namespace EDM\Application\Policy {
 
 	}
 
-	/**
-	 * Adjust FantasticElastic UI
-	 *
-	 */
-	add_filter( 'elasticsearch_nhp_options_args_setup', function( $args ) {
-
-		// wp_enqueue_script('es-indexing', plugins_url( '/manage-index.js', __FILE__ ), array('jquery'));
-		// Breaks manage-index.js from loading...
+	// the following menu modification causes some javascript errors, so remove it
+	/*add_filter( 'elasticsearch_nhp_options_args_setup', function( $args ) {
 
 		$args['page_type'] = 'submenu';
 		$args['page_parent'] = 'tools.php';
 
 		return $args;
-	} );
+	} );*/
 
 }
