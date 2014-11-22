@@ -42,6 +42,15 @@ ENV           DATA_AUTHORITY                                          http://10.
 ENV           DOCKER_REGISTRY                                         http://registry.wpcloud.io
 ENV           COMPOSER_REPOSITORY                                     http://repository.usabilitydynamics.com
 
+## Install and Enable NewRelic
+##
+##
+RUN           echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list
+RUN           wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -
+RUN           apt-get update
+RUN           apt-get install newrelic-sysmond
+RUN           nrsysmond-config --set license_key=f3f909635f44aa45e6d4f5f7d99e6a05c6114c11
+
 ##
 ## Port 22, 8080 and 8443 are also available, but should be requested only when needed.
 ##
