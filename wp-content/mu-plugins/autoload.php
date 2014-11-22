@@ -30,7 +30,7 @@ namespace EDM\Application {
 		new Bootstrap;
 	}
 
-	/**
+  /**
 	 * The methods "is_plugin_active" and "activate_plugin" are only available on control panel.
 	 *
 	 */

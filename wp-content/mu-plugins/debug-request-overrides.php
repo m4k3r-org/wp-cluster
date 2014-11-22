@@ -26,6 +26,7 @@ namespace Application\EDM\Debug {
 		// die(get_option( '_uds:db:host' ) );
 		// die(get_option( '_uds:db:provider' ) );
 		// die(get_option( 'uds:db:version' ) );
+
 	} );
 
 	add_action( 'template_redirect', function () {
@@ -37,7 +38,7 @@ namespace Application\EDM\Debug {
 		}
 
 		if ( function_exists( 'newrelic_ignore_transaction' ) ) {
-			newrelic_ignore_transaction();
+			// newrelic_ignore_transaction();
 		}
 
 
