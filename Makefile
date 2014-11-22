@@ -20,7 +20,7 @@ CURRENT_TAG                   ?=$(shell git describe --always --tag)
 ACCOUNT_NAME		          ?=edm
 STORAGE_DIR		              ?=/var/storage/
 STORAGE_BUCKET		          ?=gs://media.discodonniepresents.com
-RDS_BUCKET		              ?=gs://discodonniepresents.com/
+RDS_BUCKET		              ?=gs://discodonniepresents.com
 SITE_LIST		              ?=$(shell wp --allow-root site list --field=url --format=csv)
 PWD                           := $(shell pwd)
 _GET_SITES                    =$(call wp,sites,list)

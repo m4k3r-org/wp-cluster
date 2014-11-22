@@ -2,6 +2,7 @@
   "name": "www.discodonniepresents.com",
   "version": "2.3.0",
   "private": true,
+  "main": "gruntfile.js",
   "repository": {
     "url": "git@github.com:discodonniepresents/www.discodonniepresents.com.git",
     "type": "git"

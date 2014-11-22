@@ -1,7 +1,3 @@
-Makefile
 .environment
-.gitignore
-.git
-.gitmodules
 wp-content/.logs
 wp-content/storage
