@@ -26,8 +26,8 @@
       }
     },
     "amazon-aws": {
-      "key": "AKIAJ6YNWWEWZ4JV3VGA",
-      "secret": "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"
+      "key": "AKIAJ22EN5ZK6LBARQXA",
+      "secret": "XePJTCAj+Z1rnU8md2OFWr8fE1RJhr9oOr0KvRxB3B42dG"
     },
     "subtrees": {
       "wp-content/plugins/wp-amd": {}
