@@ -17,11 +17,11 @@ CIRCLE_PROJECT_REPONAME	      ?=www.discodonniepresents.com
 CURRENT_BRANCH                ?=$(shell git describe --contains --all HEAD)
 CURRENT_COMMIT                ?=$(shell git rev-list -1 HEAD)
 CURRENT_TAG                   ?=$(shell git describe --always --tag)
-ACCOUNT_NAME		          ?=edm
-STORAGE_DIR		              ?=/var/storage/
-STORAGE_BUCKET		          ?=gs://media.discodonniepresents.com
-RDS_BUCKET		              ?=gs://discodonniepresents.com
-SITE_LIST		              ?=$(shell wp --allow-root site list --field=url --format=csv)
+ACCOUNT_NAME		              ?=edm
+STORAGE_DIR		                ?=/var/storage/
+STORAGE_BUCKET		            ?=gs://media.discodonniepresents.com
+RDS_BUCKET		                ?=gs://discodonniepresents.com
+SITE_LIST		                  ?=$(shell wp --allow-root site list --field=url --format=csv)
 PWD                           := $(shell pwd)
 _GET_SITES                    =$(call wp,sites,list)
 

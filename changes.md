@@ -1,4 +1,5 @@
 #### 2.3.0
+* Changed ComponentJS install path to wp-content/components.
 * (WIP) Add wp-comment-post.php rewrite for posting comments instead of symlinking file.
 * (WIP) Added standard "save site" method to fix common issues such as upload paths/urls, transient paths, etc.
 * Revert application structure to native-supported naming conventions, fixes problems with missing themes.
