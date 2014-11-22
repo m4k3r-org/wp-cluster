@@ -180,6 +180,26 @@ gsutil -m cp -a public-read -rn /var/storage/sugarsociety.com/media/            
 gsutil -m cp -a public-read -rn /var/storage/gxgmag.com/media/                           gs://discodonniepresents.com/gxgmag.com
 ```
 
+### Importing Single Sites
+Generate a standard MySQL dump of origin site, replacing the wp_ prefix with %prefix%_%ID% of the new site on the network.
+
+```
+gsutil cp gs://discodonniepresents.com/soundwaveaz.sql.gz ./
+gunzip soundwaveaz.sql.gz
+wp db import ~/Downloads/soundwaveaz.sql
+wp db query "DELETE FROM wp_43_options WHERE option_name LIKE '_site_transient%';"
+wp db query "DELETE FROM wp_43_options WHERE option_name LIKE '_transient%';"
+wp db query "UPDATE wp_43_options SET option_name = 'theme_mods_wp-soundwave' WHERE option_name = 'theme_soundwave_wp';"
+wp --url=2013.soundwaveaz.com option update siteurl http://2013.soundwaveaz.com
+wp --url=2013.soundwaveaz.com option update home http://2013.soundwaveaz.com
+wp --url=2013.soundwaveaz.com option update upload_url_path https://media.soundwaveaz.com/archive/2013
+wp --url=2013.soundwaveaz.com plugin install wp-pagespeed --activate
+wp --url=2013.soundwaveaz.com theme activate wp-soundwave
+wp --url=2013.soundwaveaz.com transient delete-all 
+wp --url=2013.soundwaveaz.com cache flush 
+wp --url=2013.soundwaveaz.com rewrite flush 
+```
+
 ### Technologies Used
 There are several technologies that are used in our stack. Initially you won't have to work with them and we can explore each in more detail later.
 
