@@ -12,7 +12,7 @@
 ##
 ################################################################################################
 
-CIRCLE_PROJECT_USERNAME	      ?=DiscoDonniePresents
+CIRCLE_PROJECT_USERNAME	      ?=discodonniepresents
 CIRCLE_PROJECT_REPONAME	      ?=www.discodonniepresents.com
 CURRENT_BRANCH                ?=$(shell git describe --contains --all HEAD)
 CURRENT_COMMIT                ?=$(shell git rev-list -1 HEAD)
@@ -211,6 +211,10 @@ install:
 	@npm install --silent
 	@rm -rf wp-vendor/composer/installed.json wp-vendor/composer/installers
 	@composer update --prefer-source --dev --no-interaction --no-progress
+
+image:
+	@echo "Building Docker Image ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CURRENT_TAG}."
+	# docker build --tag=${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:latest .
 
 # pass commands to Grunt
 #

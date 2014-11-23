@@ -1,8 +1,5 @@
 wp-content/public/repository.usabilitydynamics.com/cache/**
 /wc-logs
-composer.lock
-/wp-vendor/composer/installers/
-/wp-vendor/composer/installed.json
 
 /*.sql.tgz
 /*.sql

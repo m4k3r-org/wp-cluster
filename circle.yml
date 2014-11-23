@@ -83,3 +83,24 @@ test:
     - mocha wp-content/static/test/functional/media
     - mocha wp-content/static/test/functional/rewrites
     - mocha wp-content/static/test/functional/sharding
+
+  post:
+    - make image
+
+deployment:
+  production:
+    branch: [production, master, stable]
+    commands:
+      - git push git@heroku.com:foo-bar-123.git $CIRCLE_SHA1:master
+      - wp cluster deploy --target=production
+  staging:
+    branch: [develop, staging]
+    commands:
+      - wp cluster deploy --target=staging
+
+general:
+  branches:
+    ignore:
+      - gh-pages
+      - /feature-.*/
+      - /hotifx-.*/
