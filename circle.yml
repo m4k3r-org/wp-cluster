@@ -73,15 +73,11 @@ dependencies:
     - sudo service apache2 start
 
   override:
-    - make staging
+    # - make staging
 
 test:
   override:
-    - mocha wp-content/static/test/unit
-    - mocha wp-content/static/test/functional/assets
-    - mocha wp-content/static/test/functional/media
-    - mocha wp-content/static/test/functional/rewrites
-    - mocha wp-content/static/test/functional/sharding
+    - npm test
 
   post:
     - make image
@@ -93,7 +89,7 @@ deployment:
       - git push git@heroku.com:foo-bar-123.git $CIRCLE_SHA1:master
       - wp cluster deploy --target=production
   staging:
-    branch: [develop, staging]
+    branch: [staging]
     commands:
       - wp cluster deploy --target=staging
 
