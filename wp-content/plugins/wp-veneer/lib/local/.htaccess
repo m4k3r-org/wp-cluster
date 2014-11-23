@@ -24,9 +24,14 @@
 # END Rewrite Engine
 
 # BEGIN Veneer Security
-<FilesMatch "Dockerfile|makefile|.dockerignore|.environment|.gitignore|.gitmodules|.envrc">
+<FilesMatch "node_modules|error_log|debug.log|Dockerfile|makefile|.dockerignore|.environment|.gitignore|.gitmodules|.envrc|changes.md|readme.md">
   Order allow,deny
   Deny from all
+</FilesMatch>
+<FilesMatch "(^#.*#|\.(md|lock|yml|bak|config|dist|fla|inc|ini|log|psd|sh|sql|sw[op])|~)$">
+  Order allow,deny
+  Deny from all
+  Satisfy All
 </FilesMatch>
 # END Veneer Security
 

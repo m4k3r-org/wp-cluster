@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "309c2e1a3d048a03f766de5e7e0e4bfc",
+    "hash": "8adf52c50ac0a766406229805db40174",
     "packages": [
         {
             "name": "composer/installers",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "5ed225fe8545c4e4bf502d56fdd87791ecfdd078"
+                "reference": "8024be9aa3ee446272937f46a8807fa52b337767"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/5ed225fe8545c4e4bf502d56fdd87791ecfdd078",
-                "reference": "5ed225fe8545c4e4bf502d56fdd87791ecfdd078",
+                "url": "https://api.github.com/repos/composer/installers/zipball/8024be9aa3ee446272937f46a8807fa52b337767",
+                "reference": "8024be9aa3ee446272937f46a8807fa52b337767",
                 "shasum": ""
             },
             "replace": {
@@ -96,82 +96,50 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-09-25 03:36:45"
+            "time": "2014-11-01 17:51:50"
         },
         {
             "name": "siteorigin/panels",
-            "version": "master",
+            "version": "1.4.11",
             "source": {
-                "type": "git",
-                "url": "git@github.com:UsabilityDynamics/siteorigin-panels",
-                "reference": "master"
+                "type": "svn",
+                "url": "http://plugins.svn.wordpress.org/siteorigin-panels",
+                "reference": "trunk"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/siteorigin-panels/archive/master.zip",
+                "url": "http://downloads.wordpress.org/plugin/siteorigin-panels.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.3"
+                "composer/installers": "~1.0"
             },
             "type": "wordpress-plugin",
             "extra": {
-                "installer-name": "siteorigin-panels",
-                "main-file": "siteorigin-panels.php",
-                "text_domain": "siteorigin-panels"
-            },
-            "autoload": {
-                "classmap": [
-                    "widgets/basic.php",
-                    "widgets/widgets/testimonial/testimonial.php",
-                    "widgets/widgets/price-box/price-box.php",
-                    "widgets/widgets/list/list.php",
-                    "widgets/widgets/call-to-action/call-to-action.php",
-                    "widgets/widgets/button/button.php",
-                    "widgets/widgets/animated-image/animated-image.php",
-                    "widgets/lib/color.php"
-                ]
+                "installer-name": "siteorigin-panels"
             },
             "license": [
-                "GPLv2"
-            ],
-            "authors": [
-                {
-                    "name": "Greg Priday",
-                    "email": "support@siteorigin.com",
-                    "homepage": "http://siteorigin.com/",
-                    "role": "WordPress Developer"
-                }
-            ],
-            "description": "Build responsive page layouts using the widgets you know and love using this simple drag and drop page builder.",
-            "homepage": "http://siteorigin.com/page-builder/",
-            "keywords": [
-                "admin",
-                "builder",
-                "page-builder",
-                "responsive",
-                "wordpress"
+                "proprietary"
             ]
         },
         {
             "name": "usabilitydynamics/lib-ui",
-            "version": "master",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-ui",
-                "reference": "master"
+                "url": "git@github.com:usabilitydynamics/lib-ui",
+                "reference": "0.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-ui/archive/master.zip",
+                "url": "https://github.com/usabilitydynamics/lib-ui/archive/0.2.1.zip",
                 "reference": null,
                 "shasum": null
             },
             "require": {
                 "php": ">=5.3",
-                "usabilitydynamics/lib-utility": "master"
+                "usabilitydynamics/lib-utility": "~0.3"
             },
             "type": "library",
             "extra": {
@@ -219,7 +187,7 @@
                     "role": "Developer"
                 }
             ],
-            "homepage": "http://github.com/UsabilityDynamics/wp-ui",
+            "homepage": "http://github.com/usabilitydynamics/wp-ui",
             "keywords": [
                 "css-editor",
                 "editor",
@@ -229,15 +197,15 @@
         },
         {
             "name": "usabilitydynamics/lib-utility",
-            "version": "master",
+            "version": "0.3.6",
             "source": {
                 "type": "git",
-                "url": "git@github.com:UsabilityDynamics/lib-utility",
-                "reference": "master"
+                "url": "git@github.com:usabilitydynamics/lib-utility",
+                "reference": "0.3.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/UsabilityDynamics/lib-utility/archive/master.zip",
+                "url": "https://github.com/usabilitydynamics/lib-utility/archive/0.3.6.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -290,7 +258,7 @@
         },
         {
             "name": "zaininnari/html-minifier",
-            "version": "dev-master",
+            "version": "0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zaininnari/html-minifier.git",
@@ -345,8 +313,6 @@
     "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": false,
-    "platform": {
-        "php": ">=5.3"
-    },
+    "platform": [],
     "platform-dev": []
 }

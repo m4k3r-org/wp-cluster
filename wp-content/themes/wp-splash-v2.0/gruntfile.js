@@ -9,10 +9,18 @@
  */
 module.exports = function( grunt ) {
 
+  // Automatically Load Tasks
+  require( 'load-grunt-tasks' )( grunt, {
+    pattern: 'grunt-*',
+    config: './package.json',
+    scope: 'devDependencies'
+  } );
+
   grunt.initConfig( {
-    
-    pkg: grunt.file.readJSON( 'package.json' ),
-    
+
+    // Get Project Package.
+    composer: grunt.file.readJSON( 'composer.json' ),
+
     requirejs: {
       dev: {
         options: {
@@ -31,20 +39,6 @@ module.exports = function( grunt ) {
             max_line_length: 1000,
             no_mangle: true
           }
-        }
-      }
-    },
-    
-    yuidoc: {
-      compile: {
-        name: '<%= pkg.name %>',
-        description: '<%= pkg.description %>',
-        version: '<%= pkg.version %>',
-        url: '<%= pkg.homepage %>',
-        logo: 'http://media.usabilitydynamics.com/logo.png',
-        options: {
-          paths: './',
-          outdir: 'static/codex'
         }
       }
     },
@@ -125,24 +119,38 @@ module.exports = function( grunt ) {
           }
         }
       }
-    }
-    
-  });
+    },
 
-  // Load tasks
-  grunt.loadNpmTasks( 'grunt-markdown' );
-  grunt.loadNpmTasks( 'grunt-requirejs' );
-  grunt.loadNpmTasks( 'grunt-spritefiles' );
-  grunt.loadNpmTasks( 'grunt-contrib-symlink' );
-  grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
-  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-  grunt.loadNpmTasks( 'grunt-contrib-watch' );
-  grunt.loadNpmTasks( 'grunt-contrib-less' );
+    // Generate POT file.
+    makepot: {
+      target: {
+        options: {
+          type: 'wp-theme',
+          domainPath: 'static/locale',                   // Where to save the POT file.
+          exclude: [ "static/**", "tasks/**", "vendor/**", "test" ],
+          mainFile: 'style.css',
+          potFilename: 'wp-splash.pot',
+          potHeaders: {
+            poedit: true,
+            language: 'en',
+            'x-poedit-country': 'United States',
+            'x-poedit-sourcecharset': 'UTF-8',
+            'x-textdomain-support': 'yes',
+            'x-poedit-keywordslist': true
+          },
+          updateTimestamp: true
+        }
+      }
+    }
+
+
+  });
 
   // Build Assets
   grunt.registerTask( 'default', [
     'less',
-    'uglify'
+    'uglify',
+    'makepot'
   ]);
 
   grunt.registerTask( 'distribution', [
@@ -155,7 +163,6 @@ module.exports = function( grunt ) {
 
   // Update Documentation
   grunt.registerTask( 'document', [
-    'yuidoc',
     'markdown'
   ]);
 

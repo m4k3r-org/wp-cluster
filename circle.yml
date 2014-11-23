@@ -7,6 +7,7 @@ machine:
     version: 5.5.9
   services:
     - mysql
+    - elasticsearch
 
   hosts:
     edm.wpcloud.io: 127.0.0.1
@@ -14,9 +15,9 @@ machine:
     hififest.com: 127.0.0.1
     2013.monsterblockparty.com: 127.0.0.1
     2013.freaksbeatstreats.com: 127.0.0.1
-    winterfantasyrgv-com.discodonniepresents.com: 127.0.0.1
-    gifttampa-com.discodonniepresents.com: 127.0.0.1
-    bassodyssey-com.discodonniepresents.com: 127.0.0.1
+    winterfantasyrgv.com: 127.0.0.1
+    gifttampa.com: 127.0.0.1
+    bassodyssey.com: 127.0.0.1
     discodonniepresents.com: 127.0.0.1
     mexico.lightsallnight.com: 127.0.0.1
     umesouthpadre.com: 127.0.0.1
@@ -28,8 +29,6 @@ machine:
     wildwood.beachblanketfestival.com: 127.0.0.1
     galveston.beachblanketfestival.com: 127.0.0.1
     beachblanketfestival.com: 127.0.0.1
-    old.isladelsolfest.com: 127.0.0.1
-    hardwellmx-com.discodonniepresents.com: 127.0.0.1
     dayafter.com: 127.0.0.1
     somethingwicked.com: 127.0.0.1
     isladelsolfest.com: 127.0.0.1

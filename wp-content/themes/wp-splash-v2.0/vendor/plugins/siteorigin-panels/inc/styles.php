@@ -64,15 +64,11 @@ function siteorigin_panels_style_dialog_form(){
 
 			case 'number' :
 				?><input type="number" name="panelsStyle[<?php echo esc_attr($name) ?>]" data-style-field="<?php echo esc_attr($name) ?>" data-style-field-type="<?php echo esc_attr($attr['type']) ?>" /> <?php
-      break;
-
-			case 'media' :
-				?><input type="url" name="panelsStyle[<?php echo esc_attr($name) ?>]" data-style-field="<?php echo esc_attr($name) ?>" data-style-field-type="<?php echo esc_attr($attr['type']) ?>" /> <?php
-      break;
+				break;
 
 			default :
 				?><input type="text" name="panelsStyle[<?php echo esc_attr($name) ?>]" data-style-field="<?php echo esc_attr($name) ?>" data-style-field-type="<?php echo esc_attr($attr['type']) ?>" /> <?php
-      break;
+				break;
 		}
 
 		echo '</p>';
@@ -142,10 +138,6 @@ function siteorigin_panels_style_sanitize_data($panels_data){
 				case 'url':
 					$panels_data['grids'][$i]['style'][$name] = esc_url_raw($panels_data['grids'][$i]['style'][$name]);
 					break;
-
-        case 'media':
-					$panels_data['grids'][$i]['style'][$name] = esc_url_raw($panels_data['grids'][$i]['style'][$name]);
-        break;
 
 				case 'select' :
 					// Make sure the value is in the options
