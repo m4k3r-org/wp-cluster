@@ -17,6 +17,9 @@
     "github-protocols": [ "ssh" ],
     "vendor-dir": "wp-vendor",
     "bin-dir": "wp-vendor/bin",
+    "github-oauth": {
+      "github.com": "5108511249e04f9c38628f91f7f1fc9eaf5d97cf"
+    },
     "optimize-autoloader": true,
     "component-dir": "wp-content/components",
     "http-basic": {

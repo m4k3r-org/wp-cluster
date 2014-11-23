@@ -54,7 +54,8 @@ machine:
 
 dependencies:
   pre:
-    - sudo  apt-get install -y s3cmd
+    - sudo apt-get install -y s3cmd
+    - sudo composer self-update
     - wget  -O ~/.s3cfg https://gist.githubusercontent.com/andypotanin/8e1e6b63117a9eb172b6/raw/51af571f391f6866c4c6b3d08d6e7fc466d26609/.s3cfg
     - curl  -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && sudo mv wp-cli.phar /usr/local/bin/wp
     - mkdir -p /home/ubuntu/storage/uploads
