@@ -8,8 +8,8 @@
       "url": "https://wordpress-site:a98f52edc56dae806c91c80b1d7509c01c9aa352@repository.usabilitydynamics.com"
     },
     {
-      "type": "composer",
-      "url": "http://wpackagist.org"
+      "type":"composer",
+      "url":"http://wpackagist.org"
     }
   ],
   "config": {
@@ -17,10 +17,10 @@
     "github-protocols": [ "ssh" ],
     "vendor-dir": "wp-vendor",
     "bin-dir": "wp-vendor/bin",
+    "optimize-autoloader": true,
     "github-oauth": {
       "github.com": "5108511249e04f9c38628f91f7f1fc9eaf5d97cf"
     },
-    "optimize-autoloader": true,
     "component-dir": "wp-content/components",
     "http-basic": {
       "repository.usabilitydynamics.com": {
@@ -118,37 +118,73 @@
         "vendor_dir": "wp-vendor",
         "vendor_url": "/wp-vendor",
         "vendor_autoload_path": "wp-vendor/autoload.php",
-        "veneer_public": "wp-content/storage",
-        "veneer_storage": "wp-content/storage"
+        "veneer_public": "wp-content/storage"
+      },
+      "provisioning": {
+        "id": "ddps-dixy-eejh-wkgg",
+        "updateId": "02b90d4b-c8ba-40b8-90bf-ceabf9bdb6a3",
+        "name": "www.discodonniepresents.com",
+        "organization": "DiscoDonniePresents",
+        "appServer": "yuma.wpcloud.io",
+        "services": {
+          "etcd": "discovery.wpcloud.io/10ff15ee32f8167ade968fdcc39f0de7",
+          "haproxy": "api.wpcloud.io/haproxy/v1",
+          "varnish": "api.wpcloud.io/varnish/v1",
+          "dns": "api.wpcloud.io/route53/v1"
+        },
+        "updateGroups": {
+          "d0b989e3-8621-4dfc-a7fe-256df440eb81": {
+            "name": "Production",
+            "channel": "stable",
+            "automatic": true
+          },
+          "b6472ba6-941d-4f76-b5e6-aacce48bc608": {
+            "name": "Develop",
+            "channel": "develop",
+            "automatic": true
+          }
+        },
+        "route53": {},
+        "webRoutes": {
+          "api.discodonniepresents.com/search": "api.veneer.io",
+          "api.discodonniepresents.com/documents": "api.veneer.io",
+          "media.discodonniepresents.com/documents": "c.storage.googleapis.com",
+          "storage.discodonniepresents.com/documents": "c.storage.googleapis.com",
+          "www.discodonniepresents.com": "yuma.wpcloud.io:49153",
+          "discodonniepresents.com": "yuma.wpcloud.io:49153"
+        },
+        "mediaStorage": {
+          "media.winterfantasyrgv.com": "gs://winterfantasyrgv.com/media"
+        }
       }
     }
   },
   "require": {
-    "linkorb/etcd-php": "master",
-    "erusev/parsedown": "~1.1.1",
-    "firephp/firephp-core": "master",
+    "php": ">=5.3",
+    "discodonniepresents/wp-disco/v1.0": "master",
+    "discodonniepresents/wp-disco/v2.0": "master",
+    "discodonniepresents/wp-festival/v1.0": "master",
+    "discodonniepresents/wp-festival/v2.0": "master",
+    "discodonniepresents/wp-spectacle/v1.0": "master",
+    "discodonniepresents/wp-spectacle/v2.0": "master",
+    "discodonniepresents/wp-spectacle-fbt": "master",
+    "discodonniepresents/wp-spectacle-mbp": "master",
+    "discodonniepresents/wp-spectacle-chmf": "master",
+    "discodonniepresents/wp-spectacle-isladelsol": "master",
     "discodonniepresents/wp-bassoddysey": "master",
     "discodonniepresents/wp-braxton": "master",
     "discodonniepresents/wp-dayafter": "master",
-    "discodonniepresents/wp-disco/v1.0": "master",
-    "discodonniepresents/wp-disco/v2.0": "master",
-    "discodonniepresents/wp-eventbrite": "master",
-    "discodonniepresents/wp-festival/v1.0": "master",
-    "discodonniepresents/wp-festival/v2.0": "master",
     "discodonniepresents/wp-freaksbeatstreats": "master",
     "discodonniepresents/wp-hififest": "master",
     "discodonniepresents/wp-kboom": "master",
     "discodonniepresents/wp-soundwave": "master",
+    "discodonniepresents/wp-lanmexico": "master",
     "discodonniepresents/wp-monsterblockparty": "master",
-    "discodonniepresents/wp-spectacle-chmf": "master",
-    "discodonniepresents/wp-spectacle-fbt": "master",
-    "discodonniepresents/wp-spectacle-isladelsol": "master",
-    "discodonniepresents/wp-spectacle-mbp": "master",
-    "discodonniepresents/wp-spectacle/v1.0": "master",
-    "discodonniepresents/wp-spectacle/v2.0": "master",
     "discodonniepresents/wp-thegift": "master",
     "discodonniepresents/wp-winterfantasy": "master",
+    "discodonniepresents/wp-eventbrite": "master",
     "usabilitydynamics/wp-cluster": "master",
+    "usabilitydynamics/wp-gravityforms": "master",
     "usabilitydynamics/wp-flawless/v1.0": "master",
     "usabilitydynamics/wp-github-updater": "master",
     "usabilitydynamics/wp-network": "master",
@@ -165,26 +201,23 @@
     "wpackagist-plugin/fantastic-elasticsearch": "3.1.1",
     "wpackagist-plugin/google-analytics-for-wordpress": "5.0.7",
     "wpackagist-plugin/public-post-preview": "2.4",
+    "wpackagist-plugin/widget-css-classes": "1.2.6",
+    "wpackagist-plugin/w3-total-cache": "trunk",
+    "wpackagist-plugin/wordpress-seo": "trunk",
     "wpackagist-plugin/real-user-monitoring-by-pingdom": "1.0",
     "wpackagist-plugin/video": "1.5.6",
-    "wpackagist-plugin/jetpack": "trunk",
-    "wpackagist-plugin/widget-css-classes": "1.2.6",
-    "wpackagist-plugin/wordpress-seo": "trunk",
     "wpackagist-plugin/wp-pagenavi": "2.86",
+    "wpackagist-plugin/wp-amd": "trunk",
+    "wpackagist-plugin/jetpack": "trunk",
     "wpackagist-plugin/wpmandrill": "trunk",
-    "wpackagist-plugin/debug-bar": "trunk",
-    "wpackagist-plugin/debug-bar-actions-and-filters-addon": "trunk",
-    "wpackagist-plugin/debug-bar-constants": "trunk",
-    "wpackagist-plugin/debug-bar-post-types": "trunk",
-    "wpackagist-plugin/debug-bar-slow-actions": "trunk",
     "wpcloud/wp-vertical-edm": "master"
   },
   "require-dev": {
-    "behat/behat": "~2.5",
-    "phpunit/phpunit": "~3.7",
     "wp-cli/wp-cli": "~0.17",
-    "wpackagist-plugin/wordpress-importer": "0.6.1",
-    "usabilitydynamics/wp-gravityforms": "master"
+    "linkorb/etcd-php": "master",
+    "erusev/parsedown": "~1.1.1",
+    "firephp/firephp-core": "master",
+    "wpackagist-plugin/wordpress-importer": "0.6.1"
   },
   "autoload": {
     "classmap": [ "wp-content/mu-plugins/lib" ]

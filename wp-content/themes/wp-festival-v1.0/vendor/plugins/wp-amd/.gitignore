@@ -3,8 +3,6 @@ node_modules
 npm-debug.log
 vendor
 
-wp-test-config.php
-
 .svn
 .idea
 .idea/workspace.xml
