@@ -1,3 +1,6 @@
+### 2.1.4
+* JS modifications
+
 ### 2.1.3
 * Changed flag icon rectangular on mobile normal on desktop
 * Top nav share icon is hidden on mobile only if language switcher is visible

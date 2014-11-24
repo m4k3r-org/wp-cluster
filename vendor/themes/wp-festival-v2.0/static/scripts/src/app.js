@@ -261,20 +261,21 @@ define(
           }
         }
 
-        if( document.documentElement.clientWidth >= 992 ){
+      } );
 
-          var header = $( '#doc > header' );
 
-          var remainingSpace = header.height() - ( $( '.travel-packages-container' ).outerHeight( true ) + $( '.nav-arrows' ).outerHeight( true ) + $( '.travel-packages-container' ).position().top);
+      if( document.documentElement.clientWidth >= 992 ){
 
-          if( remainingSpace < header.height() ){
-            header.height( header.height() - remainingSpace + 105 );
-          }
+        var header = $( '#doc > header' );
 
+        var remainingSpace = header.height() - ( $( '.travel-packages-container' ).outerHeight( true ) + $( '.nav-arrows' ).outerHeight( true ) + $( '.travel-packages-container' ).position().top);
+
+        if( remainingSpace < header.height() ){
+          header.height( header.height() - remainingSpace + 105 );
         }
 
-      } );
-      
+      }
+
     }
 
     // Initialize swipe for tier3 artists
