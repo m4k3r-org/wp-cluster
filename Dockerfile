@@ -13,7 +13,7 @@
 ## @author potanin@UD
 #################################################################
 
-FROM          hipstack/hipstack
+FROM          hipstack/wordpress
 MAINTAINER    UsabilityDynamics, Inc.   <info@usabilitydynamics.com>
 USER          root
 
@@ -21,8 +21,22 @@ USER          root
 ## We are running a basic PHP application served by Apache, via HAproxy.
 ## It may make sense to move codebase into /home/web later to better organize other apps, which may need to be in their own user/home directories.
 ##
-ADD           /                                             /var/www
+ADD           application                                             /var/www/application
+ADD           vendor/libraries                                        /var/www/vendor/libraries
+ADD           vendor/modules/wp-veneer/lib/class-config.php           /var/www/vendor/libraries/automattic/wordpress/wp-config.php
+ADD           vendor/modules                                          /var/www/vendor/modules
+ADD           vendor/plugins                                          /var/www/vendor/plugins
+ADD           vendor/themes                                           /var/www/vendor/themes
+ADD           storage                                                 /var/www/storage
+ADD           index.php                                               /var/www/index.php
+ADD           composer.json                                           /var/www/composer.json
+ADD           vendor/modules/wp-cluster/lib/class-database.php        /var/www/db.php
+ADD           vendor/modules/wp-cluster/lib/class-sunrise.php         /var/www/sunrise.php
+ADD           vendor/modules/wp-veneer/lib/class-advanced-cache.php   /var/www/advanced-cache.php
+ADD           vendor/modules/wp-veneer/lib/class-object-cache.php     /var/www/object-cache.php
+ADD           vendor/modules/wp-veneer/lib/local/.htaccess            /var/www/.htaccess
 
+##
 ## All WordPress configuration that is environment-specific should be here.
 ##
 ##
@@ -42,15 +56,6 @@ ENV           DATA_AUTHORITY                                          http://10.
 ENV           DOCKER_REGISTRY                                         http://registry.wpcloud.io
 ENV           COMPOSER_REPOSITORY                                     http://repository.usabilitydynamics.com
 
-## Install and Enable NewRelic
-##
-##
-# RUN           echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list
-# RUN           wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -
-# RUN           apt-get update
-# RUN           apt-get install newrelic-sysmond
-# RUN           nrsysmond-config --set license_key=f3f909635f44aa45e6d4f5f7d99e6a05c6114c11
-
 ##
 ## Port 22, 8080 and 8443 are also available, but should be requested only when needed.
 ##
@@ -62,8 +67,8 @@ EXPOSE        80
 ## - Storage Media should typically be stored on a host machine. For local development an SSHFS mount may be created.
 ## - Cache is ephemeral.
 ##
-VOLUME        [ "/var/www/wp-content/.logs" ]
-VOLUME        [ "/var/www/wp-content/storage" ]
-VOLUME        [ "/var/www/wp-conten/cache" ]
+VOLUME        [ "/var/www/application/logs" ]
+VOLUME        [ "/var/www/storage/media" ]
+VOLUME        [ "/var/www/cache" ]
 
 CMD           [ "/usr/bin/supervisord", "-n" ]

@@ -1,17 +1,29 @@
 <?php
 /**
- * Front to the WordPress application. This file doesn't do anything, but loads
- * wp-blog-header.php which does and tells WordPress to load the theme.
- *
- * @package WordPress
+ * WordPress Site Loader
  */
+try {
 
-/**
- * Tells WordPress to load the WordPress theme and output it.
- *
- * @var bool
- */
-define('WP_USE_THEMES', true);
+  header( 'PageSpeed: off' );
 
-/** Loads the WordPress Environment and Template */
-require( dirname( __FILE__ ) . '/wp-blog-header.php' );
+  /** Make sure we have a proper wp-config file */
+  if( !file_exists( 'vendor/libraries/automattic/wp-config.php' ) ) {
+    throw new Exception( 'Site not installed.' );
+  }
+
+  /** Make sure we have our vendor libraries installed, and if we - include them */
+  if( !file_exists( 'vendor/libraries/automattic/wordpress/wp-blog-header.php' ) ) {
+    throw new Exception( 'Site vendor libraries not installed.' );
+  }else{
+    require_once( 'vendor/libraries/automattic/wordpress/wp-blog-header.php' );
+  }
+
+} catch( Exception $e ) {
+
+  /** There was an issue, we need to bail */
+  header( 'HTTP/1.1 500 Internal Server Error' );
+  echo '<h1>Site Error</h1>';
+  echo '<p>' . $e->getMessage() . '</p>';
+  die();
+
+}

@@ -1,9 +1,0 @@
-/build
-/vendor
-/.idea
-/.project
-/.cache
-/.buildpath
-/.settings
-.*.swp
-.DS_Store

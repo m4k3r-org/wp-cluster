@@ -1,18 +1,1 @@
-url: http://discodonniepresents.com/
-quiet: true
-debug: false
-disabled_commands:
-  - eval-file
-  - cron
-  - comment
-  - menu
-  - eval
-  - widget
-  - search-replace
-  - core multisite-install
-  - term
-  - sidebar
-  - shell
-  - scaffold
-  - db drop
-  - db reset
+application/static/etc/wp-cli.yml

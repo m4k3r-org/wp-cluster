@@ -1,3 +1,10 @@
+makefile
+Dockerfile
 .environment
-wp-content/.logs
-wp-content/storage
+.gitignore
+.git
+.gitmodules
+application/logs
+storage/media/**
+storage/cache/**
+storage/static/**

@@ -1,95 +1,3 @@
-### Setting up Local Environment
-Before running the following commands, please setup a new MySQL database calling it "edm_develop".
-You will also need to have [gsutil](https://cloud.google.com/storage/docs/gsutil), [wp-cli](http://wp-cli.org/gsutil) and [direnv](https://github.com/zimbatm/direnv) installed:
-
-Assuming your local site setup will be in ~/Sites/discodonniepresents.com using the **develop** branch:
-```
-cd ~/Sites/discodonniepresents.com
-git clone git@github.com:DiscoDonniePresents/www.discodonniepresents.com.git .
-git checkout develop
-echo "export WP_ENV=develop" >> .envrc
-echo "export DB_NAME=edm" >> .envrc
-echo "export DB_USER=edm" >> .envrc
-echo "export DB_PASSWORD=your-mysql-password" >> .envrc
-echo "export DB_HOST=127.0.0.1" >> .envrc
-echo "export WP_ELASTIC_SECRET_KEY=jqnp-krmw-nmap-idpk:julw-urbp-vzst-jwwv" >> .envrc
-echo "export WP_ELASTIC_PUBLIC_KEY=jqnp-krmw-nmap-idpk-ooau-bkfm-bghf-jatg" >> .envrc
-echo "export WP_ELASTIC_SERVICE_URL=api.discodonniepresents-com.drop.ud-dev.com/" >> .envrc
-echo "export WP_ELASTIC_SERVICE_INDEX=jqnp-krmw-nmap-idpk" >> .envrc
-make subtreePull
-make snapshotImport
-wp cloud sites
-```
-
-The very last command is to help you determine if wp-cli can connect to DB, meaning everything is setup good.
-
-Now we will need to configure Apache. First create a "discodonniepresents.com" host then set the following environment variables:
-
-```
-SetEnv DB_NAME edm_develop
-SetEnv DB_USER root
-SetEnv DB_PASSWORD root
-SetEnv DB_HOST localhost
-SetEnv WP_ENV develop
-SetEnv WP_DEBUG 1
-SetEnv WP_ELASTIC_SECRET_KEY jqnp-krmw-nmap-idpk:julw-urbp-vzst-jwwv
-SetEnv WP_ELASTIC_PUBLIC_KEY jqnp-krmw-nmap-idpk-ooau-bkfm-bghf-jatg
-SetEnv WP_ELASTIC_SERVICE_URL api.discodonniepresents-com.drop.ud-dev.com
-SetEnv WP_ELASTIC_SERVICE_INDEX jqnp-krmw-nmap-idpk
-SetEnv QM_DISABLED false
-```
-
-That should be enough to get discodonniepresents.com to work locally, other network sites will also need aliases.
-
-### Subtrees
-Add "subtree helpers" to your bash profile. (https://gist.github.com/andypotanin/e54a7322da3fa33ada7e) to simplify subtree adding/pulling/pushing:
-
-#### Pull Subtree Changes
-
-```
-pullSubtree UsabilityDynamics/wp-amd                      wp-content/plugins/wp-amd
-pullSubtree UsabilityDynamics/wp-cluster                  wp-content/plugins/wp-cluster
-pullSubtree UsabilityDynamics/wp-crm                      wp-content/plugins/wp-crm
-pullSubtree UsabilityDynamics/wp-github-updater           wp-content/plugins/wp-github-updater
-pullSubtree UsabilityDynamics/wp-network                  wp-content/plugins/wp-network
-pullSubtree UsabilityDynamics/wp-pagespeed                wp-content/plugins/wp-pagespeed
-pullSubtree UsabilityDynamics/wp-social-stream            wp-content/plugins/wp-social-stream
-pullSubtree UsabilityDynamics/wp-splash                   wp-content/themes/wp-splash-v1.0      v1.0
-pullSubtree UsabilityDynamics/wp-splash                   wp-content/themes/wp-splash-v2.0      v2.0
-pullSubtree UsabilityDynamics/wp-veneer                   wp-content/plugins/wp-veneer
-pullSubtree wpCloud/wp-vertical-edm                       wp-content/plugins/wp-vertical-edm
-pullSubtree DiscoDonniePresents/wp-disco                  wp-content/themes/wp-disco-v1.0       v1.0
-pullSubtree DiscoDonniePresents/wp-disco                  wp-content/themes/wp-disco-v2.0       v2.0
-pullSubtree DiscoDonniePresents/wp-spectacle              wp-content/themes/wp-spectacle-v1.0   v1.0
-pullSubtree DiscoDonniePresents/wp-spectacle              wp-content/themes/wp-spectacle-v2.0   v2.0
-pullSubtree DiscoDonniePresents/wp-festival               wp-content/themes/wp-festival-v1.0    v1.0
-pullSubtree DiscoDonniePresents/wp-festival               wp-content/themes/wp-festival-v2.0    v2.0
-pullSubtree DiscoDonniePresents/wp-spectacle-chmf         wp-content/themes/wp-spectacle-chmf
-pullSubtree DiscoDonniePresents/wp-spectacle-mbp          wp-content/themes/wp-spectacle-mbp
-pullSubtree DiscoDonniePresents/wp-spectacle-fbt          wp-content/themes/wp-spectacle-fbt
-pullSubtree DiscoDonniePresents/wp-spectacle-isladelsol   wp-content/themes/wp-spectacle-isladelsol
-```
-
-#### Update Subtrees Dependencies
-```
-git subtree push --prefix=wp-content/themes/wp-splash-v1.0 git@github.com:UsabilityDynamics/wp-splash v1.0
-```
-
-Add Subtree for new dependency.
-```
-git subtree add --prefix=wp-content/themes/wp-splash-v1.0 git@github.com:UsabilityDynamics/wp-splash v1.0
-```
-
-Show installed libs. This will only work if there is a composer.lock file.
-```
-composer show --installed --path
-```
-
-Show versions of libs:
-```
-composer show --self
-```
-
 ### Cache Purging
 To purge Varnish cache, run the following commands. Be advised, Varnish will only accept purge notifications from accepted IP addresses.
 
@@ -99,7 +7,66 @@ curl -X PURGE dayafter.com
 curl -X PURGE umesouthpadre.com
 ```
 
-Otherwise you may simply `make varnishPurge`.
+### Subtrees
+Add "subtree helpers" to your bash profile. (https://gist.github.com/andypotanin/e54a7322da3fa33ada7e) to simplify subtree adding/pulling/pushing:
+
+```
+makeSubtree UsabilityDynamics/wp-veneer           vendor/plugins/wp-veneer
+makeSubtree UsabilityDynamics/wp-cluster          vendor/plugins/wp-cluster
+makeSubtree UsabilityDynamics/wp-elastic          vendor/plugins/wp-elastic
+makeSubtree UsabilityDynamics/wp-network          vendor/plugins/wp-network
+makeSubtree UsabilityDynamics/wp-github-updater   vendor/plugins/wp-network
+makeSubtree UsabilityDynamics/wp-splash           vendor/themes/wp-splash
+makeSubtree wpCloud/wp-vertical-edm               vendor/plugins/wp-vertical-edm
+makeSubtree wpCloud/wp-event-post-type            vendor/plugins/wp-event-post-type
+```
+
+```
+makeSubtree DiscoDonniePresents/wp-disco          vendor/themes/wp-disco-v2.0       v2.0
+makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-v1.0    v1.0
+makeSubtree DiscoDonniePresents/wp-festival       vendor/themes/wp-festival-v2.0    v2.0
+makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-v1.0   v1.0
+makeSubtree DiscoDonniePresents/wp-spectacle      vendor/themes/wp-spectacle-v2.0   v2.0
+makeSubtree DiscoDonniePresents/wp-spectacle-chmf  vendor/themes/wp-spectacle-chmf
+makeSubtree DiscoDonniePresents/wp-spectacle-mbp  vendor/themes/wp-spectacle-mbp
+makeSubtree DiscoDonniePresents/wp-spectacle-fbt  vendor/themes/wp-spectacle-fbt
+makeSubtree DiscoDonniePresents/wp-spectacle-isladelsol  vendor/themes/wp-spectacle-isladelsol
+```
+
+Pull subtrees.
+```
+pullSubtree UsabilityDynamics/wp-cluster            vendor/plugins/wp-cluster
+pullSubtree UsabilityDynamics/wp-veneer             vendor/plugins/wp-veneer
+pullSubtree UsabilityDynamics/wp-crm                vendor/plugins/wp-crm
+pullSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v1.0   v1.0
+pullSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v2.0   v2.0
+pullSubtree DiscoDonniePresents/wp-festival         vendor/themes/wp-festival-v2.0    v2.0
+pullSubtree DiscoDonniePresents/wp-spectacle-chmf   vendor/themes/wp-spectacle-chmf
+pullSubtree DiscoDonniePresents/wp-spectacle-mbp    vendor/themes/wp-spectacle-mbp
+pullSubtree DiscoDonniePresents/wp-spectacle-fbt    vendor/themes/wp-spectacle-fbt
+pullSubtree DiscoDonniePresents/wp-spectacle-isladelsol  vendor/themes/wp-spectacle-isladelsol
+```
+
+Update subtrees.
+```
+pushSubtree UsabilityDynamics/wp-cluster            vendor/plugins/wp-cluster
+pushSubtree UsabilityDynamics/wp-veneer             vendor/plugins/wp-veneer
+pushSubtree UsabilityDynamics/wp-crm                vendor/plugins/wp-crm
+pushSubtree DiscoDonniePresents/wp-spectacle-mbp    vendor/themes/wp-spectacle-mbp
+pushSubtree DiscoDonniePresents/wp-disco            vendor/themes/wp-disco-v2.0 v2.0
+pushSubtree DiscoDonniePresents/wp-spectacle        vendor/themes/wp-spectacle-v2.0   v2.0
+pushSubtree DiscoDonniePresents/wp-festival         vendor/themes/wp-festival-v2.0    v2.0
+```
+
+Show installed libs:
+```
+composer show --installed --path
+```
+
+Show versions of libs:
+```
+composer show --self
+```
 
 ### Staging
 
@@ -108,105 +75,82 @@ Otherwise you may simply `make varnishPurge`.
 * In addition, we have a database backup done daily, that can be restored by including the following text in your commit message:
   [drop refreshdb]
 
-### Setting Up wpCloud.io Remote
-You will need to have a wpCloud.io SSH key setup first.
-
-Add wpCloud.io as a remote:
+### MySQL Backup and Restore
+Create Backup, either run "make snapshot" to create an automatic snapshot that uses branch name, or create a manually DB backup:
 ```
-git remote add cloud git@wpcloud.io:DiscoDonniePresents/www.discodonniepresents.com.git
-```
-
-Merge any updates from production into current branch:
-```
-git fetch cloud
-git merge cloud/production
+wp transient delete-all && wp cache flush
+wp db export edm_production.sql
+tar cvzf edm_production.sql.tgz edm_production.sql
+s3cmd put --no-check-md5 --reduced-redundancy edm_production.sql.tgz s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com/edm_production.sql.tgz
+mv  edm_production.sql**
 ```
 
-Push to production deployment:
+To fetch backup locally and import it:
 ```
-git push cloud production
+s3cmd get s3://rds.uds.io/DiscoDonniePresents/www.discodonniepresents.com/edm_production.sql.tgz
+tar xvf edm_production.sql.tgz
+wp db import edm_production.sql
 ```
 
-### ElasticSearch Access Keys
 
-#### Production
-* Index: qccj-nxwm-etsk-niuu
-* Admin Key: qccj-nxwm-etsk-niuu:chdq-tvek-desl-izlf
-* Public Key: qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty
-
-#### Development
-* Index: jqnp-krmw-nmap-idpk
-* Admin Key: jqnp-krmw-nmap-idpk:julw-urbp-vzst-jwwv
-* Public Key: jqnp-krmw-nmap-idpk-ooau-bkfm-bghf-jatg
-
-```
-SetEnv WP_ELASTIC_SECRET_KEY qccj-nxwm-etsk-niuu:chdq-tvek-desl-izlf
-SetEnv WP_ELASTIC_PUBLIC_KEY qccj-nxwm-etsk-niuu-xctg-ezsd-uixa-jhty
-SetEnv WP_ELASTIC_SERVICE_URL api.discodonniepresents.com/documents/v1/
-SetEnv WP_ELASTIC_SERVICE_INDEX qccj-nxwm-etsk-niuu
-```
+### Media Sync
 
 #### Standard Sites' Media
-
 ```
-gsutil -m cp -a public-read -rn /var/storage/dayafter.com/media/                         gs://media.dayafter.com/
-gsutil -m cp -a public-read -rn /var/storage/beachblanketfestival.com/media/             gs://media.beachblanketfestival.com/
-gsutil -m cp -a public-read -rn /var/storage/cominghomemusicfestival.com/media/          gs://media.cominghomemusicfestival.com/
-gsutil -m cp -a public-read -rn /var/storage/discodonniepresents.com/media/              gs://media.discodonniepresents.com/
-gsutil -m cp -a public-read -rn /var/storage/freaksbeatstreats.com/media/                gs://media.freaksbeatstreats.com/
-gsutil -m cp -a public-read -rn /var/storage/gifttampa.com/media/                        gs://media.gifttampa.com/
-gsutil -m cp -a public-read -rn /var/storage/isladelsolfest.com/media/                   gs://media.isladelsolfest.com/
-gsutil -m cp -a public-read -rn /var/storage/monsterblockparty.com/media/                gs://media.monsterblockparty.com/
-gsutil -m cp -a public-read -rn /var/storage/smftampa.com/media/                         gs://media.smftampa.com/
-gsutil -m cp -a public-read -rn /var/storage/somethingwicked.com/media/                  gs://media.somethingwicked.com/
-gsutil -m cp -a public-read -rn /var/storage/suncitymusicfestival.com/media/             gs://media.suncitymusicfestival.com/
-gsutil -m cp -a public-read -rn /var/storage/winterfantasyrgv.com/media/                 gs://media.winterfantasyrgv.com/
-gsutil -m cp -a public-read -rn /var/storage/umesouthpadre.com/media/                    gs://media.umesouthpadre.com/
+gsutil -m rsync -d  /var/storage/beachblanketfestival.com/media/             gs://media.beachblanketfestival.com/
+gsutil -m rsync -d  /var/storage/cominghomemusicfestival.com/media/          gs://media.cominghomemusicfestival.com/
+gsutil -m rsync -d  /var/storage/dayafter.com/media/                         gs://media.dayafter.com/
+gsutil -m rsync -d  /var/storage/discodonniepresents.com/media/              gs://media.discodonniepresents.com/
+gsutil -m rsync -d  /var/storage/freaksbeatstreats.com/media/                gs://media.freaksbeatstreats.com/
+gsutil -m rsync -d  /var/storage/gifttampa.com/media/                        gs://media.gifttampa.com/
+gsutil -m rsync -d  /var/storage/isladelsolfest.com/media/                   gs://media.isladelsolfest.com/
+gsutil -m rsync -d  /var/storage/monsterblockparty.com/media/                gs://media.monsterblockparty.com/
+gsutil -m rsync -d  /var/storage/smftampa.com/media/                         gs://media.smftampa.com/
+gsutil -m rsync -d  /var/storage/somethingwicked.com/media/                  gs://media.somethingwicked.com/
+gsutil -m rsync -d  /var/storage/suncitymusicfestival.com/media/             gs://media.suncitymusicfestival.com/
+gsutil -m rsync -d  /var/storage/winterfantasyrgv.com/media/                 gs://media.winterfantasyrgv.com/
+gsutil -m rsync -d  /var/storage/umesouthpadre.com/media/                    gs://media.umesouthpadre.com/
 ```
 
 #### Archived Sites' Media
-
 ```
-gsutil -m cp -a public-read -rn /var/storage/2014.dayafter.com/media/                    gs://media.dayafter.com/archive/2014/
-gsutil -m cp -a public-read -rn /var/storage/2013.monsterblockparty.com/media/           gs://media.monsterblockparty.com/archive/2013/
-gsutil -m cp -a public-read -rn /var/storage/2013.freaksbeatstreats.com/media/           gs://media.freaksbeatstreats.com/archive/2013/
-
-gsutil -m cp -a public-read -rn /var/storage/hififest.com/media/                         gs://discodonniepresents.com/hififest.com
-gsutil -m cp -a public-read -rn /var/storage/bassodyssey.com/media/                      gs://discodonniepresents.com/bassodyssey.com
-gsutil -m cp -a public-read -rn /var/storage/wildwood.beachblanketfestival.com/media/    gs://discodonniepresents.com/wildwood.beachblanketfestival.com
-gsutil -m cp -a public-read -rn /var/storage/galveston.beachblanketfestival.com/media/   gs://discodonniepresents.com/galveston.beachblanketfestival.com
-gsutil -m cp -a public-read -rn /var/storage/mexico.lightsallnight.com/media/            gs://discodonniepresents.com/mexico.lightsallnight.com
-gsutil -m cp -a public-read -rn /var/storage/sugarsociety.com/media/                     gs://discodonniepresents.com/sugarsociety.com
-gsutil -m cp -a public-read -rn /var/storage/gxgmag.com/media/                           gs://discodonniepresents.com/gxgmag.com
+gsutil -m rsync -d  /var/storage/hififest.com/media/                         gs://ddpsdixyeejhwkgg.wpcloud.zone/media/hififest.com
+gsutil -m rsync -d  /var/storage/bassodyssey.com/media/                      gs://ddpsdixyeejhwkgg.wpcloud.zone/media/bassodyssey.com
+gsutil -m rsync -d  /var/storage/wildwood.beachblanketfestival.com/media/    gs://ddpsdixyeejhwkgg.wpcloud.zone/media/wildwood.beachblanketfestival.com
+gsutil -m rsync -d  /var/storage/galveston.beachblanketfestival.com/media/   gs://ddpsdixyeejhwkgg.wpcloud.zone/media/galveston.beachblanketfestival.com
+gsutil -m rsync -d  /var/storage/mexico.lightsallnight.com/media/            gs://ddpsdixyeejhwkgg.wpcloud.zone/media/mexico.lightsallnight.com
+gsutil -m rsync -d  /var/storage/2014.dayafter.com/media/                    gs://ddpsdixyeejhwkgg.wpcloud.zone/media/2014.dayafter.com
+gsutil -m rsync -d  /var/storage/2013.monsterblockparty.com/media/           gs://ddpsdixyeejhwkgg.wpcloud.zone/media/2013.monsterblockparty.com
+gsutil -m rsync -d  /var/storage/2013.freaksbeatstreats.com/media/           gs://ddpsdixyeejhwkgg.wpcloud.zone/media/2013.freaksbeatstreats.com
+gsutil -m rsync -d  /var/storage/sugarsociety.com/media/                     gs://ddpsdixyeejhwkgg.wpcloud.zone/media/sugarsociety.com
+gsutil -m rsync -d  /var/storage/gxgmag.com/media/                           gs://ddpsdixyeejhwkgg.wpcloud.zone/media/gxgmag.com
 ```
 
-### Importing Single Sites
-Generate a standard MySQL dump of origin site, replacing the wp_ prefix with %prefix%_%ID% of the new site on the network.
-
+#### Archived Sites' Media (Broken)
 ```
-gsutil cp gs://discodonniepresents.com/soundwaveaz.sql.gz ./
-gunzip soundwaveaz.sql.gz
-wp db import ~/Downloads/soundwaveaz.sql
-wp db query "DELETE FROM wp_43_options WHERE option_name LIKE '_site_transient%';"
-wp db query "DELETE FROM wp_43_options WHERE option_name LIKE '_transient%';"
-wp db query "UPDATE wp_43_options SET option_name = 'theme_mods_wp-soundwave' WHERE option_name = 'theme_soundwave_wp';"
-wp --url=2013.soundwaveaz.com option update siteurl http://2013.soundwaveaz.com
-wp --url=2013.soundwaveaz.com option update home http://2013.soundwaveaz.com
-wp --url=2013.soundwaveaz.com option update upload_url_path https://media.soundwaveaz.com/archive/2013
-wp --url=2013.soundwaveaz.com plugin install wp-pagespeed --activate
-wp --url=2013.soundwaveaz.com theme activate wp-soundwave
-wp --url=2013.soundwaveaz.com transient delete-all 
-wp --url=2013.soundwaveaz.com cache flush 
-wp --url=2013.soundwaveaz.com rewrite flush 
+gsutil -m rsync -rd  /var/storage/2015.umesouthpadre.com/media/               gs://ddpsdixyeejhwkgg.wpcloud.zone/media/2015.umesouthpadre.com
 ```
 
-### Technologies Used
-There are several technologies that are used in our stack. Initially you won't have to work with them and we can explore each in more detail later.
+#### Media Permissions
+```
+gsutil -m setacl -R -a public-read gs://media.beachblanketfestival.com
+gsutil -m setacl -R -a public-read gs://media.cominghomemusicfestival.com
+gsutil -m setacl -R -a public-read gs://media.dayafter.com
+gsutil -m setacl -R -a public-read gs://media.discodonniepresents.com
+gsutil -m setacl -R -a public-read gs://media.freaksbeatstreats.com
+gsutil -m setacl -R -a public-read gs://media.gifttampa.com
+gsutil -m setacl -R -a public-read gs://media.isladelsolfest.com
+gsutil -m setacl -R -a public-read gs://media.monsterblockparty.com
+gsutil -m setacl -R -a public-read gs://media.smftampa.com
+gsutil -m setacl -R -a public-read gs://media.somethingwicked.com
+gsutil -m setacl -R -a public-read gs://media.suncitymusicfestival.com
+gsutil -m setacl -R -a public-read gs://media.winterfantasyrgv.com
+gsutil -m setacl -R -a public-read gs://media.umesouthpadre.com
+gsutil -m setacl -R -a public-read gs://ddpsdixyeejhwkgg.wpcloud.zone/media
+```
 
-* Varnish - All requests to production and develop branch use Varnish for caching.
-* PageSpeed - This is a Google middleware that optimizes HTML output on the fly.
-* ElasticSearch - We use this for searching and filtering. All Events are synchronized between WordPress in an ElasticSearch index.
-* HHVM - Any PHP code has to be HHVM compatible since we'll be switching our production server to this shortly.
-* Docker - The site's application code is packaged into a Docker image before being pushed to production.
-* Gsutil - A CLI tool for accessing Google Cloud Storage files, which have all media uploads, MySQL dumps, etc.
+### Archive Sync
 
+```
+gsutil -m rsync -rd  /var/storage/2014.dayafter.com/media/                gs://2014.dayafter.com/
+```

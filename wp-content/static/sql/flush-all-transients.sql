@@ -1,1 +1,0 @@
-DELETE FROM edm_12_options WHERE option_name LIKE ('_site_transient_%');
