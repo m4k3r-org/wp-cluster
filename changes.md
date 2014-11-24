@@ -1,4 +1,5 @@
 #### 2.3.0
+* Resolved mergability of "develop" and "production" branches.
 * Added wp-soundwave theme from soundwaveaz.com site, a legacy stand-alone site.
 * Changed ComponentJS install path to wp-content/components.
 * (WIP) Add wp-comment-post.php rewrite for posting comments instead of symlinking file.
