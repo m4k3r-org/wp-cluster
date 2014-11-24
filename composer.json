@@ -2,6 +2,16 @@
   "name": "usabilitydynamics/wp-splash",
   "description": "Wordpress Splash Theme.",
   "type"   : "wordpress-theme",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://repository.usabilitydynamics.com"
+    },
+    {
+      "type":"composer",
+      "url":"http://wpackagist.org"
+    }
+  ],
   "license": "GPL-2.0",
   "license_url": "http://www.gnu.org/licenses/gpl-2.0.html",
   "tags": [
@@ -40,15 +50,6 @@
     "usabilitydynamics/lib-ui": "~0.2",
     "siteorigin/panels": "~1.4"
   },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://www.usabilitydynamics.com/repository"
-    },
-    {
-      "type":"composer",
-      "url":"http://wpackagist.org"
-    }
-  ],
+  "require-dev": {},
   "minimum-stability": "dev"
 }

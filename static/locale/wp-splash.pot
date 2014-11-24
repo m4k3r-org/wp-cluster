@@ -1,0 +1,1079 @@
+# Copyright (C) 2014 Usability Dynamics, Inc.
+# This file is distributed under the GNU General Public License v2.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: Splash v2.0 2.0.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/theme/style\n"
+"POT-Creation-Date: 2014-11-22 09:26:18+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.4.9\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+
+#: lib/class-splash.php:80
+msgid "Footer Icons"
+msgstr ""
+
+#: lib/class-splash.php:84
+msgid "Header Icons"
+msgstr ""
+
+#: lib/class-splash.php:371
+msgid "Large devices"
+msgstr ""
+
+#: lib/class-splash.php:372
+msgid "Hidden"
+msgstr ""
+
+#: lib/class-splash.php:385
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:146
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:401
+#: vendor/plugins/siteorigin-panels/widgets/widgets/call-to-action/call-to-action.php:15
+#: vendor/plugins/siteorigin-panels/widgets/widgets/list/list.php:15
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:15
+msgid "Title"
+msgstr ""
+
+#: lib/class-splash.php:390
+msgid "Scroll Reveal"
+msgstr ""
+
+#: lib/class-splash.php:395
+msgid "Text Color"
+msgstr ""
+
+#: lib/class-splash.php:400
+msgid "Background Color"
+msgstr ""
+
+#: lib/class-splash.php:405
+msgid "Background Image"
+msgstr ""
+
+#: lib/class-splash.php:410
+msgid "Center Text"
+msgstr ""
+
+#: lib/class-splash.php:514
+msgid "Site Home"
+msgstr ""
+
+#: lib/class-splash.php:548
+msgid "No metaboxes found for editor."
+msgstr ""
+
+#: lib/class-splash.php:591 vendor/plugins/siteorigin-panels/inc/options.php:57
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:78
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:87
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:368
+msgid "Page Builder"
+msgstr ""
+
+#: static/templates/splash-editor.php:3
+msgid "Splash Page Editor"
+msgstr ""
+
+#: static/templates/splash-editor.php:10
+#: vendor/plugins/siteorigin-panels/tpl/admin-home-page.php:25
+msgid "Preview Changes"
+msgstr ""
+
+#: static/templates/splash-editor.php:13
+#: vendor/plugins/siteorigin-panels/tpl/admin-home-page.php:30
+msgid "Save Home Page"
+msgstr ""
+
+#: static/templates/splash-editor.php:21
+#: vendor/plugins/siteorigin-panels/tpl/admin-home-page.php:38
+msgid "This interface requires Javascript"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-ui/lib/class-field.php:230
+msgid "+"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-ui/lib/class-field.php:246
+msgid "&#8211;"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-ui/static/templates/admin/main.php:10
+msgid "Settings updated"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-ui/static/templates/admin/main.php:41
+msgid "Save"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-guid-fix.php:26
+msgid "Could not create index on your posts table for the `guid` column"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-guid-fix.php:27
+msgid "Could not update a post&rsquo;s GUID"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-guid-fix.php:28
+msgid "Could not remove the index from `guid`"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-guid-fix.php:41
+msgid "Run GUID-fix"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-guid-fix.php:62
+msgid "CF GUID-Fix"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-guid-fix.php:66
+msgid ""
+"Post GUIDs are now unique! <b>You should now disable and remove this "
+"plugin.</b>"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-guid-fix.php:82
+msgid "What does this plugin do?"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-guid-fix.php:82
+msgid ""
+"Corrects duplicate GUID values created with versions of WordPress that "
+"exhibited a <a "
+"href=\"http://core.trac.wordpress.org/ticket/15041\">non-unique GUID "
+"bug</a>."
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-guid-fix.php:83
+msgid "Clicking the button below runs the plugin to ensure your guids are unique."
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-guid-fix.php:86
+msgid "Fix Your GUIDs"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-guid-fix.php:100
+msgid "You should not be here."
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-job.php:138
+msgid "Job %s"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-job.php:197
+msgid "Could not load job with unknown ID."
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-job.php:252
+msgid "Job Batch %s"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-job.php:382
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-job.php:383
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-job.php:386
+msgid "Jobs"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-job.php:384
+msgid "New Job"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-job.php:385
+msgid "View Job"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-job.php:388
+msgid "UsabilityDynamics Jobs."
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:180
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:212
+msgid "Required file not found."
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:861
+msgid "Invalid file type."
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:870
+msgid "Could not create mentioned directory."
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:909
+msgid "Zero size file downloaded"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:974
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:986
+msgid "Could not get image dimensions (headers)"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:1527
+msgid ""
+"You cannot call UD\\Utility::log() before the %1$s hook, since the current "
+"user is not yet known."
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:1540
+msgid "Log Started."
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:2008
+msgid "You cannot call UD\\Utility::add_log_page() after the %1$s hook."
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:2035
+msgid "Log Page for"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:2036
+msgid "Clear Log"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:2039
+msgid "Timestamp"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:2040
+msgid "Type"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:2041
+msgid "Event"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:2042
+msgid "User"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:2043
+msgid "Related Object"
+msgstr ""
+
+#: vendor/libraries/usabilitydynamics/lib-utility/lib/class-utility.php:2053
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:85
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:145
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:436
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:598
+msgid "None"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/notice.php:17
+msgid "You've successfully installed <strong>Page Builder</strong> version %s. "
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/notice.php:20
+msgid "You've successfully updated <strong>Page Builder</strong> to version %s. "
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/notice.php:24
+msgid ""
+"Please post on our <a href=\"%s\" target=\"_blank\">support forums</a> if "
+"you have any issues and sign up to <a href=\"%s\" target=\"_blank\">our "
+"newsletter</a> to stay up to date."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/notice.php:31
+#: vendor/plugins/siteorigin-panels/inc/notice.php:102
+msgid "Support Forums"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/notice.php:32
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:1190
+msgid "Newsletter"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/notice.php:34
+#: vendor/plugins/siteorigin-panels/inc/notice.php:103
+msgid "Dismiss"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/notice.php:84
+msgid ""
+"One or more of your active plugins are known to be incompatible with Page "
+"Builder."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/notice.php:93
+msgid "More"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:57
+#: vendor/plugins/siteorigin-panels/tpl/options.php:3
+msgid "SiteOrigin Page Builder"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:75
+msgid "General"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:76
+msgid "Display"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:78
+msgid "Post Types"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:79
+msgid "Copy Content to Post Content"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:80
+msgid "Animations"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:82
+msgid "Disable animations to improve Page Builder interface performance"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:84
+msgid "Bundled Widgets"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:86
+msgid "Should the bundled widgets be loaded"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:90
+msgid "Responsive"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:91
+msgid "Mobile Width"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:92
+msgid "Margin Sides"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:93
+msgid "Margin Bottom"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:94
+msgid "Inline CSS"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:96
+msgid "Disabling this will generate CSS using a separate query."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:129
+msgid "Post types that will have the page builder available"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:145
+msgid "Enabled"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/options.php:150
+msgid "px"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/revisions.php:50
+msgid "Page Builder Content"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/styles.php:19
+msgid "Class"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/styles.php:22
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:59
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:463
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:625
+msgid "Default"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/inc/styles.php:36
+msgid "Your theme doesn't provide any visual style fields. "
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:65
+msgid "Custom Home Page Builder"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:66
+msgid "Home Page"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:232
+msgid ""
+"You are trying to load assets too late, must do so before "
+"\"admin_print_scripts\" action."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:255
+msgid "Insert"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:256
+msgid "cancel"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:257
+msgid "Delete"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:258
+msgid "Duplicate"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:259
+msgid "Edit"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:260
+msgid "Done"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:261
+msgid "Undo"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:262
+msgid "Add"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:265
+msgid "Columns deleted"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:266
+msgid "Widget deleted"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:267
+msgid ""
+"Are you sure you want to load this layout? It will overwrite your current "
+"page."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:268
+msgid "Edit %s Widget"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:289
+msgid "Install the missing widget"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:878
+msgid "Edit Home Page"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:985
+msgid "Untitled"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:986
+msgid "Unpublished"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:991
+msgid "Clone Page: %s"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:1004
+msgid "Clone: Current Home Page"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:1023
+msgid "Recommended Plugins and Widgets"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:1024
+msgid "Free plugins that work well with Page Builder"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:1117
+msgid "This widget is not available, please install the missing plugin."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/siteorigin-panels.php:1189
+msgid "Support Forum"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/admin-home-page.php:7
+msgid "Custom Home Page"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/admin-home-page.php:10
+msgid "ON"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/admin-home-page.php:11
+msgid "OFF"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/admin-home-page.php:18
+msgid "Home page updated. <a href=\"%s\">View page</a>"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/help.php:2
+msgid ""
+"You can use SiteOrigin Page Builder to create home and sub pages, filled "
+"your own widgets."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/help.php:3
+msgid "The page layouts are responsive and fully customizable."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/help.php:8
+msgid "Read the <a href='%s' target='_blank'>full documentation</a> on SiteOrigin."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/help.php:9
+msgid ""
+"Ask a question on our <a href='%s' target='_blank'>support forum</a> if you "
+"need help and sign up to <a href='%s' target='_blank'>our newsletter</a> to "
+"stay up to date with future developments."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/metabox-panels.php:14
+msgid "Add Widget"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/metabox-panels.php:15
+#: vendor/plugins/siteorigin-panels/tpl/metabox-panels.php:56
+msgid "Add Row"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/metabox-panels.php:17
+msgid "Prebuilt Layouts"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/metabox-panels.php:24
+msgid "Add New Widget"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/metabox-panels.php:57
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:76
+msgid "Columns"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/metabox-panels.php:64
+msgid "Insert Prebuilt Page Layout"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/metabox-panels.php:65
+msgid "Page Layout"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/metabox-panels.php:67
+msgid "Select Layout"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/metabox-panels.php:71
+msgid "Untitled Layout"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/tpl/metabox-panels.php:80
+msgid "Row Visual Style"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/premium/gui.php:3
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/siteorigin/gui.php:3
+msgid "play"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/premium/gui.php:4
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/siteorigin/gui.php:4
+msgid "pause"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/premium/gui.php:5
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/siteorigin/gui.php:5
+msgid "stop"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/premium/gui.php:7
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/siteorigin/gui.php:7
+msgid "full screen"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/premium/gui.php:8
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/siteorigin/gui.php:8
+msgid "restore screen"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/premium/gui.php:10
+msgid "mute"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/video/jplayer/skins/premium/gui.php:11
+msgid "unmute"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:7
+msgid "Gallery (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:9
+msgid "Displays a gallery."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:48
+msgid "Gallery Images"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:49
+msgid "edit gallery"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:53
+msgid "Comma separated attachment IDs. Defaults to all current page's attachments."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:57
+msgid "Image Size"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:60
+msgid "Large"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:61
+msgid "Medium"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:62
+msgid "Thumbnail"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:63
+msgid "Full"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:71
+msgid "Gallery Type"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:81
+msgid "Link To"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:83
+msgid "Attachment Page"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:84
+msgid "File"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:97
+msgid "Post Content (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:99
+msgid "Displays some form of post content form the current post."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:147
+msgid "Featured Image"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:152
+msgid "Display Content"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:167
+msgid "Image (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:169
+msgid "Displays a simple image."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:202
+#: vendor/plugins/siteorigin-panels/widgets/widgets/animated-image/animated-image.php:15
+msgid "Image URL"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:206
+#: vendor/plugins/siteorigin-panels/widgets/widgets/button/button.php:19
+msgid "Destination URL"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:222
+msgid "Post Loop (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:224
+msgid "Displays a post loop."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:390
+msgid "Your theme doesn't have any post loops."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:405
+msgid "Template"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:420
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:584
+msgid "Post Type"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:429
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:591
+msgid "Posts Per Page"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:434
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:596
+msgid "Order By"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:437
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:599
+msgid "Post ID"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:438
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:600
+msgid "Author"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:439
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:440
+#: vendor/plugins/siteorigin-panels/widgets/widgets/testimonial/testimonial.php:15
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:601
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:602
+msgid "Name"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:441
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:603
+msgid "Date"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:442
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:604
+msgid "Modified"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:443
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:605
+msgid "Parent"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:444
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:606
+msgid "Random"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:445
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:607
+msgid "Comment Count"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:446
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:447
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:608
+msgid "Menu Order"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:448
+msgid "Post In Order"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:453
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:614
+msgid "Order"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:455
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:617
+msgid "Descending"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:456
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:616
+msgid "Ascending"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:461
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:623
+msgid "Sticky Posts"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:464
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:626
+msgid "Ignore Sticky"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:465
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:627
+msgid "Exclude Sticky"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:466
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:628
+msgid "Only Sticky"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:471
+msgid "Additional "
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:473
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:635
+msgid ""
+"Additional query arguments. See <a href=\"%s\" "
+"target=\"_blank\">query_posts</a>."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:486
+msgid "Embedded Video (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:488
+msgid "Embeds a video."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:526
+msgid "Video"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:542
+msgid "Self Hosted Video (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:544
+msgid "A self hosted video player."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:619
+msgid "Video URL"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:623
+msgid "Poster URL"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:625
+msgid "An image that displays before the video starts playing."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:628
+msgid "Skin"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:630
+msgid "SiteOrigin"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:631
+msgid "Premium Pixels"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:635
+msgid "Aspect Ratio"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:637
+msgid "1.777 is HD standard."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/basic.php:642
+msgid "Auto Play Video"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/animated-image/animated-image.php:6
+msgid "Animated Image (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/animated-image/animated-image.php:8
+msgid "An image that animates in when it enters the screen."
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/animated-image/animated-image.php:19
+msgid "Animation"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/animated-image/animated-image.php:21
+msgid "Fade In"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/animated-image/animated-image.php:22
+msgid "Slide Up"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/animated-image/animated-image.php:23
+msgid "Slide Down"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/animated-image/animated-image.php:24
+msgid "Slide Left"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/animated-image/animated-image.php:25
+msgid "Slide Right"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/button/button.php:6
+msgid "Button (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/button/button.php:8
+msgid "A simple button"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/button/button.php:15
+#: vendor/plugins/siteorigin-panels/widgets/widgets/list/list.php:19
+#: vendor/plugins/siteorigin-panels/widgets/widgets/testimonial/testimonial.php:27
+msgid "Text"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/button/button.php:23
+#: vendor/plugins/siteorigin-panels/widgets/widgets/call-to-action/call-to-action.php:31
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:44
+#: vendor/plugins/siteorigin-panels/widgets/widgets/testimonial/testimonial.php:35
+msgid "Open In New Window"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/button/button.php:27
+msgid "Button Alignment"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/button/button.php:29
+msgid "Left"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/button/button.php:30
+msgid "Right"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/button/button.php:31
+msgid "Center"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/button/button.php:32
+msgid "Justify"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/call-to-action/call-to-action.php:6
+msgid "Call To Action (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/call-to-action/call-to-action.php:8
+msgid "A Call to Action block"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/call-to-action/call-to-action.php:19
+msgid "Sub Title"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/call-to-action/call-to-action.php:23
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:36
+msgid "Button Text"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/call-to-action/call-to-action.php:27
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:40
+msgid "Button URL"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/call-to-action/call-to-action.php:37
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:49
+msgid "Button"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/list/list.php:6
+msgid "List (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/list/list.php:8
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:8
+#: vendor/plugins/siteorigin-panels/widgets/widgets/testimonial/testimonial.php:8
+msgid "Displays a bullet list of elements"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/list/list.php:20
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:32
+msgid "Start each new point with an asterisk (*)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:6
+msgid "Price Box (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:19
+msgid "Price"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:23
+msgid "Per"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:27
+msgid "Information Text"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:31
+msgid "Features Text"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/price-box/price-box.php:50
+msgid "Feature List"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/testimonial/testimonial.php:6
+msgid "Testimonial (PB)"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/testimonial/testimonial.php:19
+msgid "Location"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/testimonial/testimonial.php:23
+msgid "Image"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets/testimonial/testimonial.php:31
+msgid "URL"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:204
+msgid "Style"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:228
+msgid "%s Style"
+msgstr ""
+
+#: vendor/plugins/siteorigin-panels/widgets/widgets.php:634
+msgid "Additional Arguments"
+msgstr ""
+
+#. Theme Name of the plugin/theme
+msgid "Splash v2.0"
+msgstr ""
+
+#. Theme URI of the plugin/theme
+msgid "http://usabilitydynamics.com/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Network splash theme to be used as a placeholder for new sites."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Usability Dynamics, Inc."
+msgstr ""
