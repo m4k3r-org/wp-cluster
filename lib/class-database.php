@@ -19,7 +19,10 @@ namespace UsabilityDynamics\Cluster {
 
 		class HyperDB extends \wpdb {
 
-			/**
+      public static $_instance = null;
+
+
+      /**
 			 * The last table that was queried
 			 * @var string
 			 */
@@ -157,6 +160,13 @@ namespace UsabilityDynamics\Cluster {
 			 * @param array db class vars
 			 */
 			public function __construct( $args = null ) {
+
+        if( isset( self::$_instance ) )  {
+          return self::$_instance;
+        }
+
+        self::$_instance = &$this;
+
 				if ( is_array( $args ) ) {
 					foreach ( get_class_vars( __CLASS__ ) as $var => $value ) {
 						if ( isset( $args[ $var ] ) ) {
@@ -1169,6 +1179,10 @@ namespace UsabilityDynamics\Cluster {
 				}
 
 			}
+
+      public static function get_instance() {
+        return self::$_instance;
+      }
 
 		}
 

@@ -252,6 +252,10 @@ namespace UsabilityDynamics\Cluster {
 					$this->baseDir = $_SERVER[ 'DOCUMENT_ROOT' ];
 				}
 
+				if ( isset( $_SERVER[ 'REDIRECT_DOCUMENT_ROOT' ] ) ) {
+					$this->baseDir = $_SERVER[ 'REDIRECT_DOCUMENT_ROOT' ];
+				}
+
 				/** Finally, go through the composer.json file and add all the configs there */
 				if ( is_file( $_SERVER[ 'DOCUMENT_ROOT' ] . '/sunrise.php' ) ) {
 					$this->sunrise = true;

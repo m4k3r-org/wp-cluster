@@ -18,7 +18,9 @@
  */
 namespace UsabilityDynamics\Cluster {
 
-	if ( ! class_exists( 'UsabilityDynamics\Cluster\Sunrise' ) ) {
+
+
+  if ( ! class_exists( 'UsabilityDynamics\Cluster\Sunrise' ) ) {
 
 		/**
 		 * This is our WP-Cluster sunrise handler
@@ -52,7 +54,6 @@ namespace UsabilityDynamics\Cluster {
 				if ( ! ( is_bool( $do_stuff ) && $do_stuff ) ) {
 					return $this;
 				}
-
 				/** Make sure we have a valid http host */
 				$this->host = $_SERVER[ 'HTTP_HOST' ];
 
