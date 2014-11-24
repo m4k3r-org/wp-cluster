@@ -243,7 +243,10 @@ namespace UsabilityDynamics\Veneer {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 				add_action( 'wp_head', array( $this, 'wp_head' ), 0, 200 );
 				// add_filter( 'theme_root', array( $this, 'theme_root' ), 10 );
-				// add_filter( 'flush_rewrite_rules_hard', array( $this, 'flush_rewrite_rules_hard' ));
+
+				add_action( 'admin_init', function() {
+          add_filter( 'flush_rewrite_rules_hard', array( 'UsabilityDynamics\Veneer\Bootstrap', 'flush_rewrite_rules_hard' ));
+        });
 
 				// Initialize Interfaces.
 				$this->_interfaces();
@@ -567,7 +570,7 @@ namespace UsabilityDynamics\Veneer {
 			public function enqueue_scripts() {
 
 				if( is_user_logged_in() ) {
-					wp_enqueue_style( 'wp-veneer', plugins_url( '/static/styles/wp-veneer.css', dirname( __FILE__ ) ) );
+					wp_enqueue_style( 'wp-veneer', str_replace( array( 'http://', 'https://' ), '//', plugins_url( '/static/styles/wp-veneer.css', dirname( __FILE__ ) ) ) );
 				};
 
 			}
@@ -579,15 +582,27 @@ namespace UsabilityDynamics\Veneer {
 			 *
 			 * @return mixed
 			 */
-			public function flush_rewrite_rules_hard( $setting ) {
+			public function flush_rewrite_rules_hard( $setting = array() ) {
 
 				if( !is_admin() ) {
-					return;
+					return $setting;
 				}
 
 				$htaccess_file = wp_normalize_path( get_home_path() . '/.htaccess' );
 
-				insert_with_markers( $htaccess_file, 'Veneer Static Media', array(
+				insert_with_markers( $htaccess_file, 'Veneer Security', array(
+					'<FilesMatch "node_modules|error_log|debug.log|Dockerfile|makefile|.dockerignore|.environment|.gitignore|.gitmodules|.envrc|changes.md|readme.md">',
+					" Order allow,deny",
+					" Deny from all",
+					'</FilesMatch>',
+          '<FilesMatch "(^#.*#|\.(md|lock|yml|bak|config|dist|fla|inc|ini|log|psd|sh|sql|pem|pub|key|sw[op])|~)$">',
+          ' Order allow,deny',
+          ' Deny from all',
+          ' Satisfy All',
+          '</FilesMatch>'
+				));
+
+        insert_with_markers( $htaccess_file, 'Veneer Static Media', array(
 					"<IfModule mod_rewrite.c>",
 					" RewriteEngine On",
 					" RewriteBase /",
