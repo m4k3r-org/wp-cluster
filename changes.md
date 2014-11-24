@@ -1,6 +1,3 @@
-#### 2.2.2
-* Added Stream plugin.
-
 #### 2.2.1
 * Disabled PageSpeed and NewRelic on admin.
 
