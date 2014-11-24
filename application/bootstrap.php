@@ -7,11 +7,15 @@
  * Version: 0.1.2
  * Author URI: http://usabilitydynamics.com
  */
+global $current_blog;
 
 // @note Gotta do this BEFORE plugins are activated, or else wp-elastic won't recognize schemas..
 if( defined( 'WP_PLUGIN_DIR' ) && ( isset( $current_blog ) && $current_blog->domain == 'discodonniepresents.com' ) &&  is_dir( WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas' ) ) {
 	define( 'WP_ELASTIC_SCHEMAS_DIR', WP_PLUGIN_DIR . '/wp-vertical-edm/static/schemas' );
 }
+
+ini_set( 'newrelic.appname',  $current_blog->domain );
+ini_set( 'newrelic.framework', 'wordpress' );
 
 add_action( 'plugins_loaded', function() {
 	global $wp_veneer, $current_blog;
