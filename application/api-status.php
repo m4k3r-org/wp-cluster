@@ -4,7 +4,7 @@
  * Plugin URI: http://usabilitydynamics.com/plugins/
  * Description: Adds Pingdom XML API endpoint. http://www.usabilitydynamics.com/wp-admin/admin-ajax.php?action=/status/pingdom
  * Author: Usability Dynamics, Inc.
- * Version: 0.1.0
+ * Version: 0.1.1
  * Author URI: http://usabilitydynamics.com
  *
  */
