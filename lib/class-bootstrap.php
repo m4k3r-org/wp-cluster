@@ -303,7 +303,15 @@ namespace UsabilityDynamics\Cluster {
 
         // Must set or long will not work
         if( !defined( 'COOKIE_DOMAIN' ) ) {
-          define( 'COOKIE_DOMAIN', $this->requested_domain );
+          $_requested_domain = str_replace( "www.", ".", $this->requested_domain );
+
+          // Add "." prefix if not found, this is default WP.
+          if( !substr($_requested_domain, 0, 1) !== '.' && ( defined( 'SUBDOMAIN_COOKIE' ) && SUBDOMAIN_COOKIE ) ) {
+            $_requested_domain = '.' . $_requested_domain;
+          }
+
+          //if( strpos( $_requested_domain, '.', ))
+          define( 'COOKIE_DOMAIN', $_requested_domain );
         }
 
         if( !defined( 'COOKIEHASH' ) ) {
