@@ -6,6 +6,7 @@
 .idea
 w3tc-config
 .environment
+.envrc
 /storage
 /node_modules
 /cache
