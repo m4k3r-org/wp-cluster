@@ -1,7 +1,7 @@
 {
   "name": "wp-festival",
   "description": "Festival Theme for the Drop Network",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "repository": {
     "type": "git",
     "url": "git@github.com:DiscoDonniePresents/wp-festival.git"
