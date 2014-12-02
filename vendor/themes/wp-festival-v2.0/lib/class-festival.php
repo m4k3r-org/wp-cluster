@@ -815,7 +815,7 @@ namespace UsabilityDynamics {
         $this->carrington->registerModule( 'UsabilityDynamics_Festival2_SectionBreakModule' );
         $this->carrington->registerModule( 'UsabilityDynamics_Festival2_SocialStreamModule' );
         $this->carrington->registerModule( 'UsabilityDynamics_Festival2_AdvancedGalleryModule' );
-
+        $this->carrington->registerModule( 'UsabilityDynamics_Festival2_NewArtistListModule' );
       }
 
       // Disable the parent function from printing scripts

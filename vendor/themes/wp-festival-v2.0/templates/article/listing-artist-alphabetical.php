@@ -7,6 +7,10 @@
  */
 global $_col, $wp_query;
 extract( $wp_query->data );
+$date = $custom_date[ $post->ID ];
+if( $date ){
+  $date = date('l, F d' , strtotime($date ));
+}
 /** See if we need to link */
 $link_it = false;
 if( isset( $link_to_single_artist_page ) && $link_to_single_artist_page ){
@@ -26,5 +30,8 @@ $meta = get_post_meta( $post->ID );
       <img alt="<?php the_title(); ?>" src="<?php echo wp_festival2()->get_image_link_by_post_id( get_post_meta( $post->ID, $artist_image, true ), array( 'type' => 'attachment', 'width' => '320', 'height' => '480' ) ); ?>">
     </div>
   </div>
-  <h3><?php the_title(); ?></h3>
+  <?php if( $date ): ?>
+    <time><?php echo $date; ?></time>
+  <?php endif; ?>
+  <h3 class="<?php echo $date ? '' : 'no-date'; ?>"><?php the_title(); ?></h3>
 </a>
