@@ -1,17 +1,12 @@
 {
-  "name": "usabilitydynamics/lib-model",
-  "keywords": [
-    "shema",
-    "models",
-    "validation"
-  ],
+  "name": "usabilitydynamics/lib-settings",
+  "keywords": [ "settings" ],
   "type": "library",
   "require": {
-    "usabilitydynamics/lib-utility": "~0.3",
-    "hanamura/wp-model": "~1.1"
+    "usabilitydynamics/lib-utility": "~0.3"
   },
   "require-dev": {
-    "usabilitydynamics/lib-meta-box": "master"
+    "justinrainbow/json-schema": "1.1.*"
   },
   "minimum-stability": "dev",
   "repositories": [
@@ -23,7 +18,7 @@
   "autoload": {
     "classmap": [ "lib" ]
   },
-  "homepage": "http://github.com/usabilitydynamics/lib-models",
+  "homepage": "http://github.com/usabilitydynamics/lib-settings",
   "authors": [
     {
       "name": "Andy Potanin",
@@ -46,10 +41,9 @@
   ],
   "extra": {
     "component": {
-      "scripts": [
-        "static/scripts/udx.model.js",
-        "static/scripts/udx.model.validation.js"
-      ]
+      "scripts":    [ "static/scripts/settings.js" ],
+      "templates":  [ "static/views/new-installation.xhtml" ],
+      "files":      [ "static/schemas/settings.json" ]
     }
   },
   "license": "MIT"

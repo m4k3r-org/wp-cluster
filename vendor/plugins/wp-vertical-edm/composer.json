@@ -8,14 +8,16 @@
     }
   ],
   "config": {
+    "preferred-install": "dist",
+    "github-protocols": [ "ssh" ],
     "vendor-dir": "vendor/libraries",
     "bin-dir": "vendor/bin",
-    "optimize-autoloader": true,
-    "autoloader-suffix": "VendorPackages"
+    "optimize-autoloader": true
   },
   "require": {
     "composer/installers": "~1.0",
     "usabilitydynamics/lib-utility": "~0.3",
+    "usabilitydynamics/lib-settings": "~0.2",
     "usabilitydynamics/lib-model": "~0.3"
   },
   "autoload": {

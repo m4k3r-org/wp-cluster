@@ -1,11 +1,13 @@
 {
-  "name": "lib-model",
-  "version": "0.4.0",
-  "description": "Model Library.",
+  "name": "lib-settings",
+  "version": "0.2.3",
+  "description": "Settings Library.",
+  "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/UsabilityDynamics/lib-model"
+    "url": "https://github.com/UsabilityDynamics/lib-settings"
   },
+  "main": "scripts/settings",
   "engines": {
     "node": ">= 0.10.0"
   },
