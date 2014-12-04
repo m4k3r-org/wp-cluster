@@ -13,8 +13,8 @@ namespace wpCloud\Vertical\EDM {
       $this->features();
 
       // Enable Standard Actions.
-      add_action( 'muplugins_loaded',       array( $this, 'muplugins_loaded' ), 0 );
-      add_action( 'plugins_loaded',         array( $this, 'plugins_loaded' ), 100 );
+      // add_action( 'muplugins_loaded',       array( $this, 'muplugins_loaded' ), 0 );
+      // add_action( 'plugins_loaded',         array( $this, 'plugins_loaded' ), 100 );
       add_action( 'login_enqueue_scripts',  array( $this, 'login_enqueue_scripts' ), 30 );
       add_action( 'login_footer',           array( $this, 'login_footer' ), 30 );
       add_action( 'upload_mimes',           array( $this, 'upload_mimes' ), 100 );
