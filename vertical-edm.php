@@ -1,15 +1,17 @@
 <?php
 /**
  * Plugin Name: EDM Vertical
- * Text Domain: edm-vertical
  * Plugin URI: http://wpCloud.io
  * Description: EDM Vertical for wpCloud.io
  * Author: Usability Dynamics, Inc
- * Version: 1.1.1
+ * Version: 1.1.3
  * Network: true
  * Vertical: true
  * Author URI: http://wpCloud.io
- * GitHub Plugin URI: https://github.com/wpCloud/wp-vertical-edm
+ * Text Domain: edm-vertical
+ * Domain Path: /static/locale/
+ *
+ * GitHub Plugin URI: wpCloud/wp-vertical-edm
  *
  * Copyright 2011-2014  Usability Dynamics, Inc.   (email : info@UsabilityDynamics.com)
  *
@@ -32,6 +34,9 @@
  * @author Andy Potanin <andy.potanin@usabilitydynamics.com>
  */
 
+if( file_exists( __DIR__ . '/vendor/libraries/autoload.php' ) ) {
+	include_once( __DIR__ . '/vendor/libraries/autoload.php' );
+}
 if( class_exists( 'wpCloud\Vertical\EDM\Bootstrap' ) ) {
   new wpCloud\Vertical\EDM\Bootstrap;
 }

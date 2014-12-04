@@ -7,7 +7,7 @@ namespace wpCloud\Vertical\EDM {
 
   use \UsabilityDynamics\Veneer;
 
-  if( !class_exists( 'wpCloud\Vertical\EDM\API' ) ) {
+  if( !class_exists( 'wpCloud\Vertical\EDM\API' ) && class_exists( 'Veneer\API' ) ) {
 
     /**
      * Class Feed
