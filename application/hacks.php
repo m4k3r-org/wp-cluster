@@ -8,6 +8,14 @@
  * Author URI: http://usabilitydynamics.com
  */
 
+add_filter( 'site_url', function( $url ) {
+  return str_replace( '://mobile.mobile', '://mobile', $url );
+}, 100 );
+
+add_filter( 'admin_url', function( $url ) {
+  return str_replace( '://mobile.mobile', '://mobile', $url );
+}, 100 );
+
 add_action( 'init', function() {
 	// die(get_option( '_uds:db:host' ) );
 	// die(get_option( '_uds:db:provider' ) );
