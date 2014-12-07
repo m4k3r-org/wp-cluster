@@ -155,18 +155,20 @@ gsutil -m setacl -R -a public-read gs://ddpsdixyeejhwkgg.wpcloud.zone/media
 docker run -itd \
   --name=www.discodonniepresents.com \
   --hostname=www.discodonniepresents.com \
+  --volume=/home/core/.ssh:/home/core/.ssh \
   --volume=/opt/storage/DiscoDonniePresents/www.discodonniepresents.com:/var/storage \
   --volume=/opt/sources/DiscoDonniePresents/www.discodonniepresents.com:/var/www \
   --publish=80:80 \
   --env=WP_ENV=production \
   --env=NODE_ENV=production \
+  --env=WPC_HOST=fallujah.wpcloud.io \
+  --env=WPC_STACK=gce \
   discodonniepresents/www.discodonniepresents.com:2.1.5
 ```
 
 ```
 docker exec -it www.discodonniepresents.com /bin/bash
 ```
-
 
 ### Archive Sync
 

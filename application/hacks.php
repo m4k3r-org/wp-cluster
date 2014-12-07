@@ -82,6 +82,20 @@ add_action( 'admin_init', function() {
 
 });
 
+add_action( 'admin_init', function() {
+
+  ob_start( function( $buffer ) {
+
+    // $buffer = str_replace( 'cities across', 'blah blah blah', $buffer );
+    $buffer = str_replace( '/wp-admin/load-styles.php', '/vendor/libraries/automattic/wordpress/wp-admin/load-styles.php', $buffer );
+
+    return $buffer;
+
+  });
+
+});
+
+
 add_action( 'template_redirect', function() {
 
 		if( $_SERVER[ 'HTTP_X_DEBUG' ] === 'cdzt-vogs-oar-qged' ) {
