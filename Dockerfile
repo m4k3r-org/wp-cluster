@@ -25,7 +25,7 @@ ADD           test                                                    /var/www/t
 ADD           index.php                                               /var/www/index.php
 ADD           composer.json                                           /var/www/composer.json
 ADD           advanced-cache.php                                      /var/www/advanced-cache.php
-ADD           maintenanance.php                                       /var/www/maintenanance.php
+ADD           maintenance.php                                         /var/www/maintenance.php
 ADD           object-cache.php                                        /var/www/object-cache.php
 ADD           vendor/plugins/wp-cluster/lib/class-database.php        /var/www/db.php
 ADD           vendor/plugins/wp-cluster/lib/class-sunrise.php         /var/www/sunrise.php
