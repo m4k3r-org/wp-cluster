@@ -232,6 +232,306 @@ if( !function_exists( 'get_event' ) ) {
   }
 }
 
+if( !function_exists( 'flawlessss_breadcrumbs' ) ) {
+  /**
+   * Prints out breadcrumbs
+   *
+   * @todo Improve the way term and taxonomy is handled here.
+   * @version 0.1
+   * @author potanin@UD
+   */
+  function flawless_breadcrumbs( $args = false ) {
+    global $wp_query, $post, $flawless;
+
+    $args = wp_parse_args( $args, array(
+      'hide_breadcrumbs' => get_post_meta( $post->ID, 'hide_breadcrumbs', true ) == 'true' || $flawless[ 'hide_breadcrumbs' ]? true : false,
+      'return' => false,
+      'home_label' => __( 'Home' ),
+      'home_link' => home_url(),
+      'wrapper_class' => 'breadcrumbs',
+      'divider' => ' <span class="divider">&raquo;</span> ',
+      'hide_on_home' => true
+    ));
+
+    if( $args[ 'hide_breadcrumbs' ] ) {
+      return;
+    }
+
+    $before = '<span class="current">';
+    $after = '</span>';
+
+    if ( $args[ 'hide_on_home' ] && ( is_home() || is_front_page() ) ) {
+      return;
+    }
+
+    $html[] = '<a class="home_link" href="' . $args[ 'home_link' ]. '">' . $args[ 'home_label' ] . '</a> ' . $delimiter . ' ';
+
+    if ( is_home() || is_front_page() ) {
+
+
+    } elseif ( is_category() ) {
+
+      $cat_obj = $wp_query->get_queried_object();
+      $thisCat = $cat_obj->term_id;
+      $thisCat = get_category( $thisCat );
+      $parentCat = get_category( $thisCat->parent );
+      if ( $thisCat->parent != 0 ) $html[] =( get_category_parents( $parentCat, TRUE, ' ' . $delimiter . ' ' ));
+      $html[] = $before . single_cat_title( '', false ) . $after;
+
+    } elseif ( is_day() ) {
+      $html[] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
+      $html[] = '<a href="' . get_month_link( get_the_time( 'Y' ),get_the_time( 'm' ) ) . '">' . get_the_time( 'F' ) . '</a> ' . $delimiter . ' ';
+      $html[] = $before . get_the_time( 'd' ) . $after;
+
+    } elseif ( is_month() ) {
+      $html[] = '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a> ' . $delimiter . ' ';
+      $html[] = $before . get_the_time( 'F' ) . $after;
+
+    } elseif ( is_year() ) {
+      $html[] = $before . get_the_time( 'Y' ) . $after;
+
+    } elseif ( is_single() && !is_attachment() ) {
+
+      if ( get_post_type() != 'post' ) {
+        $post_type = get_post_type_object( get_post_type());
+        $slug = $post_type->rewrite;
+
+        $content_type_home = '';
+
+        //** Check if this content type has a custom Root page and only display a link in this case */
+        $root_page = hddp::get_root_page( get_post_type() );
+        if ( $root_page ) {
+          $content_type_home = get_permalink( $root_page );
+        }
+
+        /** Fix 'Pages' */
+        if ( $post->post_type == 'page' ) {
+          if ( $anc = get_post_ancestors( $post ) ) {
+            $anc = wp_get_single_post( $anc[0] );
+            $content_type_home = get_permalink( $anc->ID );
+          }
+        }
+
+        if ( $anc ) {
+          $title = $anc->post_title;
+        } else {
+          $title = $post_type->labels->name;
+        }
+
+        if ( !empty( $content_type_home ) ) {
+          $html[ 'content_type_home' ] = '<a href="' . $content_type_home . '">' . $title . '</a>';
+        } else {
+          $html[ 'content_type_home' ] = '<span>' . $title . '</span>';
+        }
+        $html[ 'this_page' ] = $before . get_the_title() . $after;
+
+      } else {
+        $cat = get_the_category(); $cat = $cat[0];
+
+        if( $cat ) {
+          $html[] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
+        }
+
+        $html[] = $before . get_the_title() . $after;
+      }
+
+    } elseif ( !is_single() && !is_page() && get_post_type() != 'post' && !is_404() && !is_search() ) {
+
+      $taxonomy = get_taxonomy( $wp_query->query_vars[ 'taxonomy' ] );
+      $post_type = get_post_type_object( get_post_type() );
+
+      //** Check if this content type has a custom Root page */
+      $root_page = hddp::get_root_page( get_post_type() );
+      if ( $root_page ) {
+        $content_type_home = get_permalink( $root_page );
+      } else {
+        $content_type_home = flawless_theme::filter_post_link( $args[ 'home_link' ]. '/' . $slug[ 'slug' ] . '/', $post );
+      }
+
+      /** Fix 'Pages' */
+      if ( $post->post_type == 'page' ) {
+        if ( $anc = get_post_ancestors( $post ) ) {
+          $anc = wp_get_single_post( $anc[0] );
+          $content_type_home = get_permalink( $anc->ID );
+        }
+      }
+
+      if ( $anc ) {
+        $title = $anc->post_title;
+      } else {
+        $title = $post_type->labels->name;
+      }
+
+      switch ( true ) {
+
+        case is_tag():
+          $html[ 'content_type_home' ] = '<a href="' . $content_type_home . '">' . $title . '</a>';
+          $html[] = $before . get_queried_object()>name . $after;
+          break;
+
+        case is_tax():
+          $html[ 'content_type_home' ] = '<a href="' . $content_type_home . '">' . $title . '</a>';
+          $html[] = $before . get_queried_object()->name . $after;
+          break;
+
+        default:
+          $html[] = $before . $post_type->labels->name . $after;
+          break;
+
+      }
+
+    } elseif ( is_attachment() ) {
+      $parent = get_post( $post->post_parent );
+      $cat = get_the_category( $parent->ID ); $cat = $cat[0];
+
+      //** Must check a category was found */
+      if( $cat && !is_wp_error( $cat ) ) {
+        $html[] = get_category_parents( $cat, TRUE, ' ' . $delimiter . ' ' );
+      }
+
+      $html[] = '<a href="' . get_permalink( $parent ) . '">' . $parent->post_title . '</a> ' . $delimiter . ' ';
+      $html[] = $before . get_the_title() . $after;
+
+    } elseif ( is_page() && !$post->post_parent ) {
+      $html[] = $before . get_the_title() . $after;
+
+    } elseif ( is_page() && $post->post_parent ) {
+      $parent_id  = $post->post_parent;
+      $breadcrumbs = array();
+      while ( $parent_id ) {
+        $page = get_page( $parent_id );
+        $breadcrumbs[] = '<a href="' . get_permalink( $page->ID ) . '">' . get_the_title( $page->ID ) . '</a>';
+        $parent_id  = $page->post_parent;
+      }
+      $breadcrumbs = array_reverse( $breadcrumbs );
+      foreach ( $breadcrumbs as $crumb ) $html[] = $crumb . ' ' . $delimiter . ' ';
+      $html[] = $before . get_the_title() . $after;
+
+    } elseif ( is_search() ) {
+
+      $html[] = $before . 'Search results for "' . get_search_query() . '"' . $after;
+
+    } elseif ( is_tag() ) {
+
+      $html[] = $before . 'Posts tagged "' . single_tag_title( '', false ) . '"' . $after;
+
+    } elseif ( is_author() ) {
+      global $author;
+      $userdata = get_userdata( $author );
+      $html[] = $before . 'Content by ' . $userdata->display_name . $after;
+
+    } elseif ( is_404() ) {
+      $html[] = $before . '404 Error' . $after;
+    } elseif( is_tax() ) {
+
+      $taxonomy = get_taxonomy( $wp_query->query_vars[ 'taxonomy' ] );
+
+      $html[] = '<a href="' . $args[ 'home_link' ]. '/' . $taxonomy->rewrite[ 'slug' ]  . '">' . $taxonomy->labels->name . '</a> ';
+      $html[] = $before . $wp_query->get_queried_object()->name . $after;
+
+    } else {
+
+      //$html[] = "<pre>";print_r( $wp_query );$html[] = "</pre>";
+    }
+
+    if ( get_query_var( 'paged' ) ) {
+      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[] = ' ( ';
+      $page[] = __( 'Page' ) . ' ' . get_query_var( 'paged' );
+      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $page[] = ' )';
+
+      $html[] = implode( '', ( array ) $page );
+    }
+
+    $html = apply_filters( 'flawless::breadcrumb_trail', $html );
+
+    $final_html = '<div class="' . $args[ 'wrapper_class' ] . '">' . implode(  apply_filters( 'flawless_bcreadcrumbs::delimiter', $args[ 'divider' ] ) , $html )  . '</div>';
+
+    if( $args[ 'return' ] ) {
+      return $final_html;
+    }
+
+    echo $final_html;
+
+  }
+}
+
+function ddp_password_form() {
+  global $post;
+
+  $output = '<div class="password-protected">';
+  $output .= '<h1>Password Protected: ' . $post->post_title . '</h1>';
+  if ( $post->post_name == 'api' ) {
+    $output .= '<p>The API is password protected. To use it please enter your password below.</p>';
+  } else {
+    $output .= '<p>The content &quot;' . $post->post_title . '&quot; is password protected. To view it please enter your password below.</p>';
+  }
+  $output .= '<form action="' . esc_url( site_url( 'wp-login.php?action=postpass', 'login_post' ) ) . '" method="post">';
+  $output .= '<input type="password" id="pwbox-' . ( empty( $post->ID ) ? rand() : $post->ID ) . '" name="post_password" placeholder="Post Password" size="20" maxlength="20">';
+  $output .= '<button type="submit" name="Submit" class="btn btn-blue">Submit</button>';
+  $output .= '</form>';
+  $output .= '</div>';
+
+  return $output;
+}
+add_filter( 'the_password_form', 'ddp_password_form' );
+
+/**
+ * Helpful wrapper functions for microdata
+ * @author Felix Arntz
+ */
+if ( !function_exists( 'microdata_manual' ) ) {
+  function microdata_manual( $prop = '', $type = '', $echo = false ) {
+    $ret = \DiscoDonniePresents\Microdata::manual( $prop, $type );
+    if ( $echo ) {
+      echo $ret;
+    }
+    return $ret;
+  }
+}
+if ( !function_exists( 'microdata_type' ) ) {
+  function microdata_type( $object, $prop = '', $echo = false ) {
+    $ret = \DiscoDonniePresents\Microdata::type( $object, $prop );
+    if ( $echo ) {
+      echo $ret;
+    }
+    return $ret;
+  }
+}
+if ( !function_exists( 'microdata_link' ) ) {
+  function microdata_link( $objects, $wrap = false, $wrapper_property = '', $separator = ', ', $before = '', $after = '', $novalidate = false, $echo = false ) {
+    $ret = \DiscoDonniePresents\Microdata::link( $objects, $wrap, $wrapper_property, $separator, $before, $after, $novalidate );
+    if ( $echo ) {
+      echo $ret;
+    }
+    return $ret;
+  }
+}
+if ( !function_exists( 'microdata_meta' ) ) {
+  function microdata_meta( $object, $fields = array(), $echo = false ) {
+    $ret = \DiscoDonniePresents\Microdata::meta( $object, $fields );
+    if ( $echo ) {
+      echo $ret;
+    }
+    return $ret;
+  }
+}
+if ( !function_exists( 'microdata_handler' ) ) {
+  function microdata_handler( $microdata_args, $echo = false ) {
+    $ret = \DiscoDonniePresents\Microdata::handler( $microdata_args );
+    if ( $echo ) {
+      echo $ret;
+    }
+    return $ret;
+  }
+}
+if ( !function_exists( 'microdata_prepare_args' ) ) {
+  function microdata_prepare_args( $args, $fields, $origin_class = '', $origin_function = '', $more_args = array() ) {
+    return \DiscoDonniePresents\Microdata::prepare_args( $args, $fields, $origin_class, $origin_function, $more_args );
+  }
+}
+// Microdata initialisation
+add_action( 'wp_loaded', array( '\\DiscoDonniePresents\\Microdata', 'init' ) );
+
 /**
  * Template function for the share button that will be in the breadcrumb bar
  *

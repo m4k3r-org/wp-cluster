@@ -2,10 +2,16 @@
 
 /* =Basics
 ========================= */
+
+/* Using !important to override WP inline styles */
+#wpbody-content {
+	overflow: visible !important;
+}
+
 #post-body-content #postdiv,
 #post-body-content #postdivrich,
 #post-body-content #cfct-build-data,
-#post-body-content #cfct-select-new-row { 
+#post-body-content #cfct-select-new-row {
 	display:none;
 }
 
@@ -250,10 +256,10 @@
 /* Carrington buttons */
 .cfct-button,
 #cfct-edit-module .cfct-button {
-	-moz-border-radius: 11px;
-	-khtml-border-radius: 11px;
-	-webkit-border-radius: 11px;
-	border-radius: 11px;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 	border-style: solid;
 	border-width: 1px;
 	-moz-box-sizing: content-box;
@@ -262,19 +268,20 @@
 	box-sizing: content-box;
 	cursor: pointer;
 	font-size: 11px;
-	line-height: 16px;
-	padding: 2px 8px;
+	line-height: 1.2em;
+	padding: 4px 10px 5px;
 	text-decoration: none;
-
 }
-a.cfct-button {
-	-webkit-border-radius: 10px;
+
+.cfct-option .cfct-button {
+	color: #fff;
 	display:-moz-inline-stack;
 	display:inline-block;
 	line-height: 1.2em;
 	padding: 4px 10px;
 	white-space: nowrap;
 }
+
 .cfct-button-dark,
 .cfct-button-dark:visited,
 input.cfct-button-dark[type=submit],
@@ -307,10 +314,16 @@ input.cfct-button-dark[type=button]:active {
 	border-color:#191919;
 }
 
+.cfct-option-wrapper .cfct-button-dark,
+.cfct-option-wrapper .cfct-button-dark:visited,
+.cfct-option-wrapper .cfct-button-dark:hover {
+	color: #fff;
+}
+
 
 /* Advanced Actions Menu */
 .cfct-popup-header .cfct-build-options {
-	bottom: 8px;
+	bottom: 9px;
 	position: absolute;
 	right: 6px;
 }
@@ -524,6 +537,17 @@ p.cancel {
 	position: relative;
 	overflow: visible;
 }
+
+.cfct-build-header-group-secondary .cfct-build-options-list {
+	margin-top: 3px;
+	padding: 5px;
+}
+
+.cfct-module-option-custom-css .option-note {
+	margin-bottom: 4px;
+	margin-top: 2px;
+}
+
 .cfct-build-options .cfct-build-options-header,
 .cfct-build-options .cfct-build-help-header {
 	-moz-border-radius: 3px 3px 0 0;
@@ -538,7 +562,8 @@ p.cancel {
 	float: left;
 }
 .cfct-build-options .cfct-build-options-header a.module-options-button,
-.cfct-build-options .cfct-build-help-header a.module-help-button {
+.cfct-build-options .cfct-build-help-header a.module-help-button,
+a.options-button {
 	background:url(../img/options-cog.png) no-repeat 4px 4px;
 	display:block;
 	height: 22px;
@@ -572,9 +597,12 @@ p.cancel {
 	white-space: nowrap;
 	z-index: 99;
 }
-.cfct-build-header-group-secondary .cfct-build-options-list {
-	margin-top: 3px;
+
+.cfct-build-options-list.cfct-build-module-options-list {
+	display: block;
+	position: static;
 }
+
 .cfct-build-options-active .cfct-build-options-header,
 .cfct-build-options-active .cfct-build-options-list {
 	background:url(../img/1b1b1b.png);
@@ -587,16 +615,42 @@ p.cancel {
 }
 .cfct-build-options-list a,
 .cfct-build-options-list a:visited {
-	color:#ccc;
-	display:block;
-	padding:2px 9px;
-	text-decoration:none;
+	background:#191919 url(../img/button-gradients-sprite.gif) repeat-x 0 -400px;
+	border-color:#333;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border-style: solid;
+	border-width: 1px;
+	-moz-box-sizing: content-box;
+	-khtml-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-shadow:0 1px 0 rgba(255,255,255,.15);
+	box-sizing: content-box;
+	color:#f8f8f8;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 11px;
+	font-weight:bold;
+	line-height: 1.2em;
+	padding: 4px 10px;
+	text-decoration: none;
+	text-shadow:rgba(0,0,0,.6) 0 -1px 0;
+	-moz-box-shadow:0 1px 0 rgba(255,255,255,.15);
+	-webkit-box-shadow:0 1px 0 rgba(255,255,255,.15);
+	white-space: nowrap;
 }
 .cfct-build-options-list a:focus,
 .cfct-build-options-list a:hover {
-	background-color:#454545;
-	color:#ccc;
+	border-color:#000;
+	color:#fff;
 }
+
+.cfct-build-options-list a:active {
+	background:#191919 url(../img/button-gradients-sprite.gif) repeat-x 0 -500px;
+}
+
 
 /* =Rows
 ============================================================== */
@@ -686,16 +740,24 @@ p.cancel {
 }
 #cfct-select-new-row {
 	margin:0 auto;
-	position:absolute;
-	z-index:5;
+	position: absolute;
+	z-index: 5;
 }
+
+	#cfct-select-new-row .cfct-popup-content {
+		-moz-border-radius: 0px 0px 3px 3px;
+		-webkit-border-radius: 0px 0px 3px 3px;
+		-khtml-border-radius: 0px 0px 3px 3px;
+		border-radius: 0px 0px 3px 3px;
+	}
+
 .cfct-rows-bottom-bar {
 	background:#4e4e4e url(../img/button-gradients-sprite.gif) repeat-x 0 -600px;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	-khtml-border-radius:6px;
 	border-radius:6px;
-	padding:6px;
+	padding: 9px 6px 11px;
 	text-align:center;
 }
 #cfct-loading-row {
@@ -726,6 +788,106 @@ p.cancel {
 	height: 78px;
 	margin: 5px;
 }
+
+/* Module/Row options */
+.cfct-option {
+	padding: 8px;
+}
+
+.cfct-rendering {
+	position: relative;
+}
+
+.cfct-option,
+.cfct-rendering {
+	margin: 0;
+}
+
+.cfct-option-wrapper a,
+.cfct-option-wrapper a:visited,
+.cfct-option-wrapper a:hover {
+	color: black;
+}
+
+.cfct-rendering .form {
+	padding: 8px;
+}
+
+.cfct-option-wrapper .cancel {
+	background: url(../img/close.png) no-repeat 0 0;
+	height: 21px;
+	overflow: hidden;
+	position: absolute;
+	right: 2px;
+	text-indent: -32000px;
+	top: 4px;
+	width: 21px;
+}
+
+a.cfct-option:hover {
+	background-color: #d1d2d4;
+	cursor: pointer;
+}
+
+.cfct-module-rendering-single,
+.cfct-row-rendering-single {
+	border-bottom: none;
+}
+
+.cfct-row-option-custom-css .option-note {
+	margin-bottom: 4px;
+	margin-top: 2px;
+}
+
+.row-custom-classes {
+	color: #878787;
+}
+
+.class-list {
+	float: left;
+	width: 180px;
+}
+
+.add-class-btn {
+	float: right;
+}
+
+.cfct-option-wrapper {
+	border-top: 1px solid #cacaca;
+	-moz-box-shadow: inset 0px 1px 1px 0px rgba(255, 255, 255, .5);
+	-webkit-box-shadow: inset 0px 1px 1px 0px rgba(255, 255, 255, .5);
+	box-shadow: inset 0px 1px 1px 0px rgba(255, 255, 255, .5);
+}
+
+	.cfct-option-wrapper:first-child {
+		border-top: 0;
+		box-shadow: none;
+	}
+
+	.menu-item {
+		color: black;
+		display: block;
+		padding: 8px;
+		text-decoration: none;
+	}
+
+	.menu-item:hover {
+		color: black;
+		text-decoration: underline;
+	}
+
+	.cfct-option-wrapper:first-child .menu-item:hover {
+		-moz-border-radius: 3px 3px 0px 0px;
+		-webkit-border-radius: 3px 3px 0px 0px;
+		border-radius: 3px 3px 0px 0px;
+	}
+
+	.cfct-option-wrapper:last-child .menu-item:hover {
+		-moz-border-radius: 0px 0px 3px 3px;
+		-webkit-border-radius: 0px 0px 3px 3px;
+		border-radius: 0px 0px 3px 3px ;
+	}
+
 
 /* =Blocks
 ========================= */
@@ -843,20 +1005,214 @@ p.cancel {
 	min-height:50px;
 	padding: 11px 10px 10px 60px;
 	position:relative;
-	z-index:5;
+	/*z-index:5; */
 }
+
 .cfct-module:hover,
 .cfct-module-helper {
 	background-color:#1e1e1e;
 	background-repeat:repeat-x;
 	background-position:0 0;
 }
-.cfct-module dd {
-	margin: 2px 0 0 0;
+
+.cfct-row-disabled .cfct-module:hover {
+	background-color: #565656;
+	background-image: none;
 }
 
-.cfct-module .cfct-module-rendering {
+#cfct-build .disabled-label {
+	visibility: hidden;
+}
+
+#cfct-build .render-disabled .disabled-label {
+	visibility: visible;
+}
+
+#cfct-build .disabled-label-header {
+	display: none;
+}
+
+#cfct-build .render-disabled .disabled-label-header {
+	display: block;
+}
+
+.cfct-module.render-disabled {
+	background: #6f6f6f;
+	border: 2px dashed #565656;
+	padding: 9px 8px 8px 58px;
+}
+
+.cfct-module.render-disabled:hover {
+	background: #565656;
+	border: 2px dashed #353434;
+}
+
+.cfct-row-disabled .cfct-module.render-disabled:hover {
+	background: #6f6f6f;
+	border: 2px dashed #565656;
+}
+
+.disabled-label {
+	background: #353434;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	-khtml-border-radius:3px;
+	border-radius:3px;
+	color: #aeaeae;
+	display:none;
+	font-size: 10px;
+	line-height: 13px;
+	padding: 4px;
+	position: absolute;
+	text-transform: uppercase;
+	top: -2px;
+	right: -2px;
+	width: 95px;
+}
+
+.render-disabled .disabled-label {
+	display: block;
+}
+
+	.disabled-label span {
+		background: #565656;
+		-moz-border-radius:3px;
+		-webkit-border-radius:3px;
+		-khtml-border-radius:3px;
+		border-radius:3px;
+		display: inline-block;
+		padding: 7px 0;
+		text-align: center;
+		width: 65px;
+	}
+
+.option-button-left {
+	float: left;
+	margin-right: 8px;
+	margin-top: 2px;
+}
+
+.option-button-right {
 	float: right;
+	margin-left: 8px;
+	margin-top: 2px;
+}
+
+.hidden-note {
+	background: url(../img/responsive/small-strikethrough.png) no-repeat 0 1px;
+	bottom: 0;
+	color: #c4c3c3;
+	display: block;
+	font-size: 11px;
+	height: 18px;
+	padding-left: 16px;
+	position: absolute;
+	right: 6px;
+	text-align: right;
+}
+
+#cfct-build .cfct-responsive a.options-button {
+	height: 23px;
+	position: relative;
+	width: 24px;
+	z-index: 1;
+}
+
+#cfct-edit-module a.popover-active,
+#cfct-build .cfct-responsive a.popover-active {
+	background-position: 4px -96px;
+	background-color: #1b1b1b;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.disabled-label-header {
+	background: url(../img/responsive/disabled-striping2.png) repeat-x left top;
+	color: #505050;
+	font-size: 14px;
+	height: 25px;
+	padding-top: 8px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.option-note {
+	color: #878787;
+	font-size: 11px;
+	line-height: 12px;
+}
+
+.cfct-row-option-custom-classes .add-class-note,
+.cfct-module-option-custom-css .add-class-note {
+	margin: 4px 0;
+}
+
+.cfct-row-option-custom-classes label,
+.cfct-module-option-custom-css label {
+	display: inline-block;
+	width: 50px;
+}
+
+.cfct_custom_class_input {
+	margin: 0;
+}
+
+	.cfct-module dd {
+		margin: 2px 0 6px 0;
+	}
+
+.cfct-module-options-layout {
+	float: right;
+	margin: 0;
+	position: relative;
+}
+
+.cfct-build-module-options .cfct-popup-outer {
+	width: 261px;
+}
+
+.cfct-options-layout-inner {
+	cursor: default;
+	position: absolute;
+	width: 320px;
+	z-index: 99999;
+}
+
+.cfct-options-layout-trigger-module {
+	float:right;
+	position:relative;
+	top:-6px;
+	right:-5px;
+	z-index:1;
+}
+
+.cfct-options-layout-trigger-row {
+	float:left;
+	clear:left;
+	position:relative;
+	left:-2px;
+}
+
+.cfct-build-module-options .cfct-module-edit-options {
+	padding: 0;
+}
+
+.cfct-module-edit-options .cfct-build-options-list {
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	border-top-right-radius: 3px;
+	margin: 5px 0 0 0;
+}
+
+.cfct-options-layout-inner .cfct-popup-content {
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	-khtml-border-radius:3px;
+	border-radius:3px;
+	color: black;
+	padding: 0;
 }
 
 .cfct-module .cfct-module-edit-clear {
@@ -918,39 +1274,107 @@ p.cancel {
 	z-index: 5;
 }
 
+.cfct-row-disabled {
+	-moz-border-radius: 0px 0px 6px 6px;
+	-webkit-border-radius: 0px 0px 6px 6px;
+	border-radius: 0px 0px 6px 6px;
+	margin-top: 41px;
+}
+
+.row-disabled {
+	display: none;
+}
+
+.cfct-row-disabled .row-disabled {
+	background-color: #353434;
+	border-bottom: 1px solid #222;
+	-moz-border-radius: 6px 6px 0px 0px;
+	-webkit-border-radius: 6px 6px 0px 0px;
+	border-radius: 6px 6px 0px 0px;
+	color: #aeaeae;
+	display: block;
+	font-size: 11px;
+	height: 25px;
+	left: -3px;
+	margin: 0 auto;
+	padding: 10px 0 0;
+	position: absolute;
+	right: -3px;
+	text-align: center;
+	text-transform: uppercase;
+	top: -39px;
+}
+
 /* =Popup
 ========================= */
+.cfct-popup-outer {
+	cursor: default;
+	position: absolute;
+	z-index: 10;
+}
+
+.cfct-popup-content {
+	color: black;
+}
 .cfct-popup-anchored { /* Bubble style. Default is top tick */
 	background:url(../img/cfct-popup-tick-sprite.png) no-repeat center 0;
 	padding-top:8px;
 }
+
+/* left anchored popover */
+.left-anchor .cfct-popup-anchored {
+	background:url(../img/cfct-popup-tick-sprite-left-right.png) no-repeat 0 15px;
+	padding: 0 0 0 8px;
+}
+
+
 .flopped-y .cfct-popup-anchored {
 	background-position:center bottom;
 	padding-bottom:8px;
 	padding-top:0;
 }
+
+.cfct-popup-not-anchored { /* Bubble style. Default is top tick */
+	padding-top:8px;
+}
+
+.flopped-y .cfct-popup-not-anchored {
+	padding-bottom:8px;
+	padding-top:0;
+}
+
 .cfct-popup {
 	background: url(../img/1b1b1b.png);
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	-khtml-border-radius:6px;
-	border-radius:6px;
-	padding:7px;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	-khtml-border-radius:8px;
+	border-radius:8px;
+	padding:6px;
 }
 .cfct-popup-inner-wrap {
 	/**
 	 * needed for taming extra added popup elements
 	 */
 	position: relative;
-	overflow: hidden;
+/*	overflow: hidden;*/
+}
+
+.cfct-popover-active .cfct-popup-inner-wrap {
+	overflow: visible;
 }
 
 #cfct-spinner-dialog  {
 	display: block;
 	margin: 0 auto;
-	width: 100px;
 	height: 100px;
-}	
+	width: 100px;
+}
+
+.cfct-popup #cfct-spinner-dialog {
+	width: 40px;
+	height: 40px;
+}
+
 #cfct-spinner-dialog .cfct-popup-spinner {
 	text-indent: -999px;
 	color: white;
@@ -1006,7 +1430,7 @@ p.cancel {
 	 * @workaround incorrect z-index stacks
 	 * IE < 8 creates a new z-index stack for every positioned parent. This means
 	 * We have to make sure this positioned header appears above content so the
-	 * context menu will appear above the content. 
+	 * context menu will appear above the content.
 	 * @affected ie7
 	 */
 	z-index: 2;
@@ -1035,7 +1459,7 @@ p.cancel {
 .cfct-modules-list-head {
 	color: #333;
 	padding-bottom: 1px;
-	margin-bottom: 3px;
+	margin-bottom: 12px;
 	border-bottom: 1px solid #999;
 }
 
@@ -1047,6 +1471,9 @@ p.cancel {
 	background: #ddd url(../img/popup-gradients.gif) repeat-x 0 -1000px;
 	padding: 12px;
 	position: relative;
+}
+.cfct-add-module .cfct-popup-content {
+	padding-bottom: 0px;
 }
 .cfct-popup-content.cfct-module-sideload {
 	padding: 0;
@@ -1117,6 +1544,10 @@ p.cancel {
 #cfct-module-list-toggle-compact.active {
 	background-position:-23px -54px;
 	cursor: default;
+}
+
+.cfct-module-list {
+	margin: 0;
 }
 
 .cfct-popup .cfct-dialog-activity {
@@ -1240,12 +1671,12 @@ p.cancel {
 /* =Side Loading
 ========================= */
 .cfct-popup .cfct-module-sideload {
-	display: block; 
-	position: absolute; 
-	top: 0; 
-	left: -3000px; 
-	width: 100%; 
-	height: 100%; 
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -3000px;
+	width: 100%;
+	height: 100%;
 	overflow: hidden;
 	background: #000;
 	z-index: 10;
@@ -1273,12 +1704,12 @@ p.cancel {
 ========================= */
 .cfct-reorder-status,
 .cfct-reorder-overlay {
-	position:absolute; 
-	z-index:99; 
-	height:100%; 
-	width:100%; 
-	top:0; 
-	left:0;	
+	position:absolute;
+	z-index:99;
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	-khtml-border-radius:6px;
@@ -1286,7 +1717,7 @@ p.cancel {
 	overflow: hidden;
 }
 .cfct-reorder-overlay {
-	background:black; 
+	background:black;
 	filter: alpha(opacity=35);
 	opacity: 0.35;
 }
@@ -1295,20 +1726,16 @@ p.cancel {
 ========================= */
 .cfct-module-status,
 .cfct-module-status-overlay {
-	position:absolute; 
-	z-index:99; 
-	height:100%; 
-	width:100%; 
-	top:0; 
-	left:0;	
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	-khtml-border-radius:6px;
-	border-radius:6px;
+	position:absolute;
+	z-index:99;
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
 	overflow: hidden;
 }
 .cfct-module-status-overlay {
-	background:black; 
+	background:black;
 	filter: alpha(opacity=35);
 	opacity: 0.35;
 }
@@ -1375,6 +1802,7 @@ a:hover .cfct-il-icon {
 	background-position:0 -900px;
 }
 a:active .cfct-il-icon {
+	background-color:#d8d7d7;
 	background-position:0 -1000px;
 }
 .cfct-il-title {
@@ -1429,6 +1857,15 @@ a:active .cfct-il-icon {
 .cfct-il-mini.il-hover-titles .cfct-il-item:hover .cfct-il-title {
 	display: block;
 }
+
+.cfct-rc-row-type-list {
+	margin: 0;
+}
+
+	.cfct-rc-row-type-list.cfct-il-mini .cfct-il-item {
+		margin: 0;
+	}
+
 
 /* =Welcome
 ========================= */

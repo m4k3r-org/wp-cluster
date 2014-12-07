@@ -1,8 +1,12 @@
 {
   "name": "wp-disco",
-  "version": "2.2.0",
+<<<<<<< HEAD
+  "version": "2.3.1",
+=======
+  "version": "2.4.0",
+>>>>>>> 9c90b9336891552332f97868d65b17c93ae9adb7
   "description": "test",
-  "main": "index.js",
+  "main": "gruntfile.js",
   "directories": {
     "test": "mocha test"
   },
@@ -26,6 +30,7 @@
     "grunt-contrib-requirejs": "^0.4.4",
     "grunt-contrib-uglify": "^0.5.1",
     "grunt-contrib-watch": "^0.6.1",
+    "load-grunt-tasks": "^1.0.0",
     "mocha": "^1.21.4",
     "should": "^4.0.4"
   }

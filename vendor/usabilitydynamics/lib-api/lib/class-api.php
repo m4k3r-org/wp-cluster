@@ -137,6 +137,8 @@ namespace UsabilityDynamics {
 
       // Do nothing if this has already been ran.
       if( API::$xml_rpc_done ) {
+        die( 'already ran' );
+
         return $methods;
       }
 
@@ -212,11 +214,11 @@ namespace UsabilityDynamics {
         ob_end_clean();
       };
 
-      if( is_string( $data ) ) {
-        die( $data );
-      }
-
       ob_start();
+
+      if( is_string( $data ) ) {
+        echo( $data );
+      }
 
       // Error Response.
       if( is_wp_error( $data ) ) {

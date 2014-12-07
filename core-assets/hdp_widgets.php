@@ -58,7 +58,7 @@ class HDP_Latest_Posts_Widget extends WP_Widget {
 
     $posts = array();
 
-    foreach( $settings[ 'post_types' ] as $pt ) {
+    foreach( (array) $settings[ 'post_types' ] as $pt ) {
       $params = array();
 
       $params[ 'post_type' ]      = $pt;
@@ -106,8 +106,14 @@ class HDP_Latest_Posts_Widget extends WP_Widget {
 
       foreach( $slide as $post ) {
         //$post = get_post( $post_id );
+        
+        $thumbnail_id = get_post_thumbnail_id( $post->ID );
+        if ( in_array( $post->post_type, array( 'imagegallery', 'videoobject' ) ) ) {
+          $event_id = get_post_meta( $post->ID, 'event', true );
+          $thumbnail_id = get_post_meta( $event_id, 'posterImage', true );
+        }
 
-        $post->thumbnail_src = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
+        $post->thumbnail_src = wp_get_attachment_url( $thumbnail_id );
 
         $margin_left = ( isset( $post->thumbnail_src ) && $post->thumbnail_src && !empty( $post->thumbnail_src ) ? 'hdp_lp_ml' : '' );
 
@@ -115,8 +121,8 @@ class HDP_Latest_Posts_Widget extends WP_Widget {
 
         if( $margin_left ) {
           $html[ ] = '<li class="hdp_lp_thumbnail sidebar_thumbnail">';
-          if( flawless_image_link( get_post_thumbnail_id( $post->ID ), 'sidebar_thumb' ) ) {
-            $html[ ] = '<a href="' . get_permalink( $post->ID ) . '"><img class="hdp_lp_thumbnail" src="' . flawless_image_link( get_post_thumbnail_id( $post->ID ), 'sidebar_thumb' ) . '" /></a>';
+          if( flawless_image_link( $thumbnail_id, 'sidebar_thumb' ) ) {
+            $html[ ] = '<a href="' . get_permalink( $post->ID ) . '"><img class="hdp_lp_thumbnail" src="' . flawless_image_link( $thumbnail_id, 'sidebar_thumb' ) . '" /></a>';
           }
           $html[ ] = '</li>';
         }

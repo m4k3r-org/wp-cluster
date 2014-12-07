@@ -29,13 +29,12 @@ if( is_single() ) {
 
 if( $flawless[ 'post_types' ][ $post->post_type ][ 'show_post_meta' ] == 'true' ) {
 
-  if( get_the_category_list() ) {
-    $meta_html[ ] = '<li class="posted-ago"><i class="icon-dd icon-time-ago"></i>' . sprintf( __( '%1s ago', 'flawless' ), human_time_diff( get_the_time( 'U' ) ) ) . '</li>';
-  }
+  $meta_html[ ] = '<li class="posted-ago"><i class="icon-dd icon-time-ago"></i>' . get_the_date() . '</li>';
 
-  if( get_the_category_list() ) {
+  // do not show categories here
+  /*if( get_the_category_list() ) {
     $meta_html[ ] = '<li class="posted-in"><i class="icon-dd icon-posted-in"></i>' . __( 'Posted under ', 'flawless' ) . get_the_category_list( ', ' ) . '</li>';
-  }
+  }*/
 
   if( get_comments_number() ) {
     $meta_html[ ] = '<li class="comments-count"><i class="icon-dd icon-comments-count"></i>' . sprintf( __( '%1s comments', 'flawless' ), get_comments_number() ) . '</li>';

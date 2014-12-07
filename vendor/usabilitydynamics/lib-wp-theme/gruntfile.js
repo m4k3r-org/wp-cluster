@@ -7,24 +7,17 @@
  */
 module.exports = function build( grunt ) {
 
+  // Automatically Load Tasks
+  require( 'load-grunt-tasks' )( grunt, {
+    pattern: 'grunt-*',
+    config: './package.json',
+    scope: 'devDependencies'
+  } );
+
   grunt.initConfig( {
 
     // Read Composer File.
     pkg: grunt.file.readJSON( 'composer.json' ),
-
-    // Generate Documentation.
-    yuidoc: {
-      compile: {
-        name: '<%= pkg.name %>',
-        description: '<%= pkg.description %>',
-        version: '<%= pkg.version %>',
-        url: '<%= pkg.homepage %>',
-        options: {
-          paths: [ 'lib', 'scripts' ],
-          outdir: 'static/codex/'
-        }
-      }
-    },
 
     // Compile LESS.
     less: {
@@ -171,21 +164,8 @@ module.exports = function build( grunt ) {
 
   });
 
-  // Load NPM Tasks.
-  grunt.loadNpmTasks( 'grunt-markdown' );
-  grunt.loadNpmTasks( 'grunt-requirejs' );
-  grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
-  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-  grunt.loadNpmTasks( 'grunt-contrib-watch' );
-  grunt.loadNpmTasks( 'grunt-contrib-less' );
-  grunt.loadNpmTasks( 'grunt-contrib-concat' );
-  grunt.loadNpmTasks( 'grunt-contrib-clean' );
-  grunt.loadNpmTasks( 'grunt-shell' );
-  grunt.loadNpmTasks( 'grunt-mocha-cli' );
-  grunt.loadNpmTasks( 'grunt-mocha-cov' );
-
   // Register NPM Tasks.
-  grunt.registerTask( 'default', [ 'markdown', 'less' , 'yuidoc', 'uglify' ] );
+  grunt.registerTask( 'default', [ 'markdown', 'less', 'uglify' ] );
 
   // Build Distribution.
   grunt.registerTask( 'distribution', [ 'mochacli:all', 'mochacov:all', 'clean:all', 'markdown', 'less:production', 'uglify:production' ] );

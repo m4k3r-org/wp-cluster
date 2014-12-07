@@ -10,7 +10,7 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "http://repository.usabilitydynamics.com"
+      "url": "http://library@repository.usabilitydynamics.com"
     }
   ],
   "require": {

@@ -20,7 +20,6 @@ if( isset( $_SERVER[ 'HTTP_X_UDS_DEBUG' ] ) ) {
   }, 1000 );
 }
 
-
 if( !is_dir( TEMPLATEPATH ) ) {
 	wp_die(TEMPLATEPATH);
 	return;
@@ -29,6 +28,8 @@ if( !is_dir( TEMPLATEPATH ) ) {
 include_once( untrailingslashit( TEMPLATEPATH ) . '/core-assets/class_ud.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_saas.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/ud_functions.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/template_functions.php' );
+include_once( untrailingslashit( STYLESHEETPATH ) . '/core-assets/microdata.php' );
 
 include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/entity.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/event.php' );
@@ -43,8 +44,10 @@ include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/event-taxonomy.ph
 include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/venue-taxonomy.php' );
 include_once( untrailingslashit( STYLESHEETPATH ) . '/entities/artist-taxonomy.php' );
 
+$_package = json_decode( file_get_contents( __DIR__ . '/package.json' ));
+
 /* Define Child Theme Version */
-define( 'HDDP_Version', '1.0.0' );
+define( 'HDDP_Version', $_package->version );
 
 /* Transdomain */
 define( 'HDDP', 'HDDP' );
@@ -53,10 +56,44 @@ define( 'HDDP', 'HDDP' );
 add_action( 'flawless::theme_setup::after', array( 'hddp', 'theme_setup' ) );
 add_action( 'flawless::init_upper', array( 'hddp', 'init_upper' ) );
 add_action( 'flawless::init_lower', array( 'hddp', 'init_lower' ) );
-
 add_filter( 'elasticsearch_indexer_build_document', array( 'hddp', 'build_elastic_document' ), 10, 2 );
+add_action( 'flawless::setup_theme_features::after', array( 'hddp', 'carrington_build' ) );
 
-add_action( 'admin_menu', array( 'hddp', "es_menu" ), 11 );
+add_action( 'admin_menu', array( 'hddp', 'es_menu' ), 11 );
+
+add_action( 'post_submitbox_misc_actions', array( 'hddp', 'autogenerator_submitbox_actions' ) );
+add_action( 'save_post', array( 'hddp', 'autogenerate_post_elements' ), 1, 2 );
+
+/**
+ * fix for broken CSS
+ */
+if ( ! function_exists( 'flawless_module_class' ) ) {
+  /**
+   * Builds classes for the .hentry.cfct-module based on conditional elements.
+   *
+   * Called in templates intead of post_class(). On CB pages, the cfct-move is removed by flawless_carrington::module_class()
+   *
+   * @since Flawless 0.5.0
+   * @author potanin@UD
+   */
+  function flawless_module_class( $custom_class = '' ) {
+    global $flawless, $wp_query, $post;
+
+    //** Load Post Classes if this is a post */
+    $classes = get_post_class( '', $post->ID );
+
+    $classes[] = $custom_class;
+    if ( $post->post_type != 'page' ) {
+      $classes[] = 'cfct-module';
+    }
+
+    $classes = apply_filters( 'flawless::module_class', $classes );
+
+    echo implode( ' ', ( array ) $classes );
+
+  }
+}
+
 
 /**
  * Functionality for Theme
@@ -72,7 +109,7 @@ class hddp extends Flawless_F {
    */
   static function theme_setup() {
 
-    remove_theme_support( 'header-dropdowns' );
+	  remove_theme_support( 'header-dropdowns' );
     remove_theme_support( 'custom-header' );
     remove_theme_support( 'custom-background' );
     remove_theme_support( 'header-business-card' );
@@ -84,6 +121,68 @@ class hddp extends Flawless_F {
     load_theme_textdomain( HDDP, get_template_directory() . '/lang' );
 
   }
+
+	/**
+	 *
+	 */
+	public static function carrington_build() {
+
+		if( !file_exists( __DIR__ . '/vendor/usabilitydynamics/lib-carrington/lib/carrington-build.php' ) ) {
+			return;
+		}
+
+		// Prevent Flawless' version of Carrington Build from being loaded.
+		remove_action( 'flawless_theme_setup', 'flawless_carrington::flawless_theme_setup' );
+
+		// Include our newer version of CB.
+		include_once( __DIR__ . '/vendor/usabilitydynamics/lib-carrington/lib/carrington-build.php' );
+
+		add_theme_support( 'carrington_build' );
+
+		// Legacy filters still available in Flawless but commented out until needed.
+
+		add_filter( 'cfct-module-dirs', array( 'flawless_carrington', 'cfct_module_dirs' ) );
+		
+		add_filter( 'cfct-build-display-class', array( 'flawless_carrington', 'cfct_build_display_class' ), 10, 4 );
+		
+		add_filter( 'cfct-generated-row-classes', array( 'flawless_carrington', 'cfct_generated_row_classes' ), 10, 4 );
+		
+		add_filter( 'cfct-block-c6-12-classes', function( $classes ) { return array_merge( array( 'span4', 'first' ), $classes ); }, 10, 2 );
+		add_filter( 'cfct-block-c6-34-classes', function( $classes ) { return array_merge( array( 'span4' ), $classes ); }, 10, 2 );
+		add_filter( 'cfct-block-c6-56-classes', function( $classes ) { return array_merge( array( 'span4', 'last' ), $classes ); }, 10, 2 );
+		
+		add_filter( 'cfct-block-c6-123-classes', function( $classes ) { return array_merge( array( 'span6', 'first' ), $classes ); }, 10, 2 );
+		add_filter( 'cfct-block-c6-456-classes', function( $classes ) { return array_merge( array( 'span6', 'last' ), $classes ); }, 10, 2 );
+		add_filter( 'cfct-block-c4-12-classes', function( $classes ) { return array_merge( array( 'span6', 'first' ), $classes ); }, 10, 2 );
+		add_filter( 'cfct-block-c4-34-classes', function( $classes ) { return array_merge( array( 'span6', 'last' ), $classes ); }, 10, 2 );
+		
+		add_filter( 'cfct-block-c6-1234-classes', function( $classes ) { return array_merge( array( 'span8', 'first' ), $classes ); }, 10, 2 );
+		add_filter( 'cfct-block-c6-3456-classes', function( $classes ) { return array_merge( array( 'span8', 'last' ), $classes ); }, 10, 2 );
+		
+		add_filter( 'cfct-block-c6-123456-classes', function( $classes ) { return array_merge( array( 'span12', 'first', 'full-width' ), $classes ); }, 10, 2 );
+		add_filter( 'cfct-block-c4-1234-classes', function( $classes ) { return array_merge( array( 'span12', 'first', 'full-width' ), $classes ); }, 10, 2 );
+		
+		add_filter( 'cfct-build-module-class', array( 'flawless_carrington', 'cfct_module_wrapper_classes' ) , 10, 2 );
+		
+		add_filter( 'cfct-row-admin-html', array( 'flawless_carrington', 'cfct_row_admin_html' ), 10, 4 );
+		add_filter( 'cfct-row-html', array( 'flawless_carrington', 'cfct_row_html' ), 10, 4 );
+		
+		add_filter( 'cfct-module-cfct-callout-admin-form', array( 'flawless_carrington', 'cfct_module_admin_theme_chooser' ) , 10, 2 );
+		add_filter( 'cfct-module-cf-post-callout-module-admin-form', array( 'flawless_carrington', 'cfct_module_admin_theme_chooser' ) , 10, 2 );
+		add_filter( 'cfct-module-cfct-heading-admin-form', array( 'flawless_carrington', 'cfct_module_admin_theme_chooser' ) , 10, 2 );
+		add_filter( 'cfct-module-cfct-plain-text-admin-form', array( 'flawless_carrington', 'cfct_module_admin_theme_chooser' ) , 10, 2 );
+		add_filter( 'cfct-module-cfct-rich-text-admin-form', array( 'flawless_carrington', 'cfct_module_admin_theme_chooser' ) , 10, 2 );
+		add_filter( 'cfct-module-cfct-module-loop-admin-form', array( 'flawless_carrington', 'cfct_module_admin_theme_chooser' ) , 10, 2 );
+		add_filter( 'cfct-module-cfct-module-loop-subpages-admin-form', array( 'flawless_carrington', 'cfct_module_admin_theme_chooser' ) , 10, 2 );
+		add_filter( 'cfct-module-display', array( 'flawless_carrington', 'cfct_module_display' ) , 10, 3 );
+		add_filter( 'cfct-build-module-url-unknown', array( 'flawless_carrington', 'module_url_unknown' ) , 10, 3 );
+		
+		add_action( 'cfct-modules-included', array( 'flawless_carrington', 'remove_loop_module' ) );
+
+    // Add body class carrington_layout or non_carrington_layout
+    add_filter( 'body_class', array( 'flawless_carrington', 'body_class' ), 200, 2 );
+
+	}
 
   /**
    * Primary Loader.
@@ -168,6 +267,13 @@ class hddp extends Flawless_F {
       add_action( 'wp_ajax_reindex_taxonomies', array( __CLASS__, "es_index_taxonomies" ) );
       add_action( 'wp_ajax_remap_all', array( __CLASS__, "es_remap_all" ) );
     }
+
+    // redirect unused post type archives
+    add_action( 'template_redirect', array( __CLASS__, 'maybe_redirect_post_type_archive' ) );
+
+    // Check whether the Meta-Box plugin is installed or not
+    add_action( 'admin_notices', array( __CLASS__, 'check_for_metabox_plugin' ) );
+    add_action( 'network_admin_notices', array( __CLASS__, 'check_for_metabox_plugin' ) );
 
   }
 
@@ -347,6 +453,22 @@ class hddp extends Flawless_F {
    */
   static function init_lower() {
 
+    // enqueue theme style and dequeue unnecessary flawless styles
+    // (these are included in the new theme stylesheet)
+    add_action( 'wp_enqueue_scripts', function() {
+
+      wp_dequeue_style( 'twitter-bootstrap' );
+      wp_dequeue_style( 'flawless-style' );
+      wp_dequeue_style( 'flawless-colors' );
+      wp_dequeue_style( 'flawless-content' );
+      wp_dequeue_style( 'flawless-custom-content' );
+      wp_dequeue_style( 'flawless-child-style' );
+
+      wp_enqueue_style( 'wp-disco-style', get_stylesheet_directory_uri() . '/css/app.css', array() );
+      
+    }, 120 );
+
+    // enqueue additional scripts and styles
     add_action( 'wp_enqueue_scripts', function () {
 
       wp_enqueue_script( 'knockout' );
@@ -436,7 +558,6 @@ class hddp extends Flawless_F {
 
     add_filter( 'img_caption_shortcode', array( 'hddp', 'img_caption_shortcode' ), 10, 3 );
 
-    wp_enqueue_style( 'google-droing-sans', '//fonts.googleapis.com/css?family=Droid+Sans', array() );
     wp_enqueue_style( 'animate', get_stylesheet_directory_uri() . '/css/animate.css' );
 
     //** New Elastic Search Shortcodes */
@@ -745,6 +866,276 @@ class hddp extends Flawless_F {
     return '<figure ' . $id . 'class="wp-caption ' . esc_attr( $align ) . '" >' . do_shortcode( $content ) . '<figcaption ' . $capid . 'class="wp-caption-text">' . $caption . '</figcaption></figure>';
   }
 
+  static public function get_autogenerator_data() {
+    return array(
+      'post_types'  => array(
+        'event',
+        'imagegallery',
+        'videoobject',
+      ),
+      'fields'      => array(
+        'post_title'  => array(
+          'allow_do_not'=> true,
+          'label'       => 'Do not generate the title.',
+          'callback'    => array( __CLASS__, 'autogenerate_post_title' ),
+        ),
+        'post_name'   => array(
+          'allow_do_not'=> true,
+          'label'       => 'Do not generate the slug.',
+          'callback'    => array( __CLASS__, 'autogenerate_post_name' ),
+        ),
+        'post_excerpt'=> array(
+          'allow_do_not'=> false,
+          'label'       => 'Do not generate the excerpt.',
+          'callback'    => array( __CLASS__, 'autogenerate_post_excerpt' ),
+          'depends_on'  => 'post_title',
+        ),
+      ),
+    );
+  }
+
+  static public function autogenerator_submitbox_actions() {
+    global $post;
+
+    $autogenerator = self::get_autogenerator_data();
+
+    if ( in_array( $post->post_type, $autogenerator['post_types'] ) ) {
+      foreach ( $autogenerator['fields'] as $field_name => $args ) {
+        if ( $args['allow_do_not'] ) {
+          echo '<p><input type="checkbox" name="do_not_generate_' . $field_name . '" value="true"' . checked( true, get_post_meta( $post->ID, 'do_not_generate_' . $field_name, true ), false ) . '> ' . $args['label'] . '</p>';
+        }
+      }
+    }
+  }
+
+  static public function autogenerate_post_elements( $post_id, $post ) {
+    global $wpdb;
+
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+      return $post_id;
+    }
+
+    if ( $post->post_status == 'auto-draft' ) {
+      return;
+    }
+
+    if ( wp_is_post_revision( $post_id ) ) {
+      return;
+    }
+
+    $autogenerator = self::get_autogenerator_data();
+
+    if( in_array( $post->post_type, $autogenerator['post_types'] ) )
+    {
+      $post_updated = array();
+      foreach ( $autogenerator['fields'] as $field_name => $args ) {
+        $generate = true;
+        if ( $args['allow_do_not'] ) {
+          if ( isset( $_REQUEST['do_not_generate_' . $field_name ] ) ) {
+            update_post_meta( $post_id, 'do_not_generate_' . $field_name, true );
+            if ( $_REQUEST['do_not_generate_' . $field_name ] ) {
+              $generate = false;
+            }
+          } else {
+            delete_post_meta( $post_id, 'do_not_generate_' . $field_name );
+          }
+        }
+
+        if ( $generate && is_callable( $args['callback'] ) ) {
+          $callback_args = array( $post );
+          if ( isset( $args['depends_on'] ) && !empty( $args['depends_on'] ) ) {
+            if ( !is_array( $args['depends_on'] ) ) {
+              $args['depends_on'] = array( $args['depends_on'] );
+            }
+            foreach ( $args['depends_on'] as $arg ) {
+              if ( isset( $post_updated[ $arg ] ) ) {
+                $callback_args[] = $post_updated[ $arg ];
+              } elseif( isset( $post->$arg ) ) {
+                $callback_args[] = $post->$arg;
+              } else {
+                $callback_args[] = '';
+              }
+            }
+          }
+          $generated = call_user_func_array( $args['callback'], $callback_args );
+
+          if ( $generated !== false ) {
+            $post_updated[ $field_name ] = $generated;
+          }
+        }
+      }
+
+      if ( count( $post_updated ) > 0 ) {
+        $wpdb->update( $wpdb->posts, $post_updated, array( 'ID' => $post_id ) );
+      }
+    }
+  }
+
+  static public function autogenerate_post_title( $post ) {
+    $event_id = self::get_event_id( $post );
+    if ( !$event_id ) {
+      return false;
+    }
+
+    $artists = get_post_meta( $event_id, 'artists' );
+    if ( !is_array( $artists ) ) {
+      $artists = array( $artists );
+    }
+    foreach ( $artists as &$artist ) {
+      $artist = get_the_title( $artist );
+    }
+
+    $venue = get_post_meta( $event_id, 'venue', true );
+    $venue = get_the_title( $venue );
+
+    return sprintf( '%1$s at %2$s', implode( ', ', $artists ), $venue );
+  }
+
+  static public function autogenerate_post_name( $post ) {
+    $event_id = self::get_event_id( $post );
+    if ( !$event_id ) {
+      return false;
+    }
+
+    $date = strtotime( get_post_meta( $event_id, 'dateStart', true ) );
+    $date = date( 'Y-md', $date );
+
+    $venue = get_post_meta( $event_id, 'venue', true );
+    $city = wp_get_object_terms( $venue, 'city', array( 'fields' => 'names' ) );
+    $venue = get_the_title( $venue );
+    if ( is_array( $city ) ) {
+      reset( $city );
+      $city = $city[ key( $city ) ];
+    } else {
+      $city = '';
+    }
+
+    return wp_unique_post_slug( sanitize_title( sprintf( '%1$s %2$s %3$s', $date, $city, $venue ) ), $post->ID, $post->post_status, $post->post_type, $post->post_parent );
+  }
+
+  static public function autogenerate_post_excerpt( $post, $post_title ) {
+    $event_id = self::get_event_id( $post );
+    if ( !$event_id ) {
+      return false;
+    }
+
+    if ( empty( $post_title ) ) {
+      $post_title = self::autogenerate_post_title( $post );
+    }
+
+    $venue = get_post_meta( $event_id, 'venue', true );
+
+    $city = wp_get_object_terms( $venue, 'city', array( 'fields' => 'names' ) );
+    if ( is_array( $city ) ) {
+      reset( $city );
+      $city = $city[ key( $city ) ];
+    } else {
+      $city = '';
+    }
+    
+    $state = wp_get_object_terms( $venue, 'state', array( 'fields' => 'names' ) );
+    if ( is_array( $state ) ) {
+      reset( $state );
+      $state = $state[ key( $state ) ];
+    } else {
+      $state = '';
+    }
+
+    $raw_date = strtotime( get_post_meta( $event_id, 'dateStart', true ) );
+
+    $date = date( 'l, F j, Y', $raw_date );
+
+    $time = date( 'g:i A', $raw_date );
+
+    return sprintf( '%1$s in %2$s, %3$s on %4$s at %5$s', $post_title, $city, $state, $date, $time );
+  }
+
+  static private function get_event_id( $post ) {
+    $event_id = $post->ID;
+    if ( $post->post_type != 'event' ) {
+      $event_id = get_post_meta( $post->ID, 'event', true );
+      if ( !$event_id ) {
+        return false;
+      }
+    }
+    return $event_id;
+  }
+
+  static public function maybe_redirect_post_type_archive() {
+    if ( is_post_type_archive() ) {
+      $root_page = self::get_root_page( get_post_type() );
+      if ( $root_page ) {
+        wp_redirect( get_permalink( $root_page ) );
+        exit();
+      }
+    }
+  }
+
+  static public function get_root_page( $post_type ) {
+    $root_pages = array(
+      'event'         => 'events',
+      'imagegallery'  => 'photos',
+      'videoobject'   => 'videos',
+    );
+
+    if( isset( $root_pages[ $post_type ] ) )
+    {
+      $page = get_page_by_path( $root_pages[ $post_type ] );
+      if( $page )
+      {
+        return $page->ID;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Check if Meta Box plugin is installed and if not, display activate/install link.
+   *
+   * @author Felix Arntz
+   */
+  static function check_for_metabox_plugin()
+  {
+    if( !defined( 'RWMB_VER' ) && current_user_can( 'manage_network_plugins' ) )
+    {
+      echo '<div class="error">';
+
+      $plugin_slug = 'meta-box';
+      $plugin_name = 'Meta Box';
+      
+      echo '<p>' . sprintf( __( 'The theme %1$s requires the plugin %2$s to work properly. Please make sure it is installed and activated.' ), 'WP-Disco v2.0', $plugin_name ) . '</p>';
+      
+      $installed_plugins = get_plugins();
+      $plugin_file = '';
+      foreach( $installed_plugins as $slug => $data ) {
+        if ( $pos = strpos( $slug, '/' ) ) {
+          if ( $plugin_slug == substr( $slug, 0, $pos ) ) {
+            $plugin_file = $slug;
+            break;
+          }
+        } elseif ( $plugin_slug == $slug ) {
+          $plugin_file = $slug;
+          break;
+        }
+      }
+      
+      if ( $plugin_file != '' ) {
+        $class  = 'button';
+        $text   = __( 'Network Activate' );
+        $title  = __( 'Activate this plugin for all sites in this network' );
+        $url    = wp_nonce_url( network_admin_url( 'plugins.php?action=activate&amp;plugin=' . $plugin_file . '&amp;plugin_status=all&amp;paged=1&amp;s=' ), 'activate-plugin_' . $plugin_file );
+      } else {
+        $class  = 'install-now button';
+        $text   = __( 'Install Now' );
+        $title  = sprintf( __( 'Install %s now' ), $plugin_name );
+        $url    = wp_nonce_url( network_admin_url( 'update.php?action=install-plugin&plugin=' . $plugin_slug ), 'install-plugin_' . $plugin_slug );
+      }
+      echo '<p style="text-align: right;"><a class="' . $class . '" href="' . $url . '" aria-label="' . esc_attr( $title ) . '">' . $text . '</a></p>';
+      
+      echo '</div>';
+    }
+  }
+
   /**
    * Alter feed
    * @global type $post
@@ -781,8 +1172,8 @@ class hddp extends Flawless_F {
       'venue' => '\DiscoDonniePresents\Venue'
     );
 
-    if ( empty( $_entities[$post->post_type] ) ) return $document;
-
+    if ( !isset( $_entities[$post->post_type] ) ) return $document;
+    
     $class = $_entities[$post->post_type];
 
     $document = new $class( $post->ID );
@@ -808,7 +1199,6 @@ class hddp extends Flawless_F {
     return ob_get_clean();
 
   }
-
 
   /**
    * New Elastic Search Facets

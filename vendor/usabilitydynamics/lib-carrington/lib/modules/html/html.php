@@ -8,6 +8,9 @@ if (!class_exists('cfct_module_html')) {
 	 */
 	class cfct_module_html extends cfct_build_module {
 		protected $_deprecated_id = 'cfct-html'; // deprecated property, not needed for new module development
+		
+		// remove padding from the popup-content form
+		protected $admin_form_fullscreen = true;
 
 		public function __construct() {
 			$opts = array(

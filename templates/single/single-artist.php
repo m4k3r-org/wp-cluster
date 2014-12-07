@@ -4,16 +4,26 @@
 
 <?php $artist = new \DiscoDonniePresents\Artist( get_the_ID(), false ); the_post(); ?>
 
-<?php $image = wp_get_attachment_image( $artist->meta('logo'), $size = 'sidebar_poster' ); ?>
+<?php
+// display artist image based on what's available
+$image_meta_slug = 'logo';
+if ( !$artist->meta( $image_meta_slug ) ) {
+  $image_meta_slug = 'headshotImage';
+}
+?>
 
-<div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" itemscope itemtype="http://schema.org/Artist">
+<div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>"<?php microdata_type( $artist, '', true ); ?>>
+  
+  <?php microdata_meta( $artist, array( 'url' ), true ); ?>
 
   <div class="cfct-block sidebar-left span4 first visible-desktop">
     <div class="cfct-module" style="padding: 0; margin: 0;">
-
-    <div class="visible-desktop dd_featured_image_wrap <?php echo $image ? 'have_image' : 'no_image'; ?>">
-      <?php echo $image; ?>
+    
+    <?php if ( $artist->meta( $image_meta_slug ) ) : ?>
+    <div class="visible-desktop dd_featured_image_wrap <?php echo $artist->meta( $image_meta_slug ) ? 'have_image' : 'no_image'; ?>">
+      <?php echo $artist->image( $image_meta_slug, 'sidebar_poster', true ); ?>
     </div>
+    <?php endif; ?>
 
     <ul class="dd_side_panel_nav">
 
@@ -60,17 +70,32 @@
 
         <div class="entry-content clearfix">
 
-          <?php if( $image ) { ?>
-            <div class="poster-iphone hidden-desktop">
-              <?php echo $image; ?>
-            </div>
-            <hr class="hidden-desktop"/>
-          <?php } ?>
+          <?php if ( $artist->meta( $image_meta_slug ) ) : ?>
+          <div class="poster-iphone hidden-desktop">
+            <?php echo $artist->image( $image_meta_slug, 'sidebar_poster', true ); ?>
+          </div>
+          <hr class="hidden-desktop"/>
+          <?php endif; ?>
 
           <div class="category_description taxonomy">
           <?php the_content(); ?>
           </div>
           <hr class="dotted visible-desktop" style="margin-top:5px;"/>
+
+          <?php if ( $artist->meta( 'officialLink' ) ) : ?>
+          <div class="official_link">
+            <span>Official Website:</span>
+            <a href="<?php echo $artist->meta( 'officialLink' ); ?>" target="_blank"<?php microdata_manual( 'sameAs', '', true ); ?>><?php echo $artist->meta( 'officialLink' ); ?></a>
+          </div>
+          <?php endif; ?>
+
+          <?php if ( $artist->meta( 'socialLinks' ) ) { ?>
+          <ul class="tax_meta">
+            <?php foreach( $artist->meta( 'socialLinks' ) as $link ) : ?>
+            <li><a href="<?php echo $link; ?>" target="_blank"><?php echo $link; ?></a></li>
+            <?php endforeach; ?>
+          </ul>
+          <?php } ?>
 
         </div>
 

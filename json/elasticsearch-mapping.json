@@ -123,7 +123,7 @@
           "url": {
             "type": "string",
             "index": "no",
-            "include_in_all": false
+            "include_in_all": true
           }
         }
       },
@@ -367,7 +367,7 @@
           "url": {
             "type": "string",
             "index": "no",
-            "include_in_all": false
+            "include_in_all": true
           }
         }
       },
@@ -529,8 +529,8 @@
           },
           "url": {
             "type": "string",
-            "index": "no",
-            "include_in_all": false
+            "index": "not_analyzed",
+            "include_in_all": true
           }
         }
       },
@@ -652,8 +652,8 @@
           },
           "url": {
             "type": "string",
-            "index": "no",
-            "include_in_all": false
+            "index": "not_analyzed",
+            "include_in_all": true
           }
         }
       }

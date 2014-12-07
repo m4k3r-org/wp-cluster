@@ -2,20 +2,26 @@
 
 <?php get_template_part( 'attention', 'venue' ); ?>
 
-<?php
-  $venue = new \DiscoDonniePresents\Venue( get_the_ID(), false ); the_post();
-?>
+<?php $venue = new \DiscoDonniePresents\Venue( get_the_ID(), false ); the_post(); ?>
 
-<?php $image = wp_get_attachment_image( $venue->meta('imageLogo'), $size = 'sidebar_poster' ); ?>
-
-<div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" itemscope itemtype="http://schema.org/Venue">
+<div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>"<?php microdata_type( $venue, '', true ); ?>>
+  
+  <?php microdata_meta( $venue, array( 'url' ), true ); ?>
+  <?php if ( $venue->meta('geo_located') ) : ?>
+  <span class="meta"<?php microdata_manual( 'geo', 'GeoCoordinates', true ); ?>>
+    <span<?php microdata_manual( 'latitude', '', true ); ?>><?php echo $venue->meta('latitude'); ?></span>
+    <span<?php microdata_manual( 'longitude', '', true ); ?>><?php echo $venue->meta('longitude'); ?></span>
+  </span>
+  <?php endif; ?>
 
   <div class="cfct-block sidebar-left span4 first visible-desktop">
     <div class="cfct-module" style="padding: 0; margin: 0;">
 
-    <div class="visible-desktop dd_featured_image_wrap <?php echo $image ? 'have_image' : 'no_image'; ?>">
-      <?php echo $image; ?>
+    <?php if ( $venue->meta( 'imageLogo' ) ) : ?>
+    <div class="visible-desktop dd_featured_image_wrap <?php echo $venue->meta( 'imageLogo' ) ? 'have_image' : 'no_image'; ?>">
+      <?php echo $venue->image( 'imageLogo', 'sidebar_poster', true ); ?>
     </div>
+    <?php endif; ?>
 
     <ul class="dd_side_panel_nav">
 
@@ -61,35 +67,36 @@
 
         <header class="entry-title-wrapper term-title-wrapper">
           <?php flawless_breadcrumbs(); ?>
-          <h1 class="entry-title"><?php echo $venue->post('post_title'); ?></h1>
+          <h1 class="entry-title"><?php echo $venue->post('post_title', array() ); ?></h1>
         </header>
 
         <div class="entry-content clearfix">
 
-          <?php if( $image ) { ?>
-            <div class="poster-iphone hidden-desktop">
-              <?php echo $image; ?>
-            </div>
-            <hr class="hidden-desktop"/>
-          <?php } ?>
+          <?php if ( $venue->meta( 'imageLogo' ) ) : ?>
+          <div class="poster-iphone hidden-desktop">
+            <?php echo $venue->image( 'imageLogo', 'sidebar_poster', true ); ?>
+          </div>
+          <hr class="hidden-desktop"/>
+          <?php endif; ?>
 
           <div class="category_description taxonomy">
           <?php the_content(); ?>
           </div>
           <hr class="dotted visible-desktop" style="margin-top:5px;"/>
 
-          <?php
-            if ( $venue->meta('geo_located') ) {
-          ?>
+          <?php if ( $venue->meta('geo_located') ) :?>
+          <div class="tax_address">
+            <span>Address:</span>
+            <?php echo $venue->meta('locationAddress', null, array( 'super_type' => 'PostalAddress', 'super_prop' => 'address' ) ); ?>
+          </div>
+          <?php endif; ?>
 
-            <div class="tax_address">
-              <span>Address:</span>
-              <?php echo $venue->meta('locationAddress'); ?>
-            </div>
-
-          <?php
-            }
-          ?>
+          <?php if ( $venue->meta( 'officialLink' ) ) : ?>
+          <div class="official_link">
+            <span>Official Website:</span>
+            <a href="<?php echo $venue->meta( 'officialLink' ); ?>" target="_blank"<?php microdata_manual( 'sameAs', '', true ); ?>><?php echo $venue->meta( 'officialLink' ); ?></a>
+          </div>
+          <?php endif; ?>
 
           <?php if ( $venue->meta( 'socialLinks' ) ) { ?>
           <ul class="tax_meta">
@@ -113,7 +120,6 @@
           return_fields: ['start_date','description','summary','venue.address.city','venue.address.state','url','image.poster','venue.name','artists.name','tickets']}" class="elastic_form">
         </form>
 
-        <?php get_template_part('templates/elastic/loop', 'event'); ?>
         <?php get_template_part('templates/elastic/loop', 'event'); ?>
 
       </div>

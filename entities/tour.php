@@ -49,7 +49,7 @@ namespace DiscoDonniePresents {
 
         $_object[ 'summary' ] = $this->post( 'post_title' );
         $_object[ 'url' ]     = get_permalink( $this->_id );
-        $_object[ 'logo' ]    = $photo[0];
+        $_object[ 'logo' ]    = is_array( $photo ) ? $photo[0] : '';
 
         return $_object;
 
