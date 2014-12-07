@@ -4,7 +4,7 @@
 # * http://capitaldealsonline.com/assets/scripts/admin-bar.js
 # * http://capitaldealsonline.com/assets/styles/admin-bar.css
 #
-# @version 0.6.8
+# @version 0.7.0
 # @author potanin@UD
 
 Options -Indexes
@@ -18,7 +18,6 @@ Options -Indexes
   Order allow,deny
   Deny from all
 </FilesMatch>
-
 
 # BEGIN Environment
 <IfModule mod_setenvif.c>

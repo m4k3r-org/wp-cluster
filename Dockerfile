@@ -18,21 +18,4 @@ MAINTAINER    UsabilityDynamics, Inc.   <info@usabilitydynamics.com>
 
 RUN           rm -rf /var/www/**
 
-ADD           .git                                                    /var/www/.git
-ADD           application                                             /var/www/application
-ADD           vendor                                                  /var/www/vendor
-ADD           test                                                    /var/www/test
-ADD           .htaccess                                               /var/www/.htaccess
-ADD           index.php                                               /var/www/index.php
-ADD           composer.json                                           /var/www/composer.json
-ADD           wp-cli.yml                                              /var/www/wp-cli.yml
-ADD           advanced-cache.php                                      /var/www/advanced-cache.php
-ADD           maintenance.php                                         /var/www/maintenance.php
-ADD           object-cache.php                                        /var/www/object-cache.php
-ADD           vendor/plugins/wp-cluster/lib/class-database.php        /var/www/db.php
-ADD           vendor/plugins/wp-cluster/lib/class-sunrise.php         /var/www/sunrise.php
-ADD           vendor/plugins/wp-veneer/lib/class-advanced-cache.php   /var/www/advanced-cache.php
-ADD           vendor/plugins/wp-veneer/lib/class-object-cache.php     /var/www/object-cache.php
-
-
-
+ADD           ./  /var/www/

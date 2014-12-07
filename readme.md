@@ -170,6 +170,10 @@ docker run -itd \
 docker exec -it www.discodonniepresents.com /bin/bash
 ```
 
+```
+docker build --tag=discodonniepresents/www.discodonniepresents.com:2.1.5 /opt/sources/DiscoDonniePresents/www.discodonniepresents.com
+```
+
 ### Archive Sync
 
 ```
