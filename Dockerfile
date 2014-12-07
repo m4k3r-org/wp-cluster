@@ -18,6 +18,7 @@ MAINTAINER    UsabilityDynamics, Inc.   <info@usabilitydynamics.com>
 
 RUN           rm -rf /var/www/**
 
+ADD           .git                                                    /var/www/.git
 ADD           application                                             /var/www/application
 ADD           vendor                                                  /var/www/vendor
 ADD           test                                                    /var/www/test
