@@ -84,7 +84,7 @@ test:
     - npm test
 
   post:
-    - make image
+    - docker build --tag=discodonniepresents/www.discodonniepresents.com .
 
 deployment:
   production:

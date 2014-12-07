@@ -149,6 +149,40 @@ gsutil -m setacl -R -a public-read gs://media.umesouthpadre.com
 gsutil -m setacl -R -a public-read gs://ddpsdixyeejhwkgg.wpcloud.zone/media
 ```
 
+### Migration
+
+18M	  ./winterfantasyrgv.com
+14M	  ./wildwood.beachblanketfestival.com
+105M	./sugarsociety.com
+2.5M	./mexico.lightsallnight.com
+1.5M	./hififest.com
+1.6M	./gxgmag.com
+11M	  ./gifttampa.com
+4.5M	./galveston.beachblanketfestival.com
+39G	  ./discodonniepresents.com
+21M	  ./beachblanketfestival.com
+11M	  ./2014.dayafter.com
+344M	./suncitymusicfestival.com
+20M	  ./old.cominghomemusicfestival.com
+3.1M	./cominghomemusicfestival.com
+9.0M	./old.isladelsolfest.com
+24M	  ./isladelsolfest.com
+3.1M	./old.somethingwicked.com
+347M	./somethingwicked.com
+6.1M	./old.dayafter.com
+218M	./dayafter.com
+5.2M	./2013.monsterblockparty.com
+24M	  ./monsterblockparty.com
+3.5M	./2013.freaksbeatstreats.com
+2.2M	./freaksbeatstreats.com
+839M	./2014.umesouthpadre.com
+252M	./umesouthpadre.com
+433M	./2014.smftampa.com
+266M	./smftampa.com
+464K	./2014.winterfantasyrgv.com
+704K	./2013.bassodyssey.com
+
+
 ### Archive Sync
 
 ```
