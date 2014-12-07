@@ -158,6 +158,9 @@
             }
           }
         };
+        XHR.onerror = function(e) {
+          errorcb(e.target);
+        };
         XHR.send(null);
         return XHR;
       },
@@ -182,6 +185,9 @@
               errorcb(e.target.response, e.target);
             }
           }
+        };
+        XHR.onerror = function(e) {
+          errorcb(e.target);
         };
         XHR.send(data);
         return XHR;
@@ -208,6 +214,9 @@
             }
           }
         };
+        XHR.onerror = function(e) {
+          errorcb(e.target);
+        };
         XHR.send(data);
         return XHR;
       },
@@ -232,6 +241,9 @@
               errorcb(JSON.parse(e.target.response), e.target);
             }
           }
+        };
+        XHR.onerror = function(e) {
+          errorcb(e.target);
         };
         XHR.send(data);
         return XHR;
@@ -271,6 +283,9 @@
               errorcb(JSON.parse(e.target.response), e.target);
             }
           }
+        };
+        XHR.onerror = function(e) {
+          errorcb(e.target);
         };
         XHR.send(data);
         return XHR;

@@ -43,6 +43,10 @@ namespace DiscoDonniePresents {
       public function __construct($id = null, $preload = true) {
         parent::__construct($id);
 
+        if ( $this->event()->meta( 'posterImage' ) ) {
+          $this->meta( 'primaryImageOfPage', $this->event()->meta( 'posterImage' ) );
+        }
+
         if ( $preload ) {
           $this->_event = $this->load_event();
 
@@ -58,14 +62,20 @@ namespace DiscoDonniePresents {
        * @return type
        */
       public function load_event() {
-        return new Event( $this->meta( 'event' ), false );
+        if ( $this->meta( 'event' ) ) {
+          return new Event( $this->meta( 'event' ), false );
+        }
+        return false;
       }
 
       /**
        *
        */
       public function load_credit() {
-        return new Credit( $this->meta( 'creator' ), false );
+        if ( $this->meta( 'creator' ) ) {
+          return new Credit( $this->meta( 'creator' ), false );
+        }
+        return false;
       }
 
       /**
@@ -125,13 +135,13 @@ namespace DiscoDonniePresents {
         $_object[ 'url' ] = get_permalink( $this->_id );
         $_object[ 'description' ] = $this->post('post_excerpt');
         $_object[ 'source_url' ] = $this->meta( 'isBasedOnUrl' );
-        $_object[ 'photo' ] = $photo[0];
+        $_object[ 'photo' ] = is_array( $photo ) ? $photo[0] : '';
         $_object[ 'event_date' ] = date( 'c', strtotime( $this->event()->meta('dateStart') ) );
         $_object[ 'event_type' ] = $this->event()->taxonomies( 'event-type', 'elasticsearch' );
         $_object[ 'age_restriction' ] = $this->event()->taxonomies( 'age-limit', 'elasticsearch' );
         $_object[ 'image' ] = array(
-          'poster' => $poster[0],
-          'small'  => $small[0]
+          'poster' => is_array( $poster ) ? $poster[0] : '',
+          'small'  => is_array( $small ) ? $small[0] : ''
         );
 
         $_object[ 'artists' ] = array();
@@ -157,10 +167,17 @@ namespace DiscoDonniePresents {
           }
         }
 
-        $_object[ 'tour' ] = array(
-          'name' => $this->event()->tour()->post('post_title'),
-          'url' => get_permalink( $this->event()->tour()->post('ID') )
-        );
+        if ( $this->event()->tour() ) {
+          $_object[ 'tour' ] = array(
+            'name' => $this->event()->tour()->post('post_title'),
+            'url' => get_permalink( $this->event()->tour()->post('ID') )
+          );
+        } else {
+          $_object[ 'tour' ] = array(
+            'name' => '',
+            'url' => ''
+          );
+        }
 
         $city = $this->event()->venue()->taxonomies('city', 'elasticsearch');
         $state = $this->event()->venue()->taxonomies('state', 'elasticsearch');

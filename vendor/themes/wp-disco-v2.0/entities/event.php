@@ -84,7 +84,10 @@ namespace DiscoDonniePresents {
        * @return \DiscoDonniePresents\Venue
        */
       public function load_venue() {
-        return new Venue( $this->meta('venue'), false );
+        if ( $this->meta('venue') ) {
+          return new Venue( $this->meta('venue'), false );
+        }
+        return false;
       }
 
       /**
@@ -161,7 +164,10 @@ namespace DiscoDonniePresents {
        * @return \DiscoDonniePresents\Tour
        */
       private function load_tour() {
-        return new Tour( $this->meta('tour') );
+        if ( $this->meta['tour'] ) {
+          return new Tour( $this->meta('tour') );
+        }
+        return false;
       }
 
       /**
@@ -314,7 +320,7 @@ namespace DiscoDonniePresents {
       /**
        *
        */
-      public function genre() {
+      public function genre( $format = 'link', $separator = ', ', $microdata_args = false ) {
         $_genre = array();
 
         if ( empty( $this->_artists ) ) {
@@ -333,7 +339,11 @@ namespace DiscoDonniePresents {
           }
         }
 
-        return $this->termsToString( 'genre', $_genre, ', ' );
+        if ( $format != 'link' ) {
+          return $_genre;
+        }
+
+        return $this->termsToString( 'genre', $_genre, $separator, $microdata_args );
 
       }
 
@@ -355,10 +365,10 @@ namespace DiscoDonniePresents {
         $_object[ 'end_date' ] = date( 'c', strtotime( $this->meta('dateEnd') ) );
         $_object[ 'event_type' ] = $this->taxonomies( 'event-type', 'elasticsearch' );
         $_object[ 'age_restriction' ] = $this->taxonomies( 'age-limit', 'elasticsearch' );
-        $_object[ 'photo' ] = $photo[0];
+        $_object[ 'photo' ] = is_array( $photo ) ? $photo[0] : '';
         $_object[ 'tickets' ] = $this->meta('urlTicket');
         $_object[ 'image' ] = array(
-            'poster' => $poster[0]
+            'poster' => is_array( $poster ) ? $poster[0] : ''
         );
 
         $_object[ 'artists' ] = array();
@@ -380,30 +390,55 @@ namespace DiscoDonniePresents {
           );
         }
 
-        $city = $this->venue()->taxonomies('city', 'elasticsearch');
-        $state = $this->venue()->taxonomies('state', 'elasticsearch');
-        $country = $this->venue()->taxonomies('country', 'elasticsearch');
-        $type = $this->venue()->taxonomies('venue-type', 'elasticsearch');
-        $_object[ 'venue' ] = array(
-          'name' => htmlspecialchars_decode( $this->venue()->post( 'post_title' ) ),
-          'type' => $type[0],
-          'url' => get_permalink( $this->venue()->post( 'ID' ) ),
-          'address' => array(
-            'full' => $this->venue()->meta( 'locationAddress' ),
-            'city' => $city[0],
-            'state' => $state[0],
-            'country' => $country[0],
-            'geo' => array(
-              'lat' => (float)$this->venue()->meta('latitude'),
-              'lon' => (float)$this->venue()->meta('longitude')
+        if ( $this->venue() ) {
+          $city = $this->venue()->taxonomies('city', 'elasticsearch');
+          $state = $this->venue()->taxonomies('state', 'elasticsearch');
+          $country = $this->venue()->taxonomies('country', 'elasticsearch');
+          $type = $this->venue()->taxonomies('venue-type', 'elasticsearch');
+          $_object[ 'venue' ] = array(
+            'name' => htmlspecialchars_decode( $this->venue()->post( 'post_title' ) ),
+            'type' => $type[0],
+            'url' => get_permalink( $this->venue()->post( 'ID' ) ),
+            'address' => array(
+              'full' => $this->venue()->meta( 'locationAddress' ),
+              'city' => $city[0],
+              'state' => $state[0],
+              'country' => $country[0],
+              'geo' => array(
+                'lat' => (float)$this->venue()->meta('latitude'),
+                'lon' => (float)$this->venue()->meta('longitude')
+              )
             )
-          )
-        );
+          );
+        } else {
+          $_object[ 'venue' ] = array(
+            'name' => '',
+            'type' => '',
+            'url' => '',
+            'address' => array(
+              'full' => '',
+              'city' => '',
+              'state' => '',
+              'country' => '',
+              'geo' => array(
+                'lat' => 0.0,
+                'lon' => 0.0
+              )
+            )
+          );
+        }
 
-        $_object[ 'tour' ] = array(
-          'name' => htmlspecialchars_decode( $this->tour()->post('post_title') ),
-          'url' => get_permalink( $this->tour()->post('ID') )
-        );
+        if ( $this->tour() ) {
+          $_object[ 'tour' ] = array(
+            'name' => htmlspecialchars_decode( $this->tour()->post('post_title') ),
+            'url' => get_permalink( $this->tour()->post('ID') )
+          );
+        } else {
+          $_object[ 'tour' ] = array(
+            'name' => '',
+            'url' => ''
+          );
+        }
 
         return $_object;
 

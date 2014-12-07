@@ -1,5 +1,4 @@
 <?php
-
 if( !class_exists( 'HTMLModule' ) ) {
   /**
    * Plain Text Carrington Build Module
@@ -12,9 +11,11 @@ if( !class_exists( 'HTMLModule' ) ) {
     public function __construct() {
       $opts = array(
         'description' => __( 'Add raw HTML or JavaScript. This content is not altered.', 'carrington-build' ),
-        'icon'        => 'html/icon.png'
+        'icon'        => plugins_url( '/icon.png', __DIR__ )
       );
+
       parent::__construct( 'cfct-html', __( 'HTML', 'carrington-build' ), $opts );
+
     }
 
     public function display( $data ) {

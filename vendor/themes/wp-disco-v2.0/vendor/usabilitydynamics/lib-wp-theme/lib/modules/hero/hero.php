@@ -15,7 +15,7 @@ if( !class_exists( 'HeroModule' ) && class_exists( 'ImageModule' ) ) {
     public function __construct() {
       $opts = array(
         'description' => __( 'Superimage!', 'carrington-build' ),
-        'icon'        => 'hero/icon.png'
+        'icon'        => plugins_url( '/icon.png', __DIR__ )
       );
 
       cfct_build_module::__construct( 'cfct-module-hero', __( 'Hero', 'carrington-build' ), $opts );

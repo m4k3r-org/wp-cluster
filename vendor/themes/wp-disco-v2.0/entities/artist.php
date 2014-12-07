@@ -53,7 +53,7 @@ namespace DiscoDonniePresents {
         $_object[ 'genre' ]   = $this->taxonomies( 'genre', 'elasticsearch' ) ? $this->taxonomies( 'genre', 'elasticsearch' ) : array();
         $_object[ 'official_url' ] = $this->meta( 'officialLink' ) ? $this->meta( 'officialLink' ) : '';
         $_object[ 'social_urls' ]  = $this->meta( 'socialLinks' ) ? $this->meta( 'socialLinks' ) : array();
-        $_object[ 'logo' ]         = $photo[0];
+        $_object[ 'logo' ]         = is_array( $photo ) ? $photo[0] : '';
 
         return $_object;
 

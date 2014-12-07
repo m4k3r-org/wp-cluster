@@ -365,7 +365,7 @@ namespace UsabilityDynamics\Theme {
             else {
               $tag = get_tag( $rule[ 'minor' ] );
 
-              if( $tag && is_tag( $tag->slug ) )
+              if( $tag && !is_wp_error($tag) && is_tag( $tag->slug ) )
                 $condition_result = true;
             }
             break;

@@ -4,14 +4,21 @@
 
 <?php $video = new \DiscoDonniePresents\VideoObject( get_the_ID(), false ); the_post(); ?>
 
-<div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" itemscope itemtype="http://schema.org/Video">
+<div class="<?php flawless_wrapper_class( 'tabbed-content' ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
 
   <div class="cfct-block sidebar-left span4 first">
     <div class="cfct-module" style="padding: 0; margin: 0;">
-
+    
+    <?php if ( $video->meta( 'primaryImageOfPage' ) ) : ?>
     <div class="visible-desktop dd_featured_image_wrap <?php echo $video->meta('primaryImageOfPage') ? 'have_image' : 'no_image'; ?>">
-      <?php echo wp_get_attachment_image( $video->meta('primaryImageOfPage'), $size = 'sidebar_poster' ); ?>
+      <?php
+      $img_src = wp_get_attachment_image_src( $video->meta( 'primaryImageOfPage' ), 'full' );
+      echo '<a href="' . $img_src[0] . '">';
+      echo wp_get_attachment_image( $video->meta('primaryImageOfPage'), $size = 'sidebar_poster' );
+      echo '</a>';
+      ?>
     </div>
+    <?php endif; ?>
 
     <ul class="dd_side_panel_nav">
       <li class="visible-desktop link first ui-tabs-active"><a href="#section_video_details"><i class="icon-video icon-dd"></i> <?php _e('Video'); ?></a></li>
@@ -43,7 +50,7 @@
 
       <header class="entry-title-wrapper">
         <?php flawless_breadcrumbs(); ?>
-        <?php flawless_page_title(); ?>
+        <h1 class="entry-title"><?php echo $video->post('post_title'); ?></h1>
         <p class="event_tagline"><?php echo $video->post('post_excerpt'); ?>
           <span class="event_credit">
             <?php _e('Videos by'); ?> <a href="<?php echo get_permalink( $video->credit()->post('ID') ); ?>" target="_blank"><?php echo $video->credit()->post('post_title'); ?></a>
@@ -52,10 +59,12 @@
       </header>
 
       <hr class="dotted"/>
-
+      
+      <?php if ( $video->meta( 'primaryImageOfPage' ) ) : ?>
       <div class="poster-iphone hidden-desktop">
         <?php echo wp_get_attachment_image( $video->meta('primaryImageOfPage'), $size = 'sidebar_poster' ); ?>
       </div>
+      <?php endif; ?>
 
       <hr class="dotted hidden-desktop"/>
 
@@ -70,9 +79,11 @@
 
             <span class="event_meta_label"><i class="hdp_event_time icon-dd"></i> <?php _e('Time'); ?></span>
             <span class="event_meta_value"><?php echo $video->event()->meta('eventTimeHuman'); ?></span>
-
+            
+            <?php if( $video->event->taxonomies( 'age-limit' ) != '' ) : ?>
             <span class="event_meta_label"><i class="hdp_age_limit icon-dd"></i> <?php _e('Age Limit'); ?></span>
             <span class="event_meta_value"><?php echo $video->event()->taxonomies( 'age-limit' ); ?></span>
+            <?php endif; ?>
 
             <span class="event_meta_label"><i class="hdp_venue icon-dd"></i> <?php _e('Venue'); ?></span>
             <span class="event_meta_value">
@@ -86,21 +97,34 @@
 
           <div class="span6">
 
+            <?php if ( $video->event->promoters() != '' ): ?>
+            <span class="event_meta_label"><i class="hdp_artist icon-dd"></i> <?php _e('Promoter'); ?></span>
+            <span class="event_meta_value"><?php echo $video->event->promoters(); ?></span>
+            <?php endif; ?>
+            
+            <?php if ( $video->event->taxonomies( 'event-type' ) != '' ): ?>
             <span class="event_meta_label"><i class="hdp_type icon-dd"></i> <?php _e('Type'); ?></span>
             <span class="event_meta_value"><?php echo $video->event()->taxonomies( 'event-type' ); ?></span>
-
+            <?php endif; ?>
+            
+            <?php if ( $video->event->genre() != '' ): ?>
             <span class="event_meta_label"><i class="hdp_genre icon-dd"></i> <?php _e('Genre'); ?></span>
             <span class="event_meta_value"><?php echo $video->event()->genre(); ?></span>
+            <?php endif; ?>
 
+            <?php if( $video->event->tour() ): ?>
             <span class="event_meta_label"><i class="hdp_tour icon-dd"></i> <?php _e('Tour'); ?></span>
             <span class="event_meta_value">
               <a href="<?php echo get_permalink( $video->event()->tour()->post( 'ID' ) ); ?>">
                 <?php echo $video->event()->tour()->post( 'post_title' ); ?>
               </a>
             </span>
-
+            <?php endif; ?>
+            
+            <?php if ( $video->event->artists() != '' ): ?>
             <span class="event_meta_label"><i class="hdp_artist icon-dd"></i> <?php _e('Artist'); ?></span>
             <span class="event_meta_value"><?php echo $video->event()->artists(); ?></span>
+            <?php endif; ?>
 
           </div>
 

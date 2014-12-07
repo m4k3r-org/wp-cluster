@@ -32,6 +32,13 @@ class cfct_module_shortcode extends cfct_build_module {
 		return $this->load_view($data, compact('text'));
 	}
 
+	public function filter_objects_from_array( $item ) {
+		if( is_object( $item ) )
+			return false;
+
+		return true;
+	}
+
 	/**
 	 * Build the admin form
 	 * 
@@ -41,7 +48,8 @@ class cfct_module_shortcode extends cfct_build_module {
 	public function admin_form($data) {
 		global $shortcode_tags;
 		if (!empty($shortcode_tags) && is_array($shortcode_tags)) {
-			$tags = array_unique($shortcode_tags);
+			$tags = array_filter($shortcode_tags, array($this,'filter_objects_from_array'));
+			$tags = array_unique($tags, SORT_REGULAR);
 			ksort($tags);
 			foreach ($tags as $shortcode => $func) {
 				// if shortcode func is an internal class method the func will be an array
@@ -100,6 +108,7 @@ class cfct_module_shortcode extends cfct_build_module {
 #cfct-shortcode-edit-form .help {
 	color: #777;
 	font-size: 11px;
+	margin-left: 0;
 }
 		';
 	}

@@ -14,7 +14,7 @@ if( !class_exists( 'LoopModule' ) && class_exists( 'cfct_build_module' ) ) {
     protected $_deprecated_id = 'cfct-module-loop'; // deprecated property, not needed for new module development
 
     protected $default_display_args = array(
-      'caller_get_posts' => 1
+      'ignore_sticky_posts' => 1
     );
 
     protected $default_content_display = 'title';

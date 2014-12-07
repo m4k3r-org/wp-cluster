@@ -41,11 +41,23 @@
                       <a data-bind="html:fields['summary'],attr: {href:fields.url}"></a>
                     </li>
                     <li class="hdp_event_date" data-bind="html:'<span>Date:</span> '+moment(fields.start_date[0]).format('LLLL')"></li>
-                    <li class="hdp_event_venue" data-bind="html:'<span>Location:</span> '+fields['venue.name']+', '+fields['venue.address.city']+', '+fields['venue.address.state']"></li>
+                    <li class="hdp_event_venue">
+                      <span>Location:</span>
+                      <a data-bind="html:fields['venue.name'],attr: {href: fields['venue.url']}"></a>,
+                      <span data-bind="html:fields['venue.address.city']"></span>,
+                      <span data-bind="html:fields['venue.address.state']"></span>
+                    </li>
                     <li class="hdp_event_artists" data-bind="visible:typeof fields['artists.name'] !== 'undefined'">
                       <span>Artists: </span>
-                      <!-- ko foreach:fields['artists.name'] -->
-                        <a data-bind="text:$data"></a><!-- ko if:$parent.fields['artists.name'].length>$index()+1 -->, <!-- /ko -->
+                      <!-- ko if: fields['artists.url'] === undefined -->
+                        <!-- ko foreach:fields['artists.name'] -->
+                          <span data-bind="text:$data"></span><!-- ko if:$parent.fields['artists.name'].length>$index()+1 -->, <!-- /ko -->
+                        <!-- /ko -->
+                      <!-- /ko -->
+                      <!-- ko ifnot: fields['artists.url'] === undefined -->
+                        <!-- ko foreach:fields['artists.name'] -->
+                          <a data-bind="text:$data,attr: {href: $parent.fields['artists.url'][$index()]}"></a><!-- ko if:$parent.fields['artists.name'].length>$index()+1 -->, <!-- /ko -->
+                        <!-- /ko -->
                       <!-- /ko -->
                     </li>
                     <li class="hdp_event_description"><p data-bind="html:fields['description']"></p></li>

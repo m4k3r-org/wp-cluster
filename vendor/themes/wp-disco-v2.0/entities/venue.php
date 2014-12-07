@@ -118,7 +118,7 @@ namespace DiscoDonniePresents {
         $_object[ 'summary' ] = $this->post( 'post_title' );
         $_object[ 'type' ]    = $this->taxonomies('venue-type', 'elasticsearch') ? $this->taxonomies('venue-type', 'elasticsearch') : array();
         $_object[ 'url' ]     = get_permalink( $this->post( 'ID' ) );
-        $_object[ 'logo' ]    = $photo[0];
+        $_object[ 'logo' ]    = is_array( $photo ) ? $photo[0] : '';
         $_object[ 'address' ] = array(
           'full' => $this->meta( 'locationAddress' ),
           'city' => $city[0],

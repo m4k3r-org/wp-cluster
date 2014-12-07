@@ -11,9 +11,7 @@ if( get_comments_number() ) {
   $meta_html[ ] = '<li class="comments-count"><i class="icon-dd icon-comments-count"></i>' . sprintf( __( '%1s comments', 'flawless' ), get_comments_number() ) . '</li>';
 }
 
-if( get_the_category_list() ) {
-  $side_meta[ ] = '<li class="posted-ago"><i class="icon-gray icon-time-ago"></i>' . sprintf( __( '%1s ago', 'flawless' ), human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) ) . '</li>';
-}
+$side_meta[ ] = '<li class="posted-ago"><i class="icon-gray icon-time-ago"></i>' . get_the_date() . '</li>';
 
 if( get_the_category_list() ) {
   $side_meta[ ] = '<li class="posted-in"><i class="icon-gray icon-posted-in"></i>' . __( 'Posted under ', 'flawless' ) . get_the_category_list( ', ' ) . '</li>';
@@ -33,7 +31,7 @@ $side_meta[ ] = '<li class="permalink"><a href="' . get_permalink() . '"><i clas
       <div class="cfct-module" style="padding: 0; margin: 0;">
       <ul class="dd_side_panel_nav">
         <li class="visible-desktop link first ui-tabs-selected"><a href="#section_event_details"><i class="icon-events icon-dd"></i> Post</a></li>
-        <li class="visible-desktop link"><a href="#section_comments"><i class="icon-comments-gray icon-dd"></i> Comments <?php echo get_comments_number() ? '<span class="comment_count">' . get_comments_number() . '</span>' : ''; ?></a> </li>
+        <li class="visible-desktop link"><a href="#section_comments"><i class="icon-comments icon-dd"></i> Comments <?php echo get_comments_number() ? '<span class="comment_count">' . get_comments_number() . '</span>' : ''; ?></a> </li>
       </ul>
 
         <?php echo '<ul class="entry-meta dd_side_panel_nav">' . implode( '', (array) $side_meta ) . '</ul>'; ?>
@@ -52,7 +50,7 @@ $side_meta[ ] = '<li class="permalink"><a href="' . get_permalink() . '"><i clas
 
         <?php get_template_part( 'entry-meta', 'header' ); ?>
 
-          <?php flawless_thumbnail( array( 'size' => 'hd_large' ) ); ?>
+          <?php flawless_thumbnail( array( 'size' => 'hd_large', 'link' => false ) ); ?>
 
           <header class="entry-title-wrapper page-title-wrapper">
           <?php flawless_breadcrumbs(); ?>

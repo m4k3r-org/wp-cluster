@@ -10,6 +10,7 @@ class cfct_build_row {
 	private $defaults = array(
 		'row_class' => 'row',
 		'block_class' => 'cfct-block',
+		'extras' => array(),
 
 		/* do not override these default classes or none of them
 		will correspond to needed classes in JS */
@@ -30,6 +31,7 @@ class cfct_build_row {
 	 */
 	protected $blocks = array();
 	public $current_module;
+	public $row_options;
 
 	public function __construct($config) {
 		// Auto-create a filter key modifier if none was set.
@@ -69,8 +71,38 @@ class cfct_build_row {
 		// Add class for admin class group only
 		$this->add_classes(array('cfct-row'), 'admin');
 
+		$this->row_options = new cfct_row_options();
+
 		// validate config first...
+		$config['extras'] = (isset($config['extras'])) ? $config['extras'] : array();
 		$this->config = array_merge($this->config, $config);
+
+	}
+
+	protected function do_extras() {
+		global $cfct_build;
+		return $cfct_build->enable_custom_attributes && ($this->row_options instanceof cfct_row_options);
+	}
+
+	public function get_extras() {
+		return apply_filters('cfct-build-row-options', $this->config['extras'], get_class($this));
+	}
+
+	public function add_extra($attr) {
+		if (class_exists($attr)) {
+			$this->config['extras'][] = $attr;
+			$this->config['extras'] = array_unique($this->config['extras']);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public function remove_extra($attr) {
+		if (in_array($attr, $this->config['config'])) {
+			$this->config['extras'] = array_diff($this->config['extras'], array($attr));
+		}
 	}
 
 // Module integrity check
@@ -222,7 +254,7 @@ class cfct_build_row {
 			}
 		}
 
-		$html = $this->row_html(true);
+		$html = $this->row_html($opts, true);
 
 		$row_values = array(
 			'{class}' => $this->row_class(array(), 'admin'),
@@ -231,6 +263,10 @@ class cfct_build_row {
 
 		if ($empty) {
 			$row_values['{class}'] .= ' cfct-row-empty';
+		}
+
+		if (isset($opts['render']) && !$opts['render']) {
+			$row_values['{class}'] .= ' cfct-row-disabled';
 		}
 
 		// handle custom blocks order
@@ -324,7 +360,6 @@ class cfct_build_row {
 							$this->current_module = $template->get_module($module_key);
 							$module_html = $template->get_module($module_key)->html($module);
 							global $post;
-              $post = (object)$post;
 							if (current_user_can('edit_post', $post->ID)) {
 								// add an Edit link for the module
 
@@ -354,12 +389,13 @@ class cfct_build_row {
 
 				$blocks[$a] = $block->as_client_html(array(
 					'{modules}' => $modules,
-					'{id}' => $blockdata['guid']
+					'{id}' => $blockdata['guid'],
+					'{class}' => apply_filters('cfct-client-block-classes', $block->make_classname(), $blockdata),
 				));
 			}
 		}
 
-		$html = $this->row_html();
+		$html = $this->row_html($opts);
 
 		/* Last-minute hook for adding back in the inrow classes that
 		were default in last version.
@@ -373,7 +409,7 @@ class cfct_build_row {
 
 		// build row HTML
 		$row_values = array(
-			'{class}' => $this->row_class($generated_row_classes),
+			'{class}' => apply_filters('cfct-build-row-class', $this->row_class($generated_row_classes), $opts),
 			'{id}' => $opts['guid']
 		);
 
@@ -395,6 +431,7 @@ class cfct_build_row {
 
 		// put it all together
 		$html = str_replace(array_keys($row_values), array_values($row_values), $html);
+		$html = apply_filters('cfct-build-row-html', $html, $row_values, $this, $opts);
 		return apply_filters(
 			'cfct-build-row-'.$this->get_filter_mod().'-html',
 			$html
@@ -410,16 +447,25 @@ class cfct_build_row {
 	 * @param bool $admin
 	 * @return string html
 	 */
-	public function row_html($admin = false) {
+	public function row_html($opts, $admin = false) {
+		global $cfct_build;
+		$post_data = $cfct_build->get_postmeta();
+		$options_layout_html = '';
+		if ($this->do_extras()) {
+			$row_options = (isset($post_data['row-options'][$opts['guid']])) ? $post_data['row-options'][$opts['guid']] : array();
+			$options_layout_html = $this->row_options->list_html($opts, $row_options, $this->get_extras());
+		}
 		if ($admin) {
 			$html = '
 				<div id="{id}" class="{class}">
 					<div class="cfct-row-inner">
 						<div title="'.__('Drag and drop to reorder', 'carrington-build').'" class="'.$this->defaults['row_handle_class'].'">
-							<a class="'.$this->defaults['remove_row_class'].'" href="#">'.__('Remove', 'carrington-build').'</a>
+						<a class="'.$this->defaults['remove_row_class'].'" href="#">'.__('Remove', 'carrington-build').'</a>
+						'.$options_layout_html.'
 						</div>
 						'.$this->row_table().'
 					</div>
+					<div class="row-disabled">Row Disabled</div>
 				</div>';
 		}
 		else {
@@ -439,7 +485,8 @@ class cfct_build_row {
 			/* Add new additional parameter for classes as array */
 			$this->get_classes(),
 			/* Add new additional parameter for row filtermod */
-			$this->get_filter_mod()
+			$this->get_filter_mod(),
+			$opts
 		);
 	}
 

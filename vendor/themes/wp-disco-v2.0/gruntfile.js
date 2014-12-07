@@ -27,12 +27,12 @@ module.exports = function( grunt ) {
           yuicompress: true,
           relativeUrls: true,
           paths: [
-            'static/styles/src'
+            'css/src'
           ]
         },
         files: {
-          'static/styles/app.css' : [
-            'static/styles/src/app.less'
+          'css/app.css' : [
+            'css/src/app.less'
           ]
         }
       },
@@ -41,12 +41,12 @@ module.exports = function( grunt ) {
           yuicompress: false,
           relativeUrls: true,
           paths: [
-            'static/styles/src'
+            'css/src'
           ]
         },
         files: {
-          'static/styles/app.css' : [
-            'static/styles/src/app.less'
+          'css/app.css' : [
+            'css/src/app.less'
           ]
         }
       }
@@ -79,14 +79,6 @@ module.exports = function( grunt ) {
     clean: [
       "vendor"
     ]
-
-  });
-
-  // Build Assets
-  grunt.registerTask( 'default', [ 'build' ] );
-
-  // Build Theme
-  grunt.registerTask( 'build', [ 'compile' ], function() {
 
   });
 
