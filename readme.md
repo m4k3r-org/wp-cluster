@@ -149,6 +149,25 @@ gsutil -m setacl -R -a public-read gs://media.umesouthpadre.com
 gsutil -m setacl -R -a public-read gs://ddpsdixyeejhwkgg.wpcloud.zone/media
 ```
 
+### Docker Run
+
+```
+docker run -itd \
+  --name=www.discodonniepresents.com \
+  --hostname=www.discodonniepresents.com \
+  --volume=/opt/storage/DiscoDonniePresents/www.discodonniepresents.com:/var/storage \
+  --volume=/opt/sources/DiscoDonniePresents/www.discodonniepresents.com:/var/www \
+  --publish=80:80 \
+  --env=WP_ENV=production \
+  --env=NODE_ENV=production \
+  discodonniepresents/www.discodonniepresents.com:2.1.5
+```
+
+```
+docker exec -it www.discodonniepresents.com /bin/bash
+```
+
+
 ### Archive Sync
 
 ```

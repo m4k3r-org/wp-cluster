@@ -162,7 +162,7 @@ post-pull:
 ##
 build:
 	@echo "Building Docker image"
-	@docker build --tag=discodonniepresents/www.discodonniepresents.com .
+	@docker build --tag=discodonniepresents/www.discodonniepresents.com:2.1.5 /opt/sources/DiscoDonniePresents/www.discodonniepresents.com
 
 ##
 ##
