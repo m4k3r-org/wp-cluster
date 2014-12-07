@@ -77,7 +77,7 @@
         "db_name": "DiscoDonniePresents/www.discodonniepresents.com",
         "db_user": "edm",
         "db_password": "xdzepwgzeqmuuisq",
-        "db_host": "127.0.0.1",
+        "db_host": "colossus.wpcloud.io",
         "wp_debug": false,
         "wp_debug_display": false,
         "wp_debug_log": false,

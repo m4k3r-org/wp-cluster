@@ -24,6 +24,7 @@ ADD           vendor                                                  /var/www/v
 ADD           test                                                    /var/www/test
 ADD           index.php                                               /var/www/index.php
 ADD           composer.json                                           /var/www/composer.json
+ADD           wp-cli.yml                                              /var/www/wp-cli.yml
 ADD           advanced-cache.php                                      /var/www/advanced-cache.php
 ADD           maintenance.php                                         /var/www/maintenance.php
 ADD           object-cache.php                                        /var/www/object-cache.php
@@ -32,5 +33,6 @@ ADD           vendor/plugins/wp-cluster/lib/class-sunrise.php         /var/www/s
 ADD           vendor/plugins/wp-veneer/lib/class-advanced-cache.php   /var/www/advanced-cache.php
 ADD           vendor/plugins/wp-veneer/lib/class-object-cache.php     /var/www/object-cache.php
 ADD           vendor/plugins/wp-veneer/lib/local/.htaccess            /var/www/.htaccess
+
 
 
