@@ -157,6 +157,20 @@ post-pull:
 	@curl -X PURGE somethingwicked.com
 	@curl -X PURGE suncitymusicfestival.com
 
+##
+##
+##
+build:
+	@echo "Building Docker image"
+	@docker build --tag=discodonniepresents/www.discodonniepresents.com .
+
+##
+##
+##
+run:
+	@echo "Running Docker container"
+	@docker run discodonniepresents/www.discodonniepresents.com
+
 # Install for Staging/Development
 #
 # - We always dump /wp-vendor/composer/installers* to avoid any issues with installers.

@@ -1,5 +1,5 @@
 #### 2.2.1
-* WIP
+* Switched Docker build to use wpcloud/site:latest instead of hipstack/wordpress.
 * Disabled PageSpeed and NewRelic on admin.
 
 #### 2.2.0
