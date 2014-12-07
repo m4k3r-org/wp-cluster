@@ -75,7 +75,7 @@ dependencies:
 
   override:
     - npm install
-    - composer install --no-dev
+    # - composer install --no-dev
 
 test:
   override:
@@ -88,12 +88,11 @@ deployment:
   production:
     branch: [production, master, stable]
     commands:
-      - git push git@heroku.com:foo-bar-123.git $CIRCLE_SHA1:master
-      - wp cluster deploy --target=production
+      - echo "Deploy to production..."
   staging:
-    branch: [staging]
+    branch: [staging, develop]
     commands:
-      - wp cluster deploy --target=staging
+      - echo "Deploy to staging..."
 
 general:
   branches:
