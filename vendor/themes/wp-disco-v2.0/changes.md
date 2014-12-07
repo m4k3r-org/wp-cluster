@@ -1,4 +1,8 @@
-### 2.4.0
+#### 2.4.1
+* Added a default build task to gruntfile.
+* Configured LESS build to compress output.
+
+#### 2.4.0
 * Added microdata class
 * Inserted microdata into single pages for events, artists and venues
 * Refined stylesheet structure, now using LESS CSS
