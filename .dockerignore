@@ -1,5 +1,0 @@
-.environment
-application/logs
-storage/media/**
-storage/cache/**
-storage/static/**

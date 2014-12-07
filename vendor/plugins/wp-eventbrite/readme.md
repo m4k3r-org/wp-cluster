@@ -1,1 +1,0 @@
-Eventbrite Attendees Notifications

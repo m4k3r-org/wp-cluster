@@ -1,1 +1,0 @@
-{"virtualbox":{"/var/www":{"create":true,"group":"www-data","owner":"www-data","guestpath":"/var/www","hostpath":"/Users/gyorgyfekete/Sites/usability-dynamics/chmf/project"},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/gyorgyfekete/Sites/usability-dynamics/chmf/project/vagrant"}}}
