@@ -191,8 +191,13 @@ namespace UsabilityDynamics\Cluster {
 		    exec('git describe --always',$version_mini_hash);
 		    exec('git rev-list HEAD | wc -l',$version_number);
 		    exec('git log -1',$line);
-		    $version['short'] = "v1.".trim($version_number[0]).".".$version_mini_hash[0];
-		    $version['full'] = "v1.".trim($version_number[0]).".$version_mini_hash[0] (".str_replace('commit ','',$line[0]).")";
+
+        $version_mini_hash = (array) $version_mini_hash;
+        $version_number = (array) $version_number;
+        $line = (array) $line;
+
+		    $version['short'] = isset( $version_number[0] ) ? "v1.".trim($version_number[0]).".". ( isset( $version_mini_hash[0] ) ? $version_mini_hash[0] : '' ) : '';
+		    $version['full'] = isset( $version_number[0] ) ? "v1.".trim($version_number[0]).". " . ( isset( $version_mini_hash[0] ) ? $version_mini_hash[0] : '' ) . " (".str_replace('commit ','',( isset( $line[0] ) ? $line[0] : '' )).")" : '';
 
 		    return (object) $version;
 
@@ -233,7 +238,7 @@ namespace UsabilityDynamics\Cluster {
 	    static public function get_git_commit_message( $format = '%s' ) {
 		    $commit_text = array();
 		    exec( "git log -1 --pretty=format:'{$format}' --abbrev-commit", $commit_text );
-		    return is_array( $commit_text ) ? $commit_text[0] : null;
+		    return  isset( $commit_text ) && is_array( $commit_text ) && isset( $commit_text[0] ) ? $commit_text[0] : null;
 
 	    }
 
