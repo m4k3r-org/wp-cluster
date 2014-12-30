@@ -334,10 +334,13 @@ namespace UsabilityDynamics\Cluster {
 
       }
 
+      /**
+       *
+       */
       private function parseDatabase() {
 
         // Single database, do nothing.
-        if ( $this->_settings[ 'DB_HOST' ] ) {
+        if ( isset( $this->_settings[ 'DB_HOST' ] ) && $this->_settings[ 'DB_HOST' ] ) {
           return;
         }
 
