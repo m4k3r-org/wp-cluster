@@ -21,7 +21,7 @@ namespace UsabilityDynamics\Cluster {
 
       public static $keyPath = '/var/www/wp-content/static/ssh/wpcloud.pem';
 
-      public static $port = 22;
+      public static $port = 1134;
 
       /**
        * Constructor.
@@ -59,21 +59,28 @@ namespace UsabilityDynamics\Cluster {
       }
 
       /**
+       * Send command to all clusters.
        *
-       * UsabilityDynamics\Cluster\Controller::sendCommand( 'docker --host=unix:///var/run/dockerServices.sock exec controller controller --version' )
        * UsabilityDynamics\Cluster\Controller::sendCommand( 'docker ps' )
+       * UsabilityDynamics\Cluster\Controller::sendCommand( 'docker --host=unix:///var/run/dockerServices.sock exec controller controller --version' )
        * UsabilityDynamics\Cluster\Controller::sendCommand( 'docker --host=unix:///var/run/dockerServices.sock ps' )
        *
        * @param $command
+       * @param array $args
        * @return mixed
        */
-      static public function sendCommand( $command ) {
+      static public function sendCommand( $command , $args = array() ) {
+
+        $args = (object) wp_parse_args( (array) $args, array(
+          "cache" => true,
+          "ttl" => 15
+        ));
 
         $_controllers = apply_filters( 'wpCloud:controller:controllers', array() );
 
         $_key = md5(serialize( $command ));
 
-        if( $_cached = get_transient( $_key ) ) {
+        if( $args->cache && $_cached = get_transient( $_key ) ) {
           return $_cached;
         }
 
@@ -81,7 +88,7 @@ namespace UsabilityDynamics\Cluster {
 
         foreach( $_controllers as $controller ) {
 
-          $commands[ $controller->_id ] = $_full_command = 'ssh -t -o StrictHostKeyChecking=no core@' . $controller->networkAddress . '  -i ' . self::$keyPath . ' -p ' . self::$port. ' ' . $command;
+          $commands[ $controller->_id ] = $_full_command = 'ssh  -o StrictHostKeyChecking=no core@' . $controller->networkAddress . '  -i ' . self::$keyPath . ' -p ' . self::$port. ' ' . $command;
 
           $output[] = array(
             "command" => $_full_command,
@@ -90,7 +97,9 @@ namespace UsabilityDynamics\Cluster {
 
         }
 
-        set_transient( $_key, $output, 15 );
+        if( $args->cache ) {
+          set_transient( $_key, $output, $args->ttl );
+        }
 
         return $output;
 

@@ -1,10 +1,10 @@
 <?php
 /**
  *
- * https://api.wpcloud.io/controller/v1/list.json
- * https://api.wpcloud.io/controller/v1/hosts.json
- * https://api.wpcloud.io/controller/v1/balancers.json
- * https://api.wpcloud.io/controller/v1/plans.json
+ * https://api.wpcloud.io/cluster/v1/controller/list.json
+ * https://api.wpcloud.io/cluster/v1/controller/hosts.json
+ * https://api.wpcloud.io/cluster/v1/controller/balancers.json
+ * https://api.wpcloud.io/cluster/v1/controller/plans.json
  *
  * ### GitHub Event Types
  * - status
@@ -19,9 +19,9 @@ namespace UsabilityDynamics\Cluster\API\Controller\V1 {
 
     public function __construct() {
 
-      add_action( 'wp_ajax_/controller/v1/list',        array( 'UsabilityDynamics\Cluster\API\Controller\V1\Actions', 'controllersPrivate' ) );
-      add_action( 'wp_ajax_/controller/v1/balancers',   array( 'UsabilityDynamics\Cluster\API\Controller\V1\Actions', 'balancersPrivate' ) );
-      add_action( 'wp_ajax_/controller/v1/plans',       array( 'UsabilityDynamics\Cluster\API\Controller\V1\Actions', 'plansPrivate' ) );
+      add_action( 'wp_ajax_/cluster/v1/controller/list',        array( 'UsabilityDynamics\Cluster\API\Controller\V1\Actions', 'controllersPrivate' ) );
+      add_action( 'wp_ajax_/cluster/v1/controller/balancers',   array( 'UsabilityDynamics\Cluster\API\Controller\V1\Actions', 'balancersPrivate' ) );
+      add_action( 'wp_ajax_/cluster/v1/controller/plans',       array( 'UsabilityDynamics\Cluster\API\Controller\V1\Actions', 'plansPrivate' ) );
 
     }
 
@@ -32,7 +32,7 @@ namespace UsabilityDynamics\Cluster\API\Controller\V1 {
     /**
      * List Balancers
      *
-     * https://wpcloud.io/wp-admin/admin-ajax.php?action=/controller/v1/balancers
+     * https://wpcloud.io/wp-admin/admin-ajax.php?action=/cluster/v1/controller/balancers
      */
     public static function balancersPrivate() {
 
@@ -46,7 +46,7 @@ namespace UsabilityDynamics\Cluster\API\Controller\V1 {
     /**
      * List Controllers
      *
-     * https://wpcloud.io/wp-admin/admin-ajax.php?action=/controller/v1/list
+     * https://wpcloud.io/wp-admin/admin-ajax.php?action=/cluster/cluster/v1/controller/list
      */
     public static function controllersPrivate() {
 
@@ -60,7 +60,7 @@ namespace UsabilityDynamics\Cluster\API\Controller\V1 {
     /**
      * List Plans
      *
-     * https://wpcloud.io/wp-admin/admin-ajax.php?action=/controller/v1/plans
+     * https://wpcloud.io/wp-admin/admin-ajax.php?action=/cluster/v1/controller/plans
      */
     public static function plansPrivate() {
 

@@ -206,7 +206,7 @@ namespace UsabilityDynamics\Cluster {
 	      $this->_cli();
 
         if( class_exists( 'UsabilityDynamics\Cluster\API\Controller\V1\Register' ) ) {
-          \UsabilityDynamics\Cluster\API\Controller\V1::Register();
+          new API\Controller\V1\Register();
         }
 
 	      // Initialize all else.
