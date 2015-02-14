@@ -38,6 +38,6 @@
     "usabilitydynamics/lib-api": "~0.5"
   },
   "autoload": {
-    "classmap": [ "lib" ]
+    "classmap": [ "lib", "lib/api" ]
   }
 }

@@ -205,6 +205,10 @@ namespace UsabilityDynamics\Cluster {
 	      // Enable CLI, if in CLI mode
 	      $this->_cli();
 
+        if( class_exists( 'UsabilityDynamics\Cluster\API\Controller\V1\Register' ) ) {
+          \UsabilityDynamics\Cluster\API\Controller\V1::Register();
+        }
+
 	      // Initialize all else.
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 20 );
 
@@ -498,8 +502,8 @@ namespace UsabilityDynamics\Cluster {
        */
       public function init() {
 
-        // add_action( 'admin_menu', array( $this, '_admin_menu' ), 8 );
-        // add_action( 'network_admin_menu', array( $this, '_admin_menu' ), 8 );
+        add_action( 'admin_menu', array( $this, '_admin_menu' ), 8 );
+        add_action( 'network_admin_menu', array( $this, '_admin_menu' ), 8 );
 
       }
 
@@ -565,10 +569,10 @@ namespace UsabilityDynamics\Cluster {
       public function _admin_menu() {
 
         // Add Network Administration to Network and Site.
-        add_submenu_page( 'settings.php', __( 'Site Provisioning', self::$text_domain ), __( 'Site Provisioning', self::$text_domain ), 'manage_network', 'network/settings.php?sites', array( $this, 'network_settings' ) );
-        add_submenu_page( 'settings.php', __( 'Themes', self::$text_domain ), __( 'Themes', self::$text_domain ), 'manage_network', 'network/themes.php?security', array( $this, 'network_settings' ) );
-        add_submenu_page( 'settings.php', __( 'Policy Delegation', self::$text_domain ), __( 'Policy Delegation', self::$text_domain ), 'manage_network', 'network/settings.php?policy', array( $this, 'network_settings' ) );
-        add_submenu_page( 'settings.php', __( 'Security', self::$text_domain ), __( 'Security', self::$text_domain ), 'manage_network', 'network/settings.php?security', array( $this, 'network_settings' ) );
+        //add_submenu_page( 'settings.php', __( 'Site Provisioning', self::$text_domain ), __( 'Site Provisioning', self::$text_domain ), 'manage_network', 'network/settings.php?sites', array( $this, 'network_settings' ) );
+        //add_submenu_page( 'settings.php', __( 'Themes', self::$text_domain ), __( 'Themes', self::$text_domain ), 'manage_network', 'network/themes.php?security', array( $this, 'network_settings' ) );
+        //add_submenu_page( 'settings.php', __( 'Policy Delegation', self::$text_domain ), __( 'Policy Delegation', self::$text_domain ), 'manage_network', 'network/settings.php?policy', array( $this, 'network_settings' ) );
+        //add_submenu_page( 'settings.php', __( 'Security', self::$text_domain ), __( 'Security', self::$text_domain ), 'manage_network', 'network/settings.php?security', array( $this, 'network_settings' ) );
 
         // Site Only.
         if( current_filter() === 'admin_menu' ) {
@@ -598,6 +602,8 @@ namespace UsabilityDynamics\Cluster {
 	        // remove_menu_page( 'update-core.php' );
 	        // remove_menu_page( 'sites.php' );
 
+          add_submenu_page( 'settings.php', __( 'Controllers', self::$text_domain ), __( 'Controllers', self::$text_domain ), 'manage_network', 'cluster-controllers', array( $this, 'controllers' ) );
+
           add_submenu_page( 'settings.php', __( 'Manage Users', self::$text_domain ), __( 'Manage Users', self::$text_domain ), 'manage_network', 'network-policy', array( $this, 'network_settings' ) );
 
         }
@@ -613,6 +619,14 @@ namespace UsabilityDynamics\Cluster {
 
         if( file_exists( dirname( __DIR__ ) . '/views/settings-network.php' ) ) {
           include( dirname( __DIR__ ) . '/views/settings-network.php' );
+        }
+
+      }
+
+      public function controllers() {
+
+        if( file_exists( dirname( __DIR__ ) . '/static/views/controllers.php' ) ) {
+          include( dirname( __DIR__ ) . '/static/views/controllers.php' );
         }
 
       }

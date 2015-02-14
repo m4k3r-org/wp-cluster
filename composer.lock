@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "371188661b37b2fc0f6012c6b4b4acd5",
+    "hash": "bf88149f07bbf11a888d93aaa87117a9",
     "packages": [
         {
             "name": "composer/installers",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "8024be9aa3ee446272937f46a8807fa52b337767"
+                "reference": "fadc14257fa015b3e07f4d64710ea02f99356ccd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/8024be9aa3ee446272937f46a8807fa52b337767",
-                "reference": "8024be9aa3ee446272937f46a8807fa52b337767",
+                "url": "https://api.github.com/repos/composer/installers/zipball/fadc14257fa015b3e07f4d64710ea02f99356ccd",
+                "reference": "fadc14257fa015b3e07f4d64710ea02f99356ccd",
                 "shasum": ""
             },
             "replace": {
@@ -59,9 +59,11 @@
                 "Hurad",
                 "MODX Evo",
                 "OXID",
+                "SMF",
                 "Thelia",
                 "WolfCMS",
                 "agl",
+                "aimeos",
                 "annotatecms",
                 "bitrix",
                 "cakephp",
@@ -69,6 +71,7 @@
                 "codeigniter",
                 "concrete5",
                 "croogo",
+                "dokuwiki",
                 "drupal",
                 "elgg",
                 "fuelphp",
@@ -96,7 +99,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-11-01 17:51:50"
+            "time": "2015-02-12 22:23:32"
         },
         {
             "name": "usabilitydynamics/lib-api",
@@ -116,9 +119,6 @@
                 "usabilitydynamics/lib-utility": "*"
             },
             "type": "library",
-            "extra": {
-                "installer-name": "lib-api"
-            },
             "autoload": {
                 "classmap": [
                     "lib"
@@ -176,9 +176,6 @@
                 "justinrainbow/json-schema": "1.1.*"
             },
             "type": "library",
-            "extra": {
-                "installer-name": "lib-settings"
-            },
             "autoload": {
                 "classmap": [
                     "lib"

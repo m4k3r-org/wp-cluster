@@ -6,12 +6,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/composer/installers.git",
-            "reference": "8024be9aa3ee446272937f46a8807fa52b337767"
+            "reference": "fadc14257fa015b3e07f4d64710ea02f99356ccd"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/8024be9aa3ee446272937f46a8807fa52b337767",
-            "reference": "8024be9aa3ee446272937f46a8807fa52b337767",
+            "url": "https://api.github.com/repos/composer/installers/zipball/fadc14257fa015b3e07f4d64710ea02f99356ccd",
+            "reference": "fadc14257fa015b3e07f4d64710ea02f99356ccd",
             "shasum": ""
         },
         "replace": {
@@ -22,7 +22,7 @@
             "composer/composer": "1.0.*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2014-11-01 17:51:50",
+        "time": "2015-02-12 22:23:32",
         "type": "composer-installer",
         "extra": {
             "class": "Composer\\Installers\\Installer",
@@ -55,9 +55,11 @@
             "Hurad",
             "MODX Evo",
             "OXID",
+            "SMF",
             "Thelia",
             "WolfCMS",
             "agl",
+            "aimeos",
             "annotatecms",
             "bitrix",
             "cakephp",
@@ -65,6 +67,7 @@
             "codeigniter",
             "concrete5",
             "croogo",
+            "dokuwiki",
             "drupal",
             "elgg",
             "fuelphp",
@@ -157,65 +160,6 @@
         ]
     },
     {
-        "name": "usabilitydynamics/lib-api",
-        "version": "0.5.0",
-        "version_normalized": "0.5.0.0",
-        "source": {
-            "type": "git",
-            "url": "git@github.com:usabilitydynamics/lib-api",
-            "reference": "0.5.0"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://github.com/usabilitydynamics/lib-api/archive/0.5.0.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "usabilitydynamics/lib-utility": "*"
-        },
-        "type": "library",
-        "extra": {
-            "installer-name": "lib-api"
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "lib"
-            ]
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Andy Potanin",
-                "email": "andy.potanin@usabilitydynamics.com",
-                "homepage": "http://usabilitydynamics.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Maxim Peshkov",
-                "email": "maxim.peshkov@usabilitydynamics.com",
-                "homepage": "http://usabilitydynamics.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Anton Korotkov",
-                "email": "anton.korotkov@usabilitydynamics.com",
-                "homepage": "http://usabilitydynamics.com",
-                "role": "Developer"
-            }
-        ],
-        "homepage": "http://github.com/usabilitydynamics/lib-api",
-        "keywords": [
-            "api"
-        ],
-        "support": {
-            "issues": "https://github.com/usabilitydynamics/lib-api/issues"
-        }
-    },
-    {
         "name": "usabilitydynamics/lib-settings",
         "version": "0.2.3",
         "version_normalized": "0.2.3.0",
@@ -237,9 +181,6 @@
             "justinrainbow/json-schema": "1.1.*"
         },
         "type": "library",
-        "extra": {
-            "installer-name": "lib-settings"
-        },
         "installation-source": "dist",
         "autoload": {
             "classmap": [
@@ -347,5 +288,61 @@
             "script-editor",
             "ui"
         ]
+    },
+    {
+        "name": "usabilitydynamics/lib-api",
+        "version": "0.5.0",
+        "version_normalized": "0.5.0.0",
+        "source": {
+            "type": "git",
+            "url": "git@github.com:usabilitydynamics/lib-api",
+            "reference": "0.5.0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/usabilitydynamics/lib-api/archive/0.5.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "usabilitydynamics/lib-utility": "*"
+        },
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "lib"
+            ]
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andy Potanin",
+                "email": "andy.potanin@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Maxim Peshkov",
+                "email": "maxim.peshkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anton Korotkov",
+                "email": "anton.korotkov@usabilitydynamics.com",
+                "homepage": "http://usabilitydynamics.com",
+                "role": "Developer"
+            }
+        ],
+        "homepage": "http://github.com/usabilitydynamics/lib-api",
+        "keywords": [
+            "api"
+        ],
+        "support": {
+            "issues": "https://github.com/usabilitydynamics/lib-api/issues"
+        }
     }
 ]
