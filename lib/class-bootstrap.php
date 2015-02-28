@@ -502,7 +502,7 @@ namespace UsabilityDynamics\Cluster {
        */
       public function init() {
 
-        add_action( 'admin_menu', array( $this, '_admin_menu' ), 8 );
+        add_action( 'admin_menu', array( $this, '_admin_menu' ), 100 );
         add_action( 'network_admin_menu', array( $this, '_admin_menu' ), 8 );
 
       }
@@ -583,12 +583,15 @@ namespace UsabilityDynamics\Cluster {
 	        //remove_submenu_page( 'tools.php', 'ms-delete-site.php' );
 
           // Add Network Administration.
-          add_options_page( __( 'DNS', self::$text_domain ), __( 'DNS', self::$text_domain ), 'manage_network', 'network-dns', array( $this, 'network_settings' ) );
-          add_options_page( __( 'Domains', self::$text_domain ), __( 'Domains', self::$text_domain ), 'manage_network', 'network-dns', array( $this, 'network_settings' ) );
+          // add_options_page( __( 'DNS', self::$text_domain ), __( 'DNS', self::$text_domain ), 'manage_network', 'network-dns', array( $this, 'network_settings' ) );
+          // add_options_page( __( 'Domains', self::$text_domain ), __( 'Domains', self::$text_domain ), 'manage_network', 'network-dns', array( $this, 'network_settings' ) );
 
           // Add Network Administration to Network and Site.
-          add_menu_page( 'Network', 'Network', 'manage_network', 'settings.php', array( $this, 'network_settings' ) );
-          add_submenu_page( 'settings.php', __( 'Options', self::$text_domain ), __( 'Options', self::$text_domain ), 'manage_network', 'cloud-settings', array( $this, 'network_settings' ) );
+          //add_menu_page( 'Network', 'Network', 'manage_network', 'settings.php', array( $this, 'network_settings' ) );
+          //add_submenu_page( 'settings.php', __( 'Options', self::$text_domain ), __( 'Options', self::$text_domain ), 'manage_network', 'cloud-settings', array( $this, 'network_settings' ) );
+
+          // add_submenu_page( 'edit.php?post_type=_application', __( 'Controllers', self::$text_domain ), __( 'Controllers', self::$text_domain ), 'manage_network', 'cluster/controllers', array( $this, 'controllers' ) );
+
 
         }
 
@@ -602,9 +605,9 @@ namespace UsabilityDynamics\Cluster {
 	        // remove_menu_page( 'update-core.php' );
 	        // remove_menu_page( 'sites.php' );
 
-          add_submenu_page( 'settings.php', __( 'Controllers', self::$text_domain ), __( 'Controllers', self::$text_domain ), 'manage_network', 'cluster-controllers', array( $this, 'controllers' ) );
+          // add_submenu_page( 'settings.php', __( 'Controllers', self::$text_domain ), __( 'Controllers', self::$text_domain ), 'manage_network', 'cluster-controllers', array( $this, 'controllers' ) );
 
-          add_submenu_page( 'settings.php', __( 'Manage Users', self::$text_domain ), __( 'Manage Users', self::$text_domain ), 'manage_network', 'network-policy', array( $this, 'network_settings' ) );
+          //add_submenu_page( 'settings.php', __( 'Manage Users', self::$text_domain ), __( 'Manage Users', self::$text_domain ), 'manage_network', 'network-policy', array( $this, 'network_settings' ) );
 
         }
 

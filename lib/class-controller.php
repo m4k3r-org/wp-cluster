@@ -23,10 +23,11 @@ namespace UsabilityDynamics\Cluster {
 
       public static $port = 1134;
 
+      private $networkAddress;
+
       /**
        * Constructor.
-       *
-       * @param WP_Post $post Post object.
+       * @param array $post
        */
       public function __construct( $post = array() ) {
         global $wpdb;
@@ -69,28 +70,45 @@ namespace UsabilityDynamics\Cluster {
        * @param array $args
        * @return mixed
        */
-      static public function sendCommand( $command , $args = array() ) {
+      static public function sendCommand( $command, $args = array() ) {
 
         $args = (object) wp_parse_args( (array) $args, array(
           "cache" => true,
-          "ttl" => 15
+          "ttl" => 15,
+          "prefix" => apply_filters( 'wpCloud:controller:command:prefix', 'PATH=$PATH:/home/core/.bin' ),
+          "controllers" => apply_filters( 'wpCloud:controller:controllers', array() )
         ));
-
-        $_controllers = apply_filters( 'wpCloud:controller:controllers', array() );
 
         $_key = md5(serialize( $command ));
 
         if( $args->cache && $_cached = get_transient( $_key ) ) {
+          foreach( $_cached as $_index => $response ) {
+            $_cached[$_index]['_cached'] = true;
+          }
           return $_cached;
         }
 
         $output = array();
 
-        foreach( $_controllers as $controller ) {
+        foreach( $args->controllers as $controller ) {
 
-          $commands[ $controller->_id ] = $_full_command = 'ssh  -o StrictHostKeyChecking=no core@' . $controller->networkAddress . '  -i ' . self::$keyPath . ' -p ' . self::$port. ' ' . $command;
+          $_id = is_object( $controller ) ? $controller->_id : $controller;
+
+          // @todo Resolve controller address if just a name is provided.
+          $_address = is_object( $controller ) ? $controller->networkAddress : 'localhost';
+
+          $commands[ $_id ] = $_full_command = join( " ", array(
+            'ssh',
+            '-o StrictHostKeyChecking=no',
+            'core@' . $_address,
+            '-i ' . self::$keyPath,
+            '-p ' . self::$port,
+            $args->prefix,
+            $command
+          ));
 
           $output[] = array(
+            "controller" => $_id,
             "command" => $_full_command,
             "output" => explode( "\n", trim( shell_exec( $_full_command ), "\n" ) )
           );
