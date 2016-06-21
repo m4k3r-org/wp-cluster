@@ -710,7 +710,7 @@ namespace UsabilityDynamics\Cluster {
 	      add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ) );
 	      add_action( 'manage_sites_custom_column', array( $this, 'manage_sites_custom_column' ), 10, 2 );
 
-	      add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
+	      //commented due to issue in wp 4.5 add_filter( 'pre_update_option_rewrite_rules', array( $this, '_update_option_rewrite_rules' ), 1 );
 
 	      // /manage/admin-ajax.php?action=cluster_uptime_status
 	      add_action( 'wp_ajax_cluster_uptime_status', array( $this, '_uptime_status' ) );
